@@ -8,20 +8,8 @@ import sessions
 import util
 import config
 
-ServerSocket = socket.socket()
-host = "192.168.4.28"
-port = 25565
-threads=0
-
-try:
-    ServerSocket.bind((host, port))
-except socket.error as e:
-    print(str(e))
-
-print("Waiting for connections...")
-ServerSocket.listen(5)
-
-conns = []
+HOST_IP = "192.168.4.28"
+PORT = 25565
 
 def threaded_client(connection):
     try:
@@ -104,13 +92,23 @@ def handle_request(dict):
             p.landsession = p.Session
             out = f"Your land is the {land.title}! ({land.acronym})"
         return out
+    
+if __name__ == "__main__":
+    ServerSocket = socket.socket()
+    try:
+        ServerSocket.bind((HOST_IP, PORT))
+    except socket.error as e:
+        print(str(e))
 
+    print("Waiting for connections...")
+    ServerSocket.listen(5)
 
+    conns = []
+    threads = 0
 
-
-while True:
-    Client, address = ServerSocket.accept()
-    print(f"Connected to: {address[0]} : {str(address[1])}")
-    start_new_thread(threaded_client, (Client, ))
-    threads += 1
-    print(f"Thread Number: {str(threads)}")
+    while True:
+        Client, address = ServerSocket.accept()
+        print(f"Connected to: {address[0]} : {str(address[1])}")
+        start_new_thread(threaded_client, (Client, ))
+        threads += 1
+        print(f"Thread Number: {str(threads)}")
