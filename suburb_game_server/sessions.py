@@ -18,9 +18,10 @@ def map_from_file(file, folder=None):
     with open(f"{file}", "r") as f:
         content = f.read()
     content = content.split("\n") #split y axis
-    for index, line in enumerate(content):
-        content[index] = list(line) # split each string in content into a list of letters
-    return content
+    map = []
+    for line in content:
+        map.append(list(line)) # split each string in content into a list of letters
+    return map
 
 def all_maps_in_folder(folder): # returns a list of all of the maps in a folder
     maps = []
