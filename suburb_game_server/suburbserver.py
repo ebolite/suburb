@@ -1,6 +1,6 @@
 import socket
 import os
-from _thread import *
+from _thread import start_new_thread
 import json
 import hashlib
 
