@@ -69,22 +69,18 @@ def login():
     pwbox = render.InputTextBox(.5, .50)
     pwbox.secure = True
     def verify():
-        if len(namebox.text) != 0:
-            if len(pwbox.text) != 0:
-                log.text = "Connecting..."
-                client.dic["character"] = namebox.text
-                client.dic["character_pass_hash"] = client.hash(pwbox.text)
-                log.text = client.request("login")
-                if "Success" not in log.text:
-                    client.dic["character"] = None
-                    client.dic["character_pass_hash"] = None
-                else:
-                    namecharacter() # todo: change to play game function
-                print(f"log text {log.text}")
-            else:
-                log.text = "Password must not be empty."
+        if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
+        if len(pwbox.test) == 0: log.text = "Password must not be empty."; return
+        log.text = "Connecting..."
+        client.dic["character"] = namebox.text
+        client.dic["character_pass_hash"] = client.hash(pwbox.text)
+        log.text = client.request("login")
+        if "Success" not in log.text:
+            client.dic["character"] = None
+            client.dic["character_pass_hash"] = None
         else:
-            log.text = "Session name must not be empty."
+            namecharacter() # todo: change to play game function
+        print(f"log text {log.text}")
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
 
