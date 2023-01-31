@@ -50,8 +50,8 @@ def register():
         client.dic["character_pass_hash"] = client.hash(pwbox.text)
         log.text = client.request("create_character")
         if "Success" not in log.text:
-            client.dic["character"] = None
-            client.dic["character_pass_hash"] = None
+            client.dic["character"] = ""
+            client.dic["character_pass_hash"] = ""
         print(f"log text {log.text}")
     confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
@@ -70,14 +70,14 @@ def login():
     pwbox.secure = True
     def verify():
         if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
-        if len(pwbox.test) == 0: log.text = "Password must not be empty."; return
+        if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
         log.text = "Connecting..."
         client.dic["character"] = namebox.text
         client.dic["character_pass_hash"] = client.hash(pwbox.text)
         log.text = client.request("login")
         if "Success" not in log.text:
-            client.dic["character"] = None
-            client.dic["character_pass_hash"] = None
+            client.dic["character"] = ""
+            client.dic["character_pass_hash"] = ""
         else:
             namecharacter() # todo: change to play game function
         print(f"log text {log.text}")
@@ -461,8 +461,8 @@ def newsession():
                             client.dic["session_pass_hash"] = client.hash(pwbox.text)
                             log.text = client.request("create_session")
                             if "Success" not in log.text:
-                                client.dic["session"] = None
-                                client.dic["session_pass_hash"] = None
+                                client.dic["session"] = ""
+                                client.dic["session_pass_hash"] = ""
                             print(f"log text {log.text}")
                         else:
                             log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"
@@ -497,8 +497,8 @@ def connect():
         client.dic["session_pass_hash"] = client.hash(pwbox.text)
         log.text = client.request("connect")
         if "Success" not in log.text:
-            client.dic["session"] = None
-            client.dic["session_pass_hash"] = None
+            client.dic["session"] = ""
+            client.dic["session_pass_hash"] = ""
         print(f"log text {log.text}")
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
@@ -508,11 +508,11 @@ def title():
     logo = render.Image(.5, .20, "sprites\\largeicon.png")
     logotext = render.Image(.5, .47, "sprites\\suburb.png")
     def isconnected():
-        if client.dic["session"] != None:
+        if client.dic["session"] != "":
             return False # return False because the alternative condition is unclickable
         else:
             return True
-    play_button = render.Button(.5, .59, "sprites\\buttons\\play.png", "sprites\\buttons\\playpressed.png", play, alt=isconnected, altpath="sprites\\buttons\\playgrey.png", altclick = None)
+    play_button = render.Button(.5, .59, "sprites\\buttons\\play.png", "sprites\\buttons\\playpressed.png", play, alt=isconnected, alt_img_path="sprites\\buttons\\playgrey.png", altclick = None)
     play_button.alt_alpha = 100
     connect_button = render.Button(.5, .70, "sprites\\buttons\\connect.png", "sprites\\buttons\\connectpressed.png", connect)
     new_session_button = render.Button(.5, .81, "sprites\\buttons\\newsession.png", "sprites\\buttons\\newsessionpressed.png", newsessionprompt)
@@ -521,7 +521,7 @@ def title():
     versiontext.absolute = True
     versiontext.color = render.LIGHT_COLOR
     versiontext.outline_color = render.BLACK_COLOR
-    if client.dic["session"] != None:
+    if client.dic["session"] != "":
         conntextcontent = f"Session `{client.dic['session']}`"
     else:
         conntextcontent = f"No session."

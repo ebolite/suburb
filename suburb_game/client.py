@@ -10,12 +10,12 @@ HOST = "135.134.43.197" # server host and port
 PORT = 25565
 
 dic = {
-"intent": None,
-"session": None,
-"session_pass_hash": None,
-"character": None,
-"character_pass_hash": None,
-"content": None
+"intent": "",
+"session": "",
+"session_pass_hash": "",
+"character": "",
+"character_pass_hash": "",
+"content": ""
 }
 
 def connect():
@@ -49,5 +49,5 @@ def requestplus(intent, content):
     dic["content"] = content
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
-    dic["content"] = None
+    dic["content"] = ""
     return ClientSocket.recv(1024).decode()
