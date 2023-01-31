@@ -22,10 +22,10 @@ os.chdir(util.homedir)
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 base_font = pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), 32)
-white_color = (255, 255, 255)
-light_color = (0, 175, 255)
-dim_color = (157, 224, 255)
-black_color = (0, 0, 0)
+WHITE_COLOR = (255, 255, 255)
+LIGHT_COLOR = (0, 175, 255)
+DIM_COLOR = (157, 224, 255)
+BLACK_COLOR = (0, 0, 0)
 
 click_check = []
 key_check = []
@@ -227,7 +227,7 @@ class TextButton(UIElement):
         self.absolute = False
         self.fontsize = 16
         self.text = text
-        self.text_color = black_color
+        self.text_color = BLACK_COLOR
         self.toggle = False
         click_check.append(self)
         update_check.append(self)
@@ -236,12 +236,12 @@ class TextButton(UIElement):
     def update(self):
         self.text_surf = self.font.render(self.text, True, self.text_color)
         self.outline_surf = pygame.Surface((self.w, self.h))
-        self.outline_surf.fill(light_color)
+        self.outline_surf.fill(LIGHT_COLOR)
         self.surf = pygame.Surface((self.w-2*self.outlinedepth, self.h-2*self.outlinedepth))
-        self.surf.fill(white_color)
+        self.surf.fill(WHITE_COLOR)
         if self.active:
             self.hoversurf = pygame.Surface((self.w, self.h))
-            self.hoversurf.fill(light_color)
+            self.hoversurf.fill(LIGHT_COLOR)
             self.hoversurf.set_alpha(89)
         else:
             self.hoversurf = None
@@ -351,20 +351,20 @@ class InputTextBox(UIElement):
     def update(self, keys):
         if self.secure:
             t = "*" * len(self.text)
-            self.text_surf = base_font.render(t, True, black_color)
+            self.text_surf = base_font.render(t, True, BLACK_COLOR)
         else:
-            self.text_surf = base_font.render(self.text, True, black_color)
+            self.text_surf = base_font.render(self.text, True, BLACK_COLOR)
         width = max(100, self.text_surf.get_width()+10)
         height = 32
         outline = 3
         self.surf = pygame.Surface((width, height))
         if self.active:
-            self.surf.fill(dim_color)
+            self.surf.fill(DIM_COLOR)
         else:
-            self.surf.fill(white_color)
+            self.surf.fill(WHITE_COLOR)
 
         self.outline_surf = pygame.Surface((width + (outline * 2), height + (outline  * 2)))
-        self.outline_surf.fill(light_color)
+        self.outline_surf.fill(LIGHT_COLOR)
 
         self.rect = self.outline_surf.get_rect()
         self.rect.x = int((SCREEN_WIDTH * self.x) - self.outline_surf.get_width() / 2)
@@ -454,7 +454,7 @@ class Text(UIElement):
         self.y = y
         self.text = text
         self.absolute = False  # whether x and y should be exact coords
-        self.color = black_color
+        self.color = BLACK_COLOR
         self.outline_color = None
         self.outline_depth = 1
         self.fontsize = 32
@@ -503,7 +503,7 @@ def render():
             for sprite in key_check:
                 sprite.keypress(event)
 
-    screen.fill(dim_color)
+    screen.fill(DIM_COLOR)
     keys = pygame.key.get_pressed()
 
     for sprite in update_check:
