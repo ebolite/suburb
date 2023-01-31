@@ -1,3 +1,6 @@
 import os
 VERSION = "0.0.2"
 homedir = os.getcwd()
+subdirectories = next(os.walk("."))[1]
+if "suburb_game" in subdirectories: # if this is being run in vscode lol
+    homedir += "\\suburb_game"
