@@ -1,0 +1,101 @@
+0000000000000000000000000000000000000000 d88cc45e48e7f29751d818fb81df3184f6b450ad ebolite <moldehchez@gmail.com> 1614318395 -0600	commit (initial): add gitignore
+d88cc45e48e7f29751d818fb81df3184f6b450ad 5ef0b22b2f1fbc0cc58eaed96ce0c1158fb9c23b ebolite <moldehchez@gmail.com> 1614319257 -0600	commit: add bot.py
+5ef0b22b2f1fbc0cc58eaed96ce0c1158fb9c23b 381e5234794fb8c7f943555595e2b27d7cb86583 ebolite <moldehchez@gmail.com> 1614320028 -0600	commit: added basic command
+381e5234794fb8c7f943555595e2b27d7cb86583 4aed8106f075fab1b76ef65f23d802e51ddf87e8 ebolite <moldehchez@gmail.com> 1614320564 -0600	commit: add env and stuff
+4aed8106f075fab1b76ef65f23d802e51ddf87e8 d9a52539ee992fb6121fd302b4a719ceb96474f0 ebolite <moldehchez@gmail.com> 1614320723 -0600	commit: loadenv
+d9a52539ee992fb6121fd302b4a719ceb96474f0 f11e709a78704673b3c59427e69b9676c7d59395 ebolite <moldehchez@gmail.com> 1614321764 -0600	commit: add alchemy.py
+f11e709a78704673b3c59427e69b9676c7d59395 a92f8f3d2a98af81e4149d32d1534835f32e4c43 ebolite <moldehchez@gmail.com> 1614505059 -0600	commit: basic alchemization naming logic
+a92f8f3d2a98af81e4149d32d1534835f32e4c43 74f36634a8f966c50c10c2060c7b979c260383a1 ebolite <moldehchez@gmail.com> 1614594731 -0600	commit: basic inheritance
+74f36634a8f966c50c10c2060c7b979c260383a1 ea4b23a47c3f5303d57128ce2184efeac2617ba3 ebolite <moldehchez@gmail.com> 1614596613 -0600	commit: weight and size changes and comments
+ea4b23a47c3f5303d57128ce2184efeac2617ba3 807ce5f57893adb84c8f6738e032d391ea9ea581 ebolite <moldehchez@gmail.com> 1614606576 -0600	commit: binary code operation logic
+807ce5f57893adb84c8f6738e032d391ea9ea581 291c4225b1695bbd83ab602c59cd44c86ab6cb83 ebolite <moldehchez@gmail.com> 1614608933 -0600	commit: captcha codes
+291c4225b1695bbd83ab602c59cd44c86ab6cb83 75e735ab50f06a4d3e67519757f2c31081ba4c4e ebolite <moldehchez@gmail.com> 1614640596 -0600	commit: various adjustments
+75e735ab50f06a4d3e67519757f2c31081ba4c4e 7fda40482ac97e89d0951d249e4fd689fc9744c4 ebolite <moldehchez@gmail.com> 1614683903 -0600	commit: added basic grist types and gristcache
+7fda40482ac97e89d0951d249e4fd689fc9744c4 6a76ae52ad53aa73303c6c9f7eca952d0ac58ad7 ebolite <moldehchez@gmail.com> 1614687459 -0600	commit: add shit tons of grist
+6a76ae52ad53aa73303c6c9f7eca952d0ac58ad7 483f7409de308744ca48dece301d92e60ba206b3 ebolite <moldehchez@gmail.com> 1614688386 -0600	commit: distinguish between exotic and non-exotic grists
+483f7409de308744ca48dece301d92e60ba206b3 1bc6f3636a31ec2ff82b57f6fcc25c677db31d8d ebolite <moldehchez@gmail.com> 1614751674 -0600	commit: final alchemy changes
+1bc6f3636a31ec2ff82b57f6fcc25c677db31d8d 76c936cf46ca16c3f5b036d5d444b5af9e21bb3d ebolite <moldehchez@gmail.com> 1615307162 -0600	commit: oh god
+76c936cf46ca16c3f5b036d5d444b5af9e21bb3d 9eaed2b31250ab3d400c1b0cf9cac2411335cf53 ebolite <moldehchez@gmail.com> 1615365062 -0600	commit: added uses and instances
+9eaed2b31250ab3d400c1b0cf9cac2411335cf53 df500de7f229b0840200273227912ef751e224d8 ebolite <moldehchez@gmail.com> 1615398917 -0600	commit: more bases and use stuff
+df500de7f229b0840200273227912ef751e224d8 d2b01ce9ff611aff6e5e028261043de1eadb319e ebolite <moldehchez@gmail.com> 1615400674 -0600	commit: add vim
+d2b01ce9ff611aff6e5e028261043de1eadb319e 9f4c6096d2fec906ff2fa36a36a801886d8c25bf ebolite <moldehchez@gmail.com> 1615401805 -0600	commit: vigor regen and mechanics
+9f4c6096d2fec906ff2fa36a36a801886d8c25bf 3a0a743df167e218b39882a6a237d61c2645d536 ebolite <moldehchez@gmail.com> 1615401929 -0600	commit: add dmgmult
+3a0a743df167e218b39882a6a237d61c2645d536 9fd7f423a2e368dfe22422b88ea829a479bf7ec5 ebolite <moldehchez@gmail.com> 1615408176 -0600	commit: add abstain and enemyskill
+9fd7f423a2e368dfe22422b88ea829a479bf7ec5 271d23123eb582c359415afd21a156ffd7e7098b ebolite <moldehchez@gmail.com> 1615421410 -0600	commit: added card combining for and operation
+271d23123eb582c359415afd21a156ffd7e7098b f48cd08ff0dda992380ab87bb020011607447905 ebolite <moldehchez@gmail.com> 1615478394 -0600	commit: add skills command
+f48cd08ff0dda992380ab87bb020011607447905 4701db713d1eb13ac7485760037b3a4be5aeac49 ebolite <moldehchez@gmail.com> 1615487245 -0600	commit: add cooldown and aspect skills foundation
+4701db713d1eb13ac7485760037b3a4be5aeac49 8ef9bbd3967f755fdecbc9fbb638735fde74d2d5 ebolite <moldehchez@gmail.com> 1615534515 -0600	commit: balance
+8ef9bbd3967f755fdecbc9fbb638735fde74d2d5 3c83e29c96b6a05deae06d79e8cc6ea2f3a74d14 ebolite <moldehchez@gmail.com> 1615593215 -0600	commit: added alchemiter
+3c83e29c96b6a05deae06d79e8cc6ea2f3a74d14 58d5e6cac7b6d17208e6d5e6cbed953d3dd4282a ebolite <moldehchez@gmail.com> 1615594469 -0600	commit: add better selection ui
+58d5e6cac7b6d17208e6d5e6cbed953d3dd4282a 4fedc6925420a963ca17105657450a8d002a69f4 ebolite <moldehchez@gmail.com> 1615607360 -0600	commit: more rungs are rewarded for grinding higher power enemies
+4fedc6925420a963ca17105657450a8d002a69f4 d0a8d9e2f674c4e86be85cf27f78e69f1dca143d ebolite <moldehchez@gmail.com> 1615702133 -0600	commit: finished gristtorrent
+d0a8d9e2f674c4e86be85cf27f78e69f1dca143d 431becf88afc239627f9a79a107c84dc49465497 ebolite <moldehchez@gmail.com> 1615708887 -0500	commit: terrain generation logic
+431becf88afc239627f9a79a107c84dc49465497 97b191ad08ab988b0ddb9b4f34b1a6e97871f3ca ebolite <moldehchez@gmail.com> 1615712601 -0500	commit: overmap now works
+97b191ad08ab988b0ddb9b4f34b1a6e97871f3ca 97b191ad08ab988b0ddb9b4f34b1a6e97871f3ca ebolite <moldehchez@gmail.com> 1615715820 -0500	reset: moving to HEAD
+97b191ad08ab988b0ddb9b4f34b1a6e97871f3ca 8cb670d41777472c7981e7072ae7d3e634da45b0 ebolite <moldehchez@gmail.com> 1615715907 -0500	commit: aaA
+8cb670d41777472c7981e7072ae7d3e634da45b0 c44d3dfbf84164ae6af80a45cc241c07df301946 ebolite <moldehchez@gmail.com> 1615771665 -0500	commit: mapgen
+c44d3dfbf84164ae6af80a45cc241c07df301946 cdf2b2b69c914973358086abf94bb7f2486d9471 ebolite <moldehchez@gmail.com> 1615792535 -0500	commit: computer
+cdf2b2b69c914973358086abf94bb7f2486d9471 c987bea4f4493e1a0bbc5c61490fe0cd0991223f ebolite <moldehchez@gmail.com> 1615851681 -0500	commit: added basic server stuff
+c987bea4f4493e1a0bbc5c61490fe0cd0991223f 2204da074a50389fce567b64ba857285af1b8df6 ebolite <moldehchez@gmail.com> 1615859160 -0500	commit: finish revise and change map logic
+2204da074a50389fce567b64ba857285af1b8df6 9b9dcb468a054e36745326d0894c6d573f883d2d ebolite <moldehchez@gmail.com> 1615868846 -0500	commit: add deploy
+9b9dcb468a054e36745326d0894c6d573f883d2d d8aa1ca602349821233255bd59979b9832b70b1a ebolite <moldehchez@gmail.com> 1615880657 -0500	commit: more menu stuff
+d8aa1ca602349821233255bd59979b9832b70b1a 4ef9c3ae2b177dab1db39a41af35f1a741e7d5fa ebolite <moldehchez@gmail.com> 1615955423 -0500	commit: gate generation
+4ef9c3ae2b177dab1db39a41af35f1a741e7d5fa ce8b3f84766008c5fbd698f5d866cc4f45c6a7ba ebolite <moldehchez@gmail.com> 1615963337 -0500	commit: fix revise
+ce8b3f84766008c5fbd698f5d866cc4f45c6a7ba d87905d53f95522732c7c95bc16ddd24f1844aa2 ebolite <moldehchez@gmail.com> 1616002326 -0500	commit: add states and meter sprites
+d87905d53f95522732c7c95bc16ddd24f1844aa2 3d790c351c43aa7a42ba7c3488791ac234ae22d8 ebolite <moldehchez@gmail.com> 1616007103 -0500	commit: added secondary vials
+3d790c351c43aa7a42ba7c3488791ac234ae22d8 22ac8bceccc12d91d155c180b66d614f2dbf0650 ebolite <moldehchez@gmail.com> 1616007284 -0500	commit: move aspects to separate .py
+22ac8bceccc12d91d155c180b66d614f2dbf0650 33dc5e50d9b4966b50bb12fac6cc4ad0097858b3 ebolite <moldehchez@gmail.com> 1616007699 -0500	commit: finish adding onhit effects
+33dc5e50d9b4966b50bb12fac6cc4ad0097858b3 927d5b8fba5da4581cae33415735e493305fc7c5 ebolite <moldehchez@gmail.com> 1616037727 -0500	commit: add class skills, bard passive, knight skills and passive
+927d5b8fba5da4581cae33415735e493305fc7c5 d4c159903cff1f064efd1696d89b25467cd4d4bb ebolite <moldehchez@gmail.com> 1616044223 -0500	commit: added more classes
+d4c159903cff1f064efd1696d89b25467cd4d4bb e39a441c1167016b373fe7ad5f23aa23e372405f ebolite <moldehchez@gmail.com> 1616056458 -0500	commit: balance
+e39a441c1167016b373fe7ad5f23aa23e372405f 40f34193c2ec925a60e7f13fda3b76529c8dbaf4 ebolite <moldehchez@gmail.com> 1616063833 -0500	commit: more classes
+40f34193c2ec925a60e7f13fda3b76529c8dbaf4 0725b37f318677a9f120c4dab831a2051d8eff66 ebolite <moldehchez@gmail.com> 1616120801 -0500	commit: added maid and sylph and change thief and rogue
+0725b37f318677a9f120c4dab831a2051d8eff66 b0f97f088b931139fc1046e8a925db30b8ef1ad9 ebolite <moldehchez@gmail.com> 1616134373 -0500	commit: ui improvements
+b0f97f088b931139fc1046e8a925db30b8ef1ad9 22152c2518073ae926e2c090ecbd7aac8764cc61 ebolite <moldehchez@gmail.com> 1616225173 -0500	commit: a bunch of stuff idk anymore, notably world generation
+22152c2518073ae926e2c090ecbd7aac8764cc61 3281959324c2cb62ea0df3fc5214f2a1a1bc6d9d ebolite <moldehchez@gmail.com> 1616281556 -0500	commit: big
+3281959324c2cb62ea0df3fc5214f2a1a1bc6d9d 07d301398b8a25ed5c33504f6d03019778326f78 ebolite <moldehchez@gmail.com> 1616286887 -0500	commit: final changes before npcs
+07d301398b8a25ed5c33504f6d03019778326f78 01ba82f77e6f0d842a0cbfa43a7d5878e1a6ea55 ebolite <moldehchez@gmail.com> 1616304461 -0500	commit: more npc stuff
+01ba82f77e6f0d842a0cbfa43a7d5878e1a6ea55 d906c234f98b5844ed8fe7f17ca6cdb2081e9c96 ebolite <moldehchez@gmail.com> 1616305352 -0500	commit: combat enemies now use npc system
+d906c234f98b5844ed8fe7f17ca6cdb2081e9c96 f1a31c921ba3ab41e664e72fa0e7afa186221707 ebolite <moldehchez@gmail.com> 1616317292 -0500	commit: fixed big fuck bugs and yeah
+f1a31c921ba3ab41e664e72fa0e7afa186221707 de35cecd1686de4de2695183743ee32d4f955281 ebolite <moldehchez@gmail.com> 1616469117 -0500	commit: add flashing, npc stuff, more bases
+de35cecd1686de4de2695183743ee32d4f955281 46ef314a872837ab4e8edda64d1e25a530838610 ebolite <moldehchez@gmail.com> 1616538034 -0500	commit: add entering and npcs
+46ef314a872837ab4e8edda64d1e25a530838610 68b8650fb31493c2cb842955ae990956769ee354 ebolite <moldehchez@gmail.com> 1616539901 -0500	commit: fix data being wiped
+68b8650fb31493c2cb842955ae990956769ee354 e0b5e9f4e0f41ec02dbfa011e16d62fb15ee8581 ebolite <moldehchez@gmail.com> 1616568409 -0500	commit: fix crashes, add entering
+e0b5e9f4e0f41ec02dbfa011e16d62fb15ee8581 5984a164c56c7a3503f5ec419031591a1a90331e ebolite <moldehchez@gmail.com> 1616658584 -0500	commit: add overmap movement
+5984a164c56c7a3503f5ec419031591a1a90331e 332352aa0ad5253c5df1c9a683391824070bc243 ebolite <moldehchez@gmail.com> 1616729665 -0500	commit: add difficulty map
+332352aa0ad5253c5df1c9a683391824070bc243 4e0bba5c2cc80f2f156694ae649edd4f024e7a08 ebolite <moldehchez@gmail.com> 1616885523 -0500	commit: i don't even know anymore
+4e0bba5c2cc80f2f156694ae649edd4f024e7a08 29dc4f6b28e054fe230bb163b0d99a7be2b26892 ebolite <moldehchez@gmail.com> 1616886105 -0500	commit: stop players from moving during strife
+29dc4f6b28e054fe230bb163b0d99a7be2b26892 490d57139cffe67eb7c0e03c2ba2a8e691e2b156 ebolite <moldehchez@gmail.com> 1616887131 -0500	commit: add abscond, doesn't fully work yet
+490d57139cffe67eb7c0e03c2ba2a8e691e2b156 5991bd86ed4b2a984c19f81358ddacc33b96af91 ebolite <moldehchez@gmail.com> 1616887749 -0500	commit: add actioncheck to nextbattler, abscond should work
+5991bd86ed4b2a984c19f81358ddacc33b96af91 68d209f3c510fb10df309196d88fe577b43d56cb ebolite <moldehchez@gmail.com> 1616887920 -0500	commit: fix action break
+68d209f3c510fb10df309196d88fe577b43d56cb 415070b6d2fe20edabc1d37ea64604e2f824d44b ebolite <moldehchez@gmail.com> 1616888751 -0500	commit: abscond works
+415070b6d2fe20edabc1d37ea64604e2f824d44b 6c56e0a6c77d2cad85ea9b12077713219c71af45 ebolite <moldehchez@gmail.com> 1616962763 -0500	commit: technology interest
+6c56e0a6c77d2cad85ea9b12077713219c71af45 40e9d346dd57820378b4b94d58190882f5720794 ebolite <moldehchez@gmail.com> 1616963328 -0500	commit: sprites follow you
+40e9d346dd57820378b4b94d58190882f5720794 4b3f68f02e656bb7abba54ceec20842fa3a4ff48 ebolite <moldehchez@gmail.com> 1616963368 -0500	commit: only move when not strifing
+4b3f68f02e656bb7abba54ceec20842fa3a4ff48 948ce01242bc05d65350116120c147bee8932d6d ebolite <moldehchez@gmail.com> 1616964122 -0500	commit: npc follow now works
+948ce01242bc05d65350116120c147bee8932d6d 766363e9e6827ea0403fdcf2e510d9ed60957ec2 ebolite <moldehchez@gmail.com> 1617014063 -0500	commit: add cowboy interest
+766363e9e6827ea0403fdcf2e510d9ed60957ec2 ed5438c805d6da85e2a935ba74251136ac111f6c ebolite <moldehchez@gmail.com> 1617090285 -0500	commit: sprites can now be told to follow / unfollow you
+ed5438c805d6da85e2a935ba74251136ac111f6c f88a6d86b503b7b3964e61454a5b566b321ae670 ebolite <moldehchez@gmail.com> 1617091486 -0500	commit: add random overmap encounters, needs testing
+f88a6d86b503b7b3964e61454a5b566b321ae670 16cb5830bb67f4942f149c321f7320ff2f0c6497 ebolite <moldehchez@gmail.com> 1617091848 -0500	commit: fix abscond bug
+16cb5830bb67f4942f149c321f7320ff2f0c6497 6488962fcb7bb8b1f60ac2ca6b1bb30326f30cc0 ebolite <moldehchez@gmail.com> 1617091936 -0500	commit: fix npc dying crash
+6488962fcb7bb8b1f60ac2ca6b1bb30326f30cc0 aec5436a1d9333223ef4fa0aaefc7f7726d384fc ebolite <moldehchez@gmail.com> 1617092495 -0500	commit: random encounter deletes embark message
+aec5436a1d9333223ef4fa0aaefc7f7726d384fc f6c6f80358846980a7372036e6027573aa54a26f ebolite <moldehchez@gmail.com> 1617092800 -0500	commit: players technically leave strife at the end of battles now
+f6c6f80358846980a7372036e6027573aa54a26f 7dedeee2aae78026d681ebc829d55efe8d279c96 ebolite <moldehchez@gmail.com> 1617092977 -0500	commit: add figurine to banned sprite words list
+7dedeee2aae78026d681ebc829d55efe8d279c96 667d21018d9af6e0d4c95364bfd34448210b7dc8 ebolite <moldehchez@gmail.com> 1617093719 -0500	commit: fix random encounters
+667d21018d9af6e0d4c95364bfd34448210b7dc8 1e6b2034e29b70b07b1992becb082f8f0f448408 ebolite <moldehchez@gmail.com> 1617093768 -0500	commit: fix random encounters again
+1e6b2034e29b70b07b1992becb082f8f0f448408 297052c7995d22c15d3093ce77e274df77196299 ebolite <moldehchez@gmail.com> 1617093835 -0500	commit: fix loading
+297052c7995d22c15d3093ce77e274df77196299 2efbf7827be8ac4de3bb22cc5b187feecfaf6695 ebolite <moldehchez@gmail.com> 1617094030 -0500	commit: adjust random encounter difficulty curve
+2efbf7827be8ac4de3bb22cc5b187feecfaf6695 121e1b43db35dd7c92faba0a8d65da28953ba547 ebolite <moldehchez@gmail.com> 1617094159 -0500	commit: fix loading emoji
+121e1b43db35dd7c92faba0a8d65da28953ba547 61c8011a2ee79ac8418ac176cf2586ba1677e121 ebolite <moldehchez@gmail.com> 1617097196 -0500	commit: add clown interest
+61c8011a2ee79ac8418ac176cf2586ba1677e121 d3c63912055a03c7e83878be819661b0f40ec5fc ebolite <moldehchez@gmail.com> 1617183683 -0500	commit: add gotoroom and split follow into its own method
+d3c63912055a03c7e83878be819661b0f40ec5fc e008879c24b034dd1016b2d04110a7bf602e5bae ebolite <moldehchez@gmail.com> 1617184413 -0500	commit: add following players through interact
+e008879c24b034dd1016b2d04110a7bf602e5bae 36ed08ac652f0aacb4bde1cc8fd07e0f4d7767e8 ebolite <moldehchez@gmail.com> 1617184691 -0500	commit: map files now deepcopy
+36ed08ac652f0aacb4bde1cc8fd07e0f4d7767e8 4339d98665956b79a53f318dadb02dccc531b69e ebolite <moldehchez@gmail.com> 1617184744 -0500	commit: gates now transport to - instead of 0
+4339d98665956b79a53f318dadb02dccc531b69e a855d897e9153b5a2b9d0442393a5ff0aa5fda0d ebolite <moldehchez@gmail.com> 1617184914 -0500	commit: embark now hides loading text properly
+a855d897e9153b5a2b9d0442393a5ff0aa5fda0d ddbc790cc63091165684094f51b3a716d91eeccb ebolite <moldehchez@gmail.com> 1617187702 -0500	commit: fix follow
+ddbc790cc63091165684094f51b3a716d91eeccb 22f9570b3d5d911464fa02413bdd48d5f2c5faaf ebolite <moldehchez@gmail.com> 1617187976 -0500	commit: pathetic interest
+22f9570b3d5d911464fa02413bdd48d5f2c5faaf 9af5f980b64993e8b4fa24248314daf2a6a892cd ebolite <moldehchez@gmail.com> 1617245972 -0500	commit: begin work on suggest command
+9af5f980b64993e8b4fa24248314daf2a6a892cd 913e72edf0def794635657904319c0844876f887 ebolite <moldehchez@gmail.com> 1617272681 -0500	commit: add kinds command and fix acceptedbases
+913e72edf0def794635657904319c0844876f887 b29116e45d34eb7c1742e4c1b2dc781f4150345b ebolite <moldehchez@gmail.com> 1617272705 -0500	commit: fix kinds
+b29116e45d34eb7c1742e4c1b2dc781f4150345b 20692f146dd7c02a116cb9b9ca1b81885676595b ebolite <moldehchez@gmail.com> 1617272938 -0500	commit: more helptext for suggest
+20692f146dd7c02a116cb9b9ca1b81885676595b 0451392d967e41cac7d5d190fc341549e445c8b6 ebolite <moldehchez@gmail.com> 1617604821 -0500	commit: begin work on skills per weapon kind
