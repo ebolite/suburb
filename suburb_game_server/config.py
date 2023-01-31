@@ -360,8 +360,8 @@ classes = {
     }
 
 aspects = {
-    "space": {"description": "(\*) Represents the fabric of reality. Space players are big thinkers and innovators."},
-    "time": {"description": "(\*) Represents time. Time players are goal-focused fighters."},
+    "space": {"description": "(*) Represents the fabric of reality. Space players are big thinkers and innovators."},
+    "time": {"description": "(*) Represents time. Time players are goal-focused fighters."},
     "mind": {"description": "Represents thought, thinking and the mind. Mind players are cerebral and thoughtful."},
     "heart": {"description": "Represents the soul. Heart players are very in-tune with their sense of self and their emotions."},
     "hope": {"description": "Represents justice and hope. Hope players tend to have a strong sense of morality."},
@@ -519,12 +519,12 @@ vials = {
 
 vialemoji = {
     "health": {
-        "startfilled": "sprites\\vials\\health\healthstartfull.png",
-        "starthalffilled": "sprites\\vials\\health\healthstarthalf.png",
-        "middlefilled": "sprites\\vials\\health\healthmiddlefull.png",
-        "middlehalffilled": "sprites\\vials\\health\healthmiddlehalf.png",
-        "endfilled": "sprites\\vials\\health\healthendfull.png",
-        "endhalffilled": "sprites\\vials\\health\healthendhalf.png"
+        "startfilled": "sprites\\vials\\health\\healthstartfull.png",
+        "starthalffilled": "sprites\\vials\\health\\healthstarthalf.png",
+        "middlefilled": "sprites\\vials\\health\\healthmiddlefull.png",
+        "middlehalffilled": "sprites\\vials\\health\\healthmiddlehalf.png",
+        "endfilled": "sprites\\vials\\health\\healthendfull.png",
+        "endhalffilled": "sprites\\vials\\health\\healthendhalf.png"
         },
     "vim": {
         "startfilled": "<:vimstartfull:819270866780553216>",
