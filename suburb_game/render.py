@@ -243,8 +243,8 @@ class TextButton(UIElement):
             self.hoversurf = None
         self.rect = self.outline_surf.get_rect()
         if self.absolute:
-            self.rect.x = x
-            self.rect.y = y
+            self.rect.x = self.x
+            self.rect.y = self.y
         else:
             self.rect.x = (SCREEN_WIDTH * self.x) - self.outline_surf.get_width() / 2
             self.rect.y = (SCREEN_HEIGHT * self.y) - self.outline_surf.get_height() / 2
