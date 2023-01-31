@@ -22,10 +22,10 @@ os.chdir(util.homedir)
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 base_font = pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), 32)
-WHITE_COLOR = (255, 255, 255)
-LIGHT_COLOR = (0, 175, 255)
-DIM_COLOR = (157, 224, 255)
-BLACK_COLOR = (0, 0, 0)
+WHITE_COLOR = pygame.Color(255, 255, 255)
+LIGHT_COLOR = pygame.Color(0, 175, 255)
+DIM_COLOR = pygame.Color(157, 224, 255)
+BLACK_COLOR = pygame.Color(0, 0, 0)
 
 click_check = []
 key_check = []
@@ -197,7 +197,7 @@ class SolidColor(UIElement):
         self.y = y
         self.w = w
         self.h = h
-        self.color = color
+        self.color: pygame.Color = color
         self.absolute = True
         update_check.append(self)
 
@@ -227,7 +227,7 @@ class TextButton(UIElement):
         self.absolute = False
         self.fontsize = 16
         self.text = text
-        self.text_color = BLACK_COLOR
+        self.text_color: pygame.Color = BLACK_COLOR
         self.toggle = False
         click_check.append(self)
         update_check.append(self)
@@ -419,7 +419,7 @@ class Image(UIElement):
         self.animframes = 1
         self.speed = 3
         self.wait = 0
-        self.highlight_color = None
+        self.highlight_color: Optional[pygame.Color] = None
         update_check.append(self)
 
     def update(self):
@@ -454,8 +454,8 @@ class Text(UIElement):
         self.y = y
         self.text = text
         self.absolute = False  # whether x and y should be exact coords
-        self.color = BLACK_COLOR
-        self.outline_color = None
+        self.color: pygame.Color = BLACK_COLOR
+        self.outline_color: Optional[pygame.Color] = None
         self.outline_depth = 1
         self.fontsize = 32
         update_check.append(self)
