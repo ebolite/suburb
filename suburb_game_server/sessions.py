@@ -35,19 +35,16 @@ map_tiles["gateframe"] = all_maps_in_folder("gateframe")
 
 class Session():
     def __init__(self, name):
+        self.__dict__["session_name"] = name
         if name not in util.sessions:
             util.sessions[name] = {}
-        self.__dict__["session_name"] = name
-        if self.players == None:
             self.players = {}
-        if self.overmaps == None:
-            self.overmaps = {}
+            self.overmaps = {}          
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
         util.sessions[self.__dict__["session_name"]][attr] = value
         
-
     def __getattr__(self, attr):
         self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
                                .get(attr, self.__dict__[attr]))
@@ -59,13 +56,11 @@ class Session():
 
 class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player.session}"
     def __init__(self, name, session: Session, player: Optional["Player"] = None):
-        if name not in util.sessions[session.name]["overmaps"]:
-            util.sessions[session.name]["overmaps"][name] = {}
         self.__dict__["session_name"] = session.name
         self.__dict__["name"] = name
-        if self.maps == None:
+        if name not in util.sessions[session.name]["overmaps"]:
+            util.sessions[session.name]["overmaps"][name] = {}
             self.maps = {}
-        if self.specials == None:
             self.specials = []
         if player != None:
             self.__dict__["player_name"] = player.name
@@ -145,20 +140,17 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
 
 class Map():
     def __init__(self, name, session: Session, overmap: Overmap):
-        if name not in util.sessions[session.name]["overmaps"][overmap.name]["maps"]:
-            util.sessions[session.name]["overmaps"][overmap.name]["maps"][name] = {}
         self.__dict__["session_name"] = session.name
         self.__dict__["overmap_name"] = overmap.name
-        self.__dict__["name"] = name
-        if self.rooms == None:
+        self.__dict__["name"] = name  
+        if name not in util.sessions[session.name]["overmaps"][overmap.name]["maps"]:
+            util.sessions[session.name]["overmaps"][overmap.name]["maps"][name] = {}
             self.rooms = {}
-        if self.overmaptile == None:
             self.overmaptile = "~"
-        if self.x == None or self.y == None:
             coords = name.replace(",", "")
-            coords = name.split(" ")
-            x = int(name[0])
-            y = int(name[1])
+            coords = coords.split(" ")
+            x = int(coords[0])
+            y = int(coords[1])
             self.x = x
             self.y = y
 
@@ -240,13 +232,12 @@ class Map():
 
 class Room():
     def __init__(self, name, session: Session, overmap: Overmap, map: Map):
-        if name not in util.sessions[session.name]["overmaps"][overmap.name]["maps"][map.name]["rooms"]:
-            util.sessions[session.name]["overmaps"][overmap.name]["maps"][map.name]["rooms"][name] = {}
         self.__dict__["session_name"] = session.name
         self.__dict__["overmap_name"] = overmap.name
         self.__dict__["map_name"] = map.name
         self.__dict__["name_name"] = name
-        if self.x == None or self.y == None:
+        if name not in util.sessions[session.name]["overmaps"][overmap.name]["maps"][map.name]["rooms"]:
+            util.sessions[session.name]["overmaps"][overmap.name]["maps"][map.name]["rooms"][name] = {}
             coords = name.replace(",", "")
             coords = coords.split(" ")
             x = int(coords[0])
@@ -293,11 +284,11 @@ class Room():
 
 class Player():
     def __init__(self, name, session: Session):
-        if name not in util.sessions[session.name]["players"]:
-            util.sessions[session.name]["players"][name] = {}
         self.__dict__["session_name"] = session.name
         self.__dict__["name"] = name
-        if self.setup == None: self.setup = False
+        if name not in util.sessions[session.name]["players"]:
+            util.sessions[session.name]["players"][name] = {}
+            self.setup = False
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
