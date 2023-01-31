@@ -132,17 +132,29 @@ class Tile(UIElement):
         self.surf = pygame.Surface((tile_wh, tile_wh))
         offsety = 0
         offsetx = 0
-        if len(self.TileMap.map) > self.y + 1 and self.TileMap.map[self.y+1][self.x] in self.allowedtiles and dircheck(self.TileMap.map[self.y+1][self.x], "up"): # tile below is the same
+        if (len(self.TileMap.map) > self.y + 1 and 
+            self.TileMap.map[self.y+1][self.x] in self.allowedtiles and 
+            dircheck(self.TileMap.map[self.y+1][self.x], "up")): # tile below is the same
             offsety += tile_wh
-            if self.y != 0 and self.TileMap.map[self.y-1][self.x] in self.allowedtiles and dircheck(self.TileMap.map[self.y-1][self.x], "down"): # tile above is the same
+            if (self.y != 0 and 
+                self.TileMap.map[self.y-1][self.x] in self.allowedtiles and 
+                dircheck(self.TileMap.map[self.y-1][self.x], "down")): # tile above is the same
                 offsety += tile_wh
-        elif self.y != 0 and self.TileMap.map[self.y-1][self.x] in self.allowedtiles and dircheck(self.TileMap.map[self.y-1][self.x], "down"): # tile above is the same but not tile below
+        elif (self.y != 0 and 
+              self.TileMap.map[self.y-1][self.x] in self.allowedtiles and 
+              dircheck(self.TileMap.map[self.y-1][self.x], "down")): # tile above is the same but not tile below
             offsety += tile_wh * 3
-        if len(self.TileMap.map[0]) > self.x + 1 and self.TileMap.map[self.y][self.x+1] in self.allowedtiles and dircheck(self.TileMap.map[self.y][self.x+1], "left"): # tile right is the same
+        if (len(self.TileMap.map[0]) > self.x + 1 and 
+            self.TileMap.map[self.y][self.x+1] in self.allowedtiles and 
+            dircheck(self.TileMap.map[self.y][self.x+1], "left")): # tile right is the same
             offsetx += tile_wh
-            if self.x != 0 and self.TileMap.map[self.y][self.x-1] in self.allowedtiles and dircheck(self.TileMap.map[self.y][self.x-1], "right"): # tile left is also the same
+            if (self.x != 0 and 
+                self.TileMap.map[self.y][self.x-1] in self.allowedtiles and 
+                dircheck(self.TileMap.map[self.y][self.x-1], "right")): # tile left is also the same
                 offsetx += tile_wh
-        elif self.x != 0 and self.TileMap.map[self.y][self.x-1] in self.allowedtiles and dircheck(self.TileMap.map[self.y][self.x-1], "right"): # tile left is the same but not right
+        elif (self.x != 0 and 
+              self.TileMap.map[self.y][self.x-1] in self.allowedtiles and 
+              dircheck(self.TileMap.map[self.y][self.x-1], "right")): # tile left is the same but not right
             offsetx += tile_wh * 3
         self.rect = self.surf.get_rect()
         self.rect.x = (self.x * tile_wh) + self.TileMap.rect.x
