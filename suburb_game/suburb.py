@@ -536,6 +536,9 @@ if __name__ == "__main__":
     # choosevial()
     #render.TileMap(0.5, 0.5, map)
     title() # normal game start
+    # continue to render until render.render() returns False
+    while render.render():
+        pass
 
 
 
@@ -554,7 +557,3 @@ map = [
 ["#","#","#","#","#","#","#","#","#",],
 ["#","#","#","#","#","#","#","#","#",]
 ]
-
-# continue to render until render.render() returns False
-while render.render():
-    pass
