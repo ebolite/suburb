@@ -1,4 +1,4 @@
-.git_old/
+suburb_bot_old/.git_old/
 *.env
 # Byte-compiled / optimized / DLL files
 __pycache__/
