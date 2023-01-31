@@ -75,22 +75,10 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         landrate = config.categoryproperties[self.gristcategory]["landrate"]
         lakes = config.categoryproperties[self.gristcategory]["lakes"]
         lakerate = config.categoryproperties[self.gristcategory]["lakerate"]
-        if "special" in config.categoryproperties[self.gristcategory]:
-            special = config.categoryproperties[self.gristcategory]["special"]
-        else:
-            special = None
-        if "extralands" in config.categoryproperties[self.gristcategory]:
-            extralands = config.categoryproperties[self.gristcategory]["extralands"]
-        else:
-            extralands = None
-        if "extrarate" in config.categoryproperties[self.gristcategory]:
-            extrarate = config.categoryproperties[self.gristcategory]["extrarate"]
-        else:
-            extrarate = None
-        if "extraspecial" in config.categoryproperties[self.gristcategory]:
-            extraspecial = config.categoryproperties[self.gristcategory]["extraspecial"]
-        else:
-            extraspecial = None
+        special = config.categoryproperties[self.gristcategory].get("special", None)
+        extralands = config.categoryproperties[self.gristcategory].get("extralands", None)
+        extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
+        extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
         self.map = generateoverworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
         for line in self.map:
             print("".join(line))
@@ -105,7 +93,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             housemap.genmap("house")
             self.housemap = housemap.name
             self.specials.append(housemap.name)
-            # we're not doing this right now
+            # todo: we're not doing this right now
             # housemap.genrooms()
 
     def genlandname(self):
@@ -173,40 +161,41 @@ class Map():
 
     def genmap(self, type=None):
         map = None
-        if type == "house":
-            map = mapfromfile("gates.txt")
-            map += deepcopy(random.choice(maptiles["house"]))
-            self.overmaptile = "H"
-        elif type == "gate1":
-            map = deepcopy(random.choice(maptiles["gateframe"]))
-            self.overmaptile = "1"
-        elif type == "gate2":
-            map = deepcopy(random.choice(maptiles["gateframe"]))
-            self.overmaptile = "2"
-        elif type == "gate3":
-            map = deepcopy(random.choice(maptiles["gateframe"]))
-            self.overmaptile = "3"
-        elif type == "gate4":
-            map = deepcopy(random.choice(maptiles["gateframe"]))
-            self.overmaptile = "4"
-        elif type == "gate5":
-            map = deepcopy(random.choice(maptiles["gateframe"]))
-            self.overmaptile = "5"
-        elif type == "gate6":
-            map = deepcopy(random.choice(maptiles["gateframe"]))
-            self.overmaptile = "6"
-        elif type == "gate7":
-            map = deepcopy(random.choice(maptiles["gateframe"]))
-            self.overmaptile = "7"
-        else:
-            map = deepcopy(random.choice(maptiles["land"]))
-            self.overmaptile = "#"
+        match type:
+            case "house":
+                map = mapfromfile("gates.txt")
+                map += deepcopy(random.choice(maptiles["house"]))
+                self.overmaptile = "H"
+            case "gate1":
+                map = deepcopy(random.choice(maptiles["gateframe"]))
+                self.overmaptile = "1"
+            case "gate2":
+                map = deepcopy(random.choice(maptiles["gateframe"]))
+                self.overmaptile = "2"
+            case "gate3":
+                map = deepcopy(random.choice(maptiles["gateframe"]))
+                self.overmaptile = "3"
+            case "gate4":
+                map = deepcopy(random.choice(maptiles["gateframe"]))
+                self.overmaptile = "4"
+            case "gate5":
+                map = deepcopy(random.choice(maptiles["gateframe"]))
+                self.overmaptile = "5"
+            case "gate6":
+                map = deepcopy(random.choice(maptiles["gateframe"]))
+                self.overmaptile = "6"
+            case "gate7":
+                map = deepcopy(random.choice(maptiles["gateframe"]))
+                self.overmaptile = "7"
+            case _:
+                map = deepcopy(random.choice(maptiles["land"]))
+                self.overmaptile = "#"
         print("genmap")
         self.map = map
 
     def genrooms(self):
         for y, line in enumerate(self.map):
-            for x, char in enumerate(self.map[y]):
+            for x, char in enumerate(line):
                 if char != ".":
                     r = self.getroom(x, y)
 
