@@ -2,6 +2,7 @@ import json
 import hashlib
 import random
 import os
+from typing import Optional, Union
 from copy import deepcopy
 
 import util
@@ -56,18 +57,18 @@ class Session():
         return self.__dict__["session_name"]
 
 class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player.session}"
-    def __init__(self, name, Session, Player=None):
-        if name not in util.sessions[Session.name]["overmaps"]:
-            util.sessions[Session.name]["overmaps"][name] = {}
-        self.__dict__["session_name"] = Session.name
+    def __init__(self, name, session: Session, player: Optional["Player"] = None):
+        if name not in util.sessions[session.name]["overmaps"]:
+            util.sessions[session.name]["overmaps"][name] = {}
+        self.__dict__["session_name"] = session.name
         self.__dict__["name"] = name
         if self.maps == None:
             self.maps = {}
         if self.specials == None:
             self.specials = []
-        if Player != None:
-            self.__dict__["player_name"] = Player.name
-            self.gristcategory = Player.gristcategory
+        if player != None:
+            self.__dict__["player_name"] = player.name
+            self.gristcategory = player.gristcategory
             self.gen_overmap()
             self.gen_land_name()
 
@@ -90,7 +91,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             while self.map[y][x] == "~":
                 y = random.randint(0, len(self.map)-1)
                 x = random.randint(0, len(self.map[0])-1)
-            housemap = self.get_map(x, y)
+            housemap = self.find_map(x, y)
             housemap.gen_map("house")
             self.housemap = housemap.name
             self.specials.append(housemap.name)
@@ -98,14 +99,14 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             # housemap.gen_rooms()
 
     def gen_land_name(self):
-        print(f"{self.gristcategory} {self.Player.aspect}")
-        print(f"Player {self.Player} {self.Player.name} {self.player_name}")
-        print(f"grist {self.gristcategory} aspect {self.Player.aspect}")
-        bases = config.landbases[self.gristcategory] + config.aspectbases[self.Player.aspect]
-        random.seed(self.Player.name)
+        print(f"{self.gristcategory} {self.player.aspect}")
+        print(f"Player {self.player} {self.player.name} {self.player_name}")
+        print(f"grist {self.gristcategory} aspect {self.player.aspect}")
+        bases = config.landbases[self.gristcategory] + config.aspectbases[self.player.aspect]
+        random.seed(self.player.name)
         random.shuffle(bases)
         self.base1 = bases[0]
-        if self.Player.aspect != "space":
+        if self.player.aspect != "space":
             self.base2 = bases[1]
         else:
             self.base2 = "frogs"
@@ -116,9 +117,8 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             acronym += f"{word[0].upper()}"
         self.acronym = acronym
 
-    def get_map(self, x, y):
-        m = Map(f"{x}, {y}", self.Session, self)
-        return m
+    def find_map(self, x, y) -> "Map":
+        return Map(f"{x}, {y}", self.Session, self)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -131,11 +131,11 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         return self.__dict__[attr]
 
     @property
-    def Session(self):
+    def session(self) -> Session:
         return Session(self.__dict__["session_name"])
 
     @property
-    def Player(self):
+    def player(self) -> "Player":
         return Player(self.__dict__["player_name"], self.Session)
 
     @property
@@ -143,11 +143,11 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         return self.__dict__["name"]
 
 class Map():
-    def __init__(self, name, Session, Overmap):
-        if name not in util.sessions[Session.name]["overmaps"][Overmap.name]["maps"]:
-            util.sessions[Session.name]["overmaps"][Overmap.name]["maps"][name] = {}
-        self.__dict__["session_name"] = Session.name
-        self.__dict__["overmap_name"] = Overmap.name
+    def __init__(self, name, session: Session, overmap: Overmap):
+        if name not in util.sessions[session.name]["overmaps"][overmap.name]["maps"]:
+            util.sessions[session.name]["overmaps"][overmap.name]["maps"][name] = {}
+        self.__dict__["session_name"] = session.name
+        self.__dict__["overmap_name"] = overmap.name
         self.__dict__["name"] = name
         if self.rooms == None:
             self.rooms = {}
@@ -199,11 +199,10 @@ class Map():
         for y, line in enumerate(self.map):
             for x, char in enumerate(line):
                 if char != ".":
-                    r = self.get_room(x, y)
+                    r = self.find_room(x, y)
 
-    def get_room(self, x, y):
-        r = Room(f"{x}, {y}", self.Session, self.Overmap, self)
-        return r
+    def find_room(self, x, y) -> "Room":
+        return Room(f"{x}, {y}", self.session, self.overmap, self)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -219,19 +218,19 @@ class Map():
                                .get(attr, None))
         return self.__dict__[attr]
 
-    def get_tile(self, x, y):
+    def get_tile(self, x, y) -> str:
         return self.map[y][x]
 
     @property
-    def Session(self):
+    def session(self) -> Session:
         return Session(self.__dict__["session_name"])
 
     @property
-    def Overmap(self):
+    def overmap(self) -> Overmap:
         return Overmap(self.__dict__["session_name"], self.__dict__["overmap_name"])
 
     @property
-    def Player(self):
+    def player(self) -> "Player":
         return Player(self.__dict__["player_name"], self.Session)
 
     @property
@@ -239,18 +238,18 @@ class Map():
         return self.__dict__["name"]
 
 class Room():
-    def __init__(self, name, Session, Overmap, Map):
-        if name not in util.sessions[Session.name]["overmaps"][Overmap.name]["maps"][Map.name]["rooms"]:
-            util.sessions[Session.name]["overmaps"][Overmap.name]["maps"][Map.name]["rooms"][name] = {}
-        self.__dict__["session_name"] = Session.name
-        self.__dict__["overmap_name"] = Overmap.name
-        self.__dict__["map_name"] = Map.name
+    def __init__(self, name, session: Session, overmap: Overmap, map: Map):
+        if name not in util.sessions[session.name]["overmaps"][overmap.name]["maps"][map.name]["rooms"]:
+            util.sessions[session.name]["overmaps"][overmap.name]["maps"][map.name]["rooms"][name] = {}
+        self.__dict__["session_name"] = session.name
+        self.__dict__["overmap_name"] = overmap.name
+        self.__dict__["map_name"] = map.name
         self.__dict__["name_name"] = name
         if self.x == None or self.y == None:
             coords = name.replace(",", "")
-            coords = name.split(" ")
-            x = int(name[0])
-            y = int(name[1])
+            coords = coords.split(" ")
+            x = int(coords[0])
+            y = int(coords[1])
             self.x = x
             self.y = y
 
@@ -271,31 +270,31 @@ class Room():
         return self.__dict__[attr]
 
     @property
-    def Session(self):
-        return Session(self.__dict__["session"])
+    def session(self) -> Session:
+        return Session(self.__dict__["session_name"])
 
     @property
-    def Overmap(self):
-        return Overmap(self.__dict__["session"], self.__dict__["overmap"])
+    def overmap(self) -> Overmap:
+        return Overmap(self.__dict__["session_name"], self.__dict__["overmap_name"])
 
     @property
-    def Player(self):
-        return Player(self.__dict__["player"], self.Session)
+    def player(self) -> "Player":
+        return self.overmap.player
 
     @property
     def name(self):
         return self.__dict__["name"]
 
     @property
-    def tile(self):
+    def tile(self) -> str:
         return self.Map.get_tile(self.x, self.y)
 
 
 class Player():
-    def __init__(self, name, Session):
-        if name not in util.sessions[Session.name]["players"]:
-            util.sessions[Session.name]["players"][name] = {}
-        self.__dict__["session_name"] = Session.name
+    def __init__(self, name, session: Session):
+        if name not in util.sessions[session.name]["players"]:
+            util.sessions[session.name]["players"][name] = {}
+        self.__dict__["session_name"] = session.name
         self.__dict__["name"] = name
         if self.setup == None: self.setup = False
 
@@ -310,8 +309,8 @@ class Player():
         return self.__dict__[attr]
 
     @property
-    def Session(self):
-        return Session(self.__dict__["session"])
+    def session(self) -> Session:
+        return Session(self.__dict__["session_name"])
 
     @property
     def name(self):
@@ -322,9 +321,8 @@ class Player():
         return self.nickname
 
     @property
-    def Land(self):
-        l = Overmap(self.land, Session(self.landsession))
-        return l
+    def land(self) -> Overmap:
+        return Overmap(self.land_name, Session(self.landsession))
 
     def verify(self, hash): # returns True if hash is valid
         if hash == self.character_pass_hash:
