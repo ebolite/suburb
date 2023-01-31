@@ -3,6 +3,7 @@ import sys
 import os
 import pathlib
 import hashlib
+from typing import Optional, Union, Callable
 
 import util
 import config
@@ -38,7 +39,7 @@ tile_wh = 32
 
 checks = [click_check, key_check, mouseup_check, update_check, keypress_update_check]
 
-icon_surf = pygame.image.load("sprites\icon.png").convert()
+icon_surf = pygame.image.load("sprites\\icon.png").convert()
 pygame.display.set_icon(icon_surf)
 pygame.display.set_caption(f"SUBURB CLIENT {util.VERSION}")
 
@@ -49,7 +50,7 @@ def clear_elements():
 class UIElement(pygame.sprite.Sprite):
     def __init__(self): # x and y as fractions of 1 (centered position on screen)
         super(UIElement, self).__init__()
-        self.rect = pygame.Rect(0, 0, 0, 0)
+        self.rect: Union[pygame.Rect, pygame.rect.Rect] = pygame.Rect(0, 0, 0, 0)
         ui_elements.append(self)
 
     def mouseover(self): # returns True if mouse is over this element
@@ -83,8 +84,8 @@ class TileMap(UIElement):
     def update_map(self, map):
         if self.map != map or len(self.tiles) == 0:
             self.rect = pygame.Rect(0, 0, len(map[0])*tile_wh, len(map)*tile_wh)
-            self.rect.x = (SCREEN_WIDTH * self.x) - self.rect.w / 2
-            self.rect.y = (SCREEN_HEIGHT * self.y) - self.rect.h / 2
+            self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2))
+            self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2))
             for tile in self.tiles:
                 self.tiles[tile].delete()
             self.tiles = {}
@@ -95,7 +96,7 @@ class TileMap(UIElement):
     def delete(self):
         for tile in self.tiles:
             self.tiles[tile].delete()
-        super(Tile, self).delete()
+        super(TileMap, self).delete()
 
 allowedtiles = {
 "#": ["|", "=", "+"],
@@ -249,8 +250,8 @@ class TextButton(UIElement):
             self.rect.x = self.x
             self.rect.y = self.y
         else:
-            self.rect.x = (SCREEN_WIDTH * self.x) - self.outline_surf.get_width() / 2
-            self.rect.y = (SCREEN_HEIGHT * self.y) - self.outline_surf.get_height() / 2
+            self.rect.x = int((SCREEN_WIDTH * self.x) - (self.outline_surf.get_width() / 2))
+            self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.outline_surf.get_height() / 2))
         screen.blit(self.outline_surf, ((self.rect.x, self.rect.y)))
         screen.blit(self.surf, ((self.rect.x+self.outlinedepth, self.rect.y+self.outlinedepth)))
         screen.blit(self.text_surf, ((self.rect.x+(self.outline_surf.get_width()/2)-(self.text_surf.get_width()/2), self.rect.y+(self.outline_surf.get_height()/2)-(self.text_surf.get_height()/2))))
@@ -280,16 +281,16 @@ class TextButton(UIElement):
 
 
 class Button(UIElement):
-    def __init__(self, x, y, unpressed, pressed, onpress, alt=None, altpath=None, altclick=None, hover=None): # x and y as fractions of 1 (centered position on screen)
+    def __init__(self, x, y, unpressed_img_path, pressed_img_path, onpress: Callable, alt: Optional[Callable]=None, alt_img_path=None, altclick: Optional[Callable]=None, hover=None): # x and y as fractions of 1 (centered position on screen)
         super(Button, self).__init__()
-        self.unpressed = unpressed
-        self.pressed = pressed
+        self.unpressed_img_path = unpressed_img_path
+        self.pressed_img_path = pressed_img_path
         self.x = x
         self.y = y
         self.onpress = onpress
         self.active = False
         self.alt = alt
-        self.altpath = altpath
+        self.alt_img_path = alt_img_path
         self.altclick = altclick
         self.alt_alpha = 255
         self.absolute = False
@@ -299,19 +300,17 @@ class Button(UIElement):
         mouseup_check.append(self)
 
     def update(self):
-        if self.alt != None and self.alt(): # alternative display condition
-            self.surf = pygame.image.load(self.altpath).convert()
+        if self.alt is not None and self.alt() and self.alt_img_path is not None: # alternative display condition
+            self.surf = pygame.image.load(self.alt_img_path).convert()
             self.surf.set_alpha(self.alt_alpha)
         else:
             if self.active:
-                self.surf = pygame.image.load(self.pressed).convert()
+                self.surf = pygame.image.load(self.pressed_img_path).convert()
             else:
                 if self.hover != None and self.collidepoint(pygame.mouse.get_pos()):
                     self.surf = pygame.image.load(self.hover).convert()
                 else:
-                    self.surf = pygame.image.load(self.unpressed).convert()
-
-
+                    self.surf = pygame.image.load(self.unpressed_img_path).convert()
         self.rect = self.surf.get_rect()
         if self.absolute:
             self.rect.x = self.x
@@ -368,8 +367,8 @@ class InputTextBox(UIElement):
         self.outline_surf.fill(light_color)
 
         self.rect = self.outline_surf.get_rect()
-        self.rect.x = (SCREEN_WIDTH * self.x) - self.outline_surf.get_width() / 2
-        self.rect.y = (SCREEN_HEIGHT * self.y) - self.outline_surf.get_height() / 2
+        self.rect.x = int((SCREEN_WIDTH * self.x) - self.outline_surf.get_width() / 2)
+        self.rect.y = int((SCREEN_HEIGHT * self.y) - self.outline_surf.get_height() / 2)
         screen.blit(self.outline_surf, (self.rect.x, self.rect.y))
 
         surfx = (SCREEN_WIDTH * self.x) - self.surf.get_width() / 2
@@ -440,8 +439,8 @@ class Image(UIElement):
             self.rect.x = self.x
             self.rect.y = self.y
         else:
-            self.rect.x = (SCREEN_WIDTH * self.x) - self.surf.get_width() / 2
-            self.rect.y = (SCREEN_HEIGHT * self.y) - self.surf.get_height() / 2
+            self.rect.x = int((SCREEN_WIDTH * self.x) - self.surf.get_width() / 2)
+            self.rect.y = int((SCREEN_HEIGHT * self.y) - self.surf.get_height() / 2)
         if self.highlight_color != None:
             self.highlight_surf = pygame.Surface((self.surf.get_width(), self.surf.get_height()))
             self.highlight_surf.fill(self.highlight_color)
@@ -468,8 +467,8 @@ class Text(UIElement):
             self.rect.x = self.x
             self.rect.y = self.y
         else:
-            self.rect.x = (SCREEN_WIDTH * self.x) - self.text_surf.get_width() / 2
-            self.rect.y = (SCREEN_HEIGHT * self.y) - self.text_surf.get_height() / 2
+            self.rect.x = int((SCREEN_WIDTH * self.x) - self.text_surf.get_width() / 2)
+            self.rect.y = int((SCREEN_HEIGHT * self.y) - self.text_surf.get_height() / 2)
         if self.outline_color != None:
             self.outline_surf = self.font.render(self.text, True, self.outline_color)
             # screen.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y + self.outline_depth)) # +y +x
