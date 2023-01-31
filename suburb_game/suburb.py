@@ -40,29 +40,19 @@ def register():
     confirmbox.secure = True
     def verify():
         print("verify")
-        if pwbox.text == confirmbox.text:
-            if len(namebox.text) != 0:
-                if len(pwbox.text) != 0:
-                    if len(namebox.text) < 32:
-                        if len(pwbox.text) < 32:
-                            print("final step")
-                            client.dic["character"] = namebox.text
-                            client.dic["character_pass_hash"] = client.hash(pwbox.text)
-                            log.text = client.request("create_character")
-                            if "Success" not in log.text:
-                                client.dic["character"] = None
-                                client.dic["character_pass_hash"] = None
-                            print(f"log text {log.text}")
-                        else:
-                            log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"
-                    else:
-                        log.text = f"Username must be less than 32 characters. Yours: {len(namebox.text)}"
-                else:
-                    log.text = "Password field must not be empty."
-            else:
-                log.text = "Username must not be empty."
-        else:
-            log.text = "Passwords do not match."
+        if pwbox.text != confirmbox.text: log.text = "Passwords do not match."; return
+        if len(namebox.text) == 0: log.text = "Username must not be empty."; return
+        if len(pwbox.text) == 0: log.text = "Password field must not be empty."; return
+        if len(namebox.text) >= 32: log.text = f"Username must be less than 32 characters. Yours: {len(namebox.text)}"; return
+        if len(pwbox.text) >= 32: log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"; return
+        print("final step")
+        client.dic["character"] = namebox.text
+        client.dic["character_pass_hash"] = client.hash(pwbox.text)
+        log.text = client.request("create_character")
+        if "Success" not in log.text:
+            client.dic["character"] = None
+            client.dic["character_pass_hash"] = None
+        print(f"log text {log.text}")
     confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
 
@@ -109,6 +99,7 @@ character_info = {
 "gristcategory": None
 }
 
+# the following functions are scenes to display
 def namecharacter():
     render.clear_elements()
     log = render.Text(0.5, 0.20, "")
@@ -198,6 +189,7 @@ def make_asbutton(aspect):
         backbutton = render.Button(0.5, 0.66, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", aspectcharacter)
     return button
 
+# NIGHTMARE NIGHTMARE NIGHTMARE!!!
 def aspectcharacter():
     render.clear_elements()
     space = render.Button(0,0, "sprites\\aspects\\space120.png", "sprites\\aspects\\space120.png", make_asbutton("space"), hover="sprites\\aspects\\space120hover.png")
@@ -207,7 +199,7 @@ def aspectcharacter():
     time = render.Button(640, 0, "sprites\\aspects\\time120.png", "sprites\\aspects\\time120.png", make_asbutton("time"), hover="sprites\\aspects\\time120hover.png")
     time.absolute = True
     timeblurb = render.Image(760, 0, "sprites\\aspects\\timeblurb.png")
-    timeblurb.absolute= True
+    timeblurb.absolute = True
     mind = render.Button(0, 120, "sprites\\aspects\\mind120.png", "sprites\\aspects\\mind120.png", make_asbutton("mind"), hover="sprites\\aspects\\mind120hover.png")
     mind.absolute = True
     mindblurb = render.Image(120, 120, "sprites\\aspects\\mindblurb.png")
