@@ -11,7 +11,7 @@ PORT = 25565
 
 dic = {
 "intent": "",
-"session": "",
+"session_name": "",
 "session_pass_hash": "",
 "character": "",
 "character_pass_hash": "",

@@ -457,11 +457,11 @@ def newsession():
                     if len(namebox.text) < 32:
                         if len(pwbox.text) < 32:
                             print("final step")
-                            client.dic["session"] = namebox.text
+                            client.dic["session_name"] = namebox.text
                             client.dic["session_pass_hash"] = client.hash(pwbox.text)
                             log.text = client.request("create_session")
                             if "Success" not in log.text:
-                                client.dic["session"] = ""
+                                client.dic["session_name"] = ""
                                 client.dic["session_pass_hash"] = ""
                             print(f"log text {log.text}")
                         else:
@@ -493,11 +493,11 @@ def connect():
         if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
         if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
         log.text = "Connecting..."
-        client.dic["session"] = namebox.text
+        client.dic["session_name"] = namebox.text
         client.dic["session_pass_hash"] = client.hash(pwbox.text)
         log.text = client.request("connect")
         if "Success" not in log.text:
-            client.dic["session"] = ""
+            client.dic["session_name"] = ""
             client.dic["session_pass_hash"] = ""
         print(f"log text {log.text}")
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
@@ -508,7 +508,7 @@ def title():
     logo = render.Image(.5, .20, "sprites\\largeicon.png")
     logotext = render.Image(.5, .47, "sprites\\suburb.png")
     def isconnected():
-        if client.dic["session"] != "":
+        if client.dic["session_name"] != "":
             return False # return False because the alternative condition is unclickable
         else:
             return True
@@ -521,7 +521,7 @@ def title():
     versiontext.absolute = True
     versiontext.color = render.LIGHT_COLOR
     versiontext.outline_color = render.BLACK_COLOR
-    if client.dic["session"] != "":
+    if client.dic["session_name"] != "":
         conntextcontent = f"Session `{client.dic['session']}`"
     else:
         conntextcontent = f"No session."

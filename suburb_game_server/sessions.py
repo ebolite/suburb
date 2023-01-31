@@ -42,12 +42,12 @@ class Session():
             self.overmaps = {}          
 
     def __setattr__(self, attr, value):
-        self.__dict__[attr] = value
         util.sessions[self.__dict__["session_name"]][attr] = value
+        self.__dict__[attr] = value
         
     def __getattr__(self, attr):
         self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
-                               .get(attr, self.__dict__[attr]))
+                               [attr])
         return self.__dict__[attr]
 
     @property
@@ -123,7 +123,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
     def __getattr__(self, attr):
         self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
                                ["overmaps"][self.__dict__["name"]]
-                               .get(attr, self.__dict__[attr]))
+                               [attr])
         return self.__dict__[attr]
 
     @property
@@ -208,7 +208,7 @@ class Map():
         self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
                                ["overmaps"][self.__dict__["overmap_name"]]
                                ["maps"][self.__dict__["name"]]
-                               .get(attr, None))
+                               [attr])
         return self.__dict__[attr]
 
     def get_tile(self, x, y) -> str:
@@ -258,7 +258,7 @@ class Room():
                                ["overmaps"][self.__dict__["overmap"]]
                                ["maps"][self.__dict__["map"]]
                                ["rooms"][self.__dict__["name"]]
-                               .get(attr, self.__dict__[attr]))
+                               [attr])
         return self.__dict__[attr]
 
     @property

@@ -24,25 +24,26 @@ def threaded_client(connection):
             dict = json.loads(decoded)
             print(dict)
             intent = dict["intent"]
-            session = dict["session"]
+            session_name = dict["session_name"]
             session_pass_hash = dict["session_pass_hash"]
             if intent == "create_session":
-                if session in util.sessions:
-                    reply = f"The session `{session}` is already registered."
+                if session_name in util.sessions:
+                    reply = f"The session `{session_name}` is already registered."
                 else:
-                    s = sessions.Session(session)
-                    s.pass_hash = dict["session_pass_hash"]
-                    reply = f"The session `{session}` has been successfully registered."
+                    session = sessions.Session(session_name)
+                    session.pass_hash = dict["session_pass_hash"]
+                    print(f"session {session_name} pass_hash {session.pass_hash} dict pass_hash {dict['session_pass_hash']}")
+                    reply = f"The session `{session_name}` has been successfully registered."
             else:
-                if session in util.sessions:
-                    s = sessions.Session(session)
-                    print(s.pass_hash)
-                    if session_pass_hash == s.pass_hash:
+                if session_name in util.sessions:
+                    session = sessions.Session(session_name)
+                    print(session.pass_hash)
+                    if session_pass_hash == session.pass_hash:
                         reply = handle_request(dict)
                     else:
                         reply = f"Incorrect session password."
                 else:
-                    reply = f"Invalid session name `{session}`."
+                    reply = f"Invalid session name `{session_name}`."
             connection.sendall(str.encode(str(reply)))
         conns.remove(connection)
         connection.close()
@@ -54,7 +55,7 @@ def handle_request(dict):
     intent = dict["intent"]
     if intent == "connect":
         return "Successfully connected."
-    session_name = dict["session"]
+    session_name = dict["session_name"]
     session = sessions.Session(session_name)
     character = dict["character"]
     character_pass_hash = dict["character_pass_hash"]
