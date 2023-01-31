@@ -1,5 +1,6 @@
 import pygame
 import sys
+import os
 import pathlib
 import hashlib
 
@@ -14,6 +15,8 @@ SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
 RUNNING = True
+
+os.chdir(util.homedir)
 
 screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
