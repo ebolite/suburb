@@ -7,9 +7,9 @@ from copy import deepcopy
 import util
 import config
 
-maptiles = {}
+map_tiles = {}
 
-def mapfromfile(file, folder=None):
+def map_from_file(file, folder=None):
     if folder == None:
         os.chdir(f"{util.homedir}\\maps")
     else:
@@ -21,15 +21,15 @@ def mapfromfile(file, folder=None):
         content[index] = list(line) # split each string in content into a list of letters
     return content
 
-def allmapsinfolder(folder): # returns a list of all of the maps in a folder
+def all_maps_in_folder(folder): # returns a list of all of the maps in a folder
     maps = []
     for filename in os.listdir(f"{util.homedir}\\maps\\{folder}"):
-        maps.append(mapfromfile(filename, folder))
+        maps.append(map_from_file(filename, folder))
     return maps
 
-maptiles["house"] = allmapsinfolder("house")
-maptiles["land"] = allmapsinfolder("land")
-maptiles["gateframe"] = allmapsinfolder("gateframe")
+map_tiles["house"] = all_maps_in_folder("house")
+map_tiles["land"] = all_maps_in_folder("land")
+map_tiles["gateframe"] = all_maps_in_folder("gateframe")
 
 class Session():
     def __init__(self, name):
@@ -67,10 +67,10 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         if Player != None:
             self.__dict__["player"] = Player.name
             self.gristcategory = Player.gristcategory
-            self.genovermap()
-            self.genlandname()
+            self.gen_overmap()
+            self.gen_land_name()
 
-    def genovermap(self):
+    def gen_overmap(self):
         islands = config.categoryproperties[self.gristcategory]["islands"]
         landrate = config.categoryproperties[self.gristcategory]["landrate"]
         lakes = config.categoryproperties[self.gristcategory]["lakes"]
@@ -79,7 +79,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         extralands = config.categoryproperties[self.gristcategory].get("extralands", None)
         extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
         extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
-        self.map = generateoverworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
+        self.map = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
         for line in self.map:
             print("".join(line))
         #house
@@ -89,14 +89,14 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             while self.map[y][x] == "~":
                 y = random.randint(0, len(self.map)-1)
                 x = random.randint(0, len(self.map[0])-1)
-            housemap = self.getmap(x, y)
-            housemap.genmap("house")
+            housemap = self.get_map(x, y)
+            housemap.gen_map("house")
             self.housemap = housemap.name
             self.specials.append(housemap.name)
             # todo: we're not doing this right now
-            # housemap.genrooms()
+            # housemap.gen_rooms()
 
-    def genlandname(self):
+    def gen_land_name(self):
         print(f"{self.gristcategory} {self.Player.aspect}")
         print(f"Player {self.Player} {self.Player.name} {self.player}")
         print(f"grist {self.gristcategory} aspect {self.Player.aspect}")
@@ -115,7 +115,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             acronym += f"{word[0].upper()}"
         self.acronym = acronym
 
-    def getmap(self, x, y):
+    def get_map(self, x, y):
         m = Map(f"{x}, {y}", self.Session, self)
         return m
 
@@ -159,47 +159,47 @@ class Map():
             self.x = x
             self.y = y
 
-    def genmap(self, type=None):
+    def gen_map(self, type=None):
         map = None
         match type:
             case "house":
-                map = mapfromfile("gates.txt")
-                map += deepcopy(random.choice(maptiles["house"]))
+                map = map_from_file("gates.txt")
+                map += deepcopy(random.choice(map_tiles["house"]))
                 self.overmaptile = "H"
             case "gate1":
-                map = deepcopy(random.choice(maptiles["gateframe"]))
+                map = deepcopy(random.choice(map_tiles["gateframe"]))
                 self.overmaptile = "1"
             case "gate2":
-                map = deepcopy(random.choice(maptiles["gateframe"]))
+                map = deepcopy(random.choice(map_tiles["gateframe"]))
                 self.overmaptile = "2"
             case "gate3":
-                map = deepcopy(random.choice(maptiles["gateframe"]))
+                map = deepcopy(random.choice(map_tiles["gateframe"]))
                 self.overmaptile = "3"
             case "gate4":
-                map = deepcopy(random.choice(maptiles["gateframe"]))
+                map = deepcopy(random.choice(map_tiles["gateframe"]))
                 self.overmaptile = "4"
             case "gate5":
-                map = deepcopy(random.choice(maptiles["gateframe"]))
+                map = deepcopy(random.choice(map_tiles["gateframe"]))
                 self.overmaptile = "5"
             case "gate6":
-                map = deepcopy(random.choice(maptiles["gateframe"]))
+                map = deepcopy(random.choice(map_tiles["gateframe"]))
                 self.overmaptile = "6"
             case "gate7":
-                map = deepcopy(random.choice(maptiles["gateframe"]))
+                map = deepcopy(random.choice(map_tiles["gateframe"]))
                 self.overmaptile = "7"
             case _:
-                map = deepcopy(random.choice(maptiles["land"]))
+                map = deepcopy(random.choice(map_tiles["land"]))
                 self.overmaptile = "#"
-        print("genmap")
+        print("gen_map")
         self.map = map
 
-    def genrooms(self):
+    def gen_rooms(self):
         for y, line in enumerate(self.map):
             for x, char in enumerate(line):
                 if char != ".":
-                    r = self.getroom(x, y)
+                    r = self.get_room(x, y)
 
-    def getroom(self, x, y):
+    def get_room(self, x, y):
         r = Room(f"{x}, {y}", self.Session, self.Overmap, self)
         return r
 
@@ -212,7 +212,7 @@ class Map():
         else:
             return None
 
-    def gettile(self, x, y):
+    def get_tile(self, x, y):
         return self.map[y][x]
 
     @property
@@ -274,7 +274,7 @@ class Room():
 
     @property
     def tile(self):
-        return self.Map.gettile(self.x, self.y)
+        return self.Map.get_tile(self.x, self.y)
 
 
 class Player():
@@ -317,7 +317,7 @@ class Player():
         else:
             return False
 
-def generateterrain(x, y, map, replacetile, terrain, depth=0):
+def gen_terrain(x, y, map, replacetile, terrain, depth=0):
     if map[y][x] == "*":
         for coordinate in [(-1, 0), (1, 0), (0, 1), (0, -1)]: # up down left right
             try:
@@ -325,7 +325,7 @@ def generateterrain(x, y, map, replacetile, terrain, depth=0):
                 rng = random.random()
                 if rng < terrain - (0.1 * depth * terrain): # chance to generate more terrain lowers with depth
                     map[y+coordinate[1]][x+coordinate[0]] = "*"
-                    map = generateterrain(x+coordinate[0], y+coordinate[1], map, tile, terrain, depth+1)
+                    map = gen_terrain(x+coordinate[0], y+coordinate[1], map, tile, terrain, depth+1)
             except IndexError:
                 pass
     if depth == 0:
@@ -335,7 +335,7 @@ def generateterrain(x, y, map, replacetile, terrain, depth=0):
                     map[y][x] = replacetile
     return map
 
-def blockmodify(map, checktile, replacetile):
+def modify_block(map, checktile, replacetile):
     newmap = map.copy()
     while True:
         removed = 0
@@ -347,7 +347,7 @@ def blockmodify(map, checktile, replacetile):
             print(ln)
         for y, line in enumerate(newmap):
             for x, char in enumerate(line):
-                valid = blockcheck(x, y, newmap, checktile)
+                valid = check_block(x, y, newmap, checktile)
                 if valid == False:
                     newmap[y][x] = replacetile
                     removed += 1
@@ -355,7 +355,7 @@ def blockmodify(map, checktile, replacetile):
             break
     return newmap
 
-def blockcheck(x, y, map, checktile):
+def check_block(x, y, map, checktile):
     adjacent = 0
     if map[y][x] != checktile: return True
     for coordinate in [(-1, 0), (1, 0), (0, 1), (0, -1)]: # up down left right
@@ -368,7 +368,7 @@ def blockcheck(x, y, map, checktile):
     if adjacent != 1: return True
     else: return False
 
-def generateoverworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial):
+def gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial):
     map = [
         ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
         ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
@@ -401,16 +401,16 @@ def generateoverworld(islands, landrate, lakes, lakerate, special, extralands, e
             y = random.randint(0, len(map)-1)
             x = random.randint(0, len(map[0])-1)
         map[y][x] = "*" # placeholder terrain tile
-        map = generateterrain(x, y, map, "#", landrate)
+        map = gen_terrain(x, y, map, "#", landrate)
     for i in range(0, lakes): # generate lakes
         y = random.randint(0, len(map)-1)
         x = random.randint(0, len(map[0])-1)
         map[y][x] = "*" # placeholder terrain tile
-        map = generateterrain(x, y, map, "~", lakerate)
+        map = gen_terrain(x, y, map, "~", lakerate)
     if special == "block":
         print("block special")
-        map = blockmodify(map, "#", "~")
-        map = blockmodify(map, "~", "#")
+        map = modify_block(map, "#", "~")
+        map = modify_block(map, "~", "#")
     if extralands != None:
         for i in range(0, extralands): # generate extra islands
             if extraspecial == "center":
@@ -427,5 +427,5 @@ def generateoverworld(islands, landrate, lakes, lakerate, special, extralands, e
                 y = random.randint(0, len(map)-1)
                 x = random.randint(0, len(map[0])-1)
             map[y][x] = "*" # placeholder terrain tile
-            map = generateterrain(x, y, map, "#", extrarate)
+            map = gen_terrain(x, y, map, "#", extrarate)
     return map
