@@ -522,7 +522,7 @@ def title():
     versiontext.color = render.LIGHT_COLOR
     versiontext.outline_color = render.BLACK_COLOR
     if client.dic["session_name"] != "":
-        conntextcontent = f"Session `{client.dic['session']}`"
+        conntextcontent = f"Session `{client.dic['session_name']}`"
     else:
         conntextcontent = f"No session."
     conntext = render.Text(0, 30, conntextcontent)
