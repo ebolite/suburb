@@ -80,19 +80,17 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         self.map = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
         for line in self.map:
             print("".join(line))
-        #house
-        if self.housemap == None:
+        y = random.randint(0, len(self.map)-1)
+        x = random.randint(0, len(self.map[0])-1)
+        while self.map[y][x] == "~":
             y = random.randint(0, len(self.map)-1)
             x = random.randint(0, len(self.map[0])-1)
-            while self.map[y][x] == "~":
-                y = random.randint(0, len(self.map)-1)
-                x = random.randint(0, len(self.map[0])-1)
-            housemap = self.find_map(x, y)
-            housemap.gen_map("house")
-            self.housemap = housemap.name
-            self.specials.append(housemap.name)
-            # todo: we're not doing this right now
-            # housemap.gen_rooms()
+        housemap = self.find_map(x, y)
+        housemap.gen_map("house")
+        self.housemap = housemap.name
+        self.specials.append(housemap.name)
+        # todo: we're not doing this right now
+        # housemap.gen_rooms()
 
     def gen_land_name(self):
         print(f"{self.gristcategory} {self.player.aspect}")
@@ -114,7 +112,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         self.acronym = acronym
 
     def find_map(self, x, y) -> "Map":
-        return Map(f"{x}, {y}", self.Session, self)
+        return Map(f"{x}, {y}", self.session, self)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -132,7 +130,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
 
     @property
     def player(self) -> "Player":
-        return Player(self.__dict__["player_name"], self.Session)
+        return Player(self.__dict__["player_name"], self.session)
 
     @property
     def name(self):
@@ -224,7 +222,7 @@ class Map():
 
     @property
     def player(self) -> "Player":
-        return Player(self.__dict__["player_name"], self.Session)
+        return Player(self.__dict__["player_name"], self.session)
 
     @property
     def name(self):
@@ -268,6 +266,10 @@ class Room():
     @property
     def overmap(self) -> Overmap:
         return Overmap(self.__dict__["session_name"], self.__dict__["overmap_name"])
+    
+    @property
+    def map(self) -> Map:
+        return Map(self.__dict__["map_name"], self.__dict__["session_name"], self.__dict__["overmap_name"])
 
     @property
     def player(self) -> "Player":
@@ -279,7 +281,7 @@ class Room():
 
     @property
     def tile(self) -> str:
-        return self.Map.get_tile(self.x, self.y)
+        return self.map.get_tile(self.x, self.y)
 
 
 class Player():
@@ -297,7 +299,9 @@ class Player():
          [attr]) = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = util.sessions[self.__dict__["session_name"]]["players"][self.__dict__["name"]].get(attr, self.__dict__[attr])
+        self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
+                                ["players"][self.__dict__["name"]]
+                                [attr])
         return self.__dict__[attr]
 
     @property
