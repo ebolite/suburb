@@ -28,7 +28,6 @@ def readjson(obj, filename):
                 data = json.load(f)
             except json.JSONDecodeError:
                 print(f"UNABLE TO READ JSON {filename}")
-                input("CONTINUE")
                 data = {}
             return data
     except FileNotFoundError:
