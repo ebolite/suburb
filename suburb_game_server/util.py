@@ -36,11 +36,21 @@ def readjson(obj, filename):
         writejson(obj, filename)
         return obj
     
-sessions = {}
+sessions = {} 
+sessions = readjson(sessions, "sessions")
 
 bases = {}
 bases = readjson(bases, "bases")
 print(bases)
+
+items = {}
+items = readjson(items, "items")
+
+instances = {}
+instances = readjson(instances, "instances")
+
+codes = {} # key: item code value: item name
+codes = readjson(codes, "codes")
 
 if __name__ == "__main__": # if this file is being run, run the json editor
     bases = {}
