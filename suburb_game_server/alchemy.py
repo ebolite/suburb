@@ -18,7 +18,6 @@ class Components():
         self.name = name
         components_name = name[1:]
         components_name = components_name[:-1]
-        print(components_name)
         parentheses = 0
         operation = ""
         component_1 = ""
@@ -86,7 +85,7 @@ class InheritedStatistics():
         self.descriptors = self.adjectives + [self.base]
         self.gen_statistics()
 
-    def get_descriptors(self, guaranteed_compound_name = False) -> tuple[str, list, list, list]:
+    def get_descriptors(self, guaranteed_compound_name = False, depth = 0) -> tuple[str, list, list, list]:
         required_inheritors = []
         base = ""
         adjectives = []
@@ -96,40 +95,53 @@ class InheritedStatistics():
         if len(self.component_2.descriptors) == 1: required_inheritors.append(self.component_2.descriptors[0])
         inheritable_bases = [self.component_1.base, self.component_2.base]
         if self.operation == "&&": # && has compound names sometimes
-            random.seed(self.name+"compound_chance")
+            random.seed(self.name+"compound_chance"+str(depth))
             if random.random() < COMPOUND_NAME_CHANCE or guaranteed_compound_name:
                 merged_bases = list(inheritable_bases)
                 inheritable_bases = []
                 if self.component_1.base in required_inheritors: required_inheritors.remove(self.component_1.base)
                 if self.component_2.base in required_inheritors: required_inheritors.remove(self.component_2.base)
-                random.seed(self.name+"compound_choice")
+                random.seed(self.name+"compound_choice"+str(depth))
                 if random.random() < 0.5: inheritable_bases.append(f"{self.component_1.base}-{self.component_2.base}")
                 else: inheritable_bases.append(f"{self.component_2.base}-{self.component_1.base}")
-        inheritable_adjectives = self.component_1.adjectives + self.component_2.adjectives
-        random.seed(self.name+"base")
+        inheritable_adjectives = self.component_1.adjectives + self.component_2.adjectives + self.component_1.secretadjectives + self.component_2.secretadjectives
+        random.seed(self.name+"base"+str(depth))
         base = random.choice(inheritable_bases)
         if base in required_inheritors: required_inheritors.remove(base)
         if base in inheritable_bases: inheritable_bases.remove(base)
-        inheritable_adjectives += inheritable_bases
-        random.seed(self.name+"shuffle")
+        if len(inheritable_adjectives) < 1:
+            inheritable_adjectives += inheritable_bases
+        random.seed(self.name+"shuffle"+str(depth))
+        inheritable_adjectives = list(set(inheritable_adjectives)) # remove duplicates
         random.shuffle(inheritable_adjectives)
         for adj in inheritable_adjectives:
             inherit_chance = 1 - (len(adjectives) / len(inheritable_adjectives)) # chance decreases as more adjectives are choses
-            inherit_chance -= (0.1 * len(adjectives)) # additional flat chance decrease based on how many adjectives it has already
+            inherit_chance -= (0.15 * len(adjectives)) # additional flat chance decrease based on how many adjectives it has already
             if adj in required_inheritors:
                 required_inheritors.remove(adj)
                 adjectives.append(adj)
                 continue
-            random.seed(self.name+"inherit"+adj)
+            random.seed(self.name+"inherit"+adj+str(depth))
             if random.random() < inherit_chance:
                 adjectives.append(adj)
+        # secret adjectives
         secretadjectives = self.component_1.secretadjectives + self.component_2.secretadjectives
         for descriptor in [base] + adjectives:
             if descriptor in secretadjectives:
                 secretadjectives.remove(descriptor)
+        for descriptor in inheritable_adjectives: # unused adjectives have a 50% chance to become secrets
+            if descriptor not in [base] + adjectives and descriptor != base:
+                random.seed(self.name+descriptor+"secret")
+                if random.random() < 0.5: secretadjectives.append(descriptor)
+        # check if this has the exact same name as one of its components
+        new_name = adjectives+[base]
+        component_1_name = self.component_1.adjectives+[self.component_1.base]
+        component_2_name = self.component_2.adjectives+[self.component_2.base]
+        if new_name == component_1_name or new_name == component_2_name:
+            base, adjectives, merged_bases, secretadjectives = self.get_descriptors(depth=depth+1)
         # check if AND is different from OR, if they are the same, guarantee a compound base
         if self.operation == "&&":
-            or_object= InheritedStatistics(self.component_1, self.component_2, "||")
+            or_object = InheritedStatistics(self.component_1, self.component_2, "||")
             adjectives_set = set(adjectives)
             or_adjectives_set = set(or_object.adjectives)
             if (base == or_object.base and 
@@ -238,6 +250,8 @@ class InheritedStatistics():
         if self.component_1.base == self.base: base_stat = component_1_stat; mult_stat = component_2_stat
         elif self.component_2.base == self.base: base_stat = component_2_stat; mult_stat = component_1_stat
         else: return 0
+        if base_stat == 0: base_stat = 1
+        if mult_stat == 0: mult_stat = 1
         if base_stat > mult_stat: # adjust should be negative due to lower mult stat
             return int(-1 * (base_stat / mult_stat))
         else: # adjust should be positive due to higher mult stat
@@ -322,11 +336,15 @@ defaults = {
 }
 
 if __name__ == "__main__":
-    while True:
-        base1 = random.choice(list(util.bases.keys()))
-        base2 = random.choice(list(util.bases.keys()))
-        merge_and = Item(alchemize(base1, base2, "&&"))
-        merge_or = Item(alchemize(base1, base2, "||"))
+    def loop(base1: Item, base2: Item):
+        merge_and = Item(alchemize(base1.name, base2.name,"&&"))
+        merge_or = Item(alchemize(base1.name, base2.name, "||"))
+        print(merge_and.name)
         print(display_item(merge_and))
+        print(merge_or.name)
         print(display_item(merge_or))
         input()
+        loop(random.choice([merge_and, merge_or]), Item(random.choice(list(util.bases.keys()))))
+    initial_base1 = Item(random.choice(list(util.bases.keys())))
+    initial_base2 = Item(random.choice(list(util.bases.keys())))
+    loop(initial_base1, initial_base2)
