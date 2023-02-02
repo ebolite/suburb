@@ -278,7 +278,7 @@ class Item(): # Items are the base of instants.
         code = get_code_from_name(name)
         if code in util.codes: # if this code already exists, give the item the code corresponds to instead
             name = util.codes[code]
-        self.name = name
+        self.__dict__["name"] = name
         self.code = code
         if self.name not in util.items:
             if self.name in util.bases:
@@ -309,6 +309,21 @@ class Item(): # Items are the base of instants.
             self.consumeeffect = statistics.consumeeffect
             self.secreteffect = statistics.secreteffect
             self.secretadjectives = statistics.secretadjectives
+
+    def __set__(self, attr, value):
+        util.items[self.__dict__["name"]][attr] = value
+        self.__dict__[attr] = value
+
+    def __get__(self, attr):
+        return util.items[self.__dict__["name"]][attr]
+
+    @property
+    def name(self):
+        return self.__dict__["name"]
+    
+    @name.setter
+    def name(self, value):
+        self.__dict__["name"] = value
 
     @property
     def displayname(self):
