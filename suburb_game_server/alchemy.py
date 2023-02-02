@@ -1,11 +1,15 @@
 import random
-import string
+from typing import Optional
 
 import util
-import binary
-import config
 
 COMPOUND_NAME_CHANCE = 0.2 # chance for having compound names in && operations
+DICEMIN_MINIMUM_SOFTCAP = -2.8
+DICEMIN_MAXIMUM_SOFTCAP = 1.4
+DICEMAX_MINIMUM_SOFTCAP = -1.4
+DICEMAX_MAXIMUM_SOFTCAP = 5.6
+INHERITANCE_BONUS_MULT = 1.25 # bonus for simply alchemizing items
+INHERITANCE_MALUS_MULT = 0.75 # malus for being above softcap
 
 class Components():
     def __init__(self, name: str):
@@ -41,39 +45,73 @@ class Components():
         self.component_2: str = component_2
         self.operation: str = operation
 
-class BaseDescriptors():
+class BaseStatistics():
     def __init__(self, base_name: str):
-        descriptors = list(util.bases[base_name]["adjectives"])
+        descriptors = list(util.bases[base_name]["secretadjectives"])
         descriptors += base_name.split(" ") # " " is a separator for descriptors in base name
-        self.descriptors = list(descriptors)
-        self.base = descriptors.pop() # last descriptor is the base
-        self.adjectives = list(set(descriptors)) # everything else are adjectives, remove duplicates
+        self.descriptors: list = list(descriptors)
+        self.base: str = descriptors.pop() # last descriptor is the base
+        self.adjectives: list = list(set(descriptors)) # everything else are adjectives, remove duplicates
+        properties = util.bases[base_name]
+        self.secretadjectives = properties["secretadjectives"]
+        for descriptor in self.descriptors:
+            if descriptor in self.secretadjectives:
+                self.secretadjectives.remove(descriptor)
+        self.forbidden: bool = properties["forbiddencode"]
+        self.power: int = properties["power"]
+        self.inheritpower: int = properties["inheritpower"]
+        self.dicemin: float = properties["dicemin"]
+        self.dicemax: float = properties["dicemax"]
+        self.weight: int = properties["weight"]
+        self.size: int = properties["size"]
+        self.kinds: dict = properties["kinds"]
+        self.slots: dict = properties["slots"]
+        self.tags: dict = properties["tags"]
+        self.description: str = properties["description"]
+        self.cost: dict = properties["cost"]
+        self.use: Optional[str] = properties["use"]
+        self.onhiteffect: dict = properties["onhiteffect"]
+        self.weareffect: dict = properties["weareffect"]
+        self.consumeeffect: dict = properties["consumeeffect"]
+        self.secreteffect: dict = properties["secreteffect"]
 
-class InheritedDescriptors():
-    def __init__(self, component_1: "Item", component_2: "Item", operation, guaranteed_compound_name = False):
-        name = f"({component_1.name}{operation}{component_2.name})" # for seed
+# todo: captchalogue code inheritance
+class InheritedStatistics():
+    def __init__(self, component_1: "Item", component_2: "Item", operation: str):
+        self.name = f"({component_1.name}{operation}{component_2.name})" # for seed
+        self.component_1: Item = component_1
+        self.component_2: Item = component_2
+        self.operation = operation
+        self.base, self.adjectives, self.merged_bases, self.secretadjectives = self.get_descriptors()
+        self.descriptors = self.adjectives + [self.base]
+        self.gen_statistics()
+
+    def get_descriptors(self, guaranteed_compound_name = False) -> tuple[str, list, list, list]:
         required_inheritors = []
         base = ""
         adjectives = []
-        if len(component_1.descriptors) == 1: required_inheritors.append(component_1.descriptors[0])
-        if len(component_2.descriptors) == 1: required_inheritors.append(component_2.descriptors[0])
-        inheritable_bases = [component_1.base, component_2.base]
-        if operation == "&&": # && has compound names sometimes
-            random.seed(name+"compound_chance")
+        merged_bases = []
+        secretadjectives = []
+        if len(self.component_1.descriptors) == 1: required_inheritors.append(self.component_1.descriptors[0])
+        if len(self.component_2.descriptors) == 1: required_inheritors.append(self.component_2.descriptors[0])
+        inheritable_bases = [self.component_1.base, self.component_2.base]
+        if self.operation == "&&": # && has compound names sometimes
+            random.seed(self.name+"compound_chance")
             if random.random() < COMPOUND_NAME_CHANCE or guaranteed_compound_name:
+                merged_bases = list(inheritable_bases)
                 inheritable_bases = []
-                if component_1.base in required_inheritors: required_inheritors.remove(component_1.base)
-                if component_2.base in required_inheritors: required_inheritors.remove(component_2.base)
-                random.seed(name+"compound_choice")
-                if random.random() < 0.5: inheritable_bases.append(f"{component_1.base}-{component_2.base}")
-                else: inheritable_bases.append(f"{component_2.base}-{component_1.base}")
-        inheritable_adjectives = component_1.adjectives + component_2.adjectives
-        random.seed(name+"base")
+                if self.component_1.base in required_inheritors: required_inheritors.remove(self.component_1.base)
+                if self.component_2.base in required_inheritors: required_inheritors.remove(self.component_2.base)
+                random.seed(self.name+"compound_choice")
+                if random.random() < 0.5: inheritable_bases.append(f"{self.component_1.base}-{self.component_2.base}")
+                else: inheritable_bases.append(f"{self.component_2.base}-{self.component_1.base}")
+        inheritable_adjectives = self.component_1.adjectives + self.component_2.adjectives
+        random.seed(self.name+"base")
         base = random.choice(inheritable_bases)
         if base in required_inheritors: required_inheritors.remove(base)
         if base in inheritable_bases: inheritable_bases.remove(base)
         inheritable_adjectives += inheritable_bases
-        random.seed(name+"shuffle")
+        random.seed(self.name+"shuffle")
         random.shuffle(inheritable_adjectives)
         for adj in inheritable_adjectives:
             inherit_chance = 1 - (len(adjectives) / len(inheritable_adjectives)) # chance decreases as more adjectives are choses
@@ -82,21 +120,129 @@ class InheritedDescriptors():
                 required_inheritors.remove(adj)
                 adjectives.append(adj)
                 continue
-            random.seed(name+"inherit"+adj)
+            random.seed(self.name+"inherit"+adj)
             if random.random() < inherit_chance:
                 adjectives.append(adj)
-        self.base = base
-        self.adjectives = adjectives
+        secretadjectives = self.component_1.secretadjectives + self.component_2.secretadjectives
+        for descriptor in [base] + adjectives:
+            if descriptor in secretadjectives:
+                secretadjectives.remove(descriptor)
         # check if AND is different from OR, if they are the same, guarantee a compound base
-        if operation == "&&":
-            or_descriptors = InheritedDescriptors(component_1, component_2, "||")
-            adjectives_set = set(self.adjectives)
-            or_adjectives_set = set(or_descriptors.adjectives)
-            if (self.base == or_descriptors.base and 
+        if self.operation == "&&":
+            or_object= InheritedStatistics(self.component_1, self.component_2, "||")
+            adjectives_set = set(adjectives)
+            or_adjectives_set = set(or_object.adjectives)
+            if (base == or_object.base and 
                 (adjectives_set.issubset(or_adjectives_set) or or_adjectives_set.issubset(adjectives_set))): # convert to set so names aren't just the same thing in different order
-                guaranteed_compound_descriptors = InheritedDescriptors(component_1, component_2, operation, guaranteed_compound_name=True)
-                self.base = guaranteed_compound_descriptors.base
-                self.adjectives = guaranteed_compound_descriptors.adjectives
+                base, adjectives, merged_bases, secretadjectives = self.get_descriptors(guaranteed_compound_name=True)
+        return base, adjectives, merged_bases, secretadjectives
+
+    def gen_statistics(self):
+        self.weight: int = self.inherit_stat_from_base(self.component_1.weight, self.component_2.weight)
+        self.weight += self.stat_adjust_from_base(self.component_1.weight, self.component_2.weight)
+        self.size: int = self.inherit_stat_from_base(self.component_1.size, self.component_2.size)
+        self.size += self.stat_adjust_from_base(self.component_1.size, self.component_2.size)
+        # power
+        total_power = (self.component_1.power + # && is more powerful when items are similar in power.
+                          self.component_1.inheritpower + 
+                          self.component_2.power + 
+                          self.component_2.inheritpower)
+        if self.operation == "&&":
+            self.power: int = total_power
+        else: # || has a power multiplier depending on
+            component_1_power = self.component_1.power + self.component_1.inheritpower
+            component_2_power = self.component_2.power + self.component_2.inheritpower
+            difference = max(abs(component_1_power - component_2_power), 1)
+            ratio = total_power / (difference * 1.5)
+            ratio = min(ratio, 0.5)
+            ratio = max(ratio, 5)
+            self.power: int = int(total_power * ratio)
+        self.inheritpower: int = self.component_1.inheritpower + self.component_2.inheritpower
+        # dicemin
+        self.dicemin: float = (self.component_1.dicemin + self.component_2.dicemin) / 2
+        if self.dicemin > 0 and self.dicemin > DICEMIN_MAXIMUM_SOFTCAP: dicemin_mult = INHERITANCE_MALUS_MULT
+        elif self.dicemin < 0 and self.dicemin < DICEMIN_MINIMUM_SOFTCAP: dicemin_mult = INHERITANCE_MALUS_MULT
+        else: dicemin_mult = INHERITANCE_BONUS_MULT
+        random.seed(self.operation+"dicemin"+self.name)
+        dicemin_mult *= random.random() + 0.5
+        self.dicemin *= dicemin_mult
+        # dicemax
+        self.dicemax: float = (self.component_1.dicemax + self.component_2.dicemax) / 2
+        if self.dicemax > 0 and self.dicemax > DICEMAX_MAXIMUM_SOFTCAP: dicemax_mult = INHERITANCE_MALUS_MULT
+        elif self.dicemax < 0 and self.dicemax < DICEMAX_MINIMUM_SOFTCAP: dicemax_mult = INHERITANCE_MALUS_MULT
+        else: dicemax_mult = INHERITANCE_BONUS_MULT
+        random.seed(self.operation+"dicemax"+self.name)
+        dicemax_mult *= random.random() + 0.5
+        self.dicemax *= dicemax_mult
+        # swap
+        if self.dicemin > self.dicemax: # swap if dicemin bigger than dicemax
+            self.dicemin, self.dicemax = self.dicemax, self.dicemin
+        # costs (dict of grist: float)
+        self.cost: dict = self.component_1.cost.copy()
+        for cost in self.component_2.cost:
+            self.cost[cost] = self.component_2.cost[cost]
+        # dict inherits
+        self.kinds: dict = self.dictionary_inherit(self.component_1.kinds, self.component_2.kinds)
+        self.slots: dict = self.dictionary_inherit(self.component_1.slots, self.component_2.slots)
+        self.tags: dict = self.dictionary_inherit(self.component_1.tags, self.component_2.tags)
+        self.onhiteffect: dict = self.dictionary_inherit(self.component_1.onhiteffect, self.component_2.onhiteffect)
+        self.weareffect: dict = self.dictionary_inherit(self.component_1.weareffect, self.component_2.weareffect)
+        self.consumeeffect: dict = self.dictionary_inherit(self.component_1.consumeeffect, self.component_2.consumeeffect)
+        self.secreteffect: dict = self.dictionary_inherit(self.component_1.secreteffect, self.component_2.secreteffect)
+        # secret effects
+        for effect in self.secreteffect.copy():
+            random.seed(self.name+"secreteffectoption"+effect)
+            option = random.choice(["consumeeffect", "onhiteffect", "weareffect", "secreteffect"]) # chance of staying dormant...
+            if option == "consumeeffect" and len(self.consumeeffect) > 0:
+                self.consumeeffect[effect] = self.secreteffect.pop(effect)
+            if option == "onhiteffect" and len(self.onhiteffect) > 0:
+                self.onhiteffect[effect] = self.secreteffect.pop(effect)
+            if option == "weareffect" and len(self.weareffect) > 0:
+                self.weareffect[effect] = self.secreteffect.pop(effect)
+        # use effect
+        if self.base == self.component_1.base: self.use = self.component_1.use
+        elif self.base == self.component_2.base: self.use = self.component_2.use
+        else:
+            self.use = self.component_1.use or self.component_2.use
+
+    def dictionary_inherit(self, component_1_dict: dict, component_2_dict: dict) -> dict: # returns new dict
+        new_dict = {}
+        if self.base == self.component_1.base: 
+            combined_dict: dict = component_1_dict.copy()
+            combined_dict.update(component_2_dict)
+        else: 
+            combined_dict: dict = component_2_dict.copy()
+            combined_dict.update(component_1_dict)
+        for key in combined_dict: # name: str: [inherit_chance: float, guaranteed_inheritor: str]. if guaranteed inheritor in adjectives or base, we must inherit!
+            if len(combined_dict[key]) > 1: # if there is a guaranteed inheritor
+                guaranteed_inheritor = combined_dict[key][1]
+                if guaranteed_inheritor in self.descriptors: # if we have the guaranteed inheritor
+                    new_dict[key] = combined_dict[key] # inherit the item
+                if guaranteed_inheritor in self.merged_bases: # if the inherited base was merged
+                    new_dict[key] = combined_dict[key] # inherit the item
+                    new_dict[key][1] = self.base # update the guaranteed inheritor
+            if key not in new_dict: # if we didn't inherit it yet
+                chance = combined_dict[key][0]
+                chance -= (0.1 * len(new_dict)) # chance to inherit decreases as we inherit more things
+                random.seed(self.name+key)
+                if random.random() < chance:
+                    new_dict[key] = combined_dict[key]
+        return new_dict
+
+    def inherit_stat_from_base(self, component_1_stat: int, component_2_stat:int) -> int:
+        if self.component_1.base == self.base: return component_1_stat
+        if self.component_2.base == self.base: return component_2_stat
+        return int((component_1_stat + component_2_stat) * 0.5) # compound base
+    
+    def stat_adjust_from_base(self, component_1_stat, component_2_stat) -> int:
+        if self.component_1.base == self.base: base_stat = component_1_stat; mult_stat = component_2_stat
+        elif self.component_2.base == self.base: base_stat = component_2_stat; mult_stat = component_1_stat
+        else: return 0
+        if base_stat > mult_stat: # adjust should be negative due to lower mult stat
+            return int(-1 * (base_stat / mult_stat))
+        else: # adjust should be positive due to higher mult stat
+            return int(mult_stat / base_stat)
+
 
 class Item(): # Items are the base of instants.
     # item re-instantiation should caused alchemized items to get their properties based on their substituents
@@ -104,19 +250,51 @@ class Item(): # Items are the base of instants.
         self.name = name
         if self.name not in util.items:
             if self.name in util.bases:
-                descriptors = BaseDescriptors(name)
-                self.descriptors = descriptors.descriptors
-                self.adjectives = descriptors.adjectives
-                self.base = descriptors.base
+                statistics = BaseStatistics(name)
             else:
                 components = Components(self.name)
                 component_1 = Item(components.component_1)
                 component_2 = Item(components.component_2)
                 operation = components.operation
-                descriptors = InheritedDescriptors(component_1, component_2, operation)
-                self.descriptors = descriptors.adjectives + [descriptors.base]
-                self.adjectives = descriptors.adjectives
-                self.base = descriptors.base
+                statistics = InheritedStatistics(component_1, component_2, operation)
+            self.descriptors = statistics.adjectives + [statistics.base]
+            self.adjectives = statistics.adjectives
+            self.base = statistics.base
+            self.power = statistics.power
+            self.inheritpower = statistics.inheritpower
+            self.dicemin = statistics.dicemin
+            self.dicemax = statistics.dicemax
+            self.weight = statistics.weight
+            self.size = statistics.size
+            self.kinds = statistics.kinds
+            self.slots = statistics.slots
+            self.tags = statistics.tags
+            self.description = "None"
+            self.cost = statistics.cost
+            self.use = statistics.use
+            self.onhiteffect = statistics.onhiteffect
+            self.weareffect = statistics.weareffect
+            self.consumeeffect = statistics.consumeeffect
+            self.secreteffect = statistics.secreteffect
+            self.secretadjectives = statistics.secretadjectives
+
+    @property
+    def displayname(self):
+        name = " ".join(self.adjectives+[self.base])
+        out = name.replace("+", " ")
+        return out
+
+def display_item(item: Item):
+    out = f"""{item.displayname}
+    POWER: {item.power}
+    DICE: {round(item.dicemin, 2)} {round(item.dicemax, 2)}
+    WEIGHT: {item.weight}
+    SIZE: {item.size} 
+    """
+    return out
+
+def alchemize(item_name1: str, item_name2: str, operation: str):
+    return f"({item_name1}{operation}{item_name2})"
 
 defaults = {
     #"code": None, #todo: add procedural hex generation for items
@@ -142,3 +320,13 @@ defaults = {
     "secreteffect": {}, # a list of effects that do nothing but may be turned into onhit, wear or consume effects upon alchemizing
     "secretadjectives": [] # a list of adjectives that might be inherited but don't show up on the item
 }
+
+if __name__ == "__main__":
+    while True:
+        base1 = random.choice(list(util.bases.keys()))
+        base2 = random.choice(list(util.bases.keys()))
+        merge_and = Item(alchemize(base1, base2, "&&"))
+        merge_or = Item(alchemize(base1, base2, "||"))
+        print(display_item(merge_and))
+        print(display_item(merge_or))
+        input()

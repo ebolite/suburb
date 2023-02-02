@@ -40,7 +40,6 @@ sessions = readjson(sessions, "sessions")
 
 bases = {}
 bases = readjson(bases, "bases")
-print(bases)
 
 items = {}
 items = readjson(items, "items")
