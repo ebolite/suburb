@@ -1,5 +1,8 @@
 import os
 import json
+import random
+
+import binaryoperations
 
 homedir =  os.getcwd()
 subdirectories = next(os.walk("."))[1]
@@ -49,6 +52,14 @@ instances = readjson(instances, "instances")
 
 codes = {} # key: item code value: item name
 codes = readjson(codes, "codes")
+for base in bases:
+    if "code" in bases[base]:
+        code = bases[base]["code"]
+    else:
+        code = random.choices(binaryoperations.reversebintable, k=8)
+        code = "".join(code)
+        bases[base]["code"] = code
+    codes[code] = base
 
 if __name__ == "__main__": # if this file is being run, run the json editor
     bases = {}

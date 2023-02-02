@@ -2,6 +2,7 @@ import random
 from typing import Optional
 
 import util
+import binaryoperations
 
 COMPOUND_NAME_CHANCE = 0.2 # chance for having compound names in && operations
 DICEMIN_MINIMUM_SOFTCAP = -2.8
@@ -257,10 +258,26 @@ class InheritedStatistics():
         else: # adjust should be positive due to higher mult stat
             return int(mult_stat / base_stat)
 
+def get_code_from_name(name: str) -> str: # from name
+    if name in util.bases:
+        code = util.bases[name]["code"]
+    else:
+        components = Components(name)
+        component_1 = Item(components.component_1)
+        component_2 = Item(components.component_2)
+        operation = components.operation
+        if operation == "&&":
+            code = binaryoperations.codeand(get_code_from_name(component_1.name), get_code_from_name(component_2.name))
+        else:
+            code = binaryoperations.codeor(get_code_from_name(component_1.name), get_code_from_name(component_2.name))
+    return code
 
 class Item(): # Items are the base of instants.
     # item re-instantiation should caused alchemized items to get their properties based on their substituents
     def __init__(self, name):
+        code = get_code_from_name(name)
+        if code in util.codes: # if this code already exists, give the item the code corresponds to instead
+            name = util.codes[code]
         self.name = name
         if self.name not in util.items:
             if self.name in util.bases:
