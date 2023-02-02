@@ -1,5 +1,6 @@
 import random
-from typing import Optional
+from typing import Optional, Union
+from string import ascii_letters
 
 import util
 import binaryoperations
@@ -279,8 +280,9 @@ class Item(): # Items are the base of instants.
         if code in util.codes: # if this code already exists, give the item the code corresponds to instead
             name = util.codes[code]
         self.__dict__["name"] = name
-        self.code = code
         if self.name not in util.items:
+            util.items[name] = {}
+            self.code = code
             if self.name in util.bases:
                 statistics = BaseStatistics(name)
             else:
@@ -289,7 +291,7 @@ class Item(): # Items are the base of instants.
                 component_2 = Item(components.component_2)
                 operation = components.operation
                 statistics = InheritedStatistics(component_1, component_2, operation)
-            self.descriptors = statistics.adjectives + [statistics.base]
+            self.descriptors = statistics.descriptors
             self.adjectives = statistics.adjectives
             self.base = statistics.base
             self.power = statistics.power
@@ -310,13 +312,6 @@ class Item(): # Items are the base of instants.
             self.secreteffect = statistics.secreteffect
             self.secretadjectives = statistics.secretadjectives
 
-    def __set__(self, attr, value):
-        util.items[self.__dict__["name"]][attr] = value
-        self.__dict__[attr] = value
-
-    def __get__(self, attr):
-        return util.items[self.__dict__["name"]][attr]
-
     @property
     def name(self):
         return self.__dict__["name"]
@@ -330,6 +325,26 @@ class Item(): # Items are the base of instants.
         name = " ".join(self.adjectives+[self.base])
         out = name.replace("+", " ")
         return out
+    
+    def __setattr__(self, attr, value):
+        util.items[self.__dict__["name"]][attr] = value
+        self.__dict__[attr] = value
+
+    def __getattr__(self, attr):
+        return util.items[self.__dict__["name"]][attr]
+
+class Instance():
+    def __init__(self, identifier: Union[Item, str]):
+        if isinstance(identifier, str):
+            self.name = identifier
+        else: # get a random name instead
+            name = identifier.name + random.choice(ascii_letters)
+            while name in util.instances:
+                name += random.choice(ascii_letters)
+            self.name = name
+            self.item = identifier.name
+        
+
 
 def display_item(item: Item):
     out = f"""{item.displayname}
@@ -371,6 +386,7 @@ defaults = {
 
 if __name__ == "__main__":
     def loop(base1: Item, base2: Item):
+        print(util.items)
         merge_and = Item(alchemize(base1.name, base2.name,"&&"))
         merge_or = Item(alchemize(base1.name, base2.name, "||"))
         print(merge_and.name)
