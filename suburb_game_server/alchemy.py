@@ -47,11 +47,11 @@ class Components():
 
 class BaseStatistics():
     def __init__(self, base_name: str):
-        descriptors = list(util.bases[base_name]["secretadjectives"])
-        descriptors += base_name.split(" ") # " " is a separator for descriptors in base name
+        descriptors = base_name.split(" ") # " " is a separator for descriptors in base name
         self.descriptors: list = list(descriptors)
         self.base: str = descriptors.pop() # last descriptor is the base
         self.adjectives: list = list(set(descriptors)) # everything else are adjectives, remove duplicates
+        self.descriptors += list(util.bases[base_name]["secretadjectives"])
         properties = util.bases[base_name]
         self.secretadjectives = properties["secretadjectives"]
         for descriptor in self.descriptors:
@@ -261,15 +261,15 @@ class InheritedStatistics():
 def get_code_from_name(name: str) -> str: # from name
     if name in util.bases:
         code = util.bases[name]["code"]
+    elif name in util.items:
+        code = util.items[name]["code"]
     else:
         components = Components(name)
-        component_1 = Item(components.component_1)
-        component_2 = Item(components.component_2)
         operation = components.operation
         if operation == "&&":
-            code = binaryoperations.codeand(get_code_from_name(component_1.name), get_code_from_name(component_2.name))
+            code = binaryoperations.codeand(get_code_from_name(components.component_1), get_code_from_name(components.component_2))
         else:
-            code = binaryoperations.codeor(get_code_from_name(component_1.name), get_code_from_name(component_2.name))
+            code = binaryoperations.codeor(get_code_from_name(components.component_1), get_code_from_name(components.component_2))
     return code
 
 class Item(): # Items are the base of instants.
@@ -279,6 +279,7 @@ class Item(): # Items are the base of instants.
         if code in util.codes: # if this code already exists, give the item the code corresponds to instead
             name = util.codes[code]
         self.name = name
+        self.code = code
         if self.name not in util.items:
             if self.name in util.bases:
                 statistics = BaseStatistics(name)
@@ -317,6 +318,7 @@ class Item(): # Items are the base of instants.
 
 def display_item(item: Item):
     out = f"""{item.displayname}
+    CODE: {item.code}
     POWER: {item.power}
     DICE: {round(item.dicemin, 2)} {round(item.dicemax, 2)}
     WEIGHT: {item.weight}
