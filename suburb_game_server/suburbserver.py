@@ -61,16 +61,16 @@ def handle_request(dict):
     character_pass_hash = dict["character_pass_hash"]
     content = dict["content"]
     player = sessions.Player(character, session)
+    if intent == "create_character":
+        if character in session.players:
+            return f"Character `{character}` already exists."
+        else:
+            player = sessions.Player(character, session)
+            player.character_pass_hash = character_pass_hash
+            return f"Successfully created `{character}`. You may now log in."
     if not player.verify(character_pass_hash):
         return f"Incorrect character password."
     match intent:
-        case "create_character":
-            if character in session.players:
-                return f"Character `{character}` already exists."
-            else:
-                player = sessions.Player(character, session)
-                player.character_pass_hash = character_pass_hash
-                return f"Successfully created `{character}`. You may now log in."
         case "login":
             return f"Successfully logged in!"
         case "interests":
@@ -94,6 +94,7 @@ def handle_request(dict):
                 player.land_session = player.session
                 out = f"Your land is the {land.title}! ({land.acronym})"
             return out
+        
     
 if __name__ == "__main__":
     ServerSocket = socket.socket()
