@@ -60,39 +60,40 @@ def handle_request(dict):
     character = dict["character"]
     character_pass_hash = dict["character_pass_hash"]
     content = dict["content"]
-    if intent == "create_character":
-        if character in session.players:
-            return f"Character `{character}` already exists."
-        else:
-            player = sessions.Player(character, session)
-            player.character_pass_hash = character_pass_hash
-            return f"Successfully created `{character}`. You may now log in."
     player = sessions.Player(character, session)
     if not player.verify(character_pass_hash):
         return f"Incorrect character password."
-    if intent == "login":
-        return f"Successfully logged in!"
-    if intent == "interests":
-        out = json.dumps(config.interests)
-        return out
-    if intent == "setup_character":
-        if player.setup:
-            out = "That character has already been setup!"
-        else:
-            player.nickname = content["name"]
-            player.noun = content["noun"]
-            player.pronouns = content["pronouns"]
-            player.interests = content["interests"]
-            player.aspect = content["aspect"]
-            player.gameclass = content["class"]
-            player.gristcategory = content["gristcategory"]
-            player.secondaryvial = content["secondaryvial"]
-            player.setup = True
-            land = sessions.Overmap(f"{player.name}{player.session.name}", player.session, player)
-            player.land_name = land.name
-            player.land_session = player.session
-            out = f"Your land is the {land.title}! ({land.acronym})"
-        return out
+    match intent:
+        case "create_character":
+            if character in session.players:
+                return f"Character `{character}` already exists."
+            else:
+                player = sessions.Player(character, session)
+                player.character_pass_hash = character_pass_hash
+                return f"Successfully created `{character}`. You may now log in."
+        case "login":
+            return f"Successfully logged in!"
+        case "interests":
+            out = json.dumps(config.interests)
+            return out
+        case "setup_character":
+            if player.setup:
+                out = "That character has already been setup!"
+            else:
+                player.nickname = content["name"]
+                player.noun = content["noun"]
+                player.pronouns = content["pronouns"]
+                player.interests = content["interests"]
+                player.aspect = content["aspect"]
+                player.gameclass = content["class"]
+                player.gristcategory = content["gristcategory"]
+                player.secondaryvial = content["secondaryvial"]
+                player.setup = True
+                land = sessions.Overmap(f"{player.name}{player.session.name}", player.session, player)
+                player.land_name = land.name
+                player.land_session = player.session
+                out = f"Your land is the {land.title}! ({land.acronym})"
+            return out
     
 if __name__ == "__main__":
     ServerSocket = socket.socket()
