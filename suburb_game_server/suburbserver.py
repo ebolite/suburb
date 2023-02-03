@@ -60,7 +60,6 @@ def handle_request(dict):
     character = dict["character"]
     character_pass_hash = dict["character_pass_hash"]
     content = dict["content"]
-    player = sessions.Player(character, session)
     if intent == "create_character":
         if character in session.players:
             return f"Character `{character}` already exists."
@@ -68,6 +67,7 @@ def handle_request(dict):
             player = sessions.Player(character, session)
             player.character_pass_hash = character_pass_hash
             return f"Successfully created `{character}`. You may now log in."
+    player = sessions.Player(character, session)
     if not player.verify(character_pass_hash):
         return f"Incorrect character password."
     match intent:
