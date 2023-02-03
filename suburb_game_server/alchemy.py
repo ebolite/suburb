@@ -336,13 +336,35 @@ class Item(): # Items are the base of instants.
 class Instance():
     def __init__(self, identifier: Union[Item, str]):
         if isinstance(identifier, str):
-            self.name = identifier
+            self.__dict__["name"] = identifier
         else: # get a random name instead
             name = identifier.name + random.choice(ascii_letters)
             while name in util.instances:
                 name += random.choice(ascii_letters)
-            self.name = name
-            self.item = identifier.name
+            self.__dict__["name"] = name
+            util.instances[self.name] = {}
+            self._item_name = identifier.name
+        if self.name not in util.instances:
+            util.instances[self.name] = {}
+
+    @property
+    def name(self):
+        return self.__dict__["name"]
+    
+    @name.setter
+    def name(self, value):
+        self.__dict__["name"] = value
+
+    def __setattr__(self, attr, value):
+        util.instances[self.__dict__["name"]][attr] = value
+        self.__dict__[attr] = value
+
+    def __getattr__(self, attr):
+        return util.instances[self.__dict__["name"]][attr]
+    
+    @property
+    def item(self) -> Item:
+        return Item(self._item_name)
         
 
 
@@ -385,16 +407,20 @@ defaults = {
 }
 
 if __name__ == "__main__":
-    def loop(base1: Item, base2: Item):
-        print(util.items)
-        merge_and = Item(alchemize(base1.name, base2.name,"&&"))
-        merge_or = Item(alchemize(base1.name, base2.name, "||"))
-        print(merge_and.name)
-        print(display_item(merge_and))
-        print(merge_or.name)
-        print(display_item(merge_or))
-        input()
-        loop(random.choice([merge_and, merge_or]), Item(random.choice(list(util.bases.keys()))))
-    initial_base1 = Item(random.choice(list(util.bases.keys())))
-    initial_base2 = Item(random.choice(list(util.bases.keys())))
-    loop(initial_base1, initial_base2)
+    inst = Instance(Item("baseball bat"))
+    print(inst.name)
+    print(inst.item.name)
+    print(util.instances)
+    # def loop(base1: Item, base2: Item):
+    #     print(util.items)
+    #     merge_and = Item(alchemize(base1.name, base2.name,"&&"))
+    #     merge_or = Item(alchemize(base1.name, base2.name, "||"))
+    #     print(merge_and.name)
+    #     print(display_item(merge_and))
+    #     print(merge_or.name)
+    #     print(display_item(merge_or))
+    #     input()
+    #     loop(random.choice([merge_and, merge_or]), Item(random.choice(list(util.bases.keys()))))
+    # initial_base1 = Item(random.choice(list(util.bases.keys())))
+    # initial_base2 = Item(random.choice(list(util.bases.keys())))
+    # loop(initial_base1, initial_base2)
