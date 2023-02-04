@@ -99,7 +99,7 @@ def handle_request(dict):
                 player.setup = True
                 return f"Your land is the {land.title}! ({land.acronym})"
         case "current_map":
-            return json.dumps({"map": player.room.map_tiles})
+            return json.dumps({"map": player.get_view()})
 
         
     

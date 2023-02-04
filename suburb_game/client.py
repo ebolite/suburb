@@ -41,7 +41,7 @@ def requestdic(intent):
     dic["intent"] = intent
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
-    return json.loads(ClientSocket.recv(1024).decode())
+    return json.loads(ClientSocket.recv(32768).decode())
 
 #request, but with additional content sent to the server
 def requestplus(intent, content):

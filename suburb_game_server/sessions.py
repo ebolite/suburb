@@ -332,19 +332,32 @@ class Player():
 
     @property
     def session(self) -> Session:
-        return Session(self.__dict__["session_name"])
+        return Session(self.session_name)
     
     @property
     def overmap(self) -> Overmap:
-        return Overmap(self.__dict__["overmap_name"], self.session)
+        return Overmap(self.overmap_name, self.session)
     
     @property
     def map(self) -> Map:
-        return Map(self.__dict__["map_name"], self.session, self.overmap)
+        return Map(self.map_name, self.session, self.overmap)
+    
+    def get_view(self, view_tiles=4) -> list:
+        map_tiles = []
+        player_x = self.room.x
+        player_y = self.room.y
+        for y, line in enumerate(self.map.map_tiles):
+            if abs(y-player_y) > view_tiles: continue
+            new_line = []
+            for x, char in enumerate(line):
+                if abs(x-player_x) > view_tiles: continue
+                new_line.append(char)
+            map_tiles.append(new_line)
+        return map_tiles
     
     @property
     def room(self) -> Room:
-        return Room(self.__dict__["room_name"], self.session, self.overmap, self.map)
+        return Room(self.room_name, self.session, self.overmap, self.map)
     
     def goto_room(self, room: Room):
         if self.room_name is not None: self.room.remove_player(self)
@@ -353,6 +366,10 @@ class Player():
         self.map_name = room.map.name
         self.room_name = room.name
         room.add_player(self)
+
+    @property
+    def coords(self):
+        return self.room.x, self.room.y
 
     @property
     def name(self):

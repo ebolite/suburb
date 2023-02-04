@@ -509,6 +509,7 @@ def debug_speedrun():
     character_info["secondaryvial"] = "IMAGINATION"
     character_info["gristcategory"] = "amber"
     client.requestplus("setup_character",  character_info)
+    map()
 
 def title():
     render.clear_elements()
@@ -539,6 +540,8 @@ def title():
 def map():
     render.clear_elements()
     new_map = client.requestdic("current_map")["map"]
+    for line in new_map:
+        print("".join(line))
     render.TileMap(0.5, 0.5, new_map)
 
 if __name__ == "__main__":
