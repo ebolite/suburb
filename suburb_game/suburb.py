@@ -52,6 +52,8 @@ def register():
         if "Success" not in log.text:
             client.dic["character"] = ""
             client.dic["character_pass_hash"] = ""
+        else:
+            namecharacter()
         print(f"log text {log.text}")
     confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
