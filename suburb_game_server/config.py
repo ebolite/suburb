@@ -649,6 +649,8 @@ maptiles = {
     "*": "debug tile"
 }
 
+starting_tiles = ["B", "S"]
+
 impassible = ["|", "#", "="] # tiles that you cannot move or fall through
 infallible = ["^", "v", "X", "+"] #tiles you cannot fall through but may walk through
 ramps = ["\\", "/", "X"] # tiles that take you up and that you can fall down
