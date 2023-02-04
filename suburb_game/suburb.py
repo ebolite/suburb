@@ -450,30 +450,18 @@ def newsession():
     confirmbox = render.InputTextBox(.5, .55)
     confirmbox.secure = True
     def verify():
-        print("verify")
-        if pwbox.text == confirmbox.text:
-            if len(namebox.text) != 0:
-                if len(pwbox.text) != 0:
-                    if len(namebox.text) < 32:
-                        if len(pwbox.text) < 32:
-                            print("final step")
-                            client.dic["session_name"] = namebox.text
-                            client.dic["session_pass_hash"] = client.hash(pwbox.text)
-                            log.text = client.request("create_session")
-                            if "Success" not in log.text:
-                                client.dic["session_name"] = ""
-                                client.dic["session_pass_hash"] = ""
-                            print(f"log text {log.text}")
-                        else:
-                            log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"
-                    else:
-                        log.text = f"Session name must be less than 32 characters. Yours: {len(namebox.text)}"
-                else:
-                    log.text = "Password field must not be empty."
-            else:
-                log.text = "Session name must not be empty."
-        else:
-            log.text = "Passwords do not match."
+        if pwbox.text != confirmbox.text: log.text = "Passwords do not match."; return
+        if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
+        if len(pwbox.text) == 0: log.text = "Password field must not be empty."; return
+        if len(namebox.text) > 32: log.text = f"Session name must be less than 32 characters. Yours: {len(namebox.text)}"; return
+        if len(pwbox.text) > 32: log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"; return
+        client.dic["session_name"] = namebox.text
+        client.dic["session_pass_hash"] = client.hash(pwbox.text)
+        log.text = client.request("create_session")
+        if "success" not in log.text:
+            client.dic["session_name"] = ""
+            client.dic["session_pass_hash"] = ""
+        print(f"log text {log.text}")
     confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
 
@@ -528,6 +516,11 @@ def title():
     conntext = render.Text(0, 30, conntextcontent)
     conntext.absolute = True
 
+def map():
+    render.clear_elements()
+    new_map = client.requestdic("current_map")["map"]
+    render.TileMap(0.5, 0.5, new_map)
+
 if __name__ == "__main__":
     client.connect() # connect to server
     # aspectcharacter() # choose scene to test
@@ -542,7 +535,7 @@ if __name__ == "__main__":
 
 
 
-map = [
+test_map = [
 [".",".",".",".",".",".",".",".",".",],
 [".",".",".","/","|","\\",".",".",".",],
 [".",".",".","|","A","|",".",".",".",],
