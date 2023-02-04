@@ -77,17 +77,17 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         extralands = config.categoryproperties[self.gristcategory].get("extralands", None)
         extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
         extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
-        self.map = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
-        for line in self.map:
+        self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
+        for line in self.map_tiles:
             print("".join(line))
-        y = random.randint(0, len(self.map)-1)
-        x = random.randint(0, len(self.map[0])-1)
-        while self.map[y][x] == "~":
-            y = random.randint(0, len(self.map)-1)
-            x = random.randint(0, len(self.map[0])-1)
+        y = random.randint(0, len(self.map_tiles)-1)
+        x = random.randint(0, len(self.map_tiles[0])-1)
+        while self.map_tiles[y][x] == "~":
+            y = random.randint(0, len(self.map_tiles)-1)
+            x = random.randint(0, len(self.map_tiles[0])-1)
         housemap = self.find_map(x, y)
         housemap.gen_map("house")
-        self.housemap = housemap.name
+        self.housemap_name = housemap.name
         self.specials.append(housemap.name)
         # todo: we're not doing this right now
         # housemap.gen_rooms()
@@ -111,6 +111,9 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             acronym += f"{word[0].upper()}"
         self.acronym = acronym
 
+    def get_map(self, name:str) -> "Map":
+        return Map(name, self.session, self)
+
     def find_map(self, x, y) -> "Map":
         return Map(f"{x}, {y}", self.session, self)
 
@@ -130,7 +133,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
 
     @property
     def player(self) -> "Player":
-        return Player(self.__dict__["player_name"], self.session)
+        return Player(self.__dict__["player_name"])
 
     @property
     def name(self):
@@ -184,16 +187,31 @@ class Map():
                 map = deepcopy(random.choice(map_tiles["land"]))
                 self.overmaptile = "#"
         print("gen_map")
-        self.map = map
+        self.map_tiles = map
 
     def gen_rooms(self):
-        for y, line in enumerate(self.map):
+        for y, line in enumerate(self.map_tiles):
             for x, char in enumerate(line):
                 if char != ".":
                     r = self.find_room(x, y)
 
-    def find_room(self, x, y) -> "Room":
+    def get_room(self, name: str) -> "Room":
+        return Room(name, self.session, self.overmap, self)
+
+    def find_room(self, x: int, y: int) -> "Room":
         return Room(f"{x}, {y}", self.session, self.overmap, self)
+    
+    def find_tiles_coords(self, valid_tiles: list) -> list:
+        valid_coords = []
+        for y, line in enumerate(self.map_tiles):
+            for x, char in enumerate(line):
+                if char in valid_tiles: valid_coords.append((x, y))
+        return valid_coords
+    
+    def random_valid_room(self, valid_tiles: list) -> "Room":
+        valid_coords = self.find_tiles_coords(valid_tiles)
+        coords = random.choice(valid_coords)
+        return self.find_room(coords[0], coords[1])
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -210,7 +228,7 @@ class Map():
         return self.__dict__[attr]
 
     def get_tile(self, x, y) -> str:
-        return self.map[y][x]
+        return self.map_tiles[y][x]
 
     @property
     def session(self) -> Session:
@@ -218,11 +236,11 @@ class Map():
 
     @property
     def overmap(self) -> Overmap:
-        return Overmap(self.__dict__["session_name"], self.__dict__["overmap_name"])
+        return Overmap(self.__dict__["overmap_name"], self.session)
 
     @property
     def player(self) -> "Player":
-        return Player(self.__dict__["player_name"], self.session)
+        return Player(self.__dict__["player_name"])
 
     @property
     def name(self):
@@ -242,6 +260,7 @@ class Room():
             y = int(coords[1])
             self.x = x
             self.y = y
+            self.players = []         
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -259,17 +278,25 @@ class Room():
                                [attr])
         return self.__dict__[attr]
 
+    def add_player(self, player: "Player"):
+        if player.username not in self.players:
+            self.players.append(player.username)
+
+    def remove_player(self, player: "Player"):
+        if player.username in self.players:
+            self.players.remove(player.username)
+
     @property
     def session(self) -> Session:
         return Session(self.__dict__["session_name"])
 
     @property
     def overmap(self) -> Overmap:
-        return Overmap(self.__dict__["session_name"], self.__dict__["overmap_name"])
+        return Overmap(self.__dict__["overmap_name"], self.session)
     
     @property
     def map(self) -> Map:
-        return Map(self.__dict__["map_name"], self.__dict__["session_name"], self.__dict__["overmap_name"])
+        return Map(self.__dict__["map_name"], self.session, self.overmap)
 
     @property
     def player(self) -> "Player":
@@ -285,32 +312,55 @@ class Room():
 
 
 class Player():
-    def __init__(self, name, session: Session):
-        self.__dict__["session_name"] = session.name
-        self.__dict__["name"] = name
-        if name not in util.sessions[session.name]["players"]:
-            util.sessions[session.name]["players"][name] = {}
+    def __init__(self, username):
+        self.__dict__["username"] = username
+        if username not in util.players:
+            util.players[username] = {}
+            self.session_name = None
+            self.overmap_name = None
+            self.map_name = None
+            self.room_name = None
             self.setup = False
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        (util.sessions[self.__dict__["session_name"]]
-         ["players"][self.__dict__["name"]]
-         [attr]) = value
+        util.players[self.__dict__["username"]][attr] = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
-                                ["players"][self.__dict__["name"]]
-                                [attr])
+        self.__dict__[attr] = util.players[self.__dict__["username"]][attr]
         return self.__dict__[attr]
 
     @property
     def session(self) -> Session:
         return Session(self.__dict__["session_name"])
+    
+    @property
+    def overmap(self) -> Overmap:
+        return Overmap(self.__dict__["overmap_name"], self.session)
+    
+    @property
+    def map(self) -> Map:
+        return Map(self.__dict__["map_name"], self.session, self.overmap)
+    
+    @property
+    def room(self) -> Room:
+        return Room(self.__dict__["room_name"], self.session, self.overmap, self.map)
+    
+    def goto_room(self, room: Room):
+        if self.room_name is not None: self.room.remove_player(self)
+        self.session_name = room.session.name
+        self.overmap_name = room.overmap.name
+        self.map_name = room.map.name
+        self.room_name = room.name
+        room.add_player(self)
 
     @property
     def name(self):
-        return self.__dict__["name"]
+        return self.__dict__["username"]
+    
+    @property
+    def username(self):
+        return self.__dict__["username"]
 
     @property
     def calledby(self):

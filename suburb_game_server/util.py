@@ -41,6 +41,9 @@ def readjson(obj, filename):
 sessions = {} 
 sessions = readjson(sessions, "sessions")
 
+players = {}
+players = readjson(players, "players")
+
 bases = {}
 bases = readjson(bases, "bases")
 
