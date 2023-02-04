@@ -493,6 +493,23 @@ def connect():
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
 
+def debug_speedrun():
+    client.dic["session_name"] = "fuck"
+    client.dic["session_pass_hash"] = client.hash("ass")
+    client.request("create_session")
+    client.dic["character"] = "alienatingParticles"
+    client.dic["character_pass_hash"] = client.hash("ass")
+    client.request("create_character")
+    character_info["name"] = "Iness"
+    character_info["noun"] = "rabbit girl"
+    character_info["pronouns"] = ["she", "her", "her", "hers"]
+    character_info["interests"] = ["music", "technology"]
+    character_info["aspect"] = "life"
+    character_info["class"] = "sylph"
+    character_info["secondaryvial"] = "IMAGINATION"
+    character_info["gristcategory"] = "amber"
+    client.requestplus("setup_character",  character_info)
+
 def title():
     render.clear_elements()
     logo = render.Image(.5, .20, "sprites\\largeicon.png")
@@ -517,6 +534,7 @@ def title():
         conntextcontent = f"No session."
     conntext = render.Text(0, 30, conntextcontent)
     conntext.absolute = True
+    debug_button = render.Button(.1, .95, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
 
 def map():
     render.clear_elements()
