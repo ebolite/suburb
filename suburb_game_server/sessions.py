@@ -233,7 +233,7 @@ class Room():
         self.__dict__["session_name"] = session.name
         self.__dict__["overmap_name"] = overmap.name
         self.__dict__["map_name"] = map.name
-        self.__dict__["name_name"] = name
+        self.__dict__["name"] = name
         if name not in util.sessions[session.name]["overmaps"][overmap.name]["maps"][map.name]["rooms"]:
             util.sessions[session.name]["overmaps"][overmap.name]["maps"][map.name]["rooms"][name] = {}
             coords = name.replace(",", "")
@@ -252,9 +252,9 @@ class Room():
          [attr]) = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = (util.sessions[self.__dict__["session"]]
-                               ["overmaps"][self.__dict__["overmap"]]
-                               ["maps"][self.__dict__["map"]]
+        self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
+                               ["overmaps"][self.__dict__["overmap_name"]]
+                               ["maps"][self.__dict__["map_name"]]
                                ["rooms"][self.__dict__["name"]]
                                [attr])
         return self.__dict__[attr]
