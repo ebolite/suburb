@@ -23,7 +23,6 @@ def threaded_client(connection):
                 break
             decoded = data.decode("utf-8")
             dict = json.loads(decoded)
-            print(dict)
             intent = dict["intent"]
             session_name = dict["session_name"]
             session_pass_hash = dict["session_pass_hash"]
@@ -33,7 +32,7 @@ def threaded_client(connection):
                 else:
                     session = sessions.Session(session_name)
                     session.pass_hash = dict["session_pass_hash"]
-                    print(f"session {session_name} pass_hash {session.pass_hash} dict pass_hash {dict['session_pass_hash']}")
+                    print(f"session created {session_name}")
                     reply = f"The session `{session_name}` has been successfully registered."
             else:
                 if session_name in util.sessions:
@@ -102,6 +101,9 @@ def handle_request(dict):
         case "current_map":
             map_tiles, map_specials = player.get_view()
             return json.dumps({"map": map_tiles, "specials": map_specials})
+        case "move":
+            player.attempt_move(content)
+            return
 
 def autosave():
     last_save = time.time()

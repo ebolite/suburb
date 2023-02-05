@@ -363,7 +363,6 @@ class Player():
         self.goto_room(new_room)
         return True
 
-
     @property
     def session(self) -> Session:
         return Session(self.session_name)

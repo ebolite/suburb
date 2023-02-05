@@ -7,6 +7,7 @@ from typing import Optional, Union, Callable
 
 import util
 import config
+import client
 
 pygame.init()
 
@@ -77,6 +78,7 @@ class TileMap(UIElement):
         self.tiles = {}
         self.update_map(map)
         update_check.append(self)
+        key_check.append(self)
 
     def update(self):
         for tile in self.tiles:
@@ -93,6 +95,18 @@ class TileMap(UIElement):
             for y, line in enumerate(map):
                 for x, char in enumerate(line):
                     self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials)
+
+    def keypress(self, event):
+        match event.key:
+            case pygame.K_UP: direction = "up"
+            case pygame.K_DOWN: direction = "down"
+            case pygame.K_LEFT: direction = "left"
+            case pygame.K_RIGHT: direction = "right"
+            case _: return
+        client.requestplus("move", direction)
+        dic = client.requestdic("current_map")
+        self.map = dic["map"]
+        self.specials = dic["specials"]
 
     def delete(self):
         for tile in self.tiles:

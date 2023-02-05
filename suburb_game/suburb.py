@@ -557,7 +557,7 @@ if __name__ == "__main__":
     title() # normal game start
     # continue to render until render.render() returns False
     while render.render():
-        pass
+        ...
 
 
 
