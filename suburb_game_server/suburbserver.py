@@ -37,7 +37,6 @@ def threaded_client(connection):
             else:
                 if session_name in util.sessions:
                     session = sessions.Session(session_name)
-                    print(session.pass_hash)
                     if session_pass_hash == session.pass_hash:
                         reply = handle_request(dict)
                     else:

@@ -237,6 +237,23 @@ class Map():
         if x >= len(self.map_tiles[0]): return False
         return True
 
+    def get_view(self, target_x: int, target_y: int, view_tiles: int) -> tuple[list, dict]:
+        out_map_tiles = []
+        out_specials = {}
+        map_tiles = self.map_tiles
+        # we need both the y of the real map(real_y) and the y of the output tile(map_tile_y)
+        for map_tile_y, real_y in enumerate(range(target_y-view_tiles, target_y+view_tiles+1)):
+            new_line = []
+            for map_tile_x, real_x in enumerate(range(target_x-view_tiles, target_x+view_tiles+1)):
+                if real_y < 0 or real_y >= len(map_tiles): new_line.append("?") # out of bounds
+                elif real_x < 0 or real_x >= len(map_tiles[0]): new_line.append("?") # out of bounds
+                else: 
+                    new_line.append(map_tiles[real_y][real_x])
+                    specials = self.find_room(real_x, real_y).specials
+                    if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
+            out_map_tiles.append(new_line)
+        return out_map_tiles, out_specials
+
     @property
     def session(self) -> Session:
         return Session(self.__dict__["session_name"])
@@ -384,22 +401,7 @@ class Player():
         return self.room.y
     
     def get_view(self, view_tiles=6) -> tuple[list, dict]:
-        out_map_tiles = []
-        out_specials = {}
-        map = self.map
-        map_tiles = map.map_tiles
-        player_x = self.room.x
-        player_y = self.room.y
-        for map_tile_y, y in enumerate(range(player_y-view_tiles, player_y+view_tiles+1)): # we need both the y of the real map(y) and the y of the output tile(map_tile_y)
-            new_line = []
-            for map_tile_x, x in enumerate(range(player_x-view_tiles, player_x+view_tiles+1)):
-                if y < 0 or y >= len(map_tiles): new_line.append("?") # out of bounds
-                elif x < 0 or x >= len(map_tiles[0]): new_line.append("?") # out of bounds
-                else: 
-                    new_line.append(map_tiles[y][x])
-                    specials = map.find_room(x, y).specials
-                    if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
-            out_map_tiles.append(new_line)
+        out_map_tiles, out_specials = self.map.get_view(self.x, self.y, view_tiles)
         return out_map_tiles, out_specials
 
     @property
