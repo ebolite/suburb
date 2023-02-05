@@ -1,6 +1,7 @@
 import util
 
 tiles = {
+"?": "sprites\\tiles\\oob.png",
 "|": "sprites\\tiles\\wall.png",
 "#": "sprites\\tiles\\#.png",
 ".": "sprites\\tiles\\..png",

@@ -342,18 +342,19 @@ class Player():
     def map(self) -> Map:
         return Map(self.map_name, self.session, self.overmap)
     
-    def get_view(self, view_tiles=4) -> list:
-        map_tiles = []
+    def get_view(self, view_tiles=6) -> list:
+        out_map_tiles = []
+        map_tiles = self.map.map_tiles
         player_x = self.room.x
         player_y = self.room.y
-        for y, line in enumerate(self.map.map_tiles):
-            if abs(y-player_y) > view_tiles: continue
+        for y in range(player_y-view_tiles, player_y+view_tiles+1):
             new_line = []
-            for x, char in enumerate(line):
-                if abs(x-player_x) > view_tiles: continue
-                new_line.append(char)
-            map_tiles.append(new_line)
-        return map_tiles
+            for x in range(player_x-view_tiles, player_x+view_tiles+1):
+                if y < 0 or y >= len(map_tiles): new_line.append("?") # out of bounds
+                elif x < 0 or x >= len(map_tiles[0]): new_line.append("?") # out of bound
+                else: new_line.append(map_tiles[y][x])
+            out_map_tiles.append(new_line)
+        return out_map_tiles
     
     @property
     def room(self) -> Room:

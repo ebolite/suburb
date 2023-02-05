@@ -601,6 +601,7 @@ vialemoji = {
     }
 
 maptiles = {
+    "?": "out of bounds",
     ".": "air",
     "-": "hallway",
     "|": "wall",
