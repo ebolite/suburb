@@ -31,6 +31,7 @@ def readjson(obj, filename):
                 data = json.load(f)
             except json.JSONDecodeError:
                 print(f"UNABLE TO READ JSON {filename}")
+                writejson(obj, f"{homedir}\\json\\failed\\{filename}")
                 data = {}
             return data
     except FileNotFoundError:
@@ -55,6 +56,14 @@ instances = readjson(instances, "instances")
 
 codes = {} # key: item code value: item name
 codes = readjson(codes, "codes")
+
+def saveall():
+    writejson(sessions, "sessions")
+    writejson(players, "players")
+    writejson(items, "items")
+    writejson(instances, "instances")
+    writejson(codes, "codes")
+
 for base in bases:
     if "code" in bases[base]:
         code = bases[base]["code"]
