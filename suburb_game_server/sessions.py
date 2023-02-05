@@ -364,8 +364,8 @@ class Player():
         return self.__dict__[attr]
     
     def attempt_move(self, direction: str) -> bool:
-        player_x = self.x
-        player_y = self.y
+        player_x = self.room.x
+        player_y = self.room.y
         map = self.map
         target_x: int = 0
         target_y: int = 0
