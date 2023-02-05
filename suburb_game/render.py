@@ -68,7 +68,7 @@ class UIElement(pygame.sprite.Sprite):
         self.kill()
 
 class TileMap(UIElement):
-    def __init__(self, x, y, map):
+    def __init__(self, x, y, map: list[list[str]]):
         super(TileMap, self).__init__()
         self.x = x
         self.y = y
@@ -125,13 +125,15 @@ def dircheck(tile, direction):
         return True
 
 class Tile(UIElement):
-    def __init__(self, x, y, TileMap):
+    def __init__(self, x, y, TileMap: TileMap):
         super(Tile, self).__init__()
         self.x = x
         self.y = y
         self.TileMap = TileMap
 
     def update(self):
+        if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly
+        if self.x == len(self.TileMap.map[0]) - 1 or self.y == len(self.TileMap.map) - 1: return # ^
         image = pygame.image.load(self.image)
         self.surf = pygame.Surface((tile_wh, tile_wh))
         offsety = 0
@@ -191,7 +193,7 @@ class Tile(UIElement):
 
 
 class SolidColor(UIElement):
-    def __init__(self, x, y, w, h, color):
+    def __init__(self, x, y, w, h, color: pygame.Color):
         super(SolidColor, self).__init__()
         self.x = x
         self.y = y
@@ -214,7 +216,7 @@ class SolidColor(UIElement):
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))
 
 class TextButton(UIElement):
-    def __init__(self, x, y, w, h, text, onpress, hover=True):
+    def __init__(self, x, y, w, h, text, onpress: Callable, hover=True):
         super(TextButton, self).__init__()
         self.x = x
         self.y = y
