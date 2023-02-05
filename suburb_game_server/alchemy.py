@@ -410,20 +410,16 @@ defaults = {
 }
 
 if __name__ == "__main__":
-    inst = Instance(Item("baseball bat"))
-    print(inst.name)
-    print(inst.item.name)
-    print(util.instances)
-    # def loop(base1: Item, base2: Item):
-    #     print(util.items)
-    #     merge_and = Item(alchemize(base1.name, base2.name,"&&"))
-    #     merge_or = Item(alchemize(base1.name, base2.name, "||"))
-    #     print(merge_and.name)
-    #     print(display_item(merge_and))
-    #     print(merge_or.name)
-    #     print(display_item(merge_or))
-    #     input()
-    #     loop(random.choice([merge_and, merge_or]), Item(random.choice(list(util.bases.keys()))))
-    # initial_base1 = Item(random.choice(list(util.bases.keys())))
-    # initial_base2 = Item(random.choice(list(util.bases.keys())))
-    # loop(initial_base1, initial_base2)
+    def loop(base1: Item, base2: Item):
+        print(util.items)
+        merge_and = Item(alchemize(base1.name, base2.name,"&&"))
+        merge_or = Item(alchemize(base1.name, base2.name, "||"))
+        print(merge_and.name)
+        print(display_item(merge_and))
+        print(merge_or.name)
+        print(display_item(merge_or))
+        input()
+        loop(random.choice([merge_and, merge_or]), Item(random.choice(list(util.bases.keys()))))
+    initial_base1 = Item(random.choice(list(util.bases.keys())))
+    initial_base2 = Item(random.choice(list(util.bases.keys())))
+    loop(initial_base1, initial_base2)
