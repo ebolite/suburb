@@ -100,7 +100,8 @@ def handle_request(dict):
                 player.setup = True
                 return f"Your land is the {land.title}! ({land.acronym})"
         case "current_map":
-            return json.dumps({"map": player.get_view()})
+            map_tiles, map_specials = player.get_view()
+            return json.dumps({"map": map_tiles, "specials": map_specials})
 
 def autosave():
     last_save = time.time()

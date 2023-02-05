@@ -68,11 +68,12 @@ class UIElement(pygame.sprite.Sprite):
         self.kill()
 
 class TileMap(UIElement):
-    def __init__(self, x, y, map: list[list[str]]):
+    def __init__(self, x, y, map: list[list[str]], specials: dict):
         super(TileMap, self).__init__()
         self.x = x
         self.y = y
         self.map = map
+        self.specials = specials
         self.tiles = {}
         self.update_map(map)
         update_check.append(self)
@@ -91,7 +92,7 @@ class TileMap(UIElement):
             self.tiles = {}
             for y, line in enumerate(map):
                 for x, char in enumerate(line):
-                    self.tiles[f"{x}, {y}"] = Tile(x, y, self)
+                    self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials)
 
     def delete(self):
         for tile in self.tiles:
@@ -125,11 +126,12 @@ def dircheck(tile, direction):
         return True
 
 class Tile(UIElement):
-    def __init__(self, x, y, TileMap: TileMap):
+    def __init__(self, x, y, TileMap: TileMap, specials: dict):
         super(Tile, self).__init__()
         self.x = x
         self.y = y
         self.TileMap = TileMap
+        self.specials = specials
 
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly
@@ -166,6 +168,16 @@ class Tile(UIElement):
         self.rect.x = (self.x * tile_wh) + self.TileMap.rect.x
         self.rect.y = (self.y * tile_wh) + self.TileMap.rect.y
         self.surf.blit(image, (0, 0), (offsetx, offsety, tile_wh, tile_wh))
+        if f"{self.x}, {self.y}" in self.specials:
+            room_specials = self.specials[f"{self.x}, {self.y}"]
+            specials_keys = list(room_specials.keys()) + [None]
+            drawing_index = int(((pygame.time.get_ticks() / 10) % 60) / (60 / len(specials_keys))) # full cycle each second
+            drawing_name = specials_keys[drawing_index]
+            if drawing_name is not None: # if we're not drawing nothing (images should be flashing)
+                drawing_type = room_specials[drawing_name]
+                icon_image_filename = config.icons[drawing_type]
+                icon_image = pygame.image.load(icon_image_filename)
+                self.surf.blit(icon_image, (0, 0), (offsetx, offsety, tile_wh, tile_wh))
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))
 
     @property

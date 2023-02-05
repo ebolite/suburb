@@ -539,10 +539,13 @@ def title():
 
 def map():
     render.clear_elements()
-    new_map = client.requestdic("current_map")["map"]
+    dic = client.requestdic("current_map")
+    new_map = dic["map"]
+    specials = dic["specials"]
+    print(specials)
     for line in new_map:
         print("".join(line))
-    render.TileMap(0.5, 0.5, new_map)
+    render.TileMap(0.5, 0.5, new_map, specials)
 
 if __name__ == "__main__":
     client.connect() # connect to server

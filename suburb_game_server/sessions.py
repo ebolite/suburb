@@ -227,8 +227,15 @@ class Map():
                                [attr])
         return self.__dict__[attr]
 
-    def get_tile(self, x, y) -> str:
+    def get_tile(self, x: int, y: int) -> str:
         return self.map_tiles[y][x]
+    
+    def is_tile_in_bounds(self, x: int, y: int) -> bool:
+        if y < 0: return False
+        if x < 0: return False
+        if y >= len(self.map_tiles): return False
+        if x >= len(self.map_tiles[0]): return False
+        return True
 
     @property
     def session(self) -> Session:
@@ -287,6 +294,15 @@ class Room():
             self.players.remove(player.username)
 
     @property
+    def specials(self) -> dict:
+        special_dict = {}
+        for player_username in self.players:
+            player = Player(player_username)
+            special_dict[player.calledby] = "player"
+        # todo: other specials
+        return special_dict
+
+    @property
     def session(self) -> Session:
         return Session(self.__dict__["session_name"])
 
@@ -329,6 +345,24 @@ class Player():
     def __getattr__(self, attr):
         self.__dict__[attr] = util.players[self.__dict__["username"]][attr]
         return self.__dict__[attr]
+    
+    def attempt_move(self, direction: str) -> bool:
+        player_x = self.x
+        player_y = self.y
+        map = self.map
+        target_x: int = 0
+        target_y: int = 0
+        if direction == "up": target_x, target_y = player_x, player_y-1
+        if direction == "down": target_x, target_y = player_x, player_y+1
+        if direction == "left": target_x, target_y = player_x-1, player_y
+        if direction == "right": target_x, target_y = player_x+1, player_y
+        if not map.is_tile_in_bounds(target_x, target_y): return False
+        target_tile = map.get_tile(target_x, target_y)
+        # todo: collision check
+        new_room = map.find_room(target_x, target_y)
+        self.goto_room(new_room)
+        return True
+
 
     @property
     def session(self) -> Session:
@@ -342,20 +376,33 @@ class Player():
     def map(self) -> Map:
         return Map(self.map_name, self.session, self.overmap)
     
-    def get_view(self, view_tiles=6) -> list:
+    @property
+    def x(self) -> int:
+        return self.room.x
+    
+    @property
+    def y(self) -> int:
+        return self.room.y
+    
+    def get_view(self, view_tiles=6) -> tuple[list, dict]:
         out_map_tiles = []
-        map_tiles = self.map.map_tiles
+        out_specials = {}
+        map = self.map
+        map_tiles = map.map_tiles
         player_x = self.room.x
         player_y = self.room.y
-        for y in range(player_y-view_tiles, player_y+view_tiles+1):
+        for map_tile_y, y in enumerate(range(player_y-view_tiles, player_y+view_tiles+1)): # we need both the y of the real map(y) and the y of the output tile(map_tile_y)
             new_line = []
-            for x in range(player_x-view_tiles, player_x+view_tiles+1):
+            for map_tile_x, x in enumerate(range(player_x-view_tiles, player_x+view_tiles+1)):
                 if y < 0 or y >= len(map_tiles): new_line.append("?") # out of bounds
-                elif x < 0 or x >= len(map_tiles[0]): new_line.append("?") # out of bound
-                else: new_line.append(map_tiles[y][x])
+                elif x < 0 or x >= len(map_tiles[0]): new_line.append("?") # out of bounds
+                else: 
+                    new_line.append(map_tiles[y][x])
+                    specials = map.find_room(x, y).specials
+                    if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
             out_map_tiles.append(new_line)
-        return out_map_tiles
-    
+        return out_map_tiles, out_specials
+
     @property
     def room(self) -> Room:
         return Room(self.room_name, self.session, self.overmap, self.map)

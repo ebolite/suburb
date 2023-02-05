@@ -45,6 +45,10 @@ tiles = {
 "7": "sprites\\tiles\\gate7.png",
 }
 
+icons = {
+    "player": "sprites\\icons\\player_alt.png"
+}
+
 grists = {
     "build": {"tier": 0, "image": "sprites\\grists\\build.png"},
     "acid": {"tier": 4, "exotic": True, "image": "sprites\\grists\\acid.png"},
