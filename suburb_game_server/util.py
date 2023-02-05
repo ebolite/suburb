@@ -58,11 +58,13 @@ codes = {} # key: item code value: item name
 codes = readjson(codes, "codes")
 
 def saveall():
+    print("Saving...")
     writejson(sessions, "sessions")
     writejson(players, "players")
     writejson(items, "items")
     writejson(instances, "instances")
     writejson(codes, "codes")
+    print("Save complete.")
 
 for base in bases:
     if "code" in bases[base]:

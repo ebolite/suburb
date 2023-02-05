@@ -3,6 +3,7 @@ import os
 from _thread import start_new_thread
 import json
 import hashlib
+import time
 
 import sessions
 import util
@@ -101,7 +102,14 @@ def handle_request(dict):
         case "current_map":
             return json.dumps({"map": player.get_view()})
 
-        
+def autosave():
+    last_save = time.time()
+    util.saveall()
+    while True:
+        if time.time() - last_save > 60:
+            util.saveall()
+            last_save = time.time()
+            
     
 if __name__ == "__main__":
     ServerSocket = socket.socket()
@@ -110,11 +118,14 @@ if __name__ == "__main__":
     except socket.error as e:
         print(str(e))
 
+    start_new_thread(autosave, ())
+
     print("Waiting for connections...")
     ServerSocket.listen(5)
 
     conns = []
     threads = 0
+    
 
     while True:
         Client, address = ServerSocket.accept()
