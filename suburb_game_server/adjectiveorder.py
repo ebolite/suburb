@@ -25,7 +25,7 @@ for base in util.bases:
     for adj in util.bases[base]["secretadjectives"]:
         if adj not in secret_adjectives: secret_adjectives.append(adj)
 
-def sort_by_adjectives(to_sort:list) -> list:
+def sort_by_adjectives(to_sort:list[str]) -> list[str]:
     def sort_function(name: str):
         if name in adjective_types:
             adjective_type = adjective_types[name]

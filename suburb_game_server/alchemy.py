@@ -4,6 +4,7 @@ from string import ascii_letters
 
 import util
 import binaryoperations
+import adjectiveorder
 
 COMPOUND_NAME_CHANCE = 0.2 # chance for having compound names in && operations
 DICEMIN_MINIMUM_SOFTCAP = -2.8
@@ -135,6 +136,8 @@ class InheritedStatistics():
             if descriptor not in [base] + adjectives and descriptor != base:
                 random.seed(self.name+descriptor+"secret")
                 if random.random() < 0.5: secretadjectives.append(descriptor)
+        # sort adjectives by englishness
+        adjectives = adjectiveorder.sort_by_adjectives(adjectives)
         # check if this has the exact same name as one of its components
         new_name = adjectives+[base]
         component_1_name = self.component_1.adjectives+[self.component_1.base]
