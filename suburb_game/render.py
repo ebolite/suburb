@@ -15,6 +15,7 @@ clock = pygame.time.Clock()
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
+FPS_CAP = 60
 
 RUNNING = True
 
@@ -185,7 +186,7 @@ class Tile(UIElement):
         if f"{self.x}, {self.y}" in self.specials:
             room_specials = self.specials[f"{self.x}, {self.y}"]
             specials_keys = list(room_specials.keys()) + [None]
-            drawing_index = int(((pygame.time.get_ticks() / 10) % 60) / (60 / len(specials_keys))) # full cycle each second
+            drawing_index = int(((pygame.time.get_ticks() / 10) % FPS_CAP) / (FPS_CAP / len(specials_keys))) # full cycle each second
             drawing_name = specials_keys[drawing_index]
             if drawing_name is not None: # if we're not drawing nothing (images should be flashing)
                 drawing_type = room_specials[drawing_name]
@@ -543,5 +544,5 @@ def render():
     pygame.display.flip()
 
     #fps cap
-    clock.tick(60)
+    clock.tick(FPS_CAP)
     return True
