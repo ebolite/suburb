@@ -200,6 +200,6 @@ if __name__ == "__main__": # if this file is being run, run the json editor
                             break
                 except (TypeError, ValueError) as e:
                     print(f"excepted error {e}")
-            if next == True:
+            if next:
                 break
     writejson(bases, "bases")
