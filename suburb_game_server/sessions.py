@@ -392,16 +392,8 @@ class Player():
     def map(self) -> Map:
         return Map(self.map_name, self.session, self.overmap)
     
-    @property
-    def x(self) -> int:
-        return self.room.x
-    
-    @property
-    def y(self) -> int:
-        return self.room.y
-    
     def get_view(self, view_tiles=6) -> tuple[list, dict]:
-        out_map_tiles, out_specials = self.map.get_view(self.x, self.y, view_tiles)
+        out_map_tiles, out_specials = self.map.get_view(self.room.x, self.room.y, view_tiles)
         return out_map_tiles, out_specials
 
     @property
