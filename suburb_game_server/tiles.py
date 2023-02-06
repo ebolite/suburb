@@ -24,6 +24,7 @@ class Tile():
         self.uncommon_spawn = []
         self.rare_spawn = []
         self.exotic_spawn = []
+        self.loot_range = (2, 6)
         if name in config.itemcategoryrarities:
             rarities = config.itemcategoryrarities
             always = rarities["always"] or []
