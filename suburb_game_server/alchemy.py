@@ -346,7 +346,7 @@ class Instance():
                 name += random.choice(ascii_letters)
             self.__dict__["name"] = name
             util.instances[self.name] = {}
-            self._item_name = identifier.name
+            self.item_name = identifier.name
         if self.name not in util.instances:
             util.instances[self.name] = {}
 
@@ -365,9 +365,12 @@ class Instance():
     def __getattr__(self, attr):
         return util.instances[self.__dict__["name"]][attr]
     
+    def get_dict(self):
+        return util.instances[self.__dict__["name"]]
+    
     @property
     def item(self) -> Item:
-        return Item(self._item_name)
+        return Item(self.item_name)
         
 
 

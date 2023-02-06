@@ -286,8 +286,8 @@ class Room():
             y = int(coords[1])
             self.x = x
             self.y = y
-            self.players = []
-            self.instances = []
+            self.players: list[str] = []
+            self.instances: list[str] = []
             self.generate_loot()
 
     def __setattr__(self, attr, value):
@@ -329,6 +329,13 @@ class Room():
     def remove_instance(self, instance: alchemy.Instance):
         if instance.name in self.instances:
             self.instances.remove(self.name)
+
+    def get_instances(self) -> dict:
+        out_dict = {}
+        for instance_name in self.instances:
+            instance = alchemy.Instance(instance_name)
+            out_dict[instance_name] = instance.get_dict()
+        return out_dict
 
     @property
     def specials(self) -> dict:
@@ -439,9 +446,10 @@ class Player():
     def map(self) -> Map:
         return Map(self.map_name, self.session, self.overmap)
     
-    def get_view(self, view_tiles=6) -> tuple[list, dict]:
-        out_map_tiles, out_specials = self.map.get_view(self.room.x, self.room.y, view_tiles)
-        return out_map_tiles, out_specials
+    def get_view(self, view_tiles=6) -> tuple[list, dict, dict]:
+        map_tiles, map_specials = self.map.get_view(self.room.x, self.room.y, view_tiles)
+        room_instances = self.room.get_instances()
+        return map_tiles, map_specials, room_instances
 
     @property
     def room(self) -> Room:

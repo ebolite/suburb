@@ -542,10 +542,10 @@ def map():
     dic = client.requestdic("current_map")
     new_map = dic["map"]
     specials = dic["specials"]
-    print(specials)
-    for line in new_map:
-        print("".join(line))
-    render.TileMap(0.5, 0.5, new_map, specials)
+    instances = dic["instances"]
+    print(instances)
+    item_display = render.RoomItemDisplay(100, 50, instances)
+    render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
 if __name__ == "__main__":
     client.connect() # connect to server
