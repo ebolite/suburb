@@ -8,6 +8,7 @@ from copy import deepcopy
 import util
 import config
 import tiles
+import alchemy
 
 map_tiles = {}
 
@@ -285,7 +286,9 @@ class Room():
             y = int(coords[1])
             self.x = x
             self.y = y
-            self.players = []         
+            self.players = []
+            self.instances = []
+            self.generate_loot()
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -310,6 +313,22 @@ class Room():
     def remove_player(self, player: "Player"):
         if player.username in self.players:
             self.players.remove(player.username)
+
+    def generate_loot(self):
+        if not self.tile.generate_loot: return
+        spawns = self.tile.get_loot_list()
+        for item_name in spawns:
+            item = alchemy.Item(item_name)
+            instance = alchemy.Instance(item)
+            self.add_instance(instance)
+        
+    def add_instance(self, instance: alchemy.Instance):
+        if instance.name not in self.instances:
+            self.instances.append(instance.name)
+    
+    def remove_instance(self, instance: alchemy.Instance):
+        if instance.name in self.instances:
+            self.instances.remove(self.name)
 
     @property
     def specials(self) -> dict:
