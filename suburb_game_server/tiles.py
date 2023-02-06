@@ -1,4 +1,5 @@
 import config
+import random
 
 tiles = {}      # tile: Tile
 
@@ -21,17 +22,21 @@ class Tile():
         self.generate_loot = False
         self.always_spawn = []
         self.common_spawn = []
+        self.common_weight = 65
         self.uncommon_spawn = []
+        self.uncommon_weight = 27
         self.rare_spawn = []
+        self.rare_weight = 7
         self.exotic_spawn = []
-        self.loot_range = (2, 6)
+        self.exotic_weight = 1
+        self.loot_range: tuple[int, int] = (2, 6)
         if name in config.itemcategoryrarities:
-            rarities = config.itemcategoryrarities
-            always = rarities["always"] or []
-            common = rarities["common"] or []
-            uncommon = rarities["common"] or []
-            rare = rarities["rare"] or []
-            exotic = rarities["exotic"] or []
+            rarities = config.itemcategoryrarities[name]
+            always = rarities.get("always", [])
+            common = rarities.get("common", [])
+            uncommon = rarities.get("uncommon", [])
+            rare = rarities.get("rare", [])
+            exotic = rarities.get("exotic", [])
             self.set_loot(always, common, uncommon, rare, exotic)
         tiles[tile_char] = self
 
@@ -51,6 +56,40 @@ class Tile():
         self.uncommon_spawn += uncommon
         self.rare_spawn += rare
         self.exotic_spawn += exotic
+
+    def get_loot_list(self) -> list[str]:
+        output = []
+        if not self.generate_loot: return []
+        for item_name in self.always_spawn:
+            output.append(item_name)
+        possible_rarities = []
+        rarities_weights = []
+        if self.common_spawn:
+            possible_rarities.append("common")
+            rarities_weights.append(self.common_weight)
+        if self.uncommon_spawn:
+            possible_rarities.append("uncommon")
+            rarities_weights.append(self.uncommon_weight)
+        if self.rare_spawn:
+            possible_rarities.append("rare")
+            rarities_weights.append(self.rare_weight)
+        if self.exotic_spawn:
+            possible_rarities.append("exotic")
+            rarities_weights.append(self.exotic_weight)
+        num_items = random.randint(*self.loot_range)
+        if num_items == 0: return output
+        rarities = random.choices(possible_rarities, weights=rarities_weights, k=num_items)
+        for rarity in rarities:
+            match rarity:
+                case "common":
+                    output.append(random.choice(self.common_spawn))
+                case "uncommon":
+                    output.append(random.choice(self.uncommon_spawn))
+                case "rare":
+                    output.append(random.choice(self.rare_spawn))
+                case "exotic":
+                    output.append(random.choice(self.exotic_spawn))
+        return output
 
 debug_tile = Tile("*", "debug tile")
 debug_tile.forbidden = True
@@ -183,3 +222,9 @@ seventh_gate = Tile("7", "seventh gate")
 seventh_gate.forbidden = True
 seventh_gate.special = True
 
+if __name__ == "__main__":
+    for tile_char in tiles:
+        tile = tiles[tile_char]
+        loot_list = tile.get_loot_list()
+        if not loot_list: continue
+        print(f"{tile.name} loot: {' - '.join(loot_list)}")
