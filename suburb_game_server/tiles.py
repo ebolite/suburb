@@ -1,4 +1,9 @@
+import config
+
 tiles = {}      # tile: Tile
+
+anywhere_rare = ["empty captchalogue card"]
+anywhere_exotic = ["fancy+santa"]
 
 class Tile():
     def __init__(self, tile_char, name):
@@ -13,6 +18,20 @@ class Tile():
         self.door = False
         self.forbidden = False      # tiles that cannot be placed or modified by servers
         self.special = False        # tiles that are otherwise special for some reason
+        self.generate_loot = False
+        self.always_spawn = []
+        self.common_spawn = []
+        self.uncommon_spawn = []
+        self.rare_spawn = []
+        self.exotic_spawn = []
+        if name in config.itemcategoryrarities:
+            rarities = config.itemcategoryrarities
+            always = rarities["always"] or []
+            common = rarities["common"] or []
+            uncommon = rarities["common"] or []
+            rare = rarities["rare"] or []
+            exotic = rarities["exotic"] or []
+            self.set_loot(always, common, uncommon, rare, exotic)
         tiles[tile_char] = self
 
     def is_special(self) -> bool:
@@ -24,6 +43,14 @@ class Tile():
         if self.special: return True
         return False
     
+    def set_loot(self, always=[], common=[], uncommon=[], rare=[], exotic=[]):
+        self.generate_loot = True
+        self.always_spawn += always
+        self.common_spawn += common
+        self.uncommon_spawn += uncommon
+        self.rare_spawn += rare
+        self.exotic_spawn += exotic
+
 debug_tile = Tile("*", "debug tile")
 debug_tile.forbidden = True
 
