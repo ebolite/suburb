@@ -34,7 +34,7 @@ tiles = {
     "G": "sprites\\tiles\\garage.png",
     "g": "sprites\\tiles\\gameroom.png",
     "W": "sprites\\tiles\\workout.png",
-    "-": "sprites\\tiles\\hallway.png",
+    "-": "sprites\\tiles\\stairwell.png",
     "0": "sprites\\tiles\\returngate.png",
     "1": "sprites\\tiles\\gate1.png",
     "2": "sprites\\tiles\\gate2.png",

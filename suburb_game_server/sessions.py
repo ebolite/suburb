@@ -7,6 +7,7 @@ from copy import deepcopy
 
 import util
 import config
+import tiles
 
 map_tiles = {}
 
@@ -227,8 +228,8 @@ class Map():
                                [attr])
         return self.__dict__[attr]
 
-    def get_tile(self, x: int, y: int) -> str:
-        return self.map_tiles[y][x]
+    def get_tile(self, x: int, y: int) -> tiles.Tile:
+        return tiles.tiles[self.map_tiles[y][x]]
     
     def is_tile_in_bounds(self, x: int, y: int) -> bool:
         if y < 0: return False
@@ -340,7 +341,7 @@ class Room():
         return self.__dict__["name"]
 
     @property
-    def tile(self) -> str:
+    def tile(self) -> tiles.Tile:
         return self.map.get_tile(self.x, self.y)
 
 
@@ -374,8 +375,35 @@ class Player():
         if direction == "left": target_x, target_y = player_x-1, player_y
         if direction == "right": target_x, target_y = player_x+1, player_y
         if not map.is_tile_in_bounds(target_x, target_y): return False
-        target_tile = map.get_tile(target_x, target_y)
-        # todo: collision check
+        current_tile = map.get_tile(player_x, player_y)
+        while True:
+            target_tile = map.get_tile(target_x, target_y)
+            if target_tile.impassible: return False
+            if direction == "up":
+                if not target_tile.stair and not current_tile.stair: return False    # obey gravity
+                if target_tile.automove:
+                    target_y -= 1
+                    continue
+                else:
+                    break
+            if direction in ["right", "left"] and target_tile.ramp:
+                if direction == "right" and target_tile.ramp_direction in ["right", "both"]:
+                    target_x += 1
+                    target_y -= 1
+                    continue
+                elif direction == "left" and target_tile.ramp_direction in ["left", "both"]:
+                    target_x -= 1
+                    target_y -= 1
+                    continue
+            break
+        # fall
+        while not target_tile.stair:
+            fall_tile = map.get_tile(target_x, target_y+1)
+            if fall_tile.infallible or fall_tile.impassible: break
+            # fall in opposite direction that ramps face
+            if fall_tile.ramp and fall_tile.ramp_direction == "left": target_x += 1
+            if fall_tile.ramp and fall_tile.ramp_direction == "right": target_x -= 1
+            target_y += 1
         new_room = map.find_room(target_x, target_y)
         self.goto_room(new_room)
         return True

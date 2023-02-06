@@ -7,7 +7,7 @@ class Tile():
         self.impassible = False     # cannot be moved into or fallen through
         self.infallible = False     # can be moved into, but not fallen through
         self.ramp = False       # tiles that can take you up and to the side
-        self.fall_direction = "infallible"      # for ramps, the direction they will send you upon falling into them
+        self.ramp_direction = "not a ramp bro"      # for ramps, the direction they will send you upon falling into them
         self.stair = False      # tiles that allow you to go up and down, but prevent you from falling through
         self.automove = False       # tiles that, when moving into, will cause you to continue to move through a chain of themself without stopping
         self.door = False
@@ -33,8 +33,6 @@ out_of_bounds.impassible = True
 
 air = Tile(".", "air")
 
-hallway = Tile("-", "hallway")
-
 wall = Tile("|", "wall")
 wall.impassible = True
 
@@ -48,22 +46,26 @@ junction = Tile(";", "junction")
 
 left_ramp = Tile("\\", "left ramp")
 left_ramp.ramp = True
-left_ramp.fall_direction = "left"
+left_ramp.ramp_direction = "left"
 
-right_ramp = Tile("\\", "right ramp")
+right_ramp = Tile("/", "right ramp")
 right_ramp.ramp = True
-right_ramp.fall_direction = "right"
+right_ramp.ramp_direction = "right"
 
 girder = Tile("+", "girder")
 girder.infallible = True
 
 cross_ramp = Tile("X", "cross ramp")
 cross_ramp.ramp = True
+cross_ramp.ramp_direction = "both"
 cross_ramp.infallible = True
 
 stairs = Tile("^", "stairs")
 stairs.stair = True
 stairs.infallible = True
+
+stairwell = Tile("-", "stairwell")
+stairwell.stair = True
 
 elevator_shaft = Tile("v", "elevator shaft")
 elevator_shaft.stair = True
