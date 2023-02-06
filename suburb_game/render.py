@@ -184,12 +184,10 @@ class Tile(UIElement):
         self.rect.y = (self.y * tile_wh) + self.TileMap.rect.y
         self.surf.blit(image, (0, 0), (offsetx, offsety, tile_wh, tile_wh))
         if f"{self.x}, {self.y}" in self.specials:
-            print(f"{self.x}, {self.y}: {self.specials[f'{self.x}, {self.y}']}")
             room_specials = self.specials[f"{self.x}, {self.y}"]
             specials_keys = list(room_specials.keys()) + [None]
             drawing_index = int(((pygame.time.get_ticks() / 10) % FPS_CAP) / (FPS_CAP / len(specials_keys))) # full cycle each second
             drawing_name = specials_keys[drawing_index]
-            print(drawing_name)
             if drawing_name is not None: # if we're not drawing nothing (images should be flashing)
                 drawing_type = room_specials[drawing_name]
                 icon_image_filename = config.icons[drawing_type]
