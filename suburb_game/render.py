@@ -540,13 +540,15 @@ class RoomItemDisplay(UIElement):
         self.update_instances(instances)
 
     def update_instances(self, instances):
+        def get_button_func(button_instance_name):
+            def output_func():
+                suburb.display_item(self.instances, button_instance_name, suburb.map)
+            return output_func
         for button in self.buttons:
             button.delete()
         for index, instance_name in enumerate(instances):
-            def button_func():
-                suburb.display_item(self.instances, instance_name, suburb.map)
             item_name = instances[instance_name]["item_name"]
-            new_button = TextButton(self.x, self.y + 30*(index+1), 250, 30, item_name, button_func, truncate_text=True)
+            new_button = TextButton(self.x, self.y + 30*(index+1), 250, 30, item_name, get_button_func(instance_name), truncate_text=True)
             new_button.absolute = True 
             self.buttons.append(new_button)
 

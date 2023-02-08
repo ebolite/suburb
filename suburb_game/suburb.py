@@ -523,8 +523,11 @@ def map():
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
 def display_item(instances:dict, instance_name:str, last_scene:Callable):
+    instance_dict = instances[instance_name]
+    item_dict = instances[instance_name]["item_dict"]
     render.clear_elements()
     render.Image(0.5, 0.5, "sprites\\captchalogue_card.png")
+    render.Text(0.5, 0.33, f"{instance_dict['item_name']}")
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
 
 def title():

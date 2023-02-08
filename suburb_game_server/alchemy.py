@@ -335,6 +335,9 @@ class Item(): # Items are the base of instants.
 
     def __getattr__(self, attr):
         return util.items[self.__dict__["name"]][attr]
+    
+    def get_dict(self):
+        return util.items[self.__dict__["name"]]
 
 class Instance():
     def __init__(self, identifier: Union[Item, str]):
@@ -366,7 +369,10 @@ class Instance():
         return util.instances[self.__dict__["name"]][attr]
     
     def get_dict(self):
-        return util.instances[self.__dict__["name"]]
+        output = util.instances[self.__dict__["name"]]
+        item_dict = self.item.get_dict()
+        output["item_dict"] = item_dict
+        return output
     
     @property
     def item(self) -> Item:
