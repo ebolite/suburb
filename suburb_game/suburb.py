@@ -5,6 +5,7 @@ import hashlib
 import socket
 import time
 import os
+from typing import Callable
 
 import util
 import render
@@ -511,6 +512,21 @@ def debug_speedrun():
     client.requestplus("setup_character",  character_info)
     map()
 
+def map():
+    render.clear_elements()
+    dic = client.requestdic("current_map")
+    new_map = dic["map"]
+    specials = dic["specials"]
+    instances = dic["instances"]
+    print(instances)
+    item_display = render.RoomItemDisplay(100, 50, instances)
+    render.TileMap(0.5, 0.5, new_map, specials, item_display)
+
+def display_item(instances:dict, instance_name:str, last_scene:Callable):
+    render.clear_elements()
+    render.Image(0.5, 0.5, "sprites\\captchalogue_card.png")
+    backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
+
 def title():
     render.clear_elements()
     logo = render.Image(.5, .20, "sprites\\largeicon.png")
@@ -536,16 +552,6 @@ def title():
     conntext = render.Text(0, 30, conntextcontent)
     conntext.absolute = True
     debug_button = render.Button(.1, .95, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
-
-def map():
-    render.clear_elements()
-    dic = client.requestdic("current_map")
-    new_map = dic["map"]
-    specials = dic["specials"]
-    instances = dic["instances"]
-    print(instances)
-    item_display = render.RoomItemDisplay(100, 50, instances)
-    render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
 if __name__ == "__main__":
     client.connect() # connect to server
