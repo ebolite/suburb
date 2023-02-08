@@ -526,8 +526,20 @@ def display_item(instances:dict, instance_name:str, last_scene:Callable):
     instance_dict = instances[instance_name]
     item_dict = instances[instance_name]["item_dict"]
     render.clear_elements()
-    render.Image(0.5, 0.5, "sprites\\captchalogue_card.png")
-    render.Text(0.5, 0.33, f"{instance_dict['item_name']}")
+    captcha_image = render.Image(0.5, 0.5, "sprites\\captchalogue_card.png")
+    label = render.Text(0.5, 0.5, f"{instance_dict['item_name']}")
+    label.bind_to(captcha_image)
+    num_kinds = len(item_dict["kinds"])
+    for i, kind in enumerate(item_dict["kinds"]):
+        x = 1.2
+        y = (1/(num_kinds+1))*num_kinds/(i+1)
+        kind_image = render.Image(x, y, "sprites\\strife_card.png")
+        kind_image.bind_to(captcha_image)
+        kind_image.hover_to_top = True
+        kind_label = render.Text(0.55, 0.91, kind)
+        kind_label.bind_to(kind_image)
+        kind_label.fontsize = 16
+        kind_label.color = render.STRIFE_LIGHT_GREEN
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
 
 def title():

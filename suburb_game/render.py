@@ -30,11 +30,16 @@ LIGHT_COLOR = pygame.Color(0, 175, 255)
 DIM_COLOR = pygame.Color(157, 224, 255)
 BLACK_COLOR = pygame.Color(0, 0, 0)
 
+STRIFE_LIGHT_GREEN = pygame.Color(0, 227, 113)
+STRIFE_GREEN = pygame.Color(0, 140, 69)
+STRIFE_DARK_GREEN = pygame.Color(14, 96, 55)
+
 click_check = []
 key_check = []
 mouseup_check = []
 update_check = []
 keypress_update_check = []
+move_to_top = []
 
 ui_elements = []
 
@@ -54,6 +59,11 @@ class UIElement(pygame.sprite.Sprite):
     def __init__(self): # x and y as fractions of 1 (centered position on screen)
         super(UIElement, self).__init__()
         self.rect: Union[pygame.Rect, pygame.rect.Rect] = pygame.Rect(0, 0, 0, 0)
+        self.relative_binding: Optional[UIElement] = None
+        self.absolute = False
+        self.x = 0
+        self.y = 0
+        self.bound_elements = []
         ui_elements.append(self)
 
     def mouseover(self): # returns True if mouse is over this element
@@ -62,6 +72,13 @@ class UIElement(pygame.sprite.Sprite):
 
     def collidepoint(self, pos):
         return self.rect.collidepoint(pos)
+    
+    def is_mouseover(self):
+        return self.collidepoint(pygame.mouse.get_pos())
+
+    def bind_to(self, element: "UIElement"):
+        self.relative_binding = element
+        element.bound_elements.append(self)
 
     def delete(self):
         if self in ui_elements:
@@ -70,6 +87,30 @@ class UIElement(pygame.sprite.Sprite):
             if self in list:
                 list.remove(self)
         self.kill()
+
+    def get_rect_xy(self, secondary_surf:Union[pygame.Surface, pygame.surface.Surface, None] = None) -> tuple[int, int]:
+        rect_x: int = 0
+        rect_y: int = 0
+        if secondary_surf is not None:
+            secondary_surf_width = secondary_surf.get_width()
+            secondary_surf_height = secondary_surf.get_height()
+        else:
+            secondary_surf_width = 0
+            secondary_surf_height = 0
+        if self.absolute:
+            rect_x = self.x
+            rect_y = self.y
+            if self.relative_binding is not None:
+                rect_x += self.relative_binding.rect.x
+                rect_y += self.relative_binding.rect.y
+        else:
+            if self.relative_binding is None:
+                rect_x = int((SCREEN_WIDTH * self.x) - secondary_surf_width/2)
+                rect_y = int((SCREEN_HEIGHT * self.y) - secondary_surf_height/2)
+            else:
+                rect_x = int(self.relative_binding.rect.x - secondary_surf_width/2) + self.x*self.relative_binding.rect.w
+                rect_y = int(self.relative_binding.rect.y - secondary_surf_height/2) + self.y*self.relative_binding.rect.h
+        return rect_x, rect_y
 
 class SolidColor(UIElement):
     def __init__(self, x, y, w, h, color: pygame.Color):
@@ -86,12 +127,7 @@ class SolidColor(UIElement):
         self.surf = pygame.Surface((self.w, self.h))
         self.surf.fill(self.color)
         self.rect = self.surf.get_rect()
-        if self.absolute:
-            self.rect.x = self.x
-            self.rect.y = self.y
-        else:
-            #todo: relative positioning
-            pass
+        self.rect.x, self.rect.y = self.get_rect_xy()
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))
 
 class TextButton(UIElement):
@@ -137,12 +173,7 @@ class TextButton(UIElement):
         else:
             self.hoversurf = None
         self.rect = self.outline_surf.get_rect()
-        if self.absolute:
-            self.rect.x = self.x
-            self.rect.y = self.y
-        else:
-            self.rect.x = int((SCREEN_WIDTH * self.x) - (self.outline_surf.get_width() / 2))
-            self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.outline_surf.get_height() / 2))
+        self.rect.x, self.rect.y = self.get_rect_xy(self.outline_surf)
         screen.blit(self.outline_surf, ((self.rect.x, self.rect.y)))
         screen.blit(self.surf, ((self.rect.x+self.outlinedepth, self.rect.y+self.outlinedepth)))
         screen.blit(self.text_surf, ((self.rect.x+(self.outline_surf.get_width()/2)-(self.text_surf.get_width()/2), self.rect.y+(self.outline_surf.get_height()/2)-(self.text_surf.get_height()/2))))
@@ -203,12 +234,7 @@ class Button(UIElement):
                 else:
                     self.surf = pygame.image.load(self.unpressed_img_path).convert()
         self.rect = self.surf.get_rect()
-        if self.absolute:
-            self.rect.x = self.x
-            self.rect.y = self.y
-        else:
-            self.rect.x = (SCREEN_WIDTH * self.x) - self.surf.get_width() / 2
-            self.rect.y = (SCREEN_HEIGHT * self.y) - self.surf.get_height() / 2
+        self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
@@ -258,16 +284,13 @@ class InputTextBox(UIElement):
         self.outline_surf.fill(LIGHT_COLOR)
 
         self.rect = self.outline_surf.get_rect()
-        self.rect.x = int((SCREEN_WIDTH * self.x) - self.outline_surf.get_width() / 2)
-        self.rect.y = int((SCREEN_HEIGHT * self.y) - self.outline_surf.get_height() / 2)
+        self.rect.x, self.rect.y = self.get_rect_xy(self.outline_surf)
         screen.blit(self.outline_surf, (self.rect.x, self.rect.y))
 
-        surfx = (SCREEN_WIDTH * self.x) - self.surf.get_width() / 2
-        surfy = (SCREEN_HEIGHT * self.y) - self.surf.get_height() / 2
+        surfx, surfy = self.get_rect_xy(self.surf)
         screen.blit(self.surf, (surfx, surfy))
 
-        textx = (SCREEN_WIDTH * self.x) - self.text_surf.get_width() / 2
-        texty = (SCREEN_HEIGHT * self.y) - self.text_surf.get_height() / 2
+        textx, texty = self.get_rect_xy(self.text_surf)
         screen.blit(self.text_surf, (textx, texty))
 
         if self.active and keys[pygame.K_BACKSPACE]:
@@ -295,9 +318,6 @@ class InputTextBox(UIElement):
                 if event.unicode.isascii() and event.unicode not in  ["\n", "\t", "\r"]: #no newline, tab or carriage return
                     self.text += event.unicode
 
-    def collidepoint(self, pos):
-        return self.rect.collidepoint(pos)
-
 class Image(UIElement):
     def __init__(self, x, y, path):
         super(Image, self).__init__()
@@ -306,6 +326,7 @@ class Image(UIElement):
         self.path = path
         self.absolute = False
         self.animated = False
+        self.hover_to_top = False
         self.animframe = 1
         self.animframes = 1
         self.speed = 3
@@ -326,16 +347,22 @@ class Image(UIElement):
         else:
             self.surf = pygame.image.load(self.path).convert()
         self.rect = self.surf.get_rect()
-        if self.absolute:
-            self.rect.x = self.x
-            self.rect.y = self.y
-        else:
-            self.rect.x = int((SCREEN_WIDTH * self.x) - self.surf.get_width() / 2)
-            self.rect.y = int((SCREEN_HEIGHT * self.y) - self.surf.get_height() / 2)
+        self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         if self.highlight_color != None:
             self.highlight_surf = pygame.Surface((self.surf.get_width(), self.surf.get_height()))
             self.highlight_surf.fill(self.highlight_color)
             screen.blit(self.highlight_surf, (self.rect.x, self.rect.y))
+        if self.hover_to_top and self.is_mouseover():
+            for ui_element in update_check:
+                if not ui_element.is_mouseover(): continue
+                # we want to bring this to the top of drawing only if it's not behind anything
+                if update_check.index(self) < update_check.index(ui_element): break
+            else:
+                # move to top (last in update_check list)
+                move_to_top.append(self)
+                # move our bound elements to the top
+                for ui_element in self.bound_elements:
+                    move_to_top.append(ui_element)
         screen.blit(self.surf, (self.rect.x, self.rect.y))
 
 class Text(UIElement):
@@ -354,12 +381,7 @@ class Text(UIElement):
     def update(self):
         self.text_surf = self.font.render(self.text, True, self.color)
         self.rect = self.text_surf.get_rect()
-        if self.absolute:
-            self.rect.x = self.x
-            self.rect.y = self.y
-        else:
-            self.rect.x = int((SCREEN_WIDTH * self.x) - self.text_surf.get_width() / 2)
-            self.rect.y = int((SCREEN_HEIGHT * self.y) - self.text_surf.get_height() / 2)
+        self.rect.x, self.rect.y = self.get_rect_xy(self.text_surf)
         if self.outline_color != None:
             self.outline_surf = self.font.render(self.text, True, self.outline_color)
             # screen.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y + self.outline_depth)) # +y +x
@@ -542,7 +564,7 @@ class RoomItemDisplay(UIElement):
     def update_instances(self, instances):
         def get_button_func(button_instance_name):
             def output_func():
-                suburb.display_item(self.instances, button_instance_name, suburb.map)
+                suburb.display_item(instances, button_instance_name, suburb.map)
             return output_func
         for button in self.buttons:
             button.delete()
@@ -553,6 +575,10 @@ class RoomItemDisplay(UIElement):
             self.buttons.append(new_button)
 
 def render():
+    for ui_element in move_to_top.copy():
+        update_check.remove(ui_element)
+        update_check.append(ui_element)
+        move_to_top.remove(ui_element)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return False
