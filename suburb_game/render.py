@@ -26,8 +26,8 @@ screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
 base_font = pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), 32)
 WHITE_COLOR = pygame.Color(255, 255, 255)
-LIGHT_COLOR = pygame.Color(0, 175, 255)
-DIM_COLOR = pygame.Color(157, 224, 255)
+DARK_COLOR = pygame.Color(0, 175, 255)
+LIGHT_COLOR = pygame.Color(157, 224, 255)
 BLACK_COLOR = pygame.Color(0, 0, 0)
 
 STRIFE_LIGHT_GREEN = pygame.Color(0, 227, 113)
@@ -163,12 +163,12 @@ class TextButton(UIElement):
             if self.text[-1] == " ": self.text = self.text[:-1]
             self.text_surf = self.font.render(self.text+"...", True, self.text_color)
         self.outline_surf = pygame.Surface((self.w, self.h))
-        self.outline_surf.fill(LIGHT_COLOR)
+        self.outline_surf.fill(DARK_COLOR)
         self.surf = pygame.Surface((self.w-2*self.outlinedepth, self.h-2*self.outlinedepth))
         self.surf.fill(WHITE_COLOR)
         if self.active:
             self.hoversurf = pygame.Surface((self.w, self.h))
-            self.hoversurf.fill(LIGHT_COLOR)
+            self.hoversurf.fill(DARK_COLOR)
             self.hoversurf.set_alpha(89)
         else:
             self.hoversurf = None
@@ -276,12 +276,12 @@ class InputTextBox(UIElement):
         outline = 3
         self.surf = pygame.Surface((width, height))
         if self.active:
-            self.surf.fill(DIM_COLOR)
+            self.surf.fill(LIGHT_COLOR)
         else:
             self.surf.fill(WHITE_COLOR)
 
         self.outline_surf = pygame.Surface((width + (outline * 2), height + (outline  * 2)))
-        self.outline_surf.fill(LIGHT_COLOR)
+        self.outline_surf.fill(DARK_COLOR)
 
         self.rect = self.outline_surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.outline_surf)
@@ -345,7 +345,7 @@ class Image(UIElement):
             else:
                 self.wait += 1
         else:
-            self.surf = pygame.image.load(self.path).convert()
+            self.surf = pygame.image.load(self.path)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         if self.highlight_color != None:
@@ -596,7 +596,7 @@ def render():
             for sprite in key_check:
                 sprite.keypress(event)
 
-    screen.fill(DIM_COLOR)
+    screen.fill(LIGHT_COLOR)
     keys = pygame.key.get_pressed()
 
     for sprite in update_check:
