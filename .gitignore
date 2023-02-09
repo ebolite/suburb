@@ -1,4 +1,6 @@
 suburb_bot_old/.git_old/
+suburb_game/__pycache__/
+suburb_game/sprites/captchas
 *.env
 # Byte-compiled / optimized / DLL files
 __pycache__/
