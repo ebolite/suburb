@@ -15,7 +15,7 @@ import render
 import client
 import config
 
-captcha_generator = ImageCaptcha(width = 204, height = 288)
+captcha_generator = ImageCaptcha(width = 204, height = 288, fonts=["fonts/cour.ttf", "fonts/courbd.ttf", "fonts/courbi.ttf", "fonts/couri.ttf"])
 
 def get_captcha(code) -> str:
     path = f"sprites\\captchas\\{code}.png".replace("?", "-")
