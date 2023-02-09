@@ -336,7 +336,7 @@ class Image(UIElement):
 
     def update(self):
         if self.animated:
-            self.surf = pygame.image.load(self.path+f"-{self.animframe}.png")
+            self.surf = pygame.image.load(self.path+f"-{self.animframe}.png").convert()
             if self.wait == self.speed:
                 self.animframe += 1
                 if self.animframe > self.animframes:
@@ -345,7 +345,8 @@ class Image(UIElement):
             else:
                 self.wait += 1
         else:
-            self.surf = pygame.image.load(self.path)
+            try: self.surf
+            except AttributeError: self.surf = pygame.image.load(self.path)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         if self.highlight_color != None:
@@ -479,11 +480,19 @@ class Tile(UIElement):
         self.y = y
         self.TileMap = TileMap
         self.specials = specials
+        self.last_tile = self.tile
+
+    def update_image(self):
+        try: self.image
+        except AttributeError: self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
+        if self.last_tile != self.tile: 
+            self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
+            self.last_tile = self.tile
 
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly
         if self.x == len(self.TileMap.map[0]) - 1 or self.y == len(self.TileMap.map) - 1: return # ^
-        image = pygame.image.load(self.image)
+        self.update_image()
         self.surf = pygame.Surface((tile_wh, tile_wh))
         offsety = 0
         offsetx = 0
@@ -514,7 +523,7 @@ class Tile(UIElement):
         self.rect = self.surf.get_rect()
         self.rect.x = (self.x * tile_wh) + self.TileMap.rect.x
         self.rect.y = (self.y * tile_wh) + self.TileMap.rect.y
-        self.surf.blit(image, (0, 0), (offsetx, offsety, tile_wh, tile_wh))
+        self.surf.blit(self.image, (0, 0), (offsetx, offsety, tile_wh, tile_wh))
         if f"{self.x}, {self.y}" in self.specials:
             room_specials = self.specials[f"{self.x}, {self.y}"]
             specials_keys = list(room_specials.keys()) + [None]
@@ -544,7 +553,7 @@ class Tile(UIElement):
         return self.TileMap.map[self.y][self.x]
 
     @property
-    def image(self): # returns path to image
+    def image_path(self): # returns path to image
         if self.tile in config.tiles:
             return config.tiles[self.tile]
         else:
