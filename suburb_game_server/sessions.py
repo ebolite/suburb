@@ -314,9 +314,10 @@ class Room():
         if player.username in self.players:
             self.players.remove(player.username)
 
-    def generate_loot(self):
+    def generate_loot(self, spawns: Optional[list[str]] = None):
         if not self.tile.generate_loot: return
-        spawns = self.tile.get_loot_list()
+        if spawns is None:
+            spawns = self.tile.get_loot_list()
         for item_name in spawns:
             item = alchemy.Item(item_name)
             instance = alchemy.Instance(item)

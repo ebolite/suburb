@@ -8,6 +8,7 @@ import time
 import sessions
 import util
 import config
+import tiles
 
 HOST_IP = "192.168.4.28"
 PORT = 25565
@@ -96,6 +97,8 @@ def handle_request(dict):
                 print(f"housemap session {housemap.session.name} {housemap.session}")
                 print(f"overmap {housemap.overmap.name} {housemap.overmap}")
                 room = housemap.random_valid_room(config.starting_tiles)
+                for interest in player.interests:
+                    room.generate_loot(tiles.get_tile(interest).get_loot_list())
                 player.goto_room(room)
                 player.setup = True
                 return f"Your land is the {land.title}! ({land.acronym})"

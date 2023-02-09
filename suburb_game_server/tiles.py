@@ -91,6 +91,13 @@ class Tile():
                     output.append(random.choice(self.exotic_spawn))
         return output
 
+def get_tile(tile_char) -> Tile:
+    return tiles[tile_char]
+
+for interest in config.interests: # for interest loot tables
+    interest_tile = Tile(interest, interest)
+    interest_tile.forbidden = True
+
 debug_tile = Tile("*", "debug tile")
 debug_tile.forbidden = True
 
