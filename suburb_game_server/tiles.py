@@ -137,8 +137,10 @@ stairwell.stair = True
 elevator_shaft = Tile("v", "elevator shaft")
 elevator_shaft.stair = True
 elevator_shaft.automove = True
+elevator_shaft.infallible = True
 
 elevator = Tile("e", "elevator")
+elevator.stair = True
 
 left_door = Tile("<", "left door")
 left_door.door = True

@@ -412,6 +412,12 @@ class Player():
                     continue
                 else:
                     break
+            if direction == "down":
+                if target_tile.automove:
+                    target_y += 1
+                    continue
+                else:
+                    break
             if direction in ["right", "left"] and target_tile.ramp:
                 if direction == "right" and target_tile.ramp_direction in ["right", "both"]:
                     target_x += 1
