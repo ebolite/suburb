@@ -21,13 +21,15 @@ class Modus():
         self.modus_name = "modus"
         self.data_type = "list"     # list or dict
     
-    def is_valid_instance(self, instance: Instance):
+    def verify(self, instance: Instance, sylladex: "Sylladex") -> bool:
+        if sylladex.empty_cards == 0: return False
         if instance.size > self.size_limit: return False
+        if "success" in client.requestplus("add_instance_to_sylladex", {"instance_name": instance.instance_name, "modus_name": self.modus_name}): return True
+        else: return False
 
     def add_instance_to_sylladex(self, instance: Instance, sylladex: "Sylladex"):
-        if sylladex.empty_cards == 0: return False
-        if not self.is_valid_instance(instance): return False
-        success = client.requestplus("add_instance_to_sylladex", {"instance_name": instance.instance_name, "modus_name": self.modus_name})
+            if not self.verify(instance, sylladex): return False
+            sylladex.deck.append(instance)
 
 class Sylladex():
     def __init__(self, modus: Modus, player_name: str, connection_host_port: str = f"{client.HOST}:{client.PORT}"):

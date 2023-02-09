@@ -381,8 +381,8 @@ class Player():
             self.overmap_name = None
             self.map_name = None
             self.room_name = None
-            self.sylladexes = {}
-            self.moduses = []
+            self.sylladexes: dict = {}
+            self.moduses: list = []
             self.empty_cards = 3
             self.setup = False
 
@@ -398,7 +398,7 @@ class Player():
         out = util.players[self.__dict__["username"]]
         return out
     
-    def add_instance_to_sylladex(self, instance_name: str, modus_name: str):
+    def add_instance_to_sylladex(self, instance_name: str, modus_name: str) -> bool:
         if instance_name not in self.room.instances: return False
         if modus_name not in self.sylladexes: return False
         if instance_name in self.sylladexes[modus_name]: return False
@@ -408,7 +408,7 @@ class Player():
         self.sylladexes[modus_name].append(instance_name)
         return True
 
-    def add_modus(self, modus_name):
+    def add_modus(self, modus_name: str) -> bool:
         if modus_name in self.sylladexes: return False
         if modus_name not in self.sylladexes: self.sylladexes[modus_name] = []
         return True

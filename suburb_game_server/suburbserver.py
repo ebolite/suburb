@@ -112,7 +112,9 @@ def handle_request(dict):
         case "add_instance_to_sylladex":
             instance_name = content["instance_name"]
             modus_name = content["modus_name"]
-            player.add_instance_to_sylladex(instance_name, modus_name)
+            success = player.add_instance_to_sylladex(instance_name, modus_name)
+            if success: return "success"
+            else: return "failure"
         case "move":
             player.attempt_move(content)
             return
