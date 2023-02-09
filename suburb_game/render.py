@@ -346,7 +346,8 @@ class Image(UIElement):
                 self.wait += 1
         else:
             try: self.surf
-            except AttributeError: self.surf = pygame.image.load(self.path)
+            except AttributeError: 
+                self.surf = pygame.image.load(self.path)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         if self.highlight_color != None:

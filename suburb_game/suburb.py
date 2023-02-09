@@ -4,13 +4,31 @@ import pathlib
 import hashlib
 import socket
 import time
+from captcha.image import ImageCaptcha
+import cv2
 import os
+import numpy as np
 from typing import Callable
 
 import util
 import render
 import client
 import config
+
+captcha_generator = ImageCaptcha(width = 204, height = 288)
+
+def get_captcha(code) -> str:
+    path = f"sprites\\captchas\\{code}.png".replace("?", "-")
+    if not os.path.isfile(path):
+        captcha_generator.write(code, path)
+        img = cv2.imread(path)
+        mask = cv2.imread("sprites\\mask.png")
+        img_masked = cv2.bitwise_and(img, mask)
+        black_mask = np.all(img_masked<=2, axis=-1)
+        alpha = np.uint8(np.logical_not(black_mask)) * 255
+        bgra = np.dstack((img_masked, alpha))
+        cv2.imwrite(path, bgra)
+    return path
 
 def placeholder():
     pass
@@ -365,6 +383,7 @@ def choosegrists():
             if logtext.text == t:
                 character_info["gristcategory"] = grist
                 logtext.text = client.requestplus("setup_character",  character_info)
+                map()
             else:
                 logtext.text = t
         return out
@@ -522,30 +541,48 @@ def map():
     item_display = render.RoomItemDisplay(100, 50, instances)
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
-def display_item(instances:dict, instance_name:str, last_scene:Callable):
+def display_item(instances:dict, instance_name:str, last_scene:Callable, flipped=False):
     instance_dict = instances[instance_name]
     item_dict = instances[instance_name]["item_dict"]
     item_name = instance_dict['item_name']
     render.clear_elements()
-    captcha_image = render.Image(0.5, 0.5, "sprites\\captchalogue_card.png")
-    if os.path.isfile(f"sprites\\items\\{item_name}.png"):
-        image = render.Image(0.5, 0.5, f"sprites\\items\\{item_name}.png")
-        image.bind_to(captcha_image)
-    label = render.Text(0.55, 0.91, util.filter_item_name(item_name))
-    label.bind_to(captcha_image)
-    label.color = render.DARK_COLOR
-    label.set_fontsize_by_width(240)
+    def flip():
+        display_item(instances, instance_name, last_scene, flipped=not flipped)
+    if not flipped:
+        captcha_image = render.Button(0.5, 0.4, "sprites\\itemdisplay\\captchalogue_card.png", "sprites\\itemdisplay\\captchalogue_card.png", flip)
+        if os.path.isfile(f"sprites\\items\\{item_name}.png"):
+            image = render.Image(0.5, 0.5, f"sprites\\items\\{item_name}.png")
+            image.bind_to(captcha_image)
+        label = render.Text(0.55, 0.91, util.filter_item_name(item_name))
+        label.bind_to(captcha_image)
+        label.color = render.DARK_COLOR
+        label.set_fontsize_by_width(240)
+    else:
+        code = item_dict["code"]
+        captcha_image = render.Button(0.5, 0.4, "sprites\\itemdisplay\\captchalogue_card_flipped.png", "sprites\\itemdisplay\\captchalogue_card_flipped.png", flip)
+        captcha_code = render.Image(76, 46, get_captcha(code))
+        captcha_code.bind_to(captcha_image)
+        captcha_code.absolute = True
+    power = item_dict["power"]
+    power_bar = render.Image(0.5, 1.15, "sprites\\itemdisplay\\power_bar.png")
+    power_bar.bind_to(captcha_image)
+    power_label = render.Text(0.512, 0.51, str(power))
+    power_label.bind_to(power_bar)
+    power_label.color = render.DARK_COLOR
+    power_label.fontsize = 54
+    power_label.set_fontsize_by_width(330)
     num_kinds = len(item_dict["kinds"])
     for i, kind in enumerate(item_dict["kinds"]):
         x = 1.2
         y = (1/(num_kinds+1))*num_kinds/(i+1)
-        kind_card_image = render.Image(x, y, "sprites\\strife_card.png")
+        kind_card_image = render.Image(x, y, "sprites\\itemdisplay\\strife_card.png")
         kind_card_image.bind_to(captcha_image)
         kind_card_image.hover_to_top = True
         kind_label = render.Text(0.55, 0.91, kind)
         kind_label.bind_to(kind_card_image)
         kind_label.fontsize = 16
         kind_label.color = render.STRIFE_LIGHT_GREEN
+        kind_label.set_fontsize_by_width(120)
         if os.path.isfile(f"sprites\\kinds\\{kind}.png"):
             kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{kind}.png")
             kind_image.bind_to(kind_card_image)

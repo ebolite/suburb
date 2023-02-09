@@ -117,6 +117,10 @@ def autosave():
         if time.time() - last_save > 60:
             util.saveall()
             last_save = time.time()
+
+def console():
+    while True:
+        console_input = input()
             
     
 if __name__ == "__main__":
@@ -127,6 +131,7 @@ if __name__ == "__main__":
         print(str(e))
 
     start_new_thread(autosave, ())
+    start_new_thread(console, ())
 
     print("Waiting for connections...")
     ServerSocket.listen(5)
