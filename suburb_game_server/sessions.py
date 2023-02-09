@@ -381,6 +381,8 @@ class Player():
             self.overmap_name = None
             self.map_name = None
             self.room_name = None
+            self.sylladex_list = []
+            self.empty_cards = 3
             self.setup = False
 
     def __setattr__(self, attr, value):
@@ -390,6 +392,10 @@ class Player():
     def __getattr__(self, attr):
         self.__dict__[attr] = util.players[self.__dict__["username"]][attr]
         return self.__dict__[attr]
+    
+    def get_dict(self):
+        out = util.players[self.__dict__["username"]]
+        return out
     
     def attempt_move(self, direction: str) -> bool:
         player_x = self.room.x

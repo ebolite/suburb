@@ -106,6 +106,8 @@ def handle_request(dict):
         case "current_map":
             map_tiles, map_specials, room_instances = player.get_view()
             return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances})
+        case "player_info":
+            return json.dumps(player.get_dict)
         case "move":
             player.attempt_move(content)
             return

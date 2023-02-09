@@ -44,4 +44,8 @@ class Sylladex():
             if modus.data_type == "dict":
                 util.sylladexes[connection_host_port][player_name][modus.modus_name] = {}
         self.deck: list[Instance] = []
-        self.empty_cards = 0
+    
+    @property
+    def empty_cards(self) -> int:
+        dic = client.requestdic("player_info")
+        return int(dic["empty_cards"])
