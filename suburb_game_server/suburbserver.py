@@ -61,8 +61,8 @@ def handle_request(dict):
     character_pass_hash = dict["character_pass_hash"]
     content = dict["content"]
     if intent == "create_character":
-        if character in session.players:
-            return f"Character `{character}` already exists."
+        if character in util.players:
+            return f"Character id `{character}` has already been made."
         else:
             player = sessions.Player(character)
             player.character_pass_hash = character_pass_hash
