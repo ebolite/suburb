@@ -531,7 +531,7 @@ def display_item(instances:dict, instance_name:str, last_scene:Callable):
     if os.path.isfile(f"sprites\\items\\{item_name}.png"):
         image = render.Image(0.5, 0.5, f"sprites\\items\\{item_name}.png")
         image.bind_to(captcha_image)
-    label = render.Text(0.55, 0.91, item_name)
+    label = render.Text(0.55, 0.91, util.filter_item_name(item_name))
     label.bind_to(captcha_image)
     label.color = render.DARK_COLOR
     label.set_fontsize_by_width(240)
@@ -588,8 +588,6 @@ if __name__ == "__main__":
     # continue to render until render.render() returns False
     while render.render():
         ...
-
-
 
 test_map = [
 [".",".",".",".",".",".",".",".",".",],

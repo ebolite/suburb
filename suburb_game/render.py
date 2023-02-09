@@ -585,7 +585,7 @@ class RoomItemDisplay(UIElement):
             button.delete()
         for index, instance_name in enumerate(instances):
             item_name = instances[instance_name]["item_name"]
-            new_button = TextButton(self.x, self.y + 30*(index+1), 250, 30, item_name, get_button_func(instance_name), truncate_text=True)
+            new_button = TextButton(self.x, self.y + 30*(index+1), 250, 30, util.filter_item_name(item_name), get_button_func(instance_name), truncate_text=True)
             new_button.absolute = True 
             self.buttons.append(new_button)
 
