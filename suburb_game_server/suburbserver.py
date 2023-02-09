@@ -66,6 +66,8 @@ def handle_request(dict):
             player = sessions.Player(character)
             player.character_pass_hash = character_pass_hash
             return f"Successfully created `{character}`. You may now log in."
+    if character not in util.players:
+        return f"Character {character} does not exist."
     player = sessions.Player(character)
     if not player.verify(character_pass_hash):
         return f"Incorrect character password."
