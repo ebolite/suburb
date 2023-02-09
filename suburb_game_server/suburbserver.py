@@ -28,7 +28,8 @@ def threaded_client(connection):
             session_name = dict["session_name"]
             session_pass_hash = dict["session_pass_hash"]
             if intent == "create_session":
-                if session_name in util.sessions:
+                if len(session_name) > 32: reply = "fuck you"
+                elif session_name in util.sessions:
                     reply = f"The session `{session_name}` is already registered."
                 else:
                     session = sessions.Session(session_name)
