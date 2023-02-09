@@ -381,7 +381,8 @@ class Player():
             self.overmap_name = None
             self.map_name = None
             self.room_name = None
-            self.sylladex_list = []
+            self.sylladexes = {}
+            self.moduses = []
             self.empty_cards = 3
             self.setup = False
 
@@ -396,6 +397,21 @@ class Player():
     def get_dict(self):
         out = util.players[self.__dict__["username"]]
         return out
+    
+    def add_instance_to_sylladex(self, instance_name: str, modus_name: str):
+        if instance_name not in self.room.instances: return False
+        if modus_name not in self.sylladexes: return False
+        if instance_name in self.sylladexes[modus_name]: return False
+        max_size = config.modus_max_sizes.get(modus_name, 30)
+        instance = alchemy.Instance(instance_name)
+        if instance.item.size > max_size: return False
+        self.sylladexes[modus_name].append(instance_name)
+        return True
+
+    def add_modus(self, modus_name):
+        if modus_name in self.sylladexes: return False
+        if modus_name not in self.sylladexes: self.sylladexes[modus_name] = []
+        return True
     
     def attempt_move(self, direction: str) -> bool:
         player_x = self.room.x

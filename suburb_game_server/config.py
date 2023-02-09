@@ -146,6 +146,8 @@ grists = {
     "zilium": {"tier": 10, "exotic": True},
 }
 
+modus_max_sizes = {"wallet": 413612}
+
 enemies = ["imp", "ogre", "basilisk", "octopisc", "lich", "titachnid", "serpentipede", "giclops", "bicephalon", "acheron"]
 
 gristcategories = {

@@ -6,6 +6,7 @@ import hashlib
 import time
 
 import sessions
+import alchemy
 import util
 import config
 import tiles
@@ -108,6 +109,10 @@ def handle_request(dict):
             return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances})
         case "player_info":
             return json.dumps(player.get_dict)
+        case "add_instance_to_sylladex":
+            instance_name = content["instance_name"]
+            modus_name = content["modus_name"]
+            player.add_instance_to_sylladex(instance_name, modus_name)
         case "move":
             player.attempt_move(content)
             return

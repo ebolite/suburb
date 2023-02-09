@@ -27,7 +27,7 @@ class Modus():
     def add_instance_to_sylladex(self, instance: Instance, sylladex: "Sylladex"):
         if sylladex.empty_cards == 0: return False
         if not self.is_valid_instance(instance): return False
-        sylladex.deck.append(instance)
+        success = client.requestplus("add_instance_to_sylladex", {"instance_name": instance.instance_name, "modus_name": self.modus_name})
 
 class Sylladex():
     def __init__(self, modus: Modus, player_name: str, connection_host_port: str = f"{client.HOST}:{client.PORT}"):
@@ -44,8 +44,8 @@ class Sylladex():
             if modus.data_type == "dict":
                 util.sylladexes[connection_host_port][player_name][modus.modus_name] = {}
         self.deck: list[Instance] = []
-    
+
     @property
     def empty_cards(self) -> int:
         dic = client.requestdic("player_info")
-        return int(dic["empty_cards"])
+        return int(dic["empty_cards"])    
