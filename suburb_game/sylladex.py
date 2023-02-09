@@ -9,6 +9,7 @@ class Instance():
         self.item_name = instance_dict["item_name"]
         self.item_dict = instance_dict["item_dict"]
         self.power = self.item_dict["power"]
+        self.size = self.item_dict["size"]
         self.code = self.item_dict["code"]
         self.kinds = self.item_dict["kinds"]
 
@@ -19,6 +20,14 @@ class Modus():
         self.size_limit = 30
         self.modus_name = "modus"
         self.data_type = "list"     # list or dict
+    
+    def is_valid_instance(self, instance: Instance):
+        if instance.size > self.size_limit: return False
+
+    def add_instance_to_sylladex(self, instance: Instance, sylladex: "Sylladex"):
+        if sylladex.empty_cards == 0: return False
+        if not self.is_valid_instance(instance): return False
+        sylladex.deck.append(instance)
 
 class Sylladex():
     def __init__(self, modus: Modus, player_name: str, connection_host_port: str = f"{client.HOST}:{client.PORT}"):
@@ -34,4 +43,5 @@ class Sylladex():
                 util.sylladexes[connection_host_port][player_name][modus.modus_name] = []
             if modus.data_type == "dict":
                 util.sylladexes[connection_host_port][player_name][modus.modus_name] = {}
-        self.deck = []
+        self.deck: list[Instance] = []
+        self.empty_cards = 0

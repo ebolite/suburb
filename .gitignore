@@ -6,6 +6,7 @@ suburb_game/sprites/captchas
 __pycache__/
 json/
 backups/
+pickle/
 *.py[cod]
 *$py.class
 
