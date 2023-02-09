@@ -379,6 +379,12 @@ class Text(UIElement):
         self.fontsize = 32
         update_check.append(self)
 
+    def set_fontsize_by_width(self, width):
+        text_surf = self.font.render(self.text, True, self.color)
+        while text_surf.get_width() > width:
+            self.fontsize -= 1
+            text_surf = self.font.render(self.text, True, self.color)
+
     def update(self):
         self.text_surf = self.font.render(self.text, True, self.color)
         self.rect = self.text_surf.get_rect()
