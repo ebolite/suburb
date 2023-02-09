@@ -14,6 +14,8 @@ import util
 import render
 import client
 import config
+import sylladex
+from sylladex import Instance
 
 captcha_generator = ImageCaptcha(width = 261, height = 336, fonts=["fonts/cour.ttf", "fonts/courbd.ttf", "fonts/courbi.ttf", "fonts/couri.ttf"])
 
@@ -543,27 +545,26 @@ def map():
 
 def display_item(instances:dict, instance_name:str, last_scene:Callable, flipped=False):
     instance_dict = instances[instance_name]
-    item_dict = instances[instance_name]["item_dict"]
-    item_name = instance_dict['item_name']
+    instance = Instance(instance_name, instance_dict)
     render.clear_elements()
     def flip():
         display_item(instances, instance_name, last_scene, flipped=not flipped)
     if not flipped:
         captcha_image = render.Button(0.5, 0.4, "sprites\\itemdisplay\\captchalogue_card.png", "sprites\\itemdisplay\\captchalogue_card.png", flip)
-        if os.path.isfile(f"sprites\\items\\{item_name}.png"):
-            image = render.Image(0.5, 0.5, f"sprites\\items\\{item_name}.png")
+        if os.path.isfile(f"sprites\\items\\{instance.item_name}.png"):
+            image = render.Image(0.5, 0.5, f"sprites\\items\\{instance.item_name}.png")
             image.bind_to(captcha_image)
-        label = render.Text(0.55, 0.91, util.filter_item_name(item_name))
+        label = render.Text(0.55, 0.91, util.filter_item_name(instance.item_name))
         label.bind_to(captcha_image)
         label.color = render.DARK_COLOR
         label.set_fontsize_by_width(240)
     else:
-        code = item_dict["code"]
+        code = instance.code
         captcha_image = render.Button(0.5, 0.4, "sprites\\itemdisplay\\captchalogue_card_flipped.png", "sprites\\itemdisplay\\captchalogue_card_flipped.png", flip)
         captcha_code = render.Image(32, 28, get_captcha(code))
         captcha_code.bind_to(captcha_image)
         captcha_code.absolute = True
-    power = item_dict["power"]
+    power = instance.power
     power_bar = render.Image(0.5, 1.15, "sprites\\itemdisplay\\power_bar.png")
     power_bar.bind_to(captcha_image)
     power_label = render.Text(0.512, 0.51, str(power))
@@ -571,8 +572,8 @@ def display_item(instances:dict, instance_name:str, last_scene:Callable, flipped
     power_label.color = render.DARK_COLOR
     power_label.fontsize = 54
     power_label.set_fontsize_by_width(330)
-    num_kinds = len(item_dict["kinds"])
-    for i, kind in enumerate(item_dict["kinds"]):
+    num_kinds = len(instance.kinds)
+    for i, kind in enumerate(instance.kinds):
         x = 1.2
         y = (1/(num_kinds+1))*num_kinds/(i+1)
         kind_card_image = render.Image(x, y, "sprites\\itemdisplay\\strife_card.png")

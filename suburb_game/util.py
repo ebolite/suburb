@@ -38,3 +38,6 @@ def readjson(obj, filename):
 
 def filter_item_name(name: str) -> str:
     return name.replace("+", " ")
+
+sylladexes = {}
+sylladex = readjson(sylladexes, "sylladexes")
