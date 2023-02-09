@@ -15,7 +15,7 @@ import render
 import client
 import config
 
-captcha_generator = ImageCaptcha(width = 204, height = 288, fonts=["fonts/cour.ttf", "fonts/courbd.ttf", "fonts/courbi.ttf", "fonts/couri.ttf"])
+captcha_generator = ImageCaptcha(width = 261, height = 336, fonts=["fonts/cour.ttf", "fonts/courbd.ttf", "fonts/courbi.ttf", "fonts/couri.ttf"])
 
 def get_captcha(code) -> str:
     path = f"sprites\\captchas\\{code}.png".replace("?", "-")
@@ -560,7 +560,7 @@ def display_item(instances:dict, instance_name:str, last_scene:Callable, flipped
     else:
         code = item_dict["code"]
         captcha_image = render.Button(0.5, 0.4, "sprites\\itemdisplay\\captchalogue_card_flipped.png", "sprites\\itemdisplay\\captchalogue_card_flipped.png", flip)
-        captcha_code = render.Image(76, 46, get_captcha(code))
+        captcha_code = render.Image(32, 28, get_captcha(code))
         captcha_code.bind_to(captcha_image)
         captcha_code.absolute = True
     power = item_dict["power"]
