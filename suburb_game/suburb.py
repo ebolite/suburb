@@ -17,6 +17,12 @@ import config
 import sylladex
 from sylladex import Instance
 
+def scene(func):
+    def out(*args, **kwargs):
+        render.clear_elements()
+        func(*args, **kwargs)
+    return out
+
 captcha_generator = ImageCaptcha(width = 261, height = 336, fonts=["fonts/cour.ttf", "fonts/courbd.ttf", "fonts/courbi.ttf", "fonts/couri.ttf"])
 
 def get_captcha(code) -> str:
@@ -35,15 +41,15 @@ def get_captcha(code) -> str:
 def placeholder():
     pass
 
+@scene
 def play():
-    render.clear_elements()
     text = render.Text(0.5, 0.3, f"Login to an existing character or register a new character?")
     loginbutton = render.Button(.5, .4, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", login)
     registerbutton = render.Button(.5, .52, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
     back = render.Button(.5, .64, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
 
+@scene
 def register():
-    render.clear_elements()
     log = render.Text(0.5, 0.10, "")
     name = render.Text(0.5, 0.20, f"Username (Case-sensitive)")
     name.color = render.DARK_COLOR
@@ -79,8 +85,8 @@ def register():
     confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
 
+@scene
 def login():
-    render.clear_elements()
     log = render.Text(0.5, 0.20, "")
     name = render.Text(0.5, 0.30, f"Character Name (Case-sensitive)")
     name.color = render.DARK_COLOR
@@ -107,8 +113,8 @@ def login():
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
 
+@scene
 def newsessionprompt():
-    render.clear_elements()
     text = render.Text(0.5, 0.3, f"Create a new session?")
     text.color = render.DARK_COLOR
     text.outline_color = render.BLACK_COLOR
@@ -118,8 +124,8 @@ def newsessionprompt():
     new = render.Button(.5, .48, "sprites\\buttons\\newsession.png", "sprites\\buttons\\newsessionpressed.png", newsession)
     back = render.Button(.5, .60, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
 
+@scene
 def newsession():
-    render.clear_elements()
     log = render.Text(0.5, 0.10, "")
     name = render.Text(0.5, 0.20, f"Session Name")
     name.color = render.DARK_COLOR
@@ -151,8 +157,8 @@ def newsession():
     confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
 
+@scene
 def connect():
-    render.clear_elements()
     log = render.Text(0.5, 0.20, "")
     name = render.Text(0.5, 0.30, f"Session Name")
     name.color = render.DARK_COLOR
@@ -188,9 +194,8 @@ character_info = {
 "gristcategory": None
 }
 
-# the following functions are scenes to display
+@scene
 def namecharacter():
-    render.clear_elements()
     log = render.Text(0.5, 0.20, "")
     l1text = render.Text(0.5, 0.3, "A young being of indeterminate nature exists in some kind of area.")
     l1text.color = render.DARK_COLOR
@@ -207,8 +212,8 @@ def namecharacter():
             log.text = "Name is too long or too short."
     confirm = render.Button(.50, .57, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
 
+@scene
 def nouncharacter():
-    render.clear_elements()
     log = render.Text(0.5, 0.20, "")
     log2 = render.Text(0.5, 0.30, "")
     l1text = render.Text(0.5, 0.4, f"You don't think \"being\" is a very accurate descriptor.")
@@ -232,8 +237,8 @@ def nouncharacter():
             log2.text = ""
     confirm = render.Button(.5, .72, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
 
+@scene
 def pronounscharacter():
-    render.clear_elements()
     log = render.Text(0.5, 0.20, "")
     log2 = render.Text(0.5, 0.30, "")
     log3 = render.Text(0.5, 0.40, "")
@@ -279,8 +284,8 @@ def make_asbutton(aspect):
     return button
 
 # NIGHTMARE NIGHTMARE NIGHTMARE!!!
+@scene
 def aspectcharacter():
-    render.clear_elements()
     space = render.Button(0,0, "sprites\\aspects\\space120.png", "sprites\\aspects\\space120.png", make_asbutton("space"), hover="sprites\\aspects\\space120hover.png")
     space.absolute = True
     spaceblurb = render.Image(120, 0, "sprites\\aspects\\spaceblurb.png")
@@ -343,8 +348,8 @@ def make_classbutton(c):
         backbutton = render.Button(0.5, 0.52, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", chooseclass)
     return button
 
+@scene
 def chooseclass():
-    render.clear_elements()
     knighttitle = render.Text(.14, .19, f"Knight")
     knightsymbol = render.Button(.14, .3, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("knight"), hover="sprites\\classes\\placeholderhover.png")
     knighttext = render.Text(.14, .4, f"Fights with {character_info['aspect'].upper()}")
@@ -411,8 +416,8 @@ def chooseclass():
     sylphtext2.fontsize = 15
     backbutton = render.Button(0.1, 0.08, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", aspectcharacter)
 
+@scene
 def chooseinterests():
-    render.clear_elements()
     #text = render.Text(0.5, 0.2, f"Interests: {client.requestdic('interests')}")
     logtext = render.Text(0.5, 0.1, "Select two interests.")
     interests = client.requestdic("interests")
@@ -437,13 +442,13 @@ def chooseinterests():
     confirm = render.Button(0.5, 0.9, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", on_confirm)
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", chooseclass)
 
+@scene
 def choosevial():
     def vialbutton(vial):
         def out():
             character_info["secondaryvial"] = vial
             choosegrists()
         return out
-    render.clear_elements()
     logtext = render.Text(.5, .05, "Choose a SECONDARY VIAL.")
     mangrittitle = render.Text(0.33, 0.24, "MANGRIT")
     mangritimage = render.Button(0.33, 0.33, "sprites\\vials\\mangrit\\mangritexample.png", "sprites\\vials\\mangrit\\mangritexamplepressed.png", vialbutton("mangrit"))
@@ -476,8 +481,8 @@ def choosevial():
     gambitdescription3.fontsize = 16
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", chooseinterests)
 
+@scene
 def choosegrists():
-    render.clear_elements()
     # 19 grist categories
     # todo: add indicators for which grist types the session already has
     logtext = render.Text(.5, .05, "Select the type of land you would like.")
@@ -533,8 +538,8 @@ def debug_speedrun():
     client.requestplus("setup_character",  character_info)
     map()
 
+@scene
 def map():
-    render.clear_elements()
     dic = client.requestdic("current_map")
     new_map = dic["map"]
     specials = dic["specials"]
@@ -545,10 +550,10 @@ def map():
     sylladex_display = render.RoomItemDisplay(900, 50, sylladex_instances)
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
+@scene
 def display_item(instances:dict, instance_name:str, last_scene:Callable, flipped=False):
     instance_dict = instances[instance_name]
     instance = Instance(instance_name, instance_dict)
-    render.clear_elements()
     def flip():
         display_item(instances, instance_name, last_scene, flipped=not flipped)
     if not flipped:
@@ -591,8 +596,8 @@ def display_item(instances:dict, instance_name:str, last_scene:Callable, flipped
             kind_image.bind_to(kind_card_image)
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
 
+@scene
 def title():
-    render.clear_elements()
     logo = render.Image(.5, .20, "sprites\\largeicon.png")
     logotext = render.Image(.5, .47, "sprites\\suburb.png")
     def isconnected():
