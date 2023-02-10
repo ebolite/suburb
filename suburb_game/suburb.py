@@ -539,8 +539,10 @@ def map():
     new_map = dic["map"]
     specials = dic["specials"]
     instances = dic["instances"]
+    sylladex_instances = client.requestdic("sylladex")
     print(instances)
     item_display = render.RoomItemDisplay(100, 50, instances)
+    sylladex_display = render.RoomItemDisplay(900, 50, sylladex_instances)
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
 def display_item(instances:dict, instance_name:str, last_scene:Callable, flipped=False):

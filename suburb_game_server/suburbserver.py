@@ -110,6 +110,8 @@ def handle_request(dict):
             return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances})
         case "player_info":
             return json.dumps(player.get_dict)
+        case "sylladex":
+            return json.dumps(player.sylladex_instances())
         case "captchalogue":
             instance_name = content["instance_name"]
             modus_name = content["modus_name"]

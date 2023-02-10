@@ -28,7 +28,7 @@ class Modus():
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex"):
         return True
     
-    def is_accessible(self, instance: Instance):
+    def is_accessible(self, instance: Instance, sylladex: "Sylladex"):
         return True
     
     def add_to_modus_data(self, instance: Instance, sylladex: "Sylladex"):
@@ -70,6 +70,7 @@ class Sylladex():
     def eject(self, instance):
         velocity = self.modus.get_eject_velocity
         client.requestplus("eject", {"instance_name": instance.instance_name, "modus_name": self.modus.modus_name, "velocity": velocity})
+        self.modus.remove_from_modus_data(instance, self)
 
     def switch_modus(self, new_modus_name):
         if new_modus_name not in self.moduses: return False
@@ -82,22 +83,53 @@ class Sylladex():
         return True
 
     def uncaptchalogue(self, instance: Instance):
-        if not self.modus.is_accessible(instance): return False
+        if not self.modus.is_accessible(instance, self): return False
         ...
     
     def use(self, instance: Instance, effect_name: str):
-        if not self.modus.is_accessible(instance): return False
+        if not self.modus.is_accessible(instance, self): return False
         ...
 
     def equip(self, instance: Instance):
-        if not self.modus.is_accessible(instance): return False
+        if not self.modus.is_accessible(instance, self): return False
         ...
 
     def wear(self, instance: Instance, slot_number: int):
-        if not self.modus.is_accessible(instance): return False
+        if not self.modus.is_accessible(instance, self): return False
         ...
 
     @property
     def empty_cards(self) -> int:
         dic = client.requestdic("player_info")
         return int(dic["empty_cards"])    
+
+class Stack(Modus):
+    def is_accessible(self, instance: Instance, sylladex: Sylladex):
+        if instance in sylladex.data_list and sylladex.data_list[0] is instance: return True
+        else: return False
+
+    def add_to_modus_data(self, instance: Instance, sylladex: "Sylladex"):
+        sylladex.data_list.insert(0, instance)
+
+stack_modus = Stack("stack")
+stack_modus.front_sprite_path = "/sprites/moduses/stack_card.png"
+stack_modus.back_sprite_path = "/sprites/moduses/stack_card_flipped.png"
+
+class Queue(Modus):
+    def is_accessible(self, instance: Instance, sylladex: Sylladex):
+        if instance in sylladex.data_list and sylladex.data_list[-1] is instance: return True
+        else: return False
+
+    def add_to_modus_data(self, instance: Instance, sylladex: "Sylladex"):
+        sylladex.data_list.insert(0, instance)
+
+queue_modus = Queue("queue")
+queue_modus.front_sprite_path = "/sprites/moduses/queue_card.png"
+queue_modus.back_sprite_path = "/sprites/moduses/queue_card_flipped.png"
+
+class Array(Modus):
+    pass
+
+array_modus = Array("array")
+array_modus.front_sprite_path = "/sprites/moduses/array_card.png"
+array_modus.back_sprite_path = "/sprites/moduses/array_card_flipped.png"

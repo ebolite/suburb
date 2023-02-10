@@ -381,8 +381,8 @@ class Player():
             self.overmap_name = None
             self.map_name = None
             self.room_name = None
-            self.sylladex: list = []
-            self.moduses: list = []
+            self.sylladex: list[str] = []
+            self.moduses: list[str] = []
             self.empty_cards = 3
             self.setup = False
 
@@ -420,6 +420,13 @@ class Player():
         self.sylladex.remove(instance_name)
         self.room.add_instance(alchemy.Instance(instance_name))
         return True
+    
+    def sylladex_instances(self) -> dict:
+        out_dict = {}
+        for instance_name in self.sylladex:
+            instance = alchemy.Instance(instance_name)
+            out_dict[instance_name] = instance.get_dict()
+        return out_dict
 
     def add_modus(self, modus_name: str) -> bool:
         if modus_name in self.sylladexes: return False
