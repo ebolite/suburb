@@ -438,9 +438,13 @@ class TileMap(UIElement):
     def keypress(self, event):
         match event.key:
             case pygame.K_UP: direction = "up"
+            case pygame.K_w: direction = "up"
             case pygame.K_DOWN: direction = "down"
+            case pygame.K_s: direction = "down"
             case pygame.K_LEFT: direction = "left"
+            case pygame.K_a: direction = "left"
             case pygame.K_RIGHT: direction = "right"
+            case pygame.K_d: direction = "right"
             case _: return
         client.requestplus("move", direction)
         dic = client.requestdic("current_map")
