@@ -58,7 +58,6 @@ class Sylladex():
         self.data_dict = {}
         self.data_list = []
         self.deck: list[Instance] = []
-        self.moduses: list[str] = []
 
     def captchalogue(self, instance: Instance) -> bool:
         if not self.modus.is_captchalogueable(instance, self): return False
@@ -102,6 +101,11 @@ class Sylladex():
     def empty_cards(self) -> int:
         dic = client.requestdic("player_info")
         return int(dic["empty_cards"])    
+    
+    @property
+    def moduses(self) -> list[str]:
+        dic = client.requestdic("player_info")
+        return dic["moduses"]
 
 class Stack(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):

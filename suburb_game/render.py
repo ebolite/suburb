@@ -216,6 +216,7 @@ class Button(UIElement):
         self.altclick = altclick
         self.alt_alpha = 255
         self.absolute = False
+        self.convert = False
         self.hover = hover
         click_check.append(self)
         update_check.append(self)
@@ -223,16 +224,17 @@ class Button(UIElement):
 
     def update(self):
         if self.alt is not None and self.alt() and self.alt_img_path is not None: # alternative display condition
-            self.surf = pygame.image.load(self.alt_img_path).convert()
+            self.surf = pygame.image.load(self.alt_img_path)
             self.surf.set_alpha(self.alt_alpha)
         else:
             if self.active:
-                self.surf = pygame.image.load(self.pressed_img_path).convert()
+                self.surf = pygame.image.load(self.pressed_img_path)
             else:
                 if self.hover != None and self.collidepoint(pygame.mouse.get_pos()):
-                    self.surf = pygame.image.load(self.hover).convert()
+                    self.surf = pygame.image.load(self.hover)
                 else:
-                    self.surf = pygame.image.load(self.unpressed_img_path).convert()
+                    self.surf = pygame.image.load(self.unpressed_img_path)
+        if self.convert: self.surf = self.surf.convert()
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))

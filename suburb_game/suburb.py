@@ -191,6 +191,7 @@ character_info = {
 "aspect": None,
 "class": None,
 "secondaryvial": None,
+"modus": None,
 "gristcategory": None
 }
 
@@ -447,7 +448,7 @@ def choosevial():
     def vialbutton(vial):
         def out():
             character_info["secondaryvial"] = vial
-            choosegrists()
+            choosemodus()
         return out
     logtext = render.Text(.5, .05, "Choose a SECONDARY VIAL.")
     mangrittitle = render.Text(0.33, 0.24, "MANGRIT")
@@ -480,6 +481,37 @@ def choosevial():
     gambitdescription3 = render.Text(0.66, 0.79, "Increases damage dealt with FUNNY weapons.")
     gambitdescription3.fontsize = 16
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", chooseinterests)
+
+@scene
+def choosemodus():
+    def modusbutton(modus):
+        def out():
+            character_info["modus"] = modus
+            choosegrists()
+        return out
+    logtext = render.Text(.5, 0.05, "Select your starting FETCH MODUS.")
+    stack_image = render.Button(0.11, 0.45, "sprites/moduses/stack_card.png", "sprites/moduses/stack_card.png", modusbutton("stack"))
+    stack_label = render.Text(0.55, 1.05, "stack")
+    stack_label.bind_to(stack_image)
+    stack_description = render.Text(0.55, 1.13, "first in, last out")
+    stack_description.fontsize = 20
+    stack_description.bind_to(stack_image)
+    queue_image = render.Button(0.36, 0.45, "sprites/moduses/queue_card.png", "sprites/moduses/queue_card.png", modusbutton("queue"))
+    queue_label = render.Text(0.55, 1.05, "queue")
+    queue_label.bind_to(queue_image)
+    queue_description = render.Text(0.55, 1.13, "first in, first out")
+    queue_description.fontsize = 20
+    queue_description.bind_to(queue_image)
+    array_image = render.Button(0.61, 0.45, "sprites/moduses/array_card.png", "sprites/moduses/array_card.png", modusbutton("array"))
+    array_label = render.Text(0.55, 1.05, "array")
+    array_label.bind_to(array_image)
+    array_description = render.Text(0.55, 1.13, "no bullshit, no fun")
+    array_description.fontsize = 20
+    array_description.bind_to(array_image)
+    scratch_image = render.Button(0.86, 0.45, "sprites/moduses/array_card.png", "sprites/moduses/array_card.png", placeholder)
+    backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosevial)
+
+    ...
 
 @scene
 def choosegrists():
@@ -518,7 +550,7 @@ def choosegrists():
             img = render.Image(x+0.07+(0.04 * ind), y, config.grists[grist]["image"])
             if "exotic" in config.grists[grist] and config.grists[grist]["exotic"]:
                 img.highlight_color = pygame.Color(255,255,0)
-    backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosevial)
+    backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosemodus)
 
 def debug_speedrun():
     client.dic["session_name"] = "fuck"
@@ -628,8 +660,9 @@ if __name__ == "__main__":
     # chooseinterests()
     # choosegrists()
     # choosevial()
+    choosemodus()
     # render.TileMap(0.5, 0.5, map)
-    title() # normal game start
+    # title() # normal game start
     # continue to render until render.render() returns False
     while render.render():
         ...
