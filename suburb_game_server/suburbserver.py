@@ -109,10 +109,10 @@ def handle_request(dict):
             return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances})
         case "player_info":
             return json.dumps(player.get_dict)
-        case "add_instance_to_sylladex":
+        case "captchalogue":
             instance_name = content["instance_name"]
             modus_name = content["modus_name"]
-            success = player.add_instance_to_sylladex(instance_name, modus_name)
+            success = player.captchalogue(instance_name, modus_name)
             if success: return "success"
             else: return "failure"
         case "move":
