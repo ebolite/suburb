@@ -490,19 +490,19 @@ def choosemodus():
             choosegrists()
         return out
     logtext = render.Text(.5, 0.05, "Select your starting FETCH MODUS.")
-    stack_image = render.Button(0.11, 0.45, "sprites/moduses/stack_card.png", "sprites/moduses/stack_card.png", modusbutton("stack"))
+    stack_image = render.Button(0.11, 0.45, "sprites/moduses/stack_card.png", "sprites/moduses/stack_card_hover.png", modusbutton("stack"))
     stack_label = render.Text(0.55, 1.05, "stack")
     stack_label.bind_to(stack_image)
     stack_description = render.Text(0.55, 1.13, "first in, last out")
     stack_description.fontsize = 20
     stack_description.bind_to(stack_image)
-    queue_image = render.Button(0.36, 0.45, "sprites/moduses/queue_card.png", "sprites/moduses/queue_card.png", modusbutton("queue"))
+    queue_image = render.Button(0.36, 0.45, "sprites/moduses/queue_card.png", "sprites/moduses/queue_card_hover.png", modusbutton("queue"))
     queue_label = render.Text(0.55, 1.05, "queue")
     queue_label.bind_to(queue_image)
     queue_description = render.Text(0.55, 1.13, "first in, first out")
     queue_description.fontsize = 20
     queue_description.bind_to(queue_image)
-    array_image = render.Button(0.61, 0.45, "sprites/moduses/array_card.png", "sprites/moduses/array_card.png", modusbutton("array"))
+    array_image = render.Button(0.61, 0.45, "sprites/moduses/array_card.png", "sprites/moduses/array_card_hover.png", modusbutton("array"))
     array_label = render.Text(0.55, 1.05, "array")
     array_label.bind_to(array_image)
     array_description = render.Text(0.55, 1.13, "no bullshit, no fun")
@@ -660,9 +660,9 @@ if __name__ == "__main__":
     # chooseinterests()
     # choosegrists()
     # choosevial()
-    choosemodus()
+    # choosemodus()
     # render.TileMap(0.5, 0.5, map)
-    # title() # normal game start
+    title() # normal game start
     # continue to render until render.render() returns False
     while render.render():
         ...
