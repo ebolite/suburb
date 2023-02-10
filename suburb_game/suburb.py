@@ -107,6 +107,76 @@ def login():
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
 
+def newsessionprompt():
+    render.clear_elements()
+    text = render.Text(0.5, 0.3, f"Create a new session?")
+    text.color = render.DARK_COLOR
+    text.outline_color = render.BLACK_COLOR
+    text2 = render.Text(0.5, 0.35, f"The first character to join will become the admin of the session.")
+    text2.color = render.DARK_COLOR
+    text2.outline_color = render.BLACK_COLOR
+    new = render.Button(.5, .48, "sprites\\buttons\\newsession.png", "sprites\\buttons\\newsessionpressed.png", newsession)
+    back = render.Button(.5, .60, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
+
+def newsession():
+    render.clear_elements()
+    log = render.Text(0.5, 0.10, "")
+    name = render.Text(0.5, 0.20, f"Session Name")
+    name.color = render.DARK_COLOR
+    name.outline_color = render.BLACK_COLOR
+    namebox = render.InputTextBox(.5, .25)
+    pw = render.Text(0.5, .35, f"Session Password")
+    pw.color = render.DARK_COLOR
+    pw.outline_color = render.BLACK_COLOR
+    pwbox = render.InputTextBox(.5, .40)
+    pwbox.secure = True
+    confirm = render.Text(0.5, .50, f"Confirm Password")
+    confirm.color = render.DARK_COLOR
+    confirm.outline_color = render.BLACK_COLOR
+    confirmbox = render.InputTextBox(.5, .55)
+    confirmbox.secure = True
+    def verify():
+        if pwbox.text != confirmbox.text: log.text = "Passwords do not match."; return
+        if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
+        if len(pwbox.text) == 0: log.text = "Password field must not be empty."; return
+        if len(namebox.text) > 32: log.text = f"Session name must be less than 32 characters. Yours: {len(namebox.text)}"; return
+        if len(pwbox.text) > 32: log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"; return
+        client.dic["session_name"] = namebox.text
+        client.dic["session_pass_hash"] = client.hash(pwbox.text)
+        log.text = client.request("create_session")
+        if "success" not in log.text:
+            client.dic["session_name"] = ""
+            client.dic["session_pass_hash"] = ""
+        print(f"log text {log.text}")
+    confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
+    back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
+
+def connect():
+    render.clear_elements()
+    log = render.Text(0.5, 0.20, "")
+    name = render.Text(0.5, 0.30, f"Session Name")
+    name.color = render.DARK_COLOR
+    name.outline_color = render.BLACK_COLOR
+    namebox = render.InputTextBox(.5, .35)
+    pw = render.Text(0.5, .45, f"Session Password")
+    pw.color = render.DARK_COLOR
+    pw.outline_color = render.BLACK_COLOR
+    pwbox = render.InputTextBox(.5, .50)
+    pwbox.secure = True
+    def verify():
+        if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
+        if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
+        log.text = "Connecting..."
+        client.dic["session_name"] = namebox.text
+        client.dic["session_pass_hash"] = client.hash(pwbox.text)
+        log.text = client.request("connect")
+        if "Success" not in log.text:
+            client.dic["session_name"] = ""
+            client.dic["session_pass_hash"] = ""
+        print(f"log text {log.text}")
+    confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
+    back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
+
 character_info = {
 "name": None,
 "noun": None,
@@ -367,45 +437,6 @@ def chooseinterests():
     confirm = render.Button(0.5, 0.9, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", on_confirm)
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", chooseclass)
 
-def choosegrists():
-    render.clear_elements()
-    # 19 grist categories
-    # todo: add indicators for which grist types the session already has
-    logtext = render.Text(.5, .05, "Select the type of land you would like.")
-    infotext = render.Text(.75, .9, "A yellow background indicates exotic grist.")
-    infotext.fontsize = 20
-    infotext = render.Text(.75, .93, "Exotic grist types cannot normally be obtained")
-    infotext.fontsize = 20
-    infotext = render.Text(.75, .96, "unless a player has specifically picked them.")
-    infotext.fontsize = 20
-    def choosegristtype(grist):
-        def out():
-            logtext.fontsize = 20
-            t = f"Are you sure you want {grist.upper()}? Press the button again to confirm."
-            if logtext.text == t:
-                character_info["gristcategory"] = grist
-                logtext.text = client.requestplus("setup_character",  character_info)
-                map()
-            else:
-                logtext.text = t
-        return out
-    for i, category in enumerate(config.gristcategories):
-        if i <= 9:
-            x = .07
-        else:
-            x = .54
-        num = i
-        if num > 9:
-            num -= 10
-        y = ((num+1) / 12)
-        y += .08
-        button = render.TextButton(x, y, 110, 33, category.upper(), choosegristtype(category))
-        for ind, grist in enumerate(config.gristcategories[category]):
-            img = render.Image(x+0.07+(0.04 * ind), y, config.grists[grist]["image"])
-            if "exotic" in config.grists[grist] and config.grists[grist]["exotic"]:
-                img.highlight_color = pygame.Color(255,255,0)
-    backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosevial)
-
 def choosevial():
     def vialbutton(vial):
         def out():
@@ -445,75 +476,44 @@ def choosevial():
     gambitdescription3.fontsize = 16
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", chooseinterests)
 
-def newsessionprompt():
+def choosegrists():
     render.clear_elements()
-    text = render.Text(0.5, 0.3, f"Create a new session?")
-    text.color = render.DARK_COLOR
-    text.outline_color = render.BLACK_COLOR
-    text2 = render.Text(0.5, 0.35, f"The first character to join will become the admin of the session.")
-    text2.color = render.DARK_COLOR
-    text2.outline_color = render.BLACK_COLOR
-    new = render.Button(.5, .48, "sprites\\buttons\\newsession.png", "sprites\\buttons\\newsessionpressed.png", newsession)
-    back = render.Button(.5, .60, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
-
-def newsession():
-    render.clear_elements()
-    log = render.Text(0.5, 0.10, "")
-    name = render.Text(0.5, 0.20, f"Session Name")
-    name.color = render.DARK_COLOR
-    name.outline_color = render.BLACK_COLOR
-    namebox = render.InputTextBox(.5, .25)
-    pw = render.Text(0.5, .35, f"Session Password")
-    pw.color = render.DARK_COLOR
-    pw.outline_color = render.BLACK_COLOR
-    pwbox = render.InputTextBox(.5, .40)
-    pwbox.secure = True
-    confirm = render.Text(0.5, .50, f"Confirm Password")
-    confirm.color = render.DARK_COLOR
-    confirm.outline_color = render.BLACK_COLOR
-    confirmbox = render.InputTextBox(.5, .55)
-    confirmbox.secure = True
-    def verify():
-        if pwbox.text != confirmbox.text: log.text = "Passwords do not match."; return
-        if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
-        if len(pwbox.text) == 0: log.text = "Password field must not be empty."; return
-        if len(namebox.text) > 32: log.text = f"Session name must be less than 32 characters. Yours: {len(namebox.text)}"; return
-        if len(pwbox.text) > 32: log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"; return
-        client.dic["session_name"] = namebox.text
-        client.dic["session_pass_hash"] = client.hash(pwbox.text)
-        log.text = client.request("create_session")
-        if "success" not in log.text:
-            client.dic["session_name"] = ""
-            client.dic["session_pass_hash"] = ""
-        print(f"log text {log.text}")
-    confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
-    back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
-
-def connect():
-    render.clear_elements()
-    log = render.Text(0.5, 0.20, "")
-    name = render.Text(0.5, 0.30, f"Session Name")
-    name.color = render.DARK_COLOR
-    name.outline_color = render.BLACK_COLOR
-    namebox = render.InputTextBox(.5, .35)
-    pw = render.Text(0.5, .45, f"Session Password")
-    pw.color = render.DARK_COLOR
-    pw.outline_color = render.BLACK_COLOR
-    pwbox = render.InputTextBox(.5, .50)
-    pwbox.secure = True
-    def verify():
-        if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
-        if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
-        log.text = "Connecting..."
-        client.dic["session_name"] = namebox.text
-        client.dic["session_pass_hash"] = client.hash(pwbox.text)
-        log.text = client.request("connect")
-        if "Success" not in log.text:
-            client.dic["session_name"] = ""
-            client.dic["session_pass_hash"] = ""
-        print(f"log text {log.text}")
-    confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
-    back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
+    # 19 grist categories
+    # todo: add indicators for which grist types the session already has
+    logtext = render.Text(.5, .05, "Select the type of land you would like.")
+    infotext = render.Text(.75, .9, "A yellow background indicates exotic grist.")
+    infotext.fontsize = 20
+    infotext = render.Text(.75, .93, "Exotic grist types cannot normally be obtained")
+    infotext.fontsize = 20
+    infotext = render.Text(.75, .96, "unless a player has specifically picked them.")
+    infotext.fontsize = 20
+    def choosegristtype(grist):
+        def out():
+            logtext.fontsize = 20
+            t = f"Are you sure you want {grist.upper()}? Press the button again to confirm."
+            if logtext.text == t:
+                character_info["gristcategory"] = grist
+                logtext.text = client.requestplus("setup_character",  character_info)
+                map()
+            else:
+                logtext.text = t
+        return out
+    for i, category in enumerate(config.gristcategories):
+        if i <= 9:
+            x = .07
+        else:
+            x = .54
+        num = i
+        if num > 9:
+            num -= 10
+        y = ((num+1) / 12)
+        y += .08
+        button = render.TextButton(x, y, 110, 33, category.upper(), choosegristtype(category))
+        for ind, grist in enumerate(config.gristcategories[category]):
+            img = render.Image(x+0.07+(0.04 * ind), y, config.grists[grist]["image"])
+            if "exotic" in config.grists[grist] and config.grists[grist]["exotic"]:
+                img.highlight_color = pygame.Color(255,255,0)
+    backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosevial)
 
 def debug_speedrun():
     client.dic["session_name"] = "fuck"
