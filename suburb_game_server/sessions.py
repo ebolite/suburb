@@ -407,6 +407,19 @@ class Player():
         if instance.item.size > max_size: return False
         self.sylladex.append(instance_name)
         return True
+    
+    def eject(self, instance_name: str, modus_name: str, velocity: int) -> bool:
+        if instance_name not in self.sylladex: return False
+        # todo: make this shit fly based on its velocity
+        self.sylladex.remove(instance_name)
+        self.room.add_instance(alchemy.Instance(instance_name))
+        return True
+    
+    def uncaptchalogue(self, instance_name: str) -> bool:
+        if instance_name not in self.sylladex: return False
+        self.sylladex.remove(instance_name)
+        self.room.add_instance(alchemy.Instance(instance_name))
+        return True
 
     def add_modus(self, modus_name: str) -> bool:
         if modus_name in self.sylladexes: return False

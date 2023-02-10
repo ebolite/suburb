@@ -113,8 +113,17 @@ def handle_request(dict):
             instance_name = content["instance_name"]
             modus_name = content["modus_name"]
             success = player.captchalogue(instance_name, modus_name)
-            if success: return "success"
-            else: return "failure"
+            return "success" if success else "failure"
+        case "uncaptchalogue":
+            instance_name = content["instance_name"]
+            success = player.uncaptchalogue(instance_name)
+            return "success" if success else "failure"
+        case "eject":
+            instance_name = content["instance_name"]
+            modus_name = content["modus_name"]
+            velocity = content["velocity"]
+            success = player.eject(instance_name, modus_name, velocity)
+            return "success" if success else "failure"
         case "move":
             player.attempt_move(content)
             return

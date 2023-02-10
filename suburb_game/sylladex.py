@@ -42,6 +42,9 @@ class Modus():
         for instance in instance_list:
             sylladex.data_list.append(instance)
         return invalid_instances
+    
+    def get_eject_velocity(self):
+        return self.eject_velocity
 
 class Sylladex():
     def __init__(self, modus: Modus, player_name: str, connection_host_port: str = f"{client.HOST}:{client.PORT}"):
@@ -65,7 +68,8 @@ class Sylladex():
         return True
     
     def eject(self, instance):
-        ...
+        velocity = self.modus.get_eject_velocity
+        client.requestplus("eject", {"instance_name": instance.instance_name, "modus_name": self.modus.modus_name, "velocity": velocity})
 
     def switch_modus(self, new_modus_name):
         if new_modus_name not in self.moduses: return False
