@@ -24,8 +24,12 @@ def readpickle(obj, filename):
     try:
         os.chdir(f"{homedir}\\pickle")
         with open(f"{filename}.pickle", "rb") as f:
-            data = pickle.load(f)
-            return data
+            try:
+                data = pickle.load(f)
+                return data
+            except EOFError:
+                print(f"File failed to read: '{filename}.pickle'. Overwriting with {obj}.")
+                return obj
     except FileNotFoundError:
         print(f"File not found when reading pickle: '{filename}.pickle'. Overwriting with {obj}.")
         writepickle(obj, filename)
