@@ -51,6 +51,7 @@ def threaded_client(connection):
         connection.close()
     except (ConnectionResetError, UnicodeDecodeError, json.JSONDecodeError) as e:
         print(f"\nExcepted error!\n{e}\n")
+        conns.remove(connection)
         connection.close()
 
 def handle_request(dict):
