@@ -132,6 +132,21 @@ class SolidColor(UIElement):
         self.rect.x, self.rect.y = self.get_rect_xy()
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))
 
+class Div(SolidColor):
+    def __init__(self, x, y, w, h):
+        super(SolidColor, self).__init__()
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.absolute = False
+        update_check.append(self)
+
+    def update(self):
+        self.surf = pygame.Surface((self.w, self.h))
+        self.rect = self.surf.get_rect()
+        self.rect.x, self.rect.y = self.get_rect_xy()
+
 class TextButton(UIElement):
     def __init__(self, x, y, w, h, text, onpress: Callable, hover=True, truncate_text=False):
         super(TextButton, self).__init__()

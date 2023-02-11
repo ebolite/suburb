@@ -2,6 +2,7 @@ from typing import Union, Optional
 
 import client
 import util
+import render
 
 moduses = {}
 
@@ -46,7 +47,20 @@ class Modus():
     def get_eject_velocity(self):
         return self.eject_velocity
     
-
+    def draw_ui_bar(self, syllabus):
+        sylladex_bar = render.Image(0, 0, "sprites/moduses/bar.png")
+        sylladex_bar.absolute = True
+        instances_length = len(syllabus.deck)
+        print(syllabus.deck)
+        for i, instance in enumerate(syllabus.deck):
+            x = (render.SCREEN_WIDTH / 2) - 109
+            x += 125 * (i + 1 - instances_length/2)
+            x = int(x)
+            y = int(render.SCREEN_HEIGHT*0.80)
+            card_thumb = render.Image(x, y, "sprites/moduses/array_card_thumb.png")
+            card_thumb.absolute = True
+            card_thumb.bind_to(sylladex_bar)
+    
 class Sylladex():
     def __init__(self, player_name: str, connection_host_port: str = f"{client.HOST}:{client.PORT}"):
         self.modus: Modus
@@ -102,6 +116,9 @@ class Sylladex():
     def wear(self, instance: Instance, slot_number: int):
         if not self.modus.is_accessible(instance, self): return False
         ...
+
+    def draw_ui_bar(self):
+        return self.modus.draw_ui_bar(self)
 
     @property
     def empty_cards(self) -> int:
