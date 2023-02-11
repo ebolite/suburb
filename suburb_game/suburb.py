@@ -572,7 +572,6 @@ def debug_speedrun():
     character_info["secondaryvial"] = "IMAGINATION"
     character_info["modus"] = "array"
     character_info["gristcategory"] = "amber"
-    client.requestplus("setup_character",  character_info)
     newgame()
 
 @scene
