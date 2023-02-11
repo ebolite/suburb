@@ -60,8 +60,13 @@ class Sylladex():
         self.data_list = []
         self.deck: list[Instance] = []
 
-    def captchalogue(self, instance: Instance) -> bool:
+    def can_captchalogue(self, instance: Instance) -> bool:
         if not self.modus.is_captchalogueable(instance, self): return False
+        if instance.size > self.modus.size_limit: return False
+        return True
+
+    def captchalogue(self, instance: Instance) -> bool:
+        if not self.can_captchalogue(instance): return False
         if not util.captchalogue_instance(instance.instance_name, self.modus.modus_name): return False
         self.deck.append(instance)
         self.modus.add_to_modus_data(instance, self)
@@ -123,6 +128,10 @@ class Sylladex():
     def get_sylladex(player_name) -> "Sylladex":
         connection_host_port = f"{client.HOST}:{client.PORT}"
         return util.sylladexes[connection_host_port][player_name]
+
+    @staticmethod
+    def current_sylladex() -> "Sylladex":
+        return Sylladex.get_sylladex(client.dic["character"])
 
 class Stack(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):
