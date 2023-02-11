@@ -530,7 +530,6 @@ def choosegrists():
             t = f"Are you sure you want {grist.upper()}? Press the button again to confirm."
             if logtext.text == t:
                 character_info["gristcategory"] = grist
-                logtext.text = client.requestplus("setup_character",  character_info)
                 newgame()
             else:
                 logtext.text = t
@@ -553,6 +552,7 @@ def choosegrists():
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosemodus)
 
 def newgame():
+    client.requestplus("setup_character",  character_info)
     new_sylladex = sylladex.Sylladex.new_sylladex(client.dic["character"], character_info["modus"])
     map()
 
