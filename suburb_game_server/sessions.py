@@ -429,8 +429,8 @@ class Player():
         return out_dict
 
     def add_modus(self, modus_name: str) -> bool:
-        if modus_name in self.sylladexes: return False
-        if modus_name not in self.sylladexes: self.sylladexes[modus_name] = []
+        if modus_name in self.moduses: return False
+        if modus_name not in self.moduses: self.moduses.append(modus_name)
         return True
     
     def attempt_move(self, direction: str) -> bool:

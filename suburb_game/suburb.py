@@ -531,7 +531,7 @@ def choosegrists():
             if logtext.text == t:
                 character_info["gristcategory"] = grist
                 logtext.text = client.requestplus("setup_character",  character_info)
-                map()
+                newgame()
             else:
                 logtext.text = t
         return out
@@ -552,6 +552,10 @@ def choosegrists():
                 img.highlight_color = pygame.Color(255,255,0)
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosemodus)
 
+def newgame():
+    new_sylladex = sylladex.Sylladex.new_sylladex(client.dic["character"], character_info["modus"])
+    map()
+
 def debug_speedrun():
     client.dic["session_name"] = "fuck"
     client.dic["session_pass_hash"] = client.hash("ass")
@@ -566,9 +570,10 @@ def debug_speedrun():
     character_info["aspect"] = "life"
     character_info["class"] = "sylph"
     character_info["secondaryvial"] = "IMAGINATION"
+    character_info["modus"] = "array"
     character_info["gristcategory"] = "amber"
     client.requestplus("setup_character",  character_info)
-    map()
+    newgame()
 
 @scene
 def map():

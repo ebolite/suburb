@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Optional
 
 import client
 import util
@@ -45,10 +45,11 @@ class Modus():
     
     def get_eject_velocity(self):
         return self.eject_velocity
+    
 
 class Sylladex():
-    def __init__(self, modus: Modus, player_name: str, connection_host_port: str = f"{client.HOST}:{client.PORT}"):
-        self.modus = modus
+    def __init__(self, player_name: str, connection_host_port: str = f"{client.HOST}:{client.PORT}"):
+        self.modus: Modus
         self.player_name = player_name
         self.connection_host_port = connection_host_port
         if connection_host_port not in util.sylladexes:
@@ -71,7 +72,7 @@ class Sylladex():
         client.requestplus("eject", {"instance_name": instance.instance_name, "modus_name": self.modus.modus_name, "velocity": velocity})
         self.modus.remove_from_modus_data(instance, self)
 
-    def switch_modus(self, new_modus_name):
+    def switch_modus(self, new_modus_name: str):
         if new_modus_name not in self.moduses: return False
         self.modus = moduses[new_modus_name]
         self.data_dict = {}
@@ -106,6 +107,22 @@ class Sylladex():
     def moduses(self) -> list[str]:
         dic = client.requestdic("player_info")
         return dic["moduses"]
+    
+    @staticmethod
+    def new_sylladex(player_name, modus_name) -> "Sylladex":
+        connection_host_port = f"{client.HOST}:{client.PORT}"
+        if connection_host_port not in util.sylladexes: util.sylladexes[connection_host_port] = {}
+        if player_name in util.sylladexes[connection_host_port]:
+            return util.sylladexes[connection_host_port][player_name]
+        else:
+            new_sylladex = Sylladex(player_name, connection_host_port)
+            new_sylladex.switch_modus(modus_name)
+            return new_sylladex
+
+    @staticmethod
+    def get_sylladex(player_name) -> "Sylladex":
+        connection_host_port = f"{client.HOST}:{client.PORT}"
+        return util.sylladexes[connection_host_port][player_name]
 
 class Stack(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):

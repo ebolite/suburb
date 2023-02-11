@@ -92,6 +92,7 @@ def handle_request(dict):
                 player.gameclass = content["class"]
                 player.gristcategory = content["gristcategory"]
                 player.secondaryvial = content["secondaryvial"]
+                player.add_modus(content["modus"])
                 land = sessions.Overmap(f"{player.name}{session.name}", session, player)
                 player.land_name = land.name
                 player.land_session = session.name
@@ -109,7 +110,7 @@ def handle_request(dict):
             map_tiles, map_specials, room_instances = player.get_view()
             return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances})
         case "player_info":
-            return json.dumps(player.get_dict)
+            return json.dumps(player.get_dict())
         case "sylladex":
             return json.dumps(player.sylladex_instances())
         case "captchalogue":
