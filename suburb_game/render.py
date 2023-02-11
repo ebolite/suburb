@@ -9,6 +9,7 @@ import util
 import config
 import client
 import suburb
+import sylladex
 
 pygame.init()
 
@@ -203,7 +204,7 @@ class TextButton(UIElement):
 
 
 class Button(UIElement):
-    def __init__(self, x, y, unpressed_img_path, pressed_img_path, onpress: Callable, alt: Optional[Callable]=None, alt_img_path=None, altclick: Optional[Callable]=None, hover=None): # x and y as fractions of 1 (centered position on screen)
+    def __init__(self, x, y, unpressed_img_path: str, pressed_img_path: str, onpress: Callable, alt: Optional[Callable]=None, alt_img_path=None, altclick: Optional[Callable]=None, hover=None): # x and y as fractions of 1 (centered position on screen)
         super(Button, self).__init__()
         self.unpressed_img_path = unpressed_img_path
         self.pressed_img_path = pressed_img_path
@@ -592,9 +593,29 @@ class RoomItemDisplay(UIElement):
             button.delete()
         for index, instance_name in enumerate(instances):
             item_name = instances[instance_name]["item_name"]
-            new_button = TextButton(self.x, self.y + 30*(index+1), 250, 30, util.filter_item_name(item_name), get_button_func(instance_name), truncate_text=True)
+            new_button = TextButton(self.x+30, self.y + 30*(index+1), 220, 30, util.filter_item_name(item_name), get_button_func(instance_name), truncate_text=True)
             new_button.absolute = True 
+            captcha_button = CaptchalogueButton(self.x, self.y + 30*(index+1), instance_name, instances)
+            captcha_button.absolute = True
             self.buttons.append(new_button)
+            self.buttons.append(captcha_button)
+
+class CaptchalogueButton(Button):
+    def __init__(self, x, y, instance_name: str, instances: dict):
+        self.instances = instances
+        self.instance_name = instance_name
+        self.instance_dict = instances[instance_name]
+        super().__init__(x, y, "sprites/buttons/captchalogue_symbol.png", "sprites/buttons/captchalogue_symbol_pressed.png", self.get_captchalogue_function())
+
+    def get_captchalogue_function(self):
+        instance = sylladex.Instance(self.instance_name, self.instance_dict)
+        def output_func():
+            syl = sylladex.Sylladex.get_sylladex(client.dic["character"])
+            if syl.captchalogue(instance):
+                suburb.map()
+            else:
+                ...
+        return output_func
 
 def render():
     for ui_element in move_to_top.copy():

@@ -1,5 +1,7 @@
 import os
 import pickle
+
+import client
 VERSION = "PRE-ALPHA 0.7.5"
 homedir = os.getcwd()
 subdirectories = next(os.walk("."))[1]
@@ -37,6 +39,10 @@ def readpickle(obj, filename):
 
 def filter_item_name(name: str) -> str:
     return name.replace("+", " ")
+
+def captchalogue_instance(instance_name: str, modus_name: str):
+    if "success" in client.requestplus("captchalogue", {"instance_name": instance_name, "modus_name": modus_name}): return True
+    else: return False
 
 sylladexes = {}
 sylladex = readpickle(sylladexes, "sylladexes")

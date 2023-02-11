@@ -321,15 +321,15 @@ class Room():
         for item_name in spawns:
             item = alchemy.Item(item_name)
             instance = alchemy.Instance(item)
-            self.add_instance(instance)
+            self.add_instance(instance.name)
         
-    def add_instance(self, instance: alchemy.Instance):
-        if instance.name not in self.instances:
-            self.instances.append(instance.name)
+    def add_instance(self, instance_name: str):
+        if instance_name not in self.instances:
+            self.instances.append(instance_name)
     
-    def remove_instance(self, instance: alchemy.Instance):
-        if instance.name in self.instances:
-            self.instances.remove(self.name)
+    def remove_instance(self, instance_name: str):
+        if instance_name in self.instances:
+            self.instances.remove(instance_name)
 
     def get_instances(self) -> dict:
         out_dict = {}
@@ -400,25 +400,26 @@ class Player():
     
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:
         if instance_name not in self.room.instances: return False
-        if modus_name not in self.sylladexes: return False
-        if instance_name in self.sylladexes[modus_name]: return False
+        if modus_name not in self.moduses: return False
+        if instance_name in self.sylladex: return False
         max_size = config.modus_max_sizes.get(modus_name, 30)
         instance = alchemy.Instance(instance_name)
         if instance.item.size > max_size: return False
         self.sylladex.append(instance_name)
+        self.room.remove_instance(instance_name)
         return True
     
     def eject(self, instance_name: str, modus_name: str, velocity: int) -> bool:
         if instance_name not in self.sylladex: return False
         # todo: make this shit fly based on its velocity
         self.sylladex.remove(instance_name)
-        self.room.add_instance(alchemy.Instance(instance_name))
+        self.room.add_instance(instance_name)
         return True
     
     def uncaptchalogue(self, instance_name: str) -> bool:
         if instance_name not in self.sylladex: return False
         self.sylladex.remove(instance_name)
-        self.room.add_instance(alchemy.Instance(instance_name))
+        self.room.add_instance(instance_name)
         return True
     
     def sylladex_instances(self) -> dict:

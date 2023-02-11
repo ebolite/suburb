@@ -62,7 +62,7 @@ class Sylladex():
 
     def captchalogue(self, instance: Instance) -> bool:
         if not self.modus.is_captchalogueable(instance, self): return False
-        if "success" not in client.requestplus("captchalogue", {"instance_name": instance.instance_name, "modus_name": self.modus.modus_name}): return False
+        if not util.captchalogue_instance(instance.instance_name, self.modus.modus_name): return False
         self.deck.append(instance)
         self.modus.add_to_modus_data(instance, self)
         return True
