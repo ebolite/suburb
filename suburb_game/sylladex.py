@@ -73,9 +73,14 @@ class Modus():
         sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True
         instances_length = len(sylladex.data_list)
+        num_cards_remaining = sylladex.empty_cards - len(sylladex.data_list)
+        remaining_cards_display = render.Image(10, render.SCREEN_HEIGHT-85, "sprites/moduses/card_num_remaining.png")
+        remaining_cards_display.absolute = True
+        remaining_cards_label = render.Text(0.5, 0.6, str(num_cards_remaining))
+        remaining_cards_label.bind_to(remaining_cards_display)
+        if num_cards_remaining == 0: remaining_cards_label.color = pygame.Color(255, 0, 0)
         for i, instance_name in enumerate(sylladex.data_list):
-            x = (render.SCREEN_WIDTH / 2) - 109
-            x += 125 * (i + 1 - instances_length/2)
+            x = (render.SCREEN_WIDTH / 2) - 109 + 125*(i + 1 - instances_length/2)
             x = int(x)
             y = int(render.SCREEN_HEIGHT*0.80)
             instance = sylladex.get_instance(instance_name)

@@ -397,7 +397,7 @@ class Image(UIElement):
         screen.blit(self.surf, (self.rect.x, self.rect.y))
 
 class Text(UIElement):
-    def __init__(self, x, y, text):
+    def __init__(self, x, y, text: str):
         super(Text, self).__init__()
         self.x = x
         self.y = y
