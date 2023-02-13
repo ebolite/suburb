@@ -1,4 +1,5 @@
 import os
+import time
 from typing import Union, Optional
 
 import client
@@ -51,10 +52,10 @@ class Modus():
         return self.eject_velocity
     
     def draw_ui_bar(self, sylladex: "Sylladex"):
+        start = time.time()
         sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True
         instances_length = len(sylladex.data_list)
-        print(sylladex.data_list)
         for i, instance_name in enumerate(sylladex.data_list):
             x = (render.SCREEN_WIDTH / 2) - 109
             x += 125 * (i + 1 - instances_length/2)
@@ -64,7 +65,7 @@ class Modus():
             card_thumb.absolute = True
             card_thumb.bind_to(sylladex_bar)
             instance = sylladex.get_instance(instance_name)
-            image_path = f"sprites\\items\\{instance.item_name}.png"
+            image_path = f"sprites/items/{instance.item_name}.png"
             if os.path.isfile(image_path):
                 card_image = render.ItemImage(0.49, 0.5, instance.item_name)
                 card_image.bind_to(card_thumb)
@@ -87,6 +88,7 @@ class Modus():
                 card_thumb.alpha = 155
                 card_label.alpha = 155
                 if card_image is not None: card_image.alpha = 155
+        print(f"draw ui bar - {time.time() - start}")
 
     
 class Sylladex():

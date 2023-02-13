@@ -19,11 +19,13 @@ from sylladex import Instance, Sylladex
 
 def scene(func):
     def out(*args, **kwargs):
+        t = time.time()
         render.clear_elements()
         fps_counter = render.FpsCounter(1150, 0)
         fps_counter.fontsize = 20
         fps_counter.absolute = True
         func(*args, **kwargs)
+        print(f"{func} - {time.time() - t}")
     return out
 
 captcha_generator = ImageCaptcha(width = 261, height = 336, fonts=["fonts/cour.ttf", "fonts/courbd.ttf", "fonts/courbi.ttf", "fonts/couri.ttf"])
