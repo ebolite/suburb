@@ -34,6 +34,7 @@ def get_captcha(code) -> str:
     os.chdir(util.homedir)
     path = f"sprites/captchas/{code}.png".replace("?", "-")
     if not os.path.isfile(path):
+        data = captcha_generator.generate(code)
         captcha_generator.write(code, path)
         img = cv2.imread(path)
         mask = cv2.imread("sprites/mask.png")
