@@ -15,7 +15,7 @@ import render
 import client
 import config
 import sylladex
-from sylladex import Instance
+from sylladex import Instance, Sylladex
 
 def scene(func):
     def out(*args, **kwargs):
@@ -553,7 +553,7 @@ def choosegrists():
 
 def newgame():
     client.requestplus("setup_character",  character_info)
-    new_sylladex = sylladex.Sylladex.new_sylladex(client.dic["character"], character_info["modus"])
+    new_sylladex = Sylladex.new_sylladex(client.dic["character"], character_info["modus"])
     map()
 
 def debug_speedrun():
@@ -583,7 +583,7 @@ def map():
     sylladex_instances = client.requestdic("sylladex")
     item_display = render.RoomItemDisplay(100, 50, instances)
     sylladex_display = render.RoomItemDisplay(900, 50, sylladex_instances)
-    sylladex.Sylladex.current_sylladex().draw_ui_bar()
+    Sylladex.current_sylladex().draw_ui_bar()
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
 @scene

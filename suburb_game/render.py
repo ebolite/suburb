@@ -9,8 +9,7 @@ import util
 import config
 import client
 import suburb
-import sylladex
-from sylladex import Sylladex
+from sylladex import Instance, Sylladex
 
 pygame.init()
 
@@ -623,13 +622,13 @@ class CaptchalogueButton(Button):
         self.instance_dict = instances[instance_name]
         def empty(): pass
         syl = Sylladex.current_sylladex()
-        if syl.can_captchalogue(sylladex.Instance(self.instance_name, self.instance_dict)):
+        if syl.can_captchalogue(Instance(self.instance_name, self.instance_dict)):
             super().__init__(x, y, "sprites/buttons/captchalogue_symbol.png", "sprites/buttons/captchalogue_symbol_pressed.png", self.get_captchalogue_function())
         else:
             super().__init__(x, y, "sprites/buttons/captchalogue_symbol_pressed.png", "sprites/buttons/captchalogue_symbol_pressed.png", empty)
 
     def get_captchalogue_function(self):
-        instance = sylladex.Instance(self.instance_name, self.instance_dict)
+        instance = Instance(self.instance_name, self.instance_dict)
         def output_func():
             syl = Sylladex.current_sylladex()
             if syl.captchalogue(instance):

@@ -21,6 +21,7 @@ def writejson(obj=None, fn=None):
                 if obj != {} and obj != None:
                     data = json.dump(obj, f, indent=4)
                     f = data
+    os.chdir(homedir)
 
 def readjson(obj, filename):
     try:
@@ -32,10 +33,12 @@ def readjson(obj, filename):
                 print(f"UNABLE TO READ JSON {filename}")
                 writejson(obj, f"{homedir}\\json\\failed\\{filename}")
                 data = {}
+            os.chdir(homedir)
             return data
     except FileNotFoundError:
         print(f"File not found when reading json: '{filename}.json'. Overwriting with {obj}.")
         writejson(obj, filename)
+        os.chdir(homedir)
         return obj
 
 def filter_item_name(name: str) -> str:
