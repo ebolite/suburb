@@ -594,7 +594,7 @@ def map():
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
 @scene
-def display_item(instances:dict, instance_name:str, last_scene:Callable, modus:Optional[Modus] = None, flipped=False):
+def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False):
     if modus is None:
         card_path = "sprites\\itemdisplay\\captchalogue_card.png"
         card_flipped_path = "sprites\\itemdisplay\\captchalogue_card_flipped.png"
@@ -604,9 +604,7 @@ def display_item(instances:dict, instance_name:str, last_scene:Callable, modus:O
         card_path = modus.front_path
         card_flipped_path = modus.back_path
         def flip():
-            display_item(instances, instance_name, last_scene, modus=modus, flipped=not flipped)
-    instance_dict = instances[instance_name]
-    instance = Instance(instance_name, instance_dict)
+            display_item(instance, last_scene, modus=modus, flipped=not flipped)
     if not flipped:
         captcha_image = render.Button(0.5, 0.4, card_path, card_path, flip)
         if os.path.isfile(f"sprites\\items\\{instance.item_name}.png"):

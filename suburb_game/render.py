@@ -615,7 +615,7 @@ class RoomItemDisplay(UIElement):
     def update_instances(self, instances):
         def get_button_func(button_instance_name):
             def output_func():
-                suburb.display_item(instances, button_instance_name, suburb.map)
+                suburb.display_item(Instance(button_instance_name, instances[button_instance_name]), suburb.map)
             return output_func
         for button in self.buttons:
             button.delete()
