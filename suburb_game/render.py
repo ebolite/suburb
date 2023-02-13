@@ -351,6 +351,7 @@ class Image(UIElement):
         self.wait = 0
         self.alpha = 255
         self.scale: float = 1
+        self.scaled = False
         self.highlight_color: Optional[pygame.Color] = None
         update_check.append(self)
 
@@ -369,7 +370,11 @@ class Image(UIElement):
             except AttributeError: 
                 self.surf = pygame.image.load(self.path)
         if self.alpha != 255: self.surf.set_alpha(self.alpha)
-        if self.scale != 1: pygame.transform.scale(self.surf, (int(self.surf.get_width()*self.scale), int(self.surf.get_height()*self.scale)))
+        if self.scale != 1 and not self.scaled: 
+            w = self.surf.get_width()
+            h = self.surf.get_height()
+            self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
+            self.scaled = True
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         if self.highlight_color != None:
@@ -650,7 +655,7 @@ class ItemImage():
         image_path = f"sprites\\items\\{item_name}.png"
         if os.path.isfile(image_path):
             return Image(x, y, image_path)
-        return Text(x, y, "\n".join(item_name.split(" ")))
+        return Text(x, y, item_name)
 
 def render():
     for ui_element in move_to_top.copy():

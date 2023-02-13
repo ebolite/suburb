@@ -1,3 +1,4 @@
+import os
 from typing import Union, Optional
 
 import client
@@ -63,12 +64,29 @@ class Modus():
             card_thumb.absolute = True
             card_thumb.bind_to(sylladex_bar)
             instance = sylladex.get_instance(instance_name)
-            card_image = render.ItemImage(0.5, 0.5, instance.item_name)
-            card_image.bind_to(card_thumb)
-            card_image.scale = 0.5
+            image_path = f"sprites\\items\\{instance.item_name}.png"
+            if os.path.isfile(image_path):
+                card_image = render.ItemImage(0.49, 0.5, instance.item_name)
+                card_image.bind_to(card_thumb)
+                card_image.scale = 0.5
+            else:
+                card_image = None
+            words = instance.item_name.replace("+", " ").split(" ")
+            if len(words) > 2:
+                base = words.pop()
+                text = ""
+                for word in words:
+                    text += f"{word[0]}."
+                label_text = f"{text} {base}"
+            else:
+                label_text = instance.item_name
+            card_label = render.Text(0.49, 0.9, label_text)
+            card_label.set_fontsize_by_width(90)
+            card_label.bind_to(card_thumb)
             if not self.is_accessible(instance, sylladex): 
                 card_thumb.alpha = 155
-                card_image.alpha = 155
+                card_label.alpha = 155
+                if card_image is not None: card_image.alpha = 155
 
     
 class Sylladex():
