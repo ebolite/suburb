@@ -108,7 +108,7 @@ def handle_request(dict):
                 return f"Your land is the {land.title}! ({land.acronym})"
         case "current_map":
             map_tiles, map_specials, room_instances = player.get_view()
-            return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances})
+            return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": player.room.tile.name})
         case "player_info":
             return json.dumps(player.get_dict())
         case "sylladex":

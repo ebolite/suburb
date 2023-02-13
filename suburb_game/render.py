@@ -440,14 +440,17 @@ class Text(UIElement):
         return pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), int(self.fontsize*self.scale))
 
 class TileMap(UIElement):
-    def __init__(self, x, y, map: list[list[str]], specials: dict, item_display:"RoomItemDisplay"):
+    def __init__(self, x, y, map: list[list[str]], specials: dict, room_name: str, item_display:"RoomItemDisplay"):
         super(TileMap, self).__init__()
         self.x = x
         self.y = y
         self.map = map
         self.specials = specials
         self.tiles = {}
+        self.room_name = room_name
         self.item_display = item_display
+        self.label = Text(0.5, 0, room_name)
+        self.label.bind_to(self)
         self.update_map(map)
         update_check.append(self)
         key_check.append(self)
@@ -484,7 +487,9 @@ class TileMap(UIElement):
         self.map = dic["map"]
         self.specials = dic["specials"]
         self.instances = dic["instances"]
+        self.room_name = dic["room_name"]
         self.item_display.update_instances(self.instances)
+        self.label.text = self.room_name
 
     def delete(self):
         for tile in self.tiles:
