@@ -73,6 +73,7 @@ class Modus():
             x = int(x)
             y = int(render.SCREEN_HEIGHT*0.80)
             instance = sylladex.get_instance(instance_name)
+            function = self.get_button_func(instance, last_scene) if self.is_accessible(instance, sylladex) else lambda *args: None
             card_thumb = render.Button(x, y, "sprites/moduses/card_thumb.png", "sprites/moduses/card_thumb.png", self.get_button_func(instance, last_scene))
             card_thumb.absolute = True
             card_thumb.bind_to(sylladex_bar)
