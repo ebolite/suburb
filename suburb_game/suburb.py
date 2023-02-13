@@ -20,7 +20,7 @@ from sylladex import Instance, Sylladex
 def scene(func):
     def out(*args, **kwargs):
         render.clear_elements()
-        fps_counter = render.FpsCounter(0, 700)
+        fps_counter = render.FpsCounter(1150, 0)
         fps_counter.fontsize = 20
         fps_counter.absolute = True
         func(*args, **kwargs)
