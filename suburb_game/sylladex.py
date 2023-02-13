@@ -63,7 +63,13 @@ class Modus():
             card_thumb.absolute = True
             card_thumb.bind_to(sylladex_bar)
             instance = sylladex.get_instance(instance_name)
-            if not self.is_accessible(instance, sylladex): card_thumb.alpha = 155
+            card_image = render.ItemImage(0.5, 0.5, instance.item_name)
+            card_image.bind_to(card_thumb)
+            card_image.scale = 0.5
+            if not self.is_accessible(instance, sylladex): 
+                card_thumb.alpha = 155
+                card_image.alpha = 155
+
     
 class Sylladex():
     def __init__(self, player_name: str, connection_host_port: str = f"{client.HOST}:{client.PORT}"):

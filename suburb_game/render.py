@@ -350,13 +350,13 @@ class Image(UIElement):
         self.speed = 3
         self.wait = 0
         self.alpha = 255
+        self.scale: float = 1
         self.highlight_color: Optional[pygame.Color] = None
         update_check.append(self)
 
     def update(self):
         if self.animated:
             self.surf = pygame.image.load(self.path+f"-{self.animframe}.png").convert()
-            if self.alpha != 255: self.surf.set_alpha(self.alpha)
             if self.wait == self.speed:
                 self.animframe += 1
                 if self.animframe > self.animframes:
@@ -368,7 +368,8 @@ class Image(UIElement):
             try: self.surf
             except AttributeError: 
                 self.surf = pygame.image.load(self.path)
-                if self.alpha != 255: self.surf.set_alpha(self.alpha)
+        if self.alpha != 255: self.surf.set_alpha(self.alpha)
+        if self.scale != 1: pygame.transform.scale(self.surf, (int(self.surf.get_width()*self.scale), int(self.surf.get_height()*self.scale)))
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         if self.highlight_color != None:
@@ -398,7 +399,9 @@ class Text(UIElement):
         self.color: pygame.Color = BLACK_COLOR
         self.outline_color: Optional[pygame.Color] = None
         self.outline_depth = 1
-        self.fontsize = 32
+        self.fontsize: int = 32
+        self.scale: float = 1
+        self.alpha = 255
         update_check.append(self)
 
     def set_fontsize_by_width(self, width):
@@ -413,6 +416,7 @@ class Text(UIElement):
         self.rect.x, self.rect.y = self.get_rect_xy(self.text_surf)
         if self.outline_color != None:
             self.outline_surf = self.font.render(self.text, True, self.outline_color)
+            if self.alpha != 255: self.outline_surf.set_alpha(self.alpha)
             # screen.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y + self.outline_depth)) # +y +x
             # screen.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y + self.outline_depth)) # +y -x
             # screen.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y - self.outline_depth)) # -y -x
@@ -421,11 +425,12 @@ class Text(UIElement):
             screen.blit(self.outline_surf, (self.rect.x, self.rect.y - self.outline_depth))
             screen.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y))
             screen.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y))
+        if self.alpha != 255: self.text_surf.set_alpha(self.alpha)
         screen.blit(self.text_surf, (self.rect.x, self.rect.y))
 
     @property
     def font(self):
-        return pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), self.fontsize)
+        return pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), int(self.fontsize*self.scale))
 
 class TileMap(UIElement):
     def __init__(self, x, y, map: list[list[str]], specials: dict, item_display:"RoomItemDisplay"):
@@ -639,6 +644,13 @@ class CaptchalogueButton(Button):
             else:
                 ...
         return output_func
+
+class ItemImage():
+    def __new__(cls, x, y, item_name: str):
+        image_path = f"sprites\\items\\{item_name}.png"
+        if os.path.isfile(image_path):
+            return Image(x, y, image_path)
+        return Text(x, y, "\n".join(item_name.split(" ")))
 
 def render():
     for ui_element in move_to_top.copy():
