@@ -48,5 +48,9 @@ def captchalogue_instance(instance_name: str, modus_name: str):
     if "success" in client.requestplus("captchalogue", {"instance_name": instance_name, "modus_name": modus_name}): return True
     else: return False
 
+if not os.path.exists(f"{homedir}/sprites/captchas"):
+    os.makedirs(f"{homedir}/sprites/captchas")
+    print(f"Created {homedir}/sprites/captchas")
+
 sylladexes = {}
 sylladexes = readjson(sylladexes, "sylladexes")
