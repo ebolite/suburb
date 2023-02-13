@@ -657,6 +657,14 @@ class ItemImage():
             return Image(x, y, image_path)
         return Text(x, y, item_name)
 
+class FpsCounter(Text):
+    def __init__(self, x, y):
+        super().__init__(x, y, "")
+
+    def update(self):
+        self.text = f"FPS: {round(clock.get_fps(), 2)}"
+        super().update()
+
 def render():
     for ui_element in move_to_top.copy():
         update_check.remove(ui_element)

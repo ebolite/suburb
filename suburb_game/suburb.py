@@ -20,6 +20,9 @@ from sylladex import Instance, Sylladex
 def scene(func):
     def out(*args, **kwargs):
         render.clear_elements()
+        fps_counter = render.FpsCounter(0, 700)
+        fps_counter.fontsize = 20
+        fps_counter.absolute = True
         func(*args, **kwargs)
     return out
 
@@ -655,7 +658,7 @@ def title():
         conntextcontent = f"No session."
     conntext = render.Text(0, 30, conntextcontent)
     conntext.absolute = True
-    debug_button = render.Button(.1, .95, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
+    debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
 
 if __name__ == "__main__":
     client.connect() # connect to server
