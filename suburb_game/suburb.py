@@ -31,13 +31,12 @@ def scene(func):
 captcha_generator = ImageCaptcha(width = 261, height = 336, fonts=["fonts/cour.ttf", "fonts/courbd.ttf", "fonts/courbi.ttf", "fonts/couri.ttf"])
 
 def get_captcha(code) -> str:
-    os.chdir(util.homedir)
-    path = f"sprites/captchas/{code}.png".replace("?", "-")
+    path = f"{util.homedir}/sprites/captchas/{code}.png".replace("?", "-")
     if not os.path.isfile(path):
         data = captcha_generator.generate(code)
         captcha_generator.write(code, path)
         img = cv2.imread(path)
-        mask = cv2.imread("sprites/mask.png")
+        mask = cv2.imread(f"{util.homedir}/sprites/mask.png")
         img_masked = cv2.bitwise_and(img, mask)
         black_mask = np.all(img_masked<=2, axis=-1)
         alpha = np.uint8(np.logical_not(black_mask)) * 255
