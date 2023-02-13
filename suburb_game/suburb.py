@@ -8,14 +8,14 @@ from captcha.image import ImageCaptcha
 import cv2
 import os
 import numpy as np
-from typing import Callable
+from typing import Callable, Optional
 
 import util
 import render
 import client
 import config
 import sylladex
-from sylladex import Instance, Sylladex
+from sylladex import Instance, Sylladex, Modus
 
 def scene(func):
     def out(*args, **kwargs):
@@ -594,13 +594,21 @@ def map():
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
 @scene
-def display_item(instances:dict, instance_name:str, last_scene:Callable, flipped=False):
+def display_item(instances:dict, instance_name:str, last_scene:Callable, modus:Optional[Modus] = None, flipped=False):
+    if modus is None:
+        card_path = "sprites\\itemdisplay\\captchalogue_card.png"
+        card_flipped_path = "sprites\\itemdisplay\\captchalogue_card_flipped.png"
+        def flip():
+            pass
+    else:
+        card_path = modus.front_path
+        card_flipped_path = modus.back_path
+        def flip():
+            display_item(instances, instance_name, last_scene, modus=modus, flipped=not flipped)
     instance_dict = instances[instance_name]
     instance = Instance(instance_name, instance_dict)
-    def flip():
-        display_item(instances, instance_name, last_scene, flipped=not flipped)
     if not flipped:
-        captcha_image = render.Button(0.5, 0.4, "sprites\\itemdisplay\\captchalogue_card.png", "sprites\\itemdisplay\\captchalogue_card.png", flip)
+        captcha_image = render.Button(0.5, 0.4, card_path, card_path, flip)
         if os.path.isfile(f"sprites\\items\\{instance.item_name}.png"):
             image = render.Image(0.5, 0.5, f"sprites\\items\\{instance.item_name}.png")
             image.bind_to(captcha_image)
@@ -610,7 +618,7 @@ def display_item(instances:dict, instance_name:str, last_scene:Callable, flipped
         label.set_fontsize_by_width(240)
     else:
         code = instance.code
-        captcha_image = render.Button(0.5, 0.4, "sprites\\itemdisplay\\captchalogue_card_flipped.png", "sprites\\itemdisplay\\captchalogue_card_flipped.png", flip)
+        captcha_image = render.Button(0.5, 0.4, card_flipped_path, card_flipped_path, flip)
         captcha_code = render.Image(32, 28, get_captcha(code))
         captcha_code.bind_to(captcha_image)
         captcha_code.absolute = True
