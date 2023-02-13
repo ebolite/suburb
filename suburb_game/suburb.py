@@ -31,11 +31,12 @@ def scene(func):
 captcha_generator = ImageCaptcha(width = 261, height = 336, fonts=["fonts/cour.ttf", "fonts/courbd.ttf", "fonts/courbi.ttf", "fonts/couri.ttf"])
 
 def get_captcha(code) -> str:
-    path = f"sprites\\captchas\\{code}.png".replace("?", "-")
+    os.chdir(util.homedir)
+    path = f"sprites/captchas/{code}.png".replace("?", "-")
     if not os.path.isfile(path):
         captcha_generator.write(code, path)
         img = cv2.imread(path)
-        mask = cv2.imread("sprites\\mask.png")
+        mask = cv2.imread("sprites/mask.png")
         img_masked = cv2.bitwise_and(img, mask)
         black_mask = np.all(img_masked<=2, axis=-1)
         alpha = np.uint8(np.logical_not(black_mask)) * 255
@@ -575,7 +576,7 @@ def debug_speedrun():
     character_info["aspect"] = "life"
     character_info["class"] = "sylph"
     character_info["secondaryvial"] = "IMAGINATION"
-    character_info["modus"] = "queue"
+    character_info["modus"] = "array"
     character_info["gristcategory"] = "amber"
     newgame()
 
@@ -585,7 +586,6 @@ def map():
     new_map = dic["map"]
     specials = dic["specials"]
     instances = dic["instances"]
-    sylladex_instances = client.requestdic("sylladex")
     item_display = render.RoomItemDisplay(100, 50, instances)
     Sylladex.current_sylladex().draw_ui_bar()
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
