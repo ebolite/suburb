@@ -402,6 +402,7 @@ class Player():
         if instance_name not in self.room.instances: return False
         if modus_name not in self.moduses: return False
         if instance_name in self.sylladex: return False
+        if len(self.sylladex) + 1 > self.empty_cards: return False
         max_size = config.modus_max_sizes.get(modus_name, 30)
         instance = alchemy.Instance(instance_name)
         if instance.item.size > max_size: return False

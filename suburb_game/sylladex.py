@@ -45,6 +45,12 @@ class Modus():
     def add_to_modus_data(self, instance: Instance, sylladex: "Sylladex"):
         sylladex.data_list.append(instance.instance_name)
 
+    def get_cards_to_eject(self, sylladex: "Sylladex"):
+        ejected = []
+        while len(sylladex.data_list) > sylladex.empty_cards:
+            ejected.append(sylladex.data_list.pop(0))
+        return ejected
+
     def remove_from_modus_data(self, instance_name: str, sylladex: "Sylladex"):
         if instance_name in sylladex.data_list: sylladex.data_list.remove(instance_name)
     
@@ -157,14 +163,17 @@ class Sylladex():
 
     def captchalogue(self, instance: Instance) -> bool:
         if not self.can_captchalogue(instance): return False
-        if not util.captchalogue_instance(instance.instance_name, self.modus.modus_name): return False
-        self.update_deck()
         self.modus.add_to_modus_data(instance, self)
+        ejected = self.modus.get_cards_to_eject(self)
+        for instance_name in ejected:
+            self.eject(instance_name)
+        util.captchalogue_instance(instance.instance_name, self.modus_name)
+        self.update_deck()
         return True
     
     def eject(self, instance_name: str):
-        velocity = self.modus.get_eject_velocity
-        client.requestplus("eject", {"instance_name": instance_name, "modus_name": self.modus.modus_name, "velocity": velocity})
+        velocity = self.modus.get_eject_velocity()
+        client.requestplus("eject", {"instance_name": instance_name, "modus_name": self.modus_name, "velocity": velocity})
         self.update_deck()
         self.modus.remove_from_modus_data(instance_name, self)
 
@@ -226,6 +235,12 @@ class Stack(Modus):
     def add_to_modus_data(self, instance: Instance, sylladex: "Sylladex"):
         sylladex.data_list.insert(0, instance.instance_name)
 
+    def get_cards_to_eject(self, sylladex: "Sylladex"):
+        ejected = []
+        while len(sylladex.data_list) > sylladex.empty_cards:
+            ejected.append(sylladex.data_list.pop())
+        return ejected
+
 stack_modus = Stack("stack")
 stack_modus.front_path = "sprites/moduses/stack_card.png"
 stack_modus.back_path = "sprites/moduses/stack_card_flipped.png"
@@ -243,6 +258,12 @@ class Queue(Modus):
 
     def add_to_modus_data(self, instance: Instance, sylladex: "Sylladex"):
         sylladex.data_list.insert(0, instance.instance_name)
+
+    def get_cards_to_eject(self, sylladex: "Sylladex"):
+        ejected = []
+        while len(sylladex.data_list) > sylladex.empty_cards:
+            ejected.append(sylladex.data_list.pop())
+        return ejected
 
 queue_modus = Queue("queue")
 queue_modus.front_path = "sprites/moduses/queue_card.png"
