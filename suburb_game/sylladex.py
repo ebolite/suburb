@@ -103,6 +103,11 @@ class Sylladex():
     def update_deck(self):
         self.deck = client.requestdic("sylladex")
 
+    def get_instance(self, instance_name) -> Instance:
+        if instance_name not in self.deck:
+            self.update_deck()
+        return Instance(instance_name, self.deck[instance_name])
+
     def can_captchalogue(self, instance: Instance) -> bool:
         if not self.modus.is_captchalogueable(instance, self): return False
         if instance.size > self.modus.size_limit: return False
