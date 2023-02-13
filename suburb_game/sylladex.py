@@ -281,7 +281,9 @@ queue_modus.light_color = pygame.Color(255, 96, 0)
 queue_modus.white_color = pygame.Color(255, 255, 255)
 
 class Array(Modus):
-    pass
+    def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
+        if sylladex.empty_cards < len(sylladex.data_list) + 1: return False
+        return True
 
 array_modus = Array("array")
 array_modus.front_path = "sprites/moduses/array_card.png"
