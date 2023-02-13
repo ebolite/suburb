@@ -1,10 +1,12 @@
 import os
 import time
-from typing import Union, Optional
+from typing import Union, Optional, Callable
+import pygame
 
 import client
 import util
 import render
+import suburb
 
 moduses = {}
 
@@ -28,6 +30,10 @@ class Modus():
         self.back_path = ""
         self.bar_path = ""
         self.thumb_path = ""
+        self.black_color: pygame.Color
+        self.dark_color: pygame.Color
+        self.light_color: pygame.Color
+        self.white_color: pygame.Color
         moduses[name] = self
 
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
@@ -51,7 +57,12 @@ class Modus():
     def get_eject_velocity(self) -> int:
         return self.eject_velocity
     
-    def draw_ui_bar(self, sylladex: "Sylladex"):
+    def get_button_func(self, instance: Instance, last_scene: Callable) -> Callable:
+        def wrapper():
+            suburb.display_item(instance, last_scene, modus=self)
+        return wrapper
+
+    def draw_ui_bar(self, sylladex: "Sylladex", last_scene: Callable):
         start = time.time()
         sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True
@@ -61,10 +72,10 @@ class Modus():
             x += 125 * (i + 1 - instances_length/2)
             x = int(x)
             y = int(render.SCREEN_HEIGHT*0.80)
-            card_thumb = render.Image(x, y, "sprites/moduses/card_thumb.png")
+            instance = sylladex.get_instance(instance_name)
+            card_thumb = render.Button(x, y, "sprites/moduses/card_thumb.png", "sprites/moduses/card_thumb.png", self.get_button_func(instance, last_scene))
             card_thumb.absolute = True
             card_thumb.bind_to(sylladex_bar)
-            instance = sylladex.get_instance(instance_name)
             image_path = f"sprites/items/{instance.item_name}.png"
             if os.path.isfile(image_path):
                 card_image = render.ItemImage(0.49, 0.5, instance.item_name)
@@ -183,8 +194,8 @@ class Sylladex():
         if not self.modus.is_accessible(instance, self): return False
         ...
 
-    def draw_ui_bar(self):
-        return self.modus.draw_ui_bar(self)
+    def draw_ui_bar(self, last_scene: Callable):
+        return self.modus.draw_ui_bar(self, last_scene)
     
     @staticmethod
     def new_sylladex(player_name, modus_name) -> "Sylladex":
@@ -219,6 +230,10 @@ stack_modus.front_path = "sprites/moduses/stack_card.png"
 stack_modus.back_path = "sprites/moduses/stack_card_flipped.png"
 stack_modus.bar_path = "sprites/moduses/stack_bar.png"
 stack_modus.thumb_path = "sprites/moduses/stack_card_thumb.png"
+stack_modus.black_color = pygame.Color(0, 0, 0)
+stack_modus.dark_color = pygame.Color(154, 36, 70)
+stack_modus.light_color = pygame.Color(255, 5, 124)
+stack_modus.white_color = pygame.Color(255, 255, 255)
 
 class Queue(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):
@@ -233,7 +248,10 @@ queue_modus.front_path = "sprites/moduses/queue_card.png"
 queue_modus.back_path = "sprites/moduses/queue_card_flipped.png"
 queue_modus.bar_path = "sprites/moduses/queue_bar.png"
 queue_modus.thumb_path = "sprites/moduses/queue_card_thumb.png"
-
+queue_modus.black_color = pygame.Color(0, 0, 0)
+queue_modus.dark_color = pygame.Color(207, 86, 12)
+queue_modus.light_color = pygame.Color(255, 96, 0)
+queue_modus.white_color = pygame.Color(255, 255, 255)
 
 class Array(Modus):
     pass
@@ -243,3 +261,7 @@ array_modus.front_path = "sprites/moduses/array_card.png"
 array_modus.back_path = "sprites/moduses/array_card_flipped.png"
 array_modus.bar_path = "sprites/moduses/array_bar.png"
 array_modus.thumb_path = "sprites/moduses/array_card_thumb.png"
+array_modus.black_color = pygame.Color(0, 0, 0)
+array_modus.dark_color = pygame.Color(16, 147, 216)
+array_modus.light_color = pygame.Color(6, 182, 255)
+array_modus.white_color = pygame.Color(255, 255, 255)

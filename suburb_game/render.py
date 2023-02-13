@@ -227,6 +227,7 @@ class Button(UIElement):
         self.y = y
         self.onpress = onpress
         self.active = False
+        self.alpha = 255
         self.alt = alt
         self.alt_img_path = alt_img_path
         self.altclick = altclick
@@ -251,6 +252,7 @@ class Button(UIElement):
                 else:
                     self.surf = pygame.image.load(self.unpressed_img_path)
         if self.convert: self.surf = self.surf.convert()
+        if self.alpha != 255: self.surf.set_alpha(self.alpha)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))

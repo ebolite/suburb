@@ -590,7 +590,7 @@ def map():
     specials = dic["specials"]
     instances = dic["instances"]
     item_display = render.RoomItemDisplay(100, 50, instances)
-    Sylladex.current_sylladex().draw_ui_bar()
+    Sylladex.current_sylladex().draw_ui_bar(map)
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
 @scene
@@ -598,11 +598,15 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     if modus is None:
         card_path = "sprites\\itemdisplay\\captchalogue_card.png"
         card_flipped_path = "sprites\\itemdisplay\\captchalogue_card_flipped.png"
+        text_color = render.DARK_COLOR
+        text_outline_color = None
         def flip():
             pass
     else:
         card_path = modus.front_path
         card_flipped_path = modus.back_path
+        text_color = modus.light_color
+        text_outline_color = modus.black_color
         def flip():
             display_item(instance, last_scene, modus=modus, flipped=not flipped)
     if not flipped:
@@ -612,7 +616,8 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             image.bind_to(captcha_image)
         label = render.Text(0.55, 0.91, util.filter_item_name(instance.item_name))
         label.bind_to(captcha_image)
-        label.color = render.DARK_COLOR
+        label.color = text_color
+        label.outline_color = text_outline_color
         label.set_fontsize_by_width(240)
     else:
         code = instance.code
