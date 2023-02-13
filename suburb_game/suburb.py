@@ -33,7 +33,6 @@ captcha_generator = ImageCaptcha(width = 261, height = 336, fonts=["fonts/cour.t
 def get_captcha(code) -> str:
     path = f"{util.homedir}/sprites/captchas/{code}.png".replace("?", "-")
     if not os.path.isfile(path):
-        data = captcha_generator.generate(code)
         captcha_generator.write(code, path)
         img = cv2.imread(path)
         mask = cv2.imread(f"{util.homedir}/sprites/mask.png")
