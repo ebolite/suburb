@@ -22,8 +22,10 @@ class Modus():
         self.eject_velocity = 3
         self.size_limit = 30
         self.modus_name = name
-        self.front_sprite_path = ""
-        self.back_sprite_path = ""
+        self.front_path = ""
+        self.back_path = ""
+        self.bar_path = ""
+        self.thumb_path = ""
         moduses[name] = self
 
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
@@ -48,7 +50,7 @@ class Modus():
         return self.eject_velocity
     
     def draw_ui_bar(self, sylladex):
-        sylladex_bar = render.Image(0, 0, "sprites/moduses/bar.png")
+        sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True
         instances_length = len(sylladex.data_list)
         print(sylladex.data_list)
@@ -57,7 +59,7 @@ class Modus():
             x += 125 * (i + 1 - instances_length/2)
             x = int(x)
             y = int(render.SCREEN_HEIGHT*0.80)
-            card_thumb = render.Image(x, y, "sprites/moduses/array_card_thumb.png")
+            card_thumb = render.Image(x, y, self.thumb_path)
             card_thumb.absolute = True
             card_thumb.bind_to(sylladex_bar)
     
@@ -185,8 +187,10 @@ class Stack(Modus):
         sylladex.data_list.insert(0, instance.instance_name)
 
 stack_modus = Stack("stack")
-stack_modus.front_sprite_path = "/sprites/moduses/stack_card.png"
-stack_modus.back_sprite_path = "/sprites/moduses/stack_card_flipped.png"
+stack_modus.front_path = "/sprites/moduses/stack_card.png"
+stack_modus.back_path = "/sprites/moduses/stack_card_flipped.png"
+stack_modus.bar_path = "/sprites/moduses/stack_bar.png"
+stack_modus.thumb_path = "/sprites/moduses/stack_bar.png"
 
 class Queue(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):
@@ -197,12 +201,17 @@ class Queue(Modus):
         sylladex.data_list.insert(0, instance.instance_name)
 
 queue_modus = Queue("queue")
-queue_modus.front_sprite_path = "/sprites/moduses/queue_card.png"
-queue_modus.back_sprite_path = "/sprites/moduses/queue_card_flipped.png"
+queue_modus.front_path = "/sprites/moduses/queue_card.png"
+queue_modus.back_path = "/sprites/moduses/queue_card_flipped.png"
+queue_modus.bar_path = "/sprites/moduses/queue_bar.png"
+queue_modus.thumb_path = "/sprites/moduses/queue_card_thumb.png"
+
 
 class Array(Modus):
     pass
 
 array_modus = Array("array")
-array_modus.front_sprite_path = "/sprites/moduses/array_card.png"
-array_modus.back_sprite_path = "/sprites/moduses/array_card_flipped.png"
+array_modus.front_path = "/sprites/moduses/array_card.png"
+array_modus.back_path = "/sprites/moduses/array_card_flipped.png"
+array_modus.bar_path = "/sprites/moduses/array_bar.png"
+array_modus.thumb_path = "/sprites/moduses/array_card_thumb.png"
