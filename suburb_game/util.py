@@ -49,4 +49,4 @@ def captchalogue_instance(instance_name: str, modus_name: str):
     else: return False
 
 sylladexes = {}
-sylladex = readjson(sylladexes, "sylladexes")
+sylladexes = readjson(sylladexes, "sylladexes")

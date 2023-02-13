@@ -114,7 +114,11 @@ def login():
             client.dic["character"] = ""
             client.dic["character_pass_hash"] = ""
         else:
-            namecharacter() # todo: change to play game function
+            player_info = client.requestdic("player_info")
+            if player_info["setup"]:
+                map()
+            else:
+                namecharacter() # todo: change to play game function
         print(f"log text {log.text}")
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
@@ -515,7 +519,7 @@ def choosemodus():
     array_description.fontsize = 20
     array_description.bind_to(array_image)
     scratch_image = render.Button(0.86, 0.45, "sprites/moduses/array_card.png", "sprites/moduses/array_card.png", placeholder)
-    backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosevial)
+    backbutton = render.Button(0.1, 0.07, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", choosevial)
 
     ...
 
