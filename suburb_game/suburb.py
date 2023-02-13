@@ -582,7 +582,6 @@ def map():
     instances = dic["instances"]
     sylladex_instances = client.requestdic("sylladex")
     item_display = render.RoomItemDisplay(100, 50, instances)
-    sylladex_display = render.RoomItemDisplay(900, 50, sylladex_instances)
     Sylladex.current_sylladex().draw_ui_bar()
     render.TileMap(0.5, 0.5, new_map, specials, item_display)
 
