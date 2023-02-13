@@ -649,6 +649,13 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         if os.path.isfile(f"sprites\\kinds\\{kind}.png"):
             kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{kind}.png")
             kind_image.bind_to(kind_card_image)
+    if modus is not None:
+        syl = Sylladex.current_sylladex()
+        def uncaptcha_button_func():
+            syl.uncaptchalogue(instance.instance_name)
+            last_scene()
+        uncaptchalogue_button = render.TextButton(0.5, 1.2, 200, 33, "uncaptchalogue", uncaptcha_button_func)
+        uncaptchalogue_button.bind_to(power_bar)
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
 
 @scene
