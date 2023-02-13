@@ -349,12 +349,14 @@ class Image(UIElement):
         self.animframes = 1
         self.speed = 3
         self.wait = 0
+        self.alpha = 255
         self.highlight_color: Optional[pygame.Color] = None
         update_check.append(self)
 
     def update(self):
         if self.animated:
             self.surf = pygame.image.load(self.path+f"-{self.animframe}.png").convert()
+            if self.alpha != 255: self.surf.set_alpha(self.alpha)
             if self.wait == self.speed:
                 self.animframe += 1
                 if self.animframe > self.animframes:
@@ -366,6 +368,7 @@ class Image(UIElement):
             try: self.surf
             except AttributeError: 
                 self.surf = pygame.image.load(self.path)
+                if self.alpha != 255: self.surf.set_alpha(self.alpha)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         if self.highlight_color != None:
