@@ -9,6 +9,7 @@ import util
 import config
 import client
 import suburb
+import themes
 from sylladex import Instance, Sylladex
 
 pygame.init()
@@ -56,6 +57,13 @@ def clear_elements():
     for element in ui_elements.copy():
         element.delete()
 
+def palette_swap(surf: Union[pygame.Surface, pygame.surface.Surface], old_color: pygame.Color, new_color: pygame.Color):
+    new_surf = pygame.Surface(surf.get_size())
+    new_surf.fill(new_color)
+    surf.set_colorkey(old_color)
+    new_surf.blit(surf, (0, 0))
+    return new_surf
+
 class UIElement(pygame.sprite.Sprite):
     def __init__(self): # x and y as fractions of 1 (centered position on screen)
         super(UIElement, self).__init__()
@@ -64,6 +72,7 @@ class UIElement(pygame.sprite.Sprite):
         self.absolute = False
         self.x = 0
         self.y = 0
+        self.theme: themes.Theme = themes.default
         self.bound_elements = []
         ui_elements.append(self)
 
@@ -88,6 +97,14 @@ class UIElement(pygame.sprite.Sprite):
             if self in list:
                 list.remove(self)
         self.kill()
+
+    def convert_to_theme(self, surf: Union[pygame.Surface, pygame.surface.Surface]) -> pygame.Surface:
+        default_theme = themes.default
+        surf = palette_swap(surf, default_theme.white, self.theme.white)
+        surf = palette_swap(surf, default_theme.light, self.theme.light)
+        surf = palette_swap(surf, default_theme.dark, self.theme.dark)
+        surf = palette_swap(surf, default_theme.black, self.theme.black)
+        return surf
 
     def get_rect_xy(self, secondary_surf:Union[pygame.Surface, pygame.surface.Surface, None] = None) -> tuple[int, int]:
         rect_x: int = 0
@@ -219,7 +236,7 @@ class TextButton(UIElement):
 
 
 class Button(UIElement):
-    def __init__(self, x, y, unpressed_img_path: str, pressed_img_path: str, onpress: Callable, alt: Optional[Callable]=None, alt_img_path=None, altclick: Optional[Callable]=None, hover=None): # x and y as fractions of 1 (centered position on screen)
+    def __init__(self, x, y, unpressed_img_path:str, pressed_img_path:str, onpress:Callable, alt:Optional[Callable]=None, alt_img_path=None, altclick:Optional[Callable]=None, hover=None, theme:themes.Theme=themes.default): # x and y as fractions of 1 (centered position on screen)
         super(Button, self).__init__()
         self.unpressed_img_path = unpressed_img_path
         self.pressed_img_path = pressed_img_path
@@ -233,8 +250,9 @@ class Button(UIElement):
         self.altclick = altclick
         self.alt_alpha = 255
         self.absolute = False
-        self.convert = False
+        self.convert = True
         self.hover = hover
+        self.theme = theme
         click_check.append(self)
         update_check.append(self)
         mouseup_check.append(self)
@@ -251,7 +269,10 @@ class Button(UIElement):
                     self.surf = pygame.image.load(self.hover)
                 else:
                     self.surf = pygame.image.load(self.unpressed_img_path)
-        if self.convert: self.surf = self.surf.convert()
+        if self.convert: 
+            self.surf = self.surf.convert()
+            self.surf = self.convert_to_theme(self.surf)
+            self.surf.set_colorkey(pygame.Color(0, 0, 0))
         if self.alpha != 255: self.surf.set_alpha(self.alpha)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
@@ -339,7 +360,7 @@ class InputTextBox(UIElement):
                     self.text += event.unicode
 
 class Image(UIElement):
-    def __init__(self, x, y, path):
+    def __init__(self, x, y, path, theme=themes.default):
         super(Image, self).__init__()
         self.x = x
         self.y = y
@@ -354,6 +375,7 @@ class Image(UIElement):
         self.alpha = 255
         self.scale: float = 1
         self.scaled = False
+        self.theme = theme
         self.highlight_color: Optional[pygame.Color] = None
         update_check.append(self)
 
@@ -370,7 +392,9 @@ class Image(UIElement):
         else:
             try: self.surf
             except AttributeError: 
-                self.surf = pygame.image.load(self.path)
+                self.surf = pygame.image.load(self.path).convert()
+                self.surf = self.convert_to_theme(self.surf)
+                self.surf.set_colorkey(pygame.Color(0, 0, 0))
         if self.alpha != 255: self.surf.set_alpha(self.alpha)
         if self.scale != 1 and not self.scaled: 
             w = self.surf.get_width()

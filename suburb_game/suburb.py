@@ -14,7 +14,7 @@ import util
 import render
 import client
 import config
-import sylladex
+import themes
 from sylladex import Instance, Sylladex, Modus
 
 def scene(func):
