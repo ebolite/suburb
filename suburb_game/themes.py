@@ -9,6 +9,11 @@ class Theme():
 
 default = Theme()
 
+strife = Theme()
+strife.light = Color(0, 227, 113)
+strife.dark = Color(0, 140, 69)
+strife.black = Color(14, 96, 55)
+
 array = Theme()
 array.light = Color(16, 147, 216)
 array.dark = Color(16, 147, 216)

@@ -17,6 +17,9 @@ import config
 import themes
 from sylladex import Instance, Sylladex, Modus
 
+def theme():
+    return themes.default
+
 def scene(func):
     def out(*args, **kwargs):
         t = time.time()
@@ -57,17 +60,17 @@ def play():
 def register():
     log = render.Text(0.5, 0.10, "")
     name = render.Text(0.5, 0.20, f"Username (Case-sensitive)")
-    name.color = render.DARK_COLOR
-    name.outline_color = render.BLACK_COLOR
+    name.color = theme().black
+    name.outline_color = theme().black
     namebox = render.InputTextBox(.5, .25)
     pw = render.Text(0.5, .35, f"Password")
-    pw.color = render.DARK_COLOR
-    pw.outline_color = render.BLACK_COLOR
+    pw.color = theme().dark
+    pw.outline_color = theme().black
     pwbox = render.InputTextBox(.5, .40)
     pwbox.secure = True
     confirm = render.Text(0.5, .50, f"Confirm Password")
-    confirm.color = render.DARK_COLOR
-    confirm.outline_color = render.BLACK_COLOR
+    confirm.color = theme().dark
+    confirm.outline_color = theme().black
     confirmbox = render.InputTextBox(.5, .55)
     confirmbox.secure = True
     def verify():
@@ -94,12 +97,12 @@ def register():
 def login():
     log = render.Text(0.5, 0.20, "")
     name = render.Text(0.5, 0.30, f"Character Name (Case-sensitive)")
-    name.color = render.DARK_COLOR
-    name.outline_color = render.BLACK_COLOR
+    name.color = theme().dark
+    name.outline_color = theme().black
     namebox = render.InputTextBox(.5, .35)
     pw = render.Text(0.5, .45, f"Password")
-    pw.color = render.DARK_COLOR
-    pw.outline_color = render.BLACK_COLOR
+    pw.color = theme().dark
+    pw.outline_color = theme().black
     pwbox = render.InputTextBox(.5, .50)
     pwbox.secure = True
     def verify():
@@ -125,11 +128,11 @@ def login():
 @scene
 def newsessionprompt():
     text = render.Text(0.5, 0.3, f"Create a new session?")
-    text.color = render.DARK_COLOR
-    text.outline_color = render.BLACK_COLOR
+    text.color = theme().dark
+    text.outline_color = theme().black
     text2 = render.Text(0.5, 0.35, f"The first character to join will become the admin of the session.")
-    text2.color = render.DARK_COLOR
-    text2.outline_color = render.BLACK_COLOR
+    text2.color = theme().dark
+    text2.outline_color = theme().black
     new = render.Button(.5, .48, "sprites\\buttons\\newsession.png", "sprites\\buttons\\newsessionpressed.png", newsession)
     back = render.Button(.5, .60, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
 
@@ -137,17 +140,17 @@ def newsessionprompt():
 def newsession():
     log = render.Text(0.5, 0.10, "")
     name = render.Text(0.5, 0.20, f"Session Name")
-    name.color = render.DARK_COLOR
-    name.outline_color = render.BLACK_COLOR
+    name.color = theme().dark
+    name.outline_color = theme().black
     namebox = render.InputTextBox(.5, .25)
     pw = render.Text(0.5, .35, f"Session Password")
-    pw.color = render.DARK_COLOR
-    pw.outline_color = render.BLACK_COLOR
+    pw.color = theme().dark
+    pw.outline_color = theme().black
     pwbox = render.InputTextBox(.5, .40)
     pwbox.secure = True
     confirm = render.Text(0.5, .50, f"Confirm Password")
-    confirm.color = render.DARK_COLOR
-    confirm.outline_color = render.BLACK_COLOR
+    confirm.color = theme().dark
+    confirm.outline_color = theme().black
     confirmbox = render.InputTextBox(.5, .55)
     confirmbox.secure = True
     def verify():
@@ -170,12 +173,12 @@ def newsession():
 def connect():
     log = render.Text(0.5, 0.20, "")
     name = render.Text(0.5, 0.30, f"Session Name")
-    name.color = render.DARK_COLOR
-    name.outline_color = render.BLACK_COLOR
+    name.color = theme().dark
+    name.outline_color = theme().black
     namebox = render.InputTextBox(.5, .35)
     pw = render.Text(0.5, .45, f"Session Password")
-    pw.color = render.DARK_COLOR
-    pw.outline_color = render.BLACK_COLOR
+    pw.color = theme().dark
+    pw.outline_color = theme().black
     pwbox = render.InputTextBox(.5, .50)
     pwbox.secure = True
     def verify():
@@ -208,11 +211,11 @@ character_info = {
 def namecharacter():
     log = render.Text(0.5, 0.20, "")
     l1text = render.Text(0.5, 0.3, "A young being of indeterminate nature exists in some kind of area.")
-    l1text.color = render.DARK_COLOR
-    l1text.outline_color = render.BLACK_COLOR
+    l1text.color = theme().dark
+    l1text.outline_color = theme().black
     l2text = render.Text(0.5, 0.4, "What will this being's name be?")
-    l2text.color = render.DARK_COLOR
-    l2text.outline_color = render.BLACK_COLOR
+    l2text.color = theme().dark
+    l2text.outline_color = theme().black
     namebox = render.InputTextBox(.5, .48)
     def verify():
         if len(namebox.text) > 0 and len(namebox.text) < 32:
@@ -227,11 +230,11 @@ def nouncharacter():
     log = render.Text(0.5, 0.20, "")
     log2 = render.Text(0.5, 0.30, "")
     l1text = render.Text(0.5, 0.4, f"You don't think \"being\" is a very accurate descriptor.")
-    l1text.color = render.DARK_COLOR
-    l1text.outline_color = render.BLACK_COLOR
+    l1text.color = theme().dark
+    l1text.outline_color = theme().black
     l2text = render.Text(0.5, 0.5, f"What word best describes {character_info['name']}?")
-    l2text.color = render.DARK_COLOR
-    l2text.outline_color = render.BLACK_COLOR
+    l2text.color = theme().dark
+    l2text.outline_color = theme().black
     namebox = render.InputTextBox(.5, .6)
     def verify():
         if len(namebox.text) > 0 and len(namebox.text) < 32:
@@ -253,8 +256,8 @@ def pronounscharacter():
     log2 = render.Text(0.5, 0.30, "")
     log3 = render.Text(0.5, 0.40, "")
     l1text = render.Text(0.5, 0.5, f"What pronouns should this {character_info['noun']} go by?")
-    l1text.color = render.DARK_COLOR
-    l1text.outline_color = render.BLACK_COLOR
+    l1text.color = theme().dark
+    l1text.outline_color = theme().black
     def confirmnouns(pronouns): # [0] they [1] them [2] their [3] theirs
         example1 = f"A newly-created {character_info['noun']} stands in {pronouns[2]} room. It surrounds {pronouns[1]}."
         example2 = f"Today {pronouns[0]} will play a game with some friends of {pronouns[3]}."
@@ -286,8 +289,8 @@ def make_asbutton(aspect):
             chooseclass()
         render.clear_elements()
         text = render.Text(0.5, 0.25, "Is this the aspect you wish to choose?")
-        text.color = render.DARK_COLOR
-        text.outline_color = render.BLACK_COLOR
+        text.color = theme().dark
+        text.outline_color = theme().black
         blurb = render.Image(0.5, 0.39, f"sprites\\aspects\\{aspect}blurb.png")
         confirm = render.Button(0.5, 0.54, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", on_confirm)
         backbutton = render.Button(0.5, 0.66, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", aspectcharacter)
@@ -352,8 +355,8 @@ def make_classbutton(c):
             chooseinterests()
         render.clear_elements()
         text = render.Text(0.5, 0.3, f"Are you sure you want to be the {c.upper()} of {character_info['aspect'].upper()}?")
-        text.color = render.DARK_COLOR
-        text.outline_color = render.BLACK_COLOR
+        text.color = theme().dark
+        text.outline_color = theme().black
         confirm = render.Button(0.5, 0.40, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", on_confirm)
         backbutton = render.Button(0.5, 0.52, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", chooseclass)
     return button
@@ -599,7 +602,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     if modus is None:
         card_path = "sprites\\itemdisplay\\captchalogue_card.png"
         card_flipped_path = "sprites\\itemdisplay\\captchalogue_card_flipped.png"
-        text_color = render.DARK_COLOR
+        text_color = theme().dark
         text_outline_color = None
         def flip():
             pass
@@ -631,7 +634,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     power_bar.bind_to(captcha_image)
     power_label = render.Text(0.512, 0.51, str(power))
     power_label.bind_to(power_bar)
-    power_label.color = render.DARK_COLOR
+    power_label.color = theme().dark
     power_label.fontsize = 54
     power_label.set_fontsize_by_width(330)
     num_kinds = len(instance.kinds)
@@ -644,7 +647,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         kind_label = render.Text(0.55, 0.91, kind)
         kind_label.bind_to(kind_card_image)
         kind_label.fontsize = 16
-        kind_label.color = render.STRIFE_LIGHT_GREEN
+        kind_label.color = themes.strife.light
         kind_label.set_fontsize_by_width(120)
         if os.path.isfile(f"sprites\\kinds\\{kind}.png"):
             kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{kind}.png")
@@ -674,8 +677,8 @@ def title():
     options_button = render.Button(.5, .92, "sprites\\buttons\\options.png", "sprites\\buttons\\optionspressed.png", newsessionprompt)
     versiontext = render.Text(0, 0, f"SUBURB Version {util.VERSION}")
     versiontext.absolute = True
-    versiontext.color = render.DARK_COLOR
-    versiontext.outline_color = render.BLACK_COLOR
+    versiontext.color = theme().dark
+    versiontext.outline_color = theme().black
     if client.dic["session_name"] != "":
         conntextcontent = f"Session `{client.dic['session_name']}`"
     else:
