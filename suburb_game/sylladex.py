@@ -197,6 +197,10 @@ class Sylladex():
         client.requestplus("eject", {"instance_name": instance_name, "modus_name": self.modus_name, "velocity": 0})
         self.update_deck()
         self.modus.remove_from_modus_data(instance_name, self)
+
+    def remove_item(self, instance_name: str):
+        self.update_deck()
+        self.modus.remove_from_modus_data(instance_name, self)
     
     def use(self, instance: Instance, effect_name: str):
         if not self.modus.is_accessible(instance, self): return False

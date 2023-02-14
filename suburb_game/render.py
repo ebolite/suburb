@@ -293,7 +293,8 @@ class InputTextBox(UIElement):
         self.x = x
         self.y = y
         self.secure = False
-        self.button = None
+        self.button: Union[Button, TextButton, None] = None
+        self.enter_func: Optional[Callable] = None
         click_check.append(self)
         key_check.append(self)
         keypress_update_check.append(self)
@@ -344,9 +345,11 @@ class InputTextBox(UIElement):
         if self.active:
             if event.key == pygame.K_BACKSPACE:
                 self.text = self.text[:-1]
+            elif event.key == pygame.K_RETURN and self.enter_func != None:
+                self.enter_func(self)
             # if enter is pressed and this text box has a button assigned to it, press that button
             elif event.key == pygame.K_RETURN and self.button != None:
-                self.button.mouseup()
+                self.button.mouseup(True)
             else:
                 if event.unicode.isascii() and event.unicode not in  ["\n", "\t", "\r"]: #no newline, tab or carriage return
                     self.text += event.unicode
@@ -467,6 +470,7 @@ class TileMap(UIElement):
         self.item_display = item_display
         self.label = Text(0.5, 0, room_name)
         self.label.bind_to(self)
+        self.input_text_box: Optional[InputTextBox] = None
         self.update_map(map)
         update_check.append(self)
         key_check.append(self)
@@ -488,6 +492,7 @@ class TileMap(UIElement):
                     self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials)
 
     def keypress(self, event):
+        if self.input_text_box is not None and self.input_text_box.active: return
         match event.key:
             case pygame.K_UP: direction = "up"
             case pygame.K_w: direction = "up"

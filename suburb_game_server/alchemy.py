@@ -377,8 +377,6 @@ class Instance():
     @property
     def item(self) -> Item:
         return Item(self.item_name)
-        
-
 
 def display_item(item: Item):
     out = f"""{item.displayname}

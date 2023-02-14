@@ -131,6 +131,18 @@ def handle_request(dict):
         case "move":
             player.attempt_move(content)
             return
+        case "console_command":
+            console_commands(player, content)
+
+
+def console_commands(player: sessions.Player, content: str):
+    args = content.split(" ")
+    command = args.pop(0)
+    match command:
+        case "harlify":
+            item = alchemy.Item(" ".join(args))
+            instance = alchemy.Instance(item)
+            player.room.add_instance(instance.name)
 
 def autosave():
     last_save = time.time()

@@ -423,6 +423,21 @@ class Player():
         self.room.add_instance(instance_name)
         return True
     
+    def consume_instance(self, instance_name: str) -> bool:
+        if instance_name not in self.sylladex: return False
+        self.sylladex.remove(instance_name)
+        return True
+    
+    def use(self, instance: alchemy.Instance, action_name, target_instance: Optional[str] = None) -> Optional[bool]:
+        if action_name not in self.item.use: return False
+        match action_name:
+            case "add_card":
+                if self.empty_cards >= 10: return False
+                self.empty_cards += 1
+                self.consume_instance(self.name)
+            case "_":
+                return False
+    
     def sylladex_instances(self) -> dict:
         out_dict = {}
         for instance_name in self.sylladex:
