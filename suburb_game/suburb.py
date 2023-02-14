@@ -641,7 +641,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     else:
         code = instance.code
         captcha_image = render.Button(0.5, 0.4, card_flipped_path, card_flipped_path, flip)
-        captcha_code = render.Image(32, 28, get_captcha(code))
+        captcha_code = render.Image(32, 28, get_captcha(code), convert=False)
         captcha_code.bind_to(captcha_image)
         captcha_code.absolute = True
     power = instance.power

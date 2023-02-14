@@ -20,7 +20,7 @@ class Instance():
         self.size = self.item_dict["size"]
         self.code = self.item_dict["code"]
         self.kinds = self.item_dict["kinds"]
-        self.use = self.item_dict["use"]
+        self.use = self.item_dict["use"] or []
 
 # the default fetch modus is array
 class Modus():

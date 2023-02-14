@@ -355,11 +355,13 @@ class InputTextBox(UIElement):
                     self.text += event.unicode
 
 class Image(UIElement):
-    def __init__(self, x, y, path, theme=suburb.current_theme()):
+    def __init__(self, x, y, path, theme=suburb.current_theme(), convert=True):
         super(Image, self).__init__()
         self.x = x
         self.y = y
         self.path = path
+        self.theme = theme
+        self.convert = convert
         self.absolute = False
         self.animated = False
         self.hover_to_top = False
@@ -370,7 +372,6 @@ class Image(UIElement):
         self.alpha = 255
         self.scale: float = 1
         self.scaled = False
-        self.theme = theme
         self.highlight_color: Optional[pygame.Color] = None
         update_check.append(self)
 
@@ -387,9 +388,11 @@ class Image(UIElement):
         else:
             try: self.surf
             except AttributeError: 
-                self.surf = pygame.image.load(self.path).convert()
-                self.surf = self.convert_to_theme(self.surf)
-                self.surf.set_colorkey(pygame.Color(0, 0, 0))
+                self.surf = pygame.image.load(self.path)
+                if self.convert:
+                    self.surf = self.surf.convert()
+                    self.surf = self.convert_to_theme(self.surf)
+                    self.surf.set_colorkey(pygame.Color(0, 0, 0))
         if self.alpha != 255: self.surf.set_alpha(self.alpha)
         if self.scale != 1 and not self.scaled: 
             w = self.surf.get_width()
