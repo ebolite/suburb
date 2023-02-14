@@ -206,6 +206,7 @@ class TextButton(UIElement):
             screen.blit(self.hoversurf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
+        if self not in click_check: return
         if isclicked:
             if not self.toggle:
                 self.active = True
@@ -271,6 +272,7 @@ class Button(UIElement):
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
+        if self not in click_check: return
         if isclicked:
             self.active = True
 
