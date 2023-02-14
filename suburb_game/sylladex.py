@@ -27,8 +27,7 @@ class Instance():
         match action_name:
             case "add_card":
                 def output_func():
-                    success = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None})
-                    if success:
+                    if client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None}):
                         Sylladex.current_sylladex().remove_item(self.instance_name)
                         last_scene()
             case _:
