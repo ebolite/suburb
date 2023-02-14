@@ -15,7 +15,7 @@ strife.dark = Color(0, 140, 69)
 strife.black = Color(14, 96, 55)
 
 array = Theme()
-array.light = Color(16, 147, 216)
+array.light = Color(6, 182, 255)
 array.dark = Color(16, 147, 216)
 
 queue = Theme()
