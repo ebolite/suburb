@@ -27,8 +27,10 @@ class Instance():
         match action_name:
             case "add card":
                 def output_func():
-                    client.requestplus(intent="use_item", content={"instance": self.instance_name, "action": action_name})
-                    last_scene()
+                    success = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None})
+                    if success:
+                        Sylladex.current_sylladex().remove_item(self.instance_name)
+                        last_scene()
             case _:
                 def output_func():
                     pass
@@ -170,7 +172,11 @@ class Sylladex():
     def get_instance(self, instance_name) -> Instance:
         if instance_name not in self.deck:
             self.update_deck()
-        return Instance(instance_name, self.deck[instance_name])
+        if instance_name in self.deck:
+            return Instance(instance_name, self.deck[instance_name])
+        else:
+            self.remove_item(instance_name)
+            raise KeyError
 
     def can_captchalogue(self, instance: Instance) -> bool:
         if not self.modus.is_captchalogueable(instance, self): return False

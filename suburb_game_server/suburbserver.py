@@ -113,6 +113,14 @@ def handle_request(dict):
             return json.dumps(player.get_dict())
         case "sylladex":
             return json.dumps(player.sylladex_instances())
+        case "use_item":
+            instance_name = content["instance_name"]
+            action_name = content["action_name"]
+            target_name = content["target_name"]
+            instance = alchemy.Instance(instance_name)
+            if target_name is not None: target_instance = alchemy.Instance(target_name)
+            else: target_instance = None
+            return player.use(instance, action_name, target_instance)
         case "captchalogue":
             instance_name = content["instance_name"]
             modus_name = content["modus_name"]

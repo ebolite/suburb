@@ -428,13 +428,14 @@ class Player():
         self.sylladex.remove(instance_name)
         return True
     
-    def use(self, instance: alchemy.Instance, action_name, target_instance: Optional[str] = None) -> Optional[bool]:
-        if action_name not in self.item.use: return False
+    def use(self, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None) -> Optional[bool]:
+        if instance.name not in self.sylladex and instance.name not in self.room.instances: return False
+        if action_name not in instance.item.use: return False
         match action_name:
-            case "add_card":
+            case "add card":
                 if self.empty_cards >= 10: return False
                 self.empty_cards += 1
-                self.consume_instance(self.name)
+                return self.consume_instance(instance.name)
             case "_":
                 return False
     
