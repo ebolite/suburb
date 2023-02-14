@@ -151,6 +151,10 @@ def console_commands(player: sessions.Player, content: str):
             item = alchemy.Item(" ".join(args))
             instance = alchemy.Instance(item)
             player.room.add_instance(instance.name)
+        case "card":
+            item = alchemy.Item("empty captchalogue card")
+            instance = alchemy.Instance(item)
+            player.room.add_instance(instance.name)
 
 def autosave():
     last_save = time.time()
