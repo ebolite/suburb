@@ -51,3 +51,11 @@ def requestplus(intent, content):
     ClientSocket.send(str.encode(Input))
     dic["content"] = ""
     return ClientSocket.recv(1024).decode()
+
+def requestplusdic(intent, content):
+    dic["intent"] = intent
+    dic["content"] = content
+    Input = json.dumps(dic)
+    ClientSocket.send(str.encode(Input))
+    dic["content"] = ""
+    return json.loads(ClientSocket.recv(32768).decode())

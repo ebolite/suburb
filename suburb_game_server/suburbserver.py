@@ -136,6 +136,14 @@ def handle_request(dict):
             velocity = content["velocity"]
             success = player.eject(instance_name, modus_name, velocity)
             return "success" if success else "failure"
+        case "valid_use_targets":
+            instance_name = content["instance_name"]
+            action_name = content["action_name"]
+            instances_dict = {}
+            valid_names = player.valid_use_targets(alchemy.Instance(instance_name), action_name)
+            for name in valid_names:
+                instances_dict[name] = alchemy.Instance(name).get_dict()
+            return json.dumps(instances_dict)
         case "move":
             player.attempt_move(content)
             return

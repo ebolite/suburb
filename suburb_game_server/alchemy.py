@@ -352,6 +352,10 @@ class Instance():
             self.item_name = identifier.name
         if self.name not in util.instances:
             util.instances[self.name] = {}
+        try:
+            self.punched
+        except KeyError:
+            self.punched: str = ""
 
     @property
     def name(self):

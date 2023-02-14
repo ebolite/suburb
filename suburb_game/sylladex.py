@@ -22,7 +22,7 @@ class Instance():
         self.kinds = self.item_dict["kinds"]
         self.use = self.item_dict["use"] or []
 
-    def get_action_button_func(self, action_name: str, last_scene:Callable) -> Callable:
+    def get_action_button_func(self, action_name: str, last_scene: Callable, target_instance: Optional["Instance"]=None) -> Callable:
         if action_name not in self.use: return lambda *args: None
         match action_name:
             case "add_card":
@@ -30,10 +30,38 @@ class Instance():
                     if client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None}):
                         Sylladex.current_sylladex().remove_item(self.instance_name)
                         last_scene()
+            case "punch_card":
+                def output_func():
+                    self.choose_target(action_name, last_scene)
             case _:
                 def output_func():
                     pass
         return output_func
+    
+    def choose_target(self, action_name: str, last_scene: Callable):
+        suburb.scene(lambda *args: None)()
+        valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.instance_name, "action_name": action_name})
+        print(valid_instances)
+        syl = Sylladex.current_sylladex()
+        syl.update_deck()
+        def placeholder(): pass
+        for i, target_instance_name in enumerate(valid_instances.keys()):
+            def choose_button_func():
+                client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
+                syl.update_deck()
+                last_scene()
+            button_height = 33
+            button_width = 400
+            x = int(render.SCREEN_WIDTH*0.5 - button_width*0.5)
+            y = 100 + (button_height + 10)*i
+            instance = Instance(target_instance_name, valid_instances[target_instance_name])
+            if target_instance_name in syl.deck: display_name = f"(Sylladex) {instance.item_name}"
+            else: display_name = instance.item_name
+            choose_button = render.TextButton(x, y, button_width, button_height, display_name, placeholder)
+            choose_button.absolute = True
+            choose_button.truncate_text = True
+        def backbutton_func(): suburb.display_item(self, last_scene, syl.modus)
+        backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", backbutton_func)
 
 # the default fetch modus is array
 class Modus():

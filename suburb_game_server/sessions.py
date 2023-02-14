@@ -438,6 +438,20 @@ class Player():
                 return self.consume_instance(instance.name)
             case "_":
                 return False
+            
+    # can't check if these items are accessible by client modus, must be checked client side
+    def valid_use_targets(self, instance: alchemy.Instance, action_name) -> list[str]:
+        valid_target_names = []
+        match action_name:
+            case "punch_card":
+                def filter_func(name):
+                    if name not in self.sylladex: return False
+                    if alchemy.Instance(name).punched != "": return False
+                    return True
+            case _:
+                return []
+        valid_target_names = filter(filter_func, self.sylladex+self.room.instances)
+        return list(valid_target_names)
     
     def sylladex_instances(self) -> dict:
         out_dict = {}
