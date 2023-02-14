@@ -630,6 +630,14 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         label.color = text_color
         label.outline_color = text_outline_color
         label.set_fontsize_by_width(240)
+        num_actions = len(instance.use)
+        for i, action_name in enumerate(instance.use):
+            x = 0.05
+            y = 0.1 + (0.1 * i)
+            path = f"sprites/item_actions/{action_name}.png"
+            if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
+            action_button = render.Button(x, y, path, path, placeholder)
+            action_button.bind_to(captcha_image)
     else:
         code = instance.code
         captcha_image = render.Button(0.5, 0.4, card_flipped_path, card_flipped_path, flip)
