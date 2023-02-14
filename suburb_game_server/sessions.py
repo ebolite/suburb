@@ -432,7 +432,7 @@ class Player():
         if instance.name not in self.sylladex and instance.name not in self.room.instances: return False
         if action_name not in instance.item.use: return False
         match action_name:
-            case "add card":
+            case "add_card":
                 if self.empty_cards >= 10: return False
                 self.empty_cards += 1
                 return self.consume_instance(instance.name)

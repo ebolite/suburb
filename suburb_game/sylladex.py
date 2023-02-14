@@ -25,7 +25,7 @@ class Instance():
     def get_action_button_func(self, action_name: str, last_scene:Callable) -> Callable:
         if action_name not in self.use: return lambda *args: None
         match action_name:
-            case "add card":
+            case "add_card":
                 def output_func():
                     success = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None})
                     if success:
