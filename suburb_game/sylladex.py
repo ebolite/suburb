@@ -22,6 +22,18 @@ class Instance():
         self.kinds = self.item_dict["kinds"]
         self.use = self.item_dict["use"] or []
 
+    def get_action_button_func(self, action_name: str, last_scene:Callable) -> Callable:
+        if action_name not in self.use: return lambda *args: None
+        match action_name:
+            case "add card":
+                def output_func():
+                    client.requestplus(intent="use_item", content={"instance": self.instance_name, "action": action_name})
+                    last_scene()
+            case _:
+                def output_func():
+                    pass
+        return output_func
+
 # the default fetch modus is array
 class Modus():
     def __init__(self, name):

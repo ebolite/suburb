@@ -632,11 +632,11 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         label.set_fontsize_by_width(240)
         num_actions = len(instance.use)
         for i, action_name in enumerate(instance.use):
-            x = 0.05
-            y = 0.1 + (0.1 * i)
+            x = 0.23 + (0.1 * i)
+            y = -0.1
             path = f"sprites/item_actions/{action_name}.png"
             if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
-            action_button = render.Button(x, y, path, path, placeholder)
+            action_button = render.Button(x, y, path, path, instance.get_action_button_func(action_name, last_scene))
             action_button.bind_to(captcha_image)
     else:
         code = instance.code
