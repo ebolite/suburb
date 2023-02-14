@@ -64,7 +64,7 @@ class UIElement(pygame.sprite.Sprite):
         self.absolute = False
         self.x = 0
         self.y = 0
-        self.theme: themes.Theme = themes.default
+        self.theme: themes.Theme = suburb.current_theme()
         self.bound_elements = []
         ui_elements.append(self)
 
@@ -228,7 +228,7 @@ class TextButton(UIElement):
 
 
 class Button(UIElement):
-    def __init__(self, x, y, unpressed_img_path:str, pressed_img_path:str, onpress:Callable, alt:Optional[Callable]=None, alt_img_path=None, altclick:Optional[Callable]=None, hover=None, theme:themes.Theme=themes.default): # x and y as fractions of 1 (centered position on screen)
+    def __init__(self, x, y, unpressed_img_path:str, pressed_img_path:str, onpress:Callable, alt:Optional[Callable]=None, alt_img_path=None, altclick:Optional[Callable]=None, hover=None, theme:themes.Theme=suburb.current_theme()): # x and y as fractions of 1 (centered position on screen)
         super(Button, self).__init__()
         self.unpressed_img_path = unpressed_img_path
         self.pressed_img_path = pressed_img_path
@@ -352,7 +352,7 @@ class InputTextBox(UIElement):
                     self.text += event.unicode
 
 class Image(UIElement):
-    def __init__(self, x, y, path, theme=themes.default):
+    def __init__(self, x, y, path, theme=suburb.current_theme()):
         super(Image, self).__init__()
         self.x = x
         self.y = y
@@ -710,7 +710,7 @@ def render():
             for sprite in key_check:
                 sprite.keypress(event)
 
-    screen.fill(suburb.theme().light)
+    screen.fill(suburb.current_theme().light)
     keys = pygame.key.get_pressed()
 
     for sprite in update_check:
