@@ -710,7 +710,7 @@ def render():
             for sprite in key_check:
                 sprite.keypress(event)
 
-    screen.fill(themes.default.light)
+    screen.fill(suburb.theme().light)
     keys = pygame.key.get_pressed()
 
     for sprite in update_check:
