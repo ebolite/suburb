@@ -7,6 +7,7 @@ import client
 import util
 import render
 import suburb
+import themes
 
 moduses = {}
 
@@ -30,10 +31,7 @@ class Modus():
         self.back_path = ""
         self.bar_path = ""
         self.thumb_path = ""
-        self.black_color: pygame.Color
-        self.dark_color: pygame.Color
-        self.light_color: pygame.Color
-        self.white_color: pygame.Color
+        self.theme: themes.Theme = themes.array
         moduses[name] = self
 
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
@@ -254,10 +252,7 @@ stack_modus.front_path = "sprites/moduses/stack_card.png"
 stack_modus.back_path = "sprites/moduses/stack_card_flipped.png"
 stack_modus.bar_path = "sprites/moduses/stack_bar.png"
 stack_modus.thumb_path = "sprites/moduses/stack_card_thumb.png"
-stack_modus.black_color = pygame.Color(0, 0, 0)
-stack_modus.dark_color = pygame.Color(154, 36, 70)
-stack_modus.light_color = pygame.Color(255, 5, 124)
-stack_modus.white_color = pygame.Color(255, 255, 255)
+stack_modus.theme = themes.stack
 
 class Queue(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):
@@ -278,10 +273,7 @@ queue_modus.front_path = "sprites/moduses/queue_card.png"
 queue_modus.back_path = "sprites/moduses/queue_card_flipped.png"
 queue_modus.bar_path = "sprites/moduses/queue_bar.png"
 queue_modus.thumb_path = "sprites/moduses/queue_card_thumb.png"
-queue_modus.black_color = pygame.Color(0, 0, 0)
-queue_modus.dark_color = pygame.Color(207, 86, 12)
-queue_modus.light_color = pygame.Color(255, 96, 0)
-queue_modus.white_color = pygame.Color(255, 255, 255)
+queue_modus.theme = themes.queue
 
 class Array(Modus):
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
@@ -293,7 +285,4 @@ array_modus.front_path = "sprites/moduses/array_card.png"
 array_modus.back_path = "sprites/moduses/array_card_flipped.png"
 array_modus.bar_path = "sprites/moduses/array_bar.png"
 array_modus.thumb_path = "sprites/moduses/array_card_thumb.png"
-array_modus.black_color = pygame.Color(0, 0, 0)
-array_modus.dark_color = pygame.Color(16, 147, 216)
-array_modus.light_color = pygame.Color(6, 182, 255)
-array_modus.white_color = pygame.Color(255, 255, 255)
+array_modus.theme = themes.array

@@ -606,8 +606,8 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     else:
         card_path = modus.front_path
         card_flipped_path = modus.back_path
-        text_color = modus.light_color
-        text_outline_color = modus.black_color
+        text_color = modus.theme.light
+        text_outline_color = modus.theme.black
         def flip():
             display_item(instance, last_scene, modus=modus, flipped=not flipped)
     if not flipped:

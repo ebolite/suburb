@@ -9,6 +9,14 @@ class Theme():
 
 default = Theme()
 
+array = Theme()
+array.light = Color(16, 147, 216)
+array.dark = Color(16, 147, 216)
+
 queue = Theme()
 queue.dark = Color(207, 86, 12)
 queue.light = Color(255, 96, 0)
+
+stack = Theme()
+stack.light = Color(255, 6, 124)
+stack.dark = Color(154, 36, 70)
