@@ -30,21 +30,21 @@ def hash(str): # returns encoded and hashed data
     encoded = str.encode()
     return hashlib.sha256(encoded).hexdigest()
 
-def request(intent):
+def request(intent) -> str:
     dic["intent"] = intent
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
     return ClientSocket.recv(1024).decode()
 
 #request, returns decoded JSON as dict
-def requestdic(intent):
+def requestdic(intent) -> dict:
     dic["intent"] = intent
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
     return json.loads(ClientSocket.recv(32768).decode())
 
 #request, but with additional content sent to the server
-def requestplus(intent, content):
+def requestplus(intent, content) -> str:
     dic["intent"] = intent
     dic["content"] = content
     Input = json.dumps(dic)
@@ -52,7 +52,7 @@ def requestplus(intent, content):
     dic["content"] = ""
     return ClientSocket.recv(1024).decode()
 
-def requestplusdic(intent, content):
+def requestplusdic(intent, content) -> dict:
     dic["intent"] = intent
     dic["content"] = content
     Input = json.dumps(dic)

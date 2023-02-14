@@ -632,7 +632,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         label.set_fontsize_by_width(240)
         num_actions = len(instance.use)
         for i, action_name in enumerate(instance.use):
-            x = 0.23 + (0.1 * i)
+            x = 0.23 + (0.2 * i)
             y = -0.1
             path = f"sprites/item_actions/{action_name}.png"
             if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"

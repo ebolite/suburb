@@ -426,9 +426,11 @@ class Player():
     def consume_instance(self, instance_name: str) -> bool:
         if instance_name not in self.sylladex: return False
         self.sylladex.remove(instance_name)
+        print(f"consuming {instance_name}")
         return True
     
-    def use(self, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None) -> Optional[bool]:
+    # return True on success, return False on failure
+    def use(self, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None) -> bool:
         if instance.name not in self.sylladex and instance.name not in self.room.instances: return False
         if action_name not in instance.item.use: return False
         match action_name:
@@ -436,14 +438,29 @@ class Player():
                 if self.empty_cards >= 10: return False
                 self.empty_cards += 1
                 return self.consume_instance(instance.name)
-            case "_":
+            case "insert_card":
+                print(f"inserted instance {instance.inserted_instance}")
+                if target_instance is None: print("no target"); return False
+                if target_instance.name not in self.sylladex: print("not in sylladex"); return False
+                if instance.inserted_instance == "":
+                    if self.consume_instance(target_instance.name):
+                        instance.inserted_instance = target_instance.name
+                        return True
+                    else: print(f"instance {instance.name} not in sylladex"); return False
+                else: print("instance already inserted"); return False
+            case "remove_card":
+                if instance.inserted_instance == "": return False
+                self.room.add_instance(instance.inserted_instance)
+                instance.inserted_instance = ""
+                return True
+            case _:
                 return False
             
     # can't check if these items are accessible by client modus, must be checked client side
     def valid_use_targets(self, instance: alchemy.Instance, action_name) -> list[str]:
         valid_target_names = []
         match action_name:
-            case "punch_card":
+            case "insert_card":
                 def filter_func(name):
                     if name not in self.sylladex: return False
                     if alchemy.Instance(name).punched != "": return False

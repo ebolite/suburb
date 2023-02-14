@@ -354,8 +354,10 @@ class Instance():
             util.instances[self.name] = {}
         try:
             self.punched
+            self.inserted_instance
         except KeyError:
             self.punched: str = ""
+            self.inserted_instance: str = ""
 
     @property
     def name(self):

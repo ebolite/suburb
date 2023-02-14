@@ -5,6 +5,7 @@ import pygame
 
 import client
 import util
+import config
 import render
 import suburb
 import themes
@@ -24,18 +25,19 @@ class Instance():
 
     def get_action_button_func(self, action_name: str, last_scene: Callable, target_instance: Optional["Instance"]=None) -> Callable:
         if action_name not in self.use: return lambda *args: None
-        match action_name:
-            case "add_card":
-                def output_func():
-                    if client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None}):
-                        Sylladex.current_sylladex().remove_item(self.instance_name)
+        if action_name not in config.item_actions: return lambda *args: None
+        action: config.ItemAction = config.item_actions[action_name]
+        if action.targeted:
+            def output_func():
+                self.choose_target(action_name, last_scene)
+        else:
+            def output_func():
+                reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None})
+                if reply != False:
+                    if self.do_use_item_stuff(action_name):
                         last_scene()
-            case "punch_card":
-                def output_func():
-                    self.choose_target(action_name, last_scene)
-            case _:
-                def output_func():
-                    pass
+                    else:
+                        suburb.display_item(self, last_scene, modus=Sylladex.current_sylladex().modus)
         return output_func
     
     def choose_target(self, action_name: str, last_scene: Callable):
@@ -44,24 +46,43 @@ class Instance():
         print(valid_instances)
         syl = Sylladex.current_sylladex()
         syl.update_deck()
-        def placeholder(): pass
         for i, target_instance_name in enumerate(valid_instances.keys()):
             def choose_button_func():
-                client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
-                syl.update_deck()
-                last_scene()
+                reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
+                if reply != "False":
+                    print(f"doing stuff")
+                    if self.do_use_item_stuff(action_name, target_instance_name):
+                        last_scene()
+                    else:
+                        suburb.display_item(self, last_scene, modus=syl.modus)
             button_height = 33
             button_width = 400
             x = int(render.SCREEN_WIDTH*0.5 - button_width*0.5)
             y = 100 + (button_height + 10)*i
-            instance = Instance(target_instance_name, valid_instances[target_instance_name])
-            if target_instance_name in syl.deck: display_name = f"(Sylladex) {instance.item_name}"
-            else: display_name = instance.item_name
-            choose_button = render.TextButton(x, y, button_width, button_height, display_name, placeholder)
+            target_instance = Instance(target_instance_name, valid_instances[target_instance_name])
+            if target_instance_name in syl.deck: display_name = f"(Sylladex) {target_instance.item_name}"
+            else: display_name = target_instance.item_name
+            choose_button = render.TextButton(x, y, button_width, button_height, display_name, choose_button_func)
             choose_button.absolute = True
             choose_button.truncate_text = True
         def backbutton_func(): suburb.display_item(self, last_scene, syl.modus)
         backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", backbutton_func)
+    
+    # returns True if go back to last scene, else go back to item display
+    def do_use_item_stuff(self, action_name: str, target_name: Optional[str]=None) -> bool:
+        match action_name:
+            case "add_card":
+                Sylladex.current_sylladex().remove_item(self.instance_name)
+                return True
+            case "insert_card":
+                if target_name is None: raise TypeError
+                Sylladex.current_sylladex().remove_item(target_name)
+                return False
+            case "remove_card":
+                return True
+            case _:
+                return True
+
 
 # the default fetch modus is array
 class Modus():
