@@ -603,8 +603,10 @@ def map():
         client.requestplus(intent="console_command", content=textbox.text)
         textbox.text = ""
         map()
-    debug_textbox = render.InputTextBox(0.5, 0.05)
+    debug_textbox = render.InputTextBox(0.5, 0.16)
     debug_textbox.enter_func = console_enter_func
+    log = render.LogWindow()
+    util.log(f"{time.time()}")
     tilemap.input_text_box = debug_textbox
 
 @scene

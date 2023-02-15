@@ -692,6 +692,44 @@ class CaptchalogueButton(Button):
                 ...
         return output_func
 
+class LogWindow(UIElement):
+    def __init__(self, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=5, fontsize=16):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.width = width
+        self.lines_to_display = lines_to_display
+        self.fontsize = fontsize
+        self.padding = 4
+        util.log_window = self
+        self.scroll = 0
+        self.elements: list[UIElement] = []
+        self.spawn_logger_lines()
+
+    def delete(self):
+        if util.log_window == self: util.log_window = None
+        super().delete()
+    
+    def update_logs(self):
+        for element in self.elements: element.delete()
+        self.spawn_logger_lines()
+
+    def spawn_logger_lines(self):
+        x = self.x - int(self.width/2)
+        background = SolidColor(x, self.y, self.width, self.fontsize*self.lines_to_display + self.padding*self.lines_to_display, self.theme.black)
+        self.elements.append(background)
+        for loop_index, position_index in enumerate(reversed(range(self.lines_to_display))):
+            y = self.y + position_index*self.fontsize + position_index*self.padding
+            try:
+                line = util.current_log()[-loop_index - 1]
+                text = Text(x, y, line)
+                text.fontsize = self.fontsize
+                text.color = self.theme.light
+                text.absolute = True
+                self.elements.append(text)
+            except IndexError:
+                pass
+
 class ItemImage():
     def __new__(cls, x, y, item_name: str):
         image_path = f"sprites\\items\\{item_name}.png"

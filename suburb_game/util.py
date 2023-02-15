@@ -63,5 +63,21 @@ if not os.path.exists(f"{homedir}/sprites/captchas"):
     os.makedirs(f"{homedir}/sprites/captchas")
     print(f"Created {homedir}/sprites/captchas")
 
+player_logs = {}
+player_logs = readjson(player_logs, "player_logs")
+
+log_window = None
+
+def log(message: str):
+    if client.dic["character"] not in player_logs: player_logs[client.dic["character"]] = []
+    logs = player_logs[client.dic["character"]]
+    logs.append(message)
+    if log_window is not None: log_window.update_logs()
+    writejson(player_logs, "player_logs")
+
+def current_log() -> list[str]:
+    if client.dic["character"] not in player_logs: player_logs[client.dic["character"]] = []
+    return player_logs[client.dic["character"]]
+
 sylladexes = {}
 sylladexes = readjson(sylladexes, "sylladexes")
