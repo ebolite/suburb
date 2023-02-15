@@ -449,7 +449,7 @@ class Player():
                 if instance.inserted == "":
                     if self.consume_instance(target_instance.name):
                         self.empty_cards -= 1
-                        if target_instance.item.name != "captchalogue card":
+                        if target_instance.item.name != "captchalogue card" and target_instance.item.name != "punched card":
                             card_instance = target_instance.to_card()
                             instance.inserted = card_instance.name
                         else:
@@ -473,6 +473,7 @@ class Player():
                 for char in code_to_punch:
                     if char not in binaryoperations.bintable: return False
                 inserted_instance = alchemy.Instance(instance.inserted)
+                if inserted_instance.item_name != "punched card": inserted_instance.item_name = "punched card"
                 if inserted_instance.punched_code == "":
                     inserted_instance.punched_code = code_to_punch
                     return True
