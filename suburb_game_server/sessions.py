@@ -469,8 +469,8 @@ class Player():
                 instance.combined = [old_instance.name, target_instance.name]
                 return True
             case "uncombine_card":
-                if instance.combined == []: return False
-                if not self.consume_instance(instance.name): return False
+                if instance.combined == []: print("not combined"); return False
+                if not self.consume_instance(instance.name): print("couldnt consume"); return False
                 card_1 = alchemy.Instance(instance.combined[0])
                 card_2 = alchemy.Instance(instance.combined[1])
                 self.room.add_instance(card_1.name)

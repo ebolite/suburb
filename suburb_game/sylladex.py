@@ -115,9 +115,17 @@ class Instance():
                 if card_instance is not None:
                     syl.captchalogue(card_instance)
                 return True
+            case "combine_card":
+                if target_name is not None and target_name in syl.deck:
+                    syl.remove_item(target_name)
+                return False
+            case "uncombine_card":
+                if self.instance_name in syl.deck:
+                    syl.remove_item(self.instance_name)
+                return True
             case "insert_card":
                 if target_name is None: raise TypeError
-                Sylladex.current_sylladex().remove_item(target_name)
+                syl.remove_item(target_name)
                 return False
             case "remove_card":
                 return True

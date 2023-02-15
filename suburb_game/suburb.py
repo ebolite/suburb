@@ -41,7 +41,7 @@ def get_captcha(code) -> str:
         mask = cv2.imread(f"{util.homedir}/sprites/mask.png")
         img_masked = cv2.bitwise_and(img, mask)
         black_mask = np.all(img_masked<=2, axis=-1)
-        alpha = np.uint8(np.logical_not(black_mask)) * 255
+        alpha = np.uint8(np.logical_not(black_mask)) * int(255)
         bgra = np.dstack((img_masked, alpha))
         cv2.imwrite(path, bgra)
     return path
