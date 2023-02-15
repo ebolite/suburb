@@ -35,13 +35,14 @@ key_check = []
 mouseup_check = []
 update_check = []
 keypress_update_check = []
+scroll_check = []
 move_to_top = []
 
 ui_elements = []
 
 tile_wh = 32
 
-checks = [click_check, key_check, mouseup_check, update_check, keypress_update_check]
+checks = [click_check, key_check, mouseup_check, update_check, keypress_update_check, scroll_check]
 
 icon_surf = pygame.image.load("sprites\\icon.png").convert()
 pygame.display.set_icon(icon_surf)
@@ -295,13 +296,21 @@ class Button(UIElement):
                 self.onpress()
 
 class InputTextBox(UIElement):
-    def __init__(self, x, y):
+    def __init__(self, x, y, w=None, h=None):
         super(InputTextBox, self).__init__()
         self.text = ""
         self.active = False
         self.waitframes = 0
         self.x = x
         self.y = y
+        self.w = w
+        self.h = h
+        self.text_color = self.theme.black
+        self.inactive_color = self.theme.white
+        self.active_color = self.theme.light
+        self.outline_color = self.theme.dark
+        self.fontsize = 32
+        self.suffix = ""
         self.secure = False
         self.button: Union[Button, TextButton, None] = None
         self.enter_func: Optional[Callable] = None
@@ -311,21 +320,21 @@ class InputTextBox(UIElement):
 
     def update(self, keys):
         if self.secure:
-            t = "*" * len(self.text)
-            self.text_surf = base_font.render(t, True, self.theme.black)
+            t = self.suffix + ("*" * len(self.text))
+            self.text_surf = self.font.render(t, True, self.text_color)
         else:
-            self.text_surf = base_font.render(self.text, True, self.theme.black)
-        width = max(100, self.text_surf.get_width()+10)
-        height = 32
+            self.text_surf = self.font.render(self.suffix+self.text, True, self.text_color)
+        width = self.w or max(100, self.text_surf.get_width()+10)
+        height = self.h or 32
         outline = 3
         self.surf = pygame.Surface((width, height))
         if self.active:
-            self.surf.fill(self.theme.light)
+            self.surf.fill(self.active_color)
         else:
-            self.surf.fill(self.theme.white)
+            self.surf.fill(self.inactive_color)
 
         self.outline_surf = pygame.Surface((width + (outline * 2), height + (outline  * 2)))
-        self.outline_surf.fill(self.theme.dark)
+        self.outline_surf.fill(self.outline_color)
 
         self.rect = self.outline_surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.outline_surf)
@@ -363,6 +372,10 @@ class InputTextBox(UIElement):
             else:
                 if event.unicode.isascii() and event.unicode not in  ["\n", "\t", "\r"]: #no newline, tab or carriage return
                     self.text += event.unicode
+
+    @property
+    def font(self):
+        return pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), int(self.fontsize))
 
 class Image(UIElement):
     def __init__(self, x, y, path, theme=suburb.current_theme(), convert=True):
@@ -693,18 +706,23 @@ class CaptchalogueButton(Button):
         return output_func
 
 class LogWindow(UIElement):
-    def __init__(self, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=5, fontsize=16):
+    def __init__(self, last_scene: Callable, tilemap: Optional[TileMap]=None, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=5, fontsize=16):
         super().__init__()
+        self.last_scene = last_scene
         self.x = x
         self.y = y
         self.width = width
         self.lines_to_display = lines_to_display
         self.fontsize = fontsize
         self.padding = 4
+        self.tilemap = tilemap
         util.log_window = self
-        self.scroll = 0
+        self.scroll_offset = 0
+        self.background: Optional[UIElement] = None
+        self.console: Optional[InputTextBox] = None
         self.elements: list[UIElement] = []
         self.spawn_logger_lines()
+        scroll_check.append(self)
 
     def delete(self):
         if util.log_window == self: util.log_window = None
@@ -712,16 +730,22 @@ class LogWindow(UIElement):
     
     def update_logs(self):
         for element in self.elements: element.delete()
+        if self.background is not None:
+            self.background.delete()
+            self.background = None
+        if self.console is not None:
+            self.console.delete()
+            self.console = None
+            if self.tilemap is not None: self.tilemap.input_text_box = None
         self.spawn_logger_lines()
 
     def spawn_logger_lines(self):
         x = self.x - int(self.width/2)
-        background = SolidColor(x, self.y, self.width, self.fontsize*self.lines_to_display + self.padding*self.lines_to_display, self.theme.black)
-        self.elements.append(background)
+        self.background = SolidColor(x, self.y, self.width, self.fontsize*self.lines_to_display + self.padding*self.lines_to_display, self.theme.black)
         for loop_index, position_index in enumerate(reversed(range(self.lines_to_display))):
             y = self.y + position_index*self.fontsize + position_index*self.padding
             try:
-                line = util.current_log()[-loop_index - 1]
+                line = util.current_log()[-loop_index - 1 - self.scroll_offset]
                 text = Text(x, y, line)
                 text.fontsize = self.fontsize
                 text.color = self.theme.light
@@ -729,6 +753,32 @@ class LogWindow(UIElement):
                 self.elements.append(text)
             except IndexError:
                 pass
+        def console_enter_func(textbox: InputTextBox):
+            util.log(textbox.text)
+            reply = client.requestplus(intent="console_command", content=textbox.text)
+            if reply != "None": util.log(reply)
+            textbox.text = ""
+            self.last_scene()
+        console_y = self.y + (self.lines_to_display-1)*self.fontsize + (self.lines_to_display-1)*self.padding
+        self.console = InputTextBox(x, console_y, self.width, self.fontsize+self.padding)
+        self.console.absolute = True
+        self.console.enter_func = console_enter_func
+        self.console.inactive_color = self.theme.black
+        self.console.active_color = self.theme.dark
+        self.console.outline_color = self.theme.light
+        self.console.text_color = self.theme.white
+        self.console.fontsize = self.fontsize
+        self.console.suffix = ">"
+        if self.tilemap is not None: self.tilemap.input_text_box = self.console
+
+    def scroll(self, y: int):
+        if self.background is None: return
+        if not self.background.is_mouseover(): return
+        max_offset = len(util.current_log()) - self.lines_to_display
+        self.scroll_offset += y
+        if self.scroll_offset < 0: self.scroll_offset = 0
+        if self.scroll_offset > max_offset: self.scroll_offset = max_offset
+        self.update_logs()
 
 class ItemImage():
     def __new__(cls, x, y, item_name: str):
@@ -776,6 +826,11 @@ def render():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return False
+
+        if event.type == pygame.MOUSEWHEEL:
+            # 1 is up, -1 is down
+            for sprite in scroll_check:
+                sprite.scroll(event.y)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             for sprite in click_check:

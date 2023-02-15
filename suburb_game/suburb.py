@@ -599,15 +599,7 @@ def map():
     item_display = render.RoomItemDisplay(100, 50, instances)
     Sylladex.current_sylladex().draw_ui_bar(map)
     tilemap = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display)
-    def console_enter_func(textbox: render.InputTextBox):
-        client.requestplus(intent="console_command", content=textbox.text)
-        textbox.text = ""
-        map()
-    debug_textbox = render.InputTextBox(0.5, 0.16)
-    debug_textbox.enter_func = console_enter_func
-    log = render.LogWindow()
-    util.log(f"{time.time()}")
-    tilemap.input_text_box = debug_textbox
+    log = render.LogWindow(map, tilemap=tilemap)
 
 @scene
 def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False):
