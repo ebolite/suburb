@@ -5,7 +5,7 @@ import pygame
 
 import client
 import util
-import config
+from itemactions import item_actions, ItemAction
 import render
 import suburb
 import themes
@@ -61,8 +61,8 @@ class Instance():
 
     def get_action_button_func(self, action_name: str, last_scene: Callable, target_instance: Optional["Instance"]=None) -> Callable:
         if action_name not in self.use: return lambda *args: None
-        if action_name not in config.item_actions: return lambda *args: None
-        action: config.ItemAction = config.item_actions[action_name]
+        if action_name not in item_actions: return lambda *args: None
+        action: ItemAction = item_actions[action_name]
         if action.targeted:
             def output_func():
                 self.choose_target(action_name, last_scene)
