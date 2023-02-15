@@ -486,7 +486,11 @@ class Player():
                 return True
             case "uncombine_card":
                 if instance.combined == []: print("not combined"); return False
-                if not self.consume_instance(instance.name): print("couldnt consume"); return False
+                if instance.name in self.sylladex:
+                    if not self.consume_instance(instance.name): print("couldnt consume"); return False
+                else:
+                    if instance.name not in self.room.instances: print("item not in room"); return False
+                    self.room.remove_instance(instance.name)
                 card_1 = alchemy.Instance(instance.combined[0])
                 card_2 = alchemy.Instance(instance.combined[1])
                 self.room.add_instance(card_1.name)

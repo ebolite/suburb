@@ -145,7 +145,7 @@ class InheritedStatistics():
         new_name = adjectives+[base]
         component_1_name = self.component_1.adjectives+[self.component_1.base]
         component_2_name = self.component_2.adjectives+[self.component_2.base]
-        if new_name == component_1_name or new_name == component_2_name:
+        if new_name == component_1_name or new_name == component_2_name and depth < 50:
             base, adjectives, merged_bases, secretadjectives = self.get_descriptors(depth=depth+1)
         # check if AND is different from OR, if they are the same, guarantee a compound base
         if self.operation == "&&":
