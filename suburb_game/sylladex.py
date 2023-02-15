@@ -26,6 +26,14 @@ class Instance():
         self.kinds = self.item_dict["kinds"]
         self.use = self.item_dict["use"] or []
 
+    def display_name(self) -> str:
+        contained_instance = self.contained_instance()
+        if self.punched_code != "":
+            return f"[:]-{self.punched_code}"
+        if contained_instance is not None:
+            return f"[]-{contained_instance.display_name()}"
+        return self.item_name
+
     # for captchalogue cards
     def contained_instance(self) -> Optional["Instance"]:
         if self.contained == "": return None
@@ -134,7 +142,6 @@ class Modus():
         return ejected
 
     def remove_from_modus_data(self, instance_name: str, sylladex: "Sylladex"):
-        print(f"removing {instance_name}")
         if instance_name in sylladex.data_list: sylladex.data_list.remove(instance_name)
     
     def convert_from_deck(self, deck: dict, sylladex: "Sylladex") -> list[str]:
