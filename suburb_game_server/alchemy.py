@@ -77,6 +77,7 @@ class BaseStatistics():
         self.weareffect: dict = properties["weareffect"]
         self.consumeeffect: dict = properties["consumeeffect"]
         self.secreteffect: dict = properties["secreteffect"]
+        self.forbiddencode: bool = properties["forbiddencode"]
 
 # todo: captchalogue code inheritance
 class InheritedStatistics():
@@ -87,6 +88,7 @@ class InheritedStatistics():
         self.operation = operation
         self.base, self.adjectives, self.merged_bases, self.secretadjectives = self.get_descriptors()
         self.descriptors = self.adjectives + [self.base]
+        self.forbiddencode = False
         self.gen_statistics()
 
     def get_descriptors(self, guaranteed_compound_name = False, depth = 0) -> tuple[str, list, list, list]:
@@ -315,6 +317,7 @@ class Item(): # Items are the base of instants.
             self.consumeeffect = statistics.consumeeffect
             self.secreteffect = statistics.secreteffect
             self.secretadjectives = statistics.secretadjectives
+            self.forbiddencode = statistics.forbiddencode
 
     @property
     def name(self):

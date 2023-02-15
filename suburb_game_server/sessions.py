@@ -528,9 +528,14 @@ class Player():
     def valid_use_targets(self, instance: alchemy.Instance, action_name) -> list[str]:
         valid_target_names = []
         match action_name:
-            case "insert_card" | "punch_card":
+            case "insert_card":
                 def filter_func(name):
                     if name not in self.sylladex: return False
+                    return True
+            case "punch_card":
+                def filter_func(name):
+                    if name not in self.sylladex: return False
+                    if alchemy.Instance(name).item.forbiddencode: return False
                     return True
             case "combine_card":
                 def filter_func(name):
