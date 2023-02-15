@@ -625,7 +625,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             display_item(instance, last_scene, modus=modus, flipped=not flipped)
     if not flipped:
         captcha_image = render.Button(0.5, 0.4, card_path, card_path, flip)
-        if os.path.isfile(f"sprites\\items\\{instance.item_name}.png"):
+        if os.path.isfile(f"sprites\\items\\{instance.item_name}.png") and instance.punched_code == "":
             image = render.Image(0.5, 0.5, f"sprites\\items\\{instance.item_name}.png")
             image.bind_to(captcha_image)
         label = render.Text(0.55, 0.91, util.filter_item_name(instance.item_name))

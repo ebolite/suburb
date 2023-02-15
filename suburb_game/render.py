@@ -697,8 +697,10 @@ class ItemImage():
 def spawn_punches(bound_element: UIElement, code: str, base_x, base_y, flipped=False, w=172, h=252):
     bin_rows = binaryoperations.captcha_code_to_bin_rows(code)
     if flipped:
-        for row in bin_rows:
-            row = row[::-1]
+        copy = bin_rows.copy()
+        bin_rows = []
+        for row in copy:
+            bin_rows.append(row[::-1])
     for row_index, row in enumerate(bin_rows):
         y = (int(h/12)*row_index)
         for char_index, char in enumerate(row):
