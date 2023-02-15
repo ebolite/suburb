@@ -326,7 +326,7 @@ class Sylladex():
         connection_host_port = f"{client.HOST}:{client.PORT}"
         if connection_host_port not in util.sylladexes: util.sylladexes[connection_host_port] = {}
         if player_name in util.sylladexes[connection_host_port]:
-            return util.sylladexes[connection_host_port][player_name]
+            return Sylladex(player_name, connection_host_port)
         else:
             new_sylladex = Sylladex(player_name, connection_host_port)
             new_sylladex.switch_modus(modus_name)

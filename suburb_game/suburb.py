@@ -567,6 +567,7 @@ def choosegrists():
 def newgame():
     client.requestplus("setup_character",  character_info)
     new_sylladex = Sylladex.new_sylladex(client.dic["character"], character_info["modus"])
+    print(new_sylladex)
     new_sylladex.validate()
     map()
 
