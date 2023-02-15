@@ -44,16 +44,16 @@ def readjson(obj, filename):
 def filter_item_name(name: str) -> str:
     return name.replace("+", " ")
 
-def shorten_item_name(name: str) -> str:
-    words = name.replace("+", " ").split(" ")
+def shorten_item_name(old_name: str) -> str:
+    words = old_name.replace("+", " ").replace("-", " ").split(" ")
     if len(words) > 2:
         base = words.pop()
         text = ""
         for word in words:
             text += f"{word[0]}."
-        name = f"{text} {base}"
-    else: name = " ".join(words)
-    return name
+        new_name = f"{text} {base}"
+    else: new_name = " ".join(words)
+    return new_name
 
 def captchalogue_instance(instance_name: str, modus_name: str):
     if "success" in client.requestplus("captchalogue", {"instance_name": instance_name, "modus_name": modus_name}): return True

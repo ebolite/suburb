@@ -29,7 +29,7 @@ class Instance():
 
     def display_name(self, short=False) -> str:
         contained_instance = self.contained_instance()
-        print(f"punched item name{self.punched_item_name}")
+        print(f"short {short} {self.punched_item_name}")
         if self.punched_code != "" and self.punched_item_name == "": return f"[:]-{self.punched_code}"
         if short:
             if self.punched_item_name != "":
