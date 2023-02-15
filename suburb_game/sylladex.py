@@ -257,6 +257,11 @@ class Sylladex():
             if instance_name not in self.deck: 
                 print(f"Found invalid instance {instance_name}!")
                 self.modus.remove_from_modus_data(instance_name, self)
+        for instance_name in self.deck:
+            if instance_name not in self.data_list:
+                print(f"Missing item {instance_name}! Converting from deck.")
+                self.modus.convert_from_deck(self.deck, self)
+                self.validate()
 
     def get_instance(self, instance_name) -> Instance:
         if instance_name not in self.deck:
