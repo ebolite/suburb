@@ -85,6 +85,7 @@ class Instance():
 
     def choose_target(self, action_name: str, last_scene: Callable):
         suburb.scene(lambda *args: None)()
+        render.LogWindow(self.choose_target)
         valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.instance_name, "action_name": action_name})
         print(valid_instances)
         syl = Sylladex.current_sylladex()
@@ -93,7 +94,7 @@ class Instance():
             button_height = 33
             button_width = 400
             x = int(render.SCREEN_WIDTH*0.5 - button_width*0.5)
-            y = 100 + (button_height + 10)*i
+            y = 120 + (button_height + 10)*i
             target_instance = Instance(target_instance_name, valid_instances[target_instance_name])
             if target_instance_name in syl.deck: display_name = f"(Sylladex) {target_instance.display_name()}"
             else: display_name = target_instance.display_name()
@@ -181,7 +182,6 @@ class Modus():
         return wrapper
 
     def draw_ui_bar(self, sylladex: "Sylladex", last_scene: Callable):
-        render.LogWindow
         start = time.time()
         sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True
