@@ -121,6 +121,8 @@ class Instance():
                 return False
             case "remove_card":
                 return True
+            case "punch_card":
+                return False
             case _:
                 return True
 
