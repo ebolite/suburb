@@ -84,7 +84,8 @@ class Instance():
                 if self.do_use_item_stuff(action_name, target_instance_name):
                     last_scene()
                 else:
-                    suburb.display_item(self, last_scene, modus=syl.modus)
+                    if last_scene is suburb.map: last_scene()
+                    else: suburb.display_item(self, last_scene, modus=syl.modus)
             else:
                 if action.error_prompt: util.log(action.error_message(self.display_name()))
         return choose_button_func
@@ -110,7 +111,10 @@ class Instance():
             choose_button = render.TextButton(x, y, button_width, button_height, display_name, button_func)
             choose_button.absolute = True
             choose_button.truncate_text = True
-        def backbutton_func(): suburb.display_item(self, last_scene, syl.modus)
+        if last_scene is suburb.map: 
+            def backbutton_func(): last_scene()
+        else: 
+            def backbutton_func(): suburb.display_item(self, last_scene, syl.modus)
         backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", backbutton_func)
 
     # returns True if go back to last scene, else go back to item display

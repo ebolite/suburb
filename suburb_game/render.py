@@ -665,6 +665,8 @@ class RoomItemDisplay(UIElement):
     def __init__(self, x, y, instances: dict):
         self.x = x
         self.y = y
+        self.w = 330
+        self.h = 30
         self.instances = instances
         self.absolute = True
         self.text = Text(x, y, f"You see here:")
@@ -680,12 +682,23 @@ class RoomItemDisplay(UIElement):
         for button in self.buttons:
             button.delete()
         for index, instance_name in enumerate(instances):
+            y = self.y + self.h*(index+1)
             instance = Instance(instance_name, instances[instance_name])
             display_name = instance.display_name()
-            new_button = TextButton(self.x+30, self.y + 30*(index+1), 220, 30, util.filter_item_name(display_name), get_button_func(instance_name), truncate_text=True)
-            new_button.absolute = True 
-            captcha_button = CaptchalogueButton(self.x, self.y + 30*(index+1), instance_name, instances)
+            captcha_button = CaptchalogueButton(self.x, y, instance_name, instances)
             captcha_button.absolute = True
+            use_buttons = 0
+            for i, action_name in enumerate(reversed(instance.use)):
+                use_buttons += 1
+                path = f"sprites/item_actions/{action_name}.png"
+                if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
+                use_button = Button(self.x+(self.w-(30*(i+1))), y, path, path, instance.get_action_button_func(action_name, suburb.map))
+                use_button.absolute = True
+                self.buttons.append(use_button)
+            main_button_width = self.w-30
+            main_button_width -= 30*use_buttons
+            new_button = TextButton(self.x+30, y, main_button_width, self.h, util.filter_item_name(display_name), get_button_func(instance_name), truncate_text=True)
+            new_button.absolute = True 
             self.buttons.append(new_button)
             self.buttons.append(captcha_button)
 
