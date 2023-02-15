@@ -77,7 +77,7 @@ class Instance():
     def get_target_button_func(self, target_instance_name: str, action_name: str, last_scene: Callable, syl: "Sylladex") -> Callable:
         action: ItemAction = item_actions[action_name]
         def choose_button_func():
-            print(f"using {target_instance_name}")
+            util.log(f">{action_name}")
             reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
             if reply != "False":
                 print(f"doing stuff")
@@ -97,7 +97,6 @@ class Instance():
         syl = Sylladex.current_sylladex()
         syl.update_deck()
         action: ItemAction = item_actions[action_name]
-        util.log(f">{action_name}")
         if action.prompt: util.log(action.prompt_message(self.display_name()))
         for i, target_instance_name in enumerate(valid_instances.keys()):
             button_height = 33
