@@ -384,7 +384,7 @@ class Player():
             self.room_name = None
             self.sylladex: list[str] = []
             self.moduses: list[str] = []
-            self.empty_cards = 3
+            self.empty_cards = 5
             self.setup = False
 
     def __setattr__(self, attr, value):
