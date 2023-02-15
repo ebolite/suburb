@@ -700,7 +700,8 @@ class ItemImage():
         return Text(x, y, item_name)
 
 
-def spawn_punches(bound_element: UIElement, code: str, base_x, base_y, flipped=False, w=172, h=252):
+def spawn_punches(bound_element: UIElement, code: str, base_x, base_y, flipped=False, w=172, h=240):
+    padding = 1
     bin_rows = binaryoperations.captcha_code_to_bin_rows(code)
     if flipped:
         copy = bin_rows.copy()
@@ -712,8 +713,14 @@ def spawn_punches(bound_element: UIElement, code: str, base_x, base_y, flipped=F
         for char_index, char in enumerate(row):
             x = (int(w/4)*char_index)
             if char == "1":
-                punch = SolidColor(base_x+x, base_y+y, int(w/4), int(h/12), suburb.current_theme().black)
+                punch_x = base_x+x + padding
+                punch_y = base_y+y + padding
+                punch_w = int(w/4) - padding*2
+                punch_h = int(h/12) - padding*2
+                punch = SolidColor(punch_x, punch_y, punch_w, punch_h, suburb.current_theme().black)
                 punch.bind_to(bound_element)
+                punch_middle = SolidColor(punch_x+padding, punch_y+padding, punch_w - padding*2, punch_h - padding*2, suburb.current_theme().white)
+                punch_middle.bind_to(bound_element)
 
 class FpsCounter(Text):
     def __init__(self, x, y):

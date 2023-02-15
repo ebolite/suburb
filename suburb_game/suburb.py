@@ -625,7 +625,8 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             display_item(instance, last_scene, modus=modus, flipped=not flipped)
     if not flipped:
         captcha_image = render.Button(0.5, 0.4, card_path, card_path, flip)
-        if os.path.isfile(f"sprites\\items\\{instance.item_name}.png") and instance.punched_code == "":
+        image_path = None
+        if os.path.isfile(f"sprites\\items\\{instance.item_name}.png"):
             image = render.Image(0.5, 0.5, f"sprites\\items\\{instance.item_name}.png")
             image.bind_to(captcha_image)
         label = render.Text(0.55, 0.91, util.filter_item_name(instance.item_name))
@@ -672,10 +673,8 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{kind}.png")
             kind_image.bind_to(kind_card_image)
     if instance.punched_code != "":
-        if flipped:
-            render.spawn_punches(captcha_image, instance.punched_code, 104, 72, flipped=flipped)
-        else:
-            render.spawn_punches(captcha_image, instance.punched_code, 84, 72)
+        if not flipped:
+            render.spawn_punches(captcha_image, instance.punched_code, 122, 138, w=80, h=120)
     if modus is not None:
         syl = Sylladex.current_sylladex()
         def uncaptcha_button_func():

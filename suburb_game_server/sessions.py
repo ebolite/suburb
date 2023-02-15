@@ -441,7 +441,11 @@ class Player():
                 if instance.contained != "":
                     contained_instance = alchemy.Instance(instance.contained)
                     self.sylladex.append(contained_instance.name)
-                return self.consume_instance(instance.name)
+                if instance.name in self.sylladex:
+                    return self.consume_instance(instance.name)
+                else:
+                    self.room.remove_instance(instance.name)
+                    return True
             case "combine_card":
                 if target_instance is None: return False
                 if target_instance.name not in self.sylladex: return False
