@@ -470,6 +470,7 @@ class Player():
                 else:
                     # otherwise the code is just bullshit
                     new_code = binaryoperations.codeor(target_instance.punched_code, instance.punched_code)
+                    alchemized_item = None
                 # make a new item containing the data of the old instance, the new instance becomes a container
                 # for the old instance and the target
                 if not self.consume_instance(target_instance.name): return False
@@ -477,7 +478,10 @@ class Player():
                 old_instance.contained = instance.contained
                 old_instance.combined = instance.combined
                 old_instance.punched_code = instance.punched_code
+                old_instance.punched_item_name = instance.punched_item_name
                 instance.punched_code = new_code
+                if alchemized_item is not None:
+                    instance.punched_item_name = alchemized_item.displayname
                 instance.combined = [old_instance.name, target_instance.name]
                 return True
             case "uncombine_card":
@@ -506,19 +510,22 @@ class Player():
                 instance.inserted = ""
                 return True
             case "punch_card":
-                if instance.inserted == "": return False
+                if instance.inserted == "": print("no instance inserted"); return False
                 if additional_data is None:
-                    if target_instance is None: return False
+                    if target_instance is None: print("no target"); return False
                     code_to_punch = target_instance.item.code
                 else:
                     code_to_punch = additional_data
-                if len(code_to_punch) != 8: return False
+                if len(code_to_punch) != 8: print("invalid code"); return False
                 for char in code_to_punch:
-                    if char not in binaryoperations.bintable: return False
+                    if char not in binaryoperations.bintable: print("invalid code"); return False
                 inserted_instance = alchemy.Instance(instance.inserted)
                 if inserted_instance.item_name != "punched card": inserted_instance.item_name = "punched card"
                 if inserted_instance.punched_code == "":
                     inserted_instance.punched_code = code_to_punch
+                    if target_instance is not None: 
+                        inserted_instance.punched_item_name = target_instance.item.displayname
+                        print(f"punching {inserted_instance.name} with {target_instance.name}")
                     return True
                 # if both items are real and not just bullshit
                 if inserted_instance.punched_code in util.codes and code_to_punch in util.codes:
@@ -527,9 +534,13 @@ class Player():
                     alchemized_item_name = alchemy.alchemize(currently_punched_item.name, additional_item.name, "||")
                     alchemized_item = alchemy.Item(alchemized_item_name)
                     inserted_instance.punched_code = alchemized_item.code
+                    inserted_instance.punched_item_name = alchemized_item.displayname
+                    print(f"punching {currently_punched_item.name} with {additional_item.name} makes {alchemized_item.displayname}")
                     return True
                 # otherwise the code is just bullshit
                 inserted_instance.punched_code = binaryoperations.codeor(inserted_instance.punched_code, code_to_punch)
+                inserted_instance.punched_item_name = ""
+                print("bullshit code")
                 return True
             case _:
                 return False

@@ -285,6 +285,8 @@ class Item(): # Items are the base of instants.
         code = get_code_from_name(name)
         if code in util.codes: # if this code already exists, give the item the code corresponds to instead
             name = util.codes[code]
+        else:
+            util.codes[code] = name     # otherwise we assign this object to the new code
         self.__dict__["name"] = name
         if self.name not in util.items:
             util.items[name] = {}
@@ -358,11 +360,13 @@ class Instance():
             util.instances[self.name] = {}
         try:
             self.punched_code
+            self.punched_item_name
             self.inserted
             self.contained
             self.combined
         except KeyError:
             self.punched_code: str = ""
+            self.punched_item_name: str = ""
             self.inserted: str = ""
             self.contained: str = ""
             self.combined: list[str] = []

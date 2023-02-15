@@ -19,6 +19,7 @@ class Instance():
         self.item_dict = instance_dict["item_dict"]
         self.contained = instance_dict["contained"]
         self.punched_code = instance_dict["punched_code"]
+        self.punched_item_name = instance_dict["punched_item_name"]
         self.inserted = instance_dict["inserted"]
         self.power = self.item_dict["power"]
         self.size = self.item_dict["size"]
@@ -28,23 +29,18 @@ class Instance():
 
     def display_name(self, short=False) -> str:
         contained_instance = self.contained_instance()
-        if self.punched_code != "":
-            return f"[:]-{self.punched_code}"
-        if not short:
-            if contained_instance is not None: return f"[ ]-{contained_instance.display_name()}"
-            else: return self.item_name
-        if contained_instance is not None: display_instance = contained_instance
-        else: display_instance = self
-        words = display_instance.item_name.replace("+", " ").split(" ")
-        if len(words) > 2:
-            base = words.pop()
-            text = ""
-            for word in words:
-                text += f"{word[0]}."
-            name = f"{text} {base}"
-        else: name = " ".join(words)
-        if contained_instance is not None: return f"[]-{name}"
-        else: return name
+        print(f"punched item name{self.punched_item_name}")
+        if self.punched_code != "" and self.punched_item_name == "": return f"[:]-{self.punched_code}"
+        if short:
+            if self.punched_item_name != "":
+                return f"[:]-{util.shorten_item_name(self.punched_item_name)}"
+            elif contained_instance is not None: return f"[ ]-{contained_instance.display_name(short)}"
+            else: return util.shorten_item_name(self.item_name)
+        else:
+            if self.punched_item_name != "":
+                return f"[:]-{self.punched_item_name}"
+            elif contained_instance is not None: return f"[ ]-{contained_instance.display_name(short)}"
+            return self.item_name
 
     # for captchalogue cards
     def contained_instance(self) -> Optional["Instance"]:
@@ -76,6 +72,18 @@ class Instance():
                         suburb.display_item(self, last_scene, modus=Sylladex.current_sylladex().modus)
         return output_func
     
+    def get_target_button_func(self, target_instance_name: str, action_name: str, last_scene: Callable, syl: "Sylladex") -> Callable:
+        def choose_button_func():
+            print(f"using {target_instance_name}")
+            reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
+            if reply != "False":
+                print(f"doing stuff")
+                if self.do_use_item_stuff(action_name, target_instance_name):
+                    last_scene()
+                else:
+                    suburb.display_item(self, last_scene, modus=syl.modus)
+        return choose_button_func
+
     def choose_target(self, action_name: str, last_scene: Callable):
         suburb.scene(lambda *args: None)()
         valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.instance_name, "action_name": action_name})
@@ -83,14 +91,6 @@ class Instance():
         syl = Sylladex.current_sylladex()
         syl.update_deck()
         for i, target_instance_name in enumerate(valid_instances.keys()):
-            def choose_button_func():
-                reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
-                if reply != "False":
-                    print(f"doing stuff")
-                    if self.do_use_item_stuff(action_name, target_instance_name):
-                        last_scene()
-                    else:
-                        suburb.display_item(self, last_scene, modus=syl.modus)
             button_height = 33
             button_width = 400
             x = int(render.SCREEN_WIDTH*0.5 - button_width*0.5)
@@ -98,7 +98,8 @@ class Instance():
             target_instance = Instance(target_instance_name, valid_instances[target_instance_name])
             if target_instance_name in syl.deck: display_name = f"(Sylladex) {target_instance.display_name()}"
             else: display_name = target_instance.display_name()
-            choose_button = render.TextButton(x, y, button_width, button_height, display_name, choose_button_func)
+            button_func = self.get_target_button_func(target_instance_name, action_name, last_scene, syl)
+            choose_button = render.TextButton(x, y, button_width, button_height, display_name, button_func)
             choose_button.absolute = True
             choose_button.truncate_text = True
         def backbutton_func(): suburb.display_item(self, last_scene, syl.modus)
