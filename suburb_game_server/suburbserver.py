@@ -121,6 +121,8 @@ def handle_request(dict):
             if target_name is not None: target_instance = alchemy.Instance(target_name)
             else: target_instance = None
             return player.use(instance, action_name, target_instance)
+        case "drop_empty_card":
+            return player.drop_empty_card()
         case "captchalogue":
             instance_name = content["instance_name"]
             modus_name = content["modus_name"]

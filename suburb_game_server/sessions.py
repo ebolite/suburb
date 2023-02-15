@@ -430,6 +430,14 @@ class Player():
         print(f"consuming {instance_name}")
         return True
     
+    def drop_empty_card(self) -> bool:
+        if self.empty_cards > 0:
+            self.empty_cards -= 1
+            self.room.add_instance(alchemy.Instance(alchemy.Item("captchalogue card")).name)
+            return True
+        else:
+            return False
+
     # return True on success, return False on failure
     def use(self, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:
         if instance.name not in self.sylladex and instance.name not in self.room.instances: return False

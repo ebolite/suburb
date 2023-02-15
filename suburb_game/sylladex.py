@@ -29,9 +29,9 @@ class Instance():
     def display_name(self, short=False) -> str:
         contained_instance = self.contained_instance()
         if self.punched_code != "":
-            return f"[:]-{self.punched_code}"
+            return f"[:]->{self.punched_code}"
         if not short:
-            if contained_instance is not None: return f"[]-{contained_instance.display_name()}"
+            if contained_instance is not None: return f"[ ]->{contained_instance.display_name()}"
             else: return self.item_name
         if contained_instance is not None: display_instance = contained_instance
         else: display_instance = self
@@ -186,7 +186,10 @@ class Modus():
         sylladex_bar.absolute = True
         instances_length = len(sylladex.data_list)
         num_cards_remaining = sylladex.empty_cards - len(sylladex.data_list)
-        remaining_cards_display = render.Image(10, render.SCREEN_HEIGHT-85, "sprites/moduses/card_num_remaining.png")
+        def drop_empty_card_button():
+            client.request("drop_empty_card")
+            last_scene()
+        remaining_cards_display = render.Button(10, render.SCREEN_HEIGHT-85, "sprites/moduses/card_num_remaining.png", "sprites/moduses/card_num_remaining.png", drop_empty_card_button)
         remaining_cards_display.absolute = True
         remaining_cards_label = render.Text(0.5, 0.6, str(num_cards_remaining))
         remaining_cards_label.bind_to(remaining_cards_display)
