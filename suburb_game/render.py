@@ -248,6 +248,7 @@ class Button(UIElement):
         self.convert = True
         self.hover = hover
         self.theme = theme
+        self.scale: float = 1.0
         click_check.append(self)
         update_check.append(self)
         mouseup_check.append(self)
@@ -269,6 +270,11 @@ class Button(UIElement):
             self.surf = self.convert_to_theme(self.surf)
             self.surf.set_colorkey(pygame.Color(0, 0, 0))
         if self.alpha != 255: self.surf.set_alpha(self.alpha)
+        if self.scale != 1:
+            w = self.surf.get_width()
+            h = self.surf.get_height()
+            self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
+            self.scaled = True
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))

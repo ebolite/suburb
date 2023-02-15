@@ -357,10 +357,12 @@ class Instance():
             self.punched_code
             self.inserted
             self.contained
+            self.combined
         except KeyError:
             self.punched_code: str = ""
             self.inserted: str = ""
             self.contained: str = ""
+            self.combined: list[str] = []
 
     @property
     def name(self):
@@ -384,6 +386,8 @@ class Instance():
             output["contained"] = Instance(output["contained"]).get_dict()
         if output["inserted"] != "":
             output["insterted"] = Instance(output["inserted"]).get_dict()
+        if output["combined"] != []:
+            output["combined"] = [Instance(i).get_dict() for i in output["combined"]]
         item_dict = self.item.get_dict()
         output["item_dict"] = item_dict
         return output

@@ -640,6 +640,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             path = f"sprites/item_actions/{action_name}.png"
             if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
             action_button = render.Button(x, y, path, path, instance.get_action_button_func(action_name, last_scene))
+            action_button.scale = 2.0
             action_button.bind_to(captcha_image)
     else:
         code = instance.code

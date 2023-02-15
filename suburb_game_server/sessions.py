@@ -442,10 +442,43 @@ class Player():
                     contained_instance = alchemy.Instance(instance.contained)
                     self.sylladex.append(contained_instance.name)
                 return self.consume_instance(instance.name)
+            case "combine_card":
+                if target_instance is None: return False
+                if target_instance.name not in self.sylladex: return False
+                if target_instance.punched_code == "" or instance.punched_code == "": return False
+                if target_instance.item.name != "punched card" or instance.item.name != "punched card": return False
+                # if both items are real and not just bullshit
+                new_code = ""
+                if target_instance.punched_code in util.codes and instance.punched_code in util.codes:
+                    currently_punched_item = alchemy.Item(util.codes[instance.punched_code])
+                    additional_item = alchemy.Item(util.codes[target_instance.punched_code])
+                    alchemized_item_name = alchemy.alchemize(currently_punched_item.name, additional_item.name, "&&")
+                    alchemized_item = alchemy.Item(alchemized_item_name)
+                    new_code = alchemized_item.code
+                else:
+                    # otherwise the code is just bullshit
+                    new_code = binaryoperations.codeor(target_instance.punched_code, instance.punched_code)
+                # make a new item containing the data of the old instance, the new instance becomes a container
+                # for the old instance and the target
+                if not self.consume_instance(target_instance.name): return False
+                old_instance = alchemy.Instance(alchemy.Item("punched card"))
+                old_instance.contained = instance.contained
+                old_instance.combined = instance.combined
+                old_instance.punched_code = instance.punched_code
+                instance.punched_code = new_code
+                instance.combined = [old_instance.name, target_instance.name]
+                return True
+            case "uncombine_card":
+                if instance.combined == []: return False
+                if not self.consume_instance(instance.name): return False
+                card_1 = alchemy.Instance(instance.combined[0])
+                card_2 = alchemy.Instance(instance.combined[1])
+                self.room.add_instance(card_1.name)
+                self.room.add_instance(card_2.name)
+                return True
             case "insert_card":
-                print(f"inserted instance {instance.inserted}")
-                if target_instance is None: print("no target"); return False
-                if target_instance.name not in self.sylladex: print("not in sylladex"); return False
+                if target_instance is None: return False
+                if target_instance.name not in self.sylladex: return False
                 if instance.inserted == "":
                     if self.consume_instance(target_instance.name):
                         self.empty_cards -= 1
@@ -455,8 +488,8 @@ class Player():
                         else:
                             instance.inserted = target_instance.name
                         return True
-                    else: print(f"instance {instance.name} not in sylladex"); return False
-                else: print("instance already inserted"); return False
+                    else: return False
+                else: return False
             case "remove_card":
                 if instance.inserted == "": return False
                 self.room.add_instance(instance.inserted)
@@ -498,6 +531,11 @@ class Player():
             case "insert_card" | "punch_card":
                 def filter_func(name):
                     if name not in self.sylladex: return False
+                    return True
+            case "combine_card":
+                def filter_func(name):
+                    if name not in self.sylladex: return False
+                    if alchemy.Instance(name).punched_code == "": return False
                     return True
             case _:
                 return []
