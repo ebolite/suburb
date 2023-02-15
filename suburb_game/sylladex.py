@@ -246,6 +246,14 @@ class Sylladex():
     def update_deck(self):
         self.deck = client.requestdic("sylladex")
 
+    # this needs to be included for dict modi
+    def validate(self):
+        self.update_deck()
+        for instance_name in self.data_list:
+            if instance_name not in self.deck: 
+                print(f"Found invalid instance {instance_name}!")
+                self.modus.remove_from_modus_data(instance_name, self)
+
     def get_instance(self, instance_name) -> Instance:
         if instance_name not in self.deck:
             self.update_deck()

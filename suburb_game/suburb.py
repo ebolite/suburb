@@ -118,6 +118,7 @@ def login():
         else:
             player_info = client.requestdic("player_info")
             if player_info["setup"]:
+                Sylladex.current_sylladex().validate()
                 map()
             else:
                 namecharacter() # todo: change to play game function
@@ -566,6 +567,7 @@ def choosegrists():
 def newgame():
     client.requestplus("setup_character",  character_info)
     new_sylladex = Sylladex.new_sylladex(client.dic["character"], character_info["modus"])
+    new_sylladex.validate()
     map()
 
 def debug_speedrun():
