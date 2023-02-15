@@ -603,7 +603,7 @@ def map():
 
 @scene
 def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False):
-    render.LogWindow(display_item, lines_to_display=4, x=200, width=400)
+    render.LogWindow(display_item)
     if modus is None:
         card_path = "sprites\\itemdisplay\\captchalogue_card.png"
         card_flipped_path = "sprites\\itemdisplay\\captchalogue_card_flipped.png"
@@ -631,8 +631,8 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         label.set_fontsize_by_width(240)
         num_actions = len(instance.use)
         for i, action_name in enumerate(instance.use):
-            x = 0.23 + (0.2 * i)
-            y = -0.1
+            x = 0.05 + (1/(num_actions+1))*(i+1)
+            y = 1.07
             path = f"sprites/item_actions/{action_name}.png"
             if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
             action_button = render.Button(x, y, path, path, instance.get_action_button_func(action_name, last_scene))
@@ -645,7 +645,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         captcha_code.bind_to(captcha_image)
         captcha_code.absolute = True
     power = instance.power
-    power_bar = render.Image(0.5, 1.15, "sprites\\itemdisplay\\power_bar.png")
+    power_bar = render.Image(0.5, 1.28, "sprites\\itemdisplay\\power_bar.png")
     power_bar.bind_to(captcha_image)
     power_label = render.Text(0.512, 0.51, str(power))
     power_label.bind_to(power_bar)

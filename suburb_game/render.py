@@ -712,7 +712,7 @@ class CaptchalogueButton(Button):
         return output_func
 
 class LogWindow(UIElement):
-    def __init__(self, last_scene: Callable, tilemap: Optional[TileMap]=None, draw_console=False, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=5, fontsize=16):
+    def __init__(self, last_scene: Callable, tilemap: Optional[TileMap]=None, draw_console=False, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=4, fontsize=16):
         super().__init__()
         self.last_scene = last_scene
         self.x = x
