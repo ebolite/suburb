@@ -447,6 +447,7 @@ class Player():
                 if target_instance.name not in self.sylladex: print("not in sylladex"); return False
                 if instance.inserted == "":
                     if self.consume_instance(target_instance.name):
+                        self.empty_cards -= 1
                         if target_instance.item != "captchalogue card":
                             card_instance = target_instance.to_card()
                             instance.inserted = card_instance.name
