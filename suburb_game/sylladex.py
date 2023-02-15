@@ -96,8 +96,8 @@ class Instance():
             x = int(render.SCREEN_WIDTH*0.5 - button_width*0.5)
             y = 100 + (button_height + 10)*i
             target_instance = Instance(target_instance_name, valid_instances[target_instance_name])
-            if target_instance_name in syl.deck: display_name = f"(Sylladex) {target_instance.item_name}"
-            else: display_name = target_instance.item_name
+            if target_instance_name in syl.deck: display_name = f"(Sylladex) {target_instance.display_name()}"
+            else: display_name = target_instance.display_name()
             choose_button = render.TextButton(x, y, button_width, button_height, display_name, choose_button_func)
             choose_button.absolute = True
             choose_button.truncate_text = True
