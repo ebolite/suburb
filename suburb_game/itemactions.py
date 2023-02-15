@@ -13,3 +13,6 @@ insert_card.targeted = True
 remove_card = ItemAction("remove_card")
 
 punch_card = ItemAction("punch_card")
+punch_card.targeted = True
+
+#todo: add support for custom punch

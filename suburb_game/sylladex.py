@@ -103,7 +103,7 @@ class Instance():
             choose_button.truncate_text = True
         def backbutton_func(): suburb.display_item(self, last_scene, syl.modus)
         backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", backbutton_func)
-    
+
     # returns True if go back to last scene, else go back to item display
     def do_use_item_stuff(self, action_name: str, target_name: Optional[str]=None) -> bool:
         syl = Sylladex.current_sylladex()

@@ -464,24 +464,28 @@ class Player():
                 return True
             case "punch_card":
                 if instance.inserted == "": return False
-                if additional_data == None: return False
-                if len(additional_data) != 8: return False
-                for char in additional_data:
+                if additional_data is None:
+                    if target_instance is None: return False
+                    code_to_punch = target_instance.item.code
+                else:
+                    code_to_punch = additional_data
+                if len(code_to_punch) != 8: return False
+                for char in code_to_punch:
                     if char not in binaryoperations.bintable: return False
                 inserted_instance = alchemy.Instance(instance.inserted)
                 if inserted_instance.punched_code == "":
-                    inserted_instance.punched_code = additional_data
+                    inserted_instance.punched_code = code_to_punch
                     return True
                 # if both items are real and not just bullshit
-                if inserted_instance.punched_code in util.codes and additional_data in util.codes:
+                if inserted_instance.punched_code in util.codes and code_to_punch in util.codes:
                     currently_punched_item = alchemy.Item(util.codes[inserted_instance.punched_code])
-                    additional_item = alchemy.Item(util.codes[additional_data])
+                    additional_item = alchemy.Item(util.codes[code_to_punch])
                     alchemized_item_name = alchemy.alchemize(currently_punched_item.name, additional_item.name, "||")
                     alchemized_item = alchemy.Item(alchemized_item_name)
                     inserted_instance.punched_code = alchemized_item.code
                     return True
                 # otherwise the code is just bullshit
-                inserted_instance.punched_code = binaryoperations.codeor(inserted_instance.punched_code, additional_data)
+                inserted_instance.punched_code = binaryoperations.codeor(inserted_instance.punched_code, code_to_punch)
                 return True
             case _:
                 return False
@@ -490,7 +494,7 @@ class Player():
     def valid_use_targets(self, instance: alchemy.Instance, action_name) -> list[str]:
         valid_target_names = []
         match action_name:
-            case "insert_card":
+            case "insert_card" | "punch_card":
                 def filter_func(name):
                     if name not in self.sylladex: return False
                     return True
