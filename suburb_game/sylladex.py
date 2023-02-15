@@ -29,9 +29,9 @@ class Instance():
     def display_name(self, short=False) -> str:
         contained_instance = self.contained_instance()
         if self.punched_code != "":
-            return f"[:]->{self.punched_code}"
+            return f"[:]-{self.punched_code}"
         if not short:
-            if contained_instance is not None: return f"[ ]->{contained_instance.display_name()}"
+            if contained_instance is not None: return f"[ ]-{contained_instance.display_name()}"
             else: return self.item_name
         if contained_instance is not None: display_instance = contained_instance
         else: display_instance = self
