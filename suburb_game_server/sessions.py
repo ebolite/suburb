@@ -534,6 +534,7 @@ class Player():
                     return True
             case "combine_card":
                 def filter_func(name):
+                    if name == instance.name: return False
                     if name not in self.sylladex: return False
                     if alchemy.Instance(name).punched_code == "": return False
                     return True
