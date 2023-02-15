@@ -670,7 +670,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         if os.path.isfile(f"sprites\\kinds\\{kind}.png"):
             kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{kind}.png")
             kind_image.bind_to(kind_card_image)
-    render.spawn_punches(captcha_image, "nZ7Un6BI", 84, 72)
+    # render.spawn_punches(captcha_image, "nZ7Un6BI", 84, 72)
     if modus is not None:
         syl = Sylladex.current_sylladex()
         def uncaptcha_button_func():
