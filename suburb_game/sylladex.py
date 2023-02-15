@@ -63,15 +63,19 @@ class Instance():
                 self.choose_target(action_name, last_scene)
         else:
             def output_func():
+                util.log(f">{action_name}")
                 reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None})
                 if reply != "False":
                     if self.do_use_item_stuff(action_name):
                         last_scene()
                     else:
                         suburb.display_item(self, last_scene, modus=Sylladex.current_sylladex().modus)
+                else:
+                    if action.error_message(self.item_name): util.log(action.error_message(self.item_name))
         return output_func
     
     def get_target_button_func(self, target_instance_name: str, action_name: str, last_scene: Callable, syl: "Sylladex") -> Callable:
+        action: ItemAction = item_actions[action_name]
         def choose_button_func():
             print(f"using {target_instance_name}")
             reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
@@ -81,6 +85,8 @@ class Instance():
                     last_scene()
                 else:
                     suburb.display_item(self, last_scene, modus=syl.modus)
+            else:
+                if action.error_prompt: util.log(action.error_message(self.display_name()))
         return choose_button_func
 
     def choose_target(self, action_name: str, last_scene: Callable):
@@ -90,6 +96,9 @@ class Instance():
         print(valid_instances)
         syl = Sylladex.current_sylladex()
         syl.update_deck()
+        action: ItemAction = item_actions[action_name]
+        util.log(f">{action_name}")
+        if action.prompt: util.log(action.prompt_message(self.display_name()))
         for i, target_instance_name in enumerate(valid_instances.keys()):
             button_height = 33
             button_width = 400
