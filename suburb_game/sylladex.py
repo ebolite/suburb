@@ -77,7 +77,7 @@ class Instance():
     def get_target_button_func(self, target_instance_name: str, action_name: str, last_scene: Callable, syl: "Sylladex") -> Callable:
         action: ItemAction = item_actions[action_name]
         def choose_button_func():
-            util.log(f">{action_name}")
+            util.log(f">{action_name} ...")
             reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
             if reply != "False":
                 print(f"doing stuff")
