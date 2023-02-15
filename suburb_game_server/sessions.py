@@ -9,6 +9,7 @@ import util
 import config
 import tiles
 import alchemy
+import binaryoperations
 
 map_tiles = {}
 
@@ -430,7 +431,7 @@ class Player():
         return True
     
     # return True on success, return False on failure
-    def use(self, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None) -> bool:
+    def use(self, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:
         if instance.name not in self.sylladex and instance.name not in self.room.instances: return False
         if action_name not in instance.item.use: return False
         match action_name:
@@ -460,6 +461,27 @@ class Player():
                 if instance.inserted == "": return False
                 self.room.add_instance(instance.inserted)
                 instance.inserted = ""
+                return True
+            case "punch_card":
+                if instance.inserted == "": return False
+                if additional_data == None: return False
+                if len(additional_data) != 8: return False
+                for char in additional_data:
+                    if char not in binaryoperations.bintable: return False
+                inserted_instance = alchemy.Instance(instance.inserted)
+                if inserted_instance.punched_code == "":
+                    inserted_instance.punched_code = additional_data
+                    return True
+                # if both items are real and not just bullshit
+                if inserted_instance.punched_code in util.codes and additional_data in util.codes:
+                    currently_punched_item = alchemy.Item(util.codes[inserted_instance.punched_code])
+                    additional_item = alchemy.Item(util.codes[additional_data])
+                    alchemized_item_name = alchemy.alchemize(currently_punched_item.name, additional_item.name, "||")
+                    alchemized_item = alchemy.Item(alchemized_item_name)
+                    inserted_instance.punched_code = alchemized_item.code
+                    return True
+                # otherwise the code is just bullshit
+                inserted_instance.punched_code = binaryoperations.codeor(inserted_instance.punched_code, additional_data)
                 return True
             case _:
                 return False

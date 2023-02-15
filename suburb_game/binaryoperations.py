@@ -120,14 +120,14 @@ def bitor(bin1, bin2): # codes as binary string
             final += "0"
     return final
 
-def codeand(code1: str, code2: str): # codes as code string
+def codeand(code1: str, code2: str) -> str: # codes as code string
     bin1 = stringtobin(code1)
     bin2 = stringtobin(code2)
     finalbin = bitand(bin1, bin2)
     final = bintostring(finalbin)
     return final
 
-def codeor(code1: str, code2: str): # codes as code string
+def codeor(code1: str, code2: str) -> str: # codes as code string
     bin1 = stringtobin(code1)
     bin2 = stringtobin(code2)
     finalbin = bitor(bin1, bin2)
