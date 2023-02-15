@@ -437,21 +437,28 @@ class Player():
             case "add_card":
                 if self.empty_cards >= 10: return False
                 self.empty_cards += 1
+                if instance.contained != "":
+                    contained_instance = alchemy.Instance(instance.contained)
+                    self.sylladex.append(contained_instance.name)
                 return self.consume_instance(instance.name)
             case "insert_card":
-                print(f"inserted instance {instance.inserted_instance}")
+                print(f"inserted instance {instance.inserted}")
                 if target_instance is None: print("no target"); return False
                 if target_instance.name not in self.sylladex: print("not in sylladex"); return False
-                if instance.inserted_instance == "":
+                if instance.inserted == "":
                     if self.consume_instance(target_instance.name):
-                        instance.inserted_instance = target_instance.name
+                        if target_instance.item != "captchalogue card":
+                            card_instance = target_instance.to_card()
+                            instance.inserted = card_instance.name
+                        else:
+                            instance.inserted = target_instance.name
                         return True
                     else: print(f"instance {instance.name} not in sylladex"); return False
                 else: print("instance already inserted"); return False
             case "remove_card":
-                if instance.inserted_instance == "": return False
-                self.room.add_instance(instance.inserted_instance)
-                instance.inserted_instance = ""
+                if instance.inserted == "": return False
+                self.room.add_instance(instance.inserted)
+                instance.inserted = ""
                 return True
             case _:
                 return False
@@ -463,7 +470,6 @@ class Player():
             case "insert_card":
                 def filter_func(name):
                     if name not in self.sylladex: return False
-                    if alchemy.Instance(name).punched != "": return False
                     return True
             case _:
                 return []

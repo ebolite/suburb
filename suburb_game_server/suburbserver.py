@@ -160,7 +160,7 @@ def console_commands(player: sessions.Player, content: str):
             instance = alchemy.Instance(item)
             player.room.add_instance(instance.name)
         case "card":
-            item = alchemy.Item("empty captchalogue card")
+            item = alchemy.Item("captchalogue card")
             instance = alchemy.Instance(item)
             player.room.add_instance(instance.name)
 

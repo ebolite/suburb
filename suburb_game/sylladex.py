@@ -17,11 +17,27 @@ class Instance():
         self.instance_name = instance_name
         self.item_name = instance_dict["item_name"]
         self.item_dict = instance_dict["item_dict"]
+        self.contained = instance_dict["contained"]
+        self.punched_code = instance_dict["punched_code"]
+        self.inserted = instance_dict["inserted"]
         self.power = self.item_dict["power"]
         self.size = self.item_dict["size"]
         self.code = self.item_dict["code"]
         self.kinds = self.item_dict["kinds"]
         self.use = self.item_dict["use"] or []
+
+    # for captchalogue cards
+    def contained_instance(self) -> Optional["Instance"]:
+        if self.contained == "": return None
+        instance_name = self.contained["instance_name"]
+        instance_dict = self.contained
+        return Instance(instance_name, instance_dict)
+    
+    def inserted_instance(self) -> Optional["Instance"]:
+        if self.inserted == "": return None
+        instance_name = self.inserted["instance_name"]
+        instance_dict = self.inserted
+        return Instance(instance_name, instance_dict)
 
     def get_action_button_func(self, action_name: str, last_scene: Callable, target_instance: Optional["Instance"]=None) -> Callable:
         if action_name not in self.use: return lambda *args: None
@@ -33,7 +49,7 @@ class Instance():
         else:
             def output_func():
                 reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None})
-                if reply != False:
+                if reply != "False":
                     if self.do_use_item_stuff(action_name):
                         last_scene()
                     else:
@@ -70,9 +86,14 @@ class Instance():
     
     # returns True if go back to last scene, else go back to item display
     def do_use_item_stuff(self, action_name: str, target_name: Optional[str]=None) -> bool:
+        syl = Sylladex.current_sylladex()
         match action_name:
             case "add_card":
-                Sylladex.current_sylladex().remove_item(self.instance_name)
+                if self.instance_name in syl.deck:
+                    syl.remove_item(self.instance_name)
+                card_instance = self.contained_instance()
+                if card_instance is not None:
+                    syl.captchalogue(card_instance)
                 return True
             case "insert_card":
                 if target_name is None: raise TypeError
@@ -113,6 +134,7 @@ class Modus():
         return ejected
 
     def remove_from_modus_data(self, instance_name: str, sylladex: "Sylladex"):
+        print(f"removing {instance_name}")
         if instance_name in sylladex.data_list: sylladex.data_list.remove(instance_name)
     
     def convert_from_deck(self, deck: dict, sylladex: "Sylladex") -> list[str]:

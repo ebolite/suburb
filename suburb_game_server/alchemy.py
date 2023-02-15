@@ -1,6 +1,7 @@
 import random
 from typing import Optional, Union
 from string import ascii_letters
+from copy import deepcopy
 
 import util
 import binaryoperations
@@ -353,11 +354,13 @@ class Instance():
         if self.name not in util.instances:
             util.instances[self.name] = {}
         try:
-            self.punched
-            self.inserted_instance
+            self.punched_code
+            self.inserted
+            self.contained
         except KeyError:
-            self.punched: str = ""
-            self.inserted_instance: str = ""
+            self.punched_code: str = ""
+            self.inserted: str = ""
+            self.contained: str = ""
 
     @property
     def name(self):
@@ -375,10 +378,22 @@ class Instance():
         return util.instances[self.__dict__["name"]][attr]
     
     def get_dict(self):
-        output = util.instances[self.__dict__["name"]]
+        output = deepcopy(util.instances[self.__dict__["name"]])
+        output["instance_name"] = self.__dict__["name"]
+        if output["contained"] != "":
+            output["contained"] = Instance(output["contained"]).get_dict()
+        if output["inserted"] != "":
+            output["insterted"] = Instance(output["inserted"]).get_dict()
         item_dict = self.item.get_dict()
         output["item_dict"] = item_dict
         return output
+    
+    # note this function does not remove the instance, it merely creates a card containing it
+    def to_card(self) -> "Instance":
+        item = Item("captchalogue card")
+        instance = Instance(item)
+        instance.contained = self.name
+        return instance
     
     @property
     def item(self) -> Item:
