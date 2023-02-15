@@ -7,6 +7,9 @@ class ItemAction():
 
 add_card = ItemAction("add_card")
 
+combine_card = ItemAction("combine_card")
+combine_card.targeted = True
+
 insert_card = ItemAction("insert_card")
 insert_card.targeted = True
 
