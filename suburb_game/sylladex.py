@@ -26,13 +26,25 @@ class Instance():
         self.kinds = self.item_dict["kinds"]
         self.use = self.item_dict["use"] or []
 
-    def display_name(self) -> str:
+    def display_name(self, short=False) -> str:
         contained_instance = self.contained_instance()
         if self.punched_code != "":
             return f"[:]-{self.punched_code}"
-        if contained_instance is not None:
-            return f"[]-{contained_instance.display_name()}"
-        return self.item_name
+        if not short:
+            if contained_instance is not None: return f"[]-{contained_instance.display_name()}"
+            else: return self.item_name
+        if contained_instance is not None: display_instance = contained_instance
+        else: display_instance = self
+        words = display_instance.item_name.replace("+", " ").split(" ")
+        if len(words) > 2:
+            base = words.pop()
+            text = ""
+            for word in words:
+                text += f"{word[0]}."
+            name = f"{text} {base}"
+        else: name = " ".join(words)
+        if contained_instance is not None: return f"[]-{name}"
+        else: return name
 
     # for captchalogue cards
     def contained_instance(self) -> Optional["Instance"]:
@@ -185,15 +197,7 @@ class Modus():
                 card_image.scale = 0.5
             else:
                 card_image = None
-            words = instance.item_name.replace("+", " ").split(" ")
-            if len(words) > 2:
-                base = words.pop()
-                text = ""
-                for word in words:
-                    text += f"{word[0]}."
-                label_text = f"{text} {base}"
-            else:
-                label_text = instance.item_name
+            label_text = instance.display_name(short=True)
             card_label = render.Text(0.49, 0.9, label_text)
             card_label.set_fontsize_by_width(90)
             card_label.bind_to(card_thumb)

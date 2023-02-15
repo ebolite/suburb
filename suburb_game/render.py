@@ -653,8 +653,9 @@ class RoomItemDisplay(UIElement):
         for button in self.buttons:
             button.delete()
         for index, instance_name in enumerate(instances):
-            item_name = instances[instance_name]["item_name"]
-            new_button = TextButton(self.x+30, self.y + 30*(index+1), 220, 30, util.filter_item_name(item_name), get_button_func(instance_name), truncate_text=True)
+            instance = Instance(instance_name, instances[instance_name])
+            display_name = instance.display_name()
+            new_button = TextButton(self.x+30, self.y + 30*(index+1), 220, 30, util.filter_item_name(display_name), get_button_func(instance_name), truncate_text=True)
             new_button.absolute = True 
             captcha_button = CaptchalogueButton(self.x, self.y + 30*(index+1), instance_name, instances)
             captcha_button.absolute = True
