@@ -705,7 +705,6 @@ def spawn_punches(bound_element: UIElement, code: str, base_x, base_y, flipped=F
         y = (int(h/12)*row_index)
         for char_index, char in enumerate(row):
             x = (int(w/4)*char_index)
-            print(f"{char} at row {row_index} character {char_index} x {x} y {y}")
             if char == "1":
                 punch = SolidColor(base_x+x, base_y+y, int(w/4), int(h/12), suburb.current_theme().black)
                 punch.bind_to(bound_element)
