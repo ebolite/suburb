@@ -308,7 +308,7 @@ class InputTextBox(UIElement):
         self.text_color = self.theme.black
         self.inactive_color = self.theme.white
         self.active_color = self.theme.light
-        self.outline_color = self.theme.dark
+        self.outline_color: Optional[pygame.Color] = self.theme.dark
         self.fontsize = 32
         self.suffix = ""
         self.secure = False
@@ -333,12 +333,18 @@ class InputTextBox(UIElement):
         else:
             self.surf.fill(self.inactive_color)
 
-        self.outline_surf = pygame.Surface((width + (outline * 2), height + (outline  * 2)))
-        self.outline_surf.fill(self.outline_color)
+        if self.outline_color is not None:
+            self.outline_surf = pygame.Surface((width + (outline * 2), height + (outline  * 2)))
+            self.outline_surf.fill(self.outline_color)
+            rect_surf = self.outline_surf
+        else:
+            rect_surf = self.surf
 
-        self.rect = self.outline_surf.get_rect()
-        self.rect.x, self.rect.y = self.get_rect_xy(self.outline_surf)
-        screen.blit(self.outline_surf, (self.rect.x, self.rect.y))
+        self.rect = rect_surf.get_rect()
+        self.rect.x, self.rect.y = self.get_rect_xy(rect_surf)
+
+        if self.outline_color is not None:
+            screen.blit(self.outline_surf, (self.rect.x, self.rect.y))
 
         surfx, surfy = self.get_rect_xy(self.surf)
         screen.blit(self.surf, (surfx, surfy))
@@ -706,7 +712,7 @@ class CaptchalogueButton(Button):
         return output_func
 
 class LogWindow(UIElement):
-    def __init__(self, last_scene: Callable, tilemap: Optional[TileMap]=None, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=5, fontsize=16):
+    def __init__(self, last_scene: Callable, tilemap: Optional[TileMap]=None, draw_console=False, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=5, fontsize=16):
         super().__init__()
         self.last_scene = last_scene
         self.x = x
@@ -716,6 +722,7 @@ class LogWindow(UIElement):
         self.fontsize = fontsize
         self.padding = 4
         self.tilemap = tilemap
+        self.draw_console = draw_console
         util.log_window = self
         self.scroll_offset = 0
         self.background: Optional[UIElement] = None
@@ -750,22 +757,24 @@ class LogWindow(UIElement):
                 text.fontsize = self.fontsize
                 text.color = self.theme.light
                 text.absolute = True
+                text.set_fontsize_by_width(self.width)
                 self.elements.append(text)
             except IndexError:
                 pass
         def console_enter_func(textbox: InputTextBox):
-            util.log(textbox.text)
+            util.log(">"+textbox.text)
             reply = client.requestplus(intent="console_command", content=textbox.text)
             if reply != "None": util.log(reply)
             textbox.text = ""
             self.last_scene()
-        console_y = self.y + (self.lines_to_display-1)*self.fontsize + (self.lines_to_display-1)*self.padding
+        if not self.draw_console: return
+        console_y = self.y + (self.lines_to_display)*self.fontsize + (self.lines_to_display)*self.padding
         self.console = InputTextBox(x, console_y, self.width, self.fontsize+self.padding)
         self.console.absolute = True
         self.console.enter_func = console_enter_func
         self.console.inactive_color = self.theme.black
         self.console.active_color = self.theme.dark
-        self.console.outline_color = self.theme.light
+        self.console.outline_color = None
         self.console.text_color = self.theme.white
         self.console.fontsize = self.fontsize
         self.console.suffix = ">"

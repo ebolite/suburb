@@ -181,6 +181,7 @@ class Modus():
         return wrapper
 
     def draw_ui_bar(self, sylladex: "Sylladex", last_scene: Callable):
+        render.LogWindow
         start = time.time()
         sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True

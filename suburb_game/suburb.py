@@ -599,10 +599,11 @@ def map():
     item_display = render.RoomItemDisplay(100, 50, instances)
     Sylladex.current_sylladex().draw_ui_bar(map)
     tilemap = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display)
-    log = render.LogWindow(map, tilemap=tilemap)
+    log = render.LogWindow(map, tilemap=tilemap, draw_console=True)
 
 @scene
 def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False):
+    render.LogWindow(display_item, lines_to_display=4, x=200, width=400)
     if modus is None:
         card_path = "sprites\\itemdisplay\\captchalogue_card.png"
         card_flipped_path = "sprites\\itemdisplay\\captchalogue_card_flipped.png"
@@ -676,7 +677,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             last_scene()
         uncaptchalogue_button = render.TextButton(0.5, 1.2, 200, 33, "uncaptchalogue", uncaptcha_button_func)
         uncaptchalogue_button.bind_to(power_bar)
-    backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
+    backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
 
 @scene
 def title():
