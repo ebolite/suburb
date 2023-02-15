@@ -479,17 +479,15 @@ class Player():
             case "insert_card":
                 if target_instance is None: return False
                 if target_instance.name not in self.sylladex: return False
-                if instance.inserted == "":
-                    if self.consume_instance(target_instance.name):
-                        self.empty_cards -= 1
-                        if target_instance.item.name != "captchalogue card" and target_instance.item.name != "punched card":
-                            card_instance = target_instance.to_card()
-                            instance.inserted = card_instance.name
-                        else:
-                            instance.inserted = target_instance.name
-                        return True
-                    else: return False
-                else: return False
+                if instance.inserted != "": return False
+                if not self.consume_instance(target_instance.name): return False
+                self.empty_cards -= 1
+                if target_instance.item.name != "captchalogue card" and target_instance.item.name != "punched card":
+                    card_instance = target_instance.to_card()
+                    instance.inserted = card_instance.name
+                else:
+                    instance.inserted = target_instance.name
+                return True
             case "remove_card":
                 if instance.inserted == "": return False
                 self.room.add_instance(instance.inserted)
