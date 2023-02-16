@@ -693,8 +693,10 @@ class RoomItemDisplay(UIElement):
             for i, action_name in enumerate(reversed(instance.use)):
                 use_buttons += 1
                 path = f"sprites/item_actions/{action_name}.png"
+                pressed_path = f"sprites/item_actions/{action_name}_pressed.png"
                 if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
-                use_button = Button(self.x+(self.w-(30*(i+1))), y, path, path, instance.get_action_button_func(action_name, suburb.map))
+                if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
+                use_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, instance.get_action_button_func(action_name, suburb.map))
                 use_button.absolute = True
                 self.buttons.append(use_button)
             main_button_width = self.w-30
