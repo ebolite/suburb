@@ -46,7 +46,8 @@ tiles = {
     }
 
 icons = {
-    "player": "sprites\\icons\\player_alt.png"
+    "no_icon": "sprites/icons/no_icon.png",
+    "player": "sprites/icons/player_alt.png"
 }
 
 grists = {

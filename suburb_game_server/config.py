@@ -2,6 +2,9 @@ import util
 
 sburb = "<a:suburbspirograph:820899074986606613>"
 
+# items which appear as icons to clients
+special_items = ["punch designix", "cruxtruder", "totem lathe", "alchemiter", "Sburb disc"]
+
 verbs = [
     "Transforming",
     "Reorganizing",

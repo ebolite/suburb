@@ -345,6 +345,10 @@ class Room():
         for player_username in self.players:
             player = Player(player_username)
             special_dict[player.calledby] = "player"
+        for instance_name in self.instances:
+            instance = alchemy.Instance(instance_name)
+            if instance.item.name in config.special_items:
+                special_dict[instance_name] = instance.item.name
         # todo: other specials
         return special_dict
 

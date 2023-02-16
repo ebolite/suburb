@@ -513,6 +513,7 @@ class TileMap(UIElement):
 
     def update_map(self, map):
         if self.map != map or len(self.tiles) == 0:
+            self.map = map
             self.rect = pygame.Rect(0, 0, len(map[0])*tile_wh, len(map)*tile_wh)
             self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2))
             self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2))
@@ -626,14 +627,15 @@ class Tile(UIElement):
         self.rect.x = (self.x * tile_wh) + self.TileMap.rect.x
         self.rect.y = (self.y * tile_wh) + self.TileMap.rect.y
         self.surf.blit(self.image, (0, 0), (offsetx, offsety, tile_wh, tile_wh))
-        if f"{self.x}, {self.y}" in self.specials:
-            room_specials = self.specials[f"{self.x}, {self.y}"]
+        if f"{self.x}, {self.y}" in self.TileMap.specials:
+            room_specials = self.TileMap.specials[f"{self.x}, {self.y}"]
             specials_keys = list(room_specials.keys()) + [None]
             drawing_index = int(((pygame.time.get_ticks() / 10) % FPS_CAP) / (FPS_CAP / len(specials_keys))) # full cycle each second
             drawing_name = specials_keys[drawing_index]
             if drawing_name is not None: # if we're not drawing nothing (images should be flashing)
                 drawing_type = room_specials[drawing_name]
-                icon_image_filename = config.icons[drawing_type]
+                if drawing_type in config.icons: icon_image_filename = config.icons[drawing_type]
+                else: icon_image_filename = config.icons["no_icon"]
                 icon_image = pygame.image.load(icon_image_filename)
                 self.surf.blit(icon_image, (0, 0), (0, 0, tile_wh, tile_wh))
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))
