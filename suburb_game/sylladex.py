@@ -21,6 +21,7 @@ class Instance():
         self.punched_code = instance_dict["punched_code"]
         self.punched_item_name = instance_dict["punched_item_name"]
         self.inserted = instance_dict["inserted"]
+        self.forbiddencode = instance_dict["forbiddencode"]
         self.power = self.item_dict["power"]
         self.size = self.item_dict["size"]
         self.code = self.item_dict["code"]

@@ -617,7 +617,8 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         text_color = modus.theme.light
         text_outline_color = modus.theme.black
         def flip():
-            display_item(instance, last_scene, modus=modus, flipped=not flipped)
+            if not instance.forbiddencode:
+                display_item(instance, last_scene, modus=modus, flipped=not flipped)
     if not flipped:
         captcha_image = render.Button(0.5, 0.4, card_path, card_path, flip)
         image_path = None
