@@ -21,6 +21,8 @@ class Instance():
         self.punched_code = instance_dict["punched_code"]
         self.punched_item_name = instance_dict["punched_item_name"]
         self.inserted = instance_dict["inserted"]
+        self.carved = instance_dict["carved"]
+        self.carved_item_name = instance_dict["carved_item_name"]
         self.forbiddencode = self.item_dict["forbiddencode"]
         self.power = self.item_dict["power"]
         self.size = self.item_dict["size"]
@@ -31,14 +33,19 @@ class Instance():
     def display_name(self, short=False) -> str:
         contained_instance = self.contained_instance()
         if self.punched_code != "" and self.punched_item_name == "": return f"[:]-{self.punched_code}"
+        if self.carved != "00000000" and self.carved_item_name == "": return f")(-{self.carved}"
         if short:
             if self.punched_item_name != "":
                 return f"[:]-{util.shorten_item_name(self.punched_item_name)}"
+            elif self.carved_item_name != "perfectly+generic object":
+                return f")(-{util.shorten_item_name(self.carved_item_name)}"
             elif contained_instance is not None: return f"[ ]-{contained_instance.display_name(short)}"
             else: return util.shorten_item_name(self.item_name)
         else:
             if self.punched_item_name != "":
                 return f"[:]-{self.punched_item_name}"
+            elif self.carved_item_name != "perfectly+generic object":
+                return f")(-{self.carved_item_name}"
             elif contained_instance is not None: return f"[ ]-{contained_instance.display_name(short)}"
             return self.item_name
 
@@ -145,6 +152,14 @@ class Instance():
                 return True
             case "punch_card":
                 return False
+            case "insert_dowel":
+                if target_name is None: raise TypeError
+                syl.remove_item(target_name)
+                return False
+            case "remove_dowel":
+                return True
+            case "punch_card":
+                return True
             case _:
                 return True
 

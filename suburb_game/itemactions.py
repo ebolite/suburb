@@ -41,3 +41,16 @@ punch_card.error_prompt = "No card is inserted."
 #todo: add support for custom punch
 
 cruxtrude = ItemAction("cruxtrude")
+
+insert_dowel = ItemAction("insert_dowel")
+insert_dowel.targeted = True
+insert_dowel.prompt = "Insert what into the {}?"
+insert_dowel.error_prompt = "There's already a dowel inserted."
+
+remove_dowel = ItemAction("remove_dowel")
+remove_dowel.error_prompt = "No dowel is inserted."
+
+lathe = ItemAction("lathe")
+lathe.targeted = True
+lathe.prompt = "Which punched card should you lathe?"
+lathe.error_prompt = "No dowel is inserted."

@@ -501,7 +501,8 @@ class Player():
                 self.room.add_instance(card_2.name)
                 return True
             case "cruxtrude":
-                self.room.add_instance(alchemy.Instance(alchemy.Item("cruxite dowel")).name)
+                dowel_instance = alchemy.Instance(alchemy.Item("cruxite dowel"))
+                self.room.add_instance(dowel_instance.name)
                 return True
             case "insert_card":
                 if target_instance is None: return False
@@ -553,6 +554,33 @@ class Player():
                 inserted_instance.punched_item_name = ""
                 print("bullshit code")
                 return True
+            case "insert_dowel":
+                if instance.inserted != "": print("something is already inserted"); return False
+                if target_instance is None: print("no target"); return False
+                if target_instance.item.name != "cruxite dowel": print("not a dowel"); return False
+                if target_instance.name in self.sylladex:
+                    if not self.consume_instance(target_instance.name): print("couldn't consume"); return False
+                else:
+                    if target_instance.name not in self.room: print("couldn't find dowel in room"); return False
+                    self.room.remove_instance(target_instance.name)
+                instance.inserted = target_instance.name
+                return True
+            case "remove_dowel":
+                if instance.inserted == "": print("nothing in machine"); return False
+                self.room.add_instance(instance.inserted)
+                instance.inserted = ""
+                return True
+            case "lathe":
+                if instance.inserted == "": print("nothing in machine"); return False
+                if target_instance is None: print("no target"); return False
+                if target_instance.item.name != "punched card": print("not punched card"); return False
+                inserted_instance = alchemy.Instance(instance.inserted)
+                inserted_instance.carved = target_instance.punched_code
+                inserted_instance.carved_item_name = target_instance.punched_item_name
+                # eject dowel
+                self.room.add_instance(inserted_instance.name)
+                instance.inserted = ""
+                return True
             case _:
                 return False
             
@@ -574,6 +602,18 @@ class Player():
                     if name == instance.name: return False
                     if name not in self.sylladex: return False
                     if alchemy.Instance(name).punched_code == "": return False
+                    return True
+            case "insert_dowel":
+                def filter_func(name):
+                    filter_instance = alchemy.Instance(name)
+                    if filter_instance.item.name != "cruxite dowel": return False
+                    if filter_instance.carved != "00000000": return False
+                    return True
+            case "lathe":
+                def filter_func(name):
+                    if name not in self.sylladex: return False
+                    filter_instance = alchemy.Instance(name)
+                    if filter_instance.item.name != "punched card": return False
                     return True
             case _:
                 return []

@@ -364,12 +364,16 @@ class Instance():
             self.inserted
             self.contained
             self.combined
+            self.carved
+            self.carved_item_name
         except KeyError:
             self.punched_code: str = ""
             self.punched_item_name: str = ""
             self.inserted: str = ""
             self.contained: str = ""
             self.combined: list[str] = []
+            self.carved: str = "00000000"
+            self.carved_item_name: str = "perfectly+generic object"
 
     @property
     def name(self):
