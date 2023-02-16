@@ -19,7 +19,7 @@ add_card.error_prompt = "You are at the maximum amount of empty cards."
 
 combine_card = ItemAction("combine_card")
 combine_card.targeted = True
-combine_card.prompt = "Combine {} with what?"
+combine_card.prompt = "Combine {} with what (&&)?"
 combine_card.error_prompt = ""
 
 uncombine_card = ItemAction("uncombine_card")
