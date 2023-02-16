@@ -623,6 +623,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         image_path = None
         if os.path.isfile(f"sprites\\items\\{instance.item_name}.png"):
             image = render.Image(0.5, 0.5, f"sprites\\items\\{instance.item_name}.png")
+            image.convert = False
             image.bind_to(captcha_image)
         label = render.Text(0.55, 0.91, util.filter_item_name(instance.item_name))
         label.bind_to(captcha_image)
