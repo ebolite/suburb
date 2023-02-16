@@ -47,7 +47,11 @@ tiles = {
 
 icons = {
     "no_icon": "sprites/icons/no_icon.png",
-    "player": "sprites/icons/player_alt.png"
+    "player": "sprites/icons/player_alt.png",
+    "alchemiter": "sprites/icons/alchemiter.png",
+    "cruxtruder": "sprites/icons/cruxtruder.png",
+    "punch designix": "sprites/icons/punch designix.png",
+    "totem lathe": "sprites/icons/totem lathe.png"
 }
 
 grists = {
