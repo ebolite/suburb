@@ -39,3 +39,5 @@ punch_card.prompt = "Which item's code should be punched?"
 punch_card.error_prompt = "No card is inserted."
 
 #todo: add support for custom punch
+
+cruxtrude = ItemAction("cruxtrude")

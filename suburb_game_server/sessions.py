@@ -500,6 +500,9 @@ class Player():
                 self.room.add_instance(card_1.name)
                 self.room.add_instance(card_2.name)
                 return True
+            case "cruxtrude":
+                self.room.add_instance(alchemy.Instance(alchemy.Item("cruxite dowel")).name)
+                return True
             case "insert_card":
                 if target_instance is None: return False
                 if target_instance.name not in self.sylladex: return False
