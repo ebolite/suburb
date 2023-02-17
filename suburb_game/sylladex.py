@@ -14,15 +14,15 @@ moduses = {}
 
 class Instance():
     def __init__(self, instance_name: str, instance_dict: dict):
-        self.instance_name = instance_name
-        self.item_name = instance_dict["item_name"]
-        self.item_dict = instance_dict["item_dict"]
-        self.contained = instance_dict["contained"]
-        self.punched_code = instance_dict["punched_code"]
-        self.punched_item_name = instance_dict["punched_item_name"]
-        self.inserted = instance_dict["inserted"]
-        self.carved = instance_dict["carved"]
-        self.carved_item_name = instance_dict["carved_item_name"]
+        self.instance_name: str = instance_name
+        self.item_name: str = instance_dict["item_name"]
+        self.item_dict: dict = instance_dict["item_dict"]
+        self.contained: dict  = instance_dict["contained"]
+        self.punched_code:str  = instance_dict["punched_code"]
+        self.punched_item_name: str = instance_dict["punched_item_name"]
+        self.inserted: dict = instance_dict["inserted"]
+        self.carved: str = instance_dict["carved"]
+        self.carved_item_name: str = instance_dict["carved_item_name"]
         self.forbiddencode = self.item_dict["forbiddencode"]
         self.power = self.item_dict["power"]
         self.size = self.item_dict["size"]
@@ -62,16 +62,18 @@ class Instance():
         instance_dict = self.inserted
         return Instance(instance_name, instance_dict)
 
-    def use_item(self, action_name: str, target_name: Optional[str]=None) -> bool:
+    def use_item(self, action_name: str, target_instance: Optional["Instance"]=None) -> bool:
         if action_name not in item_actions: return False
         action: ItemAction = item_actions[action_name]
-        util.log(f">{action_name}")
-        reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_name})
+        target_instance_name = None if target_instance is None else target_instance.instance_name
+        target_instance_display_name = None if target_instance is None else target_instance.display_name()
+        reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
         if reply == "False": 
-            if action.error_message(self.item_name): util.log(action.error_message(self.item_name))
+            if action.error_prompt: util.log(action.error_message(self.display_name(), target_instance_display_name))
             return False
         else: 
-            self.do_use_item_stuff(action_name, target_name)
+            if action.use_prompt: util.log(action.use_message(self.display_name(), target_instance_display_name))
+            self.do_use_item_stuff(action_name, target_instance_name)
             return True
 
     # returns True if go back to last scene, else go back to item display
@@ -127,11 +129,11 @@ class Instance():
                     else: suburb.display_item(self, last_scene, modus=syl.modus)
         return output_func
     
-    def get_target_button_func(self, target_instance_name: str, action_name: str, last_scene: Callable) -> Callable:
+    def get_target_button_func(self, target_instance: "Instance", action_name: str, last_scene: Callable) -> Callable:
         if action_name not in item_actions: return lambda *args: None
         syl = Sylladex.current_sylladex()
         def choose_button_func():
-            reply = self.use_item(action_name, target_instance_name)
+            reply = self.use_item(action_name, target_instance)
             if reply:
                 if last_scene is suburb.map: last_scene()
                 else: suburb.display_item(self, last_scene, modus=syl.modus)
@@ -154,7 +156,7 @@ class Instance():
             target_instance = Instance(target_instance_name, valid_instances[target_instance_name])
             if target_instance_name in syl.deck: display_name = f"(Sylladex) {target_instance.display_name()}"
             else: display_name = target_instance.display_name()
-            button_func = self.get_target_button_func(target_instance_name, action_name, last_scene)
+            button_func = self.get_target_button_func(target_instance, action_name, last_scene)
             choose_button = render.TextButton(x, y, button_width, button_height, display_name, button_func)
             choose_button.absolute = True
             choose_button.truncate_text = True
