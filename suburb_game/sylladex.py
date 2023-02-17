@@ -217,11 +217,16 @@ class Modus():
             suburb.display_item(instance, last_scene, modus=self)
         return wrapper
 
+    def get_ui_bar_card_instances(self, sylladex: "Sylladex", remaining_cards:int):
+        instances = sylladex.data_list.copy()
+        empty_cards = ["" for i in range(remaining_cards)]
+        return empty_cards+instances
+
     def draw_ui_bar(self, sylladex: "Sylladex", last_scene: Callable):
         start = time.time()
         sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True
-        instances_length = len(sylladex.data_list)
+        
         num_cards_remaining = sylladex.empty_cards - len(sylladex.data_list)
         def drop_empty_card_button():
             client.request("drop_empty_card")
@@ -231,15 +236,24 @@ class Modus():
         remaining_cards_label = render.Text(0.5, 0.6, str(num_cards_remaining))
         remaining_cards_label.bind_to(remaining_cards_display)
         if num_cards_remaining == 0: remaining_cards_label.color = pygame.Color(255, 0, 0)
-        for i, instance_name in enumerate(sylladex.data_list):
+        ui_bar_card_instances = self.get_ui_bar_card_instances(sylladex, num_cards_remaining)
+        instances_length = len(ui_bar_card_instances)
+        for i, instance_name in enumerate(ui_bar_card_instances):
             x = (render.SCREEN_WIDTH / 2) - 109 + 125*(i + 1 - instances_length/2)
             x = int(x)
             y = int(render.SCREEN_HEIGHT*0.80)
-            instance = sylladex.get_instance(instance_name)
-            button_function = self.get_button_func(instance, last_scene) if self.is_accessible(instance, sylladex) else lambda *args: None
-            card_thumb = render.Button(x, y, "sprites/moduses/card_thumb.png", "sprites/moduses/card_thumb.png", button_function)
-            card_thumb.absolute = True
-            card_thumb.bind_to(sylladex_bar)
+            if instance_name != "": 
+                instance = sylladex.get_instance(instance_name)
+                button_function = self.get_button_func(instance, last_scene) if self.is_accessible(instance, sylladex) else lambda *args: None
+                card_thumb = render.Button(x, y, "sprites/moduses/card_thumb.png", "sprites/moduses/card_thumb.png", button_function)
+                card_thumb.absolute = True
+                card_thumb.bind_to(sylladex_bar)
+            else:
+                card_thumb = render.Image(x, y, "sprites/moduses/card_thumb.png")
+                card_thumb.absolute = True
+                card_thumb.alpha = 155
+                card_thumb.bind_to(sylladex_bar)
+                continue
             image_path = f"sprites/items/{instance.item_name}.png"
             if os.path.isfile(image_path):
                 card_image = render.ItemImage(0.49, 0.5, instance.item_name)
@@ -416,6 +430,11 @@ class Stack(Modus):
         while len(sylladex.data_list) > sylladex.empty_cards:
             ejected.append(sylladex.data_list.pop())
         return ejected
+    
+    def get_ui_bar_card_instances(self, sylladex: "Sylladex", remaining_cards:int):
+        instances = sylladex.data_list.copy()
+        empty_cards = ["" for i in range(remaining_cards)]
+        return instances+empty_cards
 
 stack_modus = Stack("stack")
 stack_modus.front_path = "sprites/moduses/stack_card.png"
