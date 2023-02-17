@@ -390,7 +390,7 @@ class Player():
             self.moduses: list[str] = []
             self.empty_cards = 5
             self.echeladder_rung = 0
-            self.grists = {grist_name:0 for grist_name in config.grists}
+            self.grist_cache = {grist_name:0 for grist_name in config.grists}
             self.grist_gutter = {grist_name:0 for grist_name in config.grists}
             self.setup = False
             self.nickname = ""
