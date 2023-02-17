@@ -679,8 +679,9 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         def uncaptcha_button_func():
             syl.uncaptchalogue(instance.instance_name)
             last_scene()
-        uncaptchalogue_button = render.TextButton(0.5, 1.2, 200, 33, "uncaptchalogue", uncaptcha_button_func)
-        uncaptchalogue_button.bind_to(power_bar)
+        if modus.can_uncaptchalogue:
+            uncaptchalogue_button = render.TextButton(0.5, 1.2, 200, 33, "uncaptchalogue", uncaptcha_button_func)
+            uncaptchalogue_button.bind_to(power_bar)
     backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
 
 @scene

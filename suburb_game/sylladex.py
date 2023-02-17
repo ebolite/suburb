@@ -175,6 +175,7 @@ class Modus():
         self.bar_path = ""
         self.thumb_path = ""
         self.theme: themes.Theme = themes.array
+        self.can_uncaptchalogue = True
         moduses[name] = self
 
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
@@ -412,6 +413,7 @@ stack_modus.back_path = "sprites/moduses/stack_card_flipped.png"
 stack_modus.bar_path = "sprites/moduses/stack_bar.png"
 stack_modus.thumb_path = "sprites/moduses/stack_card_thumb.png"
 stack_modus.theme = themes.stack
+stack_modus.can_uncaptchalogue = False
 
 class Queue(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):
@@ -433,6 +435,7 @@ queue_modus.back_path = "sprites/moduses/queue_card_flipped.png"
 queue_modus.bar_path = "sprites/moduses/queue_bar.png"
 queue_modus.thumb_path = "sprites/moduses/queue_card_thumb.png"
 queue_modus.theme = themes.queue
+queue_modus.can_uncaptchalogue = False
 
 class Array(Modus):
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
