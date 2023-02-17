@@ -68,6 +68,12 @@ insert_dowel.prompt = "Insert what into the {}?"
 insert_dowel.error_prompt = "There's already a dowel inserted."
 insert_dowel.use_prompt = "You insert {tname} into the {iname}."
 
+insert_carved_dowel = ItemAction("insert_carved_dowel")
+insert_carved_dowel.targeted = True
+insert_carved_dowel.prompt = "Insert what into the {}?"
+insert_carved_dowel.error_prompt = "There's already a dowel inserted."
+insert_carved_dowel.use_prompt = "You insert {tname} into the {iname}."
+
 remove_dowel = ItemAction("remove_dowel")
 remove_dowel.error_prompt = "No dowel is inserted."
 remove_dowel.use_prompt = "You eject the dowel from the {iname}."

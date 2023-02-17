@@ -107,6 +107,10 @@ class Instance():
                 if target_name is None: raise TypeError
                 syl.remove_item(target_name)
                 return False
+            case "insert_carved_dowel":
+                if target_name is None: raise TypeError
+                syl.remove_item(target_name)
+                return False
             case "remove_dowel":
                 return True
             case "punch_card":

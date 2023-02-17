@@ -571,6 +571,7 @@ class Player():
                 if instance.inserted != "": print("something is already inserted"); return False
                 if target_instance is None: print("no target"); return False
                 if target_instance.item.name != "cruxite dowel": print("not a dowel"); return False
+                if target_instance.carved != "00000000": print("dowel already carved"); return False
                 if target_instance.name in self.sylladex:
                     if not self.consume_instance(target_instance.name): print("couldn't consume"); return False
                 else:
@@ -582,6 +583,17 @@ class Player():
                 if instance.inserted == "": print("nothing in machine"); return False
                 self.room.add_instance(instance.inserted)
                 instance.inserted = ""
+                return True
+            case "insert_carved_dowel":
+                if instance.inserted != "": print("something is already inserted"); return False
+                if target_instance is None: print("no target"); return False
+                if target_instance.item.name != "cruxite dowel": print("not a dowel"); return False
+                if target_instance.name in self.sylladex:
+                    if not self.consume_instance(target_instance.name): print("couldn't consume"); return False
+                else:
+                    if target_instance.name not in self.room: print("couldn't find dowel in room"); return False
+                    self.room.remove_instance(target_instance.name)
+                instance.inserted = target_instance.name
                 return True
             case "lathe":
                 if instance.inserted == "": print("nothing in machine"); return False
@@ -621,6 +633,11 @@ class Player():
                     filter_instance = alchemy.Instance(name)
                     if filter_instance.item.name != "cruxite dowel": return False
                     if filter_instance.carved != "00000000": return False
+                    return True
+            case "insert_carved_dowel":
+                def filter_func(name):
+                    filter_instance = alchemy.Instance(name)
+                    if filter_instance.item.name != "cruxite dowel": return False
                     return True
             case "lathe":
                 def filter_func(name):
