@@ -389,7 +389,20 @@ class Player():
             self.sylladex: list[str] = []
             self.moduses: list[str] = []
             self.empty_cards = 5
+            self.echeladder_rung = 0
+            self.grists = {grist_name:0 for grist_name in config.grists}
+            self.grist_gutter = {grist_name:0 for grist_name in config.grists}
             self.setup = False
+            self.nickname = ""
+            self.noun = ""
+            self.pronouns = []
+            self.interests = []
+            self.aspect = ""
+            self.gameclass = ""
+            self.gristcategory = ""
+            self.secondaryvial = ""
+            self.land_name = ""
+            self.land_session = ""
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
