@@ -585,7 +585,7 @@ def debug_speedrun():
     character_info["aspect"] = "life"
     character_info["class"] = "sylph"
     character_info["secondaryvial"] = "IMAGINATION"
-    character_info["modus"] = "stack"
+    character_info["modus"] = "array"
     character_info["gristcategory"] = "amber"
     newgame()
 

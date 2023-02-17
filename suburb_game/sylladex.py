@@ -230,6 +230,7 @@ class Modus():
         num_cards_remaining = sylladex.empty_cards - len(sylladex.data_list)
         def drop_empty_card_button():
             client.request("drop_empty_card")
+            sylladex.update_deck()
             last_scene()
         remaining_cards_display = render.Button(10, render.SCREEN_HEIGHT-85, "sprites/moduses/card_num_remaining.png", "sprites/moduses/card_num_remaining.png", drop_empty_card_button)
         remaining_cards_display.absolute = True
@@ -284,10 +285,12 @@ class Sylladex():
             self.data_dict
             self.data_list
             self.deck: dict
+            self.empty_cards: int
         except KeyError:
             self.data_dict = {}
             self.data_list = []
             self.deck: dict = {}
+            self.empty_cards: int = 0
             self.update_deck()
 
     def __getattr__(self, attr):
@@ -299,12 +302,7 @@ class Sylladex():
 
     @property
     def modus(self) -> Modus:
-        return moduses[self.modus_name]
-    
-    @property
-    def empty_cards(self) -> int:
-        dic = client.requestdic("player_info")
-        return int(dic["empty_cards"])    
+        return moduses[self.modus_name] 
     
     @property
     def moduses(self) -> list[str]:
@@ -312,6 +310,7 @@ class Sylladex():
         return dic["moduses"]
 
     def update_deck(self):
+        self.empty_cards = client.requestdic("player_info")["empty_cards"]
         self.deck = client.requestdic("sylladex")
 
     # this needs to be included for dict modi
