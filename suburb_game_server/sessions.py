@@ -448,7 +448,7 @@ class Player():
         return True
     
     def drop_empty_card(self) -> bool:
-        if self.empty_cards > 0:
+        if self.empty_cards - len(self.sylladex) > 0:
             self.empty_cards -= 1
             self.room.add_instance(alchemy.Instance(alchemy.Item("captchalogue card")).name)
             return True
