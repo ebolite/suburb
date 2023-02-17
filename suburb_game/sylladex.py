@@ -62,68 +62,17 @@ class Instance():
         instance_dict = self.inserted
         return Instance(instance_name, instance_dict)
 
-    def get_action_button_func(self, action_name: str, last_scene: Callable, target_instance: Optional["Instance"]=None) -> Callable:
-        if action_name not in self.use: return lambda *args: None
-        if action_name not in item_actions: return lambda *args: None
+    def use_item(self, action_name: str, target_name: Optional[str]=None) -> bool:
+        if action_name not in item_actions: return False
         action: ItemAction = item_actions[action_name]
-        if action.targeted:
-            def output_func():
-                self.choose_target(action_name, last_scene)
-        else:
-            def output_func():
-                util.log(f">{action_name}")
-                reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": None})
-                if reply != "False":
-                    if self.do_use_item_stuff(action_name):
-                        last_scene()
-                    else:
-                        suburb.display_item(self, last_scene, modus=Sylladex.current_sylladex().modus)
-                else:
-                    if action.error_message(self.item_name): util.log(action.error_message(self.item_name))
-        return output_func
-    
-    def get_target_button_func(self, target_instance_name: str, action_name: str, last_scene: Callable, syl: "Sylladex") -> Callable:
-        action: ItemAction = item_actions[action_name]
-        def choose_button_func():
-            util.log(f">{action_name} ...")
-            reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
-            if reply != "False":
-                print(f"doing stuff")
-                if self.do_use_item_stuff(action_name, target_instance_name):
-                    last_scene()
-                else:
-                    if last_scene is suburb.map: last_scene()
-                    else: suburb.display_item(self, last_scene, modus=syl.modus)
-            else:
-                if action.error_prompt: util.log(action.error_message(self.display_name()))
-        return choose_button_func
-
-    def choose_target(self, action_name: str, last_scene: Callable):
-        suburb.scene(lambda *args: None)()
-        render.LogWindow(self.choose_target)
-        valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.instance_name, "action_name": action_name})
-        print(valid_instances)
-        syl = Sylladex.current_sylladex()
-        syl.update_deck()
-        action: ItemAction = item_actions[action_name]
-        if action.prompt: util.log(action.prompt_message(self.display_name()))
-        for i, target_instance_name in enumerate(valid_instances.keys()):
-            button_height = 33
-            button_width = 400
-            x = int(render.SCREEN_WIDTH*0.5 - button_width*0.5)
-            y = 120 + (button_height + 10)*i
-            target_instance = Instance(target_instance_name, valid_instances[target_instance_name])
-            if target_instance_name in syl.deck: display_name = f"(Sylladex) {target_instance.display_name()}"
-            else: display_name = target_instance.display_name()
-            button_func = self.get_target_button_func(target_instance_name, action_name, last_scene, syl)
-            choose_button = render.TextButton(x, y, button_width, button_height, display_name, button_func)
-            choose_button.absolute = True
-            choose_button.truncate_text = True
-        if last_scene is suburb.map: 
-            def backbutton_func(): last_scene()
+        util.log(f">{action_name}")
+        reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_name})
+        if reply == "False": 
+            if action.error_message(self.item_name): util.log(action.error_message(self.item_name))
+            return False
         else: 
-            def backbutton_func(): suburb.display_item(self, last_scene, syl.modus)
-        backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", backbutton_func)
+            self.do_use_item_stuff(action_name, target_name)
+            return True
 
     # returns True if go back to last scene, else go back to item display
     def do_use_item_stuff(self, action_name: str, target_name: Optional[str]=None) -> bool:
@@ -162,6 +111,58 @@ class Instance():
                 return True
             case _:
                 return True
+
+    def get_action_button_func(self, action_name: str, last_scene: Callable) -> Callable:
+        if action_name not in item_actions: return lambda *args: None
+        syl = Sylladex.current_sylladex()
+        action: ItemAction = item_actions[action_name]
+        if action.targeted:
+            def output_func():
+                self.choose_target(action_name, last_scene)
+        else:
+            def output_func():
+                reply = self.use_item(action_name, None)
+                if reply:
+                    if last_scene is suburb.map: last_scene()
+                    else: suburb.display_item(self, last_scene, modus=syl.modus)
+        return output_func
+    
+    def get_target_button_func(self, target_instance_name: str, action_name: str, last_scene: Callable) -> Callable:
+        if action_name not in item_actions: return lambda *args: None
+        syl = Sylladex.current_sylladex()
+        def choose_button_func():
+            reply = self.use_item(action_name, target_instance_name)
+            if reply:
+                if last_scene is suburb.map: last_scene()
+                else: suburb.display_item(self, last_scene, modus=syl.modus)
+        return choose_button_func
+
+    def choose_target(self, action_name: str, last_scene: Callable):
+        suburb.scene(lambda *args: None)()
+        render.LogWindow(self.choose_target)
+        valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.instance_name, "action_name": action_name})
+        print(valid_instances)
+        syl = Sylladex.current_sylladex()
+        syl.update_deck()
+        action: ItemAction = item_actions[action_name]
+        if action.prompt: util.log(action.prompt_message(self.display_name()))
+        for i, target_instance_name in enumerate(valid_instances.keys()):
+            button_height = 33
+            button_width = 400
+            x = int(render.SCREEN_WIDTH*0.5 - button_width*0.5)
+            y = 120 + (button_height + 10)*i
+            target_instance = Instance(target_instance_name, valid_instances[target_instance_name])
+            if target_instance_name in syl.deck: display_name = f"(Sylladex) {target_instance.display_name()}"
+            else: display_name = target_instance.display_name()
+            button_func = self.get_target_button_func(target_instance_name, action_name, last_scene)
+            choose_button = render.TextButton(x, y, button_width, button_height, display_name, button_func)
+            choose_button.absolute = True
+            choose_button.truncate_text = True
+        if last_scene is suburb.map: 
+            def backbutton_func(): last_scene()
+        else: 
+            def backbutton_func(): suburb.display_item(self, last_scene, syl.modus)
+        backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", backbutton_func)
 
 
 # the default fetch modus is array
@@ -331,6 +332,9 @@ class Sylladex():
         return True
     
     def eject(self, instance_name: str):
+        instance = self.get_instance(instance_name)
+        if "add_card" in instance.use:
+            if instance.use_item("add_card"): return
         velocity = self.modus.get_eject_velocity()
         client.requestplus("eject", {"instance_name": instance_name, "modus_name": self.modus_name, "velocity": velocity})
         self.update_deck()

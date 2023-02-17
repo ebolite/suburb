@@ -1,3 +1,5 @@
+from typing import Optional
+
 item_actions = {}
 
 class ItemAction():
@@ -5,22 +7,28 @@ class ItemAction():
         self.targeted = False
         self.prompt = ""
         self.error_prompt = ""
+        self.use_prompt = ""
         item_actions[name] = self
     
     def prompt_message(self, item_name):
-        return self.prompt.format(item_name)
+        return self.prompt.format(iname=item_name)
 
-    def error_message(self, item_name):
-        return self.error_prompt.format(item_name)
+    def error_message(self, item_name, target_name: Optional[str]=None):
+        return self.error_prompt.format(iname=item_name, tname=target_name)
+    
+    def use_message(self, item_name, target_name: Optional[str]=None):
+        return self.use_prompt.format(iname=item_name, tname=target_name)
 
 
 add_card = ItemAction("add_card")
 add_card.error_prompt = "You are at the maximum amount of empty cards."
+add_card.use_prompt = "You add the {iname} to your sylladex."
 
 combine_card = ItemAction("combine_card")
 combine_card.targeted = True
-combine_card.prompt = "Combine {} with what (&&)?"
+combine_card.prompt = "Combine {iname} with what (&&)?"
 combine_card.error_prompt = ""
+combine_card.use_prompt = "You combine {iname} with {tname}."
 
 uncombine_card = ItemAction("uncombine_card")
 uncombine_card.error_prompt = "This card is not combined."
