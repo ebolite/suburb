@@ -133,14 +133,20 @@ class SolidColor(UIElement):
         self.w = w
         self.h = h
         self.color: pygame.Color = color
+        self.outline_color: Optional[pygame.Color] = None
+        self.outline_width = 2
         self.absolute = True
         update_check.append(self)
 
     def update(self):
         self.surf = pygame.Surface((self.w, self.h))
         self.surf.fill(self.color)
+        if self.outline_color is not None:
+            self.outline_surf = pygame.Surface((self.w + self.outline_width*2, self.h + self.outline_width*2))
+            self.outline_surf.fill(self.outline_color)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy()
+        if self.outline_color is not None: screen.blit(self.outline_surf, ((self.rect.x-self.outline_width, self.rect.y-self.outline_width)))
         screen.blit(self.surf, ((self.rect.x, self.rect.y)))
 
 class Div(SolidColor):
@@ -170,11 +176,14 @@ class TextButton(UIElement):
         self.hover = hover
         self.truncate_text = truncate_text
         self.truncated = False
-        self.outlinedepth = 2
+        self.outline_width = 2
         self.absolute = False
         self.fontsize = 16
         self.text = text
         self.text_color: pygame.Color = self.theme.black
+        self.outline_color: pygame.Color = self.theme.dark
+        self.fill_color: pygame.Color = self.theme.white
+        self.hover_color: pygame.Color = self.theme.dark
         self.toggle = False
         click_check.append(self)
         update_check.append(self)
@@ -191,19 +200,19 @@ class TextButton(UIElement):
             if self.text[-1] == " ": self.text = self.text[:-1]
             self.text_surf = self.font.render(self.text+"...", True, self.text_color)
         self.outline_surf = pygame.Surface((self.w, self.h))
-        self.outline_surf.fill(self.theme.dark)
-        self.surf = pygame.Surface((self.w-2*self.outlinedepth, self.h-2*self.outlinedepth))
-        self.surf.fill(self.theme.white)
+        self.outline_surf.fill(self.outline_color)
+        self.surf = pygame.Surface((self.w-2*self.outline_width, self.h-2*self.outline_width))
+        self.surf.fill(self.fill_color)
         if self.active:
             self.hoversurf = pygame.Surface((self.w, self.h))
-            self.hoversurf.fill(self.theme.dark)
+            self.hoversurf.fill(self.hover_color)
             self.hoversurf.set_alpha(89)
         else:
             self.hoversurf = None
         self.rect = self.outline_surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.outline_surf)
         screen.blit(self.outline_surf, ((self.rect.x, self.rect.y)))
-        screen.blit(self.surf, ((self.rect.x+self.outlinedepth, self.rect.y+self.outlinedepth)))
+        screen.blit(self.surf, ((self.rect.x+self.outline_width, self.rect.y+self.outline_width)))
         screen.blit(self.text_surf, ((self.rect.x+(self.outline_surf.get_width()/2)-(self.text_surf.get_width()/2), self.rect.y+(self.outline_surf.get_height()/2)-(self.text_surf.get_height()/2))))
         if self.hoversurf != None:
             screen.blit(self.hoversurf, ((self.rect.x, self.rect.y)))
@@ -843,6 +852,32 @@ class FpsCounter(Text):
     def update(self):
         self.text = f"FPS: {round(clock.get_fps(), 2)}"
         super().update()
+
+class TaskBar(UIElement):
+    def __init__(self):
+        super().__init__()
+        self.w = SCREEN_WIDTH
+        self.h = 40
+        self.padding = 3
+        self.background = SolidColor(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.theme.dark)
+        self.task_bar = SolidColor(0, SCREEN_HEIGHT-self.h, SCREEN_WIDTH, self.h, self.theme.dark)
+        self.task_bar.outline_color = self.theme.light
+        self.task_bar.outline_width = self.padding
+        actuate_button_box = SolidColor(0, SCREEN_HEIGHT-self.h, 120 + self.padding*2, self.h, self.theme.dark)
+        actuate_button_box.outline_color = self.theme.light
+        actuate_button_box.outline_width = self.padding
+        actuate_button = TextButton(self.padding, SCREEN_HEIGHT-self.h+self.padding, 120, self.h - self.padding*2, " ACTUATE", suburb.map)
+        actuate_button.absolute = True
+        actuate_button.outline_color = self.theme.black
+        actuate_button.fill_color = self.theme.dark
+        actuate_button.hover_color = self.theme.light
+        actuate_button.text_color = self.theme.white
+        actuate_button.outline_width = 3
+        actuate_button_image = Image(0.15, 0.5, "sprites/computer/little_green_circle.png")
+        actuate_button_image.bind_to(actuate_button)
+        # todo: time on bottom right
+        self.apps = [actuate_button]
+
 
 def render():
     for ui_element in move_to_top.copy():

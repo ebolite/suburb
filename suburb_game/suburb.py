@@ -710,6 +710,10 @@ def title():
     conntext.absolute = True
     debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
 
+@scene
+def computer():
+    render.TaskBar()
+
 if __name__ == "__main__":
     client.connect() # connect to server
     # aspectcharacter() # choose scene to test
@@ -718,7 +722,8 @@ if __name__ == "__main__":
     # choosevial()
     # choosemodus()
     # render.TileMap(0.5, 0.5, map)
-    title() # normal game start
+    computer()
+    # title() # normal game start
     # continue to render until render.render() returns False
     while render.render():
         ...
