@@ -825,7 +825,7 @@ class ItemImage():
         image_path = f"sprites\\items\\{item_name}.png"
         if os.path.isfile(image_path):
             return Image(x, y, image_path)
-        return Text(x, y, item_name)
+        return None
 
 
 def spawn_punches(bound_element: UIElement, code: str, base_x, base_y, flipped=False, w=172, h=240):
