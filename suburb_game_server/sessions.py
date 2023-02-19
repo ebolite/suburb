@@ -471,6 +471,8 @@ class Player():
                 else:
                     self.room.remove_instance(instance.name)
                     return True
+            case "computer":
+                return True
             case "combine_card":
                 if target_instance is None: return False
                 if target_instance.name not in self.sylladex: return False

@@ -72,7 +72,7 @@ class BaseStatistics():
         self.tags: dict = properties["tags"]
         self.description: str = properties["description"]
         self.cost: dict = properties["cost"]
-        self.use: Optional[str] = properties["use"]
+        self.use: list[str] = properties["use"]
         self.onhiteffect: dict = properties["onhiteffect"]
         self.weareffect: dict = properties["weareffect"]
         self.consumeeffect: dict = properties["consumeeffect"]
