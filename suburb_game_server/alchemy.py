@@ -453,6 +453,10 @@ defaults = {
 }
 
 if __name__ == "__main__":
+    name_desc = {}
+    for base in util.bases:
+        name_desc[base] = {"description": util.bases[base]["description"]}
+    util.writejson(name_desc, "base_item_list")
     def loop(base1: Item, base2: Item):
         print(util.items)
         merge_and = Item(alchemize(base1.name, base2.name,"&&"))
