@@ -466,6 +466,7 @@ class Text(UIElement):
         self.color: pygame.Color = self.theme.black
         self.outline_color: Optional[pygame.Color] = None
         self.outline_depth = 1
+        self.highlight_color: Optional[pygame.Color] = None
         self.fontsize: int = 32
         self.scale: float = 1
         self.alpha = 255
@@ -481,6 +482,10 @@ class Text(UIElement):
         self.text_surf = self.font.render(self.text, True, self.color)
         self.rect = self.text_surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.text_surf)
+        if self.highlight_color is not None:
+            self.highlight_surf = pygame.Surface((self.rect.w, self.rect.h))
+            self.highlight_surf.fill(self.highlight_color)
+            screen.blit(self.highlight_surf, (self.rect.x, self.rect.y))
         if self.outline_color != None:
             self.outline_surf = self.font.render(self.text, True, self.outline_color)
             if self.alpha != 255: self.outline_surf.set_alpha(self.alpha)
@@ -859,7 +864,7 @@ class TaskBar(UIElement):
         self.w = SCREEN_WIDTH
         self.h = 40
         self.padding = 3
-        self.background = SolidColor(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.theme.dark)
+        self.background = SolidColor(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.theme.white)
         self.task_bar = SolidColor(0, SCREEN_HEIGHT-self.h, SCREEN_WIDTH, self.h, self.theme.dark)
         self.task_bar.outline_color = self.theme.light
         self.task_bar.outline_width = self.padding
@@ -878,6 +883,15 @@ class TaskBar(UIElement):
         # todo: time on bottom right
         self.apps = [actuate_button]
 
+class AppIcon(Button):
+    def __init__(self, x, y, app_name: str):
+        path = f"sprites/computer/apps/{app_name}.png"
+        super().__init__(x, y, path, path, lambda *args: None)
+        self.convert = False
+        app_label = Text(0.5, 1.2, app_name)
+        app_label.color = self.theme.white
+        app_label.highlight_color = self.theme.dark
+        app_label.bind_to(self)
 
 def render():
     for ui_element in move_to_top.copy():

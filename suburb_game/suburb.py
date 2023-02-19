@@ -713,6 +713,7 @@ def title():
 @scene
 def computer():
     render.TaskBar()
+    render.AppIcon(0.2, 0.2, "gristTorrent")
 
 if __name__ == "__main__":
     client.connect() # connect to server
@@ -722,8 +723,8 @@ if __name__ == "__main__":
     # choosevial()
     # choosemodus()
     # render.TileMap(0.5, 0.5, map)
-    # computer()
-    title() # normal game start
+    computer()
+    # title() # normal game start
     # continue to render until render.render() returns False
     while render.render():
         ...
