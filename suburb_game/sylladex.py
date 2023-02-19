@@ -131,8 +131,7 @@ class Instance():
             def output_func():
                 reply = self.use_item(action_name, None)
                 if reply:
-                    if last_scene is suburb.map: last_scene()
-                    else: suburb.display_item(self, last_scene, modus=syl.modus)
+                    self.goto_use_next_scene(last_scene, action_name, syl.modus)
         return output_func
     
     def get_target_button_func(self, target_instance: "Instance", action_name: str, last_scene: Callable) -> Callable:
@@ -141,11 +140,14 @@ class Instance():
         def choose_button_func():
             reply = self.use_item(action_name, target_instance)
             if reply:
-                if action_name == "computer":
-                    ...
-                if last_scene is suburb.map: last_scene()
-                else: suburb.display_item(self, last_scene, modus=syl.modus)
+                self.goto_use_next_scene(last_scene, action_name, syl.modus)
         return choose_button_func
+    
+    def goto_use_next_scene(self, last_scene: Callable, action_name: str, modus: "Modus"):
+        if action_name == "computer":
+            suburb.computer()
+        elif last_scene is suburb.map: last_scene()
+        else: suburb.display_item(self, last_scene, modus=modus)
 
     def choose_target(self, action_name: str, last_scene: Callable):
         suburb.scene(lambda *args: None)()
