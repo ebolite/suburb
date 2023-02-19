@@ -31,6 +31,9 @@ add_card = ItemAction("add_card")
 add_card.error_prompt = "You are at the maximum amount of empty cards."
 add_card.use_prompt = "You add the {iname} to your sylladex."
 
+computer = ItemAction("computer")
+computer.use_prompt = "You boot up the {iname}."
+
 combine_card = ItemAction("combine_card")
 combine_card.targeted = True
 combine_card.prompt = "Combine {iname} with what (&&)?"

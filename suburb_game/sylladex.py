@@ -141,6 +141,8 @@ class Instance():
         def choose_button_func():
             reply = self.use_item(action_name, target_instance)
             if reply:
+                if action_name == "computer":
+                    ...
                 if last_scene is suburb.map: last_scene()
                 else: suburb.display_item(self, last_scene, modus=syl.modus)
         return choose_button_func
