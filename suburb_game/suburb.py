@@ -722,8 +722,8 @@ if __name__ == "__main__":
     # choosevial()
     # choosemodus()
     # render.TileMap(0.5, 0.5, map)
-    computer()
-    # title() # normal game start
+    # computer()
+    title() # normal game start
     # continue to render until render.render() returns False
     while render.render():
         ...
