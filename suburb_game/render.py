@@ -3,6 +3,7 @@ import sys
 import os
 import pathlib
 import hashlib
+import time
 import numpy as np
 from typing import Optional, Union, Callable
 
@@ -248,17 +249,20 @@ class Button(UIElement):
         self.x = x
         self.y = y
         self.onpress = onpress
+        self.alt_img_path = alt_img_path
+        self.altclick = altclick
+        self.hover = hover
         self.active = False
         self.alpha = 255
         self.alt = alt
-        self.alt_img_path = alt_img_path
-        self.altclick = altclick
         self.alt_alpha = 255
         self.absolute = False
         self.convert = True
-        self.hover = hover
         self.theme = theme
         self.scale: float = 1.0
+        self.double_click = False
+        self.last_clicked = 0
+        self.invert_on_click = False
         click_check.append(self)
         update_check.append(self)
         mouseup_check.append(self)
@@ -270,6 +274,11 @@ class Button(UIElement):
         else:
             if self.active:
                 self.surf = pygame.image.load(self.pressed_img_path)
+                if self.invert_on_click:
+                    inverted = pygame.Surface(self.surf.get_rect().size, pygame.SRCALPHA)
+                    inverted.fill((255, 255, 255, 255))
+                    inverted.blit(self.surf, (0, 0), None, pygame.BLEND_RGB_SUB)
+                    self.surf = inverted
             else:
                 if self.hover != None and self.collidepoint(pygame.mouse.get_pos()):
                     self.surf = pygame.image.load(self.hover)
@@ -297,6 +306,9 @@ class Button(UIElement):
     def mouseup(self, isclicked):
         self.active = False
         if isclicked:
+            if self.double_click and time.time() - self.last_clicked > 0.5: # 500 ms allowance
+                self.last_clicked = time.time()
+                return
             print("clicked")
             if self.alt != None and self.alt():
                 if self.altclick != None:
@@ -888,6 +900,8 @@ class AppIcon(Button):
         path = f"sprites/computer/apps/{app_name}.png"
         super().__init__(x, y, path, path, lambda *args: None)
         self.convert = False
+        self.invert_on_click = True
+        self.double_click = True
         app_label = Text(0.5, 1.2, app_name)
         app_label.color = self.theme.white
         app_label.highlight_color = self.theme.dark
