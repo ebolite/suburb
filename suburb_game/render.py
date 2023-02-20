@@ -894,12 +894,18 @@ class TaskBar(UIElement):
         actuate_button_image.bind_to(actuate_button)
         # todo: time on bottom right
         self.apps = [actuate_button]
+        self.open_windows = []
 
 class AppIcon(Button):
     def __init__(self, x, y, app_name: str, task_bar: TaskBar):
+        self.x = x
+        self.y = y
+        self.app_name = app_name
+        self.task_bar = task_bar
         self.path = f"sprites/computer/apps/{app_name}.png"
         self.window: Optional[Window] = None
         def open_window():
+            if len(self.task_bar.open_windows) > 0: return
             if self.window is None:
                 self.window = Window(app_name, task_bar, self)
         super().__init__(x, y, self.path, self.path, open_window)
@@ -916,6 +922,7 @@ class Window(SolidColor):
         self.app_name = app_name
         self.task_bar = task_bar
         self.app_icon = app_icon
+        if self not in self.task_bar.open_windows: self.task_bar.open_windows.append(self)
         self.padding = 3
         self.head_height = 40
         self.height = SCREEN_HEIGHT-task_bar.h
@@ -946,6 +953,7 @@ class Window(SolidColor):
         self.icon.delete()
         self.label.delete()
         self.xbutton.delete()
+        if self in self.task_bar.open_windows: self.task_bar.open_windows.remove(self)
         super().delete()
 
 def render():
