@@ -897,12 +897,12 @@ class TaskBar(UIElement):
 
 class AppIcon(Button):
     def __init__(self, x, y, app_name: str, task_bar: TaskBar):
-        path = f"sprites/computer/apps/{app_name}.png"
+        self.path = f"sprites/computer/apps/{app_name}.png"
         self.window: Optional[Window] = None
         def open_window():
             if self.window is None:
-                self.window = Window(app_name, task_bar)
-        super().__init__(x, y, path, path, open_window)
+                self.window = Window(app_name, task_bar, self)
+        super().__init__(x, y, self.path, self.path, open_window)
         self.convert = False
         self.invert_on_click = True
         self.double_click = True
@@ -912,13 +912,41 @@ class AppIcon(Button):
         app_label.bind_to(self)
 
 class Window(SolidColor):
-    def __init__(self, app_name: str, task_bar: TaskBar):
+    def __init__(self, app_name: str, task_bar: TaskBar, app_icon: AppIcon):
+        self.app_name = app_name
+        self.task_bar = task_bar
+        self.app_icon = app_icon
         self.padding = 3
-        self.head_height = 30
+        self.head_height = 40
         self.height = SCREEN_HEIGHT-task_bar.h
         self.width = SCREEN_WIDTH
-        super().__init__(0, 0, self.width, self.height, suburb.current_theme().light)
+        self.x = 0
+        self.y = 0
+        super().__init__(self.x, self.y, self.width, self.height, suburb.current_theme().light)
         self.viewport = SolidColor(self.padding, self.head_height, self.width - self.padding*2, self.height - (self.padding+self.head_height), self.theme.white)
+        self.icon_path = f"sprites/computer/apps/{app_name}.png"
+        self.icon = Image(self.x+self.padding, self.y+self.padding, self.icon_path, convert=False)
+        self.icon.absolute = True
+        self.icon.scale = 0.25
+        self.label = Text(self.x + 32 + self.padding*2, self.y+self.padding, app_name)
+        self.label.absolute = True
+        self.label.color = self.theme.white
+        self.label.outline_color = self.theme.black
+        self.label.fontsize = 28
+        self.xbutton = TextButton(self.width-self.head_height-self.padding, self.padding, self.head_height - self.padding*2, self.head_height - self.padding*2, "x", self.delete)
+        self.xbutton.absolute = True
+        self.xbutton.outline_color = self.theme.light
+        self.xbutton.fill_color = self.theme.light
+        self.xbutton.text_color = self.theme.white
+        self.xbutton.fontsize = 24
+
+    def delete(self):
+        self.app_icon.window = None
+        self.viewport.delete()
+        self.icon.delete()
+        self.label.delete()
+        self.xbutton.delete()
+        super().delete()
 
 def render():
     for ui_element in move_to_top.copy():
