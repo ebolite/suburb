@@ -23,6 +23,7 @@ class Instance():
         self.inserted: dict = instance_dict["inserted"]
         self.carved: str = instance_dict["carved"]
         self.carved_item_name: str = instance_dict["carved_item_name"]
+        self.computer_data = instance_dict["computer_data"]
         self.forbiddencode = self.item_dict["forbiddencode"]
         self.power = self.item_dict["power"]
         self.size = self.item_dict["size"]
@@ -145,7 +146,7 @@ class Instance():
     
     def goto_use_next_scene(self, last_scene: Callable, action_name: str, modus: "Modus"):
         if action_name == "computer":
-            suburb.computer()
+            suburb.computer(self)
         elif last_scene is suburb.map: last_scene()
         else: suburb.display_item(self, last_scene, modus=modus)
 

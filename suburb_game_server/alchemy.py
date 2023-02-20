@@ -222,8 +222,9 @@ class InheritedStatistics():
         # use effect
         if self.base == self.component_1.base: self.use = self.component_1.use
         elif self.base == self.component_2.base: self.use = self.component_2.use
+        # if compound base
         else:
-            self.use = self.component_1.use or self.component_2.use
+            self.use = self.component_1.use + self.component_2.use
 
     def dictionary_inherit(self, component_1_dict: dict, component_2_dict: dict) -> dict: # returns new dict
         new_dict = {}
@@ -366,6 +367,7 @@ class Instance():
             self.combined
             self.carved
             self.carved_item_name
+            self.computer_data
         except KeyError:
             self.punched_code: str = ""
             self.punched_item_name: str = ""
@@ -374,6 +376,7 @@ class Instance():
             self.combined: list[str] = []
             self.carved: str = "00000000"
             self.carved_item_name: str = "perfectly+generic object"
+            self.computer_data: dict = {"installed_programs": []}
 
     @property
     def name(self):
@@ -444,7 +447,7 @@ defaults = {
     #"nickname": "Broken", # the default given nickname of an item. should be set to something on generation
     "description": "None", # the description of the item (only for bases and items with set descriptions)
     "cost": {"build": 1}, # cost of item. key: grist type, value: % of power
-    "use": None, # what this item does on use. can only have one thing.
+    "use": [], # what this item does on use.
     "onhiteffect": {}, # the effect of the item as applied to the enemy key: effect value: power ratio e.g. {"healing": [.01]}
     "weareffect": {}, # the effect of the item when worn in a slot or wielded
     "consumeeffect": {}, # a list of effects that this item will have when consumed. todo: valid effects page

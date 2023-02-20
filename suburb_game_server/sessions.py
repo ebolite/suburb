@@ -458,6 +458,7 @@ class Player():
     # return True on success, return False on failure
     def use(self, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:
         if instance.name not in self.sylladex and instance.name not in self.room.instances: return False
+        if target_instance is not None and target_instance.name not in self.room.instances and target_instance.name not in self.sylladex: print("not in room"); return False
         if action_name not in instance.item.use: return False
         match action_name:
             case "add_card":
@@ -472,6 +473,16 @@ class Player():
                     self.room.remove_instance(instance.name)
                     return True
             case "computer":
+                return True
+            case "install_sburb":
+                if target_instance is None: return False
+                if "computer" not in target_instance.item.use: return False
+                if "Sburb" not in target_instance.computer_data["installed_programs"]: target_instance.computer_data["installed_programs"].append("Sburb")
+                return True
+            case "install_gristtorrent":
+                if target_instance is None: return False
+                if "computer" not in target_instance.item.use: return False
+                if "gristTorrent" not in target_instance.computer_data["installed_programs"]: target_instance.computer_data["installed_programs"].append("gristTorrent")
                 return True
             case "combine_card":
                 if target_instance is None: return False
@@ -615,6 +626,14 @@ class Player():
     def valid_use_targets(self, instance: alchemy.Instance, action_name) -> list[str]:
         valid_target_names = []
         match action_name:
+            case "install_sburb":
+                def filter_func(name):
+                    if "computer" not in alchemy.Instance(name).item.use: return False
+                    return True
+            case "install_gristtorrent":
+                def filter_func(name):
+                    if "computer" not in alchemy.Instance(name).item.use: return False
+                    return True
             case "insert_card":
                 def filter_func(name):
                     if name not in self.sylladex: return False

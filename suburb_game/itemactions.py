@@ -34,6 +34,16 @@ add_card.use_prompt = "You add the {iname} to your sylladex."
 computer = ItemAction("computer")
 computer.use_prompt = "You boot up the {iname}."
 
+install_sburb = ItemAction("install_sburb")
+install_sburb.targeted = True
+install_sburb.prompt = "What should you install Sburb on?"
+install_sburb.use_prompt = "You install Sburb onto the {tname}."
+
+install_gristtorrent = ItemAction("install_gristtorrent")
+install_gristtorrent.targeted = True
+install_gristtorrent.prompt = "What should you install gristTorrent on?"
+install_gristtorrent.use_prompt = "You install gristTorrent onto the {tname}"
+
 combine_card = ItemAction("combine_card")
 combine_card.targeted = True
 combine_card.prompt = "Combine {iname} with what (&&)?"

@@ -711,7 +711,8 @@ def title():
     debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
 
 @scene
-def computer():
+def computer(instance: Instance):
+    print(instance.computer_data)
     render.TaskBar()
     render.AppIcon(0.2, 0.2, "gristTorrent")
 
