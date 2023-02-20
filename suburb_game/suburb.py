@@ -726,6 +726,7 @@ def computer(instance: Instance):
 
 def gristtorrent(window: "render.Window"):
     text = render.Text(0.5, 0.5, "hi")
+    text.bind_to(window.viewport)
 
 if __name__ == "__main__":
     client.connect() # connect to server

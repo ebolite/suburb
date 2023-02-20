@@ -932,7 +932,7 @@ class Window(SolidColor):
         self.x = 0
         self.y = 0
         super().__init__(self.x, self.y, self.width, self.height, suburb.current_theme().light)
-        self.viewport = pygame.Surface((self.width - self.padding*2, self.height - (self.padding+self.head_height)))
+        self.viewport = SolidColor(self.padding, self.head_height, self.width - self.padding*2, self.height - (self.padding+self.head_height), self.theme.white)
         self.icon_path = f"sprites/computer/apps/{app_name}.png"
         self.icon = Image(self.x+self.padding, self.y+self.padding, self.icon_path, convert=False)
         self.icon.absolute = True
@@ -952,6 +952,9 @@ class Window(SolidColor):
 
     def delete(self):
         self.app_icon.window = None
+        for element in self.viewport.bound_elements.copy():
+            element.delete()
+        self.viewport.delete()
         self.icon.delete()
         self.label.delete()
         self.xbutton.delete()
