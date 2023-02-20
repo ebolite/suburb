@@ -70,6 +70,7 @@ class UIElement(pygame.sprite.Sprite):
         self.y = 0
         self.theme: themes.Theme = suburb.current_theme()
         self.bound_elements = []
+        self.blit_surf = screen
         ui_elements.append(self)
 
     def mouseover(self): # returns True if mouse is over this element
@@ -138,6 +139,7 @@ class SolidColor(UIElement):
         self.outline_width = 2
         self.absolute = True
         update_check.append(self)
+        self.update()
 
     def update(self):
         self.surf = pygame.Surface((self.w, self.h))
@@ -147,8 +149,8 @@ class SolidColor(UIElement):
             self.outline_surf.fill(self.outline_color)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy()
-        if self.outline_color is not None: screen.blit(self.outline_surf, ((self.rect.x-self.outline_width, self.rect.y-self.outline_width)))
-        screen.blit(self.surf, ((self.rect.x, self.rect.y)))
+        if self.outline_color is not None: self.blit_surf.blit(self.outline_surf, ((self.rect.x-self.outline_width, self.rect.y-self.outline_width)))
+        self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
 class Div(SolidColor):
     def __init__(self, x, y, w, h):
@@ -212,11 +214,11 @@ class TextButton(UIElement):
             self.hoversurf = None
         self.rect = self.outline_surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.outline_surf)
-        screen.blit(self.outline_surf, ((self.rect.x, self.rect.y)))
-        screen.blit(self.surf, ((self.rect.x+self.outline_width, self.rect.y+self.outline_width)))
-        screen.blit(self.text_surf, ((self.rect.x+(self.outline_surf.get_width()/2)-(self.text_surf.get_width()/2), self.rect.y+(self.outline_surf.get_height()/2)-(self.text_surf.get_height()/2))))
+        self.blit_surf.blit(self.outline_surf, ((self.rect.x, self.rect.y)))
+        self.blit_surf.blit(self.surf, ((self.rect.x+self.outline_width, self.rect.y+self.outline_width)))
+        self.blit_surf.blit(self.text_surf, ((self.rect.x+(self.outline_surf.get_width()/2)-(self.text_surf.get_width()/2), self.rect.y+(self.outline_surf.get_height()/2)-(self.text_surf.get_height()/2))))
         if self.hoversurf != None:
-            screen.blit(self.hoversurf, ((self.rect.x, self.rect.y)))
+            self.blit_surf.blit(self.hoversurf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
         if self not in click_check: return
@@ -296,7 +298,7 @@ class Button(UIElement):
             self.scaled = True
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
-        screen.blit(self.surf, ((self.rect.x, self.rect.y)))
+        self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
         if self not in click_check: return
@@ -365,13 +367,13 @@ class InputTextBox(UIElement):
         self.rect.x, self.rect.y = self.get_rect_xy(rect_surf)
 
         if self.outline_color is not None:
-            screen.blit(self.outline_surf, (self.rect.x, self.rect.y))
+            self.blit_surf.blit(self.outline_surf, (self.rect.x, self.rect.y))
 
         surfx, surfy = self.get_rect_xy(self.surf)
-        screen.blit(self.surf, (surfx, surfy))
+        self.blit_surf.blit(self.surf, (surfx, surfy))
 
         textx, texty = self.get_rect_xy(self.text_surf)
-        screen.blit(self.text_surf, (textx, texty))
+        self.blit_surf.blit(self.text_surf, (textx, texty))
 
         if self.active and keys[pygame.K_BACKSPACE]:
             if self.waitframes > 15:
@@ -454,7 +456,7 @@ class Image(UIElement):
         if self.highlight_color != None:
             self.highlight_surf = pygame.Surface((self.surf.get_width(), self.surf.get_height()))
             self.highlight_surf.fill(self.highlight_color)
-            screen.blit(self.highlight_surf, (self.rect.x, self.rect.y))
+            self.blit_surf.blit(self.highlight_surf, (self.rect.x, self.rect.y))
         if self.hover_to_top and self.is_mouseover():
             for ui_element in update_check:
                 if not ui_element.is_mouseover(): continue
@@ -466,7 +468,7 @@ class Image(UIElement):
                 # move our bound elements to the top
                 for ui_element in self.bound_elements:
                     move_to_top.append(ui_element)
-        screen.blit(self.surf, (self.rect.x, self.rect.y))
+        self.blit_surf.blit(self.surf, (self.rect.x, self.rect.y))
 
 class Text(UIElement):
     def __init__(self, x, y, text: str):
@@ -497,20 +499,20 @@ class Text(UIElement):
         if self.highlight_color is not None:
             self.highlight_surf = pygame.Surface((self.rect.w, self.rect.h))
             self.highlight_surf.fill(self.highlight_color)
-            screen.blit(self.highlight_surf, (self.rect.x, self.rect.y))
+            self.blit_surf.blit(self.highlight_surf, (self.rect.x, self.rect.y))
         if self.outline_color != None:
             self.outline_surf = self.font.render(self.text, True, self.outline_color)
             if self.alpha != 255: self.outline_surf.set_alpha(self.alpha)
-            # screen.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y + self.outline_depth)) # +y +x
-            # screen.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y + self.outline_depth)) # +y -x
-            # screen.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y - self.outline_depth)) # -y -x
-            # screen.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y - self.outline_depth)) # -y +x
-            screen.blit(self.outline_surf, (self.rect.x, self.rect.y + self.outline_depth))
-            screen.blit(self.outline_surf, (self.rect.x, self.rect.y - self.outline_depth))
-            screen.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y))
-            screen.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y))
+            # self.blit_surf.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y + self.outline_depth)) # +y +x
+            # self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y + self.outline_depth)) # +y -x
+            # self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y - self.outline_depth)) # -y -x
+            # self.blit_surf.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y - self.outline_depth)) # -y +x
+            self.blit_surf.blit(self.outline_surf, (self.rect.x, self.rect.y + self.outline_depth))
+            self.blit_surf.blit(self.outline_surf, (self.rect.x, self.rect.y - self.outline_depth))
+            self.blit_surf.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y))
+            self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y))
         if self.alpha != 255: self.text_surf.set_alpha(self.alpha)
-        screen.blit(self.text_surf, (self.rect.x, self.rect.y))
+        self.blit_surf.blit(self.text_surf, (self.rect.x, self.rect.y))
 
     @property
     def font(self):
@@ -664,7 +666,7 @@ class Tile(UIElement):
                 else: icon_image_filename = config.icons["no_icon"]
                 icon_image = pygame.image.load(icon_image_filename)
                 self.surf.blit(icon_image, (0, 0), (0, 0, tile_wh, tile_wh))
-        screen.blit(self.surf, ((self.rect.x, self.rect.y)))
+        self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
     @property
     def allowedtiles(self):
@@ -930,7 +932,7 @@ class Window(SolidColor):
         self.x = 0
         self.y = 0
         super().__init__(self.x, self.y, self.width, self.height, suburb.current_theme().light)
-        self.viewport = SolidColor(self.padding, self.head_height, self.width - self.padding*2, self.height - (self.padding+self.head_height), self.theme.white)
+        self.viewport = pygame.Surface((self.width - self.padding*2, self.height - (self.padding+self.head_height)))
         self.icon_path = f"sprites/computer/apps/{app_name}.png"
         self.icon = Image(self.x+self.padding, self.y+self.padding, self.icon_path, convert=False)
         self.icon.absolute = True
@@ -946,10 +948,10 @@ class Window(SolidColor):
         self.xbutton.fill_color = self.theme.light
         self.xbutton.text_color = self.theme.white
         self.xbutton.fontsize = 24
+        suburb.gristtorrent(self)
 
     def delete(self):
         self.app_icon.window = None
-        self.viewport.delete()
         self.icon.delete()
         self.label.delete()
         self.xbutton.delete()

@@ -724,6 +724,9 @@ def computer(instance: Instance):
         app_icon = render.AppIcon(random.random(), random.random(), app_name, task_bar)
         apps.append(app_icon)
 
+def gristtorrent(window: "render.Window"):
+    text = render.Text(0.5, 0.5, "hi")
+
 if __name__ == "__main__":
     client.connect() # connect to server
     # aspectcharacter() # choose scene to test
