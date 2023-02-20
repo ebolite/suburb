@@ -8,6 +8,7 @@ from captcha.image import ImageCaptcha
 import cv2
 import os
 import numpy as np
+import random
 from typing import Callable, Optional
 
 import util
@@ -714,7 +715,14 @@ def title():
 def computer(instance: Instance):
     print(instance.computer_data)
     render.TaskBar()
-    render.AppIcon(0.2, 0.2, "gristTorrent")
+    apps = []
+    for app_name in instance.computer_data["installed_programs"]:
+        random.seed(instance.instance_name+app_name)
+        x = random.random() * 0.9
+        random.seed(instance.instance_name+app_name)
+        y = random.random() * 0.9
+        app_icon = render.AppIcon(random.random(), random.random(), app_name)
+        apps.append(app_icon)
 
 if __name__ == "__main__":
     client.connect() # connect to server
