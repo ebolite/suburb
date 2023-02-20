@@ -889,16 +889,20 @@ class TaskBar(UIElement):
         actuate_button.fill_color = self.theme.dark
         actuate_button.hover_color = self.theme.light
         actuate_button.text_color = self.theme.white
-        actuate_button.outline_width = 3
+        actuate_button.outline_width = self.padding
         actuate_button_image = Image(0.15, 0.5, "sprites/computer/little_green_circle.png")
         actuate_button_image.bind_to(actuate_button)
         # todo: time on bottom right
         self.apps = [actuate_button]
 
 class AppIcon(Button):
-    def __init__(self, x, y, app_name: str):
+    def __init__(self, x, y, app_name: str, task_bar: TaskBar):
         path = f"sprites/computer/apps/{app_name}.png"
-        super().__init__(x, y, path, path, lambda *args: None)
+        self.window: Optional[Window] = None
+        def open_window():
+            if self.window is None:
+                self.window = Window(app_name, task_bar)
+        super().__init__(x, y, path, path, open_window)
         self.convert = False
         self.invert_on_click = True
         self.double_click = True
@@ -906,6 +910,15 @@ class AppIcon(Button):
         app_label.color = self.theme.white
         app_label.highlight_color = self.theme.dark
         app_label.bind_to(self)
+
+class Window(SolidColor):
+    def __init__(self, app_name: str, task_bar: TaskBar):
+        self.padding = 3
+        self.head_height = 30
+        self.height = SCREEN_HEIGHT-task_bar.h
+        self.width = SCREEN_WIDTH
+        super().__init__(0, 0, self.width, self.height, suburb.current_theme().light)
+        self.viewport = SolidColor(self.padding, self.head_height, self.width - self.padding*2, self.height - (self.padding+self.head_height), self.theme.white)
 
 def render():
     for ui_element in move_to_top.copy():
