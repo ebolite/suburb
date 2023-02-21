@@ -819,10 +819,11 @@ def gristtorrent(window: "render.Window"):
     gutter_bar_background.bind_to(gutter_box)
     #starting x
     gutter_bar_padding = 2
+    total_bar_width = (gutter_box_width-padding*2 - gutter_bar_padding*2)
     gutter_bar_x = gutter_bar_padding
     gutter_bar_y = gutter_bar_padding
     for grist_name, amount in grist_gutter:
-        bar_width = int((gutter_box_width-padding*2 - gutter_bar_padding*2) * (amount/total_gutter_grist))
+        bar_width = int(total_bar_width * (amount/total_gutter_grist))
         if bar_width == 0: continue
         gutter_bar_color = config.gristcolors[grist_name]
         gutter_bar = render.SolidColor(gutter_bar_x, gutter_bar_y, bar_width, gutter_bar_background_height - gutter_bar_padding*2, gutter_bar_color)
