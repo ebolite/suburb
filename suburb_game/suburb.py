@@ -760,6 +760,7 @@ def gristtorrent(window: "render.Window"):
             box = render.SolidColor(grist_box_x, grist_box_y, grist_box_w, grist_box_h, current_theme().light)
             box.outline_color = current_theme().dark
             box.outline_width = grist_box_outline_width
+            box.border_radius = 2
             box.bind_to(viewport)
     print(columns)
 

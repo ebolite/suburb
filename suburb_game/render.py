@@ -139,6 +139,7 @@ class SolidColor(UIElement):
         self.color: pygame.Color = color
         self.outline_color: Optional[pygame.Color] = None
         self.outline_width = 2
+        self.border_radius: int = 0
         self.absolute = True
         update_check.append(self)
         self.update()
@@ -151,8 +152,11 @@ class SolidColor(UIElement):
             self.outline_surf.fill(self.outline_color)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy()
-        if self.outline_color is not None: self.blit_surf.blit(self.outline_surf, ((self.rect.x-self.outline_width, self.rect.y-self.outline_width)))
-        self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
+        if self.outline_color is not None: 
+            self.outline_rect = self.outline_surf.get_rect()
+            self.outline_rect.x, self.outline_rect.y = self.rect.x-self.outline_width, self.rect.y-self.outline_width
+            pygame.draw.rect(self.blit_surf, self.outline_color, self.outline_rect, border_radius = self.border_radius+self.outline_width)
+        pygame.draw.rect(self.blit_surf, self.color, self.rect, border_radius = self.border_radius)
 
 class Div(SolidColor):
     def __init__(self, x, y, w, h):
