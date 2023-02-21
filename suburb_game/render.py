@@ -69,7 +69,7 @@ class UIElement(pygame.sprite.Sprite):
         self.x = 0
         self.y = 0
         self.theme: themes.Theme = suburb.current_theme()
-        self.bound_elements = []
+        self.bound_elements: list[UIElement] = []
         self.blit_surf = screen
         ui_elements.append(self)
 
@@ -88,6 +88,8 @@ class UIElement(pygame.sprite.Sprite):
         element.bound_elements.append(self)
 
     def delete(self):
+        for element in self.bound_elements.copy():
+            element.delete()
         if self in ui_elements:
             ui_elements.remove(self)
         for list in checks:
@@ -952,8 +954,6 @@ class Window(SolidColor):
 
     def delete(self):
         self.app_icon.window = None
-        for element in self.viewport.bound_elements.copy():
-            element.delete()
         self.viewport.delete()
         self.icon.delete()
         self.label.delete()

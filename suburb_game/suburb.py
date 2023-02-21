@@ -725,8 +725,43 @@ def computer(instance: Instance):
         apps.append(app_icon)
 
 def gristtorrent(window: "render.Window"):
-    text = render.Text(0.5, 0.5, "hi")
-    text.bind_to(window.viewport)
+    viewport = window.viewport
+    padding = 7
+    player_dict = client.requestdic("player_info")
+    grist_cache = player_dict["grist_cache"]
+    banner_head = render.Image(0, 0, "sprites/computer/gristTorrent/banner.png")
+    banner_head.absolute = True
+    banner_head.bind_to(viewport)
+    icon = render.Image(0.31, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
+    icon.bind_to(banner_head)
+    banner_text = render.Text(0.58, 0.5, "gristTorrent")
+    banner_text.color = current_theme().dark
+    banner_text.outline_color = current_theme().white
+    banner_text.fontsize = 72
+    banner_text.bind_to(banner_head)
+    grist_display_w = viewport.w
+    grist_display_h = 450
+    num_rows = 12
+    num_columns = 6
+    columns = [[] for i in range(num_columns)]
+    print(len(config.grists))
+    for grist_name in config.grists:
+        for column in columns:
+            if len(column) != num_rows:
+                column.append(grist_name)
+    grist_box_outline_width = 1
+    grist_box_w = grist_display_w//num_columns - padding - grist_box_outline_width
+    grist_box_h = grist_display_h//num_rows - padding - grist_box_outline_width
+    print(grist_display_w)
+    for column_index, column in enumerate(columns):
+        grist_box_x = padding + (grist_box_w+padding)*column_index 
+        for row_index, grist_name in enumerate(column):
+            grist_box_y = 180 + padding + (grist_box_h+padding)*row_index
+            box = render.SolidColor(grist_box_x, grist_box_y, grist_box_w, grist_box_h, current_theme().light)
+            box.outline_color = current_theme().dark
+            box.outline_width = grist_box_outline_width
+            box.bind_to(viewport)
+    print(columns)
 
 if __name__ == "__main__":
     client.connect() # connect to server
