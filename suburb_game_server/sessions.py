@@ -389,9 +389,9 @@ class Player():
             self.sylladex: list[str] = []
             self.moduses: list[str] = []
             self.empty_cards = 5
-            self.echeladder_rung = 0
+            self.echeladder_rung = 1
             self.grist_cache = {grist_name:0 for grist_name in config.grists}
-            self.grist_gutter = {grist_name:0 for grist_name in config.grists}
+            self.grist_gutter: list[list] = []
             self.setup = False
             self.nickname = ""
             self.noun = ""
@@ -455,6 +455,16 @@ class Player():
         else:
             return False
     
+    def add_grist(self, grist_name: str, amount: int):
+        current_grist = self.grist_cache[grist_name]
+        if current_grist + amount <= self.grist_cache_limit:
+            self.grist_cache[grist_name] = current_grist + amount
+            return
+        else:
+            self.grist_cache[grist_name] = self.grist_cache_limit
+            overflow = self.grist_cache[grist_name] - current_grist
+            self.grist_gutter.append([grist_name, overflow])
+
     def sylladex_instances(self) -> dict:
         out_dict = {}
         for instance_name in self.sylladex:
@@ -545,6 +555,11 @@ class Player():
         self.map_name = room.map.name
         self.room_name = room.name
         room.add_player(self)
+
+    @property
+    def grist_cache_limit(self):
+        mult = 1 + self.echeladder_rung//100
+        return 10*self.echeladder_rung*mult
 
     @property
     def coords(self):
