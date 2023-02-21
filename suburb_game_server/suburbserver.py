@@ -4,6 +4,7 @@ from _thread import start_new_thread
 import json
 import hashlib
 import time
+import random
 from typing import Optional
 
 import sessions
@@ -167,6 +168,17 @@ def console_commands(player: sessions.Player, content: str):
             item = alchemy.Item("captchalogue card")
             instance = alchemy.Instance(item)
             player.room.add_instance(instance.name)
+        case "gristify":
+            grist_name = args[0]
+            amount = int(args[1])
+            player.add_grist(grist_name, amount)
+        case "gushoverload":
+            try:
+                args_amount = int(args[0])
+            except IndexError: args_amount = 0
+            for grist_name in player.grist_cache:
+                amount = args_amount or random.randint(0, 1000)
+                player.add_grist(grist_name, amount)
 
 # return True on success, return False on failure
 def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:

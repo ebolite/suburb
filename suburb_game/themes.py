@@ -12,6 +12,11 @@ class Theme():
 
 default = Theme("default")
 
+gristtorrent = Theme("gristtorrent")
+gristtorrent.light = Color(0, 175, 255)
+gristtorrent.dark = Color(226, 226, 226)
+gristtorrent.black = Color(120, 120, 120)
+
 strife = Theme("strife")
 strife.light = Color(0, 227, 113)
 strife.dark = Color(0, 140, 69)

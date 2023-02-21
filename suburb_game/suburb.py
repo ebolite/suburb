@@ -725,6 +725,7 @@ def computer(instance: Instance):
         apps.append(app_icon)
 
 def gristtorrent(window: "render.Window"):
+    theme = themes.gristtorrent
     viewport = window.viewport
     padding = 7
     player_dict = client.requestdic("player_info")
@@ -736,8 +737,9 @@ def gristtorrent(window: "render.Window"):
     icon = render.Image(0.31, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
     icon.bind_to(banner_head)
     banner_text = render.Text(0.58, 0.5, "gristTorrent")
-    banner_text.color = current_theme().dark
-    banner_text.outline_color = current_theme().white
+    banner_text.color = theme.light
+    banner_text.outline_color = theme.dark
+    banner_text.outline_depth = 2
     banner_text.fontsize = 72
     banner_text.bind_to(banner_head)
     grist_display_w = viewport.w
@@ -760,10 +762,8 @@ def gristtorrent(window: "render.Window"):
     for column_index, column in enumerate(columns):
         grist_box_x = padding + (grist_box_w+padding)*column_index 
         for row_index, grist_name in enumerate(column):
-            grist_box_y = 180 + padding + (grist_box_h+padding)*row_index
-            box = render.SolidColor(grist_box_x, grist_box_y, grist_box_w, grist_box_h, current_theme().light)
-            box.outline_color = current_theme().dark
-            box.outline_width = grist_box_outline_width
+            grist_box_y = 150 + padding + (grist_box_h+padding)*row_index
+            box = render.SolidColor(grist_box_x, grist_box_y, grist_box_w, grist_box_h, theme.dark)
             box.border_radius = 2
             box.bind_to(viewport)
             grist_image_path = f"sprites/grists/{grist_name}.png"
@@ -781,6 +781,15 @@ def gristtorrent(window: "render.Window"):
                     grist_image = render.Image(x, y, grist_image_path)
                 grist_image.scale = grist_image_scale
                 grist_image.bind_to(box)
+            bar_background = render.SolidColor(0.2, 0.25, grist_box_w//1.3, grist_box_h//4, theme.dark)
+            bar_background.border_radius = 2
+            bar_background.outline_color = theme.black
+            bar_background.absolute = False
+            bar_background.bind_to(box)
+            bar_label = render.Text(0.5, 2.5, str(grist_cache[grist_name]))
+            bar_label.color = theme.light
+            bar_label.fontsize = 12
+            bar_label.bind_to(bar_background)
     print(columns)
 
 if __name__ == "__main__":
