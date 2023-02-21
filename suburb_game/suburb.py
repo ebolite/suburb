@@ -731,6 +731,8 @@ def gristtorrent(window: "render.Window"):
     player_dict = client.requestdic("player_info")
     grist_cache = player_dict["grist_cache"]
     grist_cache_limit = player_dict["grist_cache_limit"]
+    grist_gutter = player_dict["grist_gutter"]
+    total_gutter_grist = player_dict["total_gutter_grist"]
     banner_head = render.Image(0, 0, "sprites/computer/gristTorrent/banner.png")
     banner_head.absolute = True
     banner_head.bind_to(viewport)
@@ -793,7 +795,28 @@ def gristtorrent(window: "render.Window"):
             bar_label.color = theme.light
             bar_label.fontsize = 12
             bar_label.bind_to(bar_background)
-    print(columns)
+    gutter_box_width = viewport.w//2
+    gutter_box_height = 40
+    gutter_box = render.SolidColor(viewport.w-gutter_box_width-padding, viewport.h-gutter_box_height-padding, gutter_box_width, gutter_box_height, theme.white)
+    gutter_box.outline_color = theme.black
+    gutter_box.bind_to(viewport)
+    box_label = render.Text(0.5, 0.25, "grist gutter")
+    box_label.color = theme.light
+    box_label.fontsize = 18
+    box_label.bind_to(gutter_box)
+    small_icon = render.Image(-0.03, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
+    small_icon.scale = 0.33
+    small_icon.bind_to(gutter_box)
+    gutter_label = render.Text(0.5, 0.9, str(total_gutter_grist))
+    gutter_label.color = theme.light
+    gutter_label.fontsize = 12
+    gutter_label.bind_to(gutter_box)
+    gutter_bar_background = render.SolidColor(padding, gutter_box_height*1.5//3, gutter_box_width - padding*2, 8, theme.white)
+    gutter_bar_background.outline_color = theme.black
+    gutter_bar_background.border_radius = 3
+    gutter_bar_background.bind_to(gutter_box)
+    for grist_name, amount in grist_gutter:
+        ...
 
 if __name__ == "__main__":
     client.connect() # connect to server

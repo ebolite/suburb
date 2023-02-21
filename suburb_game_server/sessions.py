@@ -415,6 +415,7 @@ class Player():
     def get_dict(self):
         out = deepcopy(util.players[self.__dict__["username"]])
         out["grist_cache_limit"] = self.grist_cache_limit
+        out["total_gutter_grist"] = self.total_gutter_grist
         return out
     
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:
@@ -464,7 +465,17 @@ class Player():
         else:
             self.grist_cache[grist_name] = self.grist_cache_limit
             overflow = self.grist_cache[grist_name] - current_grist
-            self.grist_gutter.append([grist_name, overflow])
+            if self.grist_gutter[-1][0] == grist_name:
+                self.grist_gutter[-1] = [grist_name, self.grist_gutter[-1][1] + overflow]
+            else:
+                self.grist_gutter.append([grist_name, overflow])
+
+    @property
+    def total_gutter_grist(self) -> int:
+        total = 0
+        for grist_name, amount in self.grist_gutter:
+            total += amount
+        return total
 
     def sylladex_instances(self) -> dict:
         out_dict = {}
