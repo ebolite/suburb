@@ -786,6 +786,9 @@ def gristtorrent(window: "render.Window"):
             bar_background.outline_color = theme.black
             bar_background.absolute = False
             bar_background.bind_to(box)
+            filled_bar_width = int((grist_box_w//1.3 - 4) * grist_cache[grist_name]/grist_cache_limit)
+            bar_filled = render.SolidColor(2, 2, filled_bar_width, grist_box_h//4 - 4, theme.light)
+            bar_filled.bind_to(bar_background)
             bar_label = render.Text(0.5, 2.5, str(grist_cache[grist_name]))
             bar_label.color = theme.light
             bar_label.fontsize = 12

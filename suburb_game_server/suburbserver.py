@@ -177,8 +177,11 @@ def console_commands(player: sessions.Player, content: str):
                 args_amount = int(args[0])
             except IndexError: args_amount = 0
             for grist_name in player.grist_cache:
-                amount = args_amount or random.randint(0, 1000)
+                amount = args_amount or random.randint(0, player.grist_cache_limit)
                 player.add_grist(grist_name, amount)
+        case "bankgushry":
+            for grist_name in player.grist_cache:
+                player.grist_cache[grist_name] = 0
 
 # return True on success, return False on failure
 def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:
