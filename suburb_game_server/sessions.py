@@ -413,7 +413,8 @@ class Player():
         return self.__dict__[attr]
     
     def get_dict(self):
-        out = util.players[self.__dict__["username"]]
+        out = deepcopy(util.players[self.__dict__["username"]])
+        out["grist_cache_limit"] = self.grist_cache_limit
         return out
     
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:

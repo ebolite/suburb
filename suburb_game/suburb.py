@@ -729,6 +729,7 @@ def gristtorrent(window: "render.Window"):
     padding = 7
     player_dict = client.requestdic("player_info")
     grist_cache = player_dict["grist_cache"]
+    grist_cache_limit = player_dict["grist_cache_limit"]
     banner_head = render.Image(0, 0, "sprites/computer/gristTorrent/banner.png")
     banner_head.absolute = True
     banner_head.bind_to(viewport)
@@ -742,13 +743,14 @@ def gristtorrent(window: "render.Window"):
     grist_display_w = viewport.w
     grist_display_h = 450
     num_rows = 12
-    num_columns = 6
+    num_columns = 5
     columns = [[] for i in range(num_columns)]
     print(len(config.grists))
     for grist_name in config.grists:
         for column in columns:
             if len(column) != num_rows:
                 column.append(grist_name)
+                break
     grist_box_outline_width = 1
     grist_box_w = grist_display_w//num_columns - padding - grist_box_outline_width
     grist_box_h = grist_display_h//num_rows - padding - grist_box_outline_width
@@ -762,6 +764,19 @@ def gristtorrent(window: "render.Window"):
             box.outline_width = grist_box_outline_width
             box.border_radius = 2
             box.bind_to(viewport)
+            grist_image_path = f"sprites/grists/{grist_name}.png"
+            anim_grist_image_path = f"sprites/grists/{grist_name}-1.png"
+            if os.path.isfile(grist_image_path) or os.path.isfile(anim_grist_image_path):
+                x = 0.1
+                y = 0.5
+                if os.path.isfile(anim_grist_image_path):
+                    grist_image = render.Image(x, y, f"sprites/grists/{grist_name}")
+                    grist_image.animated = True
+                    grist_image.animframes = 4
+                else:
+                    grist_image = render.Image(x, y, grist_image_path)
+                grist_image.scale = 0.5
+                grist_image.bind_to(box)
     print(columns)
 
 if __name__ == "__main__":

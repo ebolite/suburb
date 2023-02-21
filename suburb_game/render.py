@@ -436,6 +436,7 @@ class Image(UIElement):
     def update(self):
         if self.animated:
             self.surf = pygame.image.load(self.path+f"-{self.animframe}.png").convert()
+            self.scaled = False
             if self.wait == self.speed:
                 self.animframe += 1
                 if self.animframe > self.animframes:
