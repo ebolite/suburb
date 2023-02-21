@@ -743,14 +743,16 @@ def gristtorrent(window: "render.Window"):
     grist_display_w = viewport.w
     grist_display_h = 450
     num_rows = 12
-    num_columns = 5
-    columns = [[] for i in range(num_columns)]
+    columns = []
     print(len(config.grists))
     for grist_name in config.grists:
         for column in columns:
             if len(column) != num_rows:
                 column.append(grist_name)
                 break
+        else:
+            columns.append([grist_name])
+    num_columns = len(columns)
     grist_box_outline_width = 1
     grist_box_w = grist_display_w//num_columns - padding - grist_box_outline_width
     grist_box_h = grist_display_h//num_rows - padding - grist_box_outline_width
@@ -769,13 +771,15 @@ def gristtorrent(window: "render.Window"):
             if os.path.isfile(grist_image_path) or os.path.isfile(anim_grist_image_path):
                 x = 0.1
                 y = 0.5
+                # grist images are 48x48, we wanna make sure they are scaled to the box plus some padding
+                grist_image_scale = grist_box_h/(48+padding)
                 if os.path.isfile(anim_grist_image_path):
                     grist_image = render.Image(x, y, f"sprites/grists/{grist_name}")
                     grist_image.animated = True
                     grist_image.animframes = 4
                 else:
                     grist_image = render.Image(x, y, grist_image_path)
-                grist_image.scale = 0.5
+                grist_image.scale = grist_image_scale
                 grist_image.bind_to(box)
     print(columns)
 
