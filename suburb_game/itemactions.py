@@ -42,7 +42,7 @@ install_sburb.use_prompt = "You install Sburb onto the {tname}."
 install_gristtorrent = ItemAction("install_gristtorrent")
 install_gristtorrent.targeted = True
 install_gristtorrent.prompt = "What should you install gristTorrent on?"
-install_gristtorrent.use_prompt = "You install gristTorrent onto the {tname}"
+install_gristtorrent.use_prompt = "You install gristTorrent onto the {tname}."
 
 combine_card = ItemAction("combine_card")
 combine_card.targeted = True
