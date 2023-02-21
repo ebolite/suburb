@@ -136,8 +136,9 @@ class SolidColor(UIElement):
         self.y = y
         self.w = w
         self.h = h
-        self.color: pygame.Color = color
+        self.color: Union[pygame.Color, list] = color
         self.outline_color: Optional[pygame.Color] = None
+        self.animframe = 0
         self.outline_width = 2
         self.border_radius: int = 0
         self.absolute = True
@@ -146,7 +147,14 @@ class SolidColor(UIElement):
 
     def update(self):
         self.surf = pygame.Surface((self.w, self.h))
-        self.surf.fill(self.color)
+        if isinstance(self.color, pygame.Color):
+            fill_color = self.color
+        else:
+            # list of colors to flip between
+            index = self.animframe % len(self.color)
+            fill_color = self.color[index]
+            self.animframe += 1
+        self.surf.fill(fill_color)
         if self.outline_color is not None:
             self.outline_surf = pygame.Surface((self.w + self.outline_width*2, self.h + self.outline_width*2))
             self.outline_surf.fill(self.outline_color)
@@ -156,7 +164,7 @@ class SolidColor(UIElement):
             self.outline_rect = self.outline_surf.get_rect()
             self.outline_rect.x, self.outline_rect.y = self.rect.x-self.outline_width, self.rect.y-self.outline_width
             pygame.draw.rect(self.blit_surf, self.outline_color, self.outline_rect, border_radius = self.border_radius+self.outline_width)
-        pygame.draw.rect(self.blit_surf, self.color, self.rect, border_radius = self.border_radius)
+        pygame.draw.rect(self.blit_surf, fill_color, self.rect, border_radius = self.border_radius)
 
 class Div(SolidColor):
     def __init__(self, x, y, w, h):

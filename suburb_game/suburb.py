@@ -811,12 +811,24 @@ def gristtorrent(window: "render.Window"):
     gutter_label.color = theme.light
     gutter_label.fontsize = 12
     gutter_label.bind_to(gutter_box)
-    gutter_bar_background = render.SolidColor(padding, gutter_box_height*1.5//3, gutter_box_width - padding*2, 8, theme.white)
+    gutter_bar_background_width = gutter_box_width - padding*2
+    gutter_bar_background_height = 8
+    gutter_bar_background = render.SolidColor(padding, gutter_box_height*1.5//3, gutter_bar_background_width, gutter_bar_background_height, theme.white)
     gutter_bar_background.outline_color = theme.black
     gutter_bar_background.border_radius = 3
     gutter_bar_background.bind_to(gutter_box)
+    #starting x
+    gutter_bar_padding = 2
+    gutter_bar_x = gutter_bar_padding
+    gutter_bar_y = gutter_bar_padding
     for grist_name, amount in grist_gutter:
-        ...
+        bar_width = int((gutter_box_width-padding*2 - gutter_bar_padding*2) * (amount/total_gutter_grist))
+        if bar_width == 0: continue
+        gutter_bar_color = config.gristcolors[grist_name]
+        gutter_bar = render.SolidColor(gutter_bar_x, gutter_bar_y, bar_width, gutter_bar_background_height - gutter_bar_padding*2, gutter_bar_color)
+        gutter_bar.bind_to(gutter_bar_background)
+        gutter_bar_x += bar_width
+
 
 if __name__ == "__main__":
     client.connect() # connect to server
