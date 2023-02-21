@@ -1,4 +1,5 @@
 import util
+from pygame import Color
 
 tiles = {
     "?": "sprites\\tiles\\oob.png",
@@ -108,6 +109,61 @@ grists = {
     "uranium": {"tier": 8, "image": "sprites\\grists\\uranium.png"},
     "wood": {"tier": 1, "image": "sprites\\grists\\wood.png"},
     "zilium": {"tier": 10, "exotic": True, "image": "sprites\\grists\\zilium.png"},
+}
+
+gristcolors = {
+    "build": Color(0, 175, 255),
+    "acid": Color(139, 255, 106),
+    "amber": Color(238, 214, 0),
+    "amethyst": Color(139, 0, 172),
+    "aquamarine": Color(115, 246, 230),
+    "blood": Color(255, 0, 0),
+    "caulk": Color(128, 128, 128),
+    "chalk": Color(255, 255, 255),
+    "cobalt": Color(8, 85, 222),
+    "copper": Color(222, 76, 0),
+    "diamond": Color(222, 230, 255),
+    "emerald": Color(106, 242, 148),
+    "fluorite": Color(33, 177, 254),
+    "frosting": Color(255, 141, 255),
+    "garnet": Color(180, 0, 0),
+    "gold": Color(255, 226, 0),
+    "iodine": Color(180, 85, 0),
+    "iron": Color(167, 167, 167),
+    "jet": Color(74, 72, 74),
+    "lead": Color(70, 99, 127),
+    "lux": Color(255, 238, 156),
+    "malachite": Color(1, 84, 33),
+    "marble": [Color(246, 242, 246), Color(238, 97, 230)],
+    "mercury": Color(165, 165, 165),
+    "mist": [Color(213, 238, 238), Color(255, 255, 255)],
+    "moonstone": Color(148, 214, 230),
+    "neon": Color(255, 165, 0),
+    "nitrogen": Color(139, 246, 255),
+    "obsidian": Color(1, 1, 1),
+    "onyx": Color(52, 52, 52),
+    "permafrost": Color(74, 246, 238),
+    "quartz": Color(180, 255, 238),
+    "rainbow": [Color(255, 60, 156), Color(115, 250, 156), Color(32, 165, 222), Color(8, 60, 255)],
+    "redstone": Color(255, 64, 0),
+    "rock candy": Color(230, 85, 255),
+    "rose quartz": Color(246, 12, 74),
+    "ruby": Color(255, 44, 24),
+    "rust": Color(126, 47, 30),
+    "sandstone": Color(156, 133, 41),
+    "shale": Color(106, 32, 156),
+    "silicon": Color(148, 174, 205),
+    "silk": Color(238, 218, 255),
+    "slime": Color(0, 226, 32),
+    "star sapphire": Color(41, 52, 255),
+    "sulfur": Color(227, 184, 0),
+    "sunstone": Color(230, 125, 57),
+    "tar": Color(5, 5, 5),
+    "titanium": Color(215, 215, 215),
+    "topaz": Color(255, 182, 32),
+    "uranium": Color(32, 206, 57),
+    "wood": Color(115, 80, 57),
+    "zilium": [Color(41, 255, 74), Color(230, 76, 213), Color(0, 113, 189)]
 }
 
 gristcategories = {
