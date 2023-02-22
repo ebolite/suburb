@@ -164,6 +164,52 @@ def handle_request(dict):
                 console_commands(player, content)
             except Exception as e:
                 print(f"Error in command {content}", e)
+        case "get_client_server_chains":
+            server_client = {player_username:sessions.Player(player_username).client_player_name for player_username in session.starting_players}
+            player_names = {player_username:sessions.Player(player_username).nickname for player_username in session.starting_players}
+            no_server = []
+            chained = []
+            chains = []
+            # find which players don't have servers
+            for player_username in session.starting_players:
+                player = sessions.Player(player_username)
+                if player.server_player_name is None: no_server.append(player_username)
+            # find which players are in a chain and which aren't
+            for player_username in session.starting_players:
+                if player_username in chained: continue
+                first_member_of_chain = get_first_member_of_chain(player_username)
+                chain = construct_chain(first_member_of_chain)
+                if len(chain) == 1: 
+                    continue
+                chains.append(chain)
+                for username in chain: chained.append(username)
+            return json.dumps({"chains": chains, "no_server": no_server, "server_client": server_client, "player_names": player_names})
+            
+def get_first_member_of_chain(player_name: str, checked=[]):
+    player = sessions.Player(player_name)
+    if player.server_player_name is None: return player_name
+    # we're in a closed server chain
+    elif player_name in checked: return player_name
+    else:
+        checked.append(player_name)
+        return get_first_member_of_chain(player.server_player_name, checked)
+
+# constructs chain from first member, or any member in a loop
+def construct_chain(player_name: str) -> list:
+    chain = [player_name]
+    current_player = sessions.Player(player_name)
+    while True:
+        client_player_name = current_player.client_player_name
+        # end of chain
+        if client_player_name is None: return chain
+        # we are in a closed chain
+        elif client_player_name in chain:
+            chain.append(client_player_name)
+            return chain
+        # add client to loop and loop again
+        else: 
+            chain.append(client_player_name)
+            current_player = sessions.Player(client_player_name)
 
 def computer_shit(player: sessions.Player, content: dict):
     for instance_name in player.sylladex + player.room.instances:
