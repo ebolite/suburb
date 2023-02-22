@@ -537,15 +537,16 @@ class Text(UIElement):
         return pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), int(self.fontsize*self.scale))
 
 class TileMap(UIElement):
-    def __init__(self, x, y, map: list[list[str]], specials: dict, room_name: str, item_display:"RoomItemDisplay"):
+    def __init__(self, x, y, map: list[list[str]], specials: dict, room_name: str, item_display:"RoomItemDisplay", server_view=False):
         super(TileMap, self).__init__()
         self.x = x
         self.y = y
         self.map = map
+        self.item_display = item_display
+        self.server_view = server_view
         self.specials = specials
         self.tiles = {}
         self.room_name = room_name
-        self.item_display = item_display
         self.label = Text(0.5, 0, room_name)
         self.label.bind_to(self)
         self.input_text_box: Optional[InputTextBox] = None
@@ -568,7 +569,7 @@ class TileMap(UIElement):
             self.tiles = {}
             for y, line in enumerate(map):
                 for x, char in enumerate(line):
-                    self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials)
+                    self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials, self.server_view)
 
     def keypress(self, event):
         if self.input_text_box is not None and self.input_text_box.active: return
@@ -582,8 +583,12 @@ class TileMap(UIElement):
             case pygame.K_RIGHT: direction = "right"
             case pygame.K_d: direction = "right"
             case _: return
-        client.requestplus("move", direction)
-        dic = client.requestdic("current_map")
+        if self.server_view:
+            sburbserver.move_view_by_direction(direction)
+            dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":sburbserver.current_x, "y":sburbserver.current_y})
+        else:
+            client.requestplus("move", direction)
+            dic = client.requestdic("current_map")
         self.map = dic["map"]
         self.specials = dic["specials"]
         self.instances = dic["instances"]
@@ -623,12 +628,13 @@ def dircheck(tile, direction):
         return True
 
 class Tile(UIElement):
-    def __init__(self, x, y, TileMap: TileMap, specials: dict):
+    def __init__(self, x, y, TileMap: TileMap, specials: dict, server_view=False):
         super(Tile, self).__init__()
         self.x = x
         self.y = y
         self.TileMap = TileMap
         self.specials = specials
+        self.server_view = server_view
         self.last_tile = self.tile
 
     def update_image(self):

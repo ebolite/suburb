@@ -221,6 +221,32 @@ def computer_shit(player: sessions.Player, content: dict):
         return "You don't have a computer, idiot!"
     command = content["command"]
     match command:
+        case "starting_sburb_coords":
+            client = player.client_player
+            if client is None: return "No client dumpass"
+            housemap = client.land.housemap
+            if client.map.name == housemap.name:
+                x = client.room.x
+                y = client.room.y
+            else:
+                x = len(housemap.map_tiles[0]) // 2
+                y = len(housemap.map_tiles) - 6
+            return json.dumps({"x": x, "y": y})
+        case "viewport":
+            x_coord = content["x"]
+            y_coord = content["y"]
+            client = player.client_player
+            if client is None: return "No client dumpass"
+            map_tiles, map_specials = client.land.housemap.get_view(x_coord, y_coord, 9)
+            room = client.land.housemap.find_room(x_coord, y_coord)
+            room_instances = room.get_instances()
+            return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name})
+        case "is_tile_in_bounds":
+            x_coord = content["x"]
+            y_coord = content["y"]
+            client = player.client_player
+            if client is None: return "No client dumpass"
+            return client.land.housemap.is_tile_in_bounds(int(x_coord), int(y_coord))
         case "leech":
             grist_type = content["grist_type"]
             if grist_type not in config.grists: return "fuck you"

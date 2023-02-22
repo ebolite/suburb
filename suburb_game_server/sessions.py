@@ -152,6 +152,10 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
     @property
     def name(self):
         return self.__dict__["name"]
+    
+    @property
+    def housemap(self) -> "Map":
+        return Map(self.housemap_name, self.session, self)
 
 class Map():
     def __init__(self, name, session: Session, overmap: Overmap):
@@ -252,6 +256,7 @@ class Map():
         return True
 
     def get_view(self, target_x: int, target_y: int, view_tiles: int) -> tuple[list, dict]:
+        if not self.is_tile_in_bounds(target_x, target_y): return ([], {})
         out_map_tiles = []
         out_specials = {}
         map_tiles = self.map_tiles

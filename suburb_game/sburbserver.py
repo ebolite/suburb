@@ -3,13 +3,54 @@ import client
 import themes
 
 client_username = None
+current_x = None
+current_y = None
+
+def is_tile_in_bounds(map_tiles, x: int, y: int) -> bool:
+    if y < 0: return False
+    if x < 0: return False
+    if y >= len(map_tiles): return False
+    if x >= len(map_tiles[0]): return False
+    return True
+
+def move_view_by_direction(direction:str) -> bool:
+    if current_x is None or current_y is None: return False
+    target_x = current_x
+    target_y = current_y
+    if direction == "up": target_y -= 1
+    if direction == "down": target_y += 1
+    if direction == "right": target_x += 1
+    if direction == "left": target_x -= 1
+    return move_view_to_tile(target_x, target_y)
+    
+def move_view_to_tile(target_x:int, target_y:int) -> bool:
+    reply = client.requestplus(intent="computer", content={"command": "is_tile_in_bounds", "x":target_x, "y":target_y})
+    if reply == "False": return False
+    else:
+        global current_x
+        global current_y
+        current_x = target_x
+        current_y = target_y
+        return True
 
 def sburb(window: "render.Window"):
     window.theme = themes.default
     if client_username is None: 
         connect(window)
         return
-    ...
+    global current_x
+    global current_y
+    if current_x is None or current_y is None:
+        coords = client.requestplusdic(intent="computer", content={"command": "starting_sburb_coords"})
+        current_x = coords["x"]
+        current_y = coords["y"]
+    dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":current_x, "y":current_y})
+    new_map = dic["map"]
+    specials = dic["specials"]
+    instances = dic["instances"]
+    room_name = dic["room_name"]
+    item_display = render.RoomItemDisplay(20, 50, instances)
+    tile_map = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display, server_view=True)
 
 def connect(window: "render.Window"):
     username = client.requestdic(intent="player_info")["client_player_name"]
