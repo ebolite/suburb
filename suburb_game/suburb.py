@@ -597,9 +597,27 @@ def debug_speedrun():
     character_info["interests"] = ["music", "technology"]
     character_info["aspect"] = "life"
     character_info["class"] = "sylph"
-    character_info["secondaryvial"] = "IMAGINATION"
+    character_info["secondaryvial"] = "imagination"
     character_info["modus"] = "array"
     character_info["gristcategory"] = "amber"
+    newgame()
+
+def debug_speedrun_2():
+    client.dic["session_name"] = "fuck"
+    client.dic["session_pass_hash"] = client.hash("ass")
+    client.request("create_session")
+    client.dic["character"] = "basementDemon"
+    client.dic["character_pass_hash"] = client.hash("ass")
+    client.request("create_character")
+    character_info["name"] = "Azaral"
+    character_info["noun"] = "basement demon"
+    character_info["pronouns"] = ["he", "him", "his", "his"]
+    character_info["interests"] = ["garbage", "anime"]
+    character_info["aspect"] = "doom"
+    character_info["class"] = "bard"
+    character_info["secondaryvial"] = "gambit"
+    character_info["modus"] = "array"
+    character_info["gristcategory"] = "dark"
     newgame()
 
 @scene
@@ -722,6 +740,7 @@ def title():
     conntext = render.Text(0, 30, conntextcontent)
     conntext.absolute = True
     debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
+    debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
 
 @scene
 def computer(instance: Instance):
