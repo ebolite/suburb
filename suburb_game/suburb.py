@@ -749,9 +749,9 @@ def computer(instance: Instance):
     apps = []
     for app_name in instance.computer_data["installed_programs"]:
         random.seed(instance.instance_name+app_name)
-        x = random.random() * 0.9
+        x = 0.1 + random.random() * 0.7
         random.seed(instance.instance_name+app_name)
-        y = random.random() * 0.9
+        y = 0.1 + random.random() * 0.7
         app_icon = render.AppIcon(random.random(), random.random(), app_name, task_bar)
         apps.append(app_icon)
 

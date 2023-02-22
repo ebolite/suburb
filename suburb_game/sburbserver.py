@@ -41,11 +41,15 @@ def connect(window: "render.Window"):
         no_chains_text = render.Text(0.6, 0.2, "None currently.")
         no_chains_text.bind_to(window.viewport)
     for chain_index, chain in enumerate(chains):
-        y = 0.1 + 0.07*chain_index
-        chain_text = render.Text(0.6, y, " -> ".join(chain))
+        y = 0.13 + 0.07*chain_index
+        chain_names = [player_names[name] for name in chain]
+        chain_text = render.Text(0.6, y, " -> ".join(chain_names))
+        chain_text.set_fontsize_by_width(900)
+        chain_text.bind_to(window.viewport)
     def get_connect_button(player_name):
         def connect_button():
             client.requestplus(intent="computer", content={"command": "connect", "client_player_username": player_name})
+            window.reload()
         return connect_button
     connect_button_y = 0.83
     for player_index, player_name in enumerate(no_server):
