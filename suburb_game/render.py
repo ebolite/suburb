@@ -716,12 +716,13 @@ class Tile(UIElement):
             return "sprites\\tiles\\missingtile.png"
 
 class RoomItemDisplay(UIElement):
-    def __init__(self, x, y, instances: dict):
+    def __init__(self, x, y, instances: dict, server_view=False):
         self.x = x
         self.y = y
         self.w = 330
         self.h = 30
         self.instances = instances
+        self.server_view=server_view
         self.absolute = True
         self.text = Text(x, y, f"You see here:")
         self.text.absolute = True
@@ -739,24 +740,31 @@ class RoomItemDisplay(UIElement):
             y = self.y + self.h*(index+1)
             instance = Instance(instance_name, instances[instance_name])
             display_name = instance.display_name()
-            captcha_button = CaptchalogueButton(self.x, y, instance_name, instances)
-            captcha_button.absolute = True
+            if not self.server_view:
+                captcha_button = CaptchalogueButton(self.x, y, instance_name, instances)
+                captcha_button.absolute = True
+            else:
+                captcha_button = None
             use_buttons = 0
-            for i, action_name in enumerate(reversed(instance.use)):
-                use_buttons += 1
-                path = f"sprites/item_actions/{action_name}.png"
-                pressed_path = f"sprites/item_actions/{action_name}_pressed.png"
-                if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
-                if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
-                use_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, instance.get_action_button_func(action_name, suburb.map))
-                use_button.absolute = True
-                self.buttons.append(use_button)
-            main_button_width = self.w-30
+            if not self.server_view:
+                for i, action_name in enumerate(reversed(instance.use)):
+                    use_buttons += 1
+                    path = f"sprites/item_actions/{action_name}.png"
+                    pressed_path = f"sprites/item_actions/{action_name}_pressed.png"
+                    if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
+                    if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
+                    use_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, instance.get_action_button_func(action_name, suburb.map))
+                    use_button.absolute = True
+                    self.buttons.append(use_button)
+            main_button_width = self.w
+            if captcha_button is not None: main_button_width -= 30
             main_button_width -= 30*use_buttons
-            new_button = TextButton(self.x+30, y, main_button_width, self.h, util.filter_item_name(display_name), get_button_func(instance_name), truncate_text=True)
+            main_button_x = self.x
+            if captcha_button is not None: main_button_x += 30
+            new_button = TextButton(main_button_x, y, main_button_width, self.h, util.filter_item_name(display_name), get_button_func(instance_name), truncate_text=True)
             new_button.absolute = True 
             self.buttons.append(new_button)
-            self.buttons.append(captcha_button)
+            if captcha_button is not None: self.buttons.append(captcha_button)
 
 class CaptchalogueButton(Button):
     def __init__(self, x, y, instance_name: str, instances: dict):
