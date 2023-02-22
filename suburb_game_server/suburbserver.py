@@ -180,6 +180,15 @@ def computer_shit(player: sessions.Player, content: dict):
             if grist_type not in config.grists: return "fuck you"
             if grist_type in player.leeching: player.leeching.remove(grist_type)
             else: player.leeching.append(grist_type)
+        case "connect":
+            client_player_username = content["client_player_username"]
+            if client_player_username not in util.players: return "Player does not exist."
+            client_player = sessions.Player(client_player_username)
+            if client_player.server_player_name is not None: return "Client already has server."
+            if player.client_player_name is not None: return "You already have a client."
+            player.client_player_name = client_player_username
+            client_player.server_player_name = player.username
+            return "Successfully connected."
 
 def console_commands(player: sessions.Player, content: str):
     args = content.split(" ")

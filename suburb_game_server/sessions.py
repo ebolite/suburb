@@ -404,6 +404,8 @@ class Player():
             self.grist_cache = {grist_name:0 for grist_name in config.grists}
             self.grist_gutter: list[list] = []
             self.leeching: list[str] = []
+            self.client_player_name: Optional[str] = None
+            self.server_player_name: Optional[str] = None
             self.setup = False
             self.nickname = ""
             self.noun = ""
@@ -604,6 +606,16 @@ class Player():
     @property
     def land(self) -> Overmap:
         return Overmap(self.land_name, Session(self.land_session))
+    
+    @property
+    def server_player(self) -> Optional["Player"]:
+        if self.server_player_name is None: return None
+        else: return Player(self.server_player_name)
+    
+    @property
+    def client_player(self) -> Optional["Player"]:
+        if self.client_player_name is None: return None
+        else: return Player(self.client_player_name)
 
     def verify(self, hash): # returns True if hash is valid
         if hash == self.character_pass_hash:
