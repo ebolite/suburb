@@ -158,7 +158,10 @@ def handle_request(dict):
             player.attempt_move(content)
             return
         case "console_command":
-            console_commands(player, content)
+            try:
+                console_commands(player, content)
+            except Exception as e:
+                print(f"Error in command {content}", e)
 
 
 def console_commands(player: sessions.Player, content: str):
