@@ -751,9 +751,9 @@ def gristtorrent(window: "render.Window"):
     banner_head = render.Image(0, 0, "sprites/computer/gristTorrent/banner.png")
     banner_head.absolute = True
     banner_head.bind_to(viewport)
-    icon = render.Image(0.31, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
+    icon = render.Image(0.29, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
     icon.bind_to(banner_head)
-    banner_text = render.Text(0.58, 0.5, "gristTorrent")
+    banner_text = render.Text(0.56, 0.5, "gristTorrent")
     banner_text.color = theme.light
     banner_text.outline_color = theme.dark
     banner_text.outline_depth = 2
