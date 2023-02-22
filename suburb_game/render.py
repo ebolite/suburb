@@ -13,6 +13,7 @@ import client
 import suburb
 import themes
 import binaryoperations
+import sburbserver
 from sylladex import Instance, Sylladex
 
 pygame.init()
@@ -969,7 +970,7 @@ class Window(SolidColor):
             case "gristTorrent":
                 suburb.gristtorrent(self)
             case "Sburb":
-                suburb.sburb(self)
+                sburbserver.sburb(self)
 
     def reload(self):
         app_name = self.app_name
