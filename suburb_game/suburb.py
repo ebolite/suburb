@@ -61,7 +61,7 @@ def play():
 def register():
     log = render.Text(0.5, 0.10, "")
     name = render.Text(0.5, 0.20, f"Username (Case-sensitive)")
-    name.color = current_theme().black
+    name.color = current_theme().dark
     name.outline_color = current_theme().black
     namebox = render.InputTextBox(.5, .25)
     pw = render.Text(0.5, .35, f"Password")
@@ -294,6 +294,7 @@ def make_asbutton(aspect):
         text.color = current_theme().dark
         text.outline_color = current_theme().black
         blurb = render.Image(0.5, 0.39, f"sprites\\aspects\\{aspect}blurb.png")
+        blurb.convert = False
         confirm = render.Button(0.5, 0.54, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", on_confirm)
         backbutton = render.Button(0.5, 0.66, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", aspectcharacter)
     return button
@@ -303,6 +304,7 @@ def make_asbutton(aspect):
 def aspectcharacter():
     space = render.Button(0,0, "sprites\\aspects\\space120.png", "sprites\\aspects\\space120.png", make_asbutton("space"), hover="sprites\\aspects\\space120hover.png")
     space.absolute = True
+    space.convert = False
     spaceblurb = render.Image(120, 0, "sprites\\aspects\\spaceblurb.png")
     spaceblurb.absolute = True
     time = render.Button(640, 0, "sprites\\aspects\\time120.png", "sprites\\aspects\\time120.png", make_asbutton("time"), hover="sprites\\aspects\\time120hover.png")
@@ -339,8 +341,10 @@ def aspectcharacter():
     lifeblurb.absolute = True
     doom = render.Button(640, 480, "sprites\\aspects\\doom120.png", "sprites\\aspects\\doom120.png", make_asbutton("doom"), hover="sprites\\aspects\\doom120hover.png")
     doom.absolute = True
+    doom.convert = False
     doomblurb = render.Image(760, 480, "sprites\\aspects\\doomblurb.png")
     doomblurb.absolute = True
+    doomblurb.convert = False
     light = render.Button(0, 600, "sprites\\aspects\\light120.png", "sprites\\aspects\\light120.png", make_asbutton("light"), hover="sprites\\aspects\\light120hover.png")
     light.absolute = True
     lightblurb = render.Image(120, 600, "sprites\\aspects\\lightblurb.png")
@@ -531,12 +535,18 @@ def choosemodus():
 def choosegrists():
     # 19 grist categories
     # todo: add indicators for which grist types the session already has
+    session_info = client.requestdic("session_info")
+    available_types = session_info["current_grist_types"]
+    print(session_info)
+    print(available_types)
     logtext = render.Text(.5, .05, "Select the type of land you would like.")
-    infotext = render.Text(.75, .9, "A yellow background indicates exotic grist.")
+    infotext = render.Text(.5, .09, "A darkened background indicates grist already available in the session.")
     infotext.fontsize = 20
-    infotext = render.Text(.75, .93, "Exotic grist types cannot normally be obtained")
+    infotext = render.Text(.75, .91, "A yellow background indicates exotic grist.")
     infotext.fontsize = 20
-    infotext = render.Text(.75, .96, "unless a player has specifically picked them.")
+    infotext = render.Text(.75, .94, "Exotic grist types cannot normally be obtained")
+    infotext.fontsize = 20
+    infotext = render.Text(.75, .97, "unless a player has specifically picked them.")
     infotext.fontsize = 20
     def choosegristtype(grist):
         def out():
@@ -561,9 +571,11 @@ def choosegrists():
         button = render.TextButton(x, y, 110, 33, category.upper(), choosegristtype(category))
         for ind, grist in enumerate(config.gristcategories[category]):
             img = render.Image(x+0.07+(0.04 * ind), y, config.grists[grist]["image"])
-            if "exotic" in config.grists[grist] and config.grists[grist]["exotic"]:
+            if grist in available_types:
+                img.highlight_color = current_theme().dark
+            elif "exotic" in config.grists[grist] and config.grists[grist]["exotic"]:
                 img.highlight_color = pygame.Color(255,255,0)
-    backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosemodus)
+    backbutton = render.Button(0.08, 0.05, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosemodus)
 
 def newgame():
     client.requestplus("setup_character",  character_info)

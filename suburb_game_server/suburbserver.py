@@ -66,6 +66,10 @@ def handle_request(dict):
     character = dict["character"]
     character_pass_hash = dict["character_pass_hash"]
     content = dict["content"]
+    if intent == "session_info":
+        out = {}
+        out["current_grist_types"] = session.current_grist_types
+        return json.dumps(out)
     if intent == "create_character":
         if character in util.players:
             return f"Character id `{character}` has already been made."
@@ -107,6 +111,7 @@ def handle_request(dict):
                 for interest in player.interests:
                     room.generate_loot(tiles.get_tile(interest).get_loot_list())
                 player.goto_room(room)
+                session.starting_players.append(character)
                 player.setup = True
                 return f"Your land is the {land.title}! ({land.acronym})"
         case "current_map":

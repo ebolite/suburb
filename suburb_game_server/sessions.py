@@ -41,7 +41,7 @@ class Session():
         self.__dict__["session_name"] = name
         if name not in util.sessions:
             util.sessions[name] = {}
-            self.players = {}
+            self.starting_players = []
             self.overmaps = {}          
 
     def __setattr__(self, attr, value):
@@ -52,6 +52,17 @@ class Session():
         self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
                                [attr])
         return self.__dict__[attr]
+
+    @property
+    def current_grist_types(self) -> list:
+        available_types = []
+        for player_name in self.starting_players:
+            player = Player(player_name)
+            gristcategory = player.gristcategory
+            for grist_name in config.gristcategories[gristcategory]:
+                if grist_name not in available_types:
+                    available_types.append(grist_name)
+        return available_types
 
     @property
     def name(self):
@@ -591,7 +602,7 @@ class Player():
 
     @property
     def land(self) -> Overmap:
-        return Overmap(self.land_name, Session(self.landsession))
+        return Overmap(self.land_name, Session(self.land_session))
 
     def verify(self, hash): # returns True if hash is valid
         if hash == self.character_pass_hash:
