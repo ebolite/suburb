@@ -963,7 +963,11 @@ class Window(SolidColor):
         self.xbutton.fill_color = self.theme.light
         self.xbutton.text_color = self.theme.white
         self.xbutton.fontsize = 24
-        suburb.gristtorrent(self)
+        match app_name:
+            case "gristTorrent":
+                suburb.gristtorrent(self)
+            case "Sburb":
+                suburb.sburb(self)
 
     def delete(self):
         self.app_icon.window = None

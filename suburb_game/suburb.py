@@ -736,6 +736,9 @@ def computer(instance: Instance):
         app_icon = render.AppIcon(random.random(), random.random(), app_name, task_bar)
         apps.append(app_icon)
 
+def sburb(window: "render.Window"):
+    ...
+
 def gristtorrent(window: "render.Window"):
     theme = themes.gristtorrent
     viewport = window.viewport
