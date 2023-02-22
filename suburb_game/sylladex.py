@@ -118,6 +118,12 @@ class Instance():
                 return True
             case "punch_card":
                 return True
+            case "install_gristtorrent":
+                syl.update_deck()
+                return True
+            case "install_sburb":
+                syl.update_deck()
+                return True
             case _:
                 return True
 

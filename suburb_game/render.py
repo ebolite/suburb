@@ -201,6 +201,7 @@ class TextButton(UIElement):
         self.outline_color: pygame.Color = self.theme.dark
         self.fill_color: pygame.Color = self.theme.white
         self.hover_color: pygame.Color = self.theme.dark
+        self.draw_sprite = True
         self.toggle = False
         click_check.append(self)
         update_check.append(self)
@@ -228,11 +229,12 @@ class TextButton(UIElement):
             self.hoversurf = None
         self.rect = self.outline_surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.outline_surf)
-        self.blit_surf.blit(self.outline_surf, ((self.rect.x, self.rect.y)))
-        self.blit_surf.blit(self.surf, ((self.rect.x+self.outline_width, self.rect.y+self.outline_width)))
-        self.blit_surf.blit(self.text_surf, ((self.rect.x+(self.outline_surf.get_width()/2)-(self.text_surf.get_width()/2), self.rect.y+(self.outline_surf.get_height()/2)-(self.text_surf.get_height()/2))))
-        if self.hoversurf != None:
-            self.blit_surf.blit(self.hoversurf, ((self.rect.x, self.rect.y)))
+        if self.draw_sprite:
+            self.blit_surf.blit(self.outline_surf, ((self.rect.x, self.rect.y)))
+            self.blit_surf.blit(self.surf, ((self.rect.x+self.outline_width, self.rect.y+self.outline_width)))
+            self.blit_surf.blit(self.text_surf, ((self.rect.x+(self.outline_surf.get_width()/2)-(self.text_surf.get_width()/2), self.rect.y+(self.outline_surf.get_height()/2)-(self.text_surf.get_height()/2))))
+            if self.hoversurf != None:
+                self.blit_surf.blit(self.hoversurf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
         if self not in click_check: return
@@ -968,6 +970,13 @@ class Window(SolidColor):
                 suburb.gristtorrent(self)
             case "Sburb":
                 suburb.sburb(self)
+
+    def reload(self):
+        app_name = self.app_name
+        task_bar = self.task_bar
+        app_icon = self.app_icon
+        self.delete()
+        self.__init__(app_name, task_bar, app_icon)
 
     def delete(self):
         self.app_icon.window = None

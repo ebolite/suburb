@@ -748,6 +748,7 @@ def gristtorrent(window: "render.Window"):
     grist_cache_limit = player_dict["grist_cache_limit"]
     grist_gutter = player_dict["grist_gutter"]
     total_gutter_grist = player_dict["total_gutter_grist"]
+    leeching = player_dict["leeching"]
     banner_head = render.Image(0, 0, "sprites/computer/gristTorrent/banner.png")
     banner_head.absolute = True
     banner_head.bind_to(viewport)
@@ -763,7 +764,6 @@ def gristtorrent(window: "render.Window"):
     grist_display_h = 450
     num_rows = 12
     columns = []
-    print(len(config.grists))
     for grist_name in config.grists:
         for column in columns:
             if len(column) != num_rows:
@@ -775,14 +775,23 @@ def gristtorrent(window: "render.Window"):
     grist_box_outline_width = 1
     grist_box_w = grist_display_w//num_columns - padding - grist_box_outline_width
     grist_box_h = grist_display_h//num_rows - padding - grist_box_outline_width
-    print(grist_display_w)
+    def get_box_button_func(grist_name):
+        def box_button_func():
+            client.requestplus(intent="computer", content={"command": "leech", "grist_type": grist_name})
+            window.reload()
+        return box_button_func
     for column_index, column in enumerate(columns):
         grist_box_x = padding + (grist_box_w+padding)*column_index 
         for row_index, grist_name in enumerate(column):
             grist_box_y = 150 + padding + (grist_box_h+padding)*row_index
             box = render.SolidColor(grist_box_x, grist_box_y, grist_box_w, grist_box_h, theme.dark)
             box.border_radius = 2
+            if grist_name in leeching: box.outline_color = pygame.Color(255, 0, 0)
             box.bind_to(viewport)
+            box_button = render.TextButton(grist_box_x, grist_box_y, grist_box_w, grist_box_h, "", get_box_button_func(grist_name))
+            box_button.absolute = True
+            box_button.draw_sprite = False
+            box_button.bind_to(viewport)
             grist_image_path = f"sprites/grists/{grist_name}.png"
             anim_grist_image_path = f"sprites/grists/{grist_name}-1.png"
             if os.path.isfile(grist_image_path) or os.path.isfile(anim_grist_image_path):

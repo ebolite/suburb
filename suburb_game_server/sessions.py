@@ -403,6 +403,7 @@ class Player():
             self.echeladder_rung = 1
             self.grist_cache = {grist_name:0 for grist_name in config.grists}
             self.grist_gutter: list[list] = []
+            self.leeching: list[str] = []
             self.setup = False
             self.nickname = ""
             self.noun = ""

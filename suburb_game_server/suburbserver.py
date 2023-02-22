@@ -129,6 +129,8 @@ def handle_request(dict):
             if target_name is not None: target_instance = alchemy.Instance(target_name)
             else: target_instance = None
             return use_item(player, instance, action_name, target_instance)
+        case "computer":
+            return computer_shit(player, content)
         case "drop_empty_card":
             return player.drop_empty_card()
         case "captchalogue":
@@ -163,6 +165,21 @@ def handle_request(dict):
             except Exception as e:
                 print(f"Error in command {content}", e)
 
+def computer_shit(player: sessions.Player, content: dict):
+    for instance_name in player.sylladex + player.room.instances:
+        instance = alchemy.Instance(instance_name)
+        if "computer" in instance.item.use:
+            break
+    else:
+        print("No computer")
+        return "You don't have a computer, idiot!"
+    command = content["command"]
+    match command:
+        case "leech":
+            grist_type = content["grist_type"]
+            if grist_type not in config.grists: return "fuck you"
+            if grist_type in player.leeching: player.leeching.remove(grist_type)
+            else: player.leeching.append(grist_type)
 
 def console_commands(player: sessions.Player, content: str):
     args = content.split(" ")
