@@ -135,6 +135,8 @@ def draw_sburb_bar(window, tilemap: Optional["render.TileMap"]=None):
 
 def sburb(window: "render.Window"):
     window.theme = themes.default
+    window.viewport.color = window.theme.light
+    window.color = window.theme.dark
     if client_username is None: 
         connect(window)
         return
