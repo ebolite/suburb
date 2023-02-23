@@ -87,6 +87,12 @@ def sburb(window: "render.Window"):
     middlebutton = render.Button(122, 84, "sprites/computer/Sburb/middlebutton.png", "sprites/computer/Sburb/middlebutton_pressed.png", placeholder)
     middlebutton.absolute = True
     middlebutton.bind_to(ui_bar)
+    selectbutton = render.Button(0.26, 0.16, "sprites/computer/Sburb/select_button.png", "sprites/computer/Sburb/select_button.png", placeholder)
+    selectbutton.bind_to(ui_bar)
+    selectbutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.dark)
+    selectbutton_background.border_radius = 2
+    selectbutton_background.bind_to(selectbutton)
+    selectbutton.bring_to_top()
 
 def connect(window: "render.Window"):
     username = client.requestdic(intent="player_info")["client_player_name"]

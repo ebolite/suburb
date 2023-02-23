@@ -102,6 +102,11 @@ class UIElement(pygame.sprite.Sprite):
         for element in self.bound_elements.copy():
             element.delete()
 
+    def bring_to_top(self):
+        if self in update_check:
+            update_check.remove(self)
+            update_check.append(self)
+
     def convert_to_theme(self, surf: Union[pygame.Surface, pygame.surface.Surface]) -> pygame.Surface:
         default_theme = themes.default
         surf = palette_swap(surf, default_theme.white, self.theme.white)
