@@ -57,10 +57,10 @@ def sburb(window: "render.Window"):
     build_display_box = render.SolidColor(235, 50, 150, 50, window.theme.white)
     build_display_box.bind_to(window.viewport)
     build_display_box.outline_color = window.theme.dark
-    build_grist_icon = render.Image(0.1, 0.6, "sprites/grists/build.png")
-    build_grist_icon.scale = 0.5
+    build_grist_icon = render.Image(0.13, 0.6, "sprites/grists/build.png")
+    build_grist_icon.scale = 0.66
     build_grist_icon.bind_to(build_display_box)
-    build_grist_number = render.Text(0.55, 0.6, str(client_grist_cache["build"]))
+    build_grist_number = render.Text(0.6, 0.6, str(client_grist_cache["build"]))
     build_grist_number.set_fontsize_by_width(100)
     build_grist_number.color = window.theme.dark
     build_grist_number.bind_to(build_display_box)
