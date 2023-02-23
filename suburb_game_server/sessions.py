@@ -43,6 +43,8 @@ class Session():
             util.sessions[name] = {}
             self.starting_players = []
             self.connected = []
+            # atheneum is a list of items that have been alchemized by all players in the session
+            self.atheneum = []
             self.overmaps = {}          
 
     def __setattr__(self, attr, value):
@@ -411,6 +413,9 @@ class Player():
             self.grist_cache = {grist_name:0 for grist_name in config.grists}
             self.grist_gutter: list[list] = []
             self.leeching: list[str] = []
+            # phernalia registry is a default list of deployable objects minus the deployed phernalia
+            self.deployed_phernalia = []
+            self.server_storage = []
             self.client_player_name: Optional[str] = None
             self.server_player_name: Optional[str] = None
             self.setup = False
