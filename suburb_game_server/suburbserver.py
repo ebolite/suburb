@@ -237,7 +237,7 @@ def computer_shit(player: sessions.Player, content: dict):
             y_coord = content["y"]
             client = player.client_player
             if client is None: return "No client dumpass"
-            map_tiles, map_specials = client.land.housemap.get_view(x_coord, y_coord, 9)
+            map_tiles, map_specials = client.land.housemap.get_view(x_coord, y_coord, 8, server_view=True)
             room = client.land.housemap.find_room(x_coord, y_coord)
             room_instances = room.get_instances()
             return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name})

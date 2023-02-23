@@ -551,8 +551,11 @@ class TileMap(UIElement):
         self.specials = specials
         self.tiles = {}
         self.room_name = room_name
-        self.label = Text(0.5, 0, room_name)
-        self.label.bind_to(self)
+        if not self.server_view:
+            self.label = Text(0.5, 0, room_name)
+            self.label.bind_to(self)
+        else:
+            self.label = None
         self.input_text_box: Optional[InputTextBox] = None
         self.update_map(map)
         update_check.append(self)
@@ -598,7 +601,7 @@ class TileMap(UIElement):
         self.instances = dic["instances"]
         self.room_name = dic["room_name"]
         self.item_display.update_instances(self.instances)
-        self.label.text = self.room_name
+        if self.label is not None: self.label.text = self.room_name
 
     def delete(self):
         for tile in self.tiles:
@@ -728,15 +731,19 @@ class RoomItemDisplay(UIElement):
         self.instances = instances
         self.server_view=server_view
         self.absolute = True
-        self.text = Text(x, y, f"You see here:")
-        self.text.absolute = True
+        if not server_view:
+            self.text = Text(x, y, f"You see here:")
+            self.text.absolute = True
         self.buttons = []
         self.update_instances(instances)
 
     def update_instances(self, instances):
         def get_button_func(button_instance_name):
-            def output_func():
-                suburb.display_item(Instance(button_instance_name, instances[button_instance_name]), suburb.map)
+            if self.server_view:
+                def output_func(): pass
+            else:
+                def output_func():
+                    suburb.display_item(Instance(button_instance_name, instances[button_instance_name]), suburb.map)
             return output_func
         for button in self.buttons:
             button.delete()

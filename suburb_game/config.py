@@ -53,7 +53,8 @@ icons = {
     "cruxtruder": "sprites/icons/cruxtruder.png",
     "punch designix": "sprites/icons/punch designix.png",
     "totem lathe": "sprites/icons/totem lathe.png",
-    "Sburb disc": "sprites/icons/Sburb disc.png"
+    "Sburb disc": "sprites/icons/Sburb disc.png",
+    "cursor": "sprites/icons/cursor.png"
 }
 
 grists = {

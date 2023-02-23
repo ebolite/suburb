@@ -49,8 +49,8 @@ def sburb(window: "render.Window"):
     specials = dic["specials"]
     instances = dic["instances"]
     room_name = dic["room_name"]
-    item_display = render.RoomItemDisplay(20, 50, instances, server_view=True)
-    tile_map = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display, server_view=True)
+    item_display = render.RoomItemDisplay(20, 175, instances, server_view=True)
+    tile_map = render.TileMap(0.5, 0.6, new_map, specials, room_name, item_display, server_view=True)
 
 def connect(window: "render.Window"):
     username = client.requestdic(intent="player_info")["client_player_name"]

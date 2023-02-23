@@ -255,7 +255,7 @@ class Map():
         if x >= len(self.map_tiles[0]): return False
         return True
 
-    def get_view(self, target_x: int, target_y: int, view_tiles: int) -> tuple[list, dict]:
+    def get_view(self, target_x: int, target_y: int, view_tiles: int, server_view=False) -> tuple[list, dict]:
         if not self.is_tile_in_bounds(target_x, target_y): return ([], {})
         out_map_tiles = []
         out_specials = {}
@@ -269,6 +269,7 @@ class Map():
                 else: 
                     new_line.append(map_tiles[real_y][real_x])
                     specials = self.find_room(real_x, real_y).specials
+                    if server_view and real_x == target_x and real_y == target_y: specials["cursor"] = "cursor"
                     if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
             out_map_tiles.append(new_line)
         return out_map_tiles, out_specials
