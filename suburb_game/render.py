@@ -270,10 +270,11 @@ class TextButton(UIElement):
 
 
 class Button(UIElement):
-    def __init__(self, x, y, unpressed_img_path:str, pressed_img_path:str, onpress:Callable, alt:Optional[Callable]=None, alt_img_path=None, altclick:Optional[Callable]=None, hover=None, theme:themes.Theme=suburb.current_theme()): # x and y as fractions of 1 (centered position on screen)
+    def __init__(self, x, y, unpressed_img_path:str, pressed_img_path:Optional[str], onpress:Callable, alt:Optional[Callable]=None, alt_img_path=None, altclick:Optional[Callable]=None, hover=None, theme:themes.Theme=suburb.current_theme()): # x and y as fractions of 1 (centered position on screen)
         super(Button, self).__init__()
         self.unpressed_img_path = unpressed_img_path
-        self.pressed_img_path = pressed_img_path
+        if pressed_img_path is None: self.pressed_img_path = self.unpressed_img_path
+        else: self.pressed_img_path = pressed_img_path
         self.x = x
         self.y = y
         self.onpress = onpress
@@ -292,7 +293,7 @@ class Button(UIElement):
         self.last_clicked = 0
         self.invert_on_click = False
         self.overlay_on_click = False
-        self.overlay_intensity = 255
+        self.overlay_intensity = 30
         click_check.append(self)
         update_check.append(self)
         mouseup_check.append(self)
@@ -310,7 +311,7 @@ class Button(UIElement):
                     inverted.blit(self.surf, (0, 0), None, pygame.BLEND_RGB_SUB)
                     self.surf = inverted
                 if self.overlay_on_click:
-                    self.surf.fill((self.overlay_intensity, self.overlay_intensity, self.overlay_intensity), None, pygame.BLEND_MULT)
+                    self.surf.fill((self.overlay_intensity, self.overlay_intensity, self.overlay_intensity), None, pygame.BLEND_ADD)
             else:
                 if self.hover != None and self.collidepoint(pygame.mouse.get_pos()):
                     self.surf = pygame.image.load(self.hover)
