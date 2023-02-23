@@ -51,8 +51,19 @@ def sburb(window: "render.Window"):
     specials = dic["specials"]
     instances = dic["instances"]
     room_name = dic["room_name"]
+    client_grist_cache = dic["client_grist_cache"]
     item_display = render.RoomItemDisplay(20, 210, instances, server_view=True)
     tile_map = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display, server_view=True)
+    build_display_box = render.SolidColor(235, 50, 150, 50, window.theme.white)
+    build_display_box.bind_to(window.viewport)
+    build_display_box.outline_color = window.theme.dark
+    build_grist_icon = render.Image(0.1, 0.6, "sprites/grists/build.png")
+    build_grist_icon.scale = 0.5
+    build_grist_icon.bind_to(build_display_box)
+    build_grist_number = render.Text(0.55, 0.6, str(client_grist_cache["build"]))
+    build_grist_number.set_fontsize_by_width(100)
+    build_grist_number.color = window.theme.dark
+    build_grist_number.bind_to(build_display_box)
     ui_bar = render.Image(0, 0, "sprites/computer/Sburb/sburb_ui.png")
     ui_bar.absolute = True
     ui_bar.bind_to(window.viewport)

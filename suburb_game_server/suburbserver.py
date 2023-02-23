@@ -240,7 +240,8 @@ def computer_shit(player: sessions.Player, content: dict):
             map_tiles, map_specials = client.land.housemap.get_view(x_coord, y_coord, 8, server_view=True)
             room = client.land.housemap.find_room(x_coord, y_coord)
             room_instances = room.get_instances()
-            return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name})
+            client_grist_cache = client.grist_cache
+            return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name, "client_grist_cache": client_grist_cache})
         case "is_tile_in_bounds":
             x_coord = content["x"]
             y_coord = content["y"]
