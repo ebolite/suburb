@@ -67,6 +67,10 @@ def sburb(window: "render.Window"):
     ui_bar = render.Image(0, 0, "sprites/computer/Sburb/sburb_ui.png")
     ui_bar.absolute = True
     ui_bar.bind_to(window.viewport)
+    spirograph = render.get_spirograph(0, 0)
+    spirograph.absolute = True
+    spirograph.scale = 0.5
+    spirograph.bind_to(ui_bar)
     def get_arrow_function(direction):
         def arrow_function():
             move_view_by_direction(direction)

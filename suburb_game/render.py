@@ -502,6 +502,12 @@ class Image(UIElement):
                     move_to_top.append(ui_element)
         self.blit_surf.blit(self.surf, (self.rect.x, self.rect.y))
 
+def get_spirograph(x, y) -> Image:
+    spirograph = Image(x, y, "sprites/spirograph/suburbspirograph")
+    spirograph.animated = True
+    spirograph.animframes = 164
+    return spirograph
+
 class Text(UIElement):
     def __init__(self, x, y, text: str):
         super(Text, self).__init__()
