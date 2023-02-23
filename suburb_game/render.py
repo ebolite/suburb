@@ -502,8 +502,10 @@ class Image(UIElement):
                     move_to_top.append(ui_element)
         self.blit_surf.blit(self.surf, (self.rect.x, self.rect.y))
 
-def get_spirograph(x, y) -> Image:
-    spirograph = Image(x, y, "sprites/spirograph/suburbspirograph")
+def get_spirograph(x, y, thick=True) -> Image:
+    if thick: path = "sprites/spirograph/thick/suburbspirograph"
+    else: path = "sprites/spirograph/thin/suburbspirograph"
+    spirograph = Image(x, y, path)
     spirograph.animated = True
     spirograph.animframes = 164
     return spirograph
