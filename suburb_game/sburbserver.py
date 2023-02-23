@@ -1,3 +1,5 @@
+from typing import Optional
+
 import render
 import client
 import themes
@@ -5,6 +7,7 @@ import themes
 client_username = None
 current_x = None
 current_y = None
+viewport_dic = {}
 
 def placeholder(): pass
 
@@ -34,26 +37,9 @@ def move_view_to_tile(target_x:int, target_y:int) -> bool:
         current_x = target_x
         current_y = target_y
         return True
-
-def sburb(window: "render.Window"):
-    window.theme = themes.default
-    if client_username is None: 
-        connect(window)
-        return
-    global current_x
-    global current_y
-    if current_x is None or current_y is None:
-        coords = client.requestplusdic(intent="computer", content={"command": "starting_sburb_coords"})
-        current_x = coords["x"]
-        current_y = coords["y"]
-    dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":current_x, "y":current_y})
-    new_map = dic["map"]
-    specials = dic["specials"]
-    instances = dic["instances"]
-    room_name = dic["room_name"]
-    client_grist_cache = dic["client_grist_cache"]
-    item_display = render.RoomItemDisplay(20, 210, instances, server_view=True)
-    tile_map = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display, server_view=True)
+    
+def draw_sburb_bar(window, tilemap: Optional["render.TileMap"]=None):
+    client_grist_cache = viewport_dic["client_grist_cache"]
     build_display_box = render.SolidColor(235, 50, 150, 50, window.theme.white)
     build_display_box.bind_to(window.viewport)
     build_display_box.outline_color = window.theme.dark
@@ -74,7 +60,7 @@ def sburb(window: "render.Window"):
     def get_arrow_function(direction):
         def arrow_function():
             move_view_by_direction(direction)
-            tile_map.update_map()
+            if tilemap is not None: tilemap.update_map()
         return arrow_function
     uparrow = render.Button(116, 56, "sprites/computer/Sburb/uparrow.png", "sprites/computer/Sburb/uparrow_pressed.png", get_arrow_function("up"))
     uparrow.absolute = True
@@ -146,6 +132,27 @@ def sburb(window: "render.Window"):
     alchemizebutton_background.border_radius = 2
     alchemizebutton_background.bind_to(alchemizebutton)
     alchemizebutton.bring_to_top()
+
+def sburb(window: "render.Window"):
+    window.theme = themes.default
+    if client_username is None: 
+        connect(window)
+        return
+    global current_x
+    global current_y
+    if current_x is None or current_y is None:
+        coords = client.requestplusdic(intent="computer", content={"command": "starting_sburb_coords"})
+        current_x = coords["x"]
+        current_y = coords["y"]
+    global viewport_dic
+    viewport_dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":current_x, "y":current_y})
+    new_map = viewport_dic["map"]
+    specials = viewport_dic["specials"]
+    instances = viewport_dic["instances"]
+    room_name = viewport_dic["room_name"]
+    item_display = render.RoomItemDisplay(20, 210, instances, server_view=True)
+    tilemap = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display, server_view=True)
+    draw_sburb_bar(window, tilemap)
 
 def connect(window: "render.Window"):
     username = client.requestdic(intent="player_info")["client_player_name"]
