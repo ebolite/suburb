@@ -103,9 +103,7 @@ class UIElement(pygame.sprite.Sprite):
             element.delete()
 
     def bring_to_top(self):
-        if self in update_check:
-            update_check.remove(self)
-            update_check.append(self)
+        move_to_top.append(self)
 
     def convert_to_theme(self, surf: Union[pygame.Surface, pygame.surface.Surface]) -> pygame.Surface:
         default_theme = themes.default
@@ -774,6 +772,10 @@ class RoomItemDisplay(UIElement):
         self.buttons = []
         self.update_instances(instances)
 
+    def delete(self):
+        for button in self.buttons:
+            button.delete()
+
     def update_instances(self, instances):
         def get_button_func(button_instance_name):
             if self.server_view:
@@ -1034,12 +1036,17 @@ class Window(SolidColor):
         self.xbutton.fill_color = self.theme.light
         self.xbutton.text_color = self.theme.white
         self.xbutton.fontsize = 24
-        match app_name:
+        self.initialize_viewport()
+        self.task_bar.bring_to_top()
+
+    def initialize_viewport(self):
+        for element in self.viewport.bound_elements.copy():
+            element.delete()
+        match self.app_name:
             case "gristTorrent":
                 suburb.gristtorrent(self)
             case "Sburb":
                 sburbserver.sburb(self)
-        self.task_bar.bring_to_top()
 
     def reload(self):
         app_name = self.app_name

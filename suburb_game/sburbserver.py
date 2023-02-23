@@ -7,6 +7,7 @@ import themes
 client_username = None
 current_x = None
 current_y = None
+current_mode = "select"
 viewport_dic = {}
 
 def placeholder(): pass
@@ -38,7 +39,14 @@ def move_view_to_tile(target_x:int, target_y:int) -> bool:
         current_y = target_y
         return True
     
-def draw_sburb_bar(window, tilemap: Optional["render.TileMap"]=None):
+def get_mode_change_button(mode: str, window: "render.Window"):
+    def button():
+        global current_mode
+        current_mode = mode
+        window.initialize_viewport()
+    return button
+
+def draw_sburb_bar(window: "render.Window", tilemap: Optional["render.TileMap"]=None):
     client_grist_cache = viewport_dic["client_grist_cache"]
     build_display_box = render.SolidColor(235, 50, 150, 50, window.theme.white)
     build_display_box.bind_to(window.viewport)
@@ -77,26 +85,32 @@ def draw_sburb_bar(window, tilemap: Optional["render.TileMap"]=None):
     middlebutton = render.Button(122, 84, "sprites/computer/Sburb/middlebutton.png", "sprites/computer/Sburb/middlebutton_pressed.png", placeholder)
     middlebutton.absolute = True
     middlebutton.bind_to(ui_bar)
-    selectbutton = render.Button(0.27, 0.16, "sprites/computer/Sburb/select_button.png", "sprites/computer/Sburb/select_button.png", placeholder)
+    selectbutton = render.Button(0.27, 0.16, "sprites/computer/Sburb/select_button.png", None, get_mode_change_button("select", window))
     selectbutton.overlay_on_click = True
     selectbutton.bind_to(ui_bar)
-    selectbutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.dark)
+    if current_mode == "select": selectcolor = window.theme.dark
+    else: selectcolor = window.theme.light
+    selectbutton_background = render.SolidColor(-2, -2, 49, 49, selectcolor)
     selectbutton_background.border_radius = 2
     selectbutton_background.bind_to(selectbutton)
     selectbutton.bring_to_top()
-    revisebutton = render.Button(55, 0, "sprites/computer/Sburb/revise_button.png", None, placeholder)
+    revisebutton = render.Button(55, 0, "sprites/computer/Sburb/revise_button.png", None, get_mode_change_button("revise", window))
     revisebutton.absolute = True
     revisebutton.overlay_on_click = True
     revisebutton.bind_to(selectbutton)
-    revisebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.dark)
+    if current_mode == "revise": revisecolor = window.theme.dark
+    else: revisecolor = window.theme.light
+    revisebutton_background = render.SolidColor(-2, -2, 49, 49, revisecolor)
     revisebutton_background.border_radius = 2
     revisebutton_background.bind_to(revisebutton)
     revisebutton.bring_to_top()
-    deploybutton = render.Button(55, 0, "sprites/computer/Sburb/deploy_button.png", None, placeholder)
+    deploybutton = render.Button(55, 0, "sprites/computer/Sburb/deploy_button.png", None, get_mode_change_button("deploy", window))
     deploybutton.absolute = True
     deploybutton.overlay_on_click = True
     deploybutton.bind_to(revisebutton)
-    deploybutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.dark)
+    if current_mode == "deploy": deploycolor = window.theme.dark
+    else: deploycolor = window.theme.light
+    deploybutton_background = render.SolidColor(-2, -2, 49, 49, deploycolor)
     deploybutton_background.border_radius = 2
     deploybutton_background.bind_to(deploybutton)
     deploybutton.bring_to_top()
@@ -104,7 +118,7 @@ def draw_sburb_bar(window, tilemap: Optional["render.TileMap"]=None):
     phernaliaregistrybutton.absolute = True
     phernaliaregistrybutton.overlay_on_click = True
     phernaliaregistrybutton.bind_to(deploybutton)
-    phernaliaregistrybutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.dark)
+    phernaliaregistrybutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     phernaliaregistrybutton_background.border_radius = 2
     phernaliaregistrybutton_background.bind_to(phernaliaregistrybutton)
     phernaliaregistrybutton.bring_to_top()
@@ -112,7 +126,7 @@ def draw_sburb_bar(window, tilemap: Optional["render.TileMap"]=None):
     gristcachebutton.absolute = True
     gristcachebutton.overlay_on_click = True
     gristcachebutton.bind_to(phernaliaregistrybutton)
-    gristcachebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.dark)
+    gristcachebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     gristcachebutton_background.border_radius = 2
     gristcachebutton_background.bind_to(gristcachebutton)
     gristcachebutton.bring_to_top()
@@ -120,7 +134,7 @@ def draw_sburb_bar(window, tilemap: Optional["render.TileMap"]=None):
     atheneumbutton.absolute = True
     atheneumbutton.overlay_on_click = True
     atheneumbutton.bind_to(gristcachebutton)
-    atheneumbutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.dark)
+    atheneumbutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     atheneumbutton_background.border_radius = 2
     atheneumbutton_background.bind_to(atheneumbutton)
     atheneumbutton.bring_to_top()
@@ -128,7 +142,7 @@ def draw_sburb_bar(window, tilemap: Optional["render.TileMap"]=None):
     alchemizebutton.absolute = True
     alchemizebutton.overlay_on_click = True
     alchemizebutton.bind_to(atheneumbutton)
-    alchemizebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.dark)
+    alchemizebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     alchemizebutton_background.border_radius = 2
     alchemizebutton_background.bind_to(alchemizebutton)
     alchemizebutton.bring_to_top()
