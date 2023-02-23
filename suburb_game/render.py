@@ -557,7 +557,7 @@ class TileMap(UIElement):
         else:
             self.label = None
         self.input_text_box: Optional[InputTextBox] = None
-        self.update_map(map)
+        self.initialize_map(map)
         update_check.append(self)
         key_check.append(self)
 
@@ -565,7 +565,7 @@ class TileMap(UIElement):
         for tile in self.tiles:
             self.tiles[tile].update()
 
-    def update_map(self, map):
+    def initialize_map(self, map):
         if self.map != map or len(self.tiles) == 0:
             self.map = map
             self.rect = pygame.Rect(0, 0, len(map[0])*tile_wh, len(map)*tile_wh)
@@ -577,6 +577,18 @@ class TileMap(UIElement):
             for y, line in enumerate(map):
                 for x, char in enumerate(line):
                     self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials, self.server_view)
+
+    def update_map(self):
+        if self.server_view:
+            dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":sburbserver.current_x, "y":sburbserver.current_y})
+        else:
+            dic = client.requestdic("current_map")
+        self.map = dic["map"]
+        self.specials = dic["specials"]
+        self.instances = dic["instances"]
+        self.room_name = dic["room_name"]
+        self.item_display.update_instances(self.instances)
+        if self.label is not None: self.label.text = self.room_name
 
     def keypress(self, event):
         if self.input_text_box is not None and self.input_text_box.active: return
@@ -592,16 +604,10 @@ class TileMap(UIElement):
             case _: return
         if self.server_view:
             sburbserver.move_view_by_direction(direction)
-            dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":sburbserver.current_x, "y":sburbserver.current_y})
         else:
             client.requestplus("move", direction)
-            dic = client.requestdic("current_map")
-        self.map = dic["map"]
-        self.specials = dic["specials"]
-        self.instances = dic["instances"]
-        self.room_name = dic["room_name"]
-        self.item_display.update_instances(self.instances)
-        if self.label is not None: self.label.text = self.room_name
+        self.update_map()
+        
 
     def delete(self):
         for tile in self.tiles:
@@ -643,6 +649,8 @@ class Tile(UIElement):
         self.specials = specials
         self.server_view = server_view
         self.last_tile = self.tile
+        if server_view:
+            mouseup_check.append(self)
 
     def update_image(self):
         try: self.image
@@ -650,6 +658,15 @@ class Tile(UIElement):
         if self.last_tile != self.tile: 
             self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
             self.last_tile = self.tile
+
+    def mouseup(self, isclicked):
+        if isclicked:
+            center_tile_x = len(self.TileMap.map)//2
+            center_tile_y = len(self.TileMap.map)//2
+            x_diff = self.x - center_tile_x
+            y_diff = self.y - center_tile_y
+            sburbserver.move_view_to_tile(sburbserver.current_x+x_diff, sburbserver.current_y+y_diff)
+            self.TileMap.update_map()
 
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly
@@ -1027,12 +1044,12 @@ def render():
             for sprite in scroll_check:
                 sprite.scroll(event.y)
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             for sprite in click_check:
                 #sprites with click events will know if the click is on them or not
                 sprite.onclick(sprite.collidepoint(event.pos))
 
-        if event.type == pygame.MOUSEBUTTONUP:
+        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
             for sprite in mouseup_check:
                 sprite.mouseup(sprite.collidepoint(event.pos))
 
