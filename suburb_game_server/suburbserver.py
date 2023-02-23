@@ -130,7 +130,7 @@ def handle_request(dict):
             else: target_instance = None
             return use_item(player, instance, action_name, target_instance)
         case "computer":
-            return computer_shit(player, content)
+            return computer_shit(player, content, session)
         case "drop_empty_card":
             return player.drop_empty_card()
         case "captchalogue":
@@ -211,7 +211,7 @@ def construct_chain(player_name: str) -> list:
             chain.append(client_player_name)
             current_player = sessions.Player(client_player_name)
 
-def computer_shit(player: sessions.Player, content: dict):
+def computer_shit(player: sessions.Player, content: dict, session:sessions.Session):
     for instance_name in player.sylladex + player.room.instances:
         instance = alchemy.Instance(instance_name)
         if "computer" in instance.item.use:
@@ -261,6 +261,8 @@ def computer_shit(player: sessions.Player, content: dict):
             if player.client_player_name is not None: return "You already have a client."
             player.client_player_name = client_player_username
             client_player.server_player_name = player.username
+            session.connected.append(client_player_username)
+            client_player.grist_cache["build"] += min(2 * len(session.connected) * 10, 20000)
             return "Successfully connected."
 
 def console_commands(player: sessions.Player, content: str):

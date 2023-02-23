@@ -42,6 +42,7 @@ class Session():
         if name not in util.sessions:
             util.sessions[name] = {}
             self.starting_players = []
+            self.connected = []
             self.overmaps = {}          
 
     def __setattr__(self, attr, value):
