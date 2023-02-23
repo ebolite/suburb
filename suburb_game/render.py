@@ -961,21 +961,27 @@ class TaskBar(UIElement):
         self.task_bar = SolidColor(0, SCREEN_HEIGHT-self.h, SCREEN_WIDTH, self.h, self.theme.dark)
         self.task_bar.outline_color = self.theme.light
         self.task_bar.outline_width = self.padding
-        actuate_button_box = SolidColor(0, SCREEN_HEIGHT-self.h, 120 + self.padding*2, self.h, self.theme.dark)
-        actuate_button_box.outline_color = self.theme.light
-        actuate_button_box.outline_width = self.padding
-        actuate_button = TextButton(self.padding, SCREEN_HEIGHT-self.h+self.padding, 120, self.h - self.padding*2, " ACTUATE", suburb.map)
-        actuate_button.absolute = True
-        actuate_button.outline_color = self.theme.black
-        actuate_button.fill_color = self.theme.dark
-        actuate_button.hover_color = self.theme.light
-        actuate_button.text_color = self.theme.white
-        actuate_button.outline_width = self.padding
-        actuate_button_image = Image(0.15, 0.5, "sprites/computer/little_green_circle.png")
-        actuate_button_image.bind_to(actuate_button)
+        self.actuate_button_box = SolidColor(0, SCREEN_HEIGHT-self.h, 120 + self.padding*2, self.h, self.theme.dark)
+        self.actuate_button_box.outline_color = self.theme.light
+        self.actuate_button_box.outline_width = self.padding
+        self.actuate_button = TextButton(self.padding, SCREEN_HEIGHT-self.h+self.padding, 120, self.h - self.padding*2, " ACTUATE", suburb.map)
+        self.actuate_button.absolute = True
+        self.actuate_button.outline_color = self.theme.black
+        self.actuate_button.fill_color = self.theme.dark
+        self.actuate_button.hover_color = self.theme.light
+        self.actuate_button.text_color = self.theme.white
+        self.actuate_button.outline_width = self.padding
+        self.actuate_button_image = Image(0.15, 0.5, "sprites/computer/little_green_circle.png")
+        self.actuate_button_image.bind_to(self.actuate_button)
         # todo: time on bottom right
-        self.apps = [actuate_button]
+        self.apps = [self.actuate_button]
         self.open_windows = []
+
+    def bring_to_top(self):
+        self.task_bar.bring_to_top()
+        self.actuate_button_box.bring_to_top()
+        self.actuate_button.bring_to_top()
+        self.actuate_button_image.bring_to_top()
 
 class AppIcon(Button):
     def __init__(self, x, y, app_name: str, task_bar: TaskBar):
@@ -1032,6 +1038,7 @@ class Window(SolidColor):
                 suburb.gristtorrent(self)
             case "Sburb":
                 sburbserver.sburb(self)
+        self.task_bar.bring_to_top()
 
     def reload(self):
         app_name = self.app_name

@@ -153,7 +153,9 @@ def sburb(window: "render.Window"):
     instances = viewport_dic["instances"]
     room_name = viewport_dic["room_name"]
     item_display = render.RoomItemDisplay(20, 210, instances, server_view=True)
+    item_display.bind_to(window.viewport)
     tilemap = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display, server_view=True)
+    tilemap.bind_to(window.viewport)
     draw_sburb_bar(window, tilemap)
 
 def connect(window: "render.Window"):
