@@ -627,7 +627,7 @@ def map():
     specials = dic["specials"]
     instances = dic["instances"]
     room_name = dic["room_name"]
-    item_display = render.RoomItemDisplay(20, 50, instances)
+    item_display = render.RoomItemDisplay(20, 80, instances)
     Sylladex.current_sylladex().draw_ui_bar(map)
     tilemap = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display)
     log = render.LogWindow(map, tilemap=tilemap, draw_console=True)

@@ -6,6 +6,8 @@ client_username = None
 current_x = None
 current_y = None
 
+def placeholder(): pass
+
 def is_tile_in_bounds(map_tiles, x: int, y: int) -> bool:
     if y < 0: return False
     if x < 0: return False
@@ -49,8 +51,31 @@ def sburb(window: "render.Window"):
     specials = dic["specials"]
     instances = dic["instances"]
     room_name = dic["room_name"]
-    item_display = render.RoomItemDisplay(20, 175, instances, server_view=True)
-    tile_map = render.TileMap(0.5, 0.6, new_map, specials, room_name, item_display, server_view=True)
+    item_display = render.RoomItemDisplay(20, 210, instances, server_view=True)
+    tile_map = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display, server_view=True)
+    ui_bar = render.Image(0, 0, "sprites/computer/Sburb/sburb_ui.png")
+    ui_bar.absolute = True
+    ui_bar.bind_to(window.viewport)
+    def get_arrow_function(direction):
+        def arrow_function():
+            move_view_by_direction(direction)
+            tile_map.update_map()
+        return arrow_function
+    uparrow = render.Button(116, 56, "sprites/computer/Sburb/uparrow.png", "sprites/computer/Sburb/uparrow_pressed.png", get_arrow_function("up"))
+    uparrow.absolute = True
+    uparrow.bind_to(ui_bar)
+    leftarrow = render.Button(94, 78, "sprites/computer/Sburb/leftarrow.png", "sprites/computer/Sburb/leftarrow_pressed.png", get_arrow_function("left"))
+    leftarrow.absolute = True
+    leftarrow.bind_to(ui_bar)
+    rightarrow = render.Button(148, 78, "sprites/computer/Sburb/rightarrow.png", "sprites/computer/Sburb/rightarrow_pressed.png", get_arrow_function("right"))
+    rightarrow.absolute = True
+    rightarrow.bind_to(ui_bar)
+    downarrow = render.Button(116, 110, "sprites/computer/Sburb/downarrow.png", "sprites/computer/Sburb/downarrow_pressed.png", get_arrow_function("down"))
+    downarrow.absolute = True
+    downarrow.bind_to(ui_bar)
+    middlebutton = render.Button(122, 84, "sprites/computer/Sburb/middlebutton.png", "sprites/computer/Sburb/middlebutton_pressed.png", placeholder)
+    middlebutton.absolute = True
+    middlebutton.bind_to(ui_bar)
 
 def connect(window: "render.Window"):
     username = client.requestdic(intent="player_info")["client_player_name"]
