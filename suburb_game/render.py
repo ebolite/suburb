@@ -291,6 +291,8 @@ class Button(UIElement):
         self.double_click = False
         self.last_clicked = 0
         self.invert_on_click = False
+        self.overlay_on_click = False
+        self.overlay_intensity = 255
         click_check.append(self)
         update_check.append(self)
         mouseup_check.append(self)
@@ -307,6 +309,8 @@ class Button(UIElement):
                     inverted.fill((255, 255, 255, 255))
                     inverted.blit(self.surf, (0, 0), None, pygame.BLEND_RGB_SUB)
                     self.surf = inverted
+                if self.overlay_on_click:
+                    self.surf.fill((self.overlay_intensity, self.overlay_intensity, self.overlay_intensity), None, pygame.BLEND_MULT)
             else:
                 if self.hover != None and self.collidepoint(pygame.mouse.get_pos()):
                     self.surf = pygame.image.load(self.hover)

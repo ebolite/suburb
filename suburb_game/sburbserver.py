@@ -88,6 +88,7 @@ def sburb(window: "render.Window"):
     middlebutton.absolute = True
     middlebutton.bind_to(ui_bar)
     selectbutton = render.Button(0.26, 0.16, "sprites/computer/Sburb/select_button.png", "sprites/computer/Sburb/select_button.png", placeholder)
+    selectbutton.overlay_on_click = True
     selectbutton.bind_to(ui_bar)
     selectbutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.dark)
     selectbutton_background.border_radius = 2
