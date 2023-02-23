@@ -650,7 +650,7 @@ class Tile(UIElement):
         self.server_view = server_view
         self.last_tile = self.tile
         if server_view:
-            mouseup_check.append(self)
+            click_check.append(self)
 
     def update_image(self):
         try: self.image
@@ -659,12 +659,13 @@ class Tile(UIElement):
             self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
             self.last_tile = self.tile
 
-    def mouseup(self, isclicked):
+    def onclick(self, isclicked):
         if isclicked:
             center_tile_x = len(self.TileMap.map)//2
             center_tile_y = len(self.TileMap.map)//2
             x_diff = self.x - center_tile_x
             y_diff = self.y - center_tile_y
+            if x_diff == 0 and y_diff == 0: return
             sburbserver.move_view_to_tile(sburbserver.current_x+x_diff, sburbserver.current_y+y_diff)
             self.TileMap.update_map()
 
