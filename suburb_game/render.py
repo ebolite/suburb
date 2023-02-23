@@ -760,6 +760,7 @@ class Tile(UIElement):
 
 class RoomItemDisplay(UIElement):
     def __init__(self, x, y, instances: dict, server_view=False):
+        super().__init__()
         self.x = x
         self.y = y
         self.w = 330
