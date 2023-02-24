@@ -83,22 +83,16 @@ def draw_sburb_bar(window: "render.Window", tilemap: Optional["render.TileMap"]=
     selectbutton_background.border_radius = 2
     selectbutton = render.Button(0.27, 0.16, "sprites/computer/Sburb/select_button.png", None, placeholder)
     selectbutton.overlay_on_click = True
-    selectbutton.bind_to(ui_bar)
-    selectbutton_background.bind_to(selectbutton)
     revisebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     revisebutton_background.border_radius = 2
     revisebutton = render.Button(55, 0, "sprites/computer/Sburb/revise_button.png", None, placeholder)
     revisebutton.absolute = True
     revisebutton.overlay_on_click = True
-    revisebutton.bind_to(selectbutton)
-    revisebutton_background.bind_to(revisebutton)
     deploybutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     deploybutton_background.border_radius = 2
     deploybutton = render.Button(55, 0, "sprites/computer/Sburb/deploy_button.png", None, placeholder)
     deploybutton.absolute = True
     deploybutton.overlay_on_click = True
-    deploybutton.bind_to(revisebutton)
-    deploybutton_background.bind_to(deploybutton)
     def update_buttons():
         selectbutton_background.color = window.theme.light
         revisebutton_background.color = window.theme.light
@@ -122,27 +116,33 @@ def draw_sburb_bar(window: "render.Window", tilemap: Optional["render.TileMap"]=
     phernaliaregistrybutton = render.Button(55, 0, "sprites/computer/Sburb/phernalia_registry_button.png", None, placeholder)
     phernaliaregistrybutton.absolute = True
     phernaliaregistrybutton.overlay_on_click = True
-    phernaliaregistrybutton.bind_to(deploybutton)
-    phernaliaregistrybutton_background.bind_to(phernaliaregistrybutton)
     gristcachebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     gristcachebutton_background.border_radius = 2
     gristcachebutton = render.Button(55, 0, "sprites/computer/Sburb/grist_cache_button.png", None, placeholder)
     gristcachebutton.absolute = True
     gristcachebutton.overlay_on_click = True
-    gristcachebutton.bind_to(phernaliaregistrybutton)
-    gristcachebutton_background.bind_to(gristcachebutton)
     atheneumbutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     atheneumbutton_background.border_radius = 2
     atheneumbutton = render.Button(55, 0, "sprites/computer/Sburb/atheneum_button.png", None, placeholder)
     atheneumbutton.absolute = True
     atheneumbutton.overlay_on_click = True
-    atheneumbutton.bind_to(gristcachebutton)
-    atheneumbutton_background.bind_to(atheneumbutton)
     alchemizebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     alchemizebutton_background.border_radius = 2
     alchemizebutton = render.Button(55, 0, "sprites/computer/Sburb/alchemize_button.png", None, placeholder)
     alchemizebutton.absolute = True
     alchemizebutton.overlay_on_click = True
+    selectbutton.bind_to(ui_bar)
+    selectbutton_background.bind_to(selectbutton)
+    revisebutton.bind_to(selectbutton)
+    revisebutton_background.bind_to(revisebutton)
+    deploybutton.bind_to(revisebutton)
+    deploybutton_background.bind_to(deploybutton)
+    phernaliaregistrybutton.bind_to(deploybutton)
+    phernaliaregistrybutton_background.bind_to(phernaliaregistrybutton)
+    gristcachebutton.bind_to(phernaliaregistrybutton)
+    gristcachebutton_background.bind_to(gristcachebutton)
+    atheneumbutton.bind_to(gristcachebutton)
+    atheneumbutton_background.bind_to(atheneumbutton)
     alchemizebutton.bind_to(atheneumbutton)
     alchemizebutton_background.bind_to(alchemizebutton)
 
@@ -154,7 +154,8 @@ def draw_info_window(window: "render.Window") -> "render.SolidColor":
     iw_outline_width = 4
     iw_x = window.viewport.w-iw_w-iw_outline_width
     iw_y = window.viewport.h-iw_h-iw_outline_width-padding
-    top_pad_w = iw_w + iw_outline_width*2
+    # outline width x3 so it can extend to the right like it's coming from the side
+    top_pad_w = iw_w + iw_outline_width*3
     top_pad_h = 20 + iw_outline_width*2
     top_pad_x = 0 - iw_outline_width
     top_pad_y = 0 - top_pad_h + padding
