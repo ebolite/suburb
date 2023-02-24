@@ -71,6 +71,8 @@ class UIElement(pygame.sprite.Sprite):
         self.y = 0
         self.theme: themes.Theme = suburb.current_theme()
         self.bound_elements: list[UIElement] = []
+        # temporary elements are meant to be disposed of
+        self.temporary_elements: list[UIElement] = []
         self.blit_surf = screen
         ui_elements.append(self)
 
@@ -84,15 +86,21 @@ class UIElement(pygame.sprite.Sprite):
     def is_mouseover(self):
         return self.collidepoint(pygame.mouse.get_pos())
 
-    def bind_to(self, element: "UIElement"):
+    def bind_to(self, element: "UIElement", temporary=False):
         self.relative_binding = element
-        element.bound_elements.append(self)
+        if temporary:
+            element.temporary_elements.append(self)
+        else:
+            element.bound_elements.append(self)
 
     def delete(self):
-        for element in self.bound_elements.copy():
+        for element in self.bound_elements + self.temporary_elements:
             element.delete()
         if self in ui_elements:
             ui_elements.remove(self)
+        if self.relative_binding is not None:
+            if self in self.relative_binding.bound_elements: self.relative_binding.bound_elements.remove(self)
+            if self in self.relative_binding.temporary_elements: self.relative_binding.temporary_elements.remove(self)
         for list in checks:
             if self in list:
                 list.remove(self)
@@ -100,6 +108,12 @@ class UIElement(pygame.sprite.Sprite):
 
     def kill_bound_elements(self):
         for element in self.bound_elements.copy():
+            element.delete()
+        for element in self.temporary_elements.copy():
+            element.delete()
+    
+    def kill_temporary_elements(self):
+        for element in self.temporary_elements.copy():
             element.delete()
 
     def bring_to_top(self):
@@ -496,7 +510,7 @@ class Image(UIElement):
                 # move to top (last in update_check list)
                 move_to_top.append(self)
                 # move our bound elements to the top
-                for ui_element in self.bound_elements:
+                for ui_element in self.bound_elements + self.temporary_elements:
                     move_to_top.append(ui_element)
         self.blit_surf.blit(self.surf, (self.rect.x, self.rect.y))
 

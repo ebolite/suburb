@@ -221,7 +221,8 @@ def grist_cache(info_window: "render.SolidColor"):
         else:
             rows.append([grist_name])
     def make_rows(page):
-        info_window.kill_bound_elements()
+        info_window.kill_temporary_elements()
+        print(info_window.temporary_elements)
         display_rows = rows[page*num_rows:page*num_rows + num_rows]
         print("display rows", display_rows)
         for row_index, row in enumerate(display_rows):
@@ -229,10 +230,10 @@ def grist_cache(info_window: "render.SolidColor"):
             for column_index, grist_name in enumerate(row):
                 grist_box_x = padding + (grist_box_w+padding)*column_index
                 box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, 
-                                                grist_name, 5, 10, 
+                                                grist_name, grist_cache[grist_name], grist_cache_limit, 
                                                 info_window.theme, info_window.theme.white, info_window.theme.dark, info_window.theme.dark,
                                                 use_grist_color=True)
-                box.bind_to(info_window)
+                box.bind_to(info_window, temporary=True)
         def get_leftbutton_func(page_num):
             def leftbutton_func():
                 if page_num == 0: pass
@@ -249,10 +250,10 @@ def grist_cache(info_window: "render.SolidColor"):
         page_button_y = info_window.h-page_button_h-padding
         left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<--", get_leftbutton_func(page))
         left_button.absolute = True
-        left_button.bind_to(info_window)
+        left_button.bind_to(info_window, temporary=True)
         right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "-->", get_rightbutton_func(page))
         right_button.absolute = True
-        right_button.bind_to(info_window)
+        right_button.bind_to(info_window, temporary=True)
     make_rows(0)
 
 def sburb(window: "render.Window"):
