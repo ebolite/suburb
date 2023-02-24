@@ -1070,9 +1070,16 @@ class Window(SolidColor):
         if self in self.task_bar.open_windows: self.task_bar.open_windows.remove(self)
         super().delete()
 
-def make_grist_display(x, y, w: int, h: int, padding: int, grist_name: str, grist_amount: int, cache_limit: int, theme: themes.Theme) -> SolidColor:
-    border_radius = 2
-    grist_box = SolidColor(x,  y, w, h, theme.dark)
+def make_grist_display(x, y, w: int, h: int, padding: int, 
+                       grist_name: str, grist_amount: int, 
+                       cache_limit: int, theme: themes.Theme, 
+                       box_color: Optional[pygame.Color]=None, 
+                       filled_color: Optional[pygame.Color]=None,
+                       label_color: Optional[pygame.Color]=None) -> SolidColor:
+    box_color = box_color or theme.dark
+    filled_color = filled_color or theme.light
+    label_color = label_color or theme.light
+    grist_box = SolidColor(x,  y, w, h, box_color)
     grist_box.border_radius = 2
     grist_image_path = f"sprites/grists/{grist_name}.png"
     anim_grist_image_path = f"sprites/grists/{grist_name}-1.png"
@@ -1080,7 +1087,7 @@ def make_grist_display(x, y, w: int, h: int, padding: int, grist_name: str, gris
         x = 0.1
         y = 0.5
         # grist images are 48x48, we wanna make sure they are scaled to the box plus some padding
-        grist_image_scale = h/(48+padding)
+        grist_image_scale = min(h, w//6)/(48+padding)
         if os.path.isfile(anim_grist_image_path):
             grist_image = Image(x, y, f"sprites/grists/{grist_name}")
             grist_image.animated = True
@@ -1089,16 +1096,16 @@ def make_grist_display(x, y, w: int, h: int, padding: int, grist_name: str, gris
             grist_image = Image(x, y, grist_image_path)
         grist_image.scale = grist_image_scale
         grist_image.bind_to(grist_box)
-    bar_background = SolidColor(0.2, 0.25, w//1.3, h//4, theme.dark)
+    bar_background = SolidColor(0.2, 0.25, w//1.3, h//3.5, box_color)
     bar_background.border_radius = 2
     bar_background.outline_color = theme.black
     bar_background.absolute = False
     bar_background.bind_to(grist_box)
     filled_bar_width = int((w//1.3 - 4) * grist_amount/cache_limit)
-    bar_filled = SolidColor(2, 2, filled_bar_width, h//4 - 4, theme.light)
+    bar_filled = SolidColor(2, 2, filled_bar_width, h//3.5 - 4, filled_color)
     bar_filled.bind_to(bar_background)
-    bar_label = Text(0.5, 2.5, str(grist_amount))
-    bar_label.color = theme.light
+    bar_label = Text(0.5, 2.2, str(grist_amount))
+    bar_label.color = label_color
     bar_label.fontsize = 12
     bar_label.bind_to(bar_background)
     return grist_box

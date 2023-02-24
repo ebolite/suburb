@@ -192,8 +192,31 @@ def draw_info_window(window: "render.Window") -> "render.SolidColor":
     text.bind_to(top_pad)
     return info_window
 
-def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
-    ...
+def grist_cache(info_window: "render.SolidColor"):
+    padding = 5
+    player_dict = client.requestdic("player_info")
+    grist_cache: dict = player_dict["grist_cache"]
+    print(grist_cache)
+    grist_cache_limit = player_dict["grist_cache_limit"]
+    nonzero_grist = []
+    zero_grist = []
+    for grist_name, amount in grist_cache.items():
+        if amount > 0: nonzero_grist.append(grist_name)
+        else: zero_grist.append(grist_name)
+    columns = 2
+    rows = 10
+    usable_area_w = info_window.w
+    usable_area_h = info_window.h
+    grist_box_w = usable_area_w//columns - padding*2
+    grist_box_h = usable_area_h//rows - padding*2
+    for column_index in range(columns):
+        grist_box_x = padding + (grist_box_w+padding)*column_index
+        for row_index in range(rows):
+            grist_box_y = padding + (grist_box_h+padding)*row_index
+            box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, 
+                                            "build", 5, 10, 
+                                            info_window.theme, info_window.theme.light, info_window.theme.dark, info_window.theme.dark)
+            box.bind_to(info_window)
 
 def sburb(window: "render.Window"):
     window.theme = themes.default
@@ -221,6 +244,7 @@ def sburb(window: "render.Window"):
     tilemap = render.TileMap(0.5, 0.55, new_map, specials, room_name, item_display, server_view=True)
     tilemap.bind_to(window.viewport)
     info_window = draw_info_window(window)
+    grist_cache(info_window)
     draw_sburb_bar(window, tilemap)
 
 def connect(window: "render.Window"):
