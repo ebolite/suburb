@@ -572,6 +572,12 @@ class TileMap(UIElement):
             self.label.bind_to(self)
         else:
             self.label = None
+        self.w = (len(self.map)-2)*32
+        self.h = (len(self.map[0])-2)*32
+        outline_width = 6
+        self.background = SolidColor(32-outline_width, 32-outline_width, self.w + outline_width*2, self.h + outline_width*2, self.theme.dark)
+        self.background.border_radius = 3
+        self.background.bind_to(self)
         self.input_text_box: Optional[InputTextBox] = None
         self.initialize_map(map)
         update_check.append(self)
