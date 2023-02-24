@@ -152,10 +152,9 @@ def draw_info_window(window: "render.Window") -> "render.SolidColor":
     iw_w = 370
     iw_h = 500
     iw_outline_width = 4
-    iw_x = window.viewport.w-iw_w-iw_outline_width
+    iw_x = window.viewport.w-iw_w-iw_outline_width+iw_outline_width
     iw_y = window.viewport.h-iw_h-iw_outline_width-padding
-    # outline width x3 so it can extend to the right like it's coming from the side
-    top_pad_w = iw_w + iw_outline_width*3
+    top_pad_w = iw_w + iw_outline_width*2
     top_pad_h = 20 + iw_outline_width*2
     top_pad_x = 0 - iw_outline_width
     top_pad_y = 0 - top_pad_h + padding
