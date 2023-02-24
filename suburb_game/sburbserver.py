@@ -170,9 +170,16 @@ def draw_info_window(window: "render.Window") -> "render.SolidColor":
     info_window.outline_color = window.theme.dark
     info_window.outline_width = iw_outline_width
     info_window.border_radius = border_radius
+    text_fontsize = top_pad_h - padding*2
+    text_y = top_pad_h//2 - padding - text_fontsize//2 + 2
+    text = render.Text(padding, text_y, "text")
+    text.color = window.theme.light
+    text.absolute = True
+    text.fontsize = text_fontsize
     info_window.bind_to(window.viewport)
     top_pad.bind_to(info_window)
     header.bind_to(top_pad)
+    text.bind_to(top_pad)
     return info_window
 
 def sburb(window: "render.Window"):
