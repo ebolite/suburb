@@ -800,7 +800,7 @@ def gristtorrent(window: "render.Window"):
         grist_box_x = padding + (grist_box_w+padding)*column_index 
         for row_index, grist_name in enumerate(column):
             grist_box_y = 150 + padding + (grist_box_h+padding)*row_index
-            box = render.SolidColor(grist_box_x, grist_box_y, grist_box_w, grist_box_h, theme.dark)
+            box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, grist_name, grist_cache[grist_name], grist_cache_limit, theme)
             box.border_radius = 2
             if grist_name in leeching: box.outline_color = pygame.Color(255, 0, 0)
             box.bind_to(viewport)
@@ -808,33 +808,6 @@ def gristtorrent(window: "render.Window"):
             box_button.absolute = True
             box_button.draw_sprite = False
             box_button.bind_to(viewport)
-            grist_image_path = f"sprites/grists/{grist_name}.png"
-            anim_grist_image_path = f"sprites/grists/{grist_name}-1.png"
-            if os.path.isfile(grist_image_path) or os.path.isfile(anim_grist_image_path):
-                x = 0.1
-                y = 0.5
-                # grist images are 48x48, we wanna make sure they are scaled to the box plus some padding
-                grist_image_scale = grist_box_h/(48+padding)
-                if os.path.isfile(anim_grist_image_path):
-                    grist_image = render.Image(x, y, f"sprites/grists/{grist_name}")
-                    grist_image.animated = True
-                    grist_image.animframes = 4
-                else:
-                    grist_image = render.Image(x, y, grist_image_path)
-                grist_image.scale = grist_image_scale
-                grist_image.bind_to(box)
-            bar_background = render.SolidColor(0.2, 0.25, grist_box_w//1.3, grist_box_h//4, theme.dark)
-            bar_background.border_radius = 2
-            bar_background.outline_color = theme.black
-            bar_background.absolute = False
-            bar_background.bind_to(box)
-            filled_bar_width = int((grist_box_w//1.3 - 4) * grist_cache[grist_name]/grist_cache_limit)
-            bar_filled = render.SolidColor(2, 2, filled_bar_width, grist_box_h//4 - 4, theme.light)
-            bar_filled.bind_to(bar_background)
-            bar_label = render.Text(0.5, 2.5, str(grist_cache[grist_name]))
-            bar_label.color = theme.light
-            bar_label.fontsize = 12
-            bar_label.bind_to(bar_background)
     gutter_box_width = viewport.w//2
     gutter_box_height = 40
     gutter_box = render.SolidColor(viewport.w-gutter_box_width-padding, viewport.h-gutter_box_height-padding, gutter_box_width, gutter_box_height, theme.white)

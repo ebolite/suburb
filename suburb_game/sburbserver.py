@@ -192,6 +192,9 @@ def draw_info_window(window: "render.Window") -> "render.SolidColor":
     text.bind_to(top_pad)
     return info_window
 
+def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
+    ...
+
 def sburb(window: "render.Window"):
     window.theme = themes.default
     window.viewport.color = window.theme.light

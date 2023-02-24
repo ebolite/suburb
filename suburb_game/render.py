@@ -1070,6 +1070,39 @@ class Window(SolidColor):
         if self in self.task_bar.open_windows: self.task_bar.open_windows.remove(self)
         super().delete()
 
+def make_grist_display(x, y, w: int, h: int, padding: int, grist_name: str, grist_amount: int, cache_limit: int, theme: themes.Theme) -> SolidColor:
+    border_radius = 2
+    grist_box = SolidColor(x,  y, w, h, theme.dark)
+    grist_box.border_radius = 2
+    grist_image_path = f"sprites/grists/{grist_name}.png"
+    anim_grist_image_path = f"sprites/grists/{grist_name}-1.png"
+    if os.path.isfile(grist_image_path) or os.path.isfile(anim_grist_image_path):
+        x = 0.1
+        y = 0.5
+        # grist images are 48x48, we wanna make sure they are scaled to the box plus some padding
+        grist_image_scale = h/(48+padding)
+        if os.path.isfile(anim_grist_image_path):
+            grist_image = Image(x, y, f"sprites/grists/{grist_name}")
+            grist_image.animated = True
+            grist_image.animframes = 4
+        else:
+            grist_image = Image(x, y, grist_image_path)
+        grist_image.scale = grist_image_scale
+        grist_image.bind_to(grist_box)
+    bar_background = SolidColor(0.2, 0.25, w//1.3, h//4, theme.dark)
+    bar_background.border_radius = 2
+    bar_background.outline_color = theme.black
+    bar_background.absolute = False
+    bar_background.bind_to(grist_box)
+    filled_bar_width = int((w//1.3 - 4) * grist_amount/cache_limit)
+    bar_filled = SolidColor(2, 2, filled_bar_width, h//4 - 4, theme.light)
+    bar_filled.bind_to(bar_background)
+    bar_label = Text(0.5, 2.5, str(grist_amount))
+    bar_label.color = theme.light
+    bar_label.fontsize = 12
+    bar_label.bind_to(bar_background)
+    return grist_box
+
 def render():
     for ui_element in move_to_top.copy():
         update_check.remove(ui_element)
