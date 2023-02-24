@@ -204,10 +204,16 @@ def grist_cache(info_window: "render.SolidColor"):
     for grist_name, amount in grist_cache.items():
         if amount > 0: nonzero_grist.append(grist_name)
         else: zero_grist.append(grist_name)
-    page = 0
+    page_num = 0
     num_columns = 2
     num_rows = 10
+    usable_area_w = info_window.w
+    usable_area_h = info_window.h - 25
+    grist_box_w = usable_area_w//num_columns - padding*2
+    grist_box_h = (usable_area_h-padding)//num_rows - padding
+    boxes = []
     rows = []
+    print(rows)
     grist_order = nonzero_grist + zero_grist
     for grist_name in grist_order:
         for row in rows:
@@ -216,22 +222,32 @@ def grist_cache(info_window: "render.SolidColor"):
                 break
         else:
             rows.append([grist_name])
-    print(rows)
-    usable_area_w = info_window.w
-    usable_area_h = info_window.h - padding
-    grist_box_w = usable_area_w//num_columns - padding*2
-    grist_box_h = usable_area_h//num_rows - padding
-    display_rows = rows[page*num_rows:page*num_rows + num_rows]
-    print(display_rows)
-    for row_index, row in enumerate(display_rows):
-        grist_box_y = padding + (grist_box_h+padding)*row_index
-        for column_index, grist_name in enumerate(row):
-            grist_box_x = padding + (grist_box_w+padding)*column_index
-            box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, 
-                                            grist_name, 5, 10, 
-                                            info_window.theme, info_window.theme.white, info_window.theme.dark, info_window.theme.dark,
-                                            use_grist_color=True)
-            box.bind_to(info_window)
+    def make_rows(page):
+        for box in boxes.copy():
+            box.delete()
+            boxes.remove(box)
+        display_rows = rows[page*num_rows:page*num_rows + num_rows]
+        print(display_rows)
+        for row_index, row in enumerate(display_rows):
+            grist_box_y = padding + (grist_box_h+padding)*row_index
+            for column_index, grist_name in enumerate(row):
+                grist_box_x = padding + (grist_box_w+padding)*column_index
+                box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, 
+                                                grist_name, 5, 10, 
+                                                info_window.theme, info_window.theme.white, info_window.theme.dark, info_window.theme.dark,
+                                                use_grist_color=True)
+                box.bind_to(info_window)
+                boxes.append(box)
+    make_rows(0)
+    page_button_w = info_window.w//2-padding*2
+    page_button_h = 20
+    page_button_y = info_window.h-page_button_h-padding
+    left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<--", placeholder)
+    left_button.absolute = True
+    left_button.bind_to(info_window)
+    right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "-->", placeholder)
+    right_button.absolute = True
+    right_button.bind_to(info_window)
 
 def sburb(window: "render.Window"):
     window.theme = themes.default
