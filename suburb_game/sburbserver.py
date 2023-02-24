@@ -8,6 +8,7 @@ client_username = None
 current_x = None
 current_y = None
 current_mode = "select"
+current_info_window = "grist_cache"
 viewport_dic = {}
 
 def placeholder(): pass
@@ -38,7 +39,6 @@ def move_view_to_tile(target_x:int, target_y:int) -> bool:
         current_x = target_x
         current_y = target_y
         return True
-
 
 def draw_sburb_bar(window: "render.Window", tilemap: Optional["render.TileMap"]=None):
     client_grist_cache = viewport_dic["client_grist_cache"]
@@ -171,6 +171,7 @@ def sburb(window: "render.Window"):
     item_display.bind_to(window.viewport)
     tilemap = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display, server_view=True)
     tilemap.bind_to(window.viewport)
+
     draw_sburb_bar(window, tilemap)
 
 def connect(window: "render.Window"):
