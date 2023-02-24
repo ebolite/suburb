@@ -1075,8 +1075,10 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
                        cache_limit: int, theme: themes.Theme, 
                        box_color: Optional[pygame.Color]=None, 
                        filled_color: Optional[pygame.Color]=None,
-                       label_color: Optional[pygame.Color]=None) -> SolidColor:
+                       label_color: Optional[pygame.Color]=None,
+                       use_grist_color=False) -> SolidColor:
     box_color = box_color or theme.dark
+    if use_grist_color: filled_color = config.gristcolors[grist_name]
     filled_color = filled_color or theme.light
     label_color = label_color or theme.light
     grist_box = SolidColor(x,  y, w, h, box_color)

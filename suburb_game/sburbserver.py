@@ -193,6 +193,7 @@ def draw_info_window(window: "render.Window") -> "render.SolidColor":
     return info_window
 
 def grist_cache(info_window: "render.SolidColor"):
+    info_window.color = info_window.theme.light
     padding = 5
     player_dict = client.requestdic("player_info")
     grist_cache: dict = player_dict["grist_cache"]
@@ -203,19 +204,33 @@ def grist_cache(info_window: "render.SolidColor"):
     for grist_name, amount in grist_cache.items():
         if amount > 0: nonzero_grist.append(grist_name)
         else: zero_grist.append(grist_name)
-    columns = 2
-    rows = 10
+    page = 0
+    num_columns = 2
+    num_rows = 10
+    rows = []
+    grist_order = nonzero_grist + zero_grist
+    for grist_name in grist_order:
+        for row in rows:
+            if len(row) != num_columns:
+                row.append(grist_name)
+                break
+        else:
+            rows.append([grist_name])
+    print(rows)
     usable_area_w = info_window.w
-    usable_area_h = info_window.h
-    grist_box_w = usable_area_w//columns - padding*2
-    grist_box_h = usable_area_h//rows - padding*2
-    for column_index in range(columns):
-        grist_box_x = padding + (grist_box_w+padding)*column_index
-        for row_index in range(rows):
-            grist_box_y = padding + (grist_box_h+padding)*row_index
+    usable_area_h = info_window.h - padding
+    grist_box_w = usable_area_w//num_columns - padding*2
+    grist_box_h = usable_area_h//num_rows - padding
+    display_rows = rows[page*num_rows:page*num_rows + num_rows]
+    print(display_rows)
+    for row_index, row in enumerate(display_rows):
+        grist_box_y = padding + (grist_box_h+padding)*row_index
+        for column_index, grist_name in enumerate(row):
+            grist_box_x = padding + (grist_box_w+padding)*column_index
             box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, 
-                                            "build", 5, 10, 
-                                            info_window.theme, info_window.theme.light, info_window.theme.dark, info_window.theme.dark)
+                                            grist_name, 5, 10, 
+                                            info_window.theme, info_window.theme.white, info_window.theme.dark, info_window.theme.dark,
+                                            use_grist_color=True)
             box.bind_to(info_window)
 
 def sburb(window: "render.Window"):
