@@ -146,6 +146,35 @@ def draw_sburb_bar(window: "render.Window", tilemap: Optional["render.TileMap"]=
     alchemizebutton.bind_to(atheneumbutton)
     alchemizebutton_background.bind_to(alchemizebutton)
 
+def draw_info_window(window: "render.Window") -> "render.SolidColor":
+    padding = 5
+    border_radius = 3
+    iw_w = 370
+    iw_h = 500
+    iw_outline_width = 4
+    iw_x = window.viewport.w-iw_w-iw_outline_width
+    iw_y = window.viewport.h-iw_h-iw_outline_width-padding
+    top_pad_w = iw_w + iw_outline_width*2
+    top_pad_h = 20 + iw_outline_width*2
+    top_pad_x = 0 - iw_outline_width
+    top_pad_y = 0 - top_pad_h + padding
+    top_pad = render.SolidColor(top_pad_x, top_pad_y, top_pad_w, top_pad_h, window.theme.dark)
+    top_pad.border_radius = border_radius
+    header_w = 200
+    header_h = 60
+    header_x = top_pad_w - header_w
+    header_y = 0 - header_h + padding
+    header = render.SolidColor(header_x, header_y, header_w, header_h, window.theme.dark)
+    header.border_radius = border_radius
+    info_window = render.SolidColor(iw_x, iw_y, iw_w, iw_h, window.theme.white)
+    info_window.outline_color = window.theme.dark
+    info_window.outline_width = iw_outline_width
+    info_window.border_radius = border_radius
+    info_window.bind_to(window.viewport)
+    top_pad.bind_to(info_window)
+    header.bind_to(top_pad)
+    return info_window
+
 def sburb(window: "render.Window"):
     window.theme = themes.default
     window.viewport.color = window.theme.light
@@ -171,7 +200,7 @@ def sburb(window: "render.Window"):
     item_display.bind_to(window.viewport)
     tilemap = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display, server_view=True)
     tilemap.bind_to(window.viewport)
-
+    info_window = draw_info_window(window)
     draw_sburb_bar(window, tilemap)
 
 def connect(window: "render.Window"):
