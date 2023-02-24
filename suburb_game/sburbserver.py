@@ -79,39 +79,44 @@ def draw_sburb_bar(window: "render.Window", tilemap: Optional["render.TileMap"]=
     middlebutton = render.Button(122, 84, "sprites/computer/Sburb/middlebutton.png", "sprites/computer/Sburb/middlebutton_pressed.png", placeholder)
     middlebutton.absolute = True
     middlebutton.bind_to(ui_bar)
-    def get_mode_change_button(mode: str):
-        def button():
-            global current_mode
-            current_mode = mode
-            draw_sburb_bar(window, tilemap)
-            ui_bar.delete()
-        return button
-    if current_mode == "select": selectcolor = window.theme.dark
-    else: selectcolor = window.theme.light
-    selectbutton_background = render.SolidColor(-2, -2, 49, 49, selectcolor)
+    selectbutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     selectbutton_background.border_radius = 2
-    selectbutton = render.Button(0.27, 0.16, "sprites/computer/Sburb/select_button.png", None, get_mode_change_button("select"))
+    selectbutton = render.Button(0.27, 0.16, "sprites/computer/Sburb/select_button.png", None, placeholder)
     selectbutton.overlay_on_click = True
     selectbutton.bind_to(ui_bar)
     selectbutton_background.bind_to(selectbutton)
-    if current_mode == "revise": revisecolor = window.theme.dark
-    else: revisecolor = window.theme.light
-    revisebutton_background = render.SolidColor(-2, -2, 49, 49, revisecolor)
+    revisebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     revisebutton_background.border_radius = 2
-    revisebutton = render.Button(55, 0, "sprites/computer/Sburb/revise_button.png", None, get_mode_change_button("revise"))
+    revisebutton = render.Button(55, 0, "sprites/computer/Sburb/revise_button.png", None, placeholder)
     revisebutton.absolute = True
     revisebutton.overlay_on_click = True
     revisebutton.bind_to(selectbutton)
     revisebutton_background.bind_to(revisebutton)
-    if current_mode == "deploy": deploycolor = window.theme.dark
-    else: deploycolor = window.theme.light
-    deploybutton_background = render.SolidColor(-2, -2, 49, 49, deploycolor)
+    deploybutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     deploybutton_background.border_radius = 2
-    deploybutton = render.Button(55, 0, "sprites/computer/Sburb/deploy_button.png", None, get_mode_change_button("deploy"))
+    deploybutton = render.Button(55, 0, "sprites/computer/Sburb/deploy_button.png", None, placeholder)
     deploybutton.absolute = True
     deploybutton.overlay_on_click = True
     deploybutton.bind_to(revisebutton)
     deploybutton_background.bind_to(deploybutton)
+    def update_buttons():
+        selectbutton_background.color = window.theme.light
+        revisebutton_background.color = window.theme.light
+        deploybutton_background.color = window.theme.light
+        match current_mode:
+            case "select": selectbutton_background.color = window.theme.dark
+            case "revise": revisebutton_background.color = window.theme.dark
+            case "deploy": deploybutton_background.color = window.theme.dark
+    update_buttons()
+    def get_mode_change_button(mode: str):
+        def button_func():
+            global current_mode
+            current_mode = mode
+            update_buttons()
+        return button_func
+    selectbutton.onpress = get_mode_change_button("select")
+    revisebutton.onpress = get_mode_change_button("revise")
+    deploybutton.onpress = get_mode_change_button("deploy")
     phernaliaregistrybutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     phernaliaregistrybutton_background.border_radius = 2
     phernaliaregistrybutton = render.Button(55, 0, "sprites/computer/Sburb/phernalia_registry_button.png", None, placeholder)
