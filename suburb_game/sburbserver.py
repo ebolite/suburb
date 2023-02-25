@@ -49,6 +49,7 @@ def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", in
     build_grist_icon.bind_to(build_display_box)
     build_grist_number = render.Text(0.6, 0.6, str(client_grist_cache["build"]))
     build_grist_number.set_fontsize_by_width(100)
+    build_grist_number.text_func = lambda *args: viewport_dic["client_grist_cache"]["build"]
     build_grist_number.color = window.theme.dark
     build_grist_number.bind_to(build_display_box)
     ui_bar = render.Image(0, 0, "sprites/computer/Sburb/sburb_ui.png")
