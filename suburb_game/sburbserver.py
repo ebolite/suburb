@@ -197,7 +197,6 @@ def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
     padding = 5
     player_dict = client.requestdic("player_info")
     grist_cache: dict = player_dict["grist_cache"]
-    print(grist_cache)
     grist_cache_limit = player_dict["grist_cache_limit"]
     text.text = f"Cache Limit: {grist_cache_limit}"
     nonzero_grist = []
@@ -212,7 +211,6 @@ def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
     grist_box_w = usable_area_w//num_columns - padding*2
     grist_box_h = (usable_area_h-padding)//num_rows - padding
     rows = []
-    print("rows", rows)
     grist_order = nonzero_grist + zero_grist
     for grist_name in grist_order:
         for row in rows:
