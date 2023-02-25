@@ -354,7 +354,6 @@ class Button(UIElement):
             if self.double_click and time.time() - self.last_clicked > 0.5: # 500 ms allowance
                 self.last_clicked = time.time()
                 return
-            print("clicked")
             if self.alt != None and self.alt():
                 if self.altclick != None:
                     self.altclick()
