@@ -852,7 +852,7 @@ class RoomItemDisplay(UIElement):
                 captcha_button = None
             use_buttons = 0
             if not self.server_view:
-                for i, action_name in enumerate(reversed(instance.use)):
+                for i, action_name in enumerate(reversed(instance.item.use)):
                     use_buttons += 1
                     path = f"sprites/item_actions/{action_name}.png"
                     pressed_path = f"sprites/item_actions/{action_name}_pressed.png"

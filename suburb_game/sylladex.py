@@ -12,9 +12,20 @@ import themes
 
 moduses = {}
 
+class Item():
+    def __init__(self, item_name: str, item_dict: dict):
+        self.name = item_name
+        self.item_dict = item_dict
+        self.forbiddencode = self.item_dict["forbiddencode"]
+        self.power = self.item_dict["power"]
+        self.size = self.item_dict["size"]
+        self.code = self.item_dict["code"]
+        self.kinds = self.item_dict["kinds"]
+        self.use = self.item_dict["use"] or []
+
 class Instance():
     def __init__(self, instance_name: str, instance_dict: dict):
-        self.instance_name: str = instance_name
+        self.name: str = instance_name
         self.item_name: str = instance_dict["item_name"]
         self.item_dict: dict = instance_dict["item_dict"]
         self.contained: dict  = instance_dict["contained"]
@@ -24,12 +35,10 @@ class Instance():
         self.carved: str = instance_dict["carved"]
         self.carved_item_name: str = instance_dict["carved_item_name"]
         self.computer_data = instance_dict["computer_data"]
-        self.forbiddencode = self.item_dict["forbiddencode"]
-        self.power = self.item_dict["power"]
-        self.size = self.item_dict["size"]
-        self.code = self.item_dict["code"]
-        self.kinds = self.item_dict["kinds"]
-        self.use = self.item_dict["use"] or []
+
+    @property
+    def item(self) -> Item:
+        return Item(self.item_name, self.item_dict)
 
     def display_name(self, short=False) -> str:
         contained_instance = self.contained_instance()
@@ -66,9 +75,9 @@ class Instance():
     def use_item(self, action_name: str, target_instance: Optional["Instance"]=None) -> bool:
         if action_name not in item_actions: return False
         action: ItemAction = item_actions[action_name]
-        target_instance_name = None if target_instance is None else target_instance.instance_name
+        target_instance_name = None if target_instance is None else target_instance.name
         target_instance_display_name = None if target_instance is None else target_instance.display_name()
-        reply = client.requestplus(intent="use_item", content={"instance_name": self.instance_name, "action_name": action_name, "target_name": target_instance_name})
+        reply = client.requestplus(intent="use_item", content={"instance_name": self.name, "action_name": action_name, "target_name": target_instance_name})
         if reply == "False": 
             if action.error_prompt: util.log(action.error_message(self.display_name(), target_instance_display_name))
             return False
@@ -82,8 +91,8 @@ class Instance():
         syl = Sylladex.current_sylladex()
         match action_name:
             case "add_card":
-                if self.instance_name in syl.deck:
-                    syl.remove_item(self.instance_name)
+                if self.name in syl.deck:
+                    syl.remove_item(self.name)
                 card_instance = self.contained_instance()
                 if card_instance is not None:
                     syl.captchalogue(card_instance)
@@ -95,8 +104,8 @@ class Instance():
                     syl.remove_item(target_name)
                 return False
             case "uncombine_card":
-                if self.instance_name in syl.deck:
-                    syl.remove_item(self.instance_name)
+                if self.name in syl.deck:
+                    syl.remove_item(self.name)
                 return True
             case "insert_card":
                 if target_name is None: raise TypeError
@@ -159,7 +168,7 @@ class Instance():
     def choose_target(self, action_name: str, last_scene: Callable):
         suburb.scene(lambda *args: None)()
         render.LogWindow(self.choose_target)
-        valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.instance_name, "action_name": action_name})
+        valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.name, "action_name": action_name})
         print(valid_instances)
         syl = Sylladex.current_sylladex()
         syl.update_deck()
@@ -205,7 +214,7 @@ class Modus():
         return True
     
     def add_to_modus_data(self, instance: Instance, sylladex: "Sylladex"):
-        sylladex.data_list.append(instance.instance_name)
+        sylladex.data_list.append(instance.name)
 
     def get_cards_to_eject(self, sylladex: "Sylladex"):
         ejected = []
@@ -352,7 +361,7 @@ class Sylladex():
 
     def can_captchalogue(self, instance: Instance) -> bool:
         if not self.modus.is_captchalogueable(instance, self): return False
-        if instance.size > self.modus.size_limit: return False
+        if instance.item.size > self.modus.size_limit: return False
         return True
 
     def captchalogue(self, instance: Instance) -> bool:
@@ -361,13 +370,13 @@ class Sylladex():
         ejected = self.modus.get_cards_to_eject(self)
         for instance_name in ejected:
             self.eject(instance_name)
-        util.captchalogue_instance(instance.instance_name, self.modus_name)
+        util.captchalogue_instance(instance.name, self.modus_name)
         self.update_deck()
         return True
     
     def eject(self, instance_name: str):
         instance = self.get_instance(instance_name)
-        if "add_card" in instance.use:
+        if "add_card" in instance.item.use:
             if instance.use_item("add_card"): return
         velocity = self.modus.get_eject_velocity()
         client.requestplus("eject", {"instance_name": instance_name, "modus_name": self.modus_name, "velocity": velocity})
@@ -433,11 +442,11 @@ class Sylladex():
 
 class Stack(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):
-        if instance.instance_name in sylladex.data_list and sylladex.data_list[0] == instance.instance_name: return True
+        if instance.name in sylladex.data_list and sylladex.data_list[0] == instance.name: return True
         else: return False
 
     def add_to_modus_data(self, instance: Instance, sylladex: "Sylladex"):
-        sylladex.data_list.insert(0, instance.instance_name)
+        sylladex.data_list.insert(0, instance.name)
 
     def get_cards_to_eject(self, sylladex: "Sylladex"):
         ejected = []
@@ -460,11 +469,11 @@ stack_modus.can_uncaptchalogue = False
 
 class Queue(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):
-        if instance.instance_name in sylladex.data_list and sylladex.data_list[-1] == instance.instance_name: return True
+        if instance.name in sylladex.data_list and sylladex.data_list[-1] == instance.name: return True
         else: return False
 
     def add_to_modus_data(self, instance: Instance, sylladex: "Sylladex"):
-        sylladex.data_list.insert(0, instance.instance_name)
+        sylladex.data_list.insert(0, instance.name)
 
     def get_cards_to_eject(self, sylladex: "Sylladex"):
         ejected = []

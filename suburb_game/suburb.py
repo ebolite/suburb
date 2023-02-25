@@ -648,7 +648,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         text_color = modus.theme.light
         text_outline_color = modus.theme.black
         def flip():
-            if not instance.forbiddencode:
+            if not instance.item.forbiddencode:
                 display_item(instance, last_scene, modus=modus, flipped=not flipped)
     if not flipped:
         captcha_image = render.Button(0.5, 0.4, card_path, card_path, flip)
@@ -662,8 +662,8 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         label.color = text_color
         label.outline_color = text_outline_color
         label.set_fontsize_by_width(240)
-        num_actions = len(instance.use)
-        for i, action_name in enumerate(instance.use):
+        num_actions = len(instance.item.use)
+        for i, action_name in enumerate(instance.item.use):
             x = 0.05 + (1/(num_actions+1))*(i+1)
             y = 1.07
             path = f"sprites/item_actions/{action_name}.png"
@@ -674,12 +674,12 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             action_button.scale = 2.0
             action_button.bind_to(captcha_image)
     else:
-        code = instance.code
+        code = instance.item.code
         captcha_image = render.Button(0.5, 0.4, card_flipped_path, card_flipped_path, flip)
         captcha_code = render.Image(32, 28, get_captcha(code), convert=False)
         captcha_code.bind_to(captcha_image)
         captcha_code.absolute = True
-    power = instance.power
+    power = instance.item.power
     power_bar = render.Image(0.5, 1.28, "sprites\\itemdisplay\\power_bar.png")
     power_bar.bind_to(captcha_image)
     power_label = render.Text(0.512, 0.51, str(power))
@@ -687,8 +687,8 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     power_label.color = current_theme().dark
     power_label.fontsize = 54
     power_label.set_fontsize_by_width(330)
-    num_kinds = len(instance.kinds)
-    for i, kind in enumerate(instance.kinds):
+    num_kinds = len(instance.item.kinds)
+    for i, kind in enumerate(instance.item.kinds):
         x = 1.2
         y = (1/(num_kinds+1))*num_kinds/(i+1)
         kind_card_image = render.Image(x, y, "sprites\\itemdisplay\\strife_card.png")
@@ -708,7 +708,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     if modus is not None:
         syl = Sylladex.current_sylladex()
         def uncaptcha_button_func():
-            syl.uncaptchalogue(instance.instance_name)
+            syl.uncaptchalogue(instance.name)
             last_scene()
         if modus.can_uncaptchalogue:
             uncaptchalogue_button = render.TextButton(0.5, 1.2, 200, 33, "uncaptchalogue", uncaptcha_button_func)
@@ -748,9 +748,9 @@ def computer(instance: Instance):
     task_bar = render.TaskBar()
     apps = []
     for app_name in instance.computer_data["installed_programs"]:
-        random.seed(instance.instance_name+app_name)
+        random.seed(instance.name+app_name)
         x = 0.1 + random.random() * 0.7
-        random.seed(instance.instance_name+app_name)
+        random.seed(instance.name+app_name)
         y = 0.1 + random.random() * 0.7
         app_icon = render.AppIcon(random.random(), random.random(), app_name, task_bar)
         apps.append(app_icon)
