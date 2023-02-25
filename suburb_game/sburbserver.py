@@ -40,6 +40,10 @@ def move_view_to_tile(target_x:int, target_y:int) -> bool:
         current_y = target_y
         return True
 
+def update_viewport_dic():
+    global viewport_dic
+    viewport_dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":current_x, "y":current_y})
+
 def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", info_text: "render.Text", tilemap: Optional["render.TileMap"]=None):
     client_grist_cache = viewport_dic["client_grist_cache"]
     build_display_box = render.SolidColor(235, 50, 150, 50, window.theme.white)
@@ -278,8 +282,7 @@ def sburb(window: "render.Window"):
         coords = client.requestplusdic(intent="computer", content={"command": "starting_sburb_coords"})
         current_x = coords["x"]
         current_y = coords["y"]
-    global viewport_dic
-    viewport_dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":current_x, "y":current_y})
+    update_viewport_dic()
     new_map = viewport_dic["map"]
     specials = viewport_dic["specials"]
     instances = viewport_dic["instances"]
