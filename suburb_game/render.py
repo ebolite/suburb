@@ -783,12 +783,11 @@ class RoomItemDisplay(UIElement):
         self.y = y
         self.w = 330
         self.h = 30
+        self.page = 0
+        self.rows = 10
         self.instances = instances
         self.server_view=server_view
         self.absolute = True
-        if not server_view:
-            self.text = Text(x, y, f"You see here:")
-            self.text.absolute = True
         self.buttons = []
         self.update_instances(instances)
 
@@ -806,7 +805,29 @@ class RoomItemDisplay(UIElement):
             return output_func
         for button in self.buttons:
             button.delete()
-        for index, instance_name in enumerate(instances):
+        # instances is a dict so we need to convert to list to slice
+        display_instances = list(instances.keys())[self.page*self.rows:self.page*self.rows + self.rows]
+        if len(instances) > self.rows:
+            page_buttons_y = self.y
+            def left_button_func():
+                self.page -= 1
+                self.update_instances(instances)
+            def right_button_func():
+                self.page += 1
+                self.update_instances(instances)
+            if self.page != 0:
+                left_button = TextButton(self.x, page_buttons_y, self.w//2, self.h, "<-", left_button_func)
+                left_button.absolute = True
+            else:
+                left_button = SolidColor(self.x, page_buttons_y, self.w//2, self.h, self.theme.dark)
+            if list(instances.keys())[(self.page+1)*self.rows:(self.page+1)*self.rows + self.rows] != "":
+                right_button = TextButton(self.x+left_button.w, page_buttons_y, self.w-left_button.w, self.h, "->", right_button_func)
+                right_button.absolute = True
+            else:
+                right_button = SolidColor(self.x+left_button.w, page_buttons_y, self.w-left_button.w, self.h, self.theme.dark)
+            self.buttons.append(left_button)
+            self.buttons.append(right_button)
+        for index, instance_name in enumerate(display_instances):
             y = self.y + self.h*(index+1)
             instance = Instance(instance_name, instances[instance_name])
             display_name = instance.display_name()
