@@ -277,7 +277,7 @@ def sburb(window: "render.Window"):
     specials = viewport_dic["specials"]
     instances = viewport_dic["instances"]
     room_name = viewport_dic["room_name"]
-    item_display = render.RoomItemDisplay(20, 210, instances, server_view=True)
+    item_display = render.RoomItemDisplay(40, 250, instances, server_view=True)
     item_display.bind_to(window.viewport)
     tilemap = render.TileMap(0.5, 0.55, new_map, specials, room_name, item_display, server_view=True)
     tilemap.bind_to(window.viewport)
