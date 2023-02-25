@@ -442,6 +442,7 @@ class Player():
         out = deepcopy(util.players[self.__dict__["username"]])
         out["grist_cache_limit"] = self.grist_cache_limit
         out["total_gutter_grist"] = self.total_gutter_grist
+        out["available_phernalia"] = self.available_phernalia
         return out
     
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:
@@ -598,6 +599,21 @@ class Player():
     def grist_cache_limit(self):
         mult = 1 + self.echeladder_rung//100
         return 10*self.echeladder_rung*mult
+    
+    @property
+    def available_phernalia(self):
+        connected = self.session.connected
+        available_phernalia = ["cruxtruder", "totem lathe", "alchemiter", "punch designix", "pre-punched card"]
+        if len(connected) >= 2:
+            # todo: add more phernalia with more connections
+            ...
+        for item in self.deployed_phernalia:
+            available_phernalia.remove(item)
+        phernalia_dict = {}
+        for item_name in available_phernalia:
+            phernalia_dict[item_name] = alchemy.Item(item_name).get_dict()
+        return phernalia_dict
+
 
     @property
     def coords(self):
