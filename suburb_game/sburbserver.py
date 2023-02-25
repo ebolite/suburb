@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Tuple
 
 import render
 import client
@@ -146,7 +146,7 @@ def draw_sburb_bar(window: "render.Window", tilemap: Optional["render.TileMap"]=
     alchemizebutton.bind_to(atheneumbutton)
     alchemizebutton_background.bind_to(alchemizebutton)
 
-def draw_info_window(window: "render.Window") -> "render.SolidColor":
+def draw_info_window(window: "render.Window") -> Tuple["render.SolidColor", "render.Text"]:
     padding = 5
     border_radius = 3
     iw_w = 370
@@ -190,15 +190,16 @@ def draw_info_window(window: "render.Window") -> "render.SolidColor":
     header.bind_to(top_pad)
     header_icon.bind_to(header)
     text.bind_to(top_pad)
-    return info_window
+    return info_window, text
 
-def grist_cache(info_window: "render.SolidColor"):
+def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
     info_window.color = info_window.theme.light
     padding = 5
     player_dict = client.requestdic("player_info")
     grist_cache: dict = player_dict["grist_cache"]
     print(grist_cache)
     grist_cache_limit = player_dict["grist_cache_limit"]
+    text.text = f"Cache Limit: {grist_cache_limit}"
     nonzero_grist = []
     zero_grist = []
     for grist_name, amount in grist_cache.items():
@@ -236,24 +237,23 @@ def grist_cache(info_window: "render.SolidColor"):
                 box.bind_to(info_window, temporary=True)
         def get_leftbutton_func(page_num):
             def leftbutton_func():
-                if page_num == 0: pass
-                else: make_rows(page_num-1)
+                make_rows(page_num-1)
             return leftbutton_func
         def get_rightbutton_func(page_num):
             def rightbutton_func():
-                new_page_num = page_num+1
-                new_rows = rows[new_page_num*num_rows:new_page_num*num_rows + num_rows]
-                if new_rows != []: make_rows(new_page_num)
+                make_rows(page_num+1)
             return rightbutton_func
         page_button_w = info_window.w//2-padding*2
         page_button_h = 20
         page_button_y = info_window.h-page_button_h-padding
-        left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<--", get_leftbutton_func(page))
-        left_button.absolute = True
-        left_button.bind_to(info_window, temporary=True)
-        right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "-->", get_rightbutton_func(page))
-        right_button.absolute = True
-        right_button.bind_to(info_window, temporary=True)
+        if page != 0:
+            left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<-", get_leftbutton_func(page))
+            left_button.absolute = True
+            left_button.bind_to(info_window, temporary=True)
+        if rows[(page+1)*num_rows:(page+1)*num_rows + num_rows] != []:
+            right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "->", get_rightbutton_func(page))
+            right_button.absolute = True
+            right_button.bind_to(info_window, temporary=True)
     make_rows(0)
 
 def sburb(window: "render.Window"):
@@ -281,8 +281,8 @@ def sburb(window: "render.Window"):
     item_display.bind_to(window.viewport)
     tilemap = render.TileMap(0.5, 0.55, new_map, specials, room_name, item_display, server_view=True)
     tilemap.bind_to(window.viewport)
-    info_window = draw_info_window(window)
-    grist_cache(info_window)
+    info_window, info_text = draw_info_window(window)
+    grist_cache(info_window, info_text)
     draw_sburb_bar(window, tilemap)
 
 def connect(window: "render.Window"):
