@@ -160,7 +160,10 @@ def handle_request(dict):
             player.attempt_move(content)
             return
         case "console_command":
-            console_commands(player, content)
+            try:
+                console_commands(player, content)
+            except Exception as e:
+                print(f"Error in command {content}", e)
         case "get_client_server_chains":
             server_client = {player_username:sessions.Player(player_username).client_player_name for player_username in session.starting_players}
             player_names = {player_username:sessions.Player(player_username).nickname for player_username in session.starting_players}
