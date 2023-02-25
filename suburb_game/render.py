@@ -1152,7 +1152,7 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
     bar_background.outline_color = theme.black
     bar_background.absolute = False
     bar_background.bind_to(grist_box)
-    filled_bar_width = int((w//1.3 - 4) * grist_amount/cache_limit)
+    filled_bar_width = int((w//1.3 - 4) * min(grist_amount, cache_limit)/cache_limit)
     bar_filled = SolidColor(2, 2, filled_bar_width, h//3.5 - 4, filled_color)
     bar_filled.bind_to(bar_background)
     bar_label = Text(0.5, 2.2, str(grist_amount))
