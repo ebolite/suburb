@@ -40,7 +40,7 @@ def move_view_to_tile(target_x:int, target_y:int) -> bool:
         current_y = target_y
         return True
 
-def draw_sburb_bar(window: "render.Window", tilemap: Optional["render.TileMap"]=None):
+def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", info_text: "render.Text", tilemap: Optional["render.TileMap"]=None):
     client_grist_cache = viewport_dic["client_grist_cache"]
     build_display_box = render.SolidColor(235, 50, 150, 50, window.theme.white)
     build_display_box.outline_color = window.theme.dark
@@ -102,11 +102,14 @@ def draw_sburb_bar(window: "render.Window", tilemap: Optional["render.TileMap"]=
             case "revise": revisebutton_background.color = window.theme.dark
             case "deploy": deploybutton_background.color = window.theme.dark
     update_buttons()
-    def get_mode_change_button(mode: str):
+    def get_mode_change_button(mode=None, new_info_window=None):
         def button_func():
             global current_mode
-            current_mode = mode
+            global current_info_window
+            if mode is not None: current_mode = mode
+            if new_info_window is not None: current_info_window = new_info_window
             update_buttons()
+            update_info_window(info_window, info_text)
         return button_func
     selectbutton.onpress = get_mode_change_button("select")
     revisebutton.onpress = get_mode_change_button("revise")
@@ -254,6 +257,11 @@ def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
             right_button.bind_to(info_window, temporary=True)
     make_rows(0)
 
+def update_info_window(info_window, info_text):
+    match current_info_window:
+        case "grist_cache": grist_cache(info_window, info_text)
+        case _: ...
+
 def sburb(window: "render.Window"):
     window.theme = themes.default
     window.viewport.color = window.theme.light
@@ -280,8 +288,8 @@ def sburb(window: "render.Window"):
     tilemap = render.TileMap(0.5, 0.55, new_map, specials, room_name, item_display, server_view=True)
     tilemap.bind_to(window.viewport)
     info_window, info_text = draw_info_window(window)
-    grist_cache(info_window, info_text)
-    draw_sburb_bar(window, tilemap)
+    update_info_window(info_window, info_text)
+    draw_sburb_bar(window, info_window, info_text, tilemap)
 
 def connect(window: "render.Window"):
     username = client.requestdic(intent="player_info")["client_player_name"]
