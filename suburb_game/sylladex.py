@@ -92,7 +92,7 @@ class Instance():
         match action_name:
             case "add_card":
                 if self.name in syl.deck:
-                    syl.remove_item(self.name)
+                    syl.remove_instance(self.name)
                 card_instance = self.contained_instance()
                 if card_instance is not None:
                     syl.captchalogue(card_instance)
@@ -101,15 +101,15 @@ class Instance():
                 return True
             case "combine_card":
                 if target_name is not None and target_name in syl.deck:
-                    syl.remove_item(target_name)
+                    syl.remove_instance(target_name)
                 return False
             case "uncombine_card":
                 if self.name in syl.deck:
-                    syl.remove_item(self.name)
+                    syl.remove_instance(self.name)
                 return True
             case "insert_card":
                 if target_name is None: raise TypeError
-                syl.remove_item(target_name)
+                syl.remove_instance(target_name)
                 return False
             case "remove_card":
                 return True
@@ -117,11 +117,11 @@ class Instance():
                 return False
             case "insert_dowel":
                 if target_name is None: raise TypeError
-                syl.remove_item(target_name)
+                syl.remove_instance(target_name)
                 return False
             case "insert_carved_dowel":
                 if target_name is None: raise TypeError
-                syl.remove_item(target_name)
+                syl.remove_instance(target_name)
                 return False
             case "remove_dowel":
                 return True
@@ -356,7 +356,7 @@ class Sylladex():
         if instance_name in self.deck:
             return Instance(instance_name, self.deck[instance_name])
         else:
-            self.remove_item(instance_name)
+            self.remove_instance(instance_name)
             raise KeyError
 
     def can_captchalogue(self, instance: Instance) -> bool:
@@ -401,7 +401,7 @@ class Sylladex():
         self.update_deck()
         self.modus.remove_from_modus_data(instance_name, self)
 
-    def remove_item(self, instance_name: str):
+    def remove_instance(self, instance_name: str):
         self.update_deck()
         self.modus.remove_from_modus_data(instance_name, self)
     
