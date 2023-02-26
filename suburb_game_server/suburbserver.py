@@ -57,6 +57,10 @@ def threaded_client(connection):
         conns.remove(connection)
         connection.close()
 
+def map_data(player: "sessions.Player"):
+    map_tiles, map_specials, room_instances = player.get_view()
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": player.room.tile.name})
+
 def handle_request(dict):
     intent = dict["intent"]
     if intent == "connect":
@@ -115,8 +119,7 @@ def handle_request(dict):
                 player.setup = True
                 return f"Your land is the {land.title}! ({land.acronym})"
         case "current_map":
-            map_tiles, map_specials, room_instances = player.get_view()
-            return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": player.room.tile.name})
+            return map_data(player)
         case "player_info":
             return json.dumps(player.get_dict())
         case "sylladex":
