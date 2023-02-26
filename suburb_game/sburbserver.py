@@ -200,7 +200,7 @@ def draw_info_window(window: "render.Window") -> Tuple["render.SolidColor", "ren
     text.bind_to(top_pad)
     return info_window, text
 
-def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
+def display_grist_cache(info_window: "render.SolidColor", text: "render.Text"):
     info_window.color = info_window.theme.light
     padding = 5
     player_dict = client.requestdic("player_info")
@@ -262,7 +262,7 @@ def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
             right_button.bind_to(info_window, temporary=True)
     make_rows(0)
 
-def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text"):
+def display_phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text"):
     info_window.kill_temporary_elements()
     info_window.color = info_window.theme.light
     padding = 4
@@ -289,7 +289,7 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
         def button_func():
             global current_selected_phernalia
             current_selected_phernalia = item_name
-            phernalia_registry(info_window, info_text)
+            display_phernalia_registry(info_window, info_text)
         return button_func
     for row_index, row in enumerate(rows):
         box_y = padding + row_index*(box_h + padding*2)
@@ -325,8 +325,8 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
 
 def update_info_window(info_window, info_text):
     match current_info_window:
-        case "grist_cache": grist_cache(info_window, info_text)
-        case "phernalia_registry": phernalia_registry(info_window, info_text)
+        case "grist_cache": display_grist_cache(info_window, info_text)
+        case "phernalia_registry": display_phernalia_registry(info_window, info_text)
         case _: ...
 
 def sburb(window: "render.Window"):
