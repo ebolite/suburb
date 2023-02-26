@@ -268,6 +268,7 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
     padding = 4
     player_dict = client.requestdic("player_info")
     available_phernalia: dict = player_dict["available_phernalia"]
+    grist_cache: dict = player_dict["grist_cache"]
     info_text.text = f"Phernalia Registry"
     num_columns = 3
     usable_area_w = info_window.w
@@ -305,7 +306,7 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
             cost_label_box = render.SolidColor(0, item_box_h, box_w, cost_label_h, info_window.theme.white)
             cost_label_box.border_radius = 3
             cost_label_box.bind_to(item_box)
-            cost_label = render.make_grist_cost_display(0, 0, cost_label_h, item.power, item.cost, cost_label_box, info_window.theme)
+            cost_label = render.make_grist_cost_display(0, 0, cost_label_h, item.power, item.cost, grist_cache, cost_label_box, info_window.theme.dark)
             box_button = render.TextButton(0, 0, box_w, item_box_h, "", get_box_button_func(item_name))
             box_button.draw_sprite = False
             box_button.absolute = True

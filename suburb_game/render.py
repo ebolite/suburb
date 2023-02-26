@@ -582,7 +582,7 @@ def get_spirograph(x, y, thick=True) -> Image:
     spirograph.animframes = 164
     return spirograph
 
-def make_grist_cost_display(x, y, h, power: int, cost: dict, binding: UIElement, theme: themes.Theme, temporary=True, absolute=True) -> UIElement:
+def make_grist_cost_display(x, y, h, power: int, cost: dict, grist_cache: dict, binding: UIElement, text_color: pygame.Color, temporary=True, absolute=True) -> UIElement:
     elements: list[UIElement] = []
     padding = 5
     scale = h / 45
@@ -595,7 +595,8 @@ def make_grist_cost_display(x, y, h, power: int, cost: dict, binding: UIElement,
         else:
             icon_x = x
             icon_y = y
-        icon = Image(icon_x, icon_y, icon_path, theme, False)
+        icon = Image(icon_x, icon_y, icon_path)
+        icon.convert = False
         icon.scale = scale
         icon.absolute = True
         if len(elements) == 0:
@@ -605,7 +606,12 @@ def make_grist_cost_display(x, y, h, power: int, cost: dict, binding: UIElement,
             icon.bind_to(elements[-1])
             elements.append(icon)
         label_x = padding + int(45*scale)
-        label = Text(label_x, 0, str(int(power*amount)))
+        grist_cost = int(power*amount)
+        label = Text(label_x, 0, str(grist_cost))
+        if grist_cost <= grist_cache[grist_name]:
+            label.color = text_color
+        else:
+            label.color = pygame.Color(255, 0, 0)
         label.fontsize = fontsize
         label.bind_to(elements[-1])
         label.absolute = True
