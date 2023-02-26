@@ -225,6 +225,7 @@ class TextButton(UIElement):
         self.hover_color: pygame.Color = self.theme.dark
         self.draw_sprite = True
         self.toggle = False
+        self.click_on_mouse_down = False
         click_check.append(self)
         update_check.append(self)
         mouseup_check.append(self)
@@ -261,11 +262,13 @@ class TextButton(UIElement):
     def onclick(self, isclicked):
         if self not in click_check: return
         if isclicked:
-            if not self.toggle:
+            if self.click_on_mouse_down: self.onpress()
+            elif not self.toggle:
                 self.active = True
 
 
     def mouseup(self, isclicked):
+        if self.click_on_mouse_down: return
         if not self.toggle:
             self.active = False
         if isclicked:

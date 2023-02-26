@@ -303,6 +303,7 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
             box_button = render.TextButton(0, 0, box_w, box_h, "", get_box_button_func(item_name))
             box_button.draw_sprite = False
             box_button.absolute = True
+            box_button.click_on_mouse_down = True
             box_button.bind_to(item_box)
             image_path = f"sprites/items/{item_name}.png"
             if os.path.isfile(image_path):
