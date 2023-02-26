@@ -360,6 +360,7 @@ class Room():
         return out_dict
 
     def deploy(self, player: "Player", item_name: str):
+        if item_name not in player.available_phernalia: return
         if item_name == "pre-punched card":
             item = alchemy.Item("punched card")
             instance = alchemy.Instance(item)
