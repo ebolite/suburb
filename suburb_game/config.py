@@ -61,7 +61,8 @@ header_icons = {
     "grist_cache": "sprites/computer/Sburb/grist_cache.png",
     "atheneum": "sprites/computer/Sburb/atheneum.png",
     "phernalia_registry": "sprites/computer/Sburb/phernalia_registry.png",
-    "alchemize": "sprites/computer/Sburb/alchemize.png"
+    "alchemize": "sprites/computer/Sburb/alchemize.png",
+    "revise": "sprites/computer/Sburb/revise.png"
 }
 
 grists = {
