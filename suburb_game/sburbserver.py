@@ -3,6 +3,7 @@ from typing import Optional, Tuple
 import render
 import client
 import themes
+import config
 
 client_username = None
 current_x = None
@@ -174,15 +175,11 @@ def draw_info_window(window: "render.Window") -> Tuple["render.SolidColor", "ren
     header_y = 0 - header_h + padding
     header = render.SolidColor(header_x, header_y, header_w, header_h, window.theme.dark)
     header.border_radius = border_radius
-    match current_info_window:
-        case "grist_cache": icon_path = "sprites/computer/Sburb/grist_cache.png"
-        case "atheneum": icon_path = "sprites/computer/Sburb/atheneum.png"
-        case "phernalia_registry": icon_path = "sprites/computer/Sburb/phernalia_registry.png"
-        case "alchemize": icon_path = "sprites/computer/Sburb/alchemize.png"
-        case _: icon_path = "sprites/computer/Sburb/phernalia_registry.png"
+    icon_path = config.header_icons[current_info_window]
     header_icon = render.Image(padding, padding, icon_path)
     header_icon.convert = False
     header_icon.absolute = True
+    header_icon.path_func = lambda *args: config.header_icons[current_info_window]
     info_window = render.SolidColor(iw_x, iw_y, iw_w, iw_h, window.theme.white)
     info_window.outline_color = window.theme.dark
     info_window.outline_width = iw_outline_width
@@ -269,7 +266,6 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
     player_dict = client.requestdic("player_info")
     available_phernalia: dict = player_dict["available_phernalia"]
     info_text.text = f"Phernalia Registry"
-
 
 def update_info_window(info_window, info_text):
     match current_info_window:

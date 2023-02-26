@@ -454,6 +454,7 @@ class Image(UIElement):
         self.x = x
         self.y = y
         self.path = path
+        self.path_func: Optional[Callable] = None
         self.theme = theme
         self.convert = convert
         self.absolute = False
@@ -470,6 +471,9 @@ class Image(UIElement):
         update_check.append(self)
 
     def update(self):
+        if self.path_func is not None and self.path != self.path_func():
+            self.path = self.path_func()
+            delattr(self, "surf")
         if self.animated:
             self.surf = pygame.image.load(self.path+f"-{self.animframe}.png").convert()
             self.scaled = False
@@ -482,7 +486,7 @@ class Image(UIElement):
                 self.wait += 1
         else:
             try: self.surf
-            except AttributeError: 
+            except AttributeError:
                 self.surf = pygame.image.load(self.path)
                 if self.convert:
                     self.surf = self.surf.convert()

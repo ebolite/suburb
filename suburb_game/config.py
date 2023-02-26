@@ -57,6 +57,13 @@ icons = {
     "cursor": "sprites/icons/cursor.png"
 }
 
+header_icons = {
+    "grist_cache": "sprites/computer/Sburb/grist_cache.png",
+    "atheneum": "sprites/computer/Sburb/atheneum.png",
+    "phernalia_registry": "sprites/computer/Sburb/phernalia_registry.png",
+    "alchemize": "sprites/computer/Sburb/alchemize.png"
+}
+
 grists = {
     "build": {"tier": 0, "image": "sprites\\grists\\build.png"},
     "acid": {"tier": 4, "exotic": True, "image": "sprites\\grists\\acid.png"},
