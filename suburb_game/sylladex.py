@@ -22,6 +22,7 @@ class Item():
         self.code = self.item_dict["code"]
         self.kinds = self.item_dict["kinds"]
         self.use = self.item_dict["use"] or []
+        self.cost = self.item_dict["cost"]
 
 class Instance():
     def __init__(self, instance_name: str, instance_dict: dict):

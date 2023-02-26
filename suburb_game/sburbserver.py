@@ -297,10 +297,15 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
             box_x = padding + column_index*(box_w + padding*2)
             if current_selected_phernalia == item_name: box_color = info_window.theme.dark
             else: box_color = info_window.theme.white
-            item_box = render.SolidColor(box_x, box_y, box_w, box_h, box_color)
+            cost_label_h = box_h//5
+            item_box_h = box_h-cost_label_h
+            item_box = render.SolidColor(box_x, box_y, box_w, item_box_h, box_color)
             item_box.border_radius = 3
             item_box.bind_to(info_window, True)
-            box_button = render.TextButton(0, 0, box_w, box_h, "", get_box_button_func(item_name))
+            cost_label_box = render.SolidColor(0, item_box_h, box_w, cost_label_h, info_window.theme.white)
+            cost_label_box.border_radius = 3
+            cost_label_box.bind_to(item_box)
+            box_button = render.TextButton(0, 0, box_w, item_box_h, "", get_box_button_func(item_name))
             box_button.draw_sprite = False
             box_button.absolute = True
             box_button.click_on_mouse_down = True
@@ -311,7 +316,7 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
                 if card_image is not None:
                     card_image.convert = False
                     card_image.bind_to(item_box)
-                    card_image.scale = box_h / 240
+                    card_image.scale = item_box_h / 240
             else:
                 card_image = None
 
