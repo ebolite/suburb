@@ -121,22 +121,22 @@ def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", in
     deploybutton.onpress = get_mode_change_button("deploy")
     phernaliaregistrybutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     phernaliaregistrybutton_background.border_radius = 2
-    phernaliaregistrybutton = render.Button(55, 0, "sprites/computer/Sburb/phernalia_registry_button.png", None, placeholder)
+    phernaliaregistrybutton = render.Button(55, 0, "sprites/computer/Sburb/phernalia_registry_button.png", None, get_mode_change_button("deploy", "phernalia_registry"))
     phernaliaregistrybutton.absolute = True
     phernaliaregistrybutton.overlay_on_click = True
     gristcachebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     gristcachebutton_background.border_radius = 2
-    gristcachebutton = render.Button(55, 0, "sprites/computer/Sburb/grist_cache_button.png", None, placeholder)
+    gristcachebutton = render.Button(55, 0, "sprites/computer/Sburb/grist_cache_button.png", None, get_mode_change_button(None, "grist_cache"))
     gristcachebutton.absolute = True
     gristcachebutton.overlay_on_click = True
     atheneumbutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     atheneumbutton_background.border_radius = 2
-    atheneumbutton = render.Button(55, 0, "sprites/computer/Sburb/atheneum_button.png", None, placeholder)
+    atheneumbutton = render.Button(55, 0, "sprites/computer/Sburb/atheneum_button.png", None, get_mode_change_button("deploy", "atheneum"))
     atheneumbutton.absolute = True
     atheneumbutton.overlay_on_click = True
     alchemizebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     alchemizebutton_background.border_radius = 2
-    alchemizebutton = render.Button(55, 0, "sprites/computer/Sburb/alchemize_button.png", None, placeholder)
+    alchemizebutton = render.Button(55, 0, "sprites/computer/Sburb/alchemize_button.png", None, get_mode_change_button(None, "alchemize"))
     alchemizebutton.absolute = True
     alchemizebutton.overlay_on_click = True
     selectbutton.bind_to(ui_bar)
@@ -262,9 +262,19 @@ def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
             right_button.bind_to(info_window, temporary=True)
     make_rows(0)
 
+def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text"):
+    info_window.kill_temporary_elements()
+    info_window.color = info_window.theme.light
+    padding = 5
+    player_dict = client.requestdic("player_info")
+    available_phernalia: dict = player_dict["available_phernalia"]
+    info_text.text = f"Phernalia Registry"
+
+
 def update_info_window(info_window, info_text):
     match current_info_window:
         case "grist_cache": grist_cache(info_window, info_text)
+        case "phernalia_registry": phernalia_registry(info_window, info_text)
         case _: ...
 
 def sburb(window: "render.Window"):
