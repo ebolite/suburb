@@ -354,13 +354,13 @@ def aspectcharacter():
     voidblurb = render.Image(760, 600, "sprites\\aspects\\voidblurb.png")
     voidblurb.absolute = True
 
-def make_classbutton(c):
+def make_classbutton(game_class):
     def button():
         def on_confirm():
-            character_info["class"] = f"{c}"
+            character_info["class"] = f"{game_class}"
             chooseinterests()
         render.clear_elements()
-        text = render.Text(0.5, 0.3, f"Are you sure you want to be the {c.upper()} of {character_info['aspect'].upper()}?")
+        text = render.Text(0.5, 0.3, f"Are you sure you want to be the {game_class.upper()} of {character_info['aspect'].upper()}?")
         text.color = current_theme().dark
         text.outline_color = current_theme().black
         confirm = render.Button(0.5, 0.40, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", on_confirm)
