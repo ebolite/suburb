@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Callable
 import os
 
 import render
@@ -12,6 +12,7 @@ current_x = None
 current_y = None
 current_mode = "select"
 current_info_window = "grist_cache"
+current_selected_phernalia = None
 viewport_dic = {}
 
 def placeholder(): pass
@@ -283,14 +284,26 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
                 break
         else:
             rows.append([item_name])
+    def get_box_button_func(item_name: str) -> Callable:
+        def button_func():
+            global current_selected_phernalia
+            current_selected_phernalia = item_name
+            phernalia_registry(info_window, info_text)
+        return button_func
     for row_index, row in enumerate(rows):
         box_y = padding + row_index*(box_h + padding*2)
         for column_index, item_name in enumerate(row):
             # item = sylladex.Item(item_name, available_phernalia[item_name])
             box_x = padding + column_index*(box_w + padding*2)
-            item_box = render.SolidColor(box_x, box_y, box_w, box_h, info_window.theme.white)
+            if current_selected_phernalia == item_name: box_color = info_window.theme.dark
+            else: box_color = info_window.theme.white
+            item_box = render.SolidColor(box_x, box_y, box_w, box_h, box_color)
             item_box.border_radius = 3
             item_box.bind_to(info_window, True)
+            box_button = render.TextButton(0, 0, box_w, box_h, "", get_box_button_func(item_name))
+            box_button.draw_sprite = False
+            box_button.absolute = True
+            box_button.bind_to(item_box)
             image_path = f"sprites/items/{item_name}.png"
             if os.path.isfile(image_path):
                 card_image = render.ItemImage(0.5, 0.5, item_name)
