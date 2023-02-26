@@ -262,7 +262,7 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             player.client_player_name = client_player_username
             client_player.server_player_name = player.username
             session.connected.append(client_player_username)
-            client_player.grist_cache["build"] += min(2 * len(session.connected) * 10, 20000)
+            client_player.grist_cache["build"] += min(2 * (10 ** len(session.connected)), 20000)
             return "Successfully connected."
 
 def console_commands(player: sessions.Player, content: str):
