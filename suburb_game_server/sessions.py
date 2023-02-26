@@ -359,6 +359,18 @@ class Room():
             out_dict[instance_name] = instance.get_dict()
         return out_dict
 
+    def deploy(self, player: "Player", item_name: str):
+        if item_name == "pre-punched card":
+            item = alchemy.Item("punched card")
+            instance = alchemy.Instance(item)
+            instance.punched_code = "I11w1a11"
+            self.add_instance(instance.name)
+        else:
+            item = alchemy.Item(item_name)
+            instance = alchemy.Instance(item)
+            self.add_instance(instance.name)
+        player.deployed_phernalia.append(item_name)
+
     @property
     def specials(self) -> dict:
         special_dict = {}
