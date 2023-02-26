@@ -1,6 +1,8 @@
 from typing import Optional, Tuple
+import os
 
 import render
+import sylladex
 import client
 import themes
 import config
@@ -262,10 +264,43 @@ def grist_cache(info_window: "render.SolidColor", text: "render.Text"):
 def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text"):
     info_window.kill_temporary_elements()
     info_window.color = info_window.theme.light
-    padding = 5
+    padding = 4
     player_dict = client.requestdic("player_info")
     available_phernalia: dict = player_dict["available_phernalia"]
     info_text.text = f"Phernalia Registry"
+    num_columns = 3
+    usable_area_w = info_window.w
+    usable_area_h = info_window.h - 25
+    box_w = usable_area_w//num_columns - padding*2
+    box_h = box_w
+    num_rows = usable_area_h // (box_h + padding*2)
+    print(num_rows)
+    rows = []
+    for item_name in available_phernalia:
+        for row in rows:
+            if len(row) != num_columns:
+                row.append(item_name)
+                break
+        else:
+            rows.append([item_name])
+    for row_index, row in enumerate(rows):
+        box_y = padding + row_index*(box_h + padding*2)
+        for column_index, item_name in enumerate(row):
+            # item = sylladex.Item(item_name, available_phernalia[item_name])
+            box_x = padding + column_index*(box_w + padding*2)
+            item_box = render.SolidColor(box_x, box_y, box_w, box_h, info_window.theme.white)
+            item_box.border_radius = 3
+            item_box.bind_to(info_window, True)
+            image_path = f"sprites/items/{item_name}.png"
+            if os.path.isfile(image_path):
+                card_image = render.ItemImage(0.5, 0.5, item_name)
+                if card_image is not None:
+                    card_image.convert = False
+                    card_image.bind_to(item_box)
+                    card_image.scale = box_h / 240
+            else:
+                card_image = None
+
 
 def update_info_window(info_window, info_text):
     match current_info_window:
