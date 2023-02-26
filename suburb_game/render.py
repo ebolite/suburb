@@ -520,14 +520,6 @@ class Image(UIElement):
                     move_to_top.append(ui_element)
         self.blit_surf.blit(self.surf, (self.rect.x, self.rect.y))
 
-def get_spirograph(x, y, thick=True) -> Image:
-    if thick: path = "sprites/spirograph/thick/suburbspirograph"
-    else: path = "sprites/spirograph/thin/suburbspirograph"
-    spirograph = Image(x, y, path)
-    spirograph.animated = True
-    spirograph.animframes = 164
-    return spirograph
-
 class Text(UIElement):
     def __init__(self, x, y, text: str):
         super(Text, self).__init__()
@@ -581,6 +573,44 @@ class Text(UIElement):
     @property
     def font(self):
         return pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), int(self.fontsize*self.scale))
+
+def get_spirograph(x, y, thick=True) -> Image:
+    if thick: path = "sprites/spirograph/thick/suburbspirograph"
+    else: path = "sprites/spirograph/thin/suburbspirograph"
+    spirograph = Image(x, y, path)
+    spirograph.animated = True
+    spirograph.animframes = 164
+    return spirograph
+
+def make_grist_cost_display(x, y, h, power: int, cost: dict, binding: UIElement, theme: themes.Theme, temporary=True, absolute=True) -> UIElement:
+    elements: list[UIElement] = []
+    padding = 5
+    scale = h / 45
+    fontsize = h
+    for grist_name, amount in cost.items():
+        icon_path = config.grists[grist_name]["image"]
+        if len(elements) != 0:
+            icon_x = padding+elements[-1].rect.w
+            icon_y = 0
+        else:
+            icon_x = x
+            icon_y = y
+        icon = Image(icon_x, icon_y, icon_path, theme, False)
+        icon.scale = scale
+        icon.absolute = True
+        if len(elements) == 0:
+            elements.append(icon)
+            icon.bind_to(binding, temporary)
+        else:
+            icon.bind_to(elements[-1])
+            elements.append(icon)
+        label_x = padding + int(45*scale)
+        label = Text(label_x, 0, str(int(power*amount)))
+        label.fontsize = fontsize
+        label.bind_to(elements[-1])
+        label.absolute = True
+        elements.append(label)
+    return elements[0]
 
 class TileMap(UIElement):
     def __init__(self, x, y, map: list[list[str]], specials: dict, room_name: str, item_display:"RoomItemDisplay", server_view=False):

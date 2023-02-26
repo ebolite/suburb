@@ -293,7 +293,7 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
     for row_index, row in enumerate(rows):
         box_y = padding + row_index*(box_h + padding*2)
         for column_index, item_name in enumerate(row):
-            # item = sylladex.Item(item_name, available_phernalia[item_name])
+            item = sylladex.Item(item_name, available_phernalia[item_name])
             box_x = padding + column_index*(box_w + padding*2)
             if current_selected_phernalia == item_name: box_color = info_window.theme.dark
             else: box_color = info_window.theme.white
@@ -305,6 +305,7 @@ def phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text
             cost_label_box = render.SolidColor(0, item_box_h, box_w, cost_label_h, info_window.theme.white)
             cost_label_box.border_radius = 3
             cost_label_box.bind_to(item_box)
+            cost_label = render.make_grist_cost_display(0, 0, cost_label_h, item.power, item.cost, cost_label_box, info_window.theme)
             box_button = render.TextButton(0, 0, box_w, item_box_h, "", get_box_button_func(item_name))
             box_button.draw_sprite = False
             box_button.absolute = True
