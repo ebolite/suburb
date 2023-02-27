@@ -307,11 +307,12 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
             cost_label_box.border_radius = 3
             cost_label_box.bind_to(item_box)
             cost_label = render.make_grist_cost_display(0, 0, cost_label_h, item.power, item.cost, grist_cache, cost_label_box, info_window.theme.dark)
-            box_button = render.TextButton(0, 0, box_w, item_box_h, "", get_box_button_func(item_name))
-            box_button.draw_sprite = False
-            box_button.absolute = True
-            box_button.click_on_mouse_down = True
-            box_button.bind_to(item_box)
+            if current_selected_phernalia != item_name:
+                box_button = render.TextButton(0, 0, box_w, item_box_h, "", get_box_button_func(item_name))
+                box_button.draw_sprite = False
+                box_button.absolute = True
+                box_button.click_on_mouse_down = True
+                box_button.bind_to(item_box)
             image_path = f"sprites/items/{item_name}.png"
             if os.path.isfile(image_path):
                 card_image = render.ItemImage(0.5, 0.5, item_name)
