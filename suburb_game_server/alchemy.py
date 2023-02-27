@@ -94,7 +94,7 @@ class InheritedStatistics():
     def get_descriptors(self, guaranteed_compound_name = False, depth = 0) -> tuple[str, list, list, list]:
         required_inheritors = []
         base = ""
-        adjectives = []
+        adjectives: list[str] = []
         merged_bases = []
         secretadjectives = []
         if len(self.component_1.descriptors) == 1: required_inheritors.append(self.component_1.descriptors[0])
@@ -334,6 +334,13 @@ class Item(): # Items are the base of instants.
     def displayname(self):
         name = " ".join(self.adjectives+[self.base])
         out = name.replace("+", " ")
+        return out
+    
+    @property
+    def true_cost(self):
+        out = {}
+        for grist_name, value in self.cost.items():
+            out[grist_name] = int(self.power*value)
         return out
     
     def __setattr__(self, attr, value):

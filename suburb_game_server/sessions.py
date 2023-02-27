@@ -371,6 +371,8 @@ class Room():
         else:
             item = alchemy.Item(item_name)
             instance = alchemy.Instance(item)
+            cost = item.true_cost
+            if not player.pay_costs(cost): print("couldn't pay cost"); return False
             self.add_instance(instance.name)
         player.deployed_phernalia.append(item_name)
         return True
@@ -518,6 +520,13 @@ class Player():
                 self.grist_gutter[-1] = [grist_name, self.grist_gutter[-1][1] + overflow]
             else:
                 self.grist_gutter.append([grist_name, overflow])
+
+    def pay_costs(self, true_cost: dict) -> bool:
+        for grist_name, value in true_cost.items():
+            if self.grist_cache[grist_name] < value: return False
+        for grist_name, value in true_cost.items():
+            self.grist_cache[grist_name] -= value
+        return True
 
     @property
     def total_gutter_grist(self) -> int:
