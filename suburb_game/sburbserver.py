@@ -345,12 +345,12 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
     info_window.color = info_window.theme.white
     info_text.text = "Available Tiles"
     padding = 4
-    cost_label_h = 32
+    cost_label_h = 16
     grist_cache: dict = viewport_dic["client_grist_cache"]
     server_tiles = get_server_tiles()
     tile_scale = 2
     tile_wh = int(render.tile_wh * tile_scale)
-    num_rows = info_window.h // (tile_wh + cost_label_h + padding) - 1
+    num_rows = info_window.h // (tile_wh + cost_label_h + padding*2)
     num_columns = info_window.w // (tile_wh + padding)
     x_offset = (info_window.w%(tile_wh+padding))//2
     rows = []
@@ -363,17 +363,35 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
             rows.append([tile_char])
     display_rows = rows[page*num_rows:page*num_rows + num_rows]
     for row_index, row in enumerate(display_rows):
-        tile_y = padding + row_index*(tile_wh+cost_label_h+padding)
+        tile_y = padding + row_index*(tile_wh+cost_label_h + padding*2)
         for column_index, tile_char in enumerate(row):
             tile_x = x_offset + column_index*(tile_wh+padding)
             tile = render.TileDisplay(tile_x, tile_y, tile_char)
             tile.absolute = True
             tile.scale = tile_scale
             tile.bind_to(info_window, True)
-            cost_label = render.make_grist_cost_display(0, tile_wh, cost_label_h, 
+            cost_label = render.make_grist_cost_display(0, tile_wh+padding, cost_label_h, 
                                                         {"build": server_tiles[tile_char]}, grist_cache, tile,
-                                                        info_window.theme.dark, scale_mult=0.6)
-        
+                                                        info_window.theme.dark, scale_mult=1)
+    def get_leftbutton_func(page_num):
+        def leftbutton_func():
+            display_revise(info_window, info_text, page_num-1)
+        return leftbutton_func
+    def get_rightbutton_func(page_num):
+        def rightbutton_func():
+            display_revise(info_window, info_text, page_num+1)
+        return rightbutton_func
+    page_button_w = info_window.w//2-padding*2
+    page_button_h = 20
+    page_button_y = info_window.h-page_button_h-padding
+    if page != 0:
+        left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<-", get_leftbutton_func(page))
+        left_button.absolute = True
+        left_button.bind_to(info_window, temporary=True)
+    if rows[(page+1)*num_rows:(page+1)*num_rows + num_rows] != []:
+        right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "->", get_rightbutton_func(page))
+        right_button.absolute = True
+        right_button.bind_to(info_window, temporary=True)
 
 
 def update_info_window(info_window, info_text):
