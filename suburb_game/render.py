@@ -854,6 +854,41 @@ class Tile(UIElement):
         else:
             return "sprites\\tiles\\missingtile.png"
 
+class TileDisplay(UIElement):
+    def __init__(self, x, y, tile_char):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.tile = tile_char
+        self.offsetx, self.offsety = 0, 0
+        self.click_func: Optional[Callable] = None
+        update_check.append(self)
+        click_check.append(self)
+
+    def onclick(self, isclicked):
+        if isclicked:
+            if self.click_func is not None:
+                self.click_func()
+
+    def update_image(self):
+        try: self.image
+        except AttributeError: self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
+
+    @property
+    def image_path(self): # returns path to image
+        if self.tile in config.tiles:
+            return config.tiles[self.tile]
+        else:
+            return "sprites\\tiles\\missingtile.png"
+
+    def update(self):
+        self.update_image()
+        self.surf = pygame.Surface((tile_wh, tile_wh))
+        self.rect = self.surf.get_rect()
+        self.rect.x, self.rect.y = self.get_rect_xy()
+        self.surf.blit(self.image, (0, 0), (self.offsetx, self.offsety, tile_wh, tile_wh))
+        self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
+
 class RoomItemDisplay(UIElement):
     def __init__(self, x, y, instances: dict, server_view=False):
         super().__init__()

@@ -14,6 +14,13 @@ current_mode = "select"
 current_info_window = "grist_cache"
 current_selected_phernalia = None
 viewport_dic = {}
+server_tiles: Optional[dict[str, int]] = None
+
+def get_server_tiles():
+    global server_tiles
+    if server_tiles is None:
+        server_tiles = client.requestdic("server_tiles")
+    return server_tiles
 
 def placeholder(): pass
 
@@ -336,6 +343,15 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
                     card_image.scale = item_box_h / 240
             else:
                 card_image = None
+
+    def display_revise(info_window: "render.SolidColor", info_text: "render.Text"):
+        info_window.kill_temporary_elements()
+        info_window.color = info_window.theme.light
+        info_text.text = "Available Tiles"
+        padding = 5
+        cost_label_h = 16
+        tile_wh = 32
+        
 
 
 def update_info_window(info_window, info_text):
