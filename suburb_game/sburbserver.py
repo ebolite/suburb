@@ -52,9 +52,12 @@ def deploy_item(target_x: int, target_y: int) -> Optional[dict]:
             "viewport_x": current_x, "viewport_y": current_y})
         return reply
 
-def update_viewport_dic():
+def update_viewport_dic(dic: Optional[dict]=None):
     global viewport_dic
-    viewport_dic = client.requestplusdic(intent="computer", content={"command": "viewport", "viewport_x":current_x, "viewport_y":current_y})
+    if dic is None:
+        viewport_dic = client.requestplusdic(intent="computer", content={"command": "viewport", "viewport_x":current_x, "viewport_y":current_y})
+    else:
+        viewport_dic = dic
 
 def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", info_text: "render.Text", tilemap: Optional["render.TileMap"]=None):
     client_grist_cache = viewport_dic["client_grist_cache"]
@@ -211,9 +214,9 @@ def draw_info_window(window: "render.Window") -> Tuple["render.SolidColor", "ren
 def display_grist_cache(info_window: "render.SolidColor", text: "render.Text"):
     info_window.color = info_window.theme.light
     padding = 5
-    player_dict = client.requestdic("player_info")
-    grist_cache: dict = player_dict["grist_cache"]
-    grist_cache_limit = player_dict["grist_cache_limit"]
+    # viewport dic needs to be up to date
+    grist_cache: dict = viewport_dic["client_grist_cache"]
+    grist_cache_limit = viewport_dic["client_cache_limit"]
     text.text = f"Cache Limit: {grist_cache_limit}"
     nonzero_grist = []
     zero_grist = []
@@ -274,9 +277,9 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
     info_window.kill_temporary_elements()
     info_window.color = info_window.theme.light
     padding = 4
-    player_dict = client.requestdic("player_info")
-    available_phernalia: dict = player_dict["available_phernalia"]
-    grist_cache: dict = player_dict["grist_cache"]
+    # viewport dic needs to be up to date
+    available_phernalia: dict = viewport_dic["client_available_phernalia"]
+    grist_cache: dict = viewport_dic["client_grist_cache"]
     info_text.text = f"Phernalia Registry"
     num_columns = 3
     usable_area_w = info_window.w

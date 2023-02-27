@@ -611,6 +611,9 @@ def make_grist_cost_display(x, y, h, power: int, cost: dict, grist_cache: dict, 
         if grist_cost <= grist_cache[grist_name]:
             label.color = text_color
         else:
+            print(grist_name)
+            print(grist_cost, grist_cache[grist_name])
+            print(grist_cache)
             label.color = pygame.Color(255, 0, 0)
         label.fontsize = fontsize
         label.bind_to(elements[-1])
@@ -757,9 +760,10 @@ class Tile(UIElement):
             target_y = sburbserver.current_y+y_diff
             match sburbserver.current_mode:
                 case "deploy":
-                    map_dict = sburbserver.deploy_item(target_x, target_y)
-                    if map_dict is not None:
-                        self.TileMap.update_map(map_dict)
+                    viewport_dict = sburbserver.deploy_item(target_x, target_y)
+                    if viewport_dict is not None:
+                        sburbserver.update_viewport_dic(viewport_dict)
+                        self.TileMap.update_map(viewport_dict)
                         if self.TileMap.info_window is not None and self.TileMap.info_text is not None:
                             sburbserver.update_info_window(self.TileMap.info_window, self.TileMap.info_text)
                 case _:

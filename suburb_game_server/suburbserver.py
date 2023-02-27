@@ -282,7 +282,10 @@ def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
     room = client.land.housemap.find_room(x, y)
     room_instances = room.get_instances()
     client_grist_cache = client.grist_cache
-    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name, "client_grist_cache": client_grist_cache})
+    client_available_phernalia = client.available_phernalia
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name, 
+                       "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
+                       "client_cache_limit": client.grist_cache_limit})
 
 def console_commands(player: sessions.Player, content: str):
     args = content.split(" ")
