@@ -799,6 +799,10 @@ class Tile(UIElement):
                 else: icon_image_filename = config.icons["no_icon"]
                 icon_image = pygame.image.load(icon_image_filename)
                 self.surf.blit(icon_image, (0, 0), (0, 0, tile_wh, tile_wh))
+        if self.server_view and self.x == len(self.TileMap.map)//2 and self.y == len(self.TileMap.map)//2:
+            center_path = config.icons["center"]
+            center_image = pygame.image.load(center_path)
+            self.surf.blit(center_image, (0, 0), (0, 0, tile_wh, tile_wh))
         if self.server_view and self.mouseover():
             cursor_image_path = config.icons["select"]
             cursor_image = pygame.image.load(cursor_image_path)

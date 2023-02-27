@@ -54,6 +54,7 @@ icons = {
     "punch designix": "sprites/icons/punch designix.png",
     "totem lathe": "sprites/icons/totem lathe.png",
     "Sburb disc": "sprites/icons/Sburb disc.png",
+    "center": "sprites/icons/center.png",
     "select": "sprites/icons/select.png"
 }
 
