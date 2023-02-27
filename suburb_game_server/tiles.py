@@ -1,7 +1,7 @@
 import config
 import random
 
-tiles: dict[str, "Tile"] = {}      # tile: Tile
+tiles: dict[str, "Tile"] = {}      # tile_char: Tile
 # tiles "revise"able by sburb servers
 server_tiles: dict[str, int] = {}       # tile_char: build_cost
 
@@ -12,6 +12,8 @@ class Tile():
     def __init__(self, tile_char, name):
         self.tile_char = tile_char
         self.name = name
+        self.solid = True       # tile can support other tiles
+        self.supported = False      # tile can only be placed above a solid tile
         self.impassible = False     # cannot be moved into or fallen through
         self.infallible = False     # can be moved into, but not fallen through
         self.ramp = False       # tiles that can take you up and to the side
@@ -110,13 +112,16 @@ for interest in config.interests: # for interest loot tables
 
 debug_tile = Tile("*", "debug tile")
 debug_tile.forbidden = True
+debug_tile.solid = False
 
 out_of_bounds = Tile("?", "out of bounds")
 out_of_bounds.forbidden = True
 out_of_bounds.impassible = True
+out_of_bounds.solid = False
 
 air = Tile(".", "air")
 air.build_cost = 0
+air.solid = False
 
 wall = Tile("|", "wall")
 wall.impassible = True
@@ -175,13 +180,21 @@ pillar.infallible = True
 
 left_door = Tile("<", "left door")
 left_door.door = True
+left_door.supported = True
+left_door.build_cost = 2
 
 right_door = Tile(">", "right door")
 right_door.door = True
+right_door.supported = True
+right_door.build_cost = 2
 
 left_window = Tile("[", "left window")
+left_window.supported = True
+left_window.build_cost = 2
 
 right_window = Tile("]", "right window")
+right_window.supported = True
+right_window.build_cost = 2
 
 bedroom = Tile("B", "bedroom")
 
@@ -221,38 +234,47 @@ nest.forbidden = True
 
 stalagtite = Tile("'", "stalagtite")
 stalagtite.forbidden = True
+stalagtite.solid = False
 
 return_gate = Tile("0", "return gate")
 return_gate.forbidden = True
 return_gate.special = True
+return_gate.solid = False
 
 first_gate = Tile("1", "first gate")
 first_gate.forbidden = True
 first_gate.special = True
+first_gate.solid = False
 
 second_gate = Tile("2", "second gate")
 second_gate.forbidden = True
 second_gate.special = True
+second_gate.solid = False
 
 third_gate = Tile("3", "third gate")
 third_gate.forbidden = True
 third_gate.special = True
+third_gate.solid = False
 
 fourth_gate = Tile("4", "fourth gate")
 fourth_gate.forbidden = True
 fourth_gate.special = True
+fourth_gate.solid = False
 
 fifth_gate = Tile("5", "fifth gate")
 fifth_gate.forbidden = True
 fifth_gate.special = True
+fifth_gate.solid = False
 
 sixth_gate = Tile("6", "sixth gate")
 sixth_gate.forbidden = True
 sixth_gate.special = True
+sixth_gate.solid = False
 
 seventh_gate = Tile("7", "seventh gate")
 seventh_gate.forbidden = True
 seventh_gate.special = True
+seventh_gate.solid = False
 
 for tile_name, tile in tiles.items():
     if not tile.forbidden:

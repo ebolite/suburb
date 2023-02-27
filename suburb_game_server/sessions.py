@@ -251,6 +251,9 @@ class Map():
     def get_tile(self, x: int, y: int) -> tiles.Tile:
         return tiles.tiles[self.map_tiles[y][x]]
     
+    def change_tile(self, x: int, y: int, tile_char: str):
+        self.map_tiles[y][x] = tile_char
+    
     def is_tile_in_bounds(self, x: int, y: int) -> bool:
         if y < 0: return False
         if x < 0: return False
@@ -358,8 +361,8 @@ class Room():
             out_dict[instance_name] = instance.get_dict()
         return out_dict
 
-    def deploy(self, player: "Player", item_name: str):
-        if item_name not in player.available_phernalia: print("not in phernalia"); return False
+    def deploy(self, client: "Player", item_name: str) -> bool:
+        if item_name not in client.available_phernalia: print("not in phernalia"); return False
         if not self.tile.deployable: print("undeployable tile"); return False
         below_room = self.map.find_room(self.x, self.y+1)
         if not below_room.tile.infallible and not below_room.tile.impassible: print("below room not suitable"); return False
@@ -372,9 +375,45 @@ class Room():
             item = alchemy.Item(item_name)
             instance = alchemy.Instance(item)
             cost = item.true_cost
-            if not player.pay_costs(cost): print("couldn't pay cost"); return False
+            if not client.pay_costs(cost): print("couldn't pay cost"); return False
             self.add_instance(instance.name)
-        player.deployed_phernalia.append(item_name)
+        client.deployed_phernalia.append(item_name)
+        return True
+    
+    def get_surrounding_tiles(self) -> list[tiles.Tile]:
+        out_tiles = []
+        for y in range(-1, 1):
+            for x in range(-1, 1):
+                if x == 0 and y == 0: continue
+                if self.map.is_tile_in_bounds(self.x+x, self.y+y):
+                    out_tiles.append(self.map.find_room(self.x+x, self.y+y).tile)
+        return out_tiles
+
+    def revise(self, client: "Player", new_tile_char: str) -> bool:
+        if self.tile.forbidden: return False
+        new_tile = tiles.tiles[new_tile_char]
+        if new_tile.forbidden: return False
+        if self.players: return False
+        # todo: return False if NPCs are in the room as well
+        # can't place an impassible tile where instances of items are
+        if new_tile.impassible and self.instances: return False
+        surrounding_tiles = self.get_surrounding_tiles()
+        if new_tile.solid:
+            for tile in surrounding_tiles:
+                if tile.solid: break
+            else: return False
+        if new_tile.supported and not self.map.find_room(self.x, self.y+1).tile.solid: return False
+        # todo: some supported tile system beyond this
+        # you can't build unsupported tiles directly right now but you can create them with "erasing" with air
+        old_cost = self.tile.build_cost
+        new_cost = new_tile.build_cost
+        if old_cost > new_cost:
+            build_cost = 0
+        else:
+            build_cost = new_cost - old_cost
+        cost = {"build": build_cost}
+        if not client.pay_costs(cost): return False
+        self.map.change_tile(self.x, self.y, new_tile_char)
         return True
 
     @property
