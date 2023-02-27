@@ -1,4 +1,5 @@
 from typing import Optional, Tuple, Callable
+from pygame import Color
 import os
 
 import render
@@ -346,19 +347,21 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
     info_window.color = info_window.theme.white
     info_text.text = "Available Tiles"
     padding = 4
+    border_width = 2
     cost_label_h = 16
     grist_cache: dict = viewport_dic["client_grist_cache"]
     server_tiles = get_server_tiles()
     tile_scale = 2
     tile_wh = int(render.tile_wh * tile_scale)
-    num_rows = info_window.h // (tile_wh + cost_label_h + padding*2)
-    num_columns = info_window.w // (tile_wh + padding)
-    x_offset = (info_window.w%(tile_wh+padding))//2
+    num_rows = info_window.h // (tile_wh + cost_label_h + border_width*2 + padding*2 )
+    num_columns = info_window.w // (tile_wh + border_width*2 + padding)
+    x_offset = (info_window.w%(tile_wh + border_width*2 + padding))
     rows = []
     def get_tile_button_func(tile_char):
         def func():
             global current_selected_tile
             current_selected_tile = tile_char
+            display_revise(info_window, info_text, page)
         return func
     for tile_char in server_tiles:
         for row in rows:
@@ -369,13 +372,20 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
             rows.append([tile_char])
     display_rows = rows[page*num_rows:page*num_rows + num_rows]
     for row_index, row in enumerate(display_rows):
-        tile_y = padding + row_index*(tile_wh+cost_label_h + padding*2)
+        tile_y = padding + row_index*(tile_wh+cost_label_h + border_width*2 + padding*2)
         for column_index, tile_char in enumerate(row):
-            tile_x = x_offset + column_index*(tile_wh+padding)
+            tile_x = x_offset + column_index*(tile_wh + border_width*2 + padding)
+            if current_selected_tile == tile_char:
+                border_color = info_window.theme.dark
+                border = render.SolidColor(-border_width, -border_width, tile_wh + border_width*2, tile_wh + border_width*2, border_color)
+                border.border_radius = 2
+            else:
+                border = None
             tile = render.TileDisplay(tile_x, tile_y, tile_char)
             tile.absolute = True
             tile.scale = tile_scale
             tile.bind_to(info_window, True)
+            if border is not None: border.bind_to(tile)
             tile_button = render.TextButton(0, 0, tile_wh, tile_wh, "", get_tile_button_func(tile_char))
             tile_button.absolute = True
             tile_button.draw_sprite = False

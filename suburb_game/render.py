@@ -158,8 +158,9 @@ class SolidColor(UIElement):
         self.y = y
         self.w = w
         self.h = h
-        self.color: Union[pygame.Color, list] = color
+        self.color: Union[pygame.Color, list[pygame.Color]] = color
         self.outline_color: Optional[pygame.Color] = None
+        self.alpha = 255
         self.animframe = 0
         self.outline_width = 2
         self.border_radius: int = 0
