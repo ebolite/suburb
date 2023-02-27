@@ -824,6 +824,8 @@ class Tile(UIElement):
         if self.server_view and self.mouseover():
             if sburbserver.current_mode == "deploy":
                 cursor_image_path = config.icons["deploy"]
+            elif sburbserver.current_mode == "revise":
+                cursor_image_path = config.tiles[sburbserver.current_selected_tile]
             else:
                 cursor_image_path = config.icons["select"]
             cursor_image = pygame.image.load(cursor_image_path)

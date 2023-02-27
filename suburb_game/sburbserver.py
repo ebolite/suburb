@@ -13,6 +13,7 @@ current_y = None
 current_mode = "select"
 current_info_window = "grist_cache"
 current_selected_phernalia = None
+current_selected_tile = "."
 viewport_dic = {}
 server_tiles: Optional[dict[str, int]] = None
 
@@ -354,6 +355,11 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
     num_columns = info_window.w // (tile_wh + padding)
     x_offset = (info_window.w%(tile_wh+padding))//2
     rows = []
+    def get_tile_button_func(tile_char):
+        def func():
+            global current_selected_tile
+            current_selected_tile = tile_char
+        return func
     for tile_char in server_tiles:
         for row in rows:
             if len(row) != num_columns:
@@ -370,6 +376,10 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
             tile.absolute = True
             tile.scale = tile_scale
             tile.bind_to(info_window, True)
+            tile_button = render.TextButton(0, 0, tile_wh, tile_wh, "", get_tile_button_func(tile_char))
+            tile_button.absolute = True
+            tile_button.draw_sprite = False
+            tile_button.bind_to(tile)
             cost_label = render.make_grist_cost_display(0, tile_wh+padding, cost_label_h, 
                                                         {"build": server_tiles[tile_char]}, grist_cache, tile,
                                                         info_window.theme.dark, scale_mult=1)
