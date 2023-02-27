@@ -239,7 +239,6 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             viewport_x = content["viewport_x"]
             viewport_y = content["viewport_y"]
             client = player.client_player
-            print("getting viewport")
             return get_viewport(viewport_x, viewport_y, client)
         case "is_tile_in_bounds":
             x_coord = content["x"]
@@ -271,12 +270,13 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             viewport_y = content["viewport_y"]
             item_name = content["item_name"]
             if player.client_player.deploy(item_name, x_coord, y_coord):
-                return ":)"
+                return get_viewport(viewport_x, viewport_y, player.client_player)
                 # return get_viewport(viewport_x, viewport_y, player.client_player)
             else:
                 return "failed to deploy stop hacking!!"
 
 def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
+    print("getting viewport")
     if client is None: print("no client"); return "No client dumpass"
     map_tiles, map_specials = client.land.housemap.get_view(x, y, 8)
     room = client.land.housemap.find_room(x, y)

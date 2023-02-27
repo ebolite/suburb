@@ -664,16 +664,17 @@ class TileMap(UIElement):
                 for x, char in enumerate(line):
                     self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials, self.server_view)
 
-    def update_map(self):
-        if self.server_view:
-            sburbserver.update_viewport_dic()
-            dic = sburbserver.viewport_dic
-        else:
-            dic = client.requestdic("current_map")
-        self.map = dic["map"]
-        self.specials = dic["specials"]
-        self.instances = dic["instances"]
-        self.room_name = dic["room_name"]
+    def update_map(self, map_dict: Optional[dict]=None):
+        if map_dict is None:
+            if self.server_view:
+                sburbserver.update_viewport_dic()
+                map_dict = sburbserver.viewport_dic
+            else:
+                map_dict = client.requestdic("current_map")
+        self.map = map_dict["map"]
+        self.specials = map_dict["specials"]
+        self.instances = map_dict["instances"]
+        self.room_name = map_dict["room_name"]
         self.item_display.update_instances(self.instances)
         if self.label is not None: self.label.text = self.room_name
 
@@ -756,10 +757,11 @@ class Tile(UIElement):
             target_y = sburbserver.current_y+y_diff
             match sburbserver.current_mode:
                 case "deploy":
-                    sburbserver.deploy_item(target_x, target_y)
-                    self.TileMap.update_map()
-                    if self.TileMap.info_window is not None and self.TileMap.info_text is not None:
-                        sburbserver.update_info_window(self.TileMap.info_window, self.TileMap.info_text)
+                    map_dict = sburbserver.deploy_item(target_x, target_y)
+                    if map_dict is not None:
+                        self.TileMap.update_map(map_dict)
+                        if self.TileMap.info_window is not None and self.TileMap.info_text is not None:
+                            sburbserver.update_info_window(self.TileMap.info_window, self.TileMap.info_text)
                 case _:
                     if x_diff == 0 and y_diff == 0: return
                     sburbserver.move_view_to_tile(target_x, target_y)

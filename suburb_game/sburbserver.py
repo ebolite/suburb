@@ -44,10 +44,10 @@ def move_view_to_tile(target_x:int, target_y:int) -> bool:
         current_y = target_y
         return True
 
-def deploy_item(target_x: int, target_y: int):
+def deploy_item(target_x: int, target_y: int) -> Optional[dict]:
     if current_info_window == "phernalia_registry":
-        if current_selected_phernalia is None: return
-        reply = client.requestplus(intent="computer", content={
+        if current_selected_phernalia is None: return None
+        reply = client.requestplusdic(intent="computer", content={
             "command": "deploy_phernalia", "x":target_x, "y":target_y, "item_name": current_selected_phernalia,
             "viewport_x": current_x, "viewport_y": current_y})
         return reply
