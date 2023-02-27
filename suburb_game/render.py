@@ -755,7 +755,7 @@ class Tile(UIElement):
             self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
             self.last_tile = self.tile
 
-    def onclick(self, isclicked):
+    def onclick(self, isclicked: bool):
         if isclicked:
             center_tile_x = len(self.TileMap.map)//2
             center_tile_y = len(self.TileMap.map)//2
@@ -770,7 +770,8 @@ class Tile(UIElement):
                         sburbserver.update_viewport_dic(viewport_dict)
                         self.TileMap.update_map(viewport_dict)
                 case "revise":
-                    if sburbserver.current_selected_tile in self.known_invalid_tiles: print("invalid tile"); return
+                    if self.tile == sburbserver.current_selected_tile: return
+                    if sburbserver.current_selected_tile in self.known_invalid_tiles: return
                     viewport_dict = sburbserver.revise_tile(target_x, target_y)
                     if viewport_dict is None: self.known_invalid_tiles.append(sburbserver.current_selected_tile)
                     else:
@@ -784,6 +785,8 @@ class Tile(UIElement):
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly
         if self.x == len(self.TileMap.map[0]) - 1 or self.y == len(self.TileMap.map) - 1: return # ^
+        if self.server_view and sburbserver.current_mode == "revise" and self.mouseover() and pygame.mouse.get_pressed()[0]:
+            self.onclick(True)
         self.update_image()
         self.surf = pygame.Surface((tile_wh, tile_wh))
         offsety = 0
