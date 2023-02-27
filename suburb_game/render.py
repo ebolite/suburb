@@ -611,9 +611,6 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding
         if grist_cost <= grist_cache[grist_name]:
             label.color = text_color
         else:
-            print(grist_name)
-            print(grist_cost, grist_cache[grist_name])
-            print(grist_cache)
             label.color = pygame.Color(255, 0, 0)
         label.fontsize = fontsize
         label.bind_to(elements[-1])

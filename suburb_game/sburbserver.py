@@ -295,7 +295,6 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
     box_w = usable_area_w//num_columns - padding*2
     box_h = box_w
     num_rows = usable_area_h // (box_h + padding*2)
-    print(num_rows)
     rows = []
     for item_name in available_phernalia:
         for row in rows:
