@@ -627,7 +627,7 @@ class TileMap(UIElement):
         self.item_display = item_display
         self.server_view = server_view
         self.specials = specials
-        self.tiles = {}
+        self.tiles: dict[str, "Tile"] = {}
         self.room_name = room_name
         if not self.server_view:
             self.label = Text(0.5, 0, room_name)
@@ -676,7 +676,14 @@ class TileMap(UIElement):
         self.instances = map_dict["instances"]
         self.room_name = map_dict["room_name"]
         self.item_display.update_instances(self.instances)
+        for tile in self.tiles.values():
+            tile.known_invalid_tiles = []
         if self.label is not None: self.label.text = self.room_name
+        self.update_info_window()
+
+    def update_info_window(self):
+        if self.info_window is not None and self.info_text is not None:
+            sburbserver.update_info_window(self.info_window, self.info_text)
 
     def keypress(self, event):
         if self.input_text_box is not None and self.input_text_box.active: return
@@ -737,6 +744,7 @@ class Tile(UIElement):
         self.specials = specials
         self.server_view = server_view
         self.last_tile = self.tile
+        self.known_invalid_tiles: list[str] = []
         if server_view:
             click_check.append(self)
 
@@ -761,13 +769,17 @@ class Tile(UIElement):
                     if viewport_dict is not None:
                         sburbserver.update_viewport_dic(viewport_dict)
                         self.TileMap.update_map(viewport_dict)
-                        if self.TileMap.info_window is not None and self.TileMap.info_text is not None:
-                            sburbserver.update_info_window(self.TileMap.info_window, self.TileMap.info_text)
+                case "revise":
+                    if sburbserver.current_selected_tile in self.known_invalid_tiles: print("invalid tile"); return
+                    viewport_dict = sburbserver.revise_tile(target_x, target_y)
+                    if viewport_dict is None: self.known_invalid_tiles.append(sburbserver.current_selected_tile)
+                    else:
+                        sburbserver.update_viewport_dic(viewport_dict)
+                        self.TileMap.update_map(viewport_dict)
                 case _:
                     if x_diff == 0 and y_diff == 0: return
                     sburbserver.move_view_to_tile(target_x, target_y)
                     self.TileMap.update_map()
-            
 
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly

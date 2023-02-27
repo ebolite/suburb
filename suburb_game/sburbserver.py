@@ -58,11 +58,22 @@ def deploy_item(target_x: int, target_y: int) -> Optional[dict]:
         if current_selected_phernalia is None: return None
         reply = client.requestplusdic(intent="computer", content={
             "command": "deploy_phernalia", "x":target_x, "y":target_y, "item_name": current_selected_phernalia,
-            "viewport_x": current_x, "viewport_y": current_y})
+            "viewport_x": current_x, "viewport_y": current_y
+            })
         if reply:
             return reply
         else:
             return None
+        
+def revise_tile(target_x: int, target_y: int) -> Optional[dict]:
+    reply = client.requestplusdic(intent="computer", content={
+        "command": "revise", "x": target_x, "y": target_y, "tile_char": current_selected_tile,
+        "viewport_x": current_x, "viewport_y": current_y
+    })
+    if reply:
+        return reply
+    else:
+        return None
 
 def update_viewport_dic(dic: Optional[dict]=None):
     global viewport_dic

@@ -276,6 +276,17 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
                 # return get_viewport(viewport_x, viewport_y, player.client_player)
             else:
                 return json.dumps({})
+        case "revise":
+            if player.client_player is None: return "No client."
+            x_coord = content["x"]
+            y_coord = content["y"]
+            viewport_x = content["viewport_x"]
+            viewport_y = content["viewport_y"]
+            tile_char = content["tile_char"]
+            if player.client_player.revise(tile_char, x_coord, y_coord):
+                return get_viewport(viewport_x, viewport_y, player.client_player)
+            else:
+                return json.dumps({})
 
 def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
     if client is None: print("no client"); return "No client dumpass"

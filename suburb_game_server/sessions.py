@@ -414,6 +414,7 @@ class Room():
         cost = {"build": build_cost}
         if not client.pay_costs(cost): return False
         self.map.change_tile(self.x, self.y, new_tile_char)
+        # todo: add item falling if this tile is no longer solid
         return True
 
     @property
@@ -545,6 +546,10 @@ class Player():
     def deploy(self, item_name, target_x, target_y) -> bool:
         room = self.land.housemap.find_room(target_x, target_y)
         return room.deploy(self, item_name)
+    
+    def revise(self, tile_char, target_x, target_y) -> bool:
+        room = self.land.housemap.find_room(target_x, target_y)
+        return room.revise(self, tile_char)
     
     def add_grist(self, grist_name: str, amount: int):
         current_grist = self.grist_cache[grist_name]
