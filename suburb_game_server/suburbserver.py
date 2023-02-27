@@ -240,7 +240,7 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             y_coord = content["y"]
             client = player.client_player
             if client is None: return "No client dumpass"
-            map_tiles, map_specials = client.land.housemap.get_view(x_coord, y_coord, 8, server_view=True)
+            map_tiles, map_specials = client.land.housemap.get_view(x_coord, y_coord, 8)
             room = client.land.housemap.find_room(x_coord, y_coord)
             room_instances = room.get_instances()
             client_grist_cache = client.grist_cache
