@@ -359,7 +359,7 @@ class Room():
         return out_dict
 
     def deploy(self, player: "Player", item_name: str):
-        if item_name not in player.available_phernalia: return
+        if item_name not in player.available_phernalia: return False
         if item_name == "pre-punched card":
             item = alchemy.Item("punched card")
             instance = alchemy.Instance(item)
@@ -370,6 +370,7 @@ class Room():
             instance = alchemy.Instance(item)
             self.add_instance(instance.name)
         player.deployed_phernalia.append(item_name)
+        return True
 
     @property
     def specials(self) -> dict:
@@ -495,6 +496,11 @@ class Player():
             return True
         else:
             return False
+        
+    # deploys an item to this user's map at the specified coordinates
+    def deploy(self, item_name, target_x, target_y) -> bool:
+        room = self.land.housemap.find_room(target_x, target_y)
+        return room.deploy(self, item_name)
     
     def add_grist(self, grist_name: str, amount: int):
         current_grist = self.grist_cache[grist_name]

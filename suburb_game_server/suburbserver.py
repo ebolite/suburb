@@ -236,15 +236,12 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
                 y = len(housemap.map_tiles) - 6
             return json.dumps({"x": x, "y": y})
         case "viewport":
-            x_coord = content["x"]
-            y_coord = content["y"]
+            viewport_x = content["viewport_x"]
+            viewport_y = content["viewport_y"]
             client = player.client_player
-            if client is None: return "No client dumpass"
-            map_tiles, map_specials = client.land.housemap.get_view(x_coord, y_coord, 8)
-            room = client.land.housemap.find_room(x_coord, y_coord)
-            room_instances = room.get_instances()
-            client_grist_cache = client.grist_cache
-            return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name, "client_grist_cache": client_grist_cache})
+            vp = get_viewport(viewport_x, viewport_y, client)
+            print(vp)
+            return vp
         case "is_tile_in_bounds":
             x_coord = content["x"]
             y_coord = content["y"]
@@ -267,6 +264,26 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             session.connected.append(client_player_username)
             client_player.grist_cache["build"] += min(2 * (10 ** len(session.connected)), 20000)
             return "Successfully connected."
+        case "deploy_phernalia":
+            if player.client_player is None: return "No client."
+            x_coord = content["x"]
+            y_coord = content["y"]
+            viewport_x = content["viewport_x"]
+            viewport_y = content["viewport_y"]
+            item_name = content["item_name"]
+            if player.client_player.deploy(item_name, x_coord, y_coord):
+                return ":)"
+                # return get_viewport(viewport_x, viewport_y, player.client_player)
+            else:
+                return "failed to deploy stop hacking!!"
+
+def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
+    if client is None: print("no client"); return "No client dumpass"
+    map_tiles, map_specials = client.land.housemap.get_view(x, y, 8)
+    room = client.land.housemap.find_room(x, y)
+    room_instances = room.get_instances()
+    client_grist_cache = client.grist_cache
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name, "client_grist_cache": client_grist_cache})
 
 def console_commands(player: sessions.Player, content: str):
     args = content.split(" ")

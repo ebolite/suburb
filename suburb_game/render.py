@@ -664,7 +664,8 @@ class TileMap(UIElement):
 
     def update_map(self):
         if self.server_view:
-            dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":sburbserver.current_x, "y":sburbserver.current_y})
+            sburbserver.update_viewport_dic()
+            dic = sburbserver.viewport_dic
         else:
             dic = client.requestdic("current_map")
         self.map = dic["map"]
@@ -749,9 +750,17 @@ class Tile(UIElement):
             center_tile_y = len(self.TileMap.map)//2
             x_diff = self.x - center_tile_x
             y_diff = self.y - center_tile_y
-            if x_diff == 0 and y_diff == 0: return
-            sburbserver.move_view_to_tile(sburbserver.current_x+x_diff, sburbserver.current_y+y_diff)
-            self.TileMap.update_map()
+            target_x = sburbserver.current_x+x_diff
+            target_y = sburbserver.current_y+y_diff
+            match sburbserver.current_mode:
+                case "deploy":
+                    sburbserver.deploy_item(target_x, target_y)
+                    self.TileMap.update_map()
+                case _:
+                    if x_diff == 0 and y_diff == 0: return
+                    sburbserver.move_view_to_tile(target_x, target_y)
+                    self.TileMap.update_map()
+            
 
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly

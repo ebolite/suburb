@@ -44,9 +44,17 @@ def move_view_to_tile(target_x:int, target_y:int) -> bool:
         current_y = target_y
         return True
 
+def deploy_item(target_x: int, target_y: int):
+    if current_info_window == "phernalia_registry":
+        if current_selected_phernalia is None: return
+        reply = client.requestplus(intent="computer", content={
+            "command": "deploy_phernalia", "x":target_x, "y":target_y, "item_name": current_selected_phernalia,
+            "viewport_x": current_x, "viewport_y": current_y})
+        return reply
+
 def update_viewport_dic():
     global viewport_dic
-    viewport_dic = client.requestplusdic(intent="computer", content={"command": "viewport", "x":current_x, "y":current_y})
+    viewport_dic = client.requestplusdic(intent="computer", content={"command": "viewport", "viewport_x":current_x, "viewport_y":current_y})
 
 def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", info_text: "render.Text", tilemap: Optional["render.TileMap"]=None):
     client_grist_cache = viewport_dic["client_grist_cache"]
