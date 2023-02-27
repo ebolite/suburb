@@ -40,6 +40,13 @@ class Tile():
             self.set_loot(always, common, uncommon, rare, exotic)
         tiles[tile_char] = self
 
+    @property
+    def deployable(self) -> bool:
+        if self.impassible: return False
+        if self.ramp: return False
+        if self.automove: return False
+        return True
+
     def is_special(self) -> bool:
         if self.impassible: return True
         if self.infallible: return True

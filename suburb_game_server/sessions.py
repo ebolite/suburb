@@ -360,6 +360,9 @@ class Room():
 
     def deploy(self, player: "Player", item_name: str):
         if item_name not in player.available_phernalia: return False
+        if not self.tile.deployable: return False
+        below_room = self.map.find_room(self.x, self.y+1)
+        if not below_room.tile.infallible or not below_room.tile.impassible: return False
         if item_name == "pre-punched card":
             item = alchemy.Item("punched card")
             instance = alchemy.Instance(item)
