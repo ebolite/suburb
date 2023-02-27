@@ -1,7 +1,9 @@
 import config
 import random
 
-tiles = {}      # tile: Tile
+tiles: dict[str, "Tile"] = {}      # tile: Tile
+# tiles "revise"able by sburb servers
+server_tiles: dict[str, int] = {}       # name: build_cost
 
 anywhere_rare = ["empty captchalogue card"]
 anywhere_exotic = ["fancy+santa"]
@@ -20,6 +22,7 @@ class Tile():
         self.forbidden = False      # tiles that cannot be placed or modified by servers
         self.special = False        # tiles that are otherwise special for some reason
         self.generate_loot = False
+        self.build_cost = 10
         self.always_spawn = []
         self.common_spawn = []
         self.common_weight = 65
@@ -113,6 +116,7 @@ out_of_bounds.forbidden = True
 out_of_bounds.impassible = True
 
 air = Tile(".", "air")
+air.build_cost = 0
 
 wall = Tile("|", "wall")
 wall.impassible = True
@@ -120,7 +124,7 @@ wall.impassible = True
 terrain = Tile("#", "terrain")
 terrain.impassible = True
 
-junction = Tile(";", "junction")
+# junction = Tile(";", "junction")
 
 # floor = Tile("=", "floor")
 # floor.impassible = True
@@ -128,33 +132,43 @@ junction = Tile(";", "junction")
 left_ramp = Tile("\\", "left ramp")
 left_ramp.ramp = True
 left_ramp.ramp_direction = "left"
+left_ramp.build_cost = 50
 
 right_ramp = Tile("/", "right ramp")
 right_ramp.ramp = True
 right_ramp.ramp_direction = "right"
-
-girder = Tile("+", "girder")
-girder.infallible = True
+right_ramp.build_cost = 50
 
 cross_ramp = Tile("X", "cross ramp")
 cross_ramp.ramp = True
 cross_ramp.ramp_direction = "both"
 cross_ramp.infallible = True
+cross_ramp.build_cost = 50
 
 stairs = Tile("^", "stairs")
 stairs.stair = True
 stairs.infallible = True
+stairs.build_cost = 200
 
 stairwell = Tile("-", "stairwell")
 stairwell.stair = True
+stairwell.build_cost = 200
 
 elevator_shaft = Tile("v", "elevator shaft")
 elevator_shaft.stair = True
 elevator_shaft.automove = True
 elevator_shaft.infallible = True
+elevator_shaft.build_cost = 600
 
 elevator = Tile("e", "elevator")
 elevator.stair = True
+elevator.build_cost = 200
+
+girder = Tile("+", "girder")
+girder.infallible = True
+
+pillar = Tile("I", "pillar")
+pillar.infallible = True
 
 left_door = Tile("<", "left door")
 left_door.door = True
@@ -184,8 +198,6 @@ cellar = Tile("C", "cellar")
 
 dining_room = Tile("D", "dining room")
 
-pillar = Tile("I", "pillar")
-
 attic = Tile("A", "attic")
 
 office = Tile("O", "office")
@@ -205,6 +217,7 @@ nest = Tile("n", "nest")
 nest.forbidden = True
 
 stalagtite = Tile("'", "stalagtite")
+stalagtite.forbidden = True
 
 return_gate = Tile("0", "return gate")
 return_gate.forbidden = True
@@ -237,6 +250,10 @@ sixth_gate.special = True
 seventh_gate = Tile("7", "seventh gate")
 seventh_gate.forbidden = True
 seventh_gate.special = True
+
+for tile_name, tile in tiles.items():
+    if not tile.forbidden:
+        server_tiles[tile_name] = tile.build_cost
 
 if __name__ == "__main__":
     for tile_char in tiles:

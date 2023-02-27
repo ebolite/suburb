@@ -65,6 +65,8 @@ def handle_request(dict):
     intent = dict["intent"]
     if intent == "connect":
         return "Successfully connected."
+    if intent == "server_tiles":
+        return json.dumps(tiles.server_tiles)
     session_name = dict["session_name"]
     session = sessions.Session(session_name)
     character = dict["character"]
