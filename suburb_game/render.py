@@ -582,12 +582,12 @@ def get_spirograph(x, y, thick=True) -> Image:
     spirograph.animframes = 164
     return spirograph
 
-def make_grist_cost_display(x, y, h, power: int, cost: dict, grist_cache: dict, binding: UIElement, text_color: pygame.Color, temporary=True, absolute=True) -> UIElement:
+def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding: UIElement, text_color: pygame.Color, temporary=True, absolute=True, scale_mult=1.0) -> UIElement:
     elements: list[UIElement] = []
     padding = 5
-    scale = h / 45
-    fontsize = h
-    for grist_name, amount in cost.items():
+    scale = (h / 45) * scale_mult
+    fontsize = int(h * scale_mult)
+    for grist_name, grist_cost in true_cost.items():
         icon_path = config.grists[grist_name]["image"]
         if len(elements) != 0:
             icon_x = padding+elements[-1].rect.w
@@ -606,7 +606,6 @@ def make_grist_cost_display(x, y, h, power: int, cost: dict, grist_cache: dict, 
             icon.bind_to(elements[-1])
             elements.append(icon)
         label_x = padding + int(45*scale)
-        grist_cost = int(power*amount)
         label = Text(label_x, 0, str(grist_cost))
         if grist_cost <= grist_cache[grist_name]:
             label.color = text_color
@@ -861,6 +860,7 @@ class TileDisplay(UIElement):
         self.y = y
         self.tile = tile_char
         self.offsetx, self.offsety = 0, 0
+        self.scale = 1
         self.click_func: Optional[Callable] = None
         update_check.append(self)
         click_check.append(self)
@@ -887,6 +887,10 @@ class TileDisplay(UIElement):
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy()
         self.surf.blit(self.image, (0, 0), (self.offsetx, self.offsety, tile_wh, tile_wh))
+        if self.scale != 1: 
+            w = self.surf.get_width()
+            h = self.surf.get_height()
+            self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
 class RoomItemDisplay(UIElement):

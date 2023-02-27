@@ -24,6 +24,13 @@ class Item():
         self.use = self.item_dict["use"] or []
         self.cost = self.item_dict["cost"]
 
+    @property
+    def true_cost(self):
+        out = {}
+        for grist_name, value in self.cost.items():
+            out[grist_name] = int(self.power*value)
+        return out
+
 class Instance():
     def __init__(self, instance_name: str, instance_dict: dict):
         self.name: str = instance_name

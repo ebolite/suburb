@@ -327,7 +327,7 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
             cost_label_box = render.SolidColor(0, item_box_h, box_w, cost_label_h, info_window.theme.white)
             cost_label_box.border_radius = 3
             cost_label_box.bind_to(item_box)
-            cost_label = render.make_grist_cost_display(0, 0, cost_label_h, item.power, item.cost, grist_cache, cost_label_box, info_window.theme.dark)
+            cost_label = render.make_grist_cost_display(0, 0, cost_label_h, item.true_cost, grist_cache, cost_label_box, info_window.theme.dark)
             if current_selected_phernalia != item_name:
                 box_button = render.TextButton(0, 0, box_w, item_box_h, "", get_box_button_func(item_name))
                 box_button.draw_sprite = False
@@ -344,13 +344,41 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
             else:
                 card_image = None
 
-    def display_revise(info_window: "render.SolidColor", info_text: "render.Text"):
-        info_window.kill_temporary_elements()
-        info_window.color = info_window.theme.light
-        info_text.text = "Available Tiles"
-        padding = 5
-        cost_label_h = 16
-        tile_wh = 32
+def display_revise(info_window: "render.SolidColor", info_text: "render.Text"):
+    info_window.kill_temporary_elements()
+    info_window.color = info_window.theme.white
+    info_text.text = "Available Tiles"
+    padding = 4
+    cost_label_h = 32
+    grist_cache: dict = viewport_dic["client_grist_cache"]
+    server_tiles = get_server_tiles()
+    tile_scale = 2
+    tile_wh = int(render.tile_wh * tile_scale)
+    num_rows = info_window.h // (tile_wh + cost_label_h + padding) - 1
+    num_columns = info_window.w // (tile_wh + padding)
+    x_offset = (info_window.w%(tile_wh+padding))//2
+    rows = []
+    for tile_char in server_tiles:
+        for row in rows:
+            if len(row) != num_columns:
+                row.append(tile_char)
+                break
+        else:
+            rows.append([tile_char])
+    def make_rows(page):
+        display_rows = rows[page*num_rows:page*num_rows + num_rows]
+        for row_index, row in enumerate(display_rows):
+            tile_y = padding + row_index*(tile_wh+cost_label_h+padding)
+            for column_index, tile_char in enumerate(row):
+                tile_x = x_offset + column_index*(tile_wh+padding)
+                tile = render.TileDisplay(tile_x, tile_y, tile_char)
+                tile.absolute = True
+                tile.scale = tile_scale
+                tile.bind_to(info_window, True)
+                cost_label = render.make_grist_cost_display(0, tile_wh, cost_label_h, 
+                                                            {"build": server_tiles[tile_char]}, grist_cache, tile,
+                                                            info_window.theme.dark, scale_mult=0.6)
+    make_rows(0)
         
 
 
@@ -358,6 +386,7 @@ def update_info_window(info_window, info_text):
     match current_info_window:
         case "grist_cache": display_grist_cache(info_window, info_text)
         case "phernalia_registry": display_phernalia_registry(info_window, info_text)
+        case "revise": display_revise(info_window, info_text)
         case _: ...
 
 def sburb(window: "render.Window"):

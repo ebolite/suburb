@@ -3,7 +3,7 @@ import random
 
 tiles: dict[str, "Tile"] = {}      # tile: Tile
 # tiles "revise"able by sburb servers
-server_tiles: dict[str, int] = {}       # name: build_cost
+server_tiles: dict[str, int] = {}       # tile_char: build_cost
 
 anywhere_rare = ["empty captchalogue card"]
 anywhere_exotic = ["fancy+santa"]
@@ -253,7 +253,7 @@ seventh_gate.special = True
 
 for tile_name, tile in tiles.items():
     if not tile.forbidden:
-        server_tiles[tile_name] = tile.build_cost
+        server_tiles[tile.tile_char] = tile.build_cost
 
 if __name__ == "__main__":
     for tile_char in tiles:
