@@ -221,13 +221,14 @@ def draw_info_window(window: "render.Window") -> Tuple["render.SolidColor", "ren
     text.bind_to(top_pad)
     return info_window, text
 
-def display_grist_cache(info_window: "render.SolidColor", text: "render.Text"):
+def display_grist_cache(info_window: "render.SolidColor", info_text: "render.Text", page=0):
+    info_window.kill_temporary_elements()
     info_window.color = info_window.theme.light
     padding = 5
     # viewport dic needs to be up to date
     grist_cache: dict = viewport_dic["client_grist_cache"]
     grist_cache_limit = viewport_dic["client_cache_limit"]
-    text.text = f"Cache Limit: {grist_cache_limit}"
+    info_text.text = f"Cache Limit: {grist_cache_limit}"
     nonzero_grist = []
     zero_grist = []
     for grist_name, amount in grist_cache.items():
@@ -248,40 +249,35 @@ def display_grist_cache(info_window: "render.SolidColor", text: "render.Text"):
                 break
         else:
             rows.append([grist_name])
-    def make_rows(page):
-        info_window.kill_temporary_elements()
-        print(info_window.temporary_elements)
-        display_rows = rows[page*num_rows:page*num_rows + num_rows]
-        print("display rows", display_rows)
-        for row_index, row in enumerate(display_rows):
-            grist_box_y = padding + (grist_box_h+padding)*row_index
-            for column_index, grist_name in enumerate(row):
-                grist_box_x = padding + (grist_box_w+padding)*column_index
-                box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, 
-                                                grist_name, grist_cache[grist_name], grist_cache_limit, 
-                                                info_window.theme, info_window.theme.white, info_window.theme.dark, info_window.theme.dark,
-                                                use_grist_color=True)
-                box.bind_to(info_window, temporary=True)
-        def get_leftbutton_func(page_num):
-            def leftbutton_func():
-                make_rows(page_num-1)
-            return leftbutton_func
-        def get_rightbutton_func(page_num):
-            def rightbutton_func():
-                make_rows(page_num+1)
-            return rightbutton_func
-        page_button_w = info_window.w//2-padding*2
-        page_button_h = 20
-        page_button_y = info_window.h-page_button_h-padding
-        if page != 0:
-            left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<-", get_leftbutton_func(page))
-            left_button.absolute = True
-            left_button.bind_to(info_window, temporary=True)
-        if rows[(page+1)*num_rows:(page+1)*num_rows + num_rows] != []:
-            right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "->", get_rightbutton_func(page))
-            right_button.absolute = True
-            right_button.bind_to(info_window, temporary=True)
-    make_rows(0)
+    display_rows = rows[page*num_rows:page*num_rows + num_rows]
+    for row_index, row in enumerate(display_rows):
+        grist_box_y = padding + (grist_box_h+padding)*row_index
+        for column_index, grist_name in enumerate(row):
+            grist_box_x = padding + (grist_box_w+padding)*column_index
+            box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, 
+                                            grist_name, grist_cache[grist_name], grist_cache_limit, 
+                                            info_window.theme, info_window.theme.white, info_window.theme.dark, info_window.theme.dark,
+                                            use_grist_color=True)
+            box.bind_to(info_window, temporary=True)
+    def get_leftbutton_func(page_num):
+        def leftbutton_func():
+            display_grist_cache(info_window, info_text, page_num-1)
+        return leftbutton_func
+    def get_rightbutton_func(page_num):
+        def rightbutton_func():
+            display_grist_cache(info_window, info_text, page_num+1)
+        return rightbutton_func
+    page_button_w = info_window.w//2-padding*2
+    page_button_h = 20
+    page_button_y = info_window.h-page_button_h-padding
+    if page != 0:
+        left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<-", get_leftbutton_func(page))
+        left_button.absolute = True
+        left_button.bind_to(info_window, temporary=True)
+    if rows[(page+1)*num_rows:(page+1)*num_rows + num_rows] != []:
+        right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "->", get_rightbutton_func(page))
+        right_button.absolute = True
+        right_button.bind_to(info_window, temporary=True)
 
 def display_phernalia_registry(info_window: "render.SolidColor", info_text: "render.Text"):
     info_window.kill_temporary_elements()
@@ -344,7 +340,7 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
             else:
                 card_image = None
 
-def display_revise(info_window: "render.SolidColor", info_text: "render.Text"):
+def display_revise(info_window: "render.SolidColor", info_text: "render.Text", page=0):
     info_window.kill_temporary_elements()
     info_window.color = info_window.theme.white
     info_text.text = "Available Tiles"
@@ -365,20 +361,18 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text"):
                 break
         else:
             rows.append([tile_char])
-    def make_rows(page):
-        display_rows = rows[page*num_rows:page*num_rows + num_rows]
-        for row_index, row in enumerate(display_rows):
-            tile_y = padding + row_index*(tile_wh+cost_label_h+padding)
-            for column_index, tile_char in enumerate(row):
-                tile_x = x_offset + column_index*(tile_wh+padding)
-                tile = render.TileDisplay(tile_x, tile_y, tile_char)
-                tile.absolute = True
-                tile.scale = tile_scale
-                tile.bind_to(info_window, True)
-                cost_label = render.make_grist_cost_display(0, tile_wh, cost_label_h, 
-                                                            {"build": server_tiles[tile_char]}, grist_cache, tile,
-                                                            info_window.theme.dark, scale_mult=0.6)
-    make_rows(0)
+    display_rows = rows[page*num_rows:page*num_rows + num_rows]
+    for row_index, row in enumerate(display_rows):
+        tile_y = padding + row_index*(tile_wh+cost_label_h+padding)
+        for column_index, tile_char in enumerate(row):
+            tile_x = x_offset + column_index*(tile_wh+padding)
+            tile = render.TileDisplay(tile_x, tile_y, tile_char)
+            tile.absolute = True
+            tile.scale = tile_scale
+            tile.bind_to(info_window, True)
+            cost_label = render.make_grist_cost_display(0, tile_wh, cost_label_h, 
+                                                        {"build": server_tiles[tile_char]}, grist_cache, tile,
+                                                        info_window.theme.dark, scale_mult=0.6)
         
 
 
