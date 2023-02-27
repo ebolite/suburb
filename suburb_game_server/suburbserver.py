@@ -273,7 +273,7 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
                 return get_viewport(viewport_x, viewport_y, player.client_player)
                 # return get_viewport(viewport_x, viewport_y, player.client_player)
             else:
-                return "failed to deploy stop hacking!!"
+                return json.dumps({})
 
 def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
     print("getting viewport")

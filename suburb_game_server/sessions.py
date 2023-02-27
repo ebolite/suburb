@@ -359,10 +359,10 @@ class Room():
         return out_dict
 
     def deploy(self, player: "Player", item_name: str):
-        if item_name not in player.available_phernalia: return False
-        if not self.tile.deployable: return False
+        if item_name not in player.available_phernalia: print("not in phernalia"); return False
+        if not self.tile.deployable: print("undeployable tile"); return False
         below_room = self.map.find_room(self.x, self.y+1)
-        if not below_room.tile.infallible or not below_room.tile.impassible: return False
+        if not below_room.tile.infallible and not below_room.tile.impassible: print("below room not suitable"); return False
         if item_name == "pre-punched card":
             item = alchemy.Item("punched card")
             instance = alchemy.Instance(item)
