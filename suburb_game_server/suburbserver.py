@@ -278,7 +278,6 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
                 return json.dumps({})
 
 def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
-    print("getting viewport")
     if client is None: print("no client"); return "No client dumpass"
     map_tiles, map_specials = client.land.housemap.get_view(x, y, 8)
     room = client.land.housemap.find_room(x, y)
