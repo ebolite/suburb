@@ -123,6 +123,7 @@ wall.impassible = True
 
 terrain = Tile("#", "terrain")
 terrain.impassible = True
+terrain.forbidden = True
 
 # junction = Tile(";", "junction")
 
@@ -144,6 +145,8 @@ cross_ramp.ramp = True
 cross_ramp.ramp_direction = "both"
 cross_ramp.infallible = True
 cross_ramp.build_cost = 50
+# todo: make cross-ramp tile
+cross_ramp.forbidden = True
 
 stairs = Tile("^", "stairs")
 stairs.stair = True

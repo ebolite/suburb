@@ -360,6 +360,7 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
         def func():
             global current_selected_tile
             current_selected_tile = tile_char
+            print(tile_char)
             display_revise(info_window, info_text, page)
         return func
     for tile_char in server_tiles:
