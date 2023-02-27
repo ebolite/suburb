@@ -54,7 +54,7 @@ icons = {
     "punch designix": "sprites/icons/punch designix.png",
     "totem lathe": "sprites/icons/totem lathe.png",
     "Sburb disc": "sprites/icons/Sburb disc.png",
-    "select": "sprites/icons/cursor.png"
+    "select": "sprites/icons/select.png"
 }
 
 header_icons = {
