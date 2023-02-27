@@ -239,9 +239,8 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             viewport_x = content["viewport_x"]
             viewport_y = content["viewport_y"]
             client = player.client_player
-            vp = get_viewport(viewport_x, viewport_y, client)
-            print(vp)
-            return vp
+            print("getting viewport")
+            return get_viewport(viewport_x, viewport_y, client)
         case "is_tile_in_bounds":
             x_coord = content["x"]
             y_coord = content["y"]

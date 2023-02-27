@@ -641,6 +641,8 @@ class TileMap(UIElement):
         self.background.border_radius = 3
         self.background.bind_to(self)
         self.input_text_box: Optional[InputTextBox] = None
+        self.info_window: Optional[UIElement] = None
+        self.info_text: Optional[UIElement] = None
         self.initialize_map(map)
         update_check.append(self)
         key_check.append(self)
@@ -756,6 +758,8 @@ class Tile(UIElement):
                 case "deploy":
                     sburbserver.deploy_item(target_x, target_y)
                     self.TileMap.update_map()
+                    if self.TileMap.info_window is not None and self.TileMap.info_text is not None:
+                        sburbserver.update_info_window(self.TileMap.info_window, self.TileMap.info_text)
                 case _:
                     if x_diff == 0 and y_diff == 0: return
                     sburbserver.move_view_to_tile(target_x, target_y)

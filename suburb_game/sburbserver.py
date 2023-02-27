@@ -363,6 +363,7 @@ def sburb(window: "render.Window"):
     tilemap = render.TileMap(0.5, 0.55, new_map, specials, room_name, item_display, server_view=True)
     tilemap.bind_to(window.viewport)
     info_window, info_text = draw_info_window(window)
+    tilemap.info_window, tilemap.info_text = info_window, info_text
     update_info_window(info_window, info_text)
     draw_sburb_bar(window, info_window, info_text, tilemap)
 
