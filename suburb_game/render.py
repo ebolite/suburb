@@ -804,7 +804,10 @@ class Tile(UIElement):
             center_image = pygame.image.load(center_path)
             self.surf.blit(center_image, (0, 0), (0, 0, tile_wh, tile_wh))
         if self.server_view and self.mouseover():
-            cursor_image_path = config.icons["select"]
+            if sburbserver.current_mode == "deploy":
+                cursor_image_path = config.icons["deploy"]
+            else:
+                cursor_image_path = config.icons["select"]
             cursor_image = pygame.image.load(cursor_image_path)
             self.surf.blit(cursor_image, (0, 0), (0, 0, tile_wh, tile_wh))
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
