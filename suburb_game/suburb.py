@@ -848,9 +848,9 @@ if __name__ == "__main__":
     # choosemodus()
     # render.TileMap(0.5, 0.5, map)
     # computer()
-    # title() # normal game start
+    title() # normal game start
     # continue to render until render.render() returns False
-    imp = render.Enemy(0.5, 0.5, "shale", "imp")
+    # imp = render.Enemy(0.5, 0.5, "shale", "imp")
     while render.render():
         ...
 
