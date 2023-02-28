@@ -5,11 +5,11 @@ import util
 import config
 import sessions
 
-monsters: dict[str, "Monster"] = {}
+underlings: dict[str, "Underling"] = {}
 
-class Monster():
+class Underling():
     def __init__(self, monster_type: str):
-        monsters[monster_type] = self
+        underlings[monster_type] = self
         self.monster_type: str = monster_type
         self.base_power: int = 1
 
@@ -24,7 +24,7 @@ class Monster():
         room.add_npc(npc)
         return npc
 
-imp = Monster("imp")
+imp = Underling("imp")
 
 class Npc():
     @staticmethod

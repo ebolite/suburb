@@ -320,7 +320,7 @@ def console_commands(player: sessions.Player, content: str):
             if args: num = int(args[0])
             else: num = 1
             grist_name = config.gristcategories[player.gristcategory][random.randint(0,8)]
-            imp = npcs.monsters["imp"]
+            imp = npcs.underlings["imp"]
             for i in range(num):
                 imp.make_npc(grist_name, player.room)
             print(player.room.npcs)
