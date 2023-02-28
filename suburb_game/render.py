@@ -618,32 +618,30 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding
     return elements[0]
 
 class TileMap(UIElement):
-    def __init__(self, x, y, map: list[list[str]], specials: dict, room_name: str, item_display:"RoomItemDisplay", server_view=False):
+    def __init__(self, x, y, item_display:"RoomItemDisplay", server_view=False):
         super(TileMap, self).__init__()
         self.x = x
         self.y = y
-        self.map = map
+        self.tiles: dict[str, "Tile"] = {}
         self.item_display = item_display
         self.server_view = server_view
-        self.specials = specials
-        self.tiles: dict[str, "Tile"] = {}
-        self.room_name = room_name
         if not self.server_view:
-            self.label = Text(0.5, 0, room_name)
+            self.label = Text(0.5, 0, "")
             self.label.bind_to(self)
         else:
             self.label = None
+        self.input_text_box: Optional[InputTextBox] = None
+        self.info_window: Optional[UIElement] = None
+        self.info_text: Optional[UIElement] = None
+        self.update_map()
         self.w = (len(self.map)-2)*32
         self.h = (len(self.map[0])-2)*32
         outline_width = 6
         self.background = SolidColor(32-outline_width, 32-outline_width, self.w + outline_width*2, self.h + outline_width*2, self.theme.dark)
         self.background.border_radius = 3
         self.background.bind_to(self)
-        self.input_text_box: Optional[InputTextBox] = None
-        self.info_window: Optional[UIElement] = None
-        self.info_text: Optional[UIElement] = None
         self.last_update = time.time()
-        self.initialize_map(map)
+        self.initialize_map(self.map)
         update_check.append(self)
         key_check.append(self)
 

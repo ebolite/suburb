@@ -622,14 +622,9 @@ def debug_speedrun_2():
 
 @scene
 def map():
-    dic = client.requestdic("current_map")
-    new_map = dic["map"]
-    specials = dic["specials"]
-    instances = dic["instances"]
-    room_name = dic["room_name"]
-    item_display = render.RoomItemDisplay(70, 190, instances)
+    item_display = render.RoomItemDisplay(70, 190, {})
     Sylladex.current_sylladex().draw_ui_bar(map)
-    tilemap = render.TileMap(0.5, 0.5, new_map, specials, room_name, item_display)
+    tilemap = render.TileMap(0.5, 0.5, item_display)
     log = render.LogWindow(map, tilemap=tilemap, draw_console=True)
 
 @scene
