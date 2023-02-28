@@ -1054,7 +1054,7 @@ class CaptchalogueButton(Button):
         return output_func
 
 class LogWindow(UIElement):
-    def __init__(self, last_scene: Callable, tilemap: Optional[TileMap]=None, draw_console=False, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=4, fontsize=16):
+    def __init__(self, last_scene: Optional[Callable], tilemap: Optional[TileMap]=None, draw_console=False, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=4, fontsize=16):
         super().__init__()
         self.last_scene = last_scene
         self.x = x
@@ -1108,7 +1108,7 @@ class LogWindow(UIElement):
             reply = client.requestplus(intent="console_command", content=textbox.text)
             if reply != "None": util.log(reply)
             textbox.text = ""
-            self.last_scene()
+            if self.last_scene: self.last_scene()
         if not self.draw_console: return
         console_y = self.y + (self.lines_to_display)*self.fontsize + (self.lines_to_display)*self.padding
         self.console = InputTextBox(x, console_y, self.width, self.fontsize+self.padding)
