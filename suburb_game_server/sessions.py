@@ -10,6 +10,7 @@ import config
 import tiles
 import alchemy
 import binaryoperations
+import npcs
 
 map_tiles = {}
 
@@ -329,6 +330,14 @@ class Room():
                                ["rooms"][self.__dict__["name"]]
                                [attr])
         return self.__dict__[attr]
+
+    def add_npc(self, npc: "npcs.Npc"):
+        if npc.name not in self.npcs:
+            self.npcs.append(npc.name)
+
+    def remove_npc(self, npc: "npcs.Npc"):
+        if npc.name in self.npcs:
+            self.npcs.remove(npc.name)
 
     def add_player(self, player: "Player"):
         if player.username not in self.players:
