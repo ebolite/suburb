@@ -1,16 +1,14 @@
 import util
 
 class Npc():
-    @staticmethod
-    def default(attr):
-        match attr:
-            case "power":
-                return 0
-            case _:
-                return None
+    _defaults = {
+        "power": 0,
+    }
 
     def __init__(self, name):
         self.__dict__["name"] = name
+        if name not in util.npcs:
+            util.npcs[name] = {}
         self.power: int
 
     def __setattr__(self, attr, value):
@@ -22,10 +20,12 @@ class Npc():
             self.__dict__[attr] = util.npcs[self.__dict__["name"]][attr]
             return self.__dict__[attr]
         except KeyError as e:
-            default = Npc.default(attr)
-            if default is None: raise e
-            else: return default
+            try:
+                return self._defaults[attr]
+            except KeyError:
+                raise e
 
 if __name__ == "__main__":
     npc = Npc("boy")
-    npc.fuck
+    npc.power += 1
+    print(npc.power)

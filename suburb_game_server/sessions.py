@@ -310,6 +310,7 @@ class Room():
             self.x = x
             self.y = y
             self.players: list[str] = []
+            self.npcs: list[str] = []
             self.instances: list[str] = []
             self.generate_loot()
 
