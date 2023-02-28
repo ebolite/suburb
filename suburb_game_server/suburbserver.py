@@ -13,6 +13,7 @@ import util
 import config
 import tiles
 import binaryoperations
+import npcs
 
 HOST_IP = "192.168.4.28"
 PORT = 25565
@@ -315,6 +316,14 @@ def console_commands(player: sessions.Player, content: str):
             grist_name = args[0]
             amount = int(args[1])
             player.add_grist(grist_name, amount)
+        case "impify":
+            if args: num = int(args[0])
+            else: num = 1
+            grist_name = config.gristcategories[player.gristcategory][random.randint(0,8)]
+            imp = npcs.monsters["imp"]
+            for i in range(num):
+                imp.make_npc(grist_name, player.room)
+            print(player.room.npcs)
         case "gushoverload":
             try:
                 args_amount = int(args[0])

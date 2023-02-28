@@ -8,15 +8,15 @@ import sessions
 monsters: dict[str, "Monster"] = {}
 
 class Monster():
-    def __init__(self, type: str):
-        monsters[type] = self
-        self.type: str = type
+    def __init__(self, monster_type: str):
+        monsters[monster_type] = self
+        self.monster_type: str = monster_type
         self.base_power: int = 1
 
     def make_npc(self, grist_name: str, room: "sessions.Room") -> "Npc":
         tier: int = config.grists[grist_name]["tier"]
         power = self.base_power * (tier**2)
-        nickname = f"{grist_name} {type}"
+        nickname = f"{grist_name} {self.monster_type}"
         name = Npc.make_valid_name(nickname)
         npc = Npc(name)
         npc.power = power
