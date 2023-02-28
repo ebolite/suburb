@@ -476,7 +476,11 @@ class Player():
             self.room_name = None
             self.sylladex: list[str] = []
             self.moduses: list[str] = []
+            # the first item in the list is the weapon being used currently
+            self.strife_portfolio: dict[str, list] = {}
+            self.current_strife_deck: Optional[str] = None
             self.empty_cards = 5
+            self.unassigned_specibi = 1
             self.echeladder_rung = 1
             self.grist_cache = {grist_name:0 for grist_name in config.grists}
             self.grist_gutter: list[list] = []
@@ -513,6 +517,15 @@ class Player():
         out["available_phernalia"] = self.available_phernalia
         return out
     
+    def assign_specibus(self, kind_name) -> bool:
+        if kind_name not in util.kinds: return False
+        if self.unassigned_specibi <= 0: return False
+        if kind_name in self.strife_portfolio: return False
+        self.strife_portfolio[kind_name] = []
+        self.unassigned_specibi -= 1
+        if self.current_strife_deck is None: self.current_strife_deck = kind_name
+        return True
+
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:
         if instance_name not in self.room.instances: return False
         if modus_name not in self.moduses: return False

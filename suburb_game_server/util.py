@@ -60,6 +60,13 @@ instances = readjson(instances, "instances")
 codes = {} # key: item code value: item name
 codes = readjson(codes, "codes")
 
+kinds: list[str] = []
+for base in bases:
+    for kind in bases[base]["kinds"]:
+        if kind not in kinds:
+            kinds.append(kind)
+print(kinds)
+
 def saveall():
     print("Saving...")
     writejson(sessions, "sessions")
