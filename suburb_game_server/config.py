@@ -1,5 +1,7 @@
 import util
 
+max_wielded_size = 20
+
 sburb = "<a:suburbspirograph:820899074986606613>"
 
 # items which appear as icons to clients

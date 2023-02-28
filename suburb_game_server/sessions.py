@@ -476,7 +476,6 @@ class Player():
             self.room_name = None
             self.sylladex: list[str] = []
             self.moduses: list[str] = []
-            # the first item in the list is the weapon being used currently
             self.strife_portfolio: dict[str, list] = {}
             self.current_strife_deck: Optional[str] = None
             self.empty_cards = 5
@@ -485,6 +484,7 @@ class Player():
             self.grist_cache = {grist_name:0 for grist_name in config.grists}
             self.grist_gutter: list[list] = []
             self.leeching: list[str] = []
+            self.wielding: Optional[str] = None
             # phernalia registry is a default list of deployable objects minus the deployed phernalia
             self.deployed_phernalia = []
             self.server_storage = []
@@ -524,6 +524,29 @@ class Player():
         self.strife_portfolio[kind_name] = []
         self.unassigned_specibi -= 1
         if self.current_strife_deck is None: self.current_strife_deck = kind_name
+        return True
+    
+    def wield(self, instance_name: str) -> bool:
+        instance = alchemy.Instance(instance_name)
+        if instance.item.size > config.max_wielded_size: return False
+        if instance.name not in self.room.instances + self.sylladex: return False
+        if instance.name in self.room.instances:
+            self.room.remove_instance(instance.name)
+        elif instance.name in self.sylladex:
+            self.sylladex.remove(instance.name)
+        if self.wielding is not None: self.unwield()
+        self.wielding = instance.name
+        return True
+
+    def unwield(self) -> bool:
+        if self.wielding is None: return False
+        instance = alchemy.Instance(self.wielding)
+        self.wielding = None
+        for kind in instance.item.kinds:
+            if kind in self.strife_portfolio:
+                self.strife_portfolio[kind].append(instance.name)
+                return True
+        self.room.add_instance(instance.name)
         return True
 
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:

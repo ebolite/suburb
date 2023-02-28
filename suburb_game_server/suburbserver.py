@@ -137,6 +137,9 @@ def handle_request(dict):
             return use_item(player, instance, action_name, target_instance)
         case "computer":
             return computer_shit(player, content, session)
+        case "assign_specibus":
+            kind_name = content["kind_name"]
+            return player.assign_specibus(kind_name)
         case "drop_empty_card":
             return player.drop_empty_card()
         case "captchalogue":
