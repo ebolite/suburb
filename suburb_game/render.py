@@ -640,7 +640,6 @@ class TileMap(UIElement):
         self.background = SolidColor(32-outline_width, 32-outline_width, self.w + outline_width*2, self.h + outline_width*2, self.theme.dark)
         self.background.border_radius = 3
         self.background.bind_to(self)
-        self.last_update = time.time()
         self.initialize_map(self.map)
         update_check.append(self)
         key_check.append(self)
@@ -653,13 +652,12 @@ class TileMap(UIElement):
 
     def initialize_map(self, map):
         if self.map != map or len(self.tiles) == 0:
-            self.map = map
+            self.map: list[list[str]] = map
             self.rect = pygame.Rect(0, 0, len(map[0])*tile_wh, len(map)*tile_wh)
             self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2))
             self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2))
             for tile in self.tiles:
                 self.tiles[tile].delete()
-            self.tiles = {}
             for y, line in enumerate(map):
                 for x, char in enumerate(line):
                     self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials, self.server_view)
