@@ -152,7 +152,7 @@ class UIElement(pygame.sprite.Sprite):
         return rect_x, rect_y
 
 class SolidColor(UIElement):
-    def __init__(self, x, y, w, h, color: pygame.Color):
+    def __init__(self, x, y, w, h, color: pygame.Color, binding:Optional[UIElement]=None):
         super(SolidColor, self).__init__()
         self.x = x
         self.y = y
@@ -165,8 +165,9 @@ class SolidColor(UIElement):
         self.outline_width = 2
         self.border_radius: int = 0
         self.absolute = True
+        if binding:
+            self.bind_to(binding)
         update_check.append(self)
-        self.update()
 
     def update(self):
         self.surf = pygame.Surface((self.w, self.h))
@@ -177,10 +178,8 @@ class SolidColor(UIElement):
             index = self.animframe % len(self.color)
             fill_color = self.color[index]
             self.animframe += 1
-        self.surf.fill(fill_color)
         if self.outline_color is not None:
             self.outline_surf = pygame.Surface((self.w + self.outline_width*2, self.h + self.outline_width*2))
-            self.outline_surf.fill(self.outline_color)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy()
         if self.outline_color is not None: 

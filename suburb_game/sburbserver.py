@@ -388,15 +388,13 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
             tile_x = x_offset + column_index*(tile_wh + border_width*2 + padding)
             if current_selected_tile == tile_char:
                 border_color = info_window.theme.dark
-                border = render.SolidColor(-border_width, -border_width, tile_wh + border_width*2, tile_wh + border_width*2, border_color)
+                border = render.SolidColor(tile_x-border_width, tile_y-border_width, tile_wh + border_width*2, tile_wh + border_width*2, border_color)
                 border.border_radius = 2
-            else:
-                border = None
+                border.bind_to(info_window, True)
             tile = render.TileDisplay(tile_x, tile_y, tile_char)
             tile.absolute = True
             tile.scale = tile_scale
             tile.bind_to(info_window, True)
-            if border is not None: border.bind_to(tile)
             tile_button = render.TextButton(0, 0, tile_wh, tile_wh, "", get_tile_button_func(tile_char))
             tile_button.absolute = True
             tile_button.draw_sprite = False
