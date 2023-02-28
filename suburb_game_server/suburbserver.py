@@ -125,12 +125,26 @@ def handle_request(dict):
             return map_data(player)
         case "player_info":
             return json.dumps(player.get_dict())
+        case "carved_item_info":
+            dowel_name = content["dowel_name"]
+            if dowel_name not in util.instances: return {}
+            dowel_instance = alchemy.Instance(dowel_name)
+            carved_code = dowel_instance.carved
+            if carved_code in util.codes:
+                carved_item_name = util.codes[carved_code]
+                carved_item = alchemy.Item(carved_item_name)
+                carved_dict = carved_item.get_dict()
+                carved_dict["name"] = carved_item.name
+                return json.dumps(carved_dict)
+            else:
+                return {}
         case "sylladex":
             return json.dumps(player.sylladex_instances())
         case "use_item":
             instance_name = content["instance_name"]
             action_name = content["action_name"]
             target_name = content["target_name"]
+            if instance_name not in util.instances: return False
             instance = alchemy.Instance(instance_name)
             if target_name is not None: target_instance = alchemy.Instance(target_name)
             else: target_instance = None
@@ -163,6 +177,7 @@ def handle_request(dict):
             instances_dict = {}
             valid_names = valid_use_targets(player, alchemy.Instance(instance_name), action_name)
             for name in valid_names:
+                if name not in util.instances: return {}
                 instances_dict[name] = alchemy.Instance(name).get_dict()
             return json.dumps(instances_dict)
         case "move":
@@ -487,7 +502,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             if target_instance.name in player.sylladex:
                 if not player.consume_instance(target_instance.name): print("couldn't consume"); return False
             else:
-                if target_instance.name not in player.room: print("couldn't find dowel in room"); return False
+                if target_instance.name not in player.room.instances: print("couldn't find dowel in room"); return False
                 player.room.remove_instance(target_instance.name)
             instance.inserted = target_instance.name
             return True

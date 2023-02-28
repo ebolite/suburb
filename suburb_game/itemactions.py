@@ -1,15 +1,25 @@
-from typing import Optional
+from typing import Optional, Callable
+
+import sylladex
+import util
+import client
+import render
+import suburb
 
 item_actions = {}
 
 class ItemAction():
     def __init__(self, name):
         self.targeted = False
+        self.special = False
         self.prompt = ""
         self.error_prompt = ""
         self.use_prompt = ""
         item_actions[name] = self
     
+    def use_func(self, instance: "sylladex.Instance") -> bool:
+        return True
+
     def prompt_message(self, item_name):
         try: return self.prompt.format(iname=item_name)
         except IndexError: return self.prompt
@@ -96,3 +106,19 @@ lathe.targeted = True
 lathe.prompt = "Which punched card should you lathe?"
 lathe.error_prompt = "No dowel is inserted."
 lathe.use_prompt = "The dowel ejects after you lathe it with the code for {tname}."
+
+alchemize = ItemAction("alchemize")
+alchemize.special = True
+def use_alchemize(instance: "sylladex.Instance") -> bool:
+    inserted_dowel = instance.inserted_instance()
+    if inserted_dowel is None:
+        util.log("The alchemiter needs a cruxite dowel to be inserted first.")
+        return False
+    carved_item_info: dict = client.requestplusdic(intent="carved_item_info", content={"dowel_name": instance.name})
+    carved_item = sylladex.Item(carved_item_info["name"], carved_item_info)
+    cost = carved_item.true_cost
+    render.clear_elements()
+    backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", suburb.map)
+    return False
+
+alchemize.use_func = use_alchemize

@@ -85,6 +85,7 @@ class Instance():
         action: ItemAction = item_actions[action_name]
         target_instance_name = None if target_instance is None else target_instance.name
         target_instance_display_name = None if target_instance is None else target_instance.display_name()
+        if action.special: return action.use_func(self)
         reply = client.requestplus(intent="use_item", content={"instance_name": self.name, "action_name": action_name, "target_name": target_instance_name})
         if reply == "False": 
             if action.error_prompt: util.log(action.error_message(self.display_name(), target_instance_display_name))
@@ -94,7 +95,7 @@ class Instance():
             self.do_use_item_stuff(action_name, target_instance_name)
             return True
 
-    # returns True if go back to last scene, else go back to item display
+    # returns True if go back to last scene, False don't
     def do_use_item_stuff(self, action_name: str, target_name: Optional[str]=None) -> bool:
         syl = Sylladex.current_sylladex()
         match action_name:

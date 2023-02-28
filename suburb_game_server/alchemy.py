@@ -406,7 +406,7 @@ class Instance():
         if output["contained"] != "":
             output["contained"] = Instance(output["contained"]).get_dict()
         if output["inserted"] != "":
-            output["insterted"] = Instance(output["inserted"]).get_dict()
+            output["inserted"] = Instance(output["inserted"]).get_dict()
         if output["combined"] != []:
             output["combined"] = [Instance(i).get_dict() for i in output["combined"]]
         item_dict = self.item.get_dict()
