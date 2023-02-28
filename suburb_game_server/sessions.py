@@ -526,10 +526,17 @@ class Player():
         if self.current_strife_deck is None: self.current_strife_deck = kind_name
         return True
     
+    def move_to_strife_deck(self, instance_name, kind_name) -> bool:
+        if instance_name not in self.sylladex: return False
+        if kind_name not in self.strife_portfolio: return False
+        self.sylladex.remove(instance_name)
+        self.strife_portfolio[kind_name].append(instance_name)
+        return True
+    
     def wield(self, instance_name: str) -> bool:
         instance = alchemy.Instance(instance_name)
         if instance.item.size > config.max_wielded_size: return False
-        for deck in self.strife_portfolio:
+        for deck in self.strife_portfolio.values():
             if instance.name not in deck: return False
         if self.wielding is not None: self.unwield()
         self.wielding = instance.name
