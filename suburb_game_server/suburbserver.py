@@ -424,6 +424,18 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             player.room.add_instance(card_1.name)
             player.room.add_instance(card_2.name)
             return True
+        case "alchemize":
+            if not instance.inserted: return False
+            inserted_instance = alchemy.Instance(instance.inserted)
+            if inserted_instance.item.name != "cruxite dowel": return False
+            code = inserted_instance.carved
+            if code not in util.codes: return False
+            new_item_name = util.codes[code]
+            new_item = alchemy.Item(new_item_name)
+            if not player.pay_costs(new_item.true_cost): return False
+            new_instance = alchemy.Instance(new_item)
+            player.room.add_instance(new_instance.name)
+            return True
         case "cruxtrude":
             dowel_instance = alchemy.Instance(alchemy.Item("cruxite dowel"))
             player.room.add_instance(dowel_instance.name)

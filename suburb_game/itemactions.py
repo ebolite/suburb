@@ -119,6 +119,11 @@ def use_alchemize(instance: "sylladex.Instance") -> bool:
     carved_item_info: dict = client.requestplusdic(intent="carved_item_info", content={"dowel_name": instance.name})
     carved_item = sylladex.Item(carved_item_info["name"], carved_item_info)
     cost = carved_item.true_cost
+    can_make = True
+    for grist_name, value in cost.items():
+        if grist_cache[grist_name] < value:
+            can_make = False
+            break
     render.clear_elements()
     render.LogWindow(None)
     text = render.Text(0.5, 0.2, "This item will cost:")
