@@ -114,10 +114,17 @@ def use_alchemize(instance: "sylladex.Instance") -> bool:
     if inserted_dowel is None:
         util.log("The alchemiter needs a cruxite dowel to be inserted first.")
         return False
+    player_info: dict = client.requestdic(intent="player_info")
+    grist_cache: dict = player_info["grist_cache"]
     carved_item_info: dict = client.requestplusdic(intent="carved_item_info", content={"dowel_name": instance.name})
     carved_item = sylladex.Item(carved_item_info["name"], carved_item_info)
     cost = carved_item.true_cost
     render.clear_elements()
+    text = render.Text(0.5, 0.1, "This item will cost:")
+    text.color = suburb.current_theme().dark
+    render.make_grist_cost_display(0.5, 0.25, 45, cost, grist_cache, None, suburb.current_theme().dark, absolute=False)
+    def confirm():
+        ...
     backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", suburb.map)
     return False
 

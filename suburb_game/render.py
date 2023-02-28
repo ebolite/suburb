@@ -474,6 +474,14 @@ class Image(UIElement):
         self.convert_colors: list[tuple[pygame.Color, pygame.Color]] = []
         update_check.append(self)
 
+    def get_width(self):
+        self.update()
+        return self.surf.get_width()
+    
+    def get_height(self):
+        self.update()
+        return self.surf.get_height()
+
     def update(self):
         if self.path_func is not None and self.path != self.path_func():
             self.path = self.path_func()
@@ -541,6 +549,10 @@ class Text(UIElement):
         self.alpha = 255
         update_check.append(self)
 
+    def get_width(self):
+        text_surf = self.font.render(self.get_text(), True, self.color)
+        return text_surf.get_width()
+
     def get_text(self):
         if self.text_func is not None:
             return str(self.text_func())
@@ -586,7 +598,7 @@ def get_spirograph(x, y, thick=True) -> Image:
     spirograph.animframes = 164
     return spirograph
 
-def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding: UIElement, text_color: pygame.Color, temporary=True, absolute=True, scale_mult=1.0) -> UIElement:
+def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding: Optional[UIElement], text_color: pygame.Color, temporary=True, absolute=True, scale_mult=1.0) -> UIElement:
     elements: list[UIElement] = []
     padding = 5
     scale = (h / 45) * scale_mult
@@ -605,7 +617,7 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding
         icon.absolute = True
         if len(elements) == 0:
             elements.append(icon)
-            icon.bind_to(binding, temporary)
+            if binding is not None: icon.bind_to(binding, temporary)
         else:
             icon.bind_to(elements[-1])
             elements.append(icon)
@@ -619,6 +631,24 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding
         label.bind_to(elements[-1])
         label.absolute = True
         elements.append(label)
+    if not absolute:
+        if binding is None:
+            binding_w = SCREEN_WIDTH
+            binding_h = SCREEN_HEIGHT
+        else:
+            binding_w = binding.rect.w
+            binding_h = binding.rect.h
+        total_element_w = 0
+        total_element_h = 0
+        for element in elements:
+            if isinstance(element, Text):
+                total_element_w += element.get_width()
+                total_element_h += element.fontsize
+            elif isinstance(element, Image):
+                total_element_w += element.get_width()
+                total_element_h += element.get_height()
+        elements[0].x = int(binding_w*x - total_element_w//2)
+        elements[0].y = int(binding_h*y - total_element_h//2)
     return elements[0]
 
 class TileMap(UIElement):
