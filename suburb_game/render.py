@@ -735,11 +735,11 @@ def dircheck(tile, direction):
         return True
 
 class Tile(UIElement):
-    def __init__(self, x, y, TileMap: TileMap, specials: dict, server_view=False):
+    def __init__(self, x, y, tile_map: TileMap, specials: dict, server_view=False):
         super(Tile, self).__init__()
         self.x = x
         self.y = y
-        self.TileMap = TileMap
+        self.tile_map = tile_map
         self.specials = specials
         self.server_view = server_view
         self.last_tile = self.tile
@@ -756,8 +756,8 @@ class Tile(UIElement):
 
     def onclick(self, isclicked: bool):
         if isclicked:
-            center_tile_x = len(self.TileMap.map)//2
-            center_tile_y = len(self.TileMap.map)//2
+            center_tile_x = len(self.tile_map.map)//2
+            center_tile_y = len(self.tile_map.map)//2
             x_diff = self.x - center_tile_x
             y_diff = self.y - center_tile_y
             target_x = sburbserver.current_x+x_diff
@@ -767,7 +767,7 @@ class Tile(UIElement):
                     viewport_dict = sburbserver.deploy_item(target_x, target_y)
                     if viewport_dict is not None:
                         sburbserver.update_viewport_dic(viewport_dict)
-                        self.TileMap.update_map(viewport_dict)
+                        self.tile_map.update_map(viewport_dict)
                 case "revise":
                     if self.tile == sburbserver.current_selected_tile: return
                     if sburbserver.current_selected_tile in self.known_invalid_tiles: return
@@ -775,51 +775,51 @@ class Tile(UIElement):
                     if viewport_dict is None: self.known_invalid_tiles.append(sburbserver.current_selected_tile)
                     else:
                         sburbserver.update_viewport_dic(viewport_dict)
-                        self.TileMap.update_map(viewport_dict)
+                        self.tile_map.update_map(viewport_dict)
                 case _:
                     if x_diff == 0 and y_diff == 0: return
                     sburbserver.move_view_to_tile(target_x, target_y)
-                    self.TileMap.update_map()
+                    self.tile_map.update_map()
 
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly
-        if self.x == len(self.TileMap.map[0]) - 1 or self.y == len(self.TileMap.map) - 1: return # ^
+        if self.x == len(self.tile_map.map[0]) - 1 or self.y == len(self.tile_map.map) - 1: return # ^
         if self.server_view and sburbserver.current_mode == "revise" and self.mouseover() and pygame.mouse.get_pressed()[0]:
             self.onclick(True)
         self.update_image()
         self.surf = pygame.Surface((tile_wh, tile_wh))
         offsety = 0
         offsetx = 0
-        if (len(self.TileMap.map) > self.y + 1 and 
-            self.TileMap.map[self.y+1][self.x] in self.allowedtiles and 
-            dircheck(self.TileMap.map[self.y+1][self.x], "up")): # tile below is the same
+        if (len(self.tile_map.map) > self.y + 1 and 
+            self.tile_map.map[self.y+1][self.x] in self.allowedtiles and 
+            dircheck(self.tile_map.map[self.y+1][self.x], "up")): # tile below is the same
             offsety += tile_wh
             if (self.y != 0 and 
-                self.TileMap.map[self.y-1][self.x] in self.allowedtiles and 
-                dircheck(self.TileMap.map[self.y-1][self.x], "down")): # tile above is the same
+                self.tile_map.map[self.y-1][self.x] in self.allowedtiles and 
+                dircheck(self.tile_map.map[self.y-1][self.x], "down")): # tile above is the same
                 offsety += tile_wh
         elif (self.y != 0 and 
-              self.TileMap.map[self.y-1][self.x] in self.allowedtiles and 
-              dircheck(self.TileMap.map[self.y-1][self.x], "down")): # tile above is the same but not tile below
+              self.tile_map.map[self.y-1][self.x] in self.allowedtiles and 
+              dircheck(self.tile_map.map[self.y-1][self.x], "down")): # tile above is the same but not tile below
             offsety += tile_wh * 3
-        if (len(self.TileMap.map[0]) > self.x + 1 and 
-            self.TileMap.map[self.y][self.x+1] in self.allowedtiles and 
-            dircheck(self.TileMap.map[self.y][self.x+1], "left")): # tile right is the same
+        if (len(self.tile_map.map[0]) > self.x + 1 and 
+            self.tile_map.map[self.y][self.x+1] in self.allowedtiles and 
+            dircheck(self.tile_map.map[self.y][self.x+1], "left")): # tile right is the same
             offsetx += tile_wh
             if (self.x != 0 and 
-                self.TileMap.map[self.y][self.x-1] in self.allowedtiles and 
-                dircheck(self.TileMap.map[self.y][self.x-1], "right")): # tile left is also the same
+                self.tile_map.map[self.y][self.x-1] in self.allowedtiles and 
+                dircheck(self.tile_map.map[self.y][self.x-1], "right")): # tile left is also the same
                 offsetx += tile_wh
         elif (self.x != 0 and 
-              self.TileMap.map[self.y][self.x-1] in self.allowedtiles and 
-              dircheck(self.TileMap.map[self.y][self.x-1], "right")): # tile left is the same but not right
+              self.tile_map.map[self.y][self.x-1] in self.allowedtiles and 
+              dircheck(self.tile_map.map[self.y][self.x-1], "right")): # tile left is the same but not right
             offsetx += tile_wh * 3
         self.rect = self.surf.get_rect()
-        self.rect.x = (self.x * tile_wh) + self.TileMap.rect.x
-        self.rect.y = (self.y * tile_wh) + self.TileMap.rect.y
+        self.rect.x = (self.x * tile_wh) + self.tile_map.rect.x
+        self.rect.y = (self.y * tile_wh) + self.tile_map.rect.y
         self.surf.blit(self.image, (0, 0), (offsetx, offsety, tile_wh, tile_wh))
-        if f"{self.x}, {self.y}" in self.TileMap.specials:
-            room_specials = self.TileMap.specials[f"{self.x}, {self.y}"]
+        if f"{self.x}, {self.y}" in self.tile_map.specials:
+            room_specials = self.tile_map.specials[f"{self.x}, {self.y}"]
             specials_keys = list(room_specials.keys()) + [None for i in range(len(room_specials.keys()))]
             drawing_index = int(((pygame.time.get_ticks() / 15) % FPS_CAP) / (FPS_CAP / len(specials_keys))) # full cycle each second
             drawing_name = specials_keys[drawing_index]
@@ -829,7 +829,7 @@ class Tile(UIElement):
                 else: icon_image_filename = config.icons["no_icon"]
                 icon_image = pygame.image.load(icon_image_filename)
                 self.surf.blit(icon_image, (0, 0), (0, 0, tile_wh, tile_wh))
-        if self.server_view and self.x == len(self.TileMap.map)//2 and self.y == len(self.TileMap.map)//2:
+        if self.server_view and self.x == len(self.tile_map.map)//2 and self.y == len(self.tile_map.map)//2:
             center_path = config.icons["center"]
             center_image = pygame.image.load(center_path)
             self.surf.blit(center_image, (0, 0), (0, 0, tile_wh, tile_wh))
@@ -858,7 +858,7 @@ class Tile(UIElement):
 
     @property
     def tile(self):
-        return self.TileMap.map[self.y][self.x]
+        return self.tile_map.map[self.y][self.x]
 
     @property
     def image_path(self): # returns path to image
