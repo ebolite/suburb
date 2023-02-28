@@ -643,11 +643,14 @@ class TileMap(UIElement):
         self.input_text_box: Optional[InputTextBox] = None
         self.info_window: Optional[UIElement] = None
         self.info_text: Optional[UIElement] = None
+        self.last_update = time.time()
         self.initialize_map(map)
         update_check.append(self)
         key_check.append(self)
 
     def update(self):
+        if time.time() - self.last_update > 2:
+            self.update_map()
         for tile in self.tiles:
             self.tiles[tile].update()
 
@@ -680,6 +683,7 @@ class TileMap(UIElement):
             tile.known_invalid_tiles = []
         if self.label is not None: self.label.text = self.room_name
         self.update_info_window()
+        self.last_update = time.time()
 
     def update_info_window(self):
         if self.info_window is not None and self.info_text is not None:
