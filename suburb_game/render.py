@@ -471,6 +471,7 @@ class Image(UIElement):
         self.scale: float = 1
         self.scaled = False
         self.highlight_color: Optional[pygame.Color] = None
+        self.convert_colors: list[tuple[pygame.Color, pygame.Color]] = []
         update_check.append(self)
 
     def update(self):
@@ -494,6 +495,9 @@ class Image(UIElement):
                 if self.convert:
                     self.surf = self.surf.convert()
                     self.surf = self.convert_to_theme(self.surf)
+                    for initial_color, converted_color in self.convert_colors:
+                        print(initial_color, converted_color)
+                        self.surf = palette_swap(self.surf, initial_color, converted_color)
                     self.surf.set_colorkey(pygame.Color(0, 0, 0))
         if self.alpha != 255: self.surf.set_alpha(self.alpha)
         if self.scale != 1 and not self.scaled: 
@@ -1244,6 +1248,13 @@ class Window(SolidColor):
         self.xbutton.delete()
         if self in self.task_bar.open_windows: self.task_bar.open_windows.remove(self)
         super().delete()
+
+class Enemy(Image):
+    def __init__(self, x, y, grist_type, monster_type):
+        path = f"sprites/strife/{monster_type}.png"
+        super().__init__(x, y, path)
+        new_color = config.gristcolors[grist_type]
+        self.convert_colors.append((themes.default.dark, new_color)) 
 
 def make_grist_display(x, y, w: int, h: int, padding: int, 
                        grist_name: str, grist_amount: int, 
