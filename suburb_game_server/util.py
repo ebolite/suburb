@@ -45,6 +45,9 @@ sessions = readjson(sessions, "sessions")
 players = {}
 players = readjson(players, "players")
 
+npcs = {}
+npcs = readjson(npcs, "npcs")
+
 bases = {}
 bases = readjson(bases, "bases")
 
