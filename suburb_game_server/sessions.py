@@ -533,6 +533,13 @@ class Player():
         self.strife_portfolio[kind_name].append(instance_name)
         return True
     
+    def eject_from_strife_deck(self, instance_name):
+        for kind_name in self.strife_portfolio:
+            if instance_name in self.strife_portfolio[kind_name]:
+                self.strife_portfolio[kind_name].remove(instance_name)
+                self.room.add_instance(instance_name)
+                return
+    
     def wield(self, instance_name: str) -> bool:
         instance = alchemy.Instance(instance_name)
         if instance.item.size > config.max_wielded_size: return False
