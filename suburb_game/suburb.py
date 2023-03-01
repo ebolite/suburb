@@ -806,6 +806,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
                 reply = client.requestplus(intent="move_to_strife_deck", content={"instance_name": instance.name, "kind_name": kind_name})
                 if reply:
                     Sylladex.current_sylladex().remove_instance(instance.name)
+                    # todo: switch to strife portfolio scene
                     last_scene()
             elif player_dict["unassigned_specibi"] <= 0:
                 util.log("You don't have any unassigned specibi.")
