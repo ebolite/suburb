@@ -515,6 +515,8 @@ class Player():
         out["grist_cache_limit"] = self.grist_cache_limit
         out["total_gutter_grist"] = self.total_gutter_grist
         out["available_phernalia"] = self.available_phernalia
+        for kind_name in self.strife_portfolio:
+            out["strife_portfolio"][kind_name] = {instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in self.strife_portfolio[kind_name]}
         return out
     
     def assign_specibus(self, kind_name) -> bool:
