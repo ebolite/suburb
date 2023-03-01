@@ -736,9 +736,17 @@ def map_scene():
     log = render.LogWindow(map_scene, tilemap=tilemap, draw_console=True)
 
 @scene
-def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False):
+def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False, strife=False):
     render.LogWindow(display_item)
-    if modus is None:
+    if strife:
+        card_path = "sprites/itemdisplay/strife_captchalogue_card.png"
+        card_flipped_path = "sprites/itemdisplay/strife_captchalogue_card_flipped.png"
+        text_color = themes.strife.light
+        text_outline_color = None
+        def flip():
+            if not instance.item.forbiddencode:
+                display_item(instance, last_scene, modus=modus, flipped=not flipped, strife=strife)
+    elif modus is None:
         card_path = "sprites\\itemdisplay\\captchalogue_card.png"
         card_flipped_path = "sprites\\itemdisplay\\captchalogue_card_flipped.png"
         text_color = current_theme().dark
@@ -752,7 +760,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         text_outline_color = modus.theme.black
         def flip():
             if not instance.item.forbiddencode:
-                display_item(instance, last_scene, modus=modus, flipped=not flipped)
+                display_item(instance, last_scene, modus=modus, flipped=not flipped, strife=strife)
     if not flipped:
         captcha_image = render.Button(0.5, 0.4, card_path, card_path, flip)
         image_path = None
@@ -820,7 +828,9 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     if instance.punched_code != "":
         if not flipped:
             render.spawn_punches(captcha_image, instance.punched_code, 122, 138, w=80, h=120)
-    if modus is not None:
+    if strife:
+        ...
+    elif modus is not None:
         syl = Sylladex.current_sylladex()
         def uncaptcha_button_func():
             syl.uncaptchalogue(instance.name)
