@@ -36,6 +36,7 @@ click_check = []
 key_check = []
 mouseup_check = []
 update_check = []
+always_on_top_check = []
 keypress_update_check = []
 scroll_check = []
 move_to_top = []
@@ -44,7 +45,7 @@ ui_elements = []
 
 tile_wh = 32
 
-checks = [click_check, key_check, mouseup_check, update_check, keypress_update_check, scroll_check]
+checks = [click_check, key_check, mouseup_check, update_check, always_on_top_check, keypress_update_check, scroll_check]
 
 icon_surf = pygame.image.load("sprites\\icon.png").convert()
 pygame.display.set_icon(icon_surf)
@@ -1363,6 +1364,9 @@ def render():
 
     for sprite in keypress_update_check:
         sprite.update(keys)
+
+    for sprite in always_on_top_check:
+        sprite.update()
 
     pygame.display.flip()
 

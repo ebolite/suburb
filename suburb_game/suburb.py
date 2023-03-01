@@ -28,6 +28,8 @@ def scene(func):
         fps_counter = render.FpsCounter(1150, 0)
         fps_counter.fontsize = 20
         fps_counter.absolute = True
+        render.update_check.remove(fps_counter)
+        render.always_on_top_check.append(fps_counter)
         func(*args, **kwargs)
         print(f"{func} - {time.time() - t}")
     return out
