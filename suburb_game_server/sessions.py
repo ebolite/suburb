@@ -538,7 +538,8 @@ class Player():
             if instance_name in self.strife_portfolio[kind_name]:
                 self.strife_portfolio[kind_name].remove(instance_name)
                 self.room.add_instance(instance_name)
-                return
+                return True
+        return False
     
     def wield(self, instance_name: str) -> bool:
         instance = alchemy.Instance(instance_name)

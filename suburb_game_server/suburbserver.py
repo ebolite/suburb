@@ -154,6 +154,13 @@ def handle_request(dict):
         case "assign_specibus":
             kind_name = content["kind_name"]
             return player.assign_specibus(kind_name)
+        case "move_to_strife_deck":
+            instance_name = content["instance_name"]
+            kind_name = content["kind_name"]
+            return player.move_to_strife_deck(instance_name, kind_name)
+        case "eject_from_strife_deck":
+            instance_name = content["instance_name"]
+            return player.eject_from_strife_deck(instance_name)
         case "drop_empty_card":
             return player.drop_empty_card()
         case "captchalogue":
