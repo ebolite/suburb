@@ -122,7 +122,7 @@ def login():
             player_info = client.requestdic("player_info")
             if player_info["setup"]:
                 Sylladex.current_sylladex().validate()
-                map()
+                map_scene()
             else:
                 namecharacter() # todo: change to play game function
         print(f"log text {log.text}")
@@ -584,7 +584,7 @@ def newgame():
     new_sylladex = Sylladex.new_sylladex(client.dic["character"], character_info["modus"])
     print(new_sylladex)
     new_sylladex.validate()
-    map()
+    map_scene()
 
 def debug_speedrun():
     client.dic["session_name"] = "fuck"
@@ -623,11 +623,11 @@ def debug_speedrun_2():
     newgame()
 
 @scene
-def map():
+def map_scene():
     item_display = render.RoomItemDisplay(70, 190, {})
-    Sylladex.current_sylladex().draw_ui_bar(map)
+    Sylladex.current_sylladex().draw_ui_bar(map_scene)
     tilemap = render.TileMap(0.5, 0.5, item_display)
-    log = render.LogWindow(map, tilemap=tilemap, draw_console=True)
+    log = render.LogWindow(map_scene, tilemap=tilemap, draw_console=True)
 
 @scene
 def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False):

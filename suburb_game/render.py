@@ -969,7 +969,7 @@ class RoomItemDisplay(UIElement):
                 def output_func(): pass
             else:
                 def output_func():
-                    suburb.display_item(Instance(button_instance_name, instances[button_instance_name]), suburb.map)
+                    suburb.display_item(Instance(button_instance_name, instances[button_instance_name]), suburb.map_scene)
             return output_func
         for button in self.buttons:
             button.delete()
@@ -1019,7 +1019,7 @@ class RoomItemDisplay(UIElement):
                     pressed_path = f"sprites/item_actions/{action_name}_pressed.png"
                     if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
                     if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
-                    use_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, instance.get_action_button_func(action_name, suburb.map))
+                    use_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, instance.get_action_button_func(action_name, suburb.map_scene))
                     use_button.absolute = True
                     self.buttons.append(use_button)
             main_button_width = self.w
@@ -1049,7 +1049,7 @@ class CaptchalogueButton(Button):
         def output_func():
             syl = Sylladex.current_sylladex()
             if syl.captchalogue(instance):
-                suburb.map()
+                suburb.map_scene()
             else:
                 ...
         return output_func
@@ -1183,7 +1183,7 @@ class TaskBar(UIElement):
         self.actuate_button_box = SolidColor(0, SCREEN_HEIGHT-self.h, 120 + self.padding*2, self.h, self.theme.dark)
         self.actuate_button_box.outline_color = self.theme.light
         self.actuate_button_box.outline_width = self.padding
-        self.actuate_button = TextButton(self.padding, SCREEN_HEIGHT-self.h+self.padding, 120, self.h - self.padding*2, " ACTUATE", suburb.map)
+        self.actuate_button = TextButton(self.padding, SCREEN_HEIGHT-self.h+self.padding, 120, self.h - self.padding*2, " ACTUATE", suburb.map_scene)
         self.actuate_button.absolute = True
         self.actuate_button.outline_color = self.theme.black
         self.actuate_button.fill_color = self.theme.dark

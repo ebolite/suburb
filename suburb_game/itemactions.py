@@ -135,13 +135,13 @@ def use_alchemize(instance: "sylladex.Instance") -> bool:
     render.make_grist_cost_display(0.5, 0.35, 45, cost, grist_cache, None, suburb.current_theme().dark, absolute=False)
     def confirm():
         client.requestplus(intent="use_item", content={"instance_name": instance.name, "action_name": "alchemize", "target_name": None})
-        suburb.map()
+        suburb.map_scene()
     if can_make:
         confirm_button = render.Button(0.5, 0.45, "sprites/buttons/confirm.png", "sprites/buttons/confirmpressed.png", confirm)
     else:
         no_text = render.Text(0.5, 0.45, "You are missing the required grist to make it.")
         no_text.color = suburb.current_theme().dark
-    backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", suburb.map)
+    backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", suburb.map_scene)
     return False
 
 alchemize.use_func = use_alchemize

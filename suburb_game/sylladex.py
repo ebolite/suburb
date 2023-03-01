@@ -171,7 +171,7 @@ class Instance():
     def goto_use_next_scene(self, last_scene: Callable, action_name: str, modus: "Modus"):
         if action_name == "computer":
             suburb.computer(self)
-        elif last_scene is suburb.map: last_scene()
+        elif last_scene is suburb.map_scene: last_scene()
         else: suburb.display_item(self, last_scene, modus=modus)
 
     def choose_target(self, action_name: str, last_scene: Callable):
@@ -195,7 +195,7 @@ class Instance():
             choose_button = render.TextButton(x, y, button_width, button_height, display_name, button_func)
             choose_button.absolute = True
             choose_button.truncate_text = True
-        if last_scene is suburb.map: 
+        if last_scene is suburb.map_scene: 
             def backbutton_func(): last_scene()
         else: 
             def backbutton_func(): suburb.display_item(self, last_scene, syl.modus)
