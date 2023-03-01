@@ -791,10 +791,18 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     power_label.fontsize = 54
     power_label.set_fontsize_by_width(330)
     num_kinds = len(instance.item.kinds)
+    def get_kind_button_func(kind_name):
+        def kind_button_func():
+            player_dict = client.requestdic(intent="player_info")
+            if player_dict["unassigned_specibi"] > 0:
+                assign_strife_specibus(kind_name, last_scene)
+            else:
+                util.log("You don't have any unassigned specibi.")
+        return kind_button_func
     for i, kind in enumerate(instance.item.kinds):
         x = 1.2
         y = (1/(num_kinds+1))*num_kinds/(i+1)
-        kind_card_image = render.Image(x, y, "sprites\\itemdisplay\\strife_card.png")
+        kind_card_image = render.Button(x, y, "sprites\\itemdisplay\\strife_card.png", None, get_kind_button_func(kind))
         kind_card_image.bind_to(captcha_image)
         kind_card_image.hover_to_top = True
         kind_label = render.Text(0.55, 0.91, kind)
@@ -817,6 +825,18 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             uncaptchalogue_button = render.TextButton(0.5, 1.2, 200, 33, "uncaptchalogue", uncaptcha_button_func)
             uncaptchalogue_button.bind_to(power_bar)
     backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
+
+@scene
+def assign_strife_specibus(kind_name: str, last_scene: Callable = map_scene):
+    confirm_text = render.Text(0.5, 0.1, f"Do you want to assign {kind_name} as a new strife specibus?")
+    confirm_text.color = current_theme().dark
+    def confirm():
+        reply = client.requestplus("assign_specibus", {"kind_name": kind_name})
+        if reply: util.log("You assigned {kind_name}!")
+        else: util.log("Failed to assign.")
+        last_scene()
+    confirm_button = render.Button(0.5, 0.2, "sprites/buttons/confirm.png", "sprites/buttons/confirm_pressed.png", confirm)
+    back_button = render.Button(0.5, 0.3, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", last_scene)
 
 @scene
 def title():

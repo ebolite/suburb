@@ -298,6 +298,7 @@ class Button(UIElement):
         self.alt_img_path = alt_img_path
         self.altclick = altclick
         self.hover = hover
+        self.hover_to_top = False
         self.active = False
         self.alpha = 255
         self.alt = alt
@@ -346,6 +347,17 @@ class Button(UIElement):
             self.scaled = True
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
+        if self.hover_to_top and self.is_mouseover():
+            for ui_element in update_check:
+                if not ui_element.is_mouseover(): continue
+                # we want to bring this to the top of drawing only if it's not behind anything
+                if update_check.index(self) < update_check.index(ui_element): break
+            else:
+                # move to top (last in update_check list)
+                move_to_top.append(self)
+                # move our bound elements to the top
+                for ui_element in self.bound_elements + self.temporary_elements:
+                    move_to_top.append(ui_element)
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
