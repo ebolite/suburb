@@ -794,10 +794,14 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     def get_kind_button_func(kind_name):
         def kind_button_func():
             player_dict = client.requestdic(intent="player_info")
-            if player_dict["unassigned_specibi"] > 0:
-                assign_strife_specibus(kind_name, last_scene)
-            else:
+            if player_dict["unassigned_specibi"] <= 0:
                 util.log("You don't have any unassigned specibi.")
+                return
+            if kind_name in player_dict["strife_portfolio"]:
+                util.log(f"You already have a {kind_name} abstratus.")
+                return
+            else:
+                assign_strife_specibus(kind_name, last_scene)
         return kind_button_func
     for i, kind in enumerate(instance.item.kinds):
         x = 1.2
