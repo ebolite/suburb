@@ -802,11 +802,16 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     def get_kind_button_func(kind_name):
         def kind_button_func():
             player_dict = client.requestdic(intent="player_info")
-            if player_dict["unassigned_specibi"] <= 0:
+            if kind_name in player_dict["strife_portfolio"] and modus is not None:
+                reply = client.requestplus(intent="move_to_strife_deck", content={"instance_name": instance.name, "kind_name": kind_name})
+                if reply:
+                    Sylladex.current_sylladex().remove_instance(instance.name)
+                    last_scene()
+            elif player_dict["unassigned_specibi"] <= 0:
                 util.log("You don't have any unassigned specibi.")
                 return
-            if kind_name in player_dict["strife_portfolio"]:
-                util.log(f"You already have a {kind_name} abstratus.")
+            elif kind_name in player_dict["strife_portfolio"]:
+                util.log(f"You must captchalogue this first.")
                 return
             else:
                 assign_strife_specibus(kind_name, last_scene)
