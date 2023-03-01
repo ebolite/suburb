@@ -728,7 +728,7 @@ def map_scene():
     item_display = render.RoomItemDisplay(70, 190, {})
     ui_bar = Sylladex.current_sylladex().draw_ui_bar(map_scene)
     tilemap = render.TileMap(0.5, 0.5, item_display)
-    portfolio_button = render.TextButton(render.SCREEN_WIDTH-256, render.SCREEN_HEIGHT-166-64, 256, 64, "strife portfolio", placeholder, theme=themes.strife)
+    portfolio_button = render.TextButton(render.SCREEN_WIDTH-256, render.SCREEN_HEIGHT-166-64, 256, 64, "strife portfolio", strife_portfolio, theme=themes.strife)
     portfolio_button.absolute = True
     portfolio_button.fill_color = themes.strife.dark
     portfolio_button.text_color = themes.strife.light
@@ -861,6 +861,14 @@ def assign_strife_specibus(kind_name: str, last_scene: Callable = map_scene):
         last_scene()
     confirm_button = render.Button(0.5, 0.2, "sprites/buttons/confirm.png", "sprites/buttons/confirm_pressed.png", confirm)
     back_button = render.Button(0.5, 0.3, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", last_scene)
+
+@scene
+def strife_portfolio():
+    player_dict = client.requestdic(intent="player_info")
+    # kind_name:dict[instance_name:instance_dict]
+    strife_portfolio = player_dict["strife_portfolio"]
+    ...
+
 
 @scene
 def title():
