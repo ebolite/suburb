@@ -726,8 +726,13 @@ def gristtorrent(window: "render.Window"):
 @scene
 def map_scene():
     item_display = render.RoomItemDisplay(70, 190, {})
-    Sylladex.current_sylladex().draw_ui_bar(map_scene)
+    ui_bar = Sylladex.current_sylladex().draw_ui_bar(map_scene)
     tilemap = render.TileMap(0.5, 0.5, item_display)
+    portfolio_button = render.TextButton(render.SCREEN_WIDTH-256, render.SCREEN_HEIGHT-166-64, 256, 64, "strife portfolio", placeholder, theme=themes.strife)
+    portfolio_button.absolute = True
+    portfolio_button.fill_color = themes.strife.dark
+    portfolio_button.text_color = themes.strife.light
+    portfolio_button.outline_color = themes.strife.black
     log = render.LogWindow(map_scene, tilemap=tilemap, draw_console=True)
 
 @scene

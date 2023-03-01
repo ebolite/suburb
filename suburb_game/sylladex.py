@@ -253,7 +253,7 @@ class Modus():
         empty_cards = ["" for i in range(remaining_cards)]
         return empty_cards+instances
 
-    def draw_ui_bar(self, sylladex: "Sylladex", last_scene: Callable):
+    def draw_ui_bar(self, sylladex: "Sylladex", last_scene: Callable) -> "render.Image":
         start = time.time()
         sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True
@@ -304,6 +304,7 @@ class Modus():
                 card_label.alpha = 155
                 if card_image is not None: card_image.alpha = 155
         print(f"draw ui bar - {time.time() - start}")
+        return sylladex_bar
 
     
 class Sylladex():
