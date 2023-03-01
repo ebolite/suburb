@@ -623,6 +623,107 @@ def debug_speedrun_2():
     newgame()
 
 @scene
+def computer(instance: Instance):
+    print(instance.computer_data)
+    task_bar = render.TaskBar()
+    apps = []
+    for app_name in instance.computer_data["installed_programs"]:
+        random.seed(instance.name+app_name)
+        x = 0.1 + random.random() * 0.7
+        random.seed(instance.name+app_name)
+        y = 0.1 + random.random() * 0.7
+        app_icon = render.AppIcon(random.random(), random.random(), app_name, task_bar)
+        apps.append(app_icon)
+
+def gristtorrent(window: "render.Window"):
+    theme = themes.gristtorrent
+    viewport = window.viewport
+    padding = 7
+    player_dict = client.requestdic("player_info")
+    grist_cache = player_dict["grist_cache"]
+    grist_cache_limit = player_dict["grist_cache_limit"]
+    grist_gutter = player_dict["grist_gutter"]
+    total_gutter_grist = player_dict["total_gutter_grist"]
+    leeching = player_dict["leeching"]
+    banner_head = render.Image(0, 0, "sprites/computer/gristTorrent/banner.png")
+    banner_head.absolute = True
+    banner_head.bind_to(viewport)
+    icon = render.Image(0.29, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
+    icon.bind_to(banner_head)
+    banner_text = render.Text(0.56, 0.5, "gristTorrent")
+    banner_text.color = theme.light
+    banner_text.outline_color = theme.dark
+    banner_text.outline_depth = 2
+    banner_text.fontsize = 72
+    banner_text.bind_to(banner_head)
+    grist_display_w = viewport.w
+    grist_display_h = 450
+    num_rows = 12
+    columns = []
+    for grist_name in config.grists:
+        for column in columns:
+            if len(column) != num_rows:
+                column.append(grist_name)
+                break
+        else:
+            columns.append([grist_name])
+    num_columns = len(columns)
+    grist_box_outline_width = 1
+    grist_box_w = grist_display_w//num_columns - padding - grist_box_outline_width
+    grist_box_h = grist_display_h//num_rows - padding - grist_box_outline_width
+    def get_box_button_func(grist_name):
+        def box_button_func():
+            client.requestplus(intent="computer", content={"command": "leech", "grist_type": grist_name})
+            window.reload()
+        return box_button_func
+    for column_index, column in enumerate(columns):
+        grist_box_x = padding + (grist_box_w+padding)*column_index 
+        for row_index, grist_name in enumerate(column):
+            grist_box_y = 150 + padding + (grist_box_h+padding)*row_index
+            box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, grist_name, grist_cache[grist_name], grist_cache_limit, theme)
+            box.border_radius = 2
+            if grist_name in leeching: box.outline_color = pygame.Color(255, 0, 0)
+            box.bind_to(viewport)
+            box_button = render.TextButton(grist_box_x, grist_box_y, grist_box_w, grist_box_h, "", get_box_button_func(grist_name))
+            box_button.absolute = True
+            box_button.draw_sprite = False
+            box_button.bind_to(viewport)
+    gutter_box_width = viewport.w//2
+    gutter_box_height = 40
+    gutter_box = render.SolidColor(viewport.w-gutter_box_width-padding, viewport.h-gutter_box_height-padding, gutter_box_width, gutter_box_height, theme.white)
+    gutter_box.outline_color = theme.black
+    gutter_box.bind_to(viewport)
+    box_label = render.Text(0.5, 0.25, "grist gutter")
+    box_label.color = theme.light
+    box_label.fontsize = 18
+    box_label.bind_to(gutter_box)
+    small_icon = render.Image(-0.03, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
+    small_icon.scale = 0.33
+    small_icon.bind_to(gutter_box)
+    gutter_label = render.Text(0.5, 0.9, str(total_gutter_grist))
+    gutter_label.color = theme.light
+    gutter_label.fontsize = 12
+    gutter_label.bind_to(gutter_box)
+    gutter_bar_background_width = gutter_box_width - padding*2
+    gutter_bar_background_height = 8
+    gutter_bar_background = render.SolidColor(padding, gutter_box_height*1.5//3, gutter_bar_background_width, gutter_bar_background_height, theme.white)
+    gutter_bar_background.outline_color = theme.black
+    gutter_bar_background.border_radius = 3
+    gutter_bar_background.bind_to(gutter_box)
+    #starting x
+    gutter_bar_padding = 2
+    total_bar_width = (gutter_box_width-padding*2 - gutter_bar_padding*2)
+    gutter_bar_x = gutter_bar_padding
+    gutter_bar_y = gutter_bar_padding
+    for grist_name, amount in grist_gutter:
+        bar_width = int(total_bar_width * (amount/total_gutter_grist))
+        if bar_width == 0: continue
+        gutter_bar_color = config.gristcolors[grist_name]
+        gutter_bar = render.SolidColor(gutter_bar_x, gutter_bar_y, bar_width, gutter_bar_background_height - gutter_bar_padding*2, gutter_bar_color)
+        gutter_bar.bind_to(gutter_bar_background)
+        gutter_bar_x += bar_width
+
+@scene
 def map_scene():
     item_display = render.RoomItemDisplay(70, 190, {})
     Sylladex.current_sylladex().draw_ui_bar(map_scene)
@@ -738,107 +839,6 @@ def title():
     conntext.absolute = True
     debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
     debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
-
-@scene
-def computer(instance: Instance):
-    print(instance.computer_data)
-    task_bar = render.TaskBar()
-    apps = []
-    for app_name in instance.computer_data["installed_programs"]:
-        random.seed(instance.name+app_name)
-        x = 0.1 + random.random() * 0.7
-        random.seed(instance.name+app_name)
-        y = 0.1 + random.random() * 0.7
-        app_icon = render.AppIcon(random.random(), random.random(), app_name, task_bar)
-        apps.append(app_icon)
-
-def gristtorrent(window: "render.Window"):
-    theme = themes.gristtorrent
-    viewport = window.viewport
-    padding = 7
-    player_dict = client.requestdic("player_info")
-    grist_cache = player_dict["grist_cache"]
-    grist_cache_limit = player_dict["grist_cache_limit"]
-    grist_gutter = player_dict["grist_gutter"]
-    total_gutter_grist = player_dict["total_gutter_grist"]
-    leeching = player_dict["leeching"]
-    banner_head = render.Image(0, 0, "sprites/computer/gristTorrent/banner.png")
-    banner_head.absolute = True
-    banner_head.bind_to(viewport)
-    icon = render.Image(0.29, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
-    icon.bind_to(banner_head)
-    banner_text = render.Text(0.56, 0.5, "gristTorrent")
-    banner_text.color = theme.light
-    banner_text.outline_color = theme.dark
-    banner_text.outline_depth = 2
-    banner_text.fontsize = 72
-    banner_text.bind_to(banner_head)
-    grist_display_w = viewport.w
-    grist_display_h = 450
-    num_rows = 12
-    columns = []
-    for grist_name in config.grists:
-        for column in columns:
-            if len(column) != num_rows:
-                column.append(grist_name)
-                break
-        else:
-            columns.append([grist_name])
-    num_columns = len(columns)
-    grist_box_outline_width = 1
-    grist_box_w = grist_display_w//num_columns - padding - grist_box_outline_width
-    grist_box_h = grist_display_h//num_rows - padding - grist_box_outline_width
-    def get_box_button_func(grist_name):
-        def box_button_func():
-            client.requestplus(intent="computer", content={"command": "leech", "grist_type": grist_name})
-            window.reload()
-        return box_button_func
-    for column_index, column in enumerate(columns):
-        grist_box_x = padding + (grist_box_w+padding)*column_index 
-        for row_index, grist_name in enumerate(column):
-            grist_box_y = 150 + padding + (grist_box_h+padding)*row_index
-            box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, grist_name, grist_cache[grist_name], grist_cache_limit, theme)
-            box.border_radius = 2
-            if grist_name in leeching: box.outline_color = pygame.Color(255, 0, 0)
-            box.bind_to(viewport)
-            box_button = render.TextButton(grist_box_x, grist_box_y, grist_box_w, grist_box_h, "", get_box_button_func(grist_name))
-            box_button.absolute = True
-            box_button.draw_sprite = False
-            box_button.bind_to(viewport)
-    gutter_box_width = viewport.w//2
-    gutter_box_height = 40
-    gutter_box = render.SolidColor(viewport.w-gutter_box_width-padding, viewport.h-gutter_box_height-padding, gutter_box_width, gutter_box_height, theme.white)
-    gutter_box.outline_color = theme.black
-    gutter_box.bind_to(viewport)
-    box_label = render.Text(0.5, 0.25, "grist gutter")
-    box_label.color = theme.light
-    box_label.fontsize = 18
-    box_label.bind_to(gutter_box)
-    small_icon = render.Image(-0.03, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
-    small_icon.scale = 0.33
-    small_icon.bind_to(gutter_box)
-    gutter_label = render.Text(0.5, 0.9, str(total_gutter_grist))
-    gutter_label.color = theme.light
-    gutter_label.fontsize = 12
-    gutter_label.bind_to(gutter_box)
-    gutter_bar_background_width = gutter_box_width - padding*2
-    gutter_bar_background_height = 8
-    gutter_bar_background = render.SolidColor(padding, gutter_box_height*1.5//3, gutter_bar_background_width, gutter_bar_background_height, theme.white)
-    gutter_bar_background.outline_color = theme.black
-    gutter_bar_background.border_radius = 3
-    gutter_bar_background.bind_to(gutter_box)
-    #starting x
-    gutter_bar_padding = 2
-    total_bar_width = (gutter_box_width-padding*2 - gutter_bar_padding*2)
-    gutter_bar_x = gutter_bar_padding
-    gutter_bar_y = gutter_bar_padding
-    for grist_name, amount in grist_gutter:
-        bar_width = int(total_bar_width * (amount/total_gutter_grist))
-        if bar_width == 0: continue
-        gutter_bar_color = config.gristcolors[grist_name]
-        gutter_bar = render.SolidColor(gutter_bar_x, gutter_bar_y, bar_width, gutter_bar_background_height - gutter_bar_padding*2, gutter_bar_color)
-        gutter_bar.bind_to(gutter_bar_background)
-        gutter_bar_x += bar_width
 
 
 if __name__ == "__main__":
