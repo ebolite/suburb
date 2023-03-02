@@ -81,7 +81,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             self.maps = {}
             self.specials = []
         if player != None:
-            self.__dict__["player_name"] = player.name
+            self.player_name = player.name
             self.gristcategory = player.gristcategory
             self.gen_overmap()
             self.gen_land_name()
@@ -95,20 +95,66 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         extralands = config.categoryproperties[self.gristcategory].get("extralands", None)
         extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
         extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
+        steepness = config.categoryproperties[self.gristcategory].get("steepness", 1)
         self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
-        for line in self.map_tiles:
-            print("".join(line))
+        housemap_x, housemap_y = self.get_random_land_coords()
+        self.set_height(housemap_x, housemap_y, 9)
+        housemap = self.find_map(housemap_x, housemap_y)
+        housemap.gen_map("house")
+        housemap.special = "housemap"
+        self.housemap_name = housemap.name
+        self.specials.append(housemap.name)
+        last_gate_x, last_gate_y = 0, 0
+        for gate_num in range(1, 8): # gates 1-7
+            if gate_num % 2 == 1: # even numbered gates should be close to odd numbered gates before them
+                gate_x, gate_y = self.get_tile_at_distance(housemap_x, housemap_y, gate_num*2)
+                last_gate_x, last_gate_y = gate_x, gate_y
+            else:
+                gate_x, gate_y = self.get_tile_at_distance(last_gate_x, last_gate_y, 2)
+            gate_map = self.find_map(gate_x, gate_y)
+            gate_map.gen_map(f"gate{gate_num}")
+            gate_map.special = f"gate{gate_num}"
+            self.specials.append(gate_map.name)
+            self.set_height(gate_x, gate_y, gate_num)
+        self.map_tiles = make_height_map(self.map_tiles, steepness)
+        # todo: we're not doing this right now
+        # housemap.gen_rooms()
+
+    def set_height(self, x, y, height: int):
+        self.map_tiles[y][x] = str(height)
+
+    def get_random_land_coords(self) -> tuple[int, int]:
         y = random.randint(0, len(self.map_tiles)-1)
         x = random.randint(0, len(self.map_tiles[0])-1)
         while self.map_tiles[y][x] == "~":
             y = random.randint(0, len(self.map_tiles)-1)
             x = random.randint(0, len(self.map_tiles[0])-1)
-        housemap = self.find_map(x, y)
-        housemap.gen_map("house")
-        self.housemap_name = housemap.name
-        self.specials.append(housemap.name)
-        # todo: we're not doing this right now
-        # housemap.gen_rooms()
+        return x, y
+
+    def get_tile_at_distance(self, x: int, y: int, distance: int) -> tuple[int, int]: # chooses a random location that's distance away from x, y
+        possiblelocs = []
+        # make a ring of valid targets around x, y
+        for num in range(0, distance+1):
+            possiblelocs.append((num, distance-num))
+            possiblelocs.append((num*-1, distance-num))
+            possiblelocs.append((num, (distance-num)*-1))
+            possiblelocs.append((num*-1, (distance-num)*-1))
+        random.shuffle(possiblelocs)
+        for xplus, yplus in possiblelocs:
+            newx = x + xplus
+            newy = y + yplus
+            while newx >= len(self.map[0]):
+                newx -= len(self.map[0]) # loop around to the other side
+            while newx < 0:
+                newx = len(self.map[0]) + newx # loop around to the other side
+            while newy >= len(self.map):
+                newy -= len(self.map) # loop around to the other side
+            while newy < 0:
+                newy = len(self.map) + newy # loop around to the other side
+            if self.map_tiles[newy][newx] != "~" and f"{newx}, {newy}" not in self.specials:
+                return newx, newy
+        else: # if there is no valid location around the tile
+            return self.get_tile_at_distance(x, y, distance+1) # recurse, find loc further away
 
     def gen_land_name(self):
         print(f"{self.gristcategory} {self.player.aspect}")
@@ -168,6 +214,8 @@ class Map():
         self.__dict__["name"] = name  
         if name not in util.sessions[session.name]["overmaps"][overmap.name]["maps"]:
             util.sessions[session.name]["overmaps"][overmap.name]["maps"][name] = {}
+            self.special: Optional[str] = None
+            self.discovered = False
             self.rooms = {}
             self.overmaptile = "~"
             coords = name.replace(",", "")
@@ -939,7 +987,6 @@ def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=N
                 x = random.randint(0, len(map_tiles[0])-1)
             map_tiles[y][x] = "*" # placeholder terrain tile
             map_tiles = gen_terrain(x, y, map_tiles, "#", extrarate)
-    map_tiles = make_height_map(map_tiles, steepness)
     return map_tiles
 
 def print_map(map_tiles: list[list[str]]):
@@ -948,4 +995,5 @@ def print_map(map_tiles: list[list[str]]):
 
 if __name__ == "__main__":
     test_map = gen_overworld(12, 0.5, 4, .4)
+    test_map = make_height_map(test_map, 2)
     print_map(test_map)
