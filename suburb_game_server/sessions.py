@@ -843,7 +843,56 @@ def check_block(x, y, map, checktile):
     if adjacent != 1: return True
     else: return False
 
-def gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial):
+def make_water_height_0(map_tiles: list[list[str]]) -> list[list[str]]:
+    out = [list(map(lambda tile: tile.replace("~", "0"), line)) for line in map_tiles]
+    return out
+
+def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], steepness: int) -> Optional[int]:
+    current_tile:str = map_tiles[target_y][target_x]
+    try:
+        return int(current_tile)
+    except ValueError: pass
+    if current_tile == "0": return 0
+    surrounding_values: list[int] = []
+    for x, y in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+        new_x = target_x+x
+        new_y = target_y+y
+        if new_x >= len(map_tiles[0]): new_x -= (len(map_tiles[0]) - 1)
+        if new_y >= len(map_tiles): new_y -= (len(map_tiles) - 1)
+        new_tile = map_tiles[new_y][new_x]
+        if new_tile == "#": continue
+        tile_value = int(new_tile)
+        surrounding_values.append(tile_value)
+    if len(surrounding_values) == 0: return None
+    if 0 in surrounding_values: return random.randint(1, steepness)
+    average_height = round(sum(surrounding_values) / len(surrounding_values))
+    new_height = average_height + random.randint(-steepness, steepness)
+    new_height = max(new_height, 1)
+    return new_height
+
+def height_map_pass(map_tiles: list[list[str]], steepness: int) -> list[list[str]]:
+    for y, line in enumerate(map_tiles):
+        for x, char in enumerate(line):
+            if char != "#": continue
+            height = generate_height(x, y, map_tiles, steepness)
+            if height is None: continue
+            map_tiles[y][x] = str(height)
+    print_map(map_tiles)
+    return map_tiles
+
+def make_height_map(map_tiles: list[list[str]], steepness: int=2):
+    map_tiles = make_water_height_0(map_tiles)
+    while True:
+        map_tiles = height_map_pass(map_tiles, steepness)
+        for line in map_tiles:
+            if "#" not in line: continue
+            else: break
+        else:
+            break
+    return map_tiles
+
+def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=None, extrarate=None, extraspecial=None):
+    steepness = 2
     map = [
         ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
         ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
@@ -903,4 +952,13 @@ def gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extra
                 x = random.randint(0, len(map[0])-1)
             map[y][x] = "*" # placeholder terrain tile
             map = gen_terrain(x, y, map, "#", extrarate)
+    map = make_height_map(map, steepness)
     return map
+
+def print_map(map_tiles: list[list[str]]):
+    for list in map_tiles:
+        print("".join(list))
+
+if __name__ == "__main__":
+    test_map = gen_overworld(12, 0.5, 4, .4)
+    print_map(test_map)
