@@ -733,7 +733,15 @@ def map_scene():
     portfolio_button.fill_color = themes.strife.dark
     portfolio_button.text_color = themes.strife.light
     portfolio_button.outline_color = themes.strife.black
+    overmap_button = render.TextButton(0.9, 0.1, 196, 64, ">OVERMAP", overmap)
     log = render.LogWindow(map_scene, tilemap=tilemap, draw_console=True)
+
+@scene
+def overmap():
+    map_tiles = client.requestdic(intent="current_overmap")["map_tiles"]
+    background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, themes.default.black)
+    overmap = render.Overmap(0.5, 0.5, map_tiles)
+    backbutton = render.Button(0.1, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", map_scene)
 
 @scene
 def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False, strife=False):

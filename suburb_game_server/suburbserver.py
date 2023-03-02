@@ -123,6 +123,8 @@ def handle_request(dict):
                 return f"Your land is the {land.title}! ({land.acronym})"
         case "current_map":
             return map_data(player)
+        case "current_overmap":
+            return json.dumps({"map_tiles": player.overmap.map_tiles})
         case "player_info":
             return json.dumps(player.get_dict())
         case "carved_item_info":

@@ -143,14 +143,14 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         for xplus, yplus in possiblelocs:
             newx = x + xplus
             newy = y + yplus
-            while newx >= len(self.map[0]):
-                newx -= len(self.map[0]) # loop around to the other side
+            while newx >= len(self.map_tiles[0]):
+                newx -= len(self.map_tiles[0]) # loop around to the other side
             while newx < 0:
-                newx = len(self.map[0]) + newx # loop around to the other side
-            while newy >= len(self.map):
-                newy -= len(self.map) # loop around to the other side
+                newx = len(self.map_tiles[0]) + newx # loop around to the other side
+            while newy >= len(self.map_tiles):
+                newy -= len(self.map_tiles) # loop around to the other side
             while newy < 0:
-                newy = len(self.map) + newy # loop around to the other side
+                newy = len(self.map_tiles) + newy # loop around to the other side
             if self.map_tiles[newy][newx] != "~" and f"{newx}, {newy}" not in self.specials:
                 return newx, newy
         else: # if there is no valid location around the tile
@@ -937,8 +937,6 @@ def height_map_pass(map_tiles: list[list[str]], steepness: float) -> list[list[s
     #         height = generate_height(x, y, map_tiles, steepness)
     #         if height is None: continue
     #         map_tiles[y][x] = str(height)
-    print_map(map_tiles)
-    print("----------")
     return map_tiles
 
 def make_height_map(map_tiles: list[list[str]], steepness: float=1.0):
