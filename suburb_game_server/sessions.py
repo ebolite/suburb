@@ -840,15 +840,15 @@ class Player():
         else:
             return False
 
-def gen_terrain(x, y, map, replacetile, terrain, depth=0):
+def gen_terrain(x, y, map, replacetile, terrain_rate, depth=0):
     if map[y][x] == "*":
         for coordinate in [(-1, 0), (1, 0), (0, 1), (0, -1)]: # up down left right
             try:
                 tile = map[y+coordinate[1]][x+coordinate[0]]
                 rng = random.random()
-                if rng < terrain - (0.1 * depth * terrain): # chance to generate more terrain lowers with depth
+                if rng < terrain_rate - (0.05 * depth * terrain_rate): # chance to generate more terrain lowers with depth
                     map[y+coordinate[1]][x+coordinate[0]] = "*"
-                    map = gen_terrain(x+coordinate[0], y+coordinate[1], map, tile, terrain, depth+1)
+                    map = gen_terrain(x+coordinate[0], y+coordinate[1], map, tile, terrain_rate, depth+1)
             except IndexError:
                 pass
     if depth == 0:
@@ -1005,7 +1005,7 @@ def print_map(map_tiles: list[list[str]]):
         print("".join(list))
 
 if __name__ == "__main__":
-    type = "amber"
+    type = "uranium"
     category: dict = config.categoryproperties[type]
     islands = category.get("islands")
     landrate = category.get("landrate")
@@ -1016,6 +1016,6 @@ if __name__ == "__main__":
     extrarate = category.get("extrarate", None)
     extraspecial = category.get("extraspecial", None)
     steepness = category.get("steepness", 1.0)
-    test_map = gen_overworld(72, 0.5, 24, .3)
+    test_map = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
     test_map = make_height_map(test_map, steepness)
     print_map(test_map)

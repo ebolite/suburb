@@ -301,7 +301,9 @@ categoryproperties = { # mapgen properties
         "landrate": .5,
         "lakes": 0,
         "lakerate": 0,
-        "special": "dual"
+        "special": "dual",
+        "extralands": 48,
+        "extrarate": 0.1
         },
     "wealth": {
         "islands": 72,
