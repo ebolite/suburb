@@ -1052,14 +1052,16 @@ class Overmap(UIElement):
         self.x = x
         self.y = y
         self.map_tiles = map_tiles
+        self.extra_height = 32 * 9
         self.offsetx = 0
-        self.offsety = 0
+        self.offsety = -self.extra_height
         self.last_mouse_pos: Optional[tuple[int, int]] = None
         self.tiles: list["OvermapTile"] = []
         self.block_image = pygame.image.load("sprites/overmap/block.png")
         self.water_image = pygame.image.load("sprites/overmap/water.png")
         self.w = (len(self.map_tiles[0]) + len(self.map_tiles))*16
         self.h = (len(self.map_tiles[0]) + len(self.map_tiles))*8
+        self.h += self.extra_height # extra tile height
         self.initialize_map(self.map_tiles)
         update_check.append(self)
 
@@ -1069,14 +1071,18 @@ class Overmap(UIElement):
             self.rect = pygame.Rect(0, 0, self.w, self.h)
             self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2))
             self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2))
+            self.surf = pygame.Surface((self.w, self.h))
+            self.surf.fill(self.theme.black)
             for tile in self.tiles:
                 tile.delete()
             # tiles should be drawn from right to left, top to bottom
             for y, line in enumerate(map_tiles):
                 for x, char in enumerate(reversed(line)):
                     overmap_tile = OvermapTile(x, y, int(char), self)
-                    overmap_tile.blit_surf = self.blit_surf
+                    overmap_tile.blit_surf = self.surf
                     self.tiles.append(overmap_tile)
+            for tile in self.tiles:
+                tile.draw_to_surface()
 
     def update(self):
         if pygame.mouse.get_pressed()[0]:
@@ -1090,8 +1096,7 @@ class Overmap(UIElement):
                 self.offsety += current_y - last_y
         else:
             self.last_mouse_pos = None
-        for tile in self.tiles:
-            tile.update()
+        screen.blit(self.surf,(self.rect.x+self.offsetx, self.rect.y+self.offsety))
 
 class OvermapTile(UIElement):
     def __init__(self, x, y, height:int, overmap: Overmap):
@@ -1101,16 +1106,15 @@ class OvermapTile(UIElement):
         self.height = height
         self.overmap = overmap
 
-    def update(self):
+    def draw_to_surface(self):
         # each block starts 16 left and 8 down from the last
         # basically It Just Works(TM) don't fucking ask questions
-        draw_x = -16 + self.overmap.offsetx
-        draw_x += self.overmap.rect.x + self.overmap.rect.w//2
+        draw_x = -16
+        draw_x += self.overmap.rect.w//2
         draw_x += (len(self.overmap.map_tiles) - len(self.overmap.map_tiles[0])) * -8
         draw_x += self.y * 16
         draw_x -= self.x * 16
-        draw_y = -16 + self.overmap.offsety
-        draw_y += self.overmap.rect.y
+        draw_y = self.overmap.extra_height - 16
         draw_y += self.y * 8
         draw_y += self.x * 8
         if self.height == 0:
