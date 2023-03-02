@@ -96,6 +96,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
         extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
         steepness = config.categoryproperties[self.gristcategory].get("steepness", 1.0)
+        smothness = config.categoryproperties[self.gristcategory].get("smoothness", 0.5)
         self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
         housemap_x, housemap_y = self.get_random_land_coords()
         housemap = self.find_map(housemap_x, housemap_y)
@@ -115,7 +116,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             gate_map.special = f"gate{gate_num}"
             self.specials.append(gate_map.name)
             self.set_height(gate_x, gate_y, gate_num)
-        self.map_tiles = make_height_map(self.map_tiles, steepness)
+        self.map_tiles = make_height_map(self.map_tiles, steepness, smoothness)
         self.set_height(housemap_x, housemap_y, 9)
         # todo: we're not doing this right now
         # housemap.gen_rooms()
@@ -895,7 +896,7 @@ def make_water_height_0(map_tiles: list[list[str]]) -> list[list[str]]:
     out = [list(map(lambda tile: tile.replace("~", "0"), line)) for line in map_tiles]
     return out
 
-def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], steepness: float) -> Optional[int]:
+def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], steepness: float, smoothness: float) -> Optional[int]:
     current_tile:str = map_tiles[target_y][target_x]
     try:
         return int(current_tile)
@@ -913,12 +914,14 @@ def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], st
         surrounding_values.append(tile_value)
     if len(surrounding_values) == 0: return None
     if 0 in surrounding_values: return 1 + round(random.uniform(0, steepness))
+    # get mode of surrounding values
+    if random.random() < smoothness: return max(set(surrounding_values), key=surrounding_values.count)
     average_height = round(sum(surrounding_values) / len(surrounding_values))
     new_height = average_height + round(random.uniform(-steepness, steepness))
     new_height = max(new_height, 1)
     return new_height
 
-def height_map_pass(map_tiles: list[list[str]], steepness: float) -> list[list[str]]:
+def height_map_pass(map_tiles: list[list[str]], steepness: float, smoothness: float) -> list[list[str]]:
     y_values = list(range(len(map_tiles)))
     x_values = list(range(len(map_tiles[0])))
     random.shuffle(x_values)
@@ -928,7 +931,7 @@ def height_map_pass(map_tiles: list[list[str]], steepness: float) -> list[list[s
         for x in x_values:
             char = line[x]
             if char != "#": continue
-            height = generate_height(x, y, map_tiles, steepness)
+            height = generate_height(x, y, map_tiles, steepness, smoothness)
             if height is None: continue
             map_tiles[y][x] = str(height)
     # for y, line in enumerate(map_tiles):
@@ -939,10 +942,10 @@ def height_map_pass(map_tiles: list[list[str]], steepness: float) -> list[list[s
     #         map_tiles[y][x] = str(height)
     return map_tiles
 
-def make_height_map(map_tiles: list[list[str]], steepness: float=1.0):
+def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness: float=0.5):
     map_tiles = make_water_height_0(map_tiles)
     while True:
-        map_tiles = height_map_pass(map_tiles, steepness)
+        map_tiles = height_map_pass(map_tiles, steepness, smoothness)
         for line in map_tiles:
             if "#" not in line: continue
             else: break
@@ -1014,6 +1017,7 @@ if __name__ == "__main__":
     extrarate = category.get("extrarate", None)
     extraspecial = category.get("extraspecial", None)
     steepness = category.get("steepness", 1.0)
+    smoothness = category.get("smoothness", 1.0)
     test_map = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
-    test_map = make_height_map(test_map, steepness)
+    test_map = make_height_map(test_map, steepness, smoothness)
     print_map(test_map)
