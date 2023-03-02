@@ -1048,10 +1048,11 @@ class RoomItemDisplay(UIElement):
             if captcha_button is not None: self.buttons.append(captcha_button)
 
 class Overmap(UIElement):
-    def __init__(self, x, y, map_tiles:list[list[str]]):
+    def __init__(self, x, y, map_tiles:list[list[str]], theme=themes.default):
         super().__init__()
         self.x = x
         self.y = y
+        self.theme = theme
         self.map_tiles = map_tiles
         self.rotation_surfs = {}
         self.rotation = 0
@@ -1059,8 +1060,13 @@ class Overmap(UIElement):
         self.offsetx = 0
         self.offsety = -self.extra_height
         self.last_mouse_pos: Optional[tuple[int, int]] = None
-        self.block_image = pygame.image.load("sprites/overmap/block.png")
-        self.water_image = pygame.image.load("sprites/overmap/water.png")
+        self.block_image = pygame.image.load("sprites/overmap/block.png").convert()
+        self.block_image = self.convert_to_theme(self.block_image)
+        self.block_image.set_colorkey(pygame.Color(0, 0, 0))
+        self.water_image = pygame.image.load("sprites/overmap/water.png").convert()
+        self.water_image = self.convert_to_theme(self.water_image)
+        self.water_image.set_colorkey(pygame.Color(0, 0, 0))
+        # self.water_image = self.convert_to_theme(self.water_image)
         self.w = (len(self.map_tiles[0]) + len(self.map_tiles))*16
         self.h = (len(self.map_tiles[0]) + len(self.map_tiles))*8
         self.h += self.extra_height # extra tile height
