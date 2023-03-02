@@ -960,11 +960,8 @@ if __name__ == "__main__":
     000000000200132000002321200000
     000000100122131000024411000021
     200002001112420000012521000010
-    100101000000200000000111000011"""
-    test_map = test_map.replace(" ", "")
-    test_map = test_map.split("\n")
-    for y, line in enumerate(test_map):
-        test_map[y] = list(line)
+    100101000000200000000111000011""".replace(" ", "").split("\n")
+    test_map = [list(line) for line in test_map]
     client.connect() # connect to server
     # aspectcharacter() # choose scene to test
     # chooseinterests()
