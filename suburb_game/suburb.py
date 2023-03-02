@@ -943,8 +943,7 @@ def title():
     debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
 
 if __name__ == "__main__":
-    test_map = """
-    200002001112420000012521000010
+    test_map = """200002001112420000012521000010
     100101000000200000000111000011
     000000000002121100000231010000
     000010001214310000000224112110
@@ -973,7 +972,6 @@ if __name__ == "__main__":
     # title() # normal game start
     # continue to render until render.render() returns False
     # imp = render.Enemy(0.5, 0.5, "shale", "imp")
-    render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, themes.default.black)
     render.Overmap(0.5, 0.5, test_map)
     while render.render():
         ...

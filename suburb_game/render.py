@@ -1055,10 +1055,9 @@ class Overmap(UIElement):
         self.tiles: list["OvermapTile"] = []
         self.block_image = pygame.image.load("sprites/overmap/block.png")
         self.water_image = pygame.image.load("sprites/overmap/water.png")
-        self.w = len(self.map_tiles)*32
-        self.h = len(self.map_tiles[0])*32
-        outline_width = 6
-        self.background = SolidColor(32-outline_width, 32-outline_width, self.w + outline_width*2, self.h + outline_width*2, self.theme.black)
+        self.w = (len(self.map_tiles[0]) + len(self.map_tiles))*16
+        self.h = (len(self.map_tiles[0]) + len(self.map_tiles))*8
+        self.background = SolidColor(0, 0, self.w, self.h, self.theme.black)
         self.background.border_radius = 3
         self.background.bind_to(self)
         self.initialize_map(self.map_tiles)
@@ -1091,10 +1090,10 @@ class OvermapTile(UIElement):
 
     def update(self):
         # each block starts 16 left and 8 down from the last
-        draw_x = 700
+        draw_x = self.overmap.rect.x + self.overmap.rect.w//2
         draw_x += self.y * 16
         draw_x -= self.x * 16
-        draw_y = 200
+        draw_y = self.overmap.rect.y
         draw_y += self.y * 8
         draw_y += self.x * 8
         if self.height == 0:
