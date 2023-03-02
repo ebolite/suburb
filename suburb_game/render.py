@@ -5,6 +5,7 @@ import pathlib
 import hashlib
 import time
 import numpy as np
+import random
 from typing import Optional, Union, Callable
 
 import util
@@ -1044,6 +1045,64 @@ class RoomItemDisplay(UIElement):
             new_button.absolute = True 
             self.buttons.append(new_button)
             if captcha_button is not None: self.buttons.append(captcha_button)
+
+class Overmap(UIElement):
+    def __init__(self, x, y, map_tiles:list[list[str]]):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.map_tiles = map_tiles
+        self.tiles: list["OvermapTile"] = []
+        self.block_image = pygame.image.load("sprites/overmap/block.png")
+        self.water_image = pygame.image.load("sprites/overmap/water.png")
+        self.w = len(self.map_tiles)*32
+        self.h = len(self.map_tiles[0])*32
+        outline_width = 6
+        self.background = SolidColor(32-outline_width, 32-outline_width, self.w + outline_width*2, self.h + outline_width*2, self.theme.black)
+        self.background.border_radius = 3
+        self.background.bind_to(self)
+        self.initialize_map(self.map_tiles)
+        update_check.append(self)
+
+    def initialize_map(self, map_tiles):
+        if self.map_tiles != map_tiles or len(self.tiles) == 0:
+            self.map_tiles: list[list[str]] = map_tiles
+            self.rect = pygame.Rect(0, 0, len(map_tiles[0])*tile_wh, len(map_tiles)*tile_wh)
+            self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2))
+            self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2))
+            for tile in self.tiles:
+                tile.delete()
+            # tiles should be drawn from right to left, top to bottom
+            for y, line in enumerate(map_tiles):
+                for x, char in enumerate(reversed(line)):
+                    self.tiles.append(OvermapTile(x, y, int(char), self))
+
+    def update(self):
+        for tile in self.tiles:
+            tile.update()
+
+class OvermapTile(UIElement):
+    def __init__(self, x, y, height:int, overmap: Overmap):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.height = height
+        self.overmap = overmap
+
+    def update(self):
+        # each block starts 16 left and 8 down from the last
+        draw_x = 700
+        draw_x += self.y * 16
+        draw_x -= self.x * 16
+        draw_y = 200
+        draw_y += self.y * 8
+        draw_y += self.x * 8
+        if self.height == 0:
+            self.blit_surf.blit(self.overmap.water_image, ((draw_x, draw_y)))
+        else:
+            for i in range(self.height):
+                self.blit_surf.blit(self.overmap.block_image, ((draw_x, draw_y)))
+                draw_y -= 16
 
 class CaptchalogueButton(Button):
     def __init__(self, x, y, instance_name: str, instances: dict):
