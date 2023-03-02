@@ -1017,7 +1017,7 @@ if __name__ == "__main__":
     extrarate = category.get("extrarate", None)
     extraspecial = category.get("extraspecial", None)
     steepness = category.get("steepness", 1.0)
-    smoothness = category.get("smoothness", 1.0)
+    smoothness = category.get("smoothness", 0.5)
     test_map = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
     test_map = make_height_map(test_map, steepness, smoothness)
     print_map(test_map)

@@ -182,7 +182,9 @@ categoryproperties = { # mapgen properties
         "islands": 72,
         "landrate": .5,
         "lakes": 24,
-        "lakerate": .4
+        "lakerate": .4,
+        "smoothness": 0.6,
+        "steepness": 0.6,
         },
     "barren": {
         "islands": 12,
@@ -190,7 +192,7 @@ categoryproperties = { # mapgen properties
         "lakes": 60,
         "lakerate": .2,
         "extralands": 24,
-        "extrarate": 0.1
+        "extrarate": 0.1,
         },
     "beach": {
         "islands": 132,
@@ -198,20 +200,26 @@ categoryproperties = { # mapgen properties
         "lakes": 0,
         "lakerate": 0,
         "extralands": 12,
-        "extrarate": 0.4
+        "extrarate": 0.4,
+        "smoothness": 0.8,
+        "steepness": 0.7,
         },
     "block": {
         "islands": 72,
         "landrate": 1,
         "lakes": 30,
         "lakerate": .3,
-        "special": "block"
+        "special": "block",
+        "smoothness": 1,
+        "steepness": 2,
         },
     "calcite": {
         "islands": 240,
         "landrate": .4,
         "lakes": 180,
-        "lakerate": .3
+        "lakerate": .3,
+        "smoothness": 0.3,
+        "steepness": 1.5,
         },
     "cold": {
         "islands": 24,
@@ -219,7 +227,9 @@ categoryproperties = { # mapgen properties
         "lakes": 60,
         "lakerate": .4,
         "extralands": 42,
-        "extrarate": 0.15
+        "extrarate": 0.15,
+        "smoothness": 0.85,
+        "steepness": 2.5,
         },
     "dark": {
         "islands": 36,
@@ -227,56 +237,71 @@ categoryproperties = { # mapgen properties
         "lakes": 24,
         "lakerate": .4,
         "extralands": 42,
-        "extrarate": 0.15
+        "extrarate": 0.15,
+        "smoothness": 0.75
         },
     "elemental": {
         "islands": 60,
         "landrate": .8,
         "lakes": 60,
-        "lakerate": .4
+        "lakerate": .4,
+        "smoothness": 0.1,
+        "steepness": 2,
         },
     "hot": {
         "islands": 18,
         "landrate": .6,
         "lakes": 0,
-        "lakerate": 0
+        "lakerate": 0,
+        "smoothness": 0.2,
+        "steepness": 0.7,
         },
     "liquid": {
         "islands": 180,
         "landrate": .2,
         "lakes": 0,
-        "lakerate": 0
+        "lakerate": 0,
+        "smoothness": 0.8,
+        "steepness": 0.7,
         },
     "metal": {
         "islands": 54,
         "landrate": .5,
         "lakes": 90,
-        "lakerate": .3
+        "lakerate": .3,
+        "smoothness": 0.95,
+        "steepness": 1.75,
         },
     "nature": {
         "islands": 12,
         "landrate": 1,
         "lakes": 60,
-        "lakerate": .4
+        "lakerate": .4,
+        "smoothness": 0.7,
         },
     "oil": {
         "islands": 48,
         "landrate": 1,
         "lakes": 90,
-        "lakerate": .4
+        "lakerate": .4,
+        "smoothness": 0.6,
+        "steepness": 0.9,
         },
     "radiant": {
         "islands": 240,
         "landrate": .1,
         "lakes": 0,
-        "lakerate": 0
+        "lakerate": 0,
+        "smoothness": 0.8,
         },
     "science": {
         "islands": 12,
         "landrate": 1,
         "lakes": 60,
         "lakerate": .4,
-        "special": "block"
+        "special": "block",
+        "smoothness": 0.8,
+        "steepness": 1.7,
         },
     "stone": {
         "islands": 24,
@@ -285,7 +310,8 @@ categoryproperties = { # mapgen properties
         "lakerate": .3,
         "special": "center",
         "extralands": 48,
-        "extrarate": 0.1
+        "extrarate": 0.1,
+        "smoothness": 0.7,
         },
     "sweet": {
         "islands": 72,
@@ -294,7 +320,8 @@ categoryproperties = { # mapgen properties
         "lakerate": .5,
         "extralands": 12,
         "extrarate": 0.4,
-        "extraspecial": "center"
+        "extraspecial": "center",
+        "smoothness": 0.6,
         },
     "uranium": {
         "islands": 48,
@@ -303,7 +330,9 @@ categoryproperties = { # mapgen properties
         "lakerate": 0,
         "special": "dual",
         "extralands": 48,
-        "extrarate": 0.1
+        "extrarate": 0.1,
+        "smoothness": 0.3,
+        "steepness": 2,
         },
     "wealth": {
         "islands": 72,
@@ -312,7 +341,9 @@ categoryproperties = { # mapgen properties
         "lakerate": 0,
         "special": "dual",
         "extralands": 24,
-        "extrarate": 0.1
+        "extrarate": 0.1,
+        "smoothness": 0.8,
+        "steepnesss": 1.3,
         }
     }
 
