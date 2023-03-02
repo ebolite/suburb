@@ -1053,9 +1053,7 @@ class Overmap(UIElement):
         self.x = x
         self.y = y
         self.map_tiles = map_tiles
-        self.map_tiles_rot90 = np.rot90(map_tiles, 1, axes=(0, 1))
-        self.map_tiles_rot180 = np.rot90(map_tiles, 2, axes=(0, 1))
-        self.map_tiles_rot270 = np.rot90(map_tiles, 3, axes=(0, 1))
+        self.rotation_surfs = {}
         self.rotation = 0
         self.extra_height = 32 * 9
         self.offsetx = 0
@@ -1066,35 +1064,30 @@ class Overmap(UIElement):
         self.w = (len(self.map_tiles[0]) + len(self.map_tiles))*16
         self.h = (len(self.map_tiles[0]) + len(self.map_tiles))*8
         self.h += self.extra_height # extra tile height
-        self.initialize_map()
+        self.initialize_map(0)
         update_check.append(self)
         key_check.append(self)
 
-    def initialize_map(self):
+    def initialize_map(self, rotation):
         self.rect = pygame.Rect(0, 0, self.w, self.h)
         self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2))
         self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2))
-        self.rotation_surfs = {}
-        # tiles should be drawn from right to left, top to bottom
-        for rotation in [0, 90, 180, 270]:
-            self.rotation_surfs[rotation] = pygame.Surface((self.w, self.h))
-            self.rotation_surfs[rotation].fill(self.theme.black)
-            match rotation:
-                # this code is stolen from stack overflow lol
-                # the code snippet rotates the 2d list by 90 degrees
-                case 90:
-                    draw_tiles = self.map_tiles_rot90
-                case 180:
-                    draw_tiles = self.map_tiles_rot180
-                case 270:
-                    draw_tiles = self.map_tiles_rot270
-                case _:
-                    draw_tiles = self.map_tiles
-            for y, line in enumerate(draw_tiles):
-                for x, char in enumerate(reversed(line)):
-                    overmap_tile = OvermapTile(x, y, int(char), self)
-                    overmap_tile.blit_surf = self.rotation_surfs[rotation]
-                    overmap_tile.draw_to_surface()
+        self.rotation_surfs[rotation] = pygame.Surface((self.w, self.h))
+        self.rotation_surfs[rotation].fill(self.theme.black)
+        match rotation:
+            case 90:
+                draw_tiles = np.rot90(self.map_tiles, 1, axes=(0, 1))
+            case 180:
+                draw_tiles = np.rot90(self.map_tiles, 2, axes=(0, 1))
+            case 270:
+                draw_tiles = np.rot90(self.map_tiles, 3, axes=(0, 1))
+            case _:
+                draw_tiles = self.map_tiles
+        for y, line in enumerate(draw_tiles):
+            for x, char in enumerate(reversed(line)):
+                overmap_tile = OvermapTile(x, y, int(char), self)
+                overmap_tile.blit_surf = self.rotation_surfs[rotation]
+                overmap_tile.draw_to_surface()
 
     def update(self):
         if pygame.mouse.get_pressed()[0]:
@@ -1108,6 +1101,8 @@ class Overmap(UIElement):
                 self.offsety += current_y - last_y
         else:
             self.last_mouse_pos = None
+        try: self.rotation_surfs[self.rotation]
+        except KeyError: self.initialize_map(self.rotation)
         screen.blit(self.rotation_surfs[self.rotation],(self.rect.x+self.offsetx, self.rect.y+self.offsety))
 
     def keypress(self, event):
