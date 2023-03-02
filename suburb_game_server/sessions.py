@@ -485,6 +485,14 @@ class Player():
             self.grist_gutter: list[list] = []
             self.leeching: list[str] = []
             self.wielding: Optional[str] = None
+            self.stat_ratios = {
+                "spunk": 1,
+                "vigor": 1,
+                "tact": 1,
+                "luck": 1,
+                "savvy": 1,
+                "mettle": 1,
+            }
             # phernalia registry is a default list of deployable objects minus the deployed phernalia
             self.deployed_phernalia = []
             self.server_storage = []

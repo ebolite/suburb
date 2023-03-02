@@ -859,14 +859,34 @@ def assign_strife_specibus(kind_name: str, last_scene: Callable = map_scene):
         if reply: util.log("You assigned {kind_name}!")
         else: util.log("Failed to assign.")
         last_scene()
-    confirm_button = render.Button(0.5, 0.2, "sprites/buttons/confirm.png", "sprites/buttons/confirm_pressed.png", confirm)
+    confirm_button = render.Button(0.5, 0.2, "sprites/buttons/confirm.png", "sprites/buttons/confirmpressed.png", confirm)
     back_button = render.Button(0.5, 0.3, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", last_scene)
 
 @scene
-def strife_portfolio():
+def strife_portfolio(selected_kind:Optional[str]=None):
+    theme = themes.strife
+    background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.dark)
     player_dict = client.requestdic(intent="player_info")
     # kind_name:dict[instance_name:instance_dict]
     strife_portfolio = player_dict["strife_portfolio"]
+    if selected_kind is None: 
+        if strife_portfolio:
+            selected_kind = list(strife_portfolio.keys())[0]
+        else:
+            selected_kind = None
+    if selected_kind is not None:
+        print(selected_kind)
+        strife_deck_bar = render.Image(0, 0, "sprites/itemdisplay/strife_deck_bar.png")
+        strife_deck_bar.absolute = True
+        label = render.Text(0.5, 0.065, selected_kind)
+        label.color = theme.light
+        label.fontsize = 48
+        abstratus_display = render.Image(0.51, 0.43, "sprites/itemdisplay/strife_abstratus_display.png")
+        if os.path.isfile(f"sprites\\kinds\\{selected_kind}.png"):
+            kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{selected_kind}.png")
+            kind_image.bind_to(abstratus_display)
+            kind_image.scale = 3
+    back_button = render.Button(0.1, 0.1, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", map_scene, theme=theme)
     ...
 
 
