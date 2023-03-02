@@ -878,6 +878,7 @@ def height_map_pass(map_tiles: list[list[str]], steepness: int) -> list[list[str
             if height is None: continue
             map_tiles[y][x] = str(height)
     print_map(map_tiles)
+    print("----------")
     return map_tiles
 
 def make_height_map(map_tiles: list[list[str]], steepness: int=2):
@@ -891,69 +892,55 @@ def make_height_map(map_tiles: list[list[str]], steepness: int=2):
             break
     return map_tiles
 
+default_map_tiles = [["~" for i in range(32)] for i in range(32)]
+
 def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=None, extrarate=None, extraspecial=None):
-    steepness = 2
-    map = [
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-        ["~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~","~"],
-    ]
+    steepness = 1
+    map_tiles = deepcopy(default_map_tiles)
     for i in range(0, islands): # generate islands
         if special == "center":
-            y = int(len(map)/2)
-            x = int(len(map[0])/2)
+            y = int(len(map_tiles)/2)
+            x = int(len(map_tiles[0])/2)
         elif special == "dual":
             if i % 2 == 0:
-                x = int(len(map[0])/7)
-                y = int(len(map)/4) * 3
+                x = int(len(map_tiles[0])/7)
+                y = int(len(map_tiles)/4) * 3
             else:
-                x = int(len(map[0])/7) * 6
-                y = int(len(map)/4)
+                x = int(len(map_tiles[0])/7) * 6
+                y = int(len(map_tiles)/4)
         else:
-            y = random.randint(0, len(map)-1)
-            x = random.randint(0, len(map[0])-1)
-        map[y][x] = "*" # placeholder terrain tile
-        map = gen_terrain(x, y, map, "#", landrate)
+            y = random.randint(0, len(map_tiles)-1)
+            x = random.randint(0, len(map_tiles[0])-1)
+        map_tiles[y][x] = "*" # placeholder terrain tile
+        map_tiles = gen_terrain(x, y, map_tiles, "#", landrate)
     for i in range(0, lakes): # generate lakes
-        y = random.randint(0, len(map)-1)
-        x = random.randint(0, len(map[0])-1)
-        map[y][x] = "*" # placeholder terrain tile
-        map = gen_terrain(x, y, map, "~", lakerate)
+        y = random.randint(0, len(map_tiles)-1)
+        x = random.randint(0, len(map_tiles[0])-1)
+        map_tiles[y][x] = "*" # placeholder terrain tile
+        map_tiles = gen_terrain(x, y, map_tiles, "~", lakerate)
     if special == "block":
         print("block special")
-        map = modify_block(map, "#", "~")
-        map = modify_block(map, "~", "#")
+        map_tiles = modify_block(map_tiles, "#", "~")
+        map_tiles = modify_block(map_tiles, "~", "#")
     if extralands != None:
         for i in range(0, extralands): # generate extra islands
             if extraspecial == "center":
-                y = int(len(map)/2)
-                x = int(len(map[0])/2)
+                y = int(len(map_tiles)/2)
+                x = int(len(map_tiles[0])/2)
             elif extraspecial == "dual":
                 if i % 2 == 0:
-                    x = int(len(map[0])/7)
-                    y = int(len(map)/4) * 3
+                    x = int(len(map_tiles[0])/7)
+                    y = int(len(map_tiles)/4) * 3
                 else:
-                    x = int(len(map[0])/7) * 6
-                    y = int(len(map)/4)
+                    x = int(len(map_tiles[0])/7) * 6
+                    y = int(len(map_tiles)/4)
             else:
-                y = random.randint(0, len(map)-1)
-                x = random.randint(0, len(map[0])-1)
-            map[y][x] = "*" # placeholder terrain tile
-            map = gen_terrain(x, y, map, "#", extrarate)
-    map = make_height_map(map, steepness)
-    return map
+                y = random.randint(0, len(map_tiles)-1)
+                x = random.randint(0, len(map_tiles[0])-1)
+            map_tiles[y][x] = "*" # placeholder terrain tile
+            map_tiles = gen_terrain(x, y, map_tiles, "#", extrarate)
+    map_tiles = make_height_map(map_tiles, steepness)
+    return map_tiles
 
 def print_map(map_tiles: list[list[str]]):
     for list in map_tiles:
