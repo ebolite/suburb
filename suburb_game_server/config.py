@@ -179,137 +179,137 @@ gristcategories = {
 
 categoryproperties = { # mapgen properties
     "amber": {
-        "islands": 12,
+        "islands": 72,
         "landrate": .5,
-        "lakes": 4,
+        "lakes": 24,
         "lakerate": .4
         },
     "barren": {
-        "islands": 2,
+        "islands": 12,
         "landrate": 1,
-        "lakes": 10,
+        "lakes": 60,
         "lakerate": .2,
-        "extralands": 4,
+        "extralands": 24,
         "extrarate": 0.1
         },
     "beach": {
-        "islands": 22,
+        "islands": 132,
         "landrate": .3,
         "lakes": 0,
         "lakerate": 0,
-        "extralands": 2,
+        "extralands": 12,
         "extrarate": 0.4
         },
     "block": {
-        "islands": 12,
+        "islands": 72,
         "landrate": 1,
-        "lakes": 5,
+        "lakes": 30,
         "lakerate": .3,
         "special": "block"
         },
     "calcite": {
-        "islands": 40,
+        "islands": 240,
         "landrate": .4,
-        "lakes": 30,
+        "lakes": 180,
         "lakerate": .3
         },
     "cold": {
-        "islands": 4,
+        "islands": 24,
         "landrate": 1,
-        "lakes": 10,
+        "lakes": 60,
         "lakerate": .4,
-        "extralands": 7,
+        "extralands": 42,
         "extrarate": 0.15
         },
     "dark": {
-        "islands": 6,
+        "islands": 36,
         "landrate": .6,
-        "lakes": 4,
+        "lakes": 24,
         "lakerate": .4,
-        "extralands": 7,
+        "extralands": 42,
         "extrarate": 0.15
         },
     "elemental": {
-        "islands": 10,
+        "islands": 60,
         "landrate": .8,
-        "lakes": 10,
+        "lakes": 60,
         "lakerate": .4
         },
     "hot": {
-        "islands": 3,
+        "islands": 18,
         "landrate": .6,
         "lakes": 0,
         "lakerate": 0
         },
     "liquid": {
-        "islands": 30,
+        "islands": 180,
         "landrate": .2,
         "lakes": 0,
         "lakerate": 0
         },
     "metal": {
-        "islands": 9,
+        "islands": 54,
         "landrate": .5,
-        "lakes": 15,
+        "lakes": 90,
         "lakerate": .3
         },
     "nature": {
-        "islands": 2,
+        "islands": 12,
         "landrate": 1,
-        "lakes": 10,
+        "lakes": 60,
         "lakerate": .4
         },
     "oil": {
-        "islands": 8,
+        "islands": 48,
         "landrate": 1,
-        "lakes": 15,
+        "lakes": 90,
         "lakerate": .4
         },
     "radiant": {
-        "islands": 40,
+        "islands": 240,
         "landrate": .1,
         "lakes": 0,
         "lakerate": 0
         },
     "science": {
-        "islands": 2,
+        "islands": 12,
         "landrate": 1,
-        "lakes": 10,
+        "lakes": 60,
         "lakerate": .4,
         "special": "block"
         },
     "stone": {
-        "islands": 4,
+        "islands": 24,
         "landrate": .6,
-        "lakes": 1,
+        "lakes": 6,
         "lakerate": .3,
         "special": "center",
-        "extralands": 8,
+        "extralands": 48,
         "extrarate": 0.1
         },
     "sweet": {
-        "islands": 12,
+        "islands": 72,
         "landrate": .4,
-        "lakes": 6,
+        "lakes": 36,
         "lakerate": .5,
-        "extralands": 2,
+        "extralands": 12,
         "extrarate": 0.4,
         "extraspecial": "center"
         },
     "uranium": {
-        "islands": 8,
+        "islands": 48,
         "landrate": .5,
         "lakes": 0,
         "lakerate": 0,
         "special": "dual"
         },
     "wealth": {
-        "islands": 12,
+        "islands": 72,
         "landrate": .2,
         "lakes": 0,
         "lakerate": 0,
         "special": "dual",
-        "extralands": 4,
+        "extralands": 24,
         "extrarate": 0.1
         }
     }

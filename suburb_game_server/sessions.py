@@ -110,7 +110,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
                 gate_x, gate_y = self.get_tile_at_distance(housemap_x, housemap_y, gate_num*2)
                 last_gate_x, last_gate_y = gate_x, gate_y
             else:
-                gate_x, gate_y = self.get_tile_at_distance(last_gate_x, last_gate_y, 2)
+                gate_x, gate_y = self.get_tile_at_distance(last_gate_x, last_gate_y, gate_num*5)
             gate_map = self.find_map(gate_x, gate_y)
             gate_map.gen_map(f"gate{gate_num}")
             gate_map.special = f"gate{gate_num}"
@@ -919,12 +919,24 @@ def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], st
     return new_height
 
 def height_map_pass(map_tiles: list[list[str]], steepness: float) -> list[list[str]]:
-    for y, line in enumerate(map_tiles):
-        for x, char in enumerate(line):
+    y_values = list(range(len(map_tiles)))
+    x_values = list(range(len(map_tiles[0])))
+    random.shuffle(x_values)
+    random.shuffle(y_values)
+    for y in y_values:
+        line = map_tiles[y]
+        for x in x_values:
+            char = line[x]
             if char != "#": continue
             height = generate_height(x, y, map_tiles, steepness)
             if height is None: continue
             map_tiles[y][x] = str(height)
+    # for y, line in enumerate(map_tiles):
+    #     for x, char in enumerate(line):
+    #         if char != "#": continue
+    #         height = generate_height(x, y, map_tiles, steepness)
+    #         if height is None: continue
+    #         map_tiles[y][x] = str(height)
     print_map(map_tiles)
     print("----------")
     return map_tiles
@@ -940,10 +952,9 @@ def make_height_map(map_tiles: list[list[str]], steepness: float=1.0):
             break
     return map_tiles
 
-default_map_tiles = [["~" for i in range(32)] for i in range(32)]
+default_map_tiles = [["~" for i in range(96)] for i in range(96)]
 
 def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=None, extrarate=None, extraspecial=None):
-    steepness = 1
     map_tiles = deepcopy(default_map_tiles)
     for i in range(0, islands): # generate islands
         if special == "center":
@@ -994,6 +1005,17 @@ def print_map(map_tiles: list[list[str]]):
         print("".join(list))
 
 if __name__ == "__main__":
-    test_map = gen_overworld(12, 0.5, 4, .4)
-    test_map = make_height_map(test_map, 2)
+    type = "amber"
+    category: dict = config.categoryproperties[type]
+    islands = category.get("islands")
+    landrate = category.get("landrate")
+    lakes = category.get("lakes")
+    lakerate = category.get("lakerate")
+    special = category.get("special", None)
+    extralands = category.get("extralands", None)
+    extrarate = category.get("extrarate", None)
+    extraspecial = category.get("extraspecial", None)
+    steepness = category.get("steepness", 1.0)
+    test_map = gen_overworld(72, 0.5, 24, .3)
+    test_map = make_height_map(test_map, steepness)
     print_map(test_map)
