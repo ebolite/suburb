@@ -971,7 +971,8 @@ if __name__ == "__main__":
     # computer()
     # title() # normal game start
     # continue to render until render.render() returns False
-    # imp = render.Enemy(0.5, 0.5, "shale", "imp")
+    # imp = render.Enemy(0.5, 0.5, "shale", "imp") 
+    render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, themes.default.black)
     render.Overmap(0.5, 0.5, test_map)
     while render.render():
         ...

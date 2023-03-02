@@ -1057,16 +1057,13 @@ class Overmap(UIElement):
         self.water_image = pygame.image.load("sprites/overmap/water.png")
         self.w = (len(self.map_tiles[0]) + len(self.map_tiles))*16
         self.h = (len(self.map_tiles[0]) + len(self.map_tiles))*8
-        self.background = SolidColor(0, 0, self.w, self.h, self.theme.black)
-        self.background.border_radius = 3
-        self.background.bind_to(self)
         self.initialize_map(self.map_tiles)
         update_check.append(self)
 
     def initialize_map(self, map_tiles):
         if self.map_tiles != map_tiles or len(self.tiles) == 0:
             self.map_tiles: list[list[str]] = map_tiles
-            self.rect = pygame.Rect(0, 0, len(map_tiles[0])*tile_wh, len(map_tiles)*tile_wh)
+            self.rect = pygame.Rect(0, 0, self.w, self.h)
             self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2))
             self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2))
             for tile in self.tiles:
@@ -1090,10 +1087,14 @@ class OvermapTile(UIElement):
 
     def update(self):
         # each block starts 16 left and 8 down from the last
-        draw_x = self.overmap.rect.x + self.overmap.rect.w//2
+        # basically It Just Works(TM) don't fucking ask questions
+        draw_x = -16
+        draw_x += self.overmap.rect.x + self.overmap.rect.w//2
+        draw_x += (len(self.overmap.map_tiles) - len(self.overmap.map_tiles[0])) * -8
         draw_x += self.y * 16
         draw_x -= self.x * 16
-        draw_y = self.overmap.rect.y
+        draw_y = -16
+        draw_y += self.overmap.rect.y
         draw_y += self.y * 8
         draw_y += self.x * 8
         if self.height == 0:
