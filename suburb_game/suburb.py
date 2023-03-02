@@ -886,9 +886,34 @@ def strife_portfolio(selected_kind:Optional[str]=None):
             kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{selected_kind}.png")
             kind_image.bind_to(abstratus_display)
             kind_image.scale = 3
+            instances_length = len(strife_portfolio[selected_kind])
+            def get_button_func(instance: Instance) -> Callable:
+                def wrapper():
+                    display_item(instance, strife_portfolio, modus=None, strife=True)
+                return wrapper
+            for i, instance_name in enumerate(strife_portfolio[selected_kind]):
+                x = (render.SCREEN_WIDTH / 2) - 109 + 125*(i + 1 - instances_length/2)
+                x = int(x)
+                y = int(render.SCREEN_HEIGHT*0.80)
+                instance = Instance(instance_name, strife_portfolio[selected_kind][instance_name])
+                button_function = get_button_func(instance)
+                card_thumb = render.Button(x, y, "sprites/moduses/card_thumb.png", "sprites/moduses/card_thumb.png", button_function)
+                card_thumb.absolute = True
+                card_thumb.bind_to(strife_deck_bar)
+                image_path = f"sprites/items/{instance.item_name}.png"
+                if os.path.isfile(image_path):
+                    card_image = render.ItemImage(0.49, 0.5, instance.item_name)
+                    if card_image is not None:
+                        card_image.convert = False
+                        card_image.bind_to(card_thumb)
+                        card_image.scale = 0.5
+                else:
+                    card_image = None
+                label_text = instance.display_name(short=True)
+                card_label = render.Text(0.49, 0.9, label_text)
+                card_label.set_fontsize_by_width(90)
+                card_label.bind_to(card_thumb)
     back_button = render.Button(0.1, 0.1, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", map_scene, theme=theme)
-    ...
-
 
 @scene
 def title():
