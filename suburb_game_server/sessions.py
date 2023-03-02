@@ -98,7 +98,6 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         steepness = config.categoryproperties[self.gristcategory].get("steepness", 1.0)
         self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
         housemap_x, housemap_y = self.get_random_land_coords()
-        self.set_height(housemap_x, housemap_y, 9)
         housemap = self.find_map(housemap_x, housemap_y)
         housemap.gen_map("house")
         housemap.special = "housemap"
@@ -117,6 +116,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             self.specials.append(gate_map.name)
             self.set_height(gate_x, gate_y, gate_num)
         self.map_tiles = make_height_map(self.map_tiles, steepness)
+        self.set_height(housemap_x, housemap_y, 9)
         # todo: we're not doing this right now
         # housemap.gen_rooms()
 
