@@ -1052,6 +1052,9 @@ class Overmap(UIElement):
         self.x = x
         self.y = y
         self.map_tiles = map_tiles
+        self.offsetx = 0
+        self.offsety = 0
+        self.last_mouse_pos: Optional[tuple[int, int]] = None
         self.tiles: list["OvermapTile"] = []
         self.block_image = pygame.image.load("sprites/overmap/block.png")
         self.water_image = pygame.image.load("sprites/overmap/water.png")
@@ -1071,9 +1074,22 @@ class Overmap(UIElement):
             # tiles should be drawn from right to left, top to bottom
             for y, line in enumerate(map_tiles):
                 for x, char in enumerate(reversed(line)):
-                    self.tiles.append(OvermapTile(x, y, int(char), self))
+                    overmap_tile = OvermapTile(x, y, int(char), self)
+                    overmap_tile.blit_surf = self.blit_surf
+                    self.tiles.append(overmap_tile)
 
     def update(self):
+        if pygame.mouse.get_pressed()[0]:
+            if self.last_mouse_pos is None:
+                self.last_mouse_pos = pygame.mouse.get_pos()
+            else:
+                last_x, last_y = self.last_mouse_pos
+                self.last_mouse_pos = pygame.mouse.get_pos()
+                current_x, current_y = self.last_mouse_pos
+                self.offsetx += current_x - last_x
+                self.offsety += current_y - last_y
+        else:
+            self.last_mouse_pos = None
         for tile in self.tiles:
             tile.update()
 
@@ -1088,12 +1104,12 @@ class OvermapTile(UIElement):
     def update(self):
         # each block starts 16 left and 8 down from the last
         # basically It Just Works(TM) don't fucking ask questions
-        draw_x = -16
+        draw_x = -16 + self.overmap.offsetx
         draw_x += self.overmap.rect.x + self.overmap.rect.w//2
         draw_x += (len(self.overmap.map_tiles) - len(self.overmap.map_tiles[0])) * -8
         draw_x += self.y * 16
         draw_x -= self.x * 16
-        draw_y = -16
+        draw_y = -16 + self.overmap.offsety
         draw_y += self.overmap.rect.y
         draw_y += self.y * 8
         draw_y += self.x * 8
