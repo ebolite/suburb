@@ -1005,7 +1005,7 @@ def print_map(map_tiles: list[list[str]]):
         print("".join(list))
 
 if __name__ == "__main__":
-    type = input()
+    type = input("land type: ")
     category: dict = config.categoryproperties[type]
     islands = category.get("islands")
     landrate = category.get("landrate")
