@@ -95,7 +95,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         extralands = config.categoryproperties[self.gristcategory].get("extralands", None)
         extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
         extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
-        steepness = config.categoryproperties[self.gristcategory].get("steepness", 1)
+        steepness = config.categoryproperties[self.gristcategory].get("steepness", 1.0)
         self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
         housemap_x, housemap_y = self.get_random_land_coords()
         self.set_height(housemap_x, housemap_y, 9)
@@ -895,7 +895,7 @@ def make_water_height_0(map_tiles: list[list[str]]) -> list[list[str]]:
     out = [list(map(lambda tile: tile.replace("~", "0"), line)) for line in map_tiles]
     return out
 
-def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], steepness: int) -> Optional[int]:
+def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], steepness: float) -> Optional[int]:
     current_tile:str = map_tiles[target_y][target_x]
     try:
         return int(current_tile)
@@ -912,13 +912,13 @@ def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], st
         tile_value = int(new_tile)
         surrounding_values.append(tile_value)
     if len(surrounding_values) == 0: return None
-    if 0 in surrounding_values: return random.randint(1, steepness)
+    if 0 in surrounding_values: return 1 + round(random.uniform(0, steepness))
     average_height = round(sum(surrounding_values) / len(surrounding_values))
-    new_height = average_height + random.randint(-steepness, steepness)
+    new_height = average_height + round(random.uniform(-steepness, steepness))
     new_height = max(new_height, 1)
     return new_height
 
-def height_map_pass(map_tiles: list[list[str]], steepness: int) -> list[list[str]]:
+def height_map_pass(map_tiles: list[list[str]], steepness: float) -> list[list[str]]:
     for y, line in enumerate(map_tiles):
         for x, char in enumerate(line):
             if char != "#": continue
@@ -929,7 +929,7 @@ def height_map_pass(map_tiles: list[list[str]], steepness: int) -> list[list[str
     print("----------")
     return map_tiles
 
-def make_height_map(map_tiles: list[list[str]], steepness: int=2):
+def make_height_map(map_tiles: list[list[str]], steepness: float=1.0):
     map_tiles = make_water_height_0(map_tiles)
     while True:
         map_tiles = height_map_pass(map_tiles, steepness)
