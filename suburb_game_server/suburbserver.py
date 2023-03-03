@@ -115,6 +115,7 @@ def handle_request(dict):
                 print(f"housemap session {housemap.session.name} {housemap.session}")
                 print(f"overmap {housemap.overmap.name} {housemap.overmap}")
                 room = housemap.random_valid_room(config.starting_tiles)
+                room.add_instance(alchemy.Instance(alchemy.Item("Sburb disc")).name)
                 for interest in player.interests:
                     room.generate_loot(tiles.get_tile(interest).get_loot_list())
                 player.goto_room(room)
