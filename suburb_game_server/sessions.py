@@ -119,8 +119,8 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             gate_map.gen_map(f"gate{gate_num}")
             gate_map.special = f"gate{gate_num}"
             self.specials.append(gate_map.name)
-            if gate_num == 1:
-                # first gate is in a bowl
+            if gate_num == 1 or gate_num == 2:
+                # first and second gates are in a bowl
                 self.map_tiles = set_height(self.map_tiles, gate_x, gate_y, 2, 4, 2)
             self.map_tiles = set_height(self.map_tiles, gate_x, gate_y, gate_num, 3)
         self.map_tiles = make_height_map(self.map_tiles, steepness, smoothness)
@@ -888,10 +888,11 @@ def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], st
     # get mode of surrounding values
     average_height = round(sum(surrounding_values) / len(surrounding_values))
     if random.random() < smoothness: 
+        possible_values = [random.choice(surrounding_values) for i in range(2)]
         mode_height = max(set(surrounding_values), key=surrounding_values.count)
-        # if the average is significantly higher than the mode, smooth to make a "hill"
-        if abs(average_height - mode_height) > 2: return average_height
-        else: return mode_height
+        possible_values.append(mode_height)
+        for i in range(2): possible_values.append(average_height)
+        return random.choice(possible_values)
     new_height = average_height + round(random.uniform(-steepness, steepness))
     new_height = max(new_height, 1)
     return new_height
@@ -1048,7 +1049,7 @@ if __name__ == "__main__":
             last_gate_x, last_gate_y = gate_x, gate_y
         else:
             gate_x, gate_y = get_tile_at_distance(test_map, last_gate_x, last_gate_y, gate_num*4)
-        if gate_num == 1:
+        if gate_num == 1 or gate_num == 2:
             test_map = set_height(test_map, gate_x, gate_y, 2, 4, 2)
         test_map = set_height(test_map, gate_x, gate_y, gate_num, 3)
     test_map = make_height_map(test_map, steepness, smoothness)
