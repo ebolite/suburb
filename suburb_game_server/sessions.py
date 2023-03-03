@@ -87,6 +87,8 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             self.theme = player.aspect
             self.gen_overmap()
             self.gen_land_name()
+            print(f"{self.title.upper()}")
+            print_map(self.map_tiles)
 
     def gen_overmap(self):
         islands = config.categoryproperties[self.gristcategory]["islands"]
@@ -227,7 +229,6 @@ class Map():
             case _:
                 map = deepcopy(random.choice(map_tiles["land"]))
                 self.overmaptile = "#"
-        print("gen_map")
         self.map_tiles = map
 
     def gen_rooms(self):
@@ -977,7 +978,6 @@ def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=N
 
 def set_height(map_tiles: list[list[str]], target_x, target_y, height: int, hill_radius=1, min_height=1) -> list[list[str]]:
         for i in reversed(range(hill_radius)):
-            print(i)
             for x in range(-i, i+1):
                 for y in range(-i, i+1):
                     dest_y = target_y+y
