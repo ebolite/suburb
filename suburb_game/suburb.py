@@ -876,8 +876,11 @@ def assign_strife_specibus(kind_name: str, last_scene: Callable = map_scene):
 @scene
 def strife_portfolio_scene(selected_kind:Optional[str]=None):
     theme = themes.strife
+    padding = 8
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.dark)
     player_dict = client.requestdic(intent="player_info")
+    # todo: get player power
+    power = 100
     stat_ratios = player_dict["stat_ratios"]
     # kind_name:dict[instance_name:instance_dict]
     strife_portfolio = player_dict["strife_portfolio"]
@@ -887,7 +890,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         for instance_name in strife_portfolio[kind]:
             print(instance_name)
             if instance_name == wielding: wielded_instance = Instance(instance_name, strife_portfolio[kind][instance_name])
-    
     if selected_kind is None: 
         if strife_portfolio:
             selected_kind = list(strife_portfolio.keys())[0]
@@ -901,15 +903,22 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         label = render.Text(0.5, 0.065, selected_kind)
         label.color = theme.light
         label.fontsize = 48
+        label.set_fontsize_by_width(350)
         abstratus_display = render.Image(0.51, 0.43, "sprites/itemdisplay/strife_abstratus_display.png")
         if os.path.isfile(f"sprites\\kinds\\{selected_kind}.png"):
             kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{selected_kind}.png")
             kind_image.bind_to(abstratus_display)
             kind_image.scale = 3
+        # power label
+        power_label = render.Text(padding, padding*3, f"power: {power}")
+        power_label.absolute = True
+        power_label.color = theme.light
+        power_label.set_fontsize_by_width(300)
         # stat ratios
+        stat_boxes: dict[str, render.InputTextBox] = {}
         for i, stat in enumerate(["spunk", "vigor", "tact", "luck", "savvy", "mettle"]):
-            padding = 8
             box_width = 64
+            fontsize = 20
             x = -box_width - padding
             y = i * (box_width + padding)
             box = render.InputTextBox(x, y, box_width, box_width, theme)
@@ -923,6 +932,41 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             box.numbers_only = True
             box.max_characters = 2
             box.bind_to(abstratus_display)
+            stat_boxes[stat] = box
+            labels = {
+                "spunk": "spunk (SPK) -> {}",
+                "vigor": "vigor (VIG) -> {}",
+                "tact": "tact (TAC) -> {}",
+                "luck": "luck (LUK) -> {}",
+                "savvy": "savvy (SAV) -> {}",
+                "mettle": "mettle (MET) -> {}",
+            }
+            descriptions = {
+                "spunk": "increases damage dealt",
+                "vigor": "increases gel viscosity (HP)",
+                "tact": "+vim and secondary vials",
+                "luck": "biases rng",
+                "savvy": "speed and auto-parry",
+                "mettle": "decreases damage taken",
+            }
+            def get_label_func(stat_name):
+                def label_func():
+                    stat_ratio = int(stat_boxes[stat_name].text)
+                    ratio_sum = 0
+                    for box in stat_boxes.values(): ratio_sum += int(box.text)
+                    stat_value = int((stat_ratio/ratio_sum) * power)
+                    return labels[stat_name].format(stat_value)
+                return label_func
+            stat_label = render.Text(padding, padding*4 + abstratus_display.rect.y+y+box_width-fontsize//2, labels[stat])
+            stat_label.text_func = get_label_func(stat)
+            stat_label.absolute = True
+            stat_label.color = theme.light
+            stat_label.fontsize = fontsize
+            stat_description = render.Text(0, fontsize+padding, descriptions[stat])
+            stat_description.absolute = True
+            stat_description.color = theme.light
+            stat_description.fontsize = fontsize
+            stat_description.bind_to(stat_label)
             if i == 0:
                 cool_bar = render.Image(0.5, -0.2, "sprites/itemdisplay/cool_bar.png")
                 cool_bar.bind_to(box)
