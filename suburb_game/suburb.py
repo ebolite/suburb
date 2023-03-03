@@ -981,7 +981,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                     for stat in stats:
                         ratios[stat] = int(stat_boxes[stat].text)
                     client.requestplus(intent="set_stat_ratios", content={"ratios": ratios})
-                    strife_portfolio_scene()
                 confirm_button = render.TextButton(0, box_width + padding, box_width, box_width//2, ">save", confirm, theme=theme)
                 confirm_button.absolute = True
                 confirm_button.outline_color = theme.black
