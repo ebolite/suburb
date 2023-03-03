@@ -712,7 +712,7 @@ class TileMap(UIElement):
                 for x, char in enumerate(line):
                     self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials, self.server_view)
 
-    def update_map(self, map_dict: Optional[dict]=None):
+    def update_map(self, map_dict: Optional[dict]=None, update_info_window=False):
         if map_dict is None:
             if self.server_view:
                 sburbserver.update_viewport_dic()
@@ -728,7 +728,7 @@ class TileMap(UIElement):
         for tile in self.tiles.values():
             tile.known_invalid_tiles = []
         if self.label is not None: self.label.text = self.room_name
-        self.update_info_window()
+        if update_info_window: self.update_info_window()
         self.last_update = time.time()
 
     def update_info_window(self):
