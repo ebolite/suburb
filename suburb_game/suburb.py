@@ -908,7 +908,13 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             kind_image.scale = 3
         # stat ratios
         for i, stat in enumerate(["spunk", "vigor", "tact", "luck", "savvy", "mettle"]):
-            box = render.InputTextBox(-0.1, (i+0.5)/6, 64, 64, theme)
+            padding = 8
+            box_width = 64
+            x = -box_width - padding
+            y = i * (box_width + padding)
+            box = render.InputTextBox(x, y, box_width, box_width, theme)
+            box.absolute = True
+            box.absolute_text = False
             box.text = str(stat_ratios[stat])
             box.inactive_color = theme.light
             box.active_color = theme.white
@@ -917,6 +923,13 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             box.numbers_only = True
             box.max_characters = 2
             box.bind_to(abstratus_display)
+            if i == 0:
+                cool_bar = render.Image(0.5, -0.2, "sprites/itemdisplay/cool_bar.png")
+                cool_bar.bind_to(box)
+                label = render.Text(0, -0.5, "stat ratios")
+                label.fontsize = 20
+                label.color = theme.light
+                label.bind_to(box)
         # wielded display
         wielded_display = render.Image(1.3, 0.2, "sprites/itemdisplay/strife_equip_display.png")
         wielded_display.bind_to(abstratus_display)

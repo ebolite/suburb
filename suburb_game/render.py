@@ -130,16 +130,17 @@ class UIElement(pygame.sprite.Sprite):
         surf = palette_swap(surf, default_theme.black, self.theme.black)
         return surf
 
-    def get_rect_xy(self, secondary_surf:Union[pygame.Surface, pygame.surface.Surface, None] = None) -> tuple[int, int]:
+    def get_rect_xy(self, secondary_surf:Union[pygame.Surface, pygame.surface.Surface, None] = None, absolute: Optional[bool]=None) -> tuple[int, int]:
         rect_x: int = 0
         rect_y: int = 0
+        if absolute is None: absolute = self.absolute
         if secondary_surf is not None:
             secondary_surf_width = secondary_surf.get_width()
             secondary_surf_height = secondary_surf.get_height()
         else:
             secondary_surf_width = 0
             secondary_surf_height = 0
-        if self.absolute:
+        if absolute:
             rect_x = self.x
             rect_y = self.y
             if self.relative_binding is not None:
@@ -397,6 +398,7 @@ class InputTextBox(UIElement):
         self.fontsize = 32
         self.max_characters = 0
         self.numbers_only = False
+        self.absolute_text = True
         self.suffix = ""
         self.secure = False
         self.button: Union[Button, TextButton, None] = None
@@ -413,7 +415,7 @@ class InputTextBox(UIElement):
             self.text_surf = self.font.render(self.suffix+self.text, True, self.text_color)
         width = self.w or max(100, self.text_surf.get_width()+10)
         height = self.h or 32
-        outline = 3
+        outline_width = 3
         self.surf = pygame.Surface((width, height))
         if self.active:
             self.surf.fill(self.active_color)
@@ -421,22 +423,23 @@ class InputTextBox(UIElement):
             self.surf.fill(self.inactive_color)
 
         if self.outline_color is not None:
-            self.outline_surf = pygame.Surface((width + (outline * 2), height + (outline  * 2)))
+            self.outline_surf = pygame.Surface((width + (outline_width * 2), height + (outline_width * 2)))
             self.outline_surf.fill(self.outline_color)
-            rect_surf = self.outline_surf
-        else:
-            rect_surf = self.surf
 
-        self.rect = rect_surf.get_rect()
-        self.rect.x, self.rect.y = self.get_rect_xy(rect_surf)
+        self.rect = self.surf.get_rect()
+        self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
 
         if self.outline_color is not None:
-            self.blit_surf.blit(self.outline_surf, (self.rect.x, self.rect.y))
+            self.blit_surf.blit(self.outline_surf, (self.rect.x-outline_width, self.rect.y-outline_width))
 
         surfx, surfy = self.get_rect_xy(self.surf)
         self.blit_surf.blit(self.surf, (surfx, surfy))
 
-        textx, texty = self.get_rect_xy(self.text_surf)
+        if self.absolute_text:
+            textx, texty = self.get_rect_xy(self.text_surf)
+        else:
+            textx = (self.rect.x + (self.rect.w//2)) - (self.text_surf.get_width()//2)
+            texty = (self.rect.y + (self.rect.h//2)) - (self.fontsize//2)
         self.blit_surf.blit(self.text_surf, (textx, texty))
 
         if self.active and keys[pygame.K_BACKSPACE]:
