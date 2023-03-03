@@ -888,10 +888,10 @@ def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], st
     # get mode of surrounding values
     average_height = round(sum(surrounding_values) / len(surrounding_values))
     if random.random() < smoothness: 
-        possible_values = [random.choice(surrounding_values) for i in range(2)]
+        possible_values = [random.choice(surrounding_values) for i in range(1)]
         mode_height = max(set(surrounding_values), key=surrounding_values.count)
         possible_values.append(mode_height)
-        for i in range(2): possible_values.append(average_height)
+        for i in range(1): possible_values.append(average_height)
         return random.choice(possible_values)
     new_height = average_height + round(random.uniform(-steepness, steepness))
     new_height = max(new_height, 1)
