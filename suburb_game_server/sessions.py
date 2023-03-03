@@ -983,7 +983,9 @@ def set_height(map_tiles: list[list[str]], target_x, target_y, height: int, hill
                     dest_y = target_y+y
                     dest_x = target_x+x
                     if dest_y > len(map_tiles)+1: dest_y -= len(map_tiles)+1
+                    if dest_y < 0: dest_y += len(map_tiles)
                     if dest_x > len(map_tiles[0])+1: dest_x -= len(map_tiles[0])+1
+                    if dest_x < 0: dest_x += len(map_tiles[0])
                     if map_tiles[dest_y][dest_x] == "~": continue
                     map_tiles[dest_y][dest_x] = str(max(height-i, min_height))
         map_tiles[target_y][target_x] = str(height)
