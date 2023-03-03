@@ -380,7 +380,7 @@ class Button(UIElement):
                 self.onpress()
 
 class InputTextBox(UIElement):
-    def __init__(self, x, y, w=None, h=None):
+    def __init__(self, x, y, w=None, h=None, theme=themes.default):
         super(InputTextBox, self).__init__()
         self.text = ""
         self.active = False
@@ -389,6 +389,7 @@ class InputTextBox(UIElement):
         self.y = y
         self.w = w
         self.h = h
+        self.theme = theme
         self.text_color = self.theme.black
         self.inactive_color = self.theme.white
         self.active_color = self.theme.light

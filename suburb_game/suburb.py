@@ -878,6 +878,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
     theme = themes.strife
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.dark)
     player_dict = client.requestdic(intent="player_info")
+    stat_ratios = player_dict["stat_ratios"]
     # kind_name:dict[instance_name:instance_dict]
     strife_portfolio = player_dict["strife_portfolio"]
     wielding = player_dict["wielding"]
@@ -886,12 +887,14 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         for instance_name in strife_portfolio[kind]:
             print(instance_name)
             if instance_name == wielding: wielded_instance = Instance(instance_name, strife_portfolio[kind][instance_name])
+    
     if selected_kind is None: 
         if strife_portfolio:
             selected_kind = list(strife_portfolio.keys())[0]
         else:
             selected_kind = None
     if selected_kind is not None:
+        # main box
         print(selected_kind)
         strife_deck_bar = render.Image(0, 0, "sprites/itemdisplay/strife_deck_bar.png")
         strife_deck_bar.absolute = True
@@ -903,6 +906,16 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{selected_kind}.png")
             kind_image.bind_to(abstratus_display)
             kind_image.scale = 3
+        # stat ratios
+        for i, stat in enumerate(["spunk", "vigor", "tact", "luck", "savvy", "mettle"]):
+            box = render.InputTextBox(-0.1, (i+0.5)/6, 64, 64, theme)
+            box.text = str(stat_ratios[stat])
+            box.inactive_color = theme.light
+            box.active_color = theme.white
+            box.text_color = theme.dark
+            box.outline_color = theme.black
+            box.bind_to(abstratus_display)
+        # wielded display
         wielded_display = render.Image(1.3, 0.2, "sprites/itemdisplay/strife_equip_display.png")
         wielded_display.bind_to(abstratus_display)
         equipped_label = render.Text(0.5, 0, "wielding")
@@ -923,6 +936,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         item_label.fontsize = 20
         item_label.color = theme.light
         item_label.bind_to(wielded_display)
+        # bottom bar
         instances_length = len(strife_portfolio[selected_kind])
         def get_button_func(instance: Instance) -> Callable:
             def wrapper():
@@ -960,7 +974,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                 wield_button = render.TextButton(0.5, -0.15, 100, 30, ">wield", get_wield_button_func(instance_name), theme=theme)
                 wield_button.outline_color = theme.black
                 wield_button.bind_to(card_thumb)
-    back_button = render.Button(0.1, 0.1, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", map_scene, theme=theme)
+    back_button = render.Button(0.08, 0.95, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", map_scene, theme=theme)
 
 @scene
 def title():
