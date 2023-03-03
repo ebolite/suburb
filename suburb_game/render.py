@@ -885,10 +885,14 @@ class Tile(UIElement):
                 if drawing_type in config.icons: icon_image_filename = config.icons[drawing_type]
                 else: icon_image_filename = config.icons["no_icon"]
                 icon_image = pygame.image.load(icon_image_filename)
+                icon_image = self.convert_to_theme(icon_image)
+                icon_image.set_colorkey(pygame.Color(0, 0, 0))
                 self.surf.blit(icon_image, (0, 0), (0, 0, tile_wh, tile_wh))
         if self.server_view and self.x == len(self.tile_map.map)//2 and self.y == len(self.tile_map.map)//2:
             center_path = config.icons["center"]
             center_image = pygame.image.load(center_path)
+            center_image = self.convert_to_theme(center_image)
+            center_image.set_colorkey(pygame.Color(0, 0, 0))
             self.surf.blit(center_image, (0, 0), (0, 0, tile_wh, tile_wh))
         if self.server_view and self.mouseover():
             if sburbserver.current_mode == "deploy":
@@ -898,6 +902,8 @@ class Tile(UIElement):
             else:
                 cursor_image_path = config.icons["select"]
             cursor_image = pygame.image.load(cursor_image_path)
+            cursor_image = self.convert_to_theme(cursor_image)
+            cursor_image.set_colorkey(pygame.Color(0, 0, 0))
             self.surf.blit(cursor_image, (0, 0), (0, 0, tile_wh, tile_wh))
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
