@@ -545,6 +545,7 @@ class Player():
         out["available_phernalia"] = self.available_phernalia
         for kind_name in self.strife_portfolio:
             out["strife_portfolio"][kind_name] = {instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in self.strife_portfolio[kind_name]}
+        out["power"] = self.power
         return out
     
     def assign_specibus(self, kind_name) -> bool:
@@ -588,6 +589,18 @@ class Player():
             if kind in self.strife_portfolio:
                 self.strife_portfolio[kind].append(instance.name)
                 return 
+
+    @property
+    def wielded_instance(self) -> Optional[alchemy.Instance]:
+        if self.wielding is None: return None
+        else: return alchemy.Instance(self.wielding)
+
+    @property
+    def power(self) -> int:
+        base_power = self.echeladder_rung
+        if self.wielded_instance is not None:
+            base_power += self.wielded_instance.item.power
+        return base_power
 
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:
         if instance_name not in self.room.instances: return False

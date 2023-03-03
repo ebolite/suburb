@@ -880,7 +880,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.dark)
     player_dict = client.requestdic(intent="player_info")
     # todo: get player power
-    power = 100
+    power = player_dict["power"]
     stat_ratios = player_dict["stat_ratios"]
     # kind_name:dict[instance_name:instance_dict]
     strife_portfolio = player_dict["strife_portfolio"]
