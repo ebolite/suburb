@@ -728,7 +728,7 @@ def map_scene():
     item_display = render.RoomItemDisplay(70, 190, {})
     ui_bar = Sylladex.current_sylladex().draw_ui_bar(map_scene)
     tilemap = render.TileMap(0.5, 0.5, item_display)
-    portfolio_button = render.TextButton(render.SCREEN_WIDTH-256, render.SCREEN_HEIGHT-166-64, 256, 64, "strife portfolio", strife_portfolio, theme=themes.strife)
+    portfolio_button = render.TextButton(render.SCREEN_WIDTH-256, render.SCREEN_HEIGHT-166-64, 256, 64, "strife portfolio", strife_portfolio_scene, theme=themes.strife)
     portfolio_button.absolute = True
     portfolio_button.fill_color = themes.strife.dark
     portfolio_button.text_color = themes.strife.light
@@ -867,19 +867,25 @@ def assign_strife_specibus(kind_name: str, last_scene: Callable = map_scene):
     confirm_text.color = current_theme().dark
     def confirm():
         reply = client.requestplus("assign_specibus", {"kind_name": kind_name})
-        if reply: util.log("You assigned {kind_name}!")
+        if reply: util.log(f"You assigned {kind_name}!")
         else: util.log("Failed to assign.")
-        last_scene()
+        strife_portfolio_scene()
     confirm_button = render.Button(0.5, 0.2, "sprites/buttons/confirm.png", "sprites/buttons/confirmpressed.png", confirm)
     back_button = render.Button(0.5, 0.3, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", last_scene)
 
 @scene
-def strife_portfolio(selected_kind:Optional[str]=None):
+def strife_portfolio_scene(selected_kind:Optional[str]=None):
     theme = themes.strife
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.dark)
     player_dict = client.requestdic(intent="player_info")
     # kind_name:dict[instance_name:instance_dict]
     strife_portfolio = player_dict["strife_portfolio"]
+    wielding = player_dict["wielding"]
+    wielded_instance: Optional[Instance] = None
+    for kind in strife_portfolio:
+        for instance_name in strife_portfolio[kind]:
+            print(instance_name)
+            if instance_name == wielding: wielded_instance = Instance(instance_name, strife_portfolio[kind][instance_name])
     if selected_kind is None: 
         if strife_portfolio:
             selected_kind = list(strife_portfolio.keys())[0]
@@ -897,33 +903,63 @@ def strife_portfolio(selected_kind:Optional[str]=None):
             kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{selected_kind}.png")
             kind_image.bind_to(abstratus_display)
             kind_image.scale = 3
-            instances_length = len(strife_portfolio[selected_kind])
-            def get_button_func(instance: Instance) -> Callable:
-                def wrapper():
-                    display_item(instance, strife_portfolio, modus=None, strife=True)
-                return wrapper
-            for i, instance_name in enumerate(strife_portfolio[selected_kind]):
-                x = (render.SCREEN_WIDTH / 2) - 109 + 125*(i + 1 - instances_length/2)
-                x = int(x)
-                y = int(render.SCREEN_HEIGHT*0.80)
-                instance = Instance(instance_name, strife_portfolio[selected_kind][instance_name])
-                button_function = get_button_func(instance)
-                card_thumb = render.Button(x, y, "sprites/moduses/card_thumb.png", "sprites/moduses/card_thumb.png", button_function)
-                card_thumb.absolute = True
-                card_thumb.bind_to(strife_deck_bar)
-                image_path = f"sprites/items/{instance.item_name}.png"
-                if os.path.isfile(image_path):
-                    card_image = render.ItemImage(0.49, 0.5, instance.item_name)
-                    if card_image is not None:
-                        card_image.convert = False
-                        card_image.bind_to(card_thumb)
-                        card_image.scale = 0.5
-                else:
-                    card_image = None
-                label_text = instance.display_name(short=True)
-                card_label = render.Text(0.49, 0.9, label_text)
-                card_label.set_fontsize_by_width(90)
-                card_label.bind_to(card_thumb)
+        wielded_display = render.Image(1.3, 0.2, "sprites/itemdisplay/strife_equip_display.png")
+        wielded_display.bind_to(abstratus_display)
+        equipped_label = render.Text(0.5, 0, "wielding")
+        equipped_label.fontsize = 20
+        equipped_label.color = theme.black
+        equipped_label.bind_to(wielded_display)
+        if wielded_instance is not None:
+            image_path = f"sprites/items/{wielded_instance.item.name}.png"
+            if os.path.isfile(image_path):
+                card_image = render.ItemImage(0.49, 0.5, wielded_instance.item_name)
+                if card_image is not None:
+                    card_image.convert = False
+                    card_image.bind_to(wielded_display)
+                    card_image.scale = 0.5
+            item_label = render.Text(0.6, 1.1, f"{wielded_instance.display_name(True)}")
+        else:
+            item_label = render.Text(0.6, 1.1, f"nothing")
+        item_label.fontsize = 20
+        item_label.color = theme.light
+        item_label.bind_to(wielded_display)
+        instances_length = len(strife_portfolio[selected_kind])
+        def get_button_func(instance: Instance) -> Callable:
+            def wrapper():
+                display_item(instance, strife_portfolio_scene, modus=None, strife=True)
+            return wrapper
+        def get_wield_button_func(instance_name: Instance) -> Callable:
+            def wrapper():
+                reply = client.requestplus(intent="wield", content={"instance_name": instance_name})
+                print(reply)
+                strife_portfolio_scene(selected_kind)
+            return wrapper
+        for i, instance_name in enumerate(strife_portfolio[selected_kind]):
+            x = (render.SCREEN_WIDTH / 2) - 109 + 125*(i + 1 - instances_length/2)
+            x = int(x)
+            y = int(render.SCREEN_HEIGHT*0.80)
+            instance = Instance(instance_name, strife_portfolio[selected_kind][instance_name])
+            button_function = get_button_func(instance)
+            card_thumb = render.Button(x, y, "sprites/moduses/card_thumb.png", "sprites/moduses/card_thumb.png", button_function)
+            card_thumb.absolute = True
+            card_thumb.bind_to(strife_deck_bar)
+            image_path = f"sprites/items/{instance.item_name}.png"
+            if os.path.isfile(image_path):
+                card_image = render.ItemImage(0.49, 0.5, instance.item_name)
+                if card_image is not None:
+                    card_image.convert = False
+                    card_image.bind_to(card_thumb)
+                    card_image.scale = 0.5
+            else:
+                card_image = None
+            label_text = instance.display_name(short=True)
+            card_label = render.Text(0.49, 0.9, label_text)
+            card_label.set_fontsize_by_width(90)
+            card_label.bind_to(card_thumb)
+            if instance_name != wielding:
+                wield_button = render.TextButton(0.5, -0.15, 100, 30, ">wield", get_wield_button_func(instance_name), theme=theme)
+                wield_button.outline_color = theme.black
+                wield_button.bind_to(card_thumb)
     back_button = render.Button(0.1, 0.1, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", map_scene, theme=theme)
 
 @scene

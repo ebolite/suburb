@@ -163,6 +163,9 @@ def handle_request(dict):
         case "eject_from_strife_deck":
             instance_name = content["instance_name"]
             return player.eject_from_strife_deck(instance_name)
+        case "wield":
+            instance_name = content["instance_name"]
+            return player.wield(instance_name)
         case "drop_empty_card":
             return player.drop_empty_card()
         case "captchalogue":
