@@ -916,7 +916,24 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         power_label.set_fontsize_by_width(300)
         # stat ratios
         stat_boxes: dict[str, render.InputTextBox] = {}
-        for i, stat in enumerate(["spunk", "vigor", "tact", "luck", "savvy", "mettle"]):
+        labels = {
+                "spunk": "spunk (SPK) -> {}",
+                "vigor": "vigor (VIG) -> {}",
+                "tact": "tact (TAC) -> {}",
+                "luck": "luck (LUK) -> {}",
+                "savvy": "savvy (SAV) -> {}",
+                "mettle": "mettle (MET) -> {}",
+            }
+        descriptions = {
+            "spunk": "increases damage dealt",
+            "vigor": "increases gel viscosity (HP)",
+            "tact": "+vim and secondary vials",
+            "luck": "biases rng",
+            "savvy": "speed and auto-parry",
+            "mettle": "decreases damage taken",
+        }
+        stats = ["spunk", "vigor", "tact", "luck", "savvy", "mettle"]
+        for i, stat in enumerate(stats):
             box_width = 64
             fontsize = 20
             x = -box_width - padding
@@ -933,22 +950,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             box.max_characters = 2
             box.bind_to(abstratus_display)
             stat_boxes[stat] = box
-            labels = {
-                "spunk": "spunk (SPK) -> {}",
-                "vigor": "vigor (VIG) -> {}",
-                "tact": "tact (TAC) -> {}",
-                "luck": "luck (LUK) -> {}",
-                "savvy": "savvy (SAV) -> {}",
-                "mettle": "mettle (MET) -> {}",
-            }
-            descriptions = {
-                "spunk": "increases damage dealt",
-                "vigor": "increases gel viscosity (HP)",
-                "tact": "+vim and secondary vials",
-                "luck": "biases rng",
-                "savvy": "speed and auto-parry",
-                "mettle": "decreases damage taken",
-            }
             def get_label_func(stat_name):
                 def label_func():
                     stat_ratio = int(stat_boxes[stat_name].text)
@@ -974,6 +975,18 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                 label.fontsize = 20
                 label.color = theme.light
                 label.bind_to(box)
+            if i == 5:
+                def confirm():
+                    ratios = {}
+                    for stat in stats:
+                        ratios[stat] = int(stat_boxes[stat].text)
+                    client.requestplus(intent="set_stat_ratios", content={"ratios": ratios})
+                    strife_portfolio_scene()
+                confirm_button = render.TextButton(0, box_width + padding, box_width, box_width//2, ">save", confirm, theme=theme)
+                confirm_button.absolute = True
+                confirm_button.outline_color = theme.black
+                confirm_button.fill_color = theme.light
+                confirm_button.bind_to(box)
         # wielded display
         wielded_display = render.Image(1.3, 0.2, "sprites/itemdisplay/strife_equip_display.png")
         wielded_display.bind_to(abstratus_display)

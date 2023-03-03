@@ -167,6 +167,11 @@ def handle_request(dict):
         case "wield":
             instance_name = content["instance_name"]
             return player.wield(instance_name)
+        case "set_stat_ratios":
+            ratios = content["ratios"]
+            for stat in player.stat_ratios:
+                player.stat_ratios[stat] = int(ratios[stat])
+            return True
         case "drop_empty_card":
             return player.drop_empty_card()
         case "captchalogue":
