@@ -395,6 +395,8 @@ class InputTextBox(UIElement):
         self.active_color = self.theme.light
         self.outline_color: Optional[pygame.Color] = self.theme.dark
         self.fontsize = 32
+        self.max_characters = 0
+        self.numbers_only = False
         self.suffix = ""
         self.secure = False
         self.button: Union[Button, TextButton, None] = None
@@ -452,17 +454,23 @@ class InputTextBox(UIElement):
             self.active = False
 
     def keypress(self, event):
-        if self.active:
-            if event.key == pygame.K_BACKSPACE:
-                self.text = self.text[:-1]
-            elif event.key == pygame.K_RETURN and self.enter_func != None:
-                self.enter_func(self)
-            # if enter is pressed and this text box has a button assigned to it, press that button
-            elif event.key == pygame.K_RETURN and self.button != None:
-                self.button.mouseup(True)
-            else:
-                if event.unicode.isascii() and event.unicode not in  ["\n", "\t", "\r"]: #no newline, tab or carriage return
-                    self.text += event.unicode
+        if not self.active: return
+        if event.key == pygame.K_BACKSPACE:
+            self.text = self.text[:-1]
+            if self.numbers_only and self.text == "": self.text = "0"
+        elif event.key == pygame.K_RETURN and self.enter_func != None:
+            self.enter_func(self)
+        # if enter is pressed and this text box has a button assigned to it, press that button
+        elif event.key == pygame.K_RETURN and self.button != None:
+            self.button.mouseup(True)
+        else:
+            if self.max_characters != 0 and len(self.text)+1 > self.max_characters: return
+            if event.unicode.isascii() and event.unicode not in  ["\n", "\t", "\r"]: #no newline, tab or carriage return
+                if self.numbers_only:
+                    try: int(event.unicode)
+                    except ValueError: return
+                self.text += event.unicode
+                if self.numbers_only: self.text = str(int(self.text))
 
     @property
     def font(self):

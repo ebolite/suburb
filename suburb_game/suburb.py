@@ -914,6 +914,8 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             box.active_color = theme.white
             box.text_color = theme.dark
             box.outline_color = theme.black
+            box.numbers_only = True
+            box.max_characters = 2
             box.bind_to(abstratus_display)
         # wielded display
         wielded_display = render.Image(1.3, 0.2, "sprites/itemdisplay/strife_equip_display.png")
