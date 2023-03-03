@@ -96,7 +96,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
         extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
         steepness = config.categoryproperties[self.gristcategory].get("steepness", 1.0)
-        smothness = config.categoryproperties[self.gristcategory].get("smoothness", 0.5)
+        smoothness = config.categoryproperties[self.gristcategory].get("smoothness", 0.5)
         self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
         housemap_x, housemap_y = get_random_land_coords(self.map_tiles)
         housemap = self.find_map(housemap_x, housemap_y)
