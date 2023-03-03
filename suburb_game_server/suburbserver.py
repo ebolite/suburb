@@ -60,7 +60,7 @@ def threaded_client(connection):
 
 def map_data(player: "sessions.Player"):
     map_tiles, map_specials, room_instances = player.get_view()
-    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": player.room.tile.name})
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": player.room.tile.name, "theme": player.overmap.theme})
 
 def handle_request(dict):
     intent = dict["intent"]
@@ -124,7 +124,7 @@ def handle_request(dict):
         case "current_map":
             return map_data(player)
         case "current_overmap":
-            return json.dumps({"map_tiles": player.overmap.map_tiles})
+            return json.dumps({"map_tiles": player.overmap.map_tiles, "theme": player.overmap.theme})
         case "player_info":
             return json.dumps(player.get_dict())
         case "carved_item_info":
@@ -325,7 +325,7 @@ def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
     client_available_phernalia = client.available_phernalia
     return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name, 
                        "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
-                       "client_cache_limit": client.grist_cache_limit})
+                       "client_cache_limit": client.grist_cache_limit, "theme": client.land.theme})
 
 def console_commands(player: sessions.Player, content: str):
     args = content.split(" ")

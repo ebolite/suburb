@@ -738,10 +738,13 @@ def map_scene():
 
 @scene
 def overmap():
-    map_tiles = client.requestdic(intent="current_overmap")["map_tiles"]
-    background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, themes.default.black)
-    overmap = render.Overmap(0.5, 0.5, map_tiles)
-    backbutton = render.Button(0.1, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", map_scene)
+    reply = client.requestdic(intent="current_overmap")
+    map_tiles = reply["map_tiles"]
+    theme_name = reply["theme"]
+    theme = themes.themes[theme_name]
+    background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
+    overmap = render.Overmap(0.5, 0.5, map_tiles, theme=theme)
+    backbutton = render.Button(0.1, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", map_scene, theme=theme)
 
 @scene
 def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False, strife=False):
@@ -1062,8 +1065,8 @@ if __name__ == "__main__":
     # choosemodus()
     # render.TileMap(0.5, 0.5, map)
     # computer()
-    # title() # normal game start
-    test_overmap()
+    title() # normal game start
+    # test_overmap()
     # continue to render until render.render() returns False
     # imp = render.Enemy(0.5, 0.5, "shale", "imp") 
     # render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, themes.default.black)

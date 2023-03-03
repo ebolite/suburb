@@ -723,6 +723,7 @@ class TileMap(UIElement):
         self.specials = map_dict["specials"]
         self.instances = map_dict["instances"]
         self.room_name = map_dict["room_name"]
+        self.theme = themes.themes[map_dict["theme"]]
         self.item_display.update_instances(self.instances)
         for tile in self.tiles.values():
             tile.known_invalid_tiles = []
@@ -797,11 +798,17 @@ class Tile(UIElement):
         if server_view:
             click_check.append(self)
 
+    def load_image(self):
+        self.theme = self.tile_map.theme
+        self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
+        self.image = self.convert_to_theme(self.image)
+        self.image.set_colorkey(pygame.Color(0, 0, 0))
+
     def update_image(self):
         try: self.image
-        except AttributeError: self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
+        except AttributeError: self.load_image()
         if self.last_tile != self.tile: 
-            self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
+            self.load_image()
             self.last_tile = self.tile
 
     def onclick(self, isclicked: bool):
