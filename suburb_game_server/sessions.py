@@ -971,14 +971,14 @@ def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness
             break
     print(f"height map generation took {time.time()-t} seconds")
     t = time.time()
-    for i in range(int(smoothness/0.25)):
+    if smoothness >= 0.5:
         map_tiles = smooth_height_pits(map_tiles)
+        # any heights pre-defined by old map tiles will be replaced here to undo smoothing
+        for y, line in enumerate(old_map_tiles):
+            for x, char in enumerate(line):
+                if char in ["~", "#"]: continue
+                map_tiles[y][x] = char
     print(f"smooth map took {time.time()-t} seconds")
-    # any heights pre-defined by old map tiles will be replaced here to undo smoothing
-    for y, line in enumerate(old_map_tiles):
-        for x, char in enumerate(line):
-            if char in ["~", "#"]: continue
-            map_tiles[y][x] = char
     return map_tiles
 
 default_map_tiles = [["~" for i in range(96)] for i in range(96)]
