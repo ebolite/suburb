@@ -446,9 +446,7 @@ def sburb(window: "render.Window"):
         current_x = coords["x"]
         current_y = coords["y"]
     update_viewport_dic()
-    item_display = render.RoomItemDisplay(40, 250, {}, server_view=True)
-    item_display.bind_to(window.viewport)
-    tilemap = render.TileMap(0.5, 0.55, item_display, server_view=True)
+    tilemap = render.TileMap(0.5, 0.55, item_display_x=40, item_display_y=250, server_view=True)
     tilemap.bind_to(window.viewport)
     info_window, info_text = draw_info_window(window)
     tilemap.info_window, tilemap.info_text = info_window, info_text

@@ -680,12 +680,11 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding
     return elements[0]
 
 class TileMap(UIElement):
-    def __init__(self, x, y, item_display:"RoomItemDisplay", server_view=False):
+    def __init__(self, x, y, server_view=False, item_display_x=70, item_display_y=190):
         super(TileMap, self).__init__()
         self.x = x
         self.y = y
         self.tiles: dict[str, "Tile"] = {}
-        self.item_display = item_display
         self.server_view = server_view
         if not self.server_view:
             self.label = Text(0.5, 0, "")
@@ -695,6 +694,7 @@ class TileMap(UIElement):
         self.input_text_box: Optional[InputTextBox] = None
         self.info_window: Optional[UIElement] = None
         self.info_text: Optional[UIElement] = None
+        self.item_display = RoomItemDisplay(item_display_x, item_display_y, self, server_view)
         self.update_map()
         self.w = (len(self.map)-2)*32
         self.h = (len(self.map[0])-2)*32
@@ -703,8 +703,13 @@ class TileMap(UIElement):
         self.background.border_radius = 3
         self.background.bind_to(self)
         self.initialize_map(self.map)
+        self.item_display.update_instances()
         update_check.append(self)
         key_check.append(self)
+
+    def bind_to(self, element, temporary=False):
+        super().bind_to(element, temporary)
+        self.item_display.bind_to(element, temporary)
 
     def update(self):
         if time.time() - self.last_update > 2:
@@ -733,10 +738,11 @@ class TileMap(UIElement):
                 map_dict = client.requestdic("current_map")
         self.map = map_dict["map"]
         self.specials = map_dict["specials"]
-        self.instances = map_dict["instances"]
-        self.room_name = map_dict["room_name"]
+        self.instances: dict[str, dict] = map_dict["instances"]
+        self.npcs: dict[str, dict] = map_dict["npcs"]
+        self.room_name: str = map_dict["room_name"]
         self.theme = themes.themes[map_dict["theme"]]
-        self.item_display.update_instances(self.instances)
+        self.item_display.update_instances()
         for tile in self.tiles.values():
             tile.known_invalid_tiles = []
         if self.label is not None: self.label.text = self.room_name
@@ -983,7 +989,7 @@ class TileDisplay(UIElement):
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
 class RoomItemDisplay(UIElement):
-    def __init__(self, x, y, instances: dict, server_view=False):
+    def __init__(self, x, y, tile_map: TileMap, server_view=False):
         super().__init__()
         self.x = x
         self.y = y
@@ -991,34 +997,33 @@ class RoomItemDisplay(UIElement):
         self.h = 30
         self.page = 0
         self.rows = 10
-        self.instances = instances
+        self.tile_map = tile_map
         self.server_view=server_view
         self.absolute = True
         self.buttons = []
         self.outline = None
         self.outline_width = 5
-        self.update_instances(instances)
 
     def delete(self):
         for button in self.buttons:
             button.delete()
 
-    def update_instances(self, instances):
+    def update_instances(self):
         def get_button_func(button_instance_name):
             if self.server_view:
                 def output_func(): pass
             else:
                 def output_func():
-                    suburb.display_item(Instance(button_instance_name, instances[button_instance_name]), suburb.map_scene)
+                    suburb.display_item(Instance(button_instance_name, self.tile_map.instances[button_instance_name]), suburb.map_scene)
             return output_func
         for button in self.buttons:
             button.delete()
         # instances is a dict so we need to convert to list to slice
-        display_instances = list(instances.keys())[self.page*self.rows:self.page*self.rows + self.rows]
+        display_instances = list(self.tile_map.instances.keys())[self.page*self.rows:self.page*self.rows + self.rows]
         if self.outline is not None:
             self.outline.delete()
             self.outline = None
-        if len(instances) > 0:
+        if len(self.tile_map.instances) > 0:
             outline_element_w = self.w + self.outline_width*2
             outline_element_h = self.h*(len(display_instances) + 1) + self.outline_width*2
             self.outline = SolidColor(self.x-self.outline_width, self.y-self.outline_width, outline_element_w, outline_element_h, self.theme.dark)
@@ -1026,16 +1031,16 @@ class RoomItemDisplay(UIElement):
             page_buttons_y = self.y
             def left_button_func():
                 self.page -= 1
-                self.update_instances(instances)
+                self.update_instances()
             def right_button_func():
                 self.page += 1
-                self.update_instances(instances)
+                self.update_instances()
             if self.page != 0:
                 left_button = TextButton(self.x, page_buttons_y, self.w//2, self.h, "<-", left_button_func)
                 left_button.absolute = True
             else:
                 left_button = SolidColor(self.x, page_buttons_y, self.w//2, self.h, self.theme.dark)
-            if list(instances.keys())[(self.page+1)*self.rows:(self.page+1)*self.rows + self.rows] != []:
+            if list(self.tile_map.instances.keys())[(self.page+1)*self.rows:(self.page+1)*self.rows + self.rows] != []:
                 right_button = TextButton(self.x+left_button.w, page_buttons_y, self.w-left_button.w, self.h, "->", right_button_func)
                 right_button.absolute = True
             else:
@@ -1044,10 +1049,10 @@ class RoomItemDisplay(UIElement):
             self.buttons.append(right_button)
         for index, instance_name in enumerate(display_instances):
             y = self.y + self.h*(index+1)
-            instance = Instance(instance_name, instances[instance_name])
+            instance = Instance(instance_name, self.tile_map.instances[instance_name])
             display_name = instance.display_name()
             if not self.server_view:
-                captcha_button = CaptchalogueButton(self.x, y, instance_name, instances)
+                captcha_button = CaptchalogueButton(self.x, y, instance_name, self.tile_map.instances)
                 captcha_button.absolute = True
             else:
                 captcha_button = None

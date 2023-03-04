@@ -725,9 +725,8 @@ def gristtorrent(window: "render.Window"):
 
 @scene
 def map_scene():
-    item_display = render.RoomItemDisplay(70, 190, {})
     ui_bar = Sylladex.current_sylladex().draw_ui_bar(map_scene)
-    tilemap = render.TileMap(0.5, 0.5, item_display)
+    tilemap = render.TileMap(0.5, 0.5)
     portfolio_button = render.TextButton(render.SCREEN_WIDTH-256, render.SCREEN_HEIGHT-166-64, 256, 64, "strife portfolio", strife_portfolio_scene, theme=themes.strife)
     portfolio_button.absolute = True
     portfolio_button.fill_color = themes.strife.dark
@@ -1099,8 +1098,8 @@ if __name__ == "__main__":
     # choosemodus()
     # render.TileMap(0.5, 0.5, map)
     # computer()
-    # title() # normal game start
-    test_overmap()
+    title() # normal game start
+    # test_overmap()
     # continue to render until render.render() returns False
     # imp = render.Enemy(0.5, 0.5, "shale", "imp") 
     # render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, themes.default.black)
