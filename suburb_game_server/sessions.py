@@ -2,6 +2,7 @@ import json
 import hashlib
 import random
 import os
+import time
 from typing import Optional, Union
 from copy import deepcopy
 
@@ -830,6 +831,7 @@ def gen_terrain(x, y, map, replacetile, terrain_rate, depth=0):
         for coordinate in [(-1, 0), (1, 0), (0, 1), (0, -1)]: # up down left right
             try:
                 tile = map[y+coordinate[1]][x+coordinate[0]]
+                if tile == "*": continue
                 rng = random.random()
                 if rng < terrain_rate - (0.05 * depth * terrain_rate): # chance to generate more terrain lowers with depth
                     map[y+coordinate[1]][x+coordinate[0]] = "*"
@@ -932,6 +934,7 @@ def height_map_pass(map_tiles: list[list[str]], steepness: float, smoothness: fl
     return map_tiles
 
 def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness: float=0.5):
+    t = time.time()
     map_tiles = make_water_height_0(map_tiles)
     while True:
         map_tiles = height_map_pass(map_tiles, steepness, smoothness)
@@ -940,11 +943,13 @@ def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness
             else: break
         else:
             break
+    print(f"height map generation took {time.time()-t} seconds")
     return map_tiles
 
 default_map_tiles = [["~" for i in range(96)] for i in range(96)]
 
 def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=None, extrarate=None, extraspecial=None):
+    t = time.time()
     map_tiles = deepcopy(default_map_tiles)
     for i in range(0, islands): # generate islands
         if special == "center":
@@ -988,6 +993,7 @@ def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=N
                 x = random.randint(0, len(map_tiles[0])-1)
             map_tiles[y][x] = "*" # placeholder terrain tile
             map_tiles = gen_terrain(x, y, map_tiles, "#", extrarate)
+    print(f"terrain gen took {time.time()-t} seconds")
     return map_tiles
 
 def set_height(map_tiles: list[list[str]], target_x, target_y, height: int, hill_radius=1, min_height=1) -> list[list[str]]:
