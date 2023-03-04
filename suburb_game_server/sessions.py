@@ -1081,7 +1081,7 @@ def get_random_land_coords(map_tiles) -> tuple[int, int]:
 
 def print_map(map_tiles: list[list[str]]):
     for list in map_tiles:
-        print("".join(list))
+        print("".join(list).replace("0", "~"))
 
 if __name__ == "__main__":
     type = input("land type: ")
