@@ -933,8 +933,34 @@ def height_map_pass(map_tiles: list[list[str]], steepness: float, smoothness: fl
     #         map_tiles[y][x] = str(height)
     return map_tiles
 
+def smooth_height_pits(map_tiles: list[list[str]]) -> list[list[str]]:
+    new_map = deepcopy(map_tiles)
+    for y, line in enumerate(map_tiles):
+        for x, char in enumerate(line):
+            height = int(char)
+            surrounding_tiles = []
+            # check surrounding tiles
+            for x_diff, y_diff in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+                new_x = x+x_diff
+                new_y = y+y_diff
+                if new_x >= len(map_tiles[0]): new_x -= (len(map_tiles[0]) - 1)
+                if new_y >= len(map_tiles): new_y -= (len(map_tiles) - 1)
+                surrounding_tiles.append(map_tiles[new_y][new_x])
+            surrounding_tiles = [int(tile) for tile in surrounding_tiles]
+            different_tiles = []
+            # if this tile is significantly different than surrounding tiles, set it to the minimum of surrounding tiles
+            for surrounding_height in surrounding_tiles.copy():
+                if surrounding_height != height:
+                    different_tiles.append(surrounding_height)
+            if len(different_tiles) > 3:
+                new_map[y][x] = str(random.choice(different_tiles))
+    return new_map
+
+
 def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness: float=0.5):
     t = time.time()
+    # we want to keep any pre-defined heights from being smoothed
+    old_map_tiles = deepcopy(map_tiles)
     map_tiles = make_water_height_0(map_tiles)
     while True:
         map_tiles = height_map_pass(map_tiles, steepness, smoothness)
@@ -944,6 +970,15 @@ def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness
         else:
             break
     print(f"height map generation took {time.time()-t} seconds")
+    t = time.time()
+    for i in range(int(smoothness/0.25)):
+        map_tiles = smooth_height_pits(map_tiles)
+    print(f"smooth map took {time.time()-t} seconds")
+    # any heights pre-defined by old map tiles will be replaced here to undo smoothing
+    for y, line in enumerate(old_map_tiles):
+        for x, char in enumerate(line):
+            if char in ["~", "#"]: continue
+            map_tiles[y][x] = char
     return map_tiles
 
 default_map_tiles = [["~" for i in range(96)] for i in range(96)]
