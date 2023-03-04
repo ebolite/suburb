@@ -16,6 +16,7 @@ import suburb
 import themes
 import binaryoperations
 import sburbserver
+import npcs
 from sylladex import Instance, Sylladex
 
 pygame.init()
@@ -1014,18 +1015,22 @@ class RoomItemDisplay(UIElement):
                 def output_func(): pass
             else:
                 def output_func():
-                    suburb.display_item(Instance(button_instance_name, self.tile_map.instances[button_instance_name]), suburb.map_scene)
+                    if button_instance_name in self.tile_map.instances:
+                        suburb.display_item(Instance(button_instance_name, self.tile_map.instances[button_instance_name]), suburb.map_scene)
+                    else:
+                        ... # todo
             return output_func
         for button in self.buttons:
             button.delete()
-        # instances is a dict so we need to convert to list to slice
-        display_instances = list(self.tile_map.instances.keys())[self.page*self.rows:self.page*self.rows + self.rows]
+        # instances and npcs are a dict so we need to convert to list to slice
+        all_items = list(self.tile_map.npcs.keys()) + list(self.tile_map.instances.keys())
+        display_items = list(all_items)[self.page*self.rows:self.page*self.rows + self.rows]
         if self.outline is not None:
             self.outline.delete()
             self.outline = None
         if len(self.tile_map.instances) > 0:
             outline_element_w = self.w + self.outline_width*2
-            outline_element_h = self.h*(len(display_instances) + 1) + self.outline_width*2
+            outline_element_h = self.h*(len(display_items) + 1) + self.outline_width*2
             self.outline = SolidColor(self.x-self.outline_width, self.y-self.outline_width, outline_element_w, outline_element_h, self.theme.dark)
             self.outline.border_radius = 3
             page_buttons_y = self.y
@@ -1047,35 +1052,42 @@ class RoomItemDisplay(UIElement):
                 right_button = SolidColor(self.x+left_button.w, page_buttons_y, self.w-left_button.w, self.h, self.theme.dark)
             self.buttons.append(left_button)
             self.buttons.append(right_button)
-        for index, instance_name in enumerate(display_instances):
+        for index, item_name in enumerate(display_items):
             y = self.y + self.h*(index+1)
-            instance = Instance(instance_name, self.tile_map.instances[instance_name])
-            display_name = instance.display_name()
-            if not self.server_view:
-                captcha_button = CaptchalogueButton(self.x, y, instance_name, self.tile_map.instances)
-                captcha_button.absolute = True
-            else:
-                captcha_button = None
-            use_buttons = 0
-            if not self.server_view:
-                for i, action_name in enumerate(reversed(instance.item.use)):
-                    use_buttons += 1
-                    path = f"sprites/item_actions/{action_name}.png"
-                    pressed_path = f"sprites/item_actions/{action_name}_pressed.png"
-                    if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
-                    if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
-                    use_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, instance.get_action_button_func(action_name, suburb.map_scene))
-                    use_button.absolute = True
-                    self.buttons.append(use_button)
-            main_button_width = self.w
-            if captcha_button is not None: main_button_width -= 30
-            main_button_width -= 30*use_buttons
-            main_button_x = self.x
-            if captcha_button is not None: main_button_x += 30
-            new_button = TextButton(main_button_x, y, main_button_width, self.h, util.filter_item_name(display_name), get_button_func(instance_name), truncate_text=True)
-            new_button.absolute = True 
-            self.buttons.append(new_button)
-            if captcha_button is not None: self.buttons.append(captcha_button)
+            if item_name in self.tile_map.instances: # this is an instance
+                instance = Instance(item_name, self.tile_map.instances[item_name])
+                display_name = instance.display_name()
+                if not self.server_view:
+                    captcha_button = CaptchalogueButton(self.x, y, instance.name, self.tile_map.instances)
+                    captcha_button.absolute = True
+                else:
+                    captcha_button = None
+                use_buttons = 0
+                if not self.server_view:
+                    for i, action_name in enumerate(reversed(instance.item.use)):
+                        use_buttons += 1
+                        path = f"sprites/item_actions/{action_name}.png"
+                        pressed_path = f"sprites/item_actions/{action_name}_pressed.png"
+                        if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
+                        if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
+                        use_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, instance.get_action_button_func(action_name, suburb.map_scene))
+                        use_button.absolute = True
+                        self.buttons.append(use_button)
+                main_button_width = self.w
+                if captcha_button is not None: main_button_width -= 30
+                main_button_width -= 30*use_buttons
+                main_button_x = self.x
+                if captcha_button is not None: main_button_x += 30
+                new_button = TextButton(main_button_x, y, main_button_width, self.h, util.filter_item_name(display_name), get_button_func(instance.name), truncate_text=True)
+                new_button.absolute = True 
+                self.buttons.append(new_button)
+                if captcha_button is not None: self.buttons.append(captcha_button)
+            elif item_name in self.tile_map.npcs:
+                npc = npcs.Npc(item_name, self.tile_map.npcs[item_name])
+                display_name = npc.nickname
+                new_button = TextButton(self.x, y, self.w, self.h, display_name, get_button_func(npc.name), truncate_text=True)
+                new_button.absolute = True
+                self.buttons.append(new_button)
 
 class Overmap(UIElement):
     def __init__(self, x, y, map_tiles:list[list[str]], theme=themes.default):
