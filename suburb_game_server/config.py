@@ -308,7 +308,7 @@ categoryproperties = { # mapgen properties
         },
     "stone": {
         "islands": 24,
-        "landrate": .6,
+        "landrate": .8,
         "lakes": 6,
         "lakerate": .3,
         "special": "center",
@@ -318,7 +318,7 @@ categoryproperties = { # mapgen properties
         },
     "sweet": {
         "islands": 72,
-        "landrate": .4,
+        "landrate": .5,
         "lakes": 36,
         "lakerate": .5,
         "extralands": 12,
