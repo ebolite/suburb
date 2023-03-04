@@ -1,4 +1,5 @@
 from string import ascii_letters
+from copy import deepcopy
 import random
 
 import util
@@ -19,6 +20,7 @@ class Underling():
         nickname = f"{grist_name} {self.monster_type}"
         name = Npc.make_valid_name(nickname)
         npc = Npc(name)
+        npc.type = self.monster_type
         npc.power = power
         npc.nickname = nickname
         room.add_npc(npc)
@@ -41,6 +43,7 @@ class Npc():
             util.npcs[name] = {}
             self.power: int = 0
             self.nickname: str = name
+            self.type: str = ""
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -49,6 +52,10 @@ class Npc():
     def __getattr__(self, attr):
         self.__dict__[attr] = util.npcs[self.__dict__["name"]][attr]
         return self.__dict__[attr]
+    
+    def get_dict(self) -> dict:
+        out = deepcopy(util.npcs[self.__dict__["name"]])
+        return out
 
 if __name__ == "__main__":
     ...

@@ -391,6 +391,13 @@ class Room():
             instance = alchemy.Instance(instance_name)
             out_dict[instance_name] = instance.get_dict()
         return out_dict
+    
+    def get_npcs(self) -> dict:
+        out_dict = {}
+        for npc_name in self.npcs:
+            npc = npcs.Npc(npc_name)
+            out_dict[npc_name] = npc.get_dict()
+        return out_dict
 
     def deploy(self, client: "Player", item_name: str) -> bool:
         if item_name not in client.available_phernalia: print("not in phernalia"); return False
@@ -753,10 +760,11 @@ class Player():
     def map(self) -> Map:
         return Map(self.map_name, self.session, self.overmap)
     
-    def get_view(self, view_tiles=6) -> tuple[list, dict, dict]:
+    def get_view(self, view_tiles=6) -> tuple[list, dict, dict, dict]:
         map_tiles, map_specials = self.map.get_view(self.room.x, self.room.y, view_tiles)
         room_instances = self.room.get_instances()
-        return map_tiles, map_specials, room_instances
+        room_npcs = self.room.get_npcs()
+        return map_tiles, map_specials, room_instances, room_npcs
 
     @property
     def room(self) -> Room:

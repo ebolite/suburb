@@ -59,8 +59,20 @@ def threaded_client(connection):
         connection.close()
 
 def map_data(player: "sessions.Player"):
-    map_tiles, map_specials, room_instances = player.get_view()
-    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": player.room.tile.name, "theme": player.overmap.theme})
+    map_tiles, map_specials, room_instances, room_npcs = player.get_view()
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "room_name": player.room.tile.name, "theme": player.overmap.theme})
+
+def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
+    if client is None: print("no client"); return "No client dumpass"
+    map_tiles, map_specials = client.land.housemap.get_view(x, y, 8)
+    room = client.land.housemap.find_room(x, y)
+    room_instances = room.get_instances()
+    room_npcs = room.get_npcs()
+    client_grist_cache = client.grist_cache
+    client_available_phernalia = client.available_phernalia
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "room_name": room.tile.name, 
+                       "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
+                       "client_cache_limit": client.grist_cache_limit, "theme": client.land.theme})
 
 def handle_request(dict):
     intent = dict["intent"]
@@ -324,17 +336,6 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
                 return get_viewport(viewport_x, viewport_y, player.client_player)
             else:
                 return json.dumps({})
-
-def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
-    if client is None: print("no client"); return "No client dumpass"
-    map_tiles, map_specials = client.land.housemap.get_view(x, y, 8)
-    room = client.land.housemap.find_room(x, y)
-    room_instances = room.get_instances()
-    client_grist_cache = client.grist_cache
-    client_available_phernalia = client.available_phernalia
-    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "room_name": room.tile.name, 
-                       "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
-                       "client_cache_limit": client.grist_cache_limit, "theme": client.land.theme})
 
 def console_commands(player: sessions.Player, content: str):
     args = content.split(" ")
