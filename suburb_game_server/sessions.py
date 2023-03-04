@@ -833,7 +833,7 @@ def gen_terrain(x, y, map, replacetile, terrain_rate, depth=0):
                 tile = map[y+coordinate[1]][x+coordinate[0]]
                 if tile == "*": continue
                 rng = random.random()
-                if rng < terrain_rate - (0.05 * depth * terrain_rate): # chance to generate more terrain lowers with depth
+                if rng < terrain_rate - (config.terrain_decay * depth * terrain_rate): # chance to generate more terrain lowers with depth
                     map[y+coordinate[1]][x+coordinate[0]] = "*"
                     map = gen_terrain(x+coordinate[0], y+coordinate[1], map, tile, terrain_rate, depth+1)
             except IndexError:
@@ -933,7 +933,7 @@ def height_map_pass(map_tiles: list[list[str]], steepness: float, smoothness: fl
     #         map_tiles[y][x] = str(height)
     return map_tiles
 
-def smooth_height_pits(map_tiles: list[list[str]]) -> list[list[str]]:
+def smooth_height_pits(map_tiles: list[list[str]], aggressiveness: int=1) -> list[list[str]]:
     new_map = deepcopy(map_tiles)
     for y, line in enumerate(map_tiles):
         for x, char in enumerate(line):
@@ -952,7 +952,7 @@ def smooth_height_pits(map_tiles: list[list[str]]) -> list[list[str]]:
             for surrounding_height in surrounding_tiles.copy():
                 if surrounding_height != height:
                     different_tiles.append(surrounding_height)
-            if len(different_tiles) > 3:
+            if len(different_tiles) > 4 - aggressiveness:
                 new_map[y][x] = str(random.choice(different_tiles))
     return new_map
 
@@ -972,7 +972,9 @@ def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness
     print(f"height map generation took {time.time()-t} seconds")
     t = time.time()
     if smoothness >= 0.5:
-        map_tiles = smooth_height_pits(map_tiles)
+        if smoothness > 0.75: aggressiveness = 2
+        else: aggressiveness = 1
+        map_tiles = smooth_height_pits(map_tiles, aggressiveness)
         # any heights pre-defined by old map tiles will be replaced here to undo smoothing
         for y, line in enumerate(old_map_tiles):
             for x, char in enumerate(line):
@@ -981,7 +983,7 @@ def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness
     print(f"smooth map took {time.time()-t} seconds")
     return map_tiles
 
-default_map_tiles = [["~" for i in range(96)] for i in range(96)]
+default_map_tiles = [["~" for i in range(config.overmap_width)] for i in range(config.overmap_width)]
 
 def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=None, extrarate=None, extraspecial=None):
     t = time.time()

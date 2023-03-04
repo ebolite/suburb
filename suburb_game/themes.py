@@ -1,6 +1,6 @@
 from pygame import Color
 
-themes = {}
+themes: dict[str, "Theme"] = {}
 
 class Theme():
     def __init__(self, name: str):

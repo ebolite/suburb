@@ -2,6 +2,9 @@ import util
 
 max_wielded_size = 20
 
+overmap_width = 96
+terrain_decay = 0.01
+
 sburb = "<a:suburbspirograph:820899074986606613>"
 
 # items which appear as icons to clients
@@ -228,7 +231,7 @@ categoryproperties = { # mapgen properties
         "lakerate": .4,
         "extralands": 42,
         "extrarate": 0.15,
-        "smoothness": 0.7,
+        "smoothness": 0.8,
         "steepness": 2.5,
         },
     "dark": {
