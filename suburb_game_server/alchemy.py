@@ -30,9 +30,13 @@ class Components():
             if "&&" in components_name:
                 self.operation = "&&"
                 components = components_name.split("&&")
-            else:
+            elif "||" in components_name:
                 self.operation = "||"
                 components = components_name.split("||")
+            else:
+                self.component_1 = None
+                self.component_2 = None
+                return
             self.component_1 = components[0]
             self.component_2 = components[1]
             return
@@ -44,9 +48,18 @@ class Components():
                 operation = components_name[index+1:][:2] # get next 2 characters
                 component_2 = components_name[index+3:] # everything after that
                 break
-        self.component_1: str = component_1
-        self.component_2: str = component_2
+        self.component_1: Optional[str] = component_1
+        self.component_2: Optional[str] = component_2
         self.operation: str = operation
+
+    def get_all_components(self) -> list[str]:
+        components_list = []
+        if self.component_1 is None or self.component_2 is None: return []
+        if self.component_1 in util.bases: components_list.append(self.component_1)
+        else: components_list += Components(self.component_1).get_all_components()
+        if self.component_2 in util.bases: components_list.append(self.component_2)
+        else: components_list += Components(self.component_2).get_all_components()
+        return components_list
 
 class BaseStatistics():
     def __init__(self, base_name: str):
@@ -89,7 +102,19 @@ class InheritedStatistics():
         self.base, self.adjectives, self.merged_bases, self.secretadjectives = self.get_descriptors()
         self.descriptors = self.adjectives + [self.base]
         self.forbiddencode = False
+        self.all_components = Components(self.name).get_all_components()
         self.gen_statistics()
+
+    # how many unique items there are, multiple counts means negative entropy means bad
+    @property
+    def entropy(self) -> int:
+        e = 0
+        for component in set(self.all_components):
+            if self.all_components.count(component) > 1:
+                e -= 1
+            else:
+                e += 1
+        return e
 
     def get_descriptors(self, guaranteed_compound_name = False, depth = 0) -> tuple[str, list, list, list]:
         required_inheritors = []
@@ -163,20 +188,21 @@ class InheritedStatistics():
         self.size: int = self.inherit_stat_from_base(self.component_1.size, self.component_2.size)
         self.size += self.stat_adjust_from_base(self.component_1.size, self.component_2.size)
         # power
-        total_power = (self.component_1.power + # && is more powerful when items are similar in power.
-                          self.component_1.inheritpower + 
-                          self.component_2.power + 
-                          self.component_2.inheritpower)
+        total_power = (self.component_1.power
+                          + self.component_1.inheritpower 
+                          + self.component_2.power 
+                          + self.component_2.inheritpower)
+        average_power = total_power//2
+        power_difference = abs((self.component_1.power + self.component_1.inheritpower)
+                                - (self.component_2.power + self.component_2.inheritpower))
         if self.operation == "&&":
-            self.power: int = total_power
-        else: # || has a power multiplier depending on
-            component_1_power = self.component_1.power + self.component_1.inheritpower
-            component_2_power = self.component_2.power + self.component_2.inheritpower
-            difference = max(abs(component_1_power - component_2_power), 1)
-            ratio = total_power / (difference * 1.5)
-            ratio = min(ratio, 0.5)
-            ratio = max(ratio, 5)
-            self.power: int = int(total_power * ratio)
+            self.power: int = total_power + average_power
+        elif self.operation == "||":
+            self.power: int = total_power + power_difference
+        if self.entropy > 0: power_mult = self.entropy
+        elif self.entropy == 0: power_mult = 1
+        else: power_mult = 1/self.entropy
+        self.power = int(self.power*power_mult)
         self.inheritpower: int = self.component_1.inheritpower + self.component_2.inheritpower
         # dicemin
         self.dicemin: float = (self.component_1.dicemin + self.component_2.dicemin) / 2
@@ -273,6 +299,7 @@ def get_code_from_name(name: str) -> str: # from name
         code = util.items[name]["code"]
     else:
         components = Components(name)
+        if components.component_1 is None or components.component_2 is None: return "!!!!!!!!"
         operation = components.operation
         if operation == "&&":
             code = binaryoperations.codeand(get_code_from_name(components.component_1), get_code_from_name(components.component_2))
@@ -468,12 +495,13 @@ if __name__ == "__main__":
         name_desc[base] = {"description": util.bases[base]["description"]}
     util.writejson(name_desc, "base_item_list")
     def loop(base1: Item, base2: Item):
-        print(util.items)
         merge_and = Item(alchemize(base1.name, base2.name,"&&"))
         merge_or = Item(alchemize(base1.name, base2.name, "||"))
         print(merge_and.name)
+        print(Components(merge_and.name).get_all_components())
         print(display_item(merge_and))
         print(merge_or.name)
+        print(Components(merge_or.name).get_all_components())
         print(display_item(merge_or))
         input()
         loop(random.choice([merge_and, merge_or]), Item(random.choice(list(util.bases.keys()))))
