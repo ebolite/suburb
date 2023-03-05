@@ -12,6 +12,7 @@ import tiles
 import alchemy
 import binaryoperations
 import npcs
+from strife import Strife
 
 map_tiles = {}
 
@@ -70,7 +71,7 @@ class Session():
         return available_types
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__dict__["session_name"]
 
 class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player.session}"
@@ -174,7 +175,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         return Player(self.__dict__["player_name"])
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__dict__["name"]
     
     @property
@@ -314,7 +315,7 @@ class Map():
         return Player(self.__dict__["player_name"])
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__dict__["name"]
 
 class Room():
@@ -483,9 +484,13 @@ class Room():
     @property
     def player(self) -> "Player":
         return self.overmap.player
+    
+    @property
+    def strife(self) -> "Strife":
+        return Strife(self)
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__dict__["name"]
 
     @property
@@ -803,7 +808,7 @@ class Player():
         return self.room.x, self.room.y
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__dict__["username"]
     
     @property

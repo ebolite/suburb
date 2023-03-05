@@ -16,7 +16,7 @@ import suburb
 import themes
 import binaryoperations
 import sburbserver
-import npcs
+from strife import Npc
 from sylladex import Instance, Sylladex
 
 pygame.init()
@@ -1083,7 +1083,7 @@ class RoomItemDisplay(UIElement):
                 self.buttons.append(new_button)
                 if captcha_button is not None: self.buttons.append(captcha_button)
             elif item_name in self.tile_map.npcs:
-                npc = npcs.Npc(item_name, self.tile_map.npcs[item_name])
+                npc = Npc(item_name, self.tile_map.npcs[item_name])
                 display_name = npc.nickname
                 new_button = TextButton(self.x, y, self.w, self.h, display_name, get_button_func(npc.name), truncate_text=True)
                 new_button.absolute = True
