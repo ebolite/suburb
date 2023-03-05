@@ -45,8 +45,8 @@ breath.dark = Color(1, 135, 235)
 breath.black = Color(0, 83, 241)
 
 doom = Theme("doom")
-doom.white = Color(32, 65, 33)
-doom.light = Color(28, 57, 33)
+doom.white = Color(24, 89, 16)
+doom.light = Color(32, 65, 33)
 doom.dark = Color(36, 46, 38)
 
 heart = Theme("heart")
