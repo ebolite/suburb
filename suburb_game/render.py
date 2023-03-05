@@ -123,12 +123,14 @@ class UIElement(pygame.sprite.Sprite):
     def bring_to_top(self):
         move_to_top.append(self)
 
-    def convert_to_theme(self, surf: Union[pygame.Surface, pygame.surface.Surface]) -> pygame.Surface:
+    def convert_to_theme(self, surf: Union[pygame.Surface, pygame.surface.Surface], theme: Optional["themes.Theme"]=None) -> pygame.Surface:
+        if theme is not None: new_theme = theme
+        else: new_theme = self.theme
         default_theme = themes.default
-        surf = palette_swap(surf, default_theme.white, self.theme.white)
-        surf = palette_swap(surf, default_theme.light, self.theme.light)
-        surf = palette_swap(surf, default_theme.dark, self.theme.dark)
-        surf = palette_swap(surf, default_theme.black, self.theme.black)
+        surf = palette_swap(surf, default_theme.white, new_theme.white)
+        surf = palette_swap(surf, default_theme.light, new_theme.light)
+        surf = palette_swap(surf, default_theme.dark, new_theme.dark)
+        surf = palette_swap(surf, default_theme.black, new_theme.black)
         return surf
 
     def get_rect_xy(self, secondary_surf:Union[pygame.Surface, pygame.surface.Surface, None] = None, absolute: Optional[bool]=None) -> tuple[int, int]:
@@ -907,12 +909,6 @@ class Tile(UIElement):
                 icon_image = self.convert_to_theme(icon_image)
                 icon_image.set_colorkey(pygame.Color(0, 0, 0))
                 self.surf.blit(icon_image, (0, 0), (0, 0, tile_wh, tile_wh))
-        if self.server_view and self.x == len(self.tile_map.map)//2 and self.y == len(self.tile_map.map)//2:
-            center_path = config.icons["center"]
-            center_image = pygame.image.load(center_path)
-            center_image = self.convert_to_theme(center_image)
-            center_image.set_colorkey(pygame.Color(0, 0, 0))
-            self.surf.blit(center_image, (0, 0), (0, 0, tile_wh, tile_wh))
         if self.server_view and self.mouseover():
             if sburbserver.current_mode == "deploy":
                 cursor_image_path = config.icons["deploy"]
@@ -921,9 +917,16 @@ class Tile(UIElement):
             else:
                 cursor_image_path = config.icons["select"]
             cursor_image = pygame.image.load(cursor_image_path)
-            cursor_image = self.convert_to_theme(cursor_image)
+            if sburbserver.current_mode == "revise":
+                cursor_image = self.convert_to_theme(cursor_image)
             cursor_image.set_colorkey(pygame.Color(0, 0, 0))
             self.surf.blit(cursor_image, (0, 0), (0, 0, tile_wh, tile_wh))
+        if self.server_view and self.x == len(self.tile_map.map)//2 and self.y == len(self.tile_map.map)//2:
+            center_path = config.icons["center"]
+            center_image = pygame.image.load(center_path)
+            center_image = self.convert_to_theme(center_image, suburb.current_theme())
+            center_image.set_colorkey(pygame.Color(0, 0, 0))
+            self.surf.blit(center_image, (0, 0), (0, 0, tile_wh, tile_wh))
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
     @property
