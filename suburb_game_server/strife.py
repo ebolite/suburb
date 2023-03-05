@@ -4,6 +4,69 @@ from typing import Optional
 import util
 import sessions
 
+vials: dict[str, "Vial"] = {}
+
+class Vial():
+    def __init__(self, name):
+        vials[name] = self
+        self.maximum_formula = "0"
+        self.starting_formula = "0"
+        # hidden vials don't display unless they change from their starting value
+        self.hidden_vial = False
+        # optional vials do not exist for every griefer
+        self.optional_vial = False
+
+    def get_maximum(self, griefer: "Griefer") -> int:
+        formula = griefer.format_formula(self.maximum_formula)
+        return int(eval(formula))
+    
+    def get_starting(self, griefer: "Griefer") -> int:
+        formula = griefer.format_formula(self.starting_formula)
+        formula = formula.format("maximum", self.get_maximum(griefer))
+        return int(eval(formula))
+    
+hp = Vial("hp")
+hp.maximum_formula = "{power} + {vig}*6"
+hp.starting_formula = "{maximum}"
+
+vigor = Vial("vigor")
+vigor.maximum_formula = "{power} + {tac}*6"
+vigor.starting_formula = "{maximum}"
+
+aspect = Vial("aspect")
+aspect.maximum_formula = "{power}*2"
+aspect.starting_formula = "{maximum}"
+
+hope = Vial("hope")
+hope.maximum_formula = "{power}*3"
+hope.starting_formula = "{maximum}//2"
+hope.hidden_vial = True
+
+rage = Vial("rage")
+rage.maximum_formula = "{power}*3"
+rage.starting_formula = "{maximum}//2"
+rage.hidden_vial = True
+
+mangrit = Vial("mangrit")
+mangrit.maximum_formula = "{power} + {tac}*6"
+mangrit.starting_formula = "0"
+mangrit.optional_vial = True
+
+imagination = Vial("imagination")
+imagination.maximum_formula = "{power} + {tac}*6"
+imagination.starting_formula = "0"
+imagination.optional_vial = True
+
+horseshitometer = Vial("horseshitometer")
+horseshitometer.maximum_formula = "{power} + {tac}*6"
+horseshitometer.starting_formula = "{maximum}//2"
+horseshitometer.optional_vial = True
+
+gambit = Vial("gambit")
+gambit.maximum_formula = "{power} + {tac}*6"
+gambit.starting_formula = "{maximum}//2"
+gambit.optional_vial = True
+
 class Griefer():
     def __init__(self, name, strife: "Strife"):
         self.__dict__["name"] = name
@@ -14,7 +77,7 @@ class Griefer():
         if name not in util.sessions[strife.session.name]["overmaps"][strife.overmap.name]["maps"][strife.map.name]["rooms"][strife.room.name]["strife_dict"]["griefers"]:
             strife.griefers[name] = {}
             self.base_power: int = 0
-            self.stat_ratios = {
+            self.base_stats = {
                 "spunk": 1,
                 "vigor": 1,
                 "tact": 1,
@@ -24,6 +87,25 @@ class Griefer():
             }
             self.player_name: Optional[str] = None
 
+    @property
+    def power(self) -> int:
+        return self.base_power
+    
+    def get_stat(self, stat) -> int:
+        stat = self.base_stats[stat]
+        return stat
+
+    def format_formula(self, formula: str) -> str:
+        terms = {
+            "power": self.power,
+            "spk": self.get_stat("spunk"),
+            "vig": self.get_stat("vigor"),
+            "tac": self.get_stat("grief"),
+            "luk": self.get_stat("luck"),
+            "sav": self.get_stat("savvy"),
+            "met": self.get_stat("mettle"),
+        }
+        return formula.format(**terms)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
