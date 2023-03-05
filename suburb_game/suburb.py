@@ -881,6 +881,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
     # todo: get player power
     power = player_dict["power"]
     stat_ratios = player_dict["stat_ratios"]
+    permanent_stat_bonuses = player_dict["permanent_stat_bonuses"]
     # kind_name:dict[instance_name:instance_dict]
     strife_portfolio = player_dict["strife_portfolio"]
     wielding = player_dict["wielding"]
@@ -965,7 +966,13 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                         if stats[stat_name] == 0: continue
                         stats[stat_name] += 1
                         remainder -= 1
-                    return labels[stat].format(stats[stat])
+                    amount = stats[stat]
+                    if stat in permanent_stat_bonuses: bonus = permanent_stat_bonuses[stat]
+                    else: bonus = 0
+                    amount += bonus
+                    text = labels[stat].format(amount)
+                    if bonus != 0: text += f" (+{bonus})"
+                    return text
                 return label_func
             stat_label = render.Text(padding, padding*4 + abstratus_display.rect.y+y+box_width-fontsize//2, labels[stat])
             stat_label.text_func = get_label_func(stat)
