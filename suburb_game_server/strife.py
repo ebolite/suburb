@@ -77,15 +77,45 @@ class Griefer():
         if name not in util.sessions[strife.session.name]["overmaps"][strife.overmap.name]["maps"][strife.map.name]["rooms"][strife.room.name]["strife_dict"]["griefers"]:
             strife.griefers[name] = {}
             self.base_power: int = 0
-            self.base_stats = {
-                "spunk": 1,
-                "vigor": 1,
-                "tact": 1,
-                "luck": 1,
-                "savvy": 1,
-                "mettle": 1,
+            self.base_stats: dict[str, int] = {
+                "spunk": 0,
+                "vigor": 0,
+                "tact": 0,
+                "luck": 0,
+                "savvy": 0,
+                "mettle": 0,
             }
             self.player_name: Optional[str] = None
+            self.vials: dict[str, dict] = {}
+            # vials still need to be initialized
+            for vial_name in vials:
+                vial = vials[vial_name]
+                if not vial.optional_vial:
+                    self.add_vial(vial_name)
+            self.maximum_vial_bonuses: dict[str, int] = {}
+
+    def change_vial(self, vial_name: str, amount: int):
+        self.vials[vial_name]["current"] += amount
+        maximum = self.get_vial_maximum(vial_name)
+        if self.vials[vial_name]["current"] > maximum:
+            self.vials[vial_name]["current"] = maximum
+        if self.vials[vial_name]["current"] < 0:
+            self.vials[vial_name]["current"] = 0
+
+    def add_vial(self, vial_name: str):
+        self.vials[vial_name] = {}
+
+    def get_vial_maximum(self, vial_name: str):
+        vial = vials[vial_name]
+        return vial.get_maximum(self)
+
+    def initialize_vials(self):
+        for vial_name in self.vials:
+            vial = vials[vial_name]
+            self.vials[vial_name] = {
+                "starting": vial.get_starting(self),
+                "current": vial.get_starting(self),
+            }
 
     @property
     def power(self) -> int:
@@ -153,6 +183,11 @@ class Griefer():
     @property
     def strife(self) -> "Strife":
         return Strife(self.room)
+    
+    @property
+    def player(self) -> Optional["sessions.Player"]:
+        if self.player_name is None: return None
+        return sessions.Player(self.player_name)
 
 # each room can only have one Strife in it
 class Strife():
