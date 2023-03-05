@@ -466,6 +466,9 @@ class Room():
             instance = alchemy.Instance(instance_name)
             if instance.item.name in config.special_items:
                 special_dict[instance_name] = instance.item.name
+        for npc_name in self.npcs:
+            npc = npcs.Npc(npc_name)
+            special_dict[npc_name] = npc.type
         # todo: other specials
         return special_dict
 

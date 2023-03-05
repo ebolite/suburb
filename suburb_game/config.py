@@ -56,7 +56,8 @@ icons = {
     "Sburb disc": "sprites/icons/Sburb disc.png",
     "center": "sprites/icons/center.png",
     "deploy": "sprites/icons/deploy.png",
-    "select": "sprites/icons/select.png"
+    "select": "sprites/icons/select.png",
+    "imp": "sprites/icons/imp.png",
 }
 
 header_icons = {
