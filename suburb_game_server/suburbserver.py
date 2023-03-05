@@ -175,6 +175,7 @@ def handle_request(dict):
             return player.move_to_strife_deck(instance_name, kind_name)
         case "eject_from_strife_deck":
             instance_name = content["instance_name"]
+            if player.wielding == instance_name: player.unwield()
             return player.eject_from_strife_deck(instance_name)
         case "wield":
             instance_name = content["instance_name"]
