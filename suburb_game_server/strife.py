@@ -138,8 +138,10 @@ class Griefer():
     def power(self) -> int:
         return self.base_power
     
-    def get_stat(self, stat) -> int:
-        stat = self.base_stats[stat]
+    def get_stat(self, stat_name) -> int:
+        stat = self.base_stats[stat_name]
+        if stat_name in self.stat_bonuses:
+            stat += self.stat_bonuses[stat_name]
         return stat
 
     def format_formula(self, formula: str) -> str:

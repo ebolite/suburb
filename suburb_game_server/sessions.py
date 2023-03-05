@@ -785,7 +785,10 @@ class Player():
             if stats[stat_name] == 0: continue
             stats[stat_name] += 1
             remainder -= 1
-        return stats[stat]
+        amount = stats[stat]
+        if stat in self.permanent_stat_bonuses:
+            amount += self.permanent_stat_bonuses[stat]
+        return amount
 
     @property
     def session(self) -> Session:
