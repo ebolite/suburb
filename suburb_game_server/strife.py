@@ -109,7 +109,10 @@ class Griefer():
 
     def get_vial_maximum(self, vial_name: str):
         vial = vials[vial_name]
-        return vial.get_maximum(self)
+        maximum = vial.get_maximum(self)
+        if vial_name in self.maximum_vial_bonuses:
+            maximum += self.maximum_vial_bonuses[vial_name]
+        return maximum
 
     def initialize_vials(self):
         for vial_name in self.vials:
