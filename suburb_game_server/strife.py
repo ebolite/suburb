@@ -3,7 +3,6 @@ from typing import Optional
 
 import util
 import sessions
-from sessions import Room
 
 class Griefer():
     def __init__(self, name, strife: "Strife"):
@@ -75,7 +74,7 @@ class Griefer():
 
 # each room can only have one Strife in it
 class Strife():
-    def __init__(self, room: "Room"):
+    def __init__(self, room: "sessions.Room"):
         self.__dict__["session_name"] = room.session.name
         self.__dict__["overmap_name"] = room.overmap.name
         self.__dict__["map_name"] = room.map.name

@@ -949,13 +949,23 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             box.max_characters = 2
             box.bind_to(abstratus_display)
             stat_boxes[stat] = box
-            def get_label_func(stat_name):
+            def get_label_func(stat):
                 def label_func():
-                    stat_ratio = int(stat_boxes[stat_name].text)
-                    ratio_sum = 0
-                    for box in stat_boxes.values(): ratio_sum += int(box.text)
-                    stat_value = int((stat_ratio/ratio_sum) * power)
-                    return labels[stat_name].format(stat_value)
+                    total_ratios = 0
+                    for box in stat_boxes.values(): total_ratios += int(box.text)
+                    stats = {}
+                    for stat_name in stat_boxes:
+                        value = int(stat_boxes[stat_name].text)
+                        if total_ratios != 0: stat_mult = (value/total_ratios)
+                        else: stat_mult = 1/len(stat_boxes)
+                        stats[stat_name] = int(power * stat_mult)
+                    remainder = power - sum(stats.values())
+                    for stat_name in stats:
+                        if remainder == 0: break
+                        if stats[stat_name] == 0: continue
+                        stats[stat_name] += 1
+                        remainder -= 1
+                    return labels[stat].format(stats[stat])
                 return label_func
             stat_label = render.Text(padding, padding*4 + abstratus_display.rect.y+y+box_width-fontsize//2, labels[stat])
             stat_label.text_func = get_label_func(stat)

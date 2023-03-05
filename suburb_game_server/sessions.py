@@ -753,6 +753,23 @@ class Player():
         self.goto_room(new_room)
         return True
 
+    def get_base_stat(self, stat):
+        total_ratios = 0
+        for stat_name in self.stat_ratios:
+            total_ratios += self.stat_ratios[stat_name]
+        stats = {}
+        for stat_name in self.stat_ratios:
+            if total_ratios != 0: stat_mult = (self.stat_ratios[stat]/total_ratios)
+            else: stat_mult = 1/len(self.stat_ratios)
+            stats[stat_name] = int(self.power * stat_mult)
+        remainder = self.power - sum(stats.values())
+        for stat_name in stats:
+            if remainder == 0: break
+            if stats[stat_name] == 0: continue
+            stats[stat_name] += 1
+            remainder -= 1
+        return stats[stat]
+
     @property
     def session(self) -> Session:
         return Session(self.session_name)
