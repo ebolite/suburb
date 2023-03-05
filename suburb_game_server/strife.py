@@ -85,6 +85,8 @@ class Griefer():
                 "savvy": 0,
                 "mettle": 0,
             }
+            self.stat_bonuses: dict[str, int] = {}
+            self.maximum_vial_bonuses: dict[str, int] = {}
             self.player_name: Optional[str] = None
             self.vials: dict[str, dict] = {}
             # vials still need to be initialized
@@ -116,6 +118,21 @@ class Griefer():
                 "starting": vial.get_starting(self),
                 "current": vial.get_starting(self),
             }
+
+    def add_bonus(self, game_attr: str, amount: int):
+        if game_attr in self.base_stats:
+            if game_attr not in self.stat_bonuses: self.stat_bonuses[game_attr] = 0
+            self.stat_bonuses[game_attr] += amount
+        elif game_attr in vials:
+            if game_attr not in self.maximum_vial_bonuses: self.maximum_vial_bonuses[game_attr] = 0
+            self.maximum_vial_bonuses[game_attr] += amount
+            self.change_vial(game_attr, amount)
+        else:
+            raise AttributeError
+        
+    def add_permanent_bonus(self, game_attr: str, amount: int):
+        if self.player is not None: self.player.add_permanent_bonus(game_attr, amount)
+        self.add_bonus(game_attr, amount)
 
     @property
     def power(self) -> int:

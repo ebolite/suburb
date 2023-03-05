@@ -12,7 +12,9 @@ import tiles
 import alchemy
 import binaryoperations
 import npcs
+import strife
 from strife import Strife
+
 
 map_tiles = {}
 
@@ -529,6 +531,8 @@ class Player():
                 "savvy": 1,
                 "mettle": 1,
             }
+            self.permanent_stat_bonuses = {}
+            self.permanent_vial_bonuses = {}
             # phernalia registry is a default list of deployable objects minus the deployed phernalia
             self.deployed_phernalia = []
             self.server_storage = []
@@ -564,6 +568,16 @@ class Player():
         out["power"] = self.power
         return out
     
+    def add_permanent_bonus(self, game_attr: str, amount: int):
+        if game_attr in self.stat_ratios:
+            if game_attr not in self.permanent_stat_bonuses: self.permanent_stat_bonuses[game_attr] = 0
+            self.permanent_stat_bonuses[game_attr] += amount
+        elif game_attr in strife.vials:
+            if game_attr not in self.permanent_vial_bonuses: self.permanent_vial_bonuses[game_attr] = 0
+            self.permanent_vial_bonuses[game_attr] += amount
+        else:
+            raise AttributeError
+
     def assign_specibus(self, kind_name) -> bool:
         if kind_name not in util.kinds: return False
         if self.unassigned_specibi <= 0: return False
