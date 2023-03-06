@@ -20,20 +20,20 @@ class ItemAction():
     def use_func(self, instance: "sylladex.Instance") -> bool:
         return True
 
-    def prompt_message(self, item_name):
-        try: return self.prompt.format(iname=item_name)
+    def prompt_message(self, item_name: str):
+        try: return self.prompt.format(iname=item_name.upper())
         except IndexError: return self.prompt
 
-    def error_message(self, item_name, target_name: Optional[str]=None):
+    def error_message(self, item_name: str, target_name: Optional[str]=None):
         try:
-            if target_name is None: self.error_prompt.format(iname=item_name)
-            return self.error_prompt.format(iname=item_name, tname=target_name)
+            if target_name is None: self.error_prompt.format(iname=item_name.upper())
+            else: return self.error_prompt.format(iname=item_name, tname=target_name.upper())
         except IndexError: return self.error_prompt
     
-    def use_message(self, item_name, target_name: Optional[str]=None):
+    def use_message(self, item_name: str, target_name: Optional[str]=None):
         try:
-            if target_name is None: self.use_prompt.format(iname=item_name)
-            return self.use_prompt.format(iname=item_name, tname=target_name)
+            if target_name is None: self.use_prompt.format(iname=item_name.upper())
+            else: return self.use_prompt.format(iname=item_name.upper(), tname=target_name.upper())
         except IndexError: return self.use_prompt
 
 
@@ -103,22 +103,22 @@ remove_dowel.use_prompt = "You eject the dowel from the {iname}."
 
 lathe = ItemAction("lathe")
 lathe.targeted = True
-lathe.prompt = "Which punched card should you lathe?"
-lathe.error_prompt = "No dowel is inserted."
-lathe.use_prompt = "The dowel ejects after you lathe it with the code for {tname}."
+lathe.prompt = "Which PUNCHED CARD should you lathe?"
+lathe.error_prompt = "No DOWEL is inserted."
+lathe.use_prompt = "The CARVED DOWEL ejects after you lathe it with the code for {tname}."
 
 alchemize = ItemAction("alchemize")
 alchemize.special = True
 def use_alchemize(instance: "sylladex.Instance") -> bool:
     inserted_dowel = instance.inserted_instance()
     if inserted_dowel is None:
-        util.log("The alchemiter needs a cruxite dowel to be inserted first.")
+        util.log("The alchemiter needs a CRUXITE DOWEL to be inserted first.")
         return False
     player_info: dict = client.requestdic(intent="player_info")
     grist_cache: dict = player_info["grist_cache"]
     carved_item_info: dict = client.requestplusdic(intent="carved_item_info", content={"dowel_name": inserted_dowel.name})
     if not carved_item_info:
-        util.log("The code carved on the dowel doesn't match any known item.")
+        util.log("The code carved on the DOWEL doesn't match any known item.")
         util.log("Tell the developer to hurry up and add paradox items.")
         return False
     carved_item = sylladex.Item(carved_item_info["name"], carved_item_info)
