@@ -314,7 +314,7 @@ class Strife():
             # key: griefer name value: list of Skill dict (skill name and target/s)
             self.submitted_actions: dict[str, list[dict]] = {}
 
-    def add_griefer(self, identifier: Union[sessions.Player, npcs.Npc]):
+    def add_griefer(self, identifier: Union["sessions.Player", "npcs.Npc"]):
         if isinstance(identifier, sessions.Player):
             Griefer.from_player(self, identifier)
         elif isinstance(identifier, npcs.Npc):
