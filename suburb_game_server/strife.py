@@ -15,6 +15,8 @@ class Vial():
         self.hidden_vial = False
         # optional vials do not exist for every griefer
         self.optional_vial = False
+        # gel vials are fucked and weird
+        self.gel_vial = False
 
     def get_maximum(self, griefer: "Griefer") -> int:
         formula = griefer.format_formula(self.maximum_formula)
@@ -28,6 +30,7 @@ class Vial():
 hp = Vial("hp")
 hp.maximum_formula = "{power} + {vig}*6"
 hp.starting_formula = "{maximum}"
+hp.gel_vial = True
 
 vim = Vial("vim")
 vim.maximum_formula = "{power} + {tac}*6"
@@ -77,6 +80,8 @@ class Griefer():
         if name not in util.sessions[strife.session.name]["overmaps"][strife.overmap.name]["maps"][strife.map.name]["rooms"][strife.room.name]["strife_dict"]["griefers"]:
             strife.griefers[name] = {}
             self.nickname = name
+            self.type = ""
+            self.symbol_dict = {}
             self.base_power: int = 0
             self.base_stats: dict[str, int] = {
                 "spunk": 0,
@@ -99,6 +104,17 @@ class Griefer():
     def from_player(cls, strife: "Strife", player: "sessions.Player") -> "Griefer":
         griefer = cls(player.name, strife)
         griefer.player_name = player.name
+        griefer.type = "player"
+        # todo: add player symbol dict here
+        griefer.symbol_dict = {
+            "base": "kid",
+            "hair": "egbert",
+            "mouth": "egbert",
+            "eyes": "egbert",
+            "shirt": "egbert",
+            "pants": "egbert",
+            "shoes": "egbert",
+        }
         griefer.nickname = player.nickname
         griefer.base_power = player.power
         base_stats = {stat_name:player.get_base_stat(stat_name) for stat_name in player.stat_ratios}
@@ -157,6 +173,26 @@ class Griefer():
     def power(self) -> int:
         return self.base_power
     
+    @property
+    def stats_dict(self) -> dict:
+        out = {}
+        for stat in self.base_stats:
+            out[stat] = self.get_stat(stat)
+        out["power"] = self.get_stat("power")
+        return out
+    
+    @property
+    def vials_dict(self) -> dict:
+        out = {}
+        for vial in self.vials:
+            out[vial] = {"current": self.get_vial(vial), 
+                         "maximum": self.get_vial_maximum(vial),
+                         "starting": self.vials[vial]["starting"],
+                         "hidden": vials[vial].hidden_vial,
+                         "gel": vials[vial].gel_vial
+                         }
+        return out
+    
     def get_stat(self, stat_name) -> int:
         if stat_name == "power": return self.power
         stat = self.base_stats[stat_name]
@@ -201,6 +237,8 @@ class Griefer():
                         ["rooms"][self.__dict__["room_name"]]
                         ["strife_dict"]["griefers"]
                         [self.__dict__["name"]])
+        out["stats_dict"] = self.stats_dict
+        out["vials_dict"] = self.vials_dict
         return out
 
     @property
