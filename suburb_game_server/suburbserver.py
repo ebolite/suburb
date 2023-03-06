@@ -59,8 +59,9 @@ def threaded_client(connection):
         connection.close()
 
 def map_data(player: "sessions.Player"):
-    map_tiles, map_specials, room_instances, room_npcs = player.get_view()
-    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "room_name": player.room.tile.name, "theme": player.overmap.theme})
+    map_tiles, map_specials, room_instances, room_npcs, strife = player.get_view()
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "strife": strife,
+                       "room_name": player.room.tile.name, "theme": player.overmap.theme})
 
 def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
     if client is None: print("no client"); return "No client dumpass"
@@ -140,6 +141,9 @@ def handle_request(dict):
             return json.dumps({"map_tiles": player.overmap.map_tiles, "theme": player.overmap.theme})
         case "player_info":
             return json.dumps(player.get_dict())
+        case "strife_data":
+            if player.strife is None: return json.dumps({})
+            else: return json.dumps(player.strife.get_dict())
         case "carved_item_info":
             dowel_name = content["dowel_name"]
             if dowel_name not in util.instances: return {}
