@@ -32,6 +32,7 @@ class Underling():
         npc.power = power
         npc.nickname = nickname
         npc.stat_ratios = self.stat_ratios
+        npc.hostile = True
         room.add_npc(npc)
         return npc
 
@@ -54,6 +55,7 @@ class Npc():
             self.power: int = 0
             self.nickname: str = name
             self.type: str = ""
+            self.hostile = True
             self.stat_ratios: dict[str, int] = {
                 "spunk": 1,
                 "vigor": 1,

@@ -144,6 +144,9 @@ def handle_request(dict):
         case "strife_data":
             if player.strife is None: return json.dumps({})
             else: return json.dumps(player.strife.get_dict())
+        # todo: this is not optional
+        case "start_strife":
+            player.room.start_strife()
         case "carved_item_info":
             dowel_name = content["dowel_name"]
             if dowel_name not in util.instances: return {}

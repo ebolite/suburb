@@ -99,6 +99,8 @@ class Griefer():
         if name not in util.sessions[strife.session.name]["overmaps"][strife.overmap.name]["maps"][strife.map.name]["rooms"][strife.room.name]["strife_dict"]["griefers"]:
             strife.griefers[name] = {}
             self.nickname = name
+            # blue: players, red: enemies
+            self.team = "red"
             self.type = ""
             self.symbol_dict = {}
             self.base_power: int = 0
@@ -136,6 +138,7 @@ class Griefer():
         }
         griefer.nickname = player.nickname
         griefer.base_power = player.power
+        griefer.team = "blue"
         base_stats = {stat_name:player.get_base_stat(stat_name) for stat_name in player.stat_ratios}
         griefer.base_stats = base_stats
         griefer.stat_bonuses = player.permanent_stat_bonuses
@@ -151,6 +154,8 @@ class Griefer():
         griefer.nickname = npc.nickname
         griefer.base_power = npc.power
         griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)
+        if npc.hostile: griefer.team = "red"
+        else: griefer.team = "blue"
         griefer.initialize_vials()
         return griefer
 
