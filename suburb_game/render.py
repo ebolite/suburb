@@ -1031,7 +1031,7 @@ class RoomItemDisplay(UIElement):
         if self.outline is not None:
             self.outline.delete()
             self.outline = None
-        if len(self.tile_map.instances) > 0:
+        if len(all_items) > 0:
             outline_element_w = self.w + self.outline_width*2
             outline_element_h = self.h*(len(display_items) + 1) + self.outline_width*2
             self.outline = SolidColor(self.x-self.outline_width, self.y-self.outline_width, outline_element_w, outline_element_h, self.theme.dark)
