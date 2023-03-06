@@ -845,7 +845,7 @@ class Tile(UIElement):
                     viewport_dict = sburbserver.deploy_item(target_x, target_y)
                     if viewport_dict is not None:
                         sburbserver.update_viewport_dic(viewport_dict)
-                        self.tile_map.update_map(viewport_dict)
+                        self.tile_map.update_map(viewport_dict, True)
                 case "revise":
                     if self.tile == sburbserver.current_selected_tile: return
                     if sburbserver.current_selected_tile in self.known_invalid_tiles: return
