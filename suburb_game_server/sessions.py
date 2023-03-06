@@ -340,21 +340,9 @@ class Room():
             self.strife_dict: dict = {}
             self.generate_loot()
 
-    def __setattr__(self, attr, value):
-        self.__dict__[attr] = value
-        (util.sessions[self.__dict__["session_name"]]
-         ["overmaps"][self.__dict__["overmap_name"]]
-         ["maps"][self.__dict__["map_name"]]
-         ["rooms"][self.__dict__["name"]]
-         [attr]) = value
-
-    def __getattr__(self, attr):
-        self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
-                               ["overmaps"][self.__dict__["overmap_name"]]
-                               ["maps"][self.__dict__["map_name"]]
-                               ["rooms"][self.__dict__["name"]]
-                               [attr])
-        return self.__dict__[attr]
+    def start_strife(self):
+        if self.strife is None:
+            strife.Strife(self)
 
     def add_npc(self, npc: "npcs.Npc"):
         if npc.name not in self.npcs:
@@ -504,6 +492,22 @@ class Room():
     @property
     def tile(self) -> tiles.Tile:
         return self.map.get_tile(self.x, self.y)
+    
+    def __setattr__(self, attr, value):
+        self.__dict__[attr] = value
+        (util.sessions[self.__dict__["session_name"]]
+         ["overmaps"][self.__dict__["overmap_name"]]
+         ["maps"][self.__dict__["map_name"]]
+         ["rooms"][self.__dict__["name"]]
+         [attr]) = value
+
+    def __getattr__(self, attr):
+        self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
+                               ["overmaps"][self.__dict__["overmap_name"]]
+                               ["maps"][self.__dict__["map_name"]]
+                               ["rooms"][self.__dict__["name"]]
+                               [attr])
+        return self.__dict__[attr]
 
 
 class Player():
@@ -774,20 +778,7 @@ class Player():
         return True
 
     def get_base_stat(self, stat):
-        total_ratios = 0
-        for stat_name in self.stat_ratios:
-            total_ratios += self.stat_ratios[stat_name]
-        stats = {}
-        for stat_name in self.stat_ratios:
-            if total_ratios != 0: stat_mult = (self.stat_ratios[stat]/total_ratios)
-            else: stat_mult = 1/len(self.stat_ratios)
-            stats[stat_name] = int(self.power * stat_mult)
-        remainder = self.power - sum(stats.values())
-        for stat_name in stats:
-            if remainder == 0: break
-            if stats[stat_name] == 0: continue
-            stats[stat_name] += 1
-            remainder -= 1
+        stats = strife.stats_from_ratios(self.stat_ratios, self.power)
         amount = stats[stat]
         if stat in self.permanent_stat_bonuses:
             amount += self.permanent_stat_bonuses[stat]

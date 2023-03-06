@@ -13,6 +13,14 @@ class Underling():
         underlings[monster_type] = self
         self.monster_type: str = monster_type
         self.base_power: int = 1
+        self.stat_ratios: dict[str, int] = {
+            "spunk": 1,
+            "vigor": 1,
+            "tact": 1,
+            "luck": 1,
+            "savvy": 1,
+            "mettle": 1,
+        }
 
     def make_npc(self, grist_name: str, room: "sessions.Room") -> "Npc":
         tier: int = config.grists[grist_name]["tier"]
@@ -23,10 +31,12 @@ class Underling():
         npc.type = self.monster_type
         npc.power = power
         npc.nickname = nickname
+        npc.stat_ratios = self.stat_ratios
         room.add_npc(npc)
         return npc
 
 imp = Underling("imp")
+imp.stat_ratios["luck"] = 3
 
 class Npc():
     @staticmethod
@@ -44,6 +54,14 @@ class Npc():
             self.power: int = 0
             self.nickname: str = name
             self.type: str = ""
+            self.stat_ratios: dict[str, int] = {
+                "spunk": 1,
+                "vigor": 1,
+                "tact": 1,
+                "luck": 1,
+                "savvy": 1,
+                "mettle": 1,
+            }
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value

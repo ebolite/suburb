@@ -1,10 +1,28 @@
 from copy import deepcopy
-from typing import Optional
+from typing import Optional, Union
 
 import util
 import sessions
+import npcs
 
 vials: dict[str, "Vial"] = {}
+
+def stats_from_ratios(stat_ratios: dict[str, int], power: int):
+    total_ratios = 0
+    for stat_name in stat_ratios:
+        total_ratios += stat_ratios[stat_name]
+    stats = {}
+    for stat_name in stat_ratios:
+        if total_ratios != 0: stat_mult = (stat_ratios[stat_name]/total_ratios)
+        else: stat_mult = 1/len(stat_ratios)
+        stats[stat_name] = int(power * stat_mult)
+    remainder = power - sum(stats.values())
+    for stat_name in stats:
+        if remainder == 0: break
+        if stats[stat_name] == 0: continue
+        stats[stat_name] += 1
+        remainder -= 1
+    return stats
 
 class Vial():
     def __init__(self, name):
@@ -39,6 +57,7 @@ vim.starting_formula = "{maximum}"
 aspect = Vial("aspect")
 aspect.maximum_formula = "{power}*2"
 aspect.starting_formula = "{maximum}"
+aspect.optional_vial = True
 
 hope = Vial("hope")
 hope.maximum_formula = "{power}*3"
@@ -120,7 +139,18 @@ class Griefer():
         base_stats = {stat_name:player.get_base_stat(stat_name) for stat_name in player.stat_ratios}
         griefer.base_stats = base_stats
         griefer.stat_bonuses = player.permanent_stat_bonuses
+        griefer.add_vial("aspect")
         griefer.add_vial(player.secondaryvial)
+        griefer.initialize_vials()
+        return griefer
+    
+    @classmethod
+    def from_npc(cls, strife: "Strife", npc: "npcs.Npc") -> "Griefer":
+        griefer = cls(npc.name, strife)
+        griefer.type = npc.type
+        griefer.nickname = npc.nickname
+        griefer.base_power = npc.power
+        griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)
         griefer.initialize_vials()
         return griefer
 
@@ -278,6 +308,12 @@ class Strife():
             self.turn_num: int = 0
             # key: griefer name value: list of Skill dict (skill name and target/s)
             self.submitted_actions: dict[str, list[dict]] = {}
+
+    def add_griefer(self, identifier: Union[sessions.Player, npcs.Npc]):
+        if isinstance(identifier, sessions.Player):
+            Griefer.from_player(self, identifier)
+        elif isinstance(identifier, npcs.Npc):
+            Griefer.from_npc(self, identifier)
 
     def end(self):
         self.room.strife_dict = {}
