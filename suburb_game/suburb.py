@@ -1064,8 +1064,9 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
     else:
         # selected kind is None
         info_text = render.Text(0.5, 0.3, "Add an item to your strife portfolio by clicking the specibus icon while viewing it.")
-        info_text.color = theme.light
-        info_text.fontsize = 20
+        info_text_2 = render.Text(0.5, 0.7, "You can assign a strife specibus the same way.")
+        info_text.color, info_text_2.color = theme.light, theme.light
+        info_text.fontsize, info_text_2.fontsize = 20, 20
         abstratus_icon = render.Image(0.5, 0.5, "sprites/itemdisplay/strife_card.png")
     back_button = render.Button(0.08, 0.95, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", map_scene, theme=theme)
 
