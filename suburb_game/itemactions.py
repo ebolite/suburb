@@ -9,6 +9,7 @@ import suburb
 item_actions = {}
 
 class ItemAction():
+
     def __init__(self, name):
         self.targeted = False
         self.special = False
@@ -20,17 +21,21 @@ class ItemAction():
     def use_func(self, instance: "sylladex.Instance") -> bool:
         return True
 
-    def prompt_message(self, item_name: str):
-        try: return self.prompt.format(iname=item_name.upper())
+    def prompt_message(self, item_name: Optional[str]):
+        if item_name is None: item_name = "MISSING ITEM"
+        try: return self.prompt.format(iname_lower=item_name, iname=item_name.upper())
         except IndexError: return self.prompt
 
-    def error_message(self, item_name: str, target_name: Optional[str]=None):
+    def error_message(self, item_name: Optional[str], target_name: Optional[str]=None):
+        if item_name is None: item_name = "MISSING ITEM"
         try:
-            if target_name is None: self.error_prompt.format(iname=item_name.upper())
-            else: return self.error_prompt.format(iname=item_name, tname=target_name.upper())
+            if target_name is None: 
+                self.error_prompt.format(iname_lower=item_name, iname=item_name.upper())
+            else: return self.error_prompt.format(iname_lower=item_name, iname=item_name, tname_lower=target_name, tname=target_name.upper())
         except IndexError: return self.error_prompt
     
-    def use_message(self, item_name: str, target_name: Optional[str]=None):
+    def use_message(self, item_name: Optional[str], target_name: Optional[str]=None):
+        if item_name is None: item_name = "MISSING ITEM"
         try:
             if target_name is None: self.use_prompt.format(iname=item_name.upper())
             else: return self.use_prompt.format(iname=item_name.upper(), tname=target_name.upper())
@@ -56,9 +61,9 @@ install_gristtorrent.use_prompt = "You install gristTorrent onto the {tname}."
 
 combine_card = ItemAction("combine_card")
 combine_card.targeted = True
-combine_card.prompt = "Combine {iname} with what (&&)?"
+combine_card.prompt = "Combine {iname_lower} with what (&&)?"
 combine_card.error_prompt = ""
-combine_card.use_prompt = "You combine {iname} with {tname}."
+combine_card.use_prompt = "You combine {iname_lower} with {tname_lower}."
 
 uncombine_card = ItemAction("uncombine_card")
 uncombine_card.error_prompt = "This card is not combined."
@@ -78,17 +83,17 @@ punch_card = ItemAction("punch_card")
 punch_card.targeted = True
 punch_card.prompt = "Which item's code should be punched?"
 punch_card.error_prompt = "No card is inserted."
-punch_card.use_prompt = "You punch the card with the code for {tname}."
+punch_card.use_prompt = "You punch the card with the code for {tname_lower}."
 
 #todo: add support for custom punch
 
 cruxtrude = ItemAction("cruxtrude")
-cruxtrude.use_prompt = "A cruxite dowel flies out of the {iname}!"
+cruxtrude.use_prompt = "A CRUXITE DOWEL flies out of the {iname}!"
 
 insert_dowel = ItemAction("insert_dowel")
 insert_dowel.targeted = True
 insert_dowel.prompt = "Insert what into the {iname}?"
-insert_dowel.error_prompt = "There's already a dowel inserted."
+insert_dowel.error_prompt = "There's already a CRUXITE DOWEL inserted."
 insert_dowel.use_prompt = "You insert {tname} into the {iname}."
 
 insert_carved_dowel = ItemAction("insert_carved_dowel")
@@ -98,8 +103,8 @@ insert_carved_dowel.error_prompt = "There's already a dowel inserted."
 insert_carved_dowel.use_prompt = "You insert {tname} into the {iname}."
 
 remove_dowel = ItemAction("remove_dowel")
-remove_dowel.error_prompt = "No dowel is inserted."
-remove_dowel.use_prompt = "You eject the dowel from the {iname}."
+remove_dowel.error_prompt = "No CRUXITE DOWEL is inserted."
+remove_dowel.use_prompt = "You eject the CRUXITE DOWEL from the {iname}."
 
 lathe = ItemAction("lathe")
 lathe.targeted = True
