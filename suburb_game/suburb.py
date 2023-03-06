@@ -16,6 +16,7 @@ import render
 import client
 import config
 import themes
+import strife
 from sylladex import Instance, Sylladex, Modus
 
 def current_theme():
@@ -725,6 +726,10 @@ def gristtorrent(window: "render.Window"):
 
 @scene
 def map_scene():
+    strife_data = client.requestdic(intent="strife_data")
+    if strife_data: 
+        strife_scene(strife_data)
+        return
     ui_bar = Sylladex.current_sylladex().draw_ui_bar(map_scene)
     tilemap = render.TileMap(0.5, 0.5)
     portfolio_button = render.TextButton(render.SCREEN_WIDTH-256, render.SCREEN_HEIGHT-166-64, 256, 64, "strife portfolio", strife_portfolio_scene, theme=themes.strife)
@@ -734,6 +739,10 @@ def map_scene():
     portfolio_button.outline_color = themes.strife.black
     overmap_button = render.TextButton(0.9, 0.1, 196, 64, ">OVERMAP", overmap)
     log = render.LogWindow(map_scene, tilemap=tilemap, draw_console=True)
+
+@scene
+def strife_scene(strife_dict: Optional[dict]=None):
+    strife.strife_scene(strife_dict)
 
 @scene
 def overmap():
