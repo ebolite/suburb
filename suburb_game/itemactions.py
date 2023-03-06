@@ -116,7 +116,7 @@ def use_alchemize(instance: "sylladex.Instance") -> bool:
         return False
     player_info: dict = client.requestdic(intent="player_info")
     grist_cache: dict = player_info["grist_cache"]
-    carved_item_info: dict = client.requestplusdic(intent="carved_item_info", content={"dowel_name": instance.name})
+    carved_item_info: dict = client.requestplusdic(intent="carved_item_info", content={"dowel_name": inserted_dowel.name})
     if not carved_item_info:
         util.log("The code carved on the dowel doesn't match any known item.")
         util.log("Tell the developer to hurry up and add paradox items.")
