@@ -342,7 +342,13 @@ class Room():
 
     def start_strife(self):
         if self.strife is None:
-            strife.Strife(self)
+            new_strife = strife.Strife(self)
+            for npc_name in self.npcs:
+                npc = npcs.Npc(npc_name)
+                new_strife.add_griefer(npc)
+            for player_name in self.players:
+                player = Player(player_name)
+                new_strife.add_griefer(player)
 
     def add_npc(self, npc: "npcs.Npc"):
         if npc.name not in self.npcs:
