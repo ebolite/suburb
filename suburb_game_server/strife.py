@@ -107,6 +107,10 @@ class Griefer():
     def add_vial(self, vial_name: str):
         self.vials[vial_name] = {}
 
+    def get_vial(self, vial_name: str) -> int:
+        if vial_name not in self.vials: return 0
+        return self.vials[vial_name]["current"]
+
     def get_vial_maximum(self, vial_name: str):
         vial = vials[vial_name]
         maximum = vial.get_maximum(self)
@@ -142,6 +146,7 @@ class Griefer():
         return self.base_power
     
     def get_stat(self, stat_name) -> int:
+        if stat_name == "power": return self.power
         stat = self.base_stats[stat_name]
         if stat_name in self.stat_bonuses:
             stat += self.stat_bonuses[stat_name]
