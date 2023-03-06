@@ -513,12 +513,15 @@ class Image(UIElement):
         self.update()
         return self.surf.get_height()
 
+    def load_image(self, path: str):
+        return pygame.image.load(path)
+
     def update(self):
         if self.path_func is not None and self.path != self.path_func():
             self.path = self.path_func()
             delattr(self, "surf")
         if self.animated:
-            self.surf = pygame.image.load(self.path+f"-{self.animframe}.png").convert()
+            self.surf = self.load_image(self.path+f"-{self.animframe}.png").convert()
             self.scaled = False
             if self.wait == self.speed:
                 self.animframe += 1
@@ -530,7 +533,7 @@ class Image(UIElement):
         else:
             try: self.surf
             except AttributeError:
-                self.surf = pygame.image.load(self.path)
+                self.surf = self.load_image(self.path)
                 if self.convert:
                     self.surf = self.surf.convert()
                     self.surf = self.convert_to_theme(self.surf)
@@ -1439,6 +1442,35 @@ class Enemy(Image):
         super().__init__(x, y, path)
         new_color = config.gristcolors[grist_type]
         self.convert_colors.append((themes.default.dark, new_color)) 
+
+class Symbol(Image):
+    def __init__(self, x, y, parts: dict):
+       self.parts = parts
+       self.base = parts["base"]
+       self.shoes = parts["shoes"]
+       self.pants = parts["pants"]
+       self.shirt = parts["shirt"]
+       self.mouth = parts["mouth"]
+       self.eyes = parts["eyes"]
+       self.hair = parts["hair"]
+       super().__init__(x, y, "")
+
+    def load_image(self, path: str):
+        base = pygame.image.load(f"sprites/symbol/bases/{self.base}.png").convert_alpha()
+        shoes = pygame.image.load(f"sprites/symbol/shoes/{self.shoes}.png").convert_alpha()
+        pants = pygame.image.load(f"sprites/symbol/pants/{self.pants}.png").convert_alpha()
+        shirt = pygame.image.load(f"sprites/symbol/shirt/{self.shirt}.png").convert_alpha()
+        mouth = pygame.image.load(f"sprites/symbol/mouth/{self.mouth}.png").convert_alpha()
+        eyes = pygame.image.load(f"sprites/symbol/eyes/{self.eyes}.png").convert_alpha()
+        hair = pygame.image.load(f"sprites/symbol/hair/{self.hair}.png").convert_alpha()
+        base.blit(shoes, (0, 0))
+        base.blit(pants, (0, 0))
+        base.blit(shirt, (0, 0))
+        base.blit(mouth, (0, 0))
+        base.blit(eyes, (0, 0))
+        base.blit(hair, (0, 0))
+        return base
+
 
 def make_grist_display(x, y, w: int, h: int, padding: int, 
                        grist_name: str, grist_amount: int, 

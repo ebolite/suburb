@@ -1,6 +1,16 @@
 import util
 from pygame import Color
 
+sample_parts = {
+    "base": "kid",
+    "hair": "egbert",
+    "mouth": "egbert",
+    "eyes": "egbert",
+    "shirt": "egbert",
+    "pants": "egbert",
+    "shoes": "egbert",
+}
+
 tiles = {
     "?": "sprites\\tiles\\oob.png",
     "|": "sprites\\tiles\\wall.png",
