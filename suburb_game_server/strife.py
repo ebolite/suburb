@@ -76,6 +76,7 @@ class Griefer():
         self.__dict__["room_name"] = strife.room.name
         if name not in util.sessions[strife.session.name]["overmaps"][strife.overmap.name]["maps"][strife.map.name]["rooms"][strife.room.name]["strife_dict"]["griefers"]:
             strife.griefers[name] = {}
+            self.nickname = name
             self.base_power: int = 0
             self.base_stats: dict[str, int] = {
                 "spunk": 0,
@@ -86,7 +87,6 @@ class Griefer():
                 "mettle": 0,
             }
             self.stat_bonuses: dict[str, int] = {}
-            self.maximum_vial_bonuses: dict[str, int] = {}
             self.player_name: Optional[str] = None
             self.vials: dict[str, dict] = {}
             # vials still need to be initialized
@@ -94,7 +94,19 @@ class Griefer():
                 vial = vials[vial_name]
                 if not vial.optional_vial:
                     self.add_vial(vial_name)
-            self.maximum_vial_bonuses: dict[str, int] = {}
+
+    @classmethod
+    def from_player(cls, strife: "Strife", player: "sessions.Player") -> "Griefer":
+        griefer = cls(player.name, strife)
+        griefer.player_name = player.name
+        griefer.nickname = player.nickname
+        griefer.base_power = player.power
+        base_stats = {stat_name:player.get_base_stat(stat_name) for stat_name in player.stat_ratios}
+        griefer.base_stats = base_stats
+        griefer.stat_bonuses = player.permanent_stat_bonuses
+        griefer.add_vial(player.secondaryvial)
+        griefer.initialize_vials()
+        return griefer
 
     def change_vial(self, vial_name: str, amount: int):
         self.vials[vial_name]["current"] += amount
@@ -114,8 +126,8 @@ class Griefer():
     def get_vial_maximum(self, vial_name: str):
         vial = vials[vial_name]
         maximum = vial.get_maximum(self)
-        if vial_name in self.maximum_vial_bonuses:
-            maximum += self.maximum_vial_bonuses[vial_name]
+        if vial_name in self.stat_bonuses:
+            maximum += self.stat_bonuses[vial_name]
         return maximum
 
     def initialize_vials(self):
@@ -131,8 +143,8 @@ class Griefer():
             if game_attr not in self.stat_bonuses: self.stat_bonuses[game_attr] = 0
             self.stat_bonuses[game_attr] += amount
         elif game_attr in vials:
-            if game_attr not in self.maximum_vial_bonuses: self.maximum_vial_bonuses[game_attr] = 0
-            self.maximum_vial_bonuses[game_attr] += amount
+            if game_attr not in self.stat_bonuses: self.stat_bonuses[game_attr] = 0
+            self.stat_bonuses[game_attr] += amount
             self.change_vial(game_attr, amount)
         else:
             raise AttributeError
@@ -190,7 +202,7 @@ class Griefer():
                         ["strife_dict"]["griefers"]
                         [self.__dict__["name"]])
         return out
-    
+
     @property
     def session(self) -> "sessions.Session":
         return sessions.Session(self.__dict__["session_name"])
