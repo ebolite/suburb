@@ -337,6 +337,7 @@ class Room():
             self.players: list[str] = []
             self.npcs: list[str] = []
             self.instances: list[str] = []
+            self.strife_dict: dict = {}
             self.generate_loot()
 
     def __setattr__(self, attr, value):
@@ -491,8 +492,10 @@ class Room():
         return self.overmap.player
     
     @property
-    def strife(self) -> "Strife":
-        return Strife(self)
+    def strife(self) -> Optional["Strife"]:
+        if self.strife_dict:
+            return Strife(self)
+        else: return None
 
     @property
     def name(self) -> str:
@@ -819,6 +822,10 @@ class Player():
         self.map_name = room.map.name
         self.room_name = room.name
         room.add_player(self)
+
+    @property
+    def strife(self) -> Optional["Strife"]:
+        return self.room.strife
 
     @property
     def grist_cache_limit(self):

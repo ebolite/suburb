@@ -235,12 +235,14 @@ class Strife():
         self.__dict__["overmap_name"] = room.overmap.name
         self.__dict__["map_name"] = room.map.name
         self.__dict__["room_name"] = room.name
-        if "strife_dict" not in util.sessions[room.session.name]["overmaps"][room.overmap.name]["maps"][room.map.name]["rooms"][room.name]:
-            room.strife_dict = {}
+        if not room.strife_dict:
             self.griefers = {}
             self.turn_num: int = 0
             # key: griefer name value: list of Skill dict (skill name and target/s)
             self.submitted_actions: dict[str, list[dict]] = {}
+
+    def end(self):
+        self.room.strife_dict = {}
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
