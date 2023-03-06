@@ -132,7 +132,7 @@ def use_alchemize(instance: "sylladex.Instance") -> bool:
     render.LogWindow(None)
     text = render.Text(0.5, 0.2, "This item will cost:")
     text.color = suburb.current_theme().dark
-    render.make_grist_cost_display(0.5, 0.35, 45, cost, grist_cache, None, suburb.current_theme().dark, absolute=False)
+    render.make_grist_cost_display(0.5, 0.32, 45, cost, grist_cache, None, suburb.current_theme().dark, absolute=False)
     def confirm():
         client.requestplus(intent="use_item", content={"instance_name": instance.name, "action_name": "alchemize", "target_name": None})
         suburb.map_scene()

@@ -630,14 +630,14 @@ def get_spirograph(x, y, thick=True) -> Image:
     return spirograph
 
 def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding: Optional[UIElement], text_color: pygame.Color, temporary=True, absolute=True, scale_mult=1.0) -> UIElement:
-    elements: list[UIElement] = []
+    elements: list[Union[Image, Text]] = []
     padding = 5
     scale = (h / 45) * scale_mult
     fontsize = int(h * scale_mult)
     for grist_name, grist_cost in true_cost.items():
         icon_path = config.grists[grist_name]["image"]
         if len(elements) != 0:
-            icon_x = padding+elements[-1].rect.w
+            icon_x = padding+elements[-1].get_width()
             icon_y = 0
         else:
             icon_x = x
@@ -670,16 +670,10 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding
             binding_w = binding.rect.w
             binding_h = binding.rect.h
         total_element_w = 0
-        total_element_h = 0
         for element in elements:
-            if isinstance(element, Text):
-                total_element_w += element.get_width()
-                total_element_h += element.fontsize
-            elif isinstance(element, Image):
-                total_element_w += element.get_width()
-                total_element_h += element.get_height()
+            total_element_w += element.get_width()
         elements[0].x = int(binding_w*x - total_element_w//2)
-        elements[0].y = int(binding_h*y - total_element_h//2)
+        elements[0].y = int(binding_h*y - h//2)
     return elements[0]
 
 class TileMap(UIElement):
