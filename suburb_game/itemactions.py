@@ -105,7 +105,7 @@ lathe = ItemAction("lathe")
 lathe.targeted = True
 lathe.prompt = "Which PUNCHED CARD should you lathe?"
 lathe.error_prompt = "No DOWEL is inserted."
-lathe.use_prompt = "The CARVED DOWEL ejects after you lathe it with the code for {tname}."
+lathe.use_prompt = "The CARVED DOWEL ejects after you lathe it with the code {tname}."
 
 alchemize = ItemAction("alchemize")
 alchemize.special = True
