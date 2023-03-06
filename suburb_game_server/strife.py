@@ -29,9 +29,9 @@ hp = Vial("hp")
 hp.maximum_formula = "{power} + {vig}*6"
 hp.starting_formula = "{maximum}"
 
-vigor = Vial("vigor")
-vigor.maximum_formula = "{power} + {tac}*6"
-vigor.starting_formula = "{maximum}"
+vim = Vial("vim")
+vim.maximum_formula = "{power} + {tac}*6"
+vim.starting_formula = "{maximum}"
 
 aspect = Vial("aspect")
 aspect.maximum_formula = "{power}*2"
