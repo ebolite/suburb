@@ -536,6 +536,7 @@ class Player():
             self.grist_gutter: list[list] = []
             self.leeching: list[str] = []
             self.wielding: Optional[str] = None
+            self.symbol_dict = {}
             self.stat_ratios = {
                 "spunk": 1,
                 "vigor": 1,

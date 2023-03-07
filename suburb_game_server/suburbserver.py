@@ -119,6 +119,7 @@ def handle_request(dict):
                 player.gameclass = content["class"]
                 player.gristcategory = content["gristcategory"]
                 player.secondaryvial = content["secondaryvial"]
+                player.symbol_dict = content["symbol_dict"]
                 player.add_modus(content["modus"])
                 land = sessions.Overmap(f"{player.name}{session.name}", session, player)
                 player.land_name = land.name

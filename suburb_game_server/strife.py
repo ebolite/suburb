@@ -128,15 +128,7 @@ class Griefer():
         griefer.player_name = player.name
         griefer.type = "player"
         # todo: add player symbol dict here
-        griefer.symbol_dict = {
-            "base": "kid",
-            "hair": "egbert",
-            "mouth": "egbert",
-            "eyes": "egbert",
-            "shirt": "egbert",
-            "pants": "egbert",
-            "shoes": "egbert",
-        }
+        griefer.symbol_dict = player.symbol_dict
         griefer.nickname = player.nickname
         griefer.base_power = player.power
         griefer.team = "blue"
