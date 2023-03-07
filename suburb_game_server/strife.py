@@ -42,7 +42,7 @@ class Vial():
     
     def get_starting(self, griefer: "Griefer") -> int:
         formula = griefer.format_formula(self.starting_formula)
-        formula = formula.format("maximum", self.get_maximum(griefer))
+        if "{maximum}" in formula: formula = formula.replace("{maximum}", str(self.get_maximum(griefer)))
         return int(eval(formula))
     
 hp = Vial("hp")
@@ -245,7 +245,9 @@ class Griefer():
             "sav": self.get_stat("savvy"),
             "met": self.get_stat("mettle"),
         }
-        return formula.format(**terms)
+        for term in terms:
+            if f"{{{term}}}" in formula: formula = formula.replace(f"{{{term}}}", str(terms[term]))
+        return formula
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
