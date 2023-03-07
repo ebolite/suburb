@@ -259,7 +259,7 @@ troll_colors = [
     [153, 0, 77],
 ]
 
-possible_parts = {
+parts_files = {
     "base": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/base")],
     "eyes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/eyes")],
     "hair": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/hair")],
@@ -271,8 +271,32 @@ possible_parts = {
     "coat": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/coat")],
 }
 
+possible_parts = {}
+part_styles = {}
+
+for part in parts_files:
+    possible_parts[part] = []
+    part_styles[part] = {}
+    for item_name in parts_files[part]:
+        style = "standard"
+        if "-" in item_name:
+            split_item = item_name.split("-")
+            final_item_name: str = split_item[0]
+            style: str = split_item[1]
+        else:
+            final_item_name = item_name
+        if final_item_name not in possible_parts[part]:
+            possible_parts[part].append(final_item_name)
+        if final_item_name not in part_styles[part]:
+            part_styles[part][final_item_name] = []
+        if style not in part_styles[part][final_item_name]:
+            part_styles[part][final_item_name].append(style)
+
+print(possible_parts)
+print(part_styles)
+
 def get_random_symbol() -> dict:
-    symbol_dict: dict[str, Union[str, list]] = {
+    symbol_dict: dict[str, Union[str, list, dict]] = {
         "base": random.choice(possible_parts["base"]),
         "eyes": random.choice(possible_parts["eyes"]),
         "hair": random.choice(possible_parts["hair"]),
@@ -288,6 +312,15 @@ def get_random_symbol() -> dict:
         symbol_dict["coat"] = "none"
     if symbol_dict["base"] != "troll":
         symbol_dict["horns"] = "none"
+    style_dict = {}
+    for part in symbol_dict:
+        item_name = symbol_dict[part]
+        if item_name == "none":
+            style_dict[part] = "standard"
+        else:
+            style_dict[part] = random.choice(part_styles[part][item_name])
+    symbol_dict["style_dict"] = style_dict
+    if symbol_dict["base"] != "troll": 
         symbol_dict["color"] = random.choice(pickable_colors)
     else:
         symbol_dict["color"] = random.choice(troll_colors)

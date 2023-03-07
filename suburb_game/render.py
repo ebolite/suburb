@@ -1467,6 +1467,7 @@ class Symbol(Image):
        self.hair = parts["hair"]
        self.horns = parts["horns"]
        self.color = parts["color"]
+       self.style_dict = parts["style_dict"]
        super().__init__(x, y, "")
 
     @property
@@ -1483,16 +1484,24 @@ class Symbol(Image):
         r, g, b = max(r, 0), max(g, 0), max(b, 0)
         return pygame.Color(r, g, b)
 
+    def get_image_path(self, part, item_name):
+        if item_name == "none": return "sprites/symbol/none.png"
+        style = self.style_dict[part]
+        if style == "standard":
+            return f"sprites/symbol/{part}/{item_name}.png"
+        else:
+            return f"sprites/symbol/{part}/{item_name}-{style}.png"
+
     def load_image(self, path: str):
-        base = pygame.image.load(f"sprites/symbol/base/{self.base}.png").convert_alpha()
-        shoes = pygame.image.load(f"sprites/symbol/shoes/{self.shoes}.png").convert_alpha()
-        pants = pygame.image.load(f"sprites/symbol/pants/{self.pants}.png").convert_alpha()
-        shirt = pygame.image.load(f"sprites/symbol/shirt/{self.shirt}.png").convert_alpha()
-        coat = pygame.image.load(f"sprites/symbol/coat/{self.coat}.png").convert_alpha()
-        mouth = pygame.image.load(f"sprites/symbol/mouth/{self.mouth}.png").convert_alpha()
-        eyes = pygame.image.load(f"sprites/symbol/eyes/{self.eyes}.png").convert_alpha()
-        hair = pygame.image.load(f"sprites/symbol/hair/{self.hair}.png").convert_alpha()
-        horns = pygame.image.load(f"sprites/symbol/horns/{self.horns}.png").convert_alpha()
+        base = pygame.image.load(self.get_image_path("base", self.base)).convert_alpha()
+        shoes = pygame.image.load(self.get_image_path("shoes", self.shoes)).convert_alpha()
+        pants = pygame.image.load(self.get_image_path("pants", self.pants)).convert_alpha()
+        shirt = pygame.image.load(self.get_image_path("shirt", self.shirt)).convert_alpha()
+        coat = pygame.image.load(self.get_image_path("coat", self.coat)).convert_alpha()
+        mouth = pygame.image.load(self.get_image_path("mouth", self.mouth)).convert_alpha()
+        eyes = pygame.image.load(self.get_image_path("eyes", self.eyes)).convert_alpha()
+        hair = pygame.image.load(self.get_image_path("hair", self.hair)).convert_alpha()
+        horns = pygame.image.load(self.get_image_path("horns", self.horns)).convert_alpha()
         if self.base == "kid":
             eyes = pygame.PixelArray(eyes)
             eyes.replace(pygame.Color(255, 186, 41), pygame.Color(255, 255, 255))
