@@ -1476,7 +1476,10 @@ class Symbol(Image):
     
     @property
     def dark(self):
-        r, g, b = self.color[0]-30, self.color[1]-30, self.color[2]-30
+        sub = 30
+        for color in self.color:
+            if color < 20: sub+= 20
+        r, g, b = self.color[0]-sub, self.color[1]-sub, self.color[2]-sub
         r, g, b = max(r, 0), max(g, 0), max(b, 0)
         return pygame.Color(r, g, b)
 
