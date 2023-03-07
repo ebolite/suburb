@@ -1131,13 +1131,13 @@ if __name__ == "__main__":
     # choosemodus()
     # render.TileMap(0.5, 0.5, map)
     # computer()
-    title() # normal game start
+    # title() # normal game start
     # test_overmap()
     # continue to render until render.render() returns False
     # imp = render.Enemy(0.5, 0.5, "shale", "imp") 
     # render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, themes.default.black)
     # render.Overmap(0.5, 0.5, test_map)
-    # render.Symbol(0.5, 0.5, config.sample_parts)
+    render.Symbol(0.5, 0.5, config.get_random_symbol())
     while render.render():
         ...
 

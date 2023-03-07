@@ -1,5 +1,6 @@
 import util
 import os
+import random
 from pygame import Color
 
 sample_parts = {
@@ -221,3 +222,14 @@ possible_parts = {
     "shoes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shoes")],
 }
 
+def get_random_symbol() -> dict:
+    symbol_dict = {
+        "base": random.choice(possible_parts["bases"]),
+        "eyes": random.choice(possible_parts["eyes"]),
+        "hair": random.choice(possible_parts["hair"]),
+        "mouth": random.choice(possible_parts["mouth"]),
+        "pants": random.choice(possible_parts["pants"]),
+        "shirt": random.choice(possible_parts["shirt"]),
+        "shoes": random.choice(possible_parts["shoes"]),
+    }
+    return symbol_dict
