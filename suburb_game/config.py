@@ -1,4 +1,5 @@
 import util
+import os
 from pygame import Color
 
 sample_parts = {
@@ -209,3 +210,14 @@ gristcategories = {
     "uranium": ["malachite", "copper", "lead", "neon", "silicon", "sunstone", "uranium", "emerald", "star sapphire"],
     "wealth": ["aquamarine", "amethyst", "topaz", "ruby", "gold", "silk", "emerald", "star sapphire", "diamond"]
     }
+
+possible_parts = {
+    "bases": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/bases")],
+    "eyes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/eyes")],
+    "hair": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/hair")],
+    "mouth": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/mouth")],
+    "pants": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/pants")],
+    "shirt": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shirt")],
+    "shoes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shoes")],
+}
+
