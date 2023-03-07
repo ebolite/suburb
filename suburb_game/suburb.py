@@ -314,6 +314,11 @@ def make_symbol():
         def text_func():
             return character_info["symbol_dict"][part]
         return text_func
+    def random_button():
+        character_info["symbol_dict"] = config.get_random_symbol()
+        symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
+        symbol.surf = symbol.load_image("")
+    randomize = render.TextButton(0.33, 0.1, 196, 32, ">RANDOM", random_button)
     for i, part in enumerate(config.possible_parts):
         y = 0.2 + 0.1*i
         text = render.Text(0.33, y, "fuck")
@@ -325,7 +330,6 @@ def make_symbol():
         left_button = render.TextButton(0.2, y, 32, 32, "<", get_left_button_func(part))
         left_button = render.TextButton(0.46, y, 32, 32, ">", get_right_button_func(part))
     confirm_button = render.Button(0.65, 0.75, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", aspectcharacter)
-    backbutton = render.Button(0.1, 0.08, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", pronounscharacter)
 
 def make_asbutton(aspect):
     def button():

@@ -1467,9 +1467,9 @@ class Symbol(Image):
         base.blit(shoes, (0, 0))
         base.blit(pants, (0, 0))
         base.blit(shirt, (0, 0))
+        base.blit(hair, (0, 0))
         base.blit(mouth, (0, 0))
         base.blit(eyes, (0, 0))
-        base.blit(hair, (0, 0))
         return base
 
 
