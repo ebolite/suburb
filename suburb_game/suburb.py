@@ -3,6 +3,7 @@ import sys
 import pathlib
 import hashlib
 import socket
+import math
 import time
 from captcha.image import ImageCaptcha
 import cv2
@@ -314,6 +315,12 @@ def make_symbol():
         def text_func():
             return character_info["symbol_dict"][part]
         return text_func
+    def get_color_button_func(color_list: list[int]):
+        def color_button_func():
+            character_info["symbol_dict"]["color"] = color_list
+            symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
+            symbol.surf = symbol.load_image("")
+        return color_button_func
     def random_button():
         character_info["symbol_dict"] = config.get_random_symbol()
         symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
@@ -329,6 +336,32 @@ def make_symbol():
         label.bind_to(text)
         left_button = render.TextButton(0.2, y, 32, 32, "<", get_left_button_func(part))
         left_button = render.TextButton(0.46, y, 32, 32, ">", get_right_button_func(part))
+    color_swatch_x = 720
+    color_swatch_y = 50
+    color_swatch_wh = 32
+    color_swatch_columns = 12
+    color_swatch_rows = math.ceil(len(config.pickable_colors) / color_swatch_columns)
+    current_column = 0
+    current_row = 0
+    outline_width = 4
+    background = render.SolidColor(color_swatch_x-outline_width, color_swatch_y-outline_width, 
+                                   color_swatch_wh*color_swatch_columns + outline_width*2,
+                                   color_swatch_wh*color_swatch_rows + outline_width*2,
+                                   current_theme().dark)
+    background.border_radius = 2
+    for color_list in config.pickable_colors:
+        x = color_swatch_x + color_swatch_wh*current_column
+        y = color_swatch_y + color_swatch_wh*current_row
+        color = pygame.Color(color_list[0], color_list[1], color_list[2])
+        color_button = render.TextButton(x, y, color_swatch_wh, color_swatch_wh, "", get_color_button_func(color_list))
+        color_button.absolute = True
+        color_button.fill_color = color
+        color_button.hover_color = color
+        color_button.outline_color = color
+        current_column += 1
+        if current_column == color_swatch_columns:
+            current_column = 0
+            current_row += 1
     confirm_button = render.Button(0.65, 0.75, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", aspectcharacter)
 
 def make_asbutton(aspect):
