@@ -340,7 +340,7 @@ def make_symbol():
             symbol.surf = symbol.load_image("")
         return color_button_func
     def random_button():
-        character_info["symbol_dict"] = config.get_random_symbol()
+        character_info["symbol_dict"] = config.get_random_symbol(character_info["symbol_dict"]["base"])
         symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
         symbol.surf = symbol.load_image("")
     randomize = render.TextButton(0.33, 0.05, 196, 32, ">RANDOM", random_button)

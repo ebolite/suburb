@@ -2,7 +2,7 @@ import util
 import os
 import random
 from pygame import Color
-from typing import Union
+from typing import Union, Optional
 
 sample_parts = {
     "base": "kid",
@@ -295,7 +295,7 @@ for part in parts_files:
 print(possible_parts)
 print(part_styles)
 
-def get_random_symbol() -> dict:
+def get_random_symbol(base: Optional[str] = None) -> dict:
     symbol_dict: dict[str, Union[str, list, dict]] = {
         "base": random.choice(possible_parts["base"]),
         "eyes": random.choice(possible_parts["eyes"]),
@@ -306,6 +306,8 @@ def get_random_symbol() -> dict:
         "shirt": random.choice(possible_parts["shirt"]),
         "shoes": random.choice(possible_parts["shoes"]),
     }
+    if base is None: symbol_dict["base"] = random.choice(possible_parts["base"])
+    else: symbol_dict["base"] = base
     if random.random() < 0.5:
         symbol_dict["coat"] = random.choice(possible_parts["coat"])
     else:
