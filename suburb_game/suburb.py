@@ -1102,7 +1102,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             selected_kind = None
     if selected_kind is not None:
         # main box
-        print(player_dict["symbol_dict"])
         symbol = render.Symbol(0.825, 0.6, player_dict["symbol_dict"])
         print(selected_kind)
         strife_deck_bar = render.Image(0, 0, "sprites/itemdisplay/strife_deck_bar.png")
@@ -1170,7 +1169,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                     remainder = power - sum(stats.values())
                     for stat_name in stats:
                         if remainder == 0: break
-                        if stats[stat_name] == 0: continue
+                        if int(stat_boxes[stat_name].text) == 0: continue
                         stats[stat_name] += 1
                         remainder -= 1
                     amount = stats[stat]

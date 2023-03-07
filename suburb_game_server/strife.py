@@ -19,7 +19,7 @@ def stats_from_ratios(stat_ratios: dict[str, int], power: int):
     remainder = power - sum(stats.values())
     for stat_name in stats:
         if remainder == 0: break
-        if stats[stat_name] == 0: continue
+        if stat_ratios[stat_name] == 0: continue
         stats[stat_name] += 1
         remainder -= 1
     return stats
