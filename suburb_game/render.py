@@ -1516,6 +1516,11 @@ class Symbol(Image):
             hair = pygame.PixelArray(hair)
             hair.replace(pygame.Color(255, 255, 255), pygame.Color(1, 1, 1))
             hair = hair.make_surface()
+        coat_back_path = f"sprites/symbol/coat-backs/{self.coat}-{self.style_dict['coat']}.png"
+        if os.path.isfile(coat_back_path):
+            coatback = pygame.image.load(coat_back_path).convert_alpha()
+            coatback.blit(base, (0, 0))
+            base = coatback
         base.blit(shoes, (0, 0))
         base.blit(pants, (0, 0))
         base.blit(shirt, (0, 0))
