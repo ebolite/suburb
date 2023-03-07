@@ -1506,13 +1506,10 @@ class Symbol(Image):
         base.blit(horns, (0, 0))
         base.blit(mouth, (0, 0))
         base.blit(eyes, (0, 0))
-        bg = pygame.Surface((base.get_width(), base.get_height()))
-        bg.fill(pygame.Color(0, 0, 0))
-        bg.blit(base, (0, 0))
-        base = bg
-        base = palette_swap(base, themes.default.light, self.light)
-        base = palette_swap(base, themes.default.dark, self.dark)
-        base.set_colorkey(pygame.Color(0, 0 ,0))
+        base = pygame.PixelArray(base)
+        base.replace(themes.default.light, self.light)
+        base.replace(themes.default.dark, self.dark)
+        base = base.make_surface()
         return base
 
 
