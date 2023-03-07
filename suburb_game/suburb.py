@@ -325,9 +325,9 @@ def make_symbol():
         character_info["symbol_dict"] = config.get_random_symbol()
         symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
         symbol.surf = symbol.load_image("")
-    randomize = render.TextButton(0.33, 0.1, 196, 32, ">RANDOM", random_button)
+    randomize = render.TextButton(0.33, 0.05, 196, 32, ">RANDOM", random_button)
     for i, part in enumerate(config.possible_parts):
-        y = 0.2 + 0.1*i
+        y = 0.15 + 0.1*i
         text = render.Text(0.33, y, "fuck")
         text.text_func = get_text_func(part)
         text.color = current_theme().dark

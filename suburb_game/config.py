@@ -268,6 +268,7 @@ possible_parts = {
     "pants": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/pants")],
     "shirt": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shirt")],
     "shoes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shoes")],
+    "coat": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/coat")],
 }
 
 def get_random_symbol() -> dict:
@@ -281,6 +282,10 @@ def get_random_symbol() -> dict:
         "shirt": random.choice(possible_parts["shirt"]),
         "shoes": random.choice(possible_parts["shoes"]),
     }
+    if random.random() < 0.5:
+        symbol_dict["coat"] = random.choice(possible_parts["coat"])
+    else:
+        symbol_dict["coat"] = "none"
     if symbol_dict["base"] != "troll":
         symbol_dict["horns"] = "none"
         symbol_dict["color"] = random.choice(pickable_colors)

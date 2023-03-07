@@ -1461,6 +1461,7 @@ class Symbol(Image):
        self.shoes = parts["shoes"]
        self.pants = parts["pants"]
        self.shirt = parts["shirt"]
+       self.coat = parts["coat"]
        self.mouth = parts["mouth"]
        self.eyes = parts["eyes"]
        self.hair = parts["hair"]
@@ -1484,6 +1485,7 @@ class Symbol(Image):
         shoes = pygame.image.load(f"sprites/symbol/shoes/{self.shoes}.png").convert_alpha()
         pants = pygame.image.load(f"sprites/symbol/pants/{self.pants}.png").convert_alpha()
         shirt = pygame.image.load(f"sprites/symbol/shirt/{self.shirt}.png").convert_alpha()
+        coat = pygame.image.load(f"sprites/symbol/coat/{self.coat}.png").convert_alpha()
         mouth = pygame.image.load(f"sprites/symbol/mouth/{self.mouth}.png").convert_alpha()
         eyes = pygame.image.load(f"sprites/symbol/eyes/{self.eyes}.png").convert_alpha()
         hair = pygame.image.load(f"sprites/symbol/hair/{self.hair}.png").convert_alpha()
@@ -1502,6 +1504,7 @@ class Symbol(Image):
         base.blit(shoes, (0, 0))
         base.blit(pants, (0, 0))
         base.blit(shirt, (0, 0))
+        base.blit(coat, (0, 0))
         base.blit(hair, (0, 0))
         base.blit(horns, (0, 0))
         base.blit(mouth, (0, 0))
