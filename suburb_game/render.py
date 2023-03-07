@@ -236,6 +236,7 @@ class TextButton(UIElement):
         self.outline_color: pygame.Color = self.theme.dark
         self.fill_color: pygame.Color = self.theme.white
         self.hover_color: pygame.Color = self.theme.dark
+        self.draw_condition: Optional[Callable] = None
         self.draw_sprite = True
         self.toggle = False
         self.click_on_mouse_down = False
@@ -244,6 +245,8 @@ class TextButton(UIElement):
         mouseup_check.append(self)
 
     def update(self):
+        if self.draw_condition is not None:
+            if not self.draw_condition(): return
         if self.truncated == True:
             self.text_surf = self.font.render(self.text+"...", True, self.text_color)
         else:

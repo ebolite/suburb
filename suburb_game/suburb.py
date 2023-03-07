@@ -325,13 +325,22 @@ def make_symbol():
             symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
             symbol.surf = symbol.load_image("")
         return button_func
+    def get_style_button_condition(part):
+        def condition():
+            current_item_name = character_info["symbol_dict"][part]
+            if len(config.part_styles[part][current_item_name]) > 1: return True
+            else: return False
+        return condition
     def get_text_func(part):
         def text_func():
             return character_info["symbol_dict"][part]
         return text_func
     def get_style_text_func(part):
         def text_func():
-            return character_info["symbol_dict"]["style_dict"][part]
+            current_item_name = character_info["symbol_dict"][part]
+            style = character_info["symbol_dict"]["style_dict"][part]
+            if len(config.part_styles[part][current_item_name]) > 1: return style
+            else: return ""
         return text_func
     def get_color_button_func(color_list: list[int]):
         def color_button_func():
@@ -360,7 +369,9 @@ def make_symbol():
         style_label.fontsize = 18
         style_label.bind_to(text)
         left_style_button = render.TextButton(0.27, y+0.04, 20, 20, "<", get_style_button_func(part, "left"))
+        left_style_button.draw_condition = get_style_button_condition(part)
         right_style_button = render.TextButton(0.39, y+0.04, 20, 20, ">", get_style_button_func(part, "right"))
+        right_style_button.draw_condition = get_style_button_condition(part)
     color_swatch_x = 680
     color_swatch_y = 50
     color_swatch_wh = 32
