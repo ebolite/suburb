@@ -1455,18 +1455,18 @@ class Symbol(Image):
        self.eyes = parts["eyes"]
        self.hair = parts["hair"]
        self.horns = parts["horns"]
-       self.light_color = parts["light_color"]
-       self.dark_color = parts["dark_color"]
+       self.color = parts["color"]
        super().__init__(x, y, "")
 
     @property
     def light(self):
-        r, g, b = self.light_color[0], self.light_color[1], self.light_color[2]
+        r, g, b = self.color[0], self.color[1], self.color[2]
         return pygame.Color(r, g, b)
     
     @property
     def dark(self):
-        r, g, b = self.dark_color[0], self.dark_color[1], self.dark_color[2]
+        r, g, b = self.color[0]-30, self.color[1]-30, self.color[2]-30
+        r, g, b = max(r, 0), max(g, 0), max(b, 0)
         return pygame.Color(r, g, b)
 
     def load_image(self, path: str):

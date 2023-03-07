@@ -213,6 +213,51 @@ gristcategories = {
     "wealth": ["aquamarine", "amethyst", "topaz", "ruby", "gold", "silk", "emerald", "star sapphire", "diamond"]
     }
 
+# first is light color, second is dark color
+pickable_colors = [
+    # kids colors
+    [4, 254, 58],
+    [213, 157, 248],
+    [248, 12, 1],
+    [84, 163, 255],
+    [74, 213, 242],
+    [32, 147, 0],
+    [255, 111, 212],
+    [253, 115, 6],
+    # 255
+    [0, 0, 255],
+    [0, 255, 0],
+    [255, 0, 0],
+    # hemospectrum
+    [161, 0, 0],
+    [162, 82, 3],
+    [161, 161, 0],
+    [101, 130, 0],
+    [64, 102, 0],
+    [7, 136, 70],
+    [0, 130, 130],
+    [0, 65, 130],
+    [0, 33, 203],
+    [68, 10, 127],
+    [106, 0, 106],
+    [153, 0, 77],
+]
+
+troll_colors = [
+    [161, 0, 0],
+    [162, 82, 3],
+    [161, 161, 0],
+    [101, 130, 0],
+    [64, 102, 0],
+    [7, 136, 70],
+    [0, 130, 130],
+    [0, 65, 130],
+    [0, 33, 203],
+    [68, 10, 127],
+    [106, 0, 106],
+    [153, 0, 77],
+]
+
 possible_parts = {
     "base": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/base")],
     "eyes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/eyes")],
@@ -237,7 +282,7 @@ def get_random_symbol() -> dict:
     }
     if symbol_dict["base"] != "troll":
         symbol_dict["horns"] = "none"
-    r, g, b = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
-    symbol_dict["light_color"] = [r, g, b]
-    symbol_dict["dark_color"]= [max(r-30, 0), max(g-30, 0), max(b-30, 0)]
+        symbol_dict["color"] = random.choice(pickable_colors)
+    else:
+        symbol_dict["color"] = random.choice(troll_colors)
     return symbol_dict
