@@ -1472,7 +1472,6 @@ class Symbol(Image):
        self.color = parts["color"]
        self.style_dict = parts["style_dict"]
        super().__init__(x, y, "")
-       self.convert = False
        self.load_image("")
 
     @property
@@ -1528,6 +1527,7 @@ class Symbol(Image):
         base = pygame.PixelArray(base)
         base.replace(themes.default.light, self.light)
         base.replace(themes.default.dark, self.dark)
+        base.replace(pygame.Color(0, 0, 0), pygame.Color(1, 1, 1))
         base = base.make_surface()
         return base
 
