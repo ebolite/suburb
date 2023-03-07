@@ -240,7 +240,7 @@ class Griefer():
             "power": self.power,
             "spk": self.get_stat("spunk"),
             "vig": self.get_stat("vigor"),
-            "tac": self.get_stat("grief"),
+            "tac": self.get_stat("tact"),
             "luk": self.get_stat("luck"),
             "sav": self.get_stat("savvy"),
             "met": self.get_stat("mettle"),

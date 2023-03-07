@@ -1017,8 +1017,9 @@ class RoomItemDisplay(UIElement):
                 def output_func():
                     if button_instance_name in self.tile_map.instances:
                         suburb.display_item(Instance(button_instance_name, self.tile_map.instances[button_instance_name]), suburb.map_scene)
-                    else:
-                        ... # todo
+                    else: # this is an npc
+                        client.request(intent="start_strife")
+                        suburb.map_scene()
             return output_func
         for button in self.buttons:
             button.delete()
