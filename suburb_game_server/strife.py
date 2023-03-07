@@ -103,6 +103,7 @@ class Griefer():
             self.team = "red"
             self.type = ""
             self.symbol_dict = {}
+            self.grist_type: Optional[str] = None
             self.base_power: int = 0
             self.base_stats: dict[str, int] = {
                 "spunk": 0,
@@ -151,6 +152,7 @@ class Griefer():
     def from_npc(cls, strife: "Strife", npc: "npcs.Npc") -> "Griefer":
         griefer = cls(npc.name, strife)
         griefer.type = npc.type
+        griefer.grist_type = npc.grist_type
         griefer.nickname = npc.nickname
         griefer.base_power = npc.power
         griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)

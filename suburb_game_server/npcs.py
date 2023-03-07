@@ -1,4 +1,5 @@
 from string import ascii_letters
+from typing import Optional
 from copy import deepcopy
 import random
 
@@ -29,6 +30,7 @@ class Underling():
         name = Npc.make_valid_name(nickname)
         npc = Npc(name)
         npc.type = self.monster_type
+        npc.grist_type = grist_name
         npc.power = power
         npc.nickname = nickname
         npc.stat_ratios = self.stat_ratios
@@ -55,6 +57,7 @@ class Npc():
             self.power: int = 0
             self.nickname: str = name
             self.type: str = ""
+            self.grist_type: Optional[str] = None
             self.hostile = True
             self.stat_ratios: dict[str, int] = {
                 "spunk": 1,

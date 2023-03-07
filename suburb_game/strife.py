@@ -14,6 +14,7 @@ class Griefer():
     def __init__(self, name, griefer_dict):
         self.name = name
         self.type: str = griefer_dict["type"]
+        self.grist_type: Optional[str] = griefer_dict["grist_type"]
         self.symbol_dict: dict = griefer_dict["symbol_dict"]
         self.player_name: Optional[str] = griefer_dict["player_name"]
         self.nickname: str = griefer_dict["nickname"]
@@ -33,3 +34,10 @@ class Strife():
 def strife_scene(strife_dict: Optional[dict]=None):
     if strife_dict is None: strife_dict = client.requestdic(intent="strife_info")
     strife = Strife(strife_dict)
+    for griefer_name in strife.griefers:
+        griefer = strife.griefers[griefer_name]
+        if griefer.type != "player":
+            grist_type = griefer.grist_type or "build"
+            sprite = render.Enemy(0.66, 0.5, grist_type, griefer.type)
+        else:
+            sprite = render.Symbol(0.33, 0.5, griefer.symbol_dict)
