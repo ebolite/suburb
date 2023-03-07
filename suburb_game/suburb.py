@@ -761,6 +761,25 @@ def debug_speedrun():
     character_info["secondaryvial"] = "imagination"
     character_info["modus"] = "array"
     character_info["gristcategory"] = "amber"
+    style_dict = config.default_style_dict.copy()
+    style_dict.update({
+            "pants": "rgb",
+            "shoes": "trollian",
+            "coat": "rgb",
+        })
+    character_info["symbol_dict"] = {
+        "base": "troll",
+        "eyes": "leo",
+        "hair": "crocker",
+        "horns": "gemini",
+        "mouth": "gemini",
+        "pants": "harley",
+        "shirt": "aries",
+        "shoes": "striber",
+        "coat": "english",
+        "color": [161, 161, 0],
+        "style_dict": style_dict,
+    }
     newgame()
 
 def debug_speedrun_2():
@@ -779,6 +798,25 @@ def debug_speedrun_2():
     character_info["secondaryvial"] = "gambit"
     character_info["modus"] = "array"
     character_info["gristcategory"] = "dark"
+    style_dict = config.default_style_dict.copy()
+    style_dict.update({
+            "pants": "rgb",
+            "shoes": "rgb",
+            "coat": "trollian",
+        })
+    character_info["symbol_dict"] = {
+        "base": "troll",
+        "eyes": "cancer",
+        "hair": "aries",
+        "horns": "gemini",
+        "mouth": "taurus",
+        "pants": "gemini",
+        "shirt": "english",
+        "shoes": "leo",
+        "coat": "leo",
+        "color": [68, 10, 127],
+        "style_dict": style_dict,
+    }
     newgame()
 
 @scene
@@ -1064,6 +1102,8 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             selected_kind = None
     if selected_kind is not None:
         # main box
+        print(player_dict["symbol_dict"])
+        symbol = render.Symbol(0.825, 0.6, player_dict["symbol_dict"])
         print(selected_kind)
         strife_deck_bar = render.Image(0, 0, "sprites/itemdisplay/strife_deck_bar.png")
         strife_deck_bar.absolute = True

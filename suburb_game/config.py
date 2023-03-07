@@ -245,18 +245,18 @@ pickable_colors = [
 ]
 
 troll_colors = [
-    [161, 0, 0],
-    [162, 82, 3],
-    [161, 161, 0],
-    [101, 130, 0],
-    [64, 102, 0],
-    [7, 136, 70],
-    [0, 130, 130],
-    [0, 65, 130],
-    [0, 33, 203],
-    [68, 10, 127],
-    [106, 0, 106],
-    [153, 0, 77],
+    [161, 0, 0], # rust
+    [162, 82, 3], # bronze
+    [161, 161, 0], # gold
+    [101, 130, 0], # lime
+    [64, 102, 0], # olive
+    [7, 136, 70], # jade
+    [0, 130, 130], # teal
+    [0, 65, 130], # cobalt
+    [0, 33, 203], # indigo
+    [68, 10, 127], # purple
+    [106, 0, 106], # violet
+    [153, 0, 77], # fuchsia
 ]
 
 parts_files = {
@@ -292,8 +292,7 @@ for part in parts_files:
         if style not in part_styles[part][final_item_name]:
             part_styles[part][final_item_name].append(style)
 
-print(possible_parts)
-print(part_styles)
+default_style_dict = {part:"standard" for part in possible_parts}
 
 def get_random_symbol(base: Optional[str] = None) -> dict:
     symbol_dict: dict[str, Union[str, list, dict]] = {
