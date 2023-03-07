@@ -1472,6 +1472,7 @@ class Symbol(Image):
        self.color = parts["color"]
        self.style_dict = parts["style_dict"]
        super().__init__(x, y, "")
+       self.convert = False
        self.load_image("")
 
     @property
