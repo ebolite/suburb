@@ -336,7 +336,7 @@ def make_symbol():
         label.bind_to(text)
         left_button = render.TextButton(0.2, y, 32, 32, "<", get_left_button_func(part))
         left_button = render.TextButton(0.46, y, 32, 32, ">", get_right_button_func(part))
-    color_swatch_x = 720
+    color_swatch_x = 680
     color_swatch_y = 50
     color_swatch_wh = 32
     color_swatch_columns = 12
@@ -362,7 +362,52 @@ def make_symbol():
         if current_column == color_swatch_columns:
             current_column = 0
             current_row += 1
+    custom_color_button = render.TextButton(1080, 65, 128, 32, ">CUSTOM", pick_custom_color)
+    custom_color_button.absolute = True
     confirm_button = render.Button(0.65, 0.75, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", aspectcharacter)
+
+@scene
+def pick_custom_color():
+    color_list = character_info["symbol_dict"]["color"]
+    red_box = render.InputTextBox(0.5, 0.5, 128, 32)
+    green_box = render.InputTextBox(0.5, 0.6, 128, 32)
+    blue_box = render.InputTextBox(0.5, 0.7, 128, 32)
+    red_box.numbers_only = True
+    red_box.maximum_value = 255
+    red_box.text = str(color_list[0])
+    red_label = render.Text(0.5, -0.3, "RED")
+    red_label.fontsize = 20
+    red_label.color = current_theme().dark
+    red_label.bind_to(red_box)
+    green_box.numbers_only = True
+    green_box.maximum_value = 255
+    green_box.text = str(color_list[1])
+    green_label = render.Text(0.5, -0.3, "GREEN")
+    green_label.fontsize = 20
+    green_label.color = current_theme().dark
+    green_label.bind_to(green_box)
+    blue_box.numbers_only = True
+    blue_box.maximum_value = 255
+    blue_box.text = str(color_list[2])
+    blue_label = render.Text(0.5, -0.3, "BLUE")
+    blue_label.fontsize = 20
+    blue_label.color = current_theme().dark
+    blue_label.bind_to(blue_box)
+    def color_display_func():
+        try:
+            r, g, b = int(red_box.text), int(green_box.text), int(blue_box.text)
+            r, g, b = max(r, 0), max(g, 0), max(b, 0)
+            return pygame.Color(r, g, b)
+        except ValueError: return pygame.Color(0, 0, 0)
+    color_display_wh = 128
+    color_display = render.SolidColor(render.SCREEN_WIDTH//2 - color_display_wh//2, 3*render.SCREEN_HEIGHT//10 - color_display_wh//2, 
+                                      color_display_wh, color_display_wh, pygame.Color(0, 0, 0))
+    color_display.color_func = color_display_func
+    def confirm_button_func():
+        r, g, b = int(red_box.text), int(green_box.text), int(blue_box.text)
+        character_info["symbol_dict"]["color"] = [r, g, b]
+        make_symbol()
+    confirm_button = render.Button(0.5, 0.85, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm_button_func)
 
 def make_asbutton(aspect):
     def button():

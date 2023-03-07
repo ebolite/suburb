@@ -166,6 +166,7 @@ class SolidColor(UIElement):
         self.w = w
         self.h = h
         self.color: Union[pygame.Color, list[pygame.Color]] = color
+        self.color_func: Optional[Callable] = None
         self.outline_color: Optional[pygame.Color] = None
         self.alpha = 255
         self.animframe = 0
@@ -176,10 +177,14 @@ class SolidColor(UIElement):
             self.bind_to(binding)
         update_check.append(self)
 
+    def get_color(self) -> Union[pygame.Color, list]:
+        if self.color_func is None: return self.color
+        else: return self.color_func()
+
     def update(self):
         self.surf = pygame.Surface((self.w, self.h))
-        if isinstance(self.color, pygame.Color):
-            fill_color = self.color
+        if isinstance(self.get_color(), pygame.Color):
+            fill_color = self.get_color()
         else:
             # list of colors to flip between
             index = self.animframe % len(self.color)
@@ -401,6 +406,7 @@ class InputTextBox(UIElement):
         self.fontsize = 32
         self.max_characters = 0
         self.numbers_only = False
+        self.maximum_value = 0
         self.absolute_text = True
         self.suffix = ""
         self.secure = False
@@ -476,7 +482,11 @@ class InputTextBox(UIElement):
                     try: int(event.unicode)
                     except ValueError: return
                 self.text += event.unicode
-                if self.numbers_only: self.text = str(int(self.text))
+                if self.numbers_only: 
+                    number = int(self.text)
+                    if self.maximum_value != 0:
+                        number = min(number, self.maximum_value)
+                    self.text = str(number)
 
     @property
     def font(self):
