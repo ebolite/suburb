@@ -1476,6 +1476,14 @@ class Symbol(Image):
         shirt = pygame.image.load(f"sprites/symbol/shirt/{self.shirt}.png").convert_alpha()
         mouth = pygame.image.load(f"sprites/symbol/mouth/{self.mouth}.png").convert_alpha()
         eyes = pygame.image.load(f"sprites/symbol/eyes/{self.eyes}.png").convert_alpha()
+        if self.base == "kid":
+            eyes = pygame.PixelArray(eyes)
+            eyes.replace(pygame.Color(255, 186, 41), pygame.Color(255, 255, 255))
+            eyes = eyes.make_surface()
+        elif self.base == "troll":
+            eyes = pygame.PixelArray(eyes)
+            eyes.replace(pygame.Color(255, 255, 255), pygame.Color(255, 186, 41))
+            eyes = eyes.make_surface()
         hair = pygame.image.load(f"sprites/symbol/hair/{self.hair}.png").convert_alpha()
         horns = pygame.image.load(f"sprites/symbol/horns/{self.horns}.png").convert_alpha()
         base.blit(shoes, (0, 0))
