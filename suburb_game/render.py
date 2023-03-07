@@ -1485,7 +1485,6 @@ class Symbol(Image):
         return pygame.Color(r, g, b)
 
     def get_image_path(self, part, item_name):
-        if item_name == "none": return "sprites/symbol/none.png"
         style = self.style_dict[part]
         if style == "standard":
             return f"sprites/symbol/{part}/{item_name}.png"

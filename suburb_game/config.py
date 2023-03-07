@@ -315,10 +315,7 @@ def get_random_symbol() -> dict:
     style_dict = {}
     for part in symbol_dict:
         item_name = symbol_dict[part]
-        if item_name == "none":
-            style_dict[part] = "standard"
-        else:
-            style_dict[part] = random.choice(part_styles[part][item_name])
+        style_dict[part] = random.choice(part_styles[part][item_name])
     symbol_dict["style_dict"] = style_dict
     if symbol_dict["base"] != "troll": 
         symbol_dict["color"] = random.choice(pickable_colors)

@@ -292,25 +292,32 @@ def pronounscharacter():
 @scene
 def make_symbol():
     symbol = render.Symbol(0.66, 0.5, character_info["symbol_dict"])
-    def get_left_button_func(part):
+    def get_button_func(part, direction: str):
         def left_button_func():
             current = character_info["symbol_dict"][part]
             new_index = config.possible_parts[part].index(current) - 1
-            character_info["symbol_dict"][part] = config.possible_parts[part][new_index]
+            new_item_name = config.possible_parts[part][new_index]
+            character_info["symbol_dict"][part] = new_item_name
+            if character_info["symbol_dict"]["style_dict"][part] not in config.part_styles[part][new_item_name]:
+                character_info["symbol_dict"]["style_dict"][part] = random.choice(config.part_styles[part][new_item_name])
             symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
             symbol.surf = symbol.load_image("")
-        return left_button_func
-    def get_right_button_func(part):
         def right_button_func():
             current = character_info["symbol_dict"][part]
             try:
                 new_index = config.possible_parts[part].index(current) + 1
-                character_info["symbol_dict"][part] = config.possible_parts[part][new_index]
+                new_item_name = config.possible_parts[part][new_index]
             except IndexError:
-                character_info["symbol_dict"][part] = config.possible_parts[part][0]
+                new_item_name = config.possible_parts[part][0]
+            character_info["symbol_dict"][part] = new_item_name
+            if character_info["symbol_dict"]["style_dict"][part] not in config.part_styles[part][new_item_name]:
+                character_info["symbol_dict"]["style_dict"][part] = random.choice(config.part_styles[part][new_item_name])
             symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
             symbol.surf = symbol.load_image("")
-        return right_button_func
+        if direction == "left":
+            return left_button_func
+        else:
+            return right_button_func
     def get_text_func(part):
         def text_func():
             return character_info["symbol_dict"][part]
@@ -331,11 +338,11 @@ def make_symbol():
         text = render.Text(0.33, y, "fuck")
         text.text_func = get_text_func(part)
         text.color = current_theme().dark
-        label = render.Text(0.5, -0.3, part)
+        label = render.Text(0.5, -0.15, part)
         label.fontsize = 18
         label.bind_to(text)
-        left_button = render.TextButton(0.2, y, 32, 32, "<", get_left_button_func(part))
-        left_button = render.TextButton(0.46, y, 32, 32, ">", get_right_button_func(part))
+        left_button = render.TextButton(0.2, y, 32, 32, "<", get_button_func(part, "left"))
+        right_button = render.TextButton(0.46, y, 32, 32, ">", get_button_func(part, "right"))
     color_swatch_x = 680
     color_swatch_y = 50
     color_swatch_wh = 32
