@@ -2,6 +2,7 @@ import util
 import os
 import random
 from pygame import Color
+from typing import Union
 
 sample_parts = {
     "base": "kid",
@@ -224,7 +225,7 @@ possible_parts = {
 }
 
 def get_random_symbol() -> dict:
-    symbol_dict = {
+    symbol_dict: dict[str, Union[str, list]] = {
         "base": random.choice(possible_parts["base"]),
         "eyes": random.choice(possible_parts["eyes"]),
         "hair": random.choice(possible_parts["hair"]),
@@ -236,4 +237,7 @@ def get_random_symbol() -> dict:
     }
     if symbol_dict["base"] != "troll":
         symbol_dict["horns"] = "none"
+    r, g, b = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+    symbol_dict["light_color"] = [r, g, b]
+    symbol_dict["dark_color"]= [max(r-30, 0), max(g-30, 0), max(b-30, 0)]
     return symbol_dict

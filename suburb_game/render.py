@@ -1455,7 +1455,19 @@ class Symbol(Image):
        self.eyes = parts["eyes"]
        self.hair = parts["hair"]
        self.horns = parts["horns"]
+       self.light_color = parts["light_color"]
+       self.dark_color = parts["dark_color"]
        super().__init__(x, y, "")
+
+    @property
+    def light(self):
+        r, g, b = self.light_color[0], self.light_color[1], self.light_color[2]
+        return pygame.Color(r, g, b)
+    
+    @property
+    def dark(self):
+        r, g, b = self.dark_color[0], self.dark_color[1], self.dark_color[2]
+        return pygame.Color(r, g, b)
 
     def load_image(self, path: str):
         base = pygame.image.load(f"sprites/symbol/base/{self.base}.png").convert_alpha()
@@ -1473,6 +1485,13 @@ class Symbol(Image):
         base.blit(horns, (0, 0))
         base.blit(mouth, (0, 0))
         base.blit(eyes, (0, 0))
+        bg = pygame.Surface((base.get_width(), base.get_height()))
+        bg.fill(pygame.Color(0, 0, 0))
+        bg.blit(base, (0, 0))
+        base = bg
+        base = palette_swap(base, themes.default.light, self.light)
+        base = palette_swap(base, themes.default.dark, self.dark)
+        base.set_colorkey(pygame.Color(0, 0 ,0))
         return base
 
 
