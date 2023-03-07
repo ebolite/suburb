@@ -216,6 +216,7 @@ possible_parts = {
     "base": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/base")],
     "eyes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/eyes")],
     "hair": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/hair")],
+    "horns": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/horns")],
     "mouth": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/mouth")],
     "pants": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/pants")],
     "shirt": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shirt")],
@@ -227,9 +228,12 @@ def get_random_symbol() -> dict:
         "base": random.choice(possible_parts["base"]),
         "eyes": random.choice(possible_parts["eyes"]),
         "hair": random.choice(possible_parts["hair"]),
+        "horns": random.choice(possible_parts["horns"]),
         "mouth": random.choice(possible_parts["mouth"]),
         "pants": random.choice(possible_parts["pants"]),
         "shirt": random.choice(possible_parts["shirt"]),
         "shoes": random.choice(possible_parts["shoes"]),
     }
+    if symbol_dict["base"] != "troll":
+        symbol_dict["horns"] = "none"
     return symbol_dict

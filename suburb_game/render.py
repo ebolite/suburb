@@ -1454,6 +1454,7 @@ class Symbol(Image):
        self.mouth = parts["mouth"]
        self.eyes = parts["eyes"]
        self.hair = parts["hair"]
+       self.horns = parts["horns"]
        super().__init__(x, y, "")
 
     def load_image(self, path: str):
@@ -1464,10 +1465,12 @@ class Symbol(Image):
         mouth = pygame.image.load(f"sprites/symbol/mouth/{self.mouth}.png").convert_alpha()
         eyes = pygame.image.load(f"sprites/symbol/eyes/{self.eyes}.png").convert_alpha()
         hair = pygame.image.load(f"sprites/symbol/hair/{self.hair}.png").convert_alpha()
+        horns = pygame.image.load(f"sprites/symbol/horns/{self.horns}.png").convert_alpha()
         base.blit(shoes, (0, 0))
         base.blit(pants, (0, 0))
         base.blit(shirt, (0, 0))
         base.blit(hair, (0, 0))
+        base.blit(horns, (0, 0))
         base.blit(mouth, (0, 0))
         base.blit(eyes, (0, 0))
         return base
