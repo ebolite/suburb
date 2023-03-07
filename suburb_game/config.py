@@ -213,7 +213,7 @@ gristcategories = {
     }
 
 possible_parts = {
-    "bases": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/bases")],
+    "base": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/base")],
     "eyes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/eyes")],
     "hair": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/hair")],
     "mouth": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/mouth")],
@@ -224,7 +224,7 @@ possible_parts = {
 
 def get_random_symbol() -> dict:
     symbol_dict = {
-        "base": random.choice(possible_parts["bases"]),
+        "base": random.choice(possible_parts["base"]),
         "eyes": random.choice(possible_parts["eyes"]),
         "hair": random.choice(possible_parts["hair"]),
         "mouth": random.choice(possible_parts["mouth"]),

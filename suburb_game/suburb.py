@@ -209,7 +209,8 @@ character_info = {
 "class": None,
 "secondaryvial": None,
 "modus": None,
-"gristcategory": None
+"gristcategory": None,
+"symbol_dict": config.get_random_symbol(),
 }
 
 @scene
@@ -268,7 +269,7 @@ def pronounscharacter():
         example2 = f"Today {pronouns[0]} will play a game with some friends of {pronouns[3]}."
         if log.text == example1 and log2.text == example2:
             character_info["pronouns"] = pronouns
-            aspectcharacter()
+            make_symbol()
         else:
             log.text = example1
             log2.text = example2
@@ -286,6 +287,45 @@ def pronounscharacter():
     sheher = render.Button(.4, .62, "sprites\\buttons\\sheher.png", "sprites\\buttons\\sheherpressed.png", hernouns)
     theyem = render.Button(.6, .62, "sprites\\buttons\\theyem.png", "sprites\\buttons\\theyempressed.png", themnouns)
     other = render.Button(.8, .62, "sprites\\buttons\\other.png", "sprites\\buttons\\otherpressed.png", placeholder) # todo
+
+@scene
+def make_symbol():
+    symbol = render.Symbol(0.66, 0.5, character_info["symbol_dict"])
+    def get_left_button_func(part):
+        def left_button_func():
+            current = character_info["symbol_dict"][part]
+            new_index = config.possible_parts[part].index(current) - 1
+            character_info["symbol_dict"][part] = config.possible_parts[part][new_index]
+            symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
+            symbol.surf = symbol.load_image("")
+        return left_button_func
+    def get_right_button_func(part):
+        def right_button_func():
+            current = character_info["symbol_dict"][part]
+            try:
+                new_index = config.possible_parts[part].index(current) + 1
+                character_info["symbol_dict"][part] = config.possible_parts[part][new_index]
+            except IndexError:
+                character_info["symbol_dict"][part] = config.possible_parts[part][0]
+            symbol.__init__(0.66, 0.5, character_info["symbol_dict"])
+            symbol.surf = symbol.load_image("")
+        return right_button_func
+    def get_text_func(part):
+        def text_func():
+            return character_info["symbol_dict"][part]
+        return text_func
+    for i, part in enumerate(config.possible_parts):
+        y = 0.2 + 0.1*i
+        text = render.Text(0.33, y, "fuck")
+        text.text_func = get_text_func(part)
+        text.color = current_theme().dark
+        label = render.Text(0.5, -0.3, part)
+        label.fontsize = 18
+        label.bind_to(text)
+        left_button = render.TextButton(0.2, y, 32, 32, "<", get_left_button_func(part))
+        left_button = render.TextButton(0.46, y, 32, 32, ">", get_right_button_func(part))
+    confirm_button = render.Button(0.65, 0.75, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", aspectcharacter)
+    backbutton = render.Button(0.1, 0.08, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", pronounscharacter)
 
 def make_asbutton(aspect):
     def button():
@@ -1131,13 +1171,14 @@ if __name__ == "__main__":
     # choosemodus()
     # render.TileMap(0.5, 0.5, map)
     # computer()
+    make_symbol()
     # title() # normal game start
     # test_overmap()
     # continue to render until render.render() returns False
     # imp = render.Enemy(0.5, 0.5, "shale", "imp") 
     # render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, themes.default.black)
     # render.Overmap(0.5, 0.5, test_map)
-    render.Symbol(0.5, 0.5, config.get_random_symbol())
+    # render.Symbol(0.5, 0.5, config.get_random_symbol())
     while render.render():
         ...
 

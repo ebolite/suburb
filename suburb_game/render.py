@@ -1457,7 +1457,7 @@ class Symbol(Image):
        super().__init__(x, y, "")
 
     def load_image(self, path: str):
-        base = pygame.image.load(f"sprites/symbol/bases/{self.base}.png").convert_alpha()
+        base = pygame.image.load(f"sprites/symbol/base/{self.base}.png").convert_alpha()
         shoes = pygame.image.load(f"sprites/symbol/shoes/{self.shoes}.png").convert_alpha()
         pants = pygame.image.load(f"sprites/symbol/pants/{self.pants}.png").convert_alpha()
         shirt = pygame.image.load(f"sprites/symbol/shirt/{self.shirt}.png").convert_alpha()
