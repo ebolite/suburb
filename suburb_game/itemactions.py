@@ -23,25 +23,30 @@ class ItemAction():
 
     def prompt_message(self, item_name: Optional[str]) -> str:
         if item_name is None: item_name = "MISSING ITEM"
-        try: return self.prompt.format(iname_lower=item_name, iname=item_name.upper())
-        except IndexError: return self.prompt
+        prompt = self.prompt
+        if "{iname_lower}" in prompt: prompt = prompt.replace("{iname_lower}", item_name)
+        if "{iname}" in prompt: prompt = prompt.replace("{iname}", item_name.upper())
+        return prompt
 
     def error_message(self, item_name: Optional[str], target_name: Optional[str]=None) -> str:
         if item_name is None: item_name = "MISSING ITEM"
         if target_name is None: target_name = "MISSING ITEM"
-        try:
-            if target_name is None: 
-                return self.error_prompt.format(iname_lower=item_name, iname=item_name.upper())
-            else: return self.error_prompt.format(iname_lower=item_name, iname=item_name, tname_lower=target_name, tname=target_name.upper())
-        except IndexError: return self.error_prompt
+        prompt = self.error_prompt
+        if "{iname_lower}" in prompt: prompt = prompt.replace("{iname_lower}", item_name)
+        if "{iname}" in prompt: prompt = prompt.replace("{iname}", item_name.upper())
+        if "{tname_lower}" in prompt: prompt = prompt.replace("{tname_lower}", target_name)
+        if "{tname}" in prompt: prompt = prompt.replace("{tname}", target_name.upper())
+        return prompt
     
     def use_message(self, item_name: Optional[str], target_name: Optional[str]=None) -> str:
         if item_name is None: item_name = "MISSING ITEM"
         if target_name is None: target_name = "MISSING ITEM"
-        try:
-            if target_name is None: return self.use_prompt.format(iname=item_name.upper())
-            else: return self.use_prompt.format(iname=item_name.upper(), tname=target_name.upper())
-        except IndexError: return self.use_prompt
+        prompt = self.use_prompt
+        if "{iname_lower}" in prompt: prompt = prompt.replace("{iname_lower}", item_name)
+        if "{iname}" in prompt: prompt = prompt.replace("{iname}", item_name.upper())
+        if "{tname_lower}" in prompt: prompt = prompt.replace("{tname_lower}", target_name)
+        if "{tname}" in prompt: prompt = prompt.replace("{tname}", target_name.upper())
+        return prompt
 
 
 add_card = ItemAction("add_card")
