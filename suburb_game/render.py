@@ -858,7 +858,7 @@ class Tile(UIElement):
                         self.tile_map.update_map(viewport_dict, True)
                 case "revise":
                     if self.tile == sburbserver.current_selected_tile: return
-                    if sburbserver.current_selected_tile in self.known_invalid_tiles: return
+                    if sburbserver.current_selected_tile in self.known_invalid_tiles: return 
                     viewport_dict = sburbserver.revise_tile(target_x, target_y)
                     if viewport_dict is None: self.known_invalid_tiles.append(sburbserver.current_selected_tile)
                     else:

@@ -418,17 +418,17 @@ class Room():
     
     def get_surrounding_tiles(self) -> list[tiles.Tile]:
         out_tiles = []
-        for y in range(-1, 1):
-            for x in range(-1, 1):
+        for y in range(-1, 2):
+            for x in range(-1, 2):
                 if x == 0 and y == 0: continue
                 if self.map.is_tile_in_bounds(self.x+x, self.y+y):
                     out_tiles.append(self.map.find_room(self.x+x, self.y+y).tile)
         return out_tiles
 
     def revise(self, client: "Player", new_tile_char: str) -> bool:
-        if self.tile.forbidden: return False
+        if self.tile.forbidden: return False 
         new_tile = tiles.tiles[new_tile_char]
-        if new_tile.forbidden: return False
+        if new_tile.forbidden: return False 
         if self.players: return False
         # todo: return False if NPCs are in the room as well
         # can't place an impassible tile where instances of items are
@@ -448,7 +448,7 @@ class Room():
         else:
             build_cost = new_cost - old_cost
         cost = {"build": build_cost}
-        if not client.pay_costs(cost): return False
+        if not client.pay_costs(cost): return False 
         self.map.change_tile(self.x, self.y, new_tile_char)
         # todo: add item falling if this tile is no longer solid
         return True
