@@ -16,7 +16,7 @@ import suburb
 import themes
 import binaryoperations
 import sburbserver
-from strife import Npc
+from strife import Npc, Griefer
 from sylladex import Instance, Sylladex
 
 pygame.init()
@@ -1511,13 +1511,6 @@ class Vial(SolidColor):
     def filled_percent(self) -> float:
         return self.current / self.maximum   
 
-class Enemy(Image):
-    def __init__(self, x, y, grist_type, monster_type):
-        path = f"sprites/strife/{monster_type}.png"
-        super().__init__(x, y, path)
-        new_color = config.gristcolors[grist_type]
-        self.convert_colors.append((themes.default.dark, new_color)) 
-
 class Symbol(Image):
     def __init__(self, x, y, parts: dict):
        self.parts = parts
@@ -1596,6 +1589,56 @@ class Symbol(Image):
         base.replace(pygame.Color(0, 0, 0), pygame.Color(1, 1, 1))
         base = base.make_surface()
         return base
+
+class Enemy(Image):
+    def __init__(self, x, y, griefer: "Griefer"):
+        self.vials: dict[str, Vial] = {}
+        self.griefer = griefer
+        path = f"sprites/strife/{griefer.type}.png"
+        super().__init__(x, y, path)
+        grist_type = griefer.grist_type or "build"
+        new_color = config.gristcolors[grist_type]
+        self.convert_colors.append((themes.default.dark, new_color)) 
+        self.add_vial("hp")
+
+    def add_vial(self, vial_type):
+        if vial_type not in self.vials:
+            current = self.griefer.vials[vial_type]["current"]
+            maximum = self.griefer.vials[vial_type]["maximum"]
+            new_vial = Vial(0, -30, 150, current, maximum, vial_type)
+            new_vial.bind_to(self)
+            self.vials[vial_type] = new_vial
+
+    def update_vials(self):
+        for vial_type in self.vials:
+            current = self.griefer.vials[vial_type]["current"]
+            maximum = self.griefer.vials[vial_type]["maximum"]
+            vial = self.vials[vial_type]
+            vial.current = current
+            vial.maximum = maximum
+
+class PlayerGriefer(Symbol):
+    def __init__(self, x, y, griefer: Griefer):
+        super().__init__(x, y, griefer.symbol_dict)
+        self.vials: dict[str, Vial] = {}
+        self.griefer = griefer
+        self.add_vial("hp")
+
+    def add_vial(self, vial_type):
+        if vial_type not in self.vials:
+            current = self.griefer.vials[vial_type]["current"]
+            maximum = self.griefer.vials[vial_type]["maximum"]
+            new_vial = Vial(120, 30, 150, current, maximum, vial_type)
+            new_vial.bind_to(self)
+            self.vials[vial_type] = new_vial
+
+    def update_vials(self):
+        for vial_type in self.vials:
+            current = self.griefer.vials[vial_type]["current"]
+            maximum = self.griefer.vials[vial_type]["maximum"]
+            vial = self.vials[vial_type]
+            vial.current = current
+            vial.maximum = maximum
 
 
 def make_grist_display(x, y, w: int, h: int, padding: int, 

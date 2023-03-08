@@ -32,12 +32,15 @@ class Strife():
         self.submitted_actions: dict[str, list[dict]] = strife_dict["submitted_actions"]
 
 def strife_scene(strife_dict: Optional[dict]=None):
+    griefer_sprites = {}
     if strife_dict is None: strife_dict = client.requestdic(intent="strife_info")
     strife = Strife(strife_dict)
     for griefer_name in strife.griefers:
         griefer = strife.griefers[griefer_name]
         if griefer.type != "player":
             grist_type = griefer.grist_type or "build"
-            sprite = render.Enemy(0.66, 0.5, grist_type, griefer.type)
+            sprite = render.Enemy(0.66, 0.5, griefer)
+            griefer_sprites[griefer_name] = sprite
         else:
-            sprite = render.Symbol(0.33, 0.5, griefer.symbol_dict)
+            sprite = render.PlayerGriefer(0.33, 0.5, griefer)
+            griefer_sprites[griefer_name] = sprite
