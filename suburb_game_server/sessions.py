@@ -424,6 +424,14 @@ class Room():
                 if self.map.is_tile_in_bounds(self.x+x, self.y+y):
                     out_tiles.append(self.map.find_room(self.x+x, self.y+y).tile)
         return out_tiles
+    
+    def get_orthogonal_tiles(self) -> list[tiles.Tile]:
+        out_tiles = []
+        for coords in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            x, y = coords
+            if self.map.is_tile_in_bounds(self.x+x, self.y+y):
+                out_tiles.append(self.map.find_room(self.x+x, self.y+y).tile)
+        return out_tiles
 
     def revise(self, client: "Player", new_tile_char: str) -> bool:
         if self.tile.forbidden: return False 
@@ -433,7 +441,7 @@ class Room():
         # todo: return False if NPCs are in the room as well
         # can't place an impassible tile where instances of items are
         if new_tile.impassible and self.instances: return False
-        surrounding_tiles = self.get_surrounding_tiles()
+        surrounding_tiles = self.get_orthogonal_tiles()
         if new_tile.solid:
             for tile in surrounding_tiles:
                 if tile.solid: break
