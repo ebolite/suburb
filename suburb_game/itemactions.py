@@ -101,13 +101,13 @@ insert_dowel = ItemAction("insert_dowel")
 insert_dowel.targeted = True
 insert_dowel.prompt = "Insert what into the {iname}?"
 insert_dowel.error_prompt = "There's already a CRUXITE DOWEL inserted."
-insert_dowel.use_prompt = "You insert {tname} into the {iname}."
+insert_dowel.use_prompt = "You insert a {tname} into the {iname}."
 
 insert_carved_dowel = ItemAction("insert_carved_dowel")
 insert_carved_dowel.targeted = True
 insert_carved_dowel.prompt = "Insert what into the {iname}?"
-insert_carved_dowel.error_prompt = "There's already a dowel inserted."
-insert_carved_dowel.use_prompt = "You insert {tname} into the {iname}."
+insert_carved_dowel.error_prompt = "There's already a CRUXITE DOWEL inserted."
+insert_carved_dowel.use_prompt = "You insert {tname_lower} into the {iname}."
 
 remove_dowel = ItemAction("remove_dowel")
 remove_dowel.error_prompt = "No CRUXITE DOWEL is inserted."
@@ -117,7 +117,7 @@ lathe = ItemAction("lathe")
 lathe.targeted = True
 lathe.prompt = "Which PUNCHED CARD should you lathe?"
 lathe.error_prompt = "No DOWEL is inserted."
-lathe.use_prompt = "The CARVED DOWEL ejects after you lathe it with the code {tname}."
+lathe.use_prompt = "The CARVED DOWEL ejects after you lathe it with the code {tname_lower}."
 
 alchemize = ItemAction("alchemize")
 alchemize.special = True
