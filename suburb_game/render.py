@@ -193,7 +193,17 @@ class SolidColor(UIElement):
         if self.outline_color is not None:
             self.outline_surf = pygame.Surface((self.w + self.outline_width*2, self.h + self.outline_width*2))
         self.rect = self.surf.get_rect()
-        self.rect.x, self.rect.y = self.get_rect_xy()
+        if self.absolute:
+            self.rect.x, self.rect.y = self.get_rect_xy()
+        else:
+            if self.relative_binding is not None:
+                width = self.relative_binding.rect.w
+                height = self.relative_binding.rect.h
+            else:
+                width = SCREEN_WIDTH
+                height = SCREEN_HEIGHT
+            self.rect.x = int(width * self.x) - self.w//2
+            self.rect.y = int(height * self.y) - self.h//2
         if self.outline_color is not None: 
             self.outline_rect = self.outline_surf.get_rect()
             self.outline_rect.x, self.outline_rect.y = self.rect.x-self.outline_width, self.rect.y-self.outline_width
