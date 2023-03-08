@@ -156,7 +156,7 @@ def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", in
         return button_func
     selectbutton.onpress = get_mode_change_button("select")
     revisebutton.onpress = get_mode_change_button("revise", "revise")
-    deploybutton.onpress = get_mode_change_button("deploy")
+    deploybutton.onpress = get_mode_change_button("deploy", "phernalia_registry")
     phernaliaregistrybutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     phernaliaregistrybutton_background.border_radius = 2
     phernaliaregistrybutton = render.Button(55, 0, "sprites/computer/Sburb/phernalia_registry_button.png", None, get_mode_change_button("deploy", "phernalia_registry"))
