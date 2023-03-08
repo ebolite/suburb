@@ -800,19 +800,20 @@ def debug_speedrun_2():
     character_info["gristcategory"] = "dark"
     style_dict = config.default_style_dict.copy()
     style_dict.update({
-            "pants": "rgb",
-            "shoes": "rgb",
+            "pants": "trollian",
+            "eyes": "rgb",
+            "shoes": "trollian",
             "coat": "trollian",
         })
     character_info["symbol_dict"] = {
         "base": "troll",
-        "eyes": "cancer",
-        "hair": "aries",
-        "horns": "gemini",
+        "eyes": "libra",
+        "hair": "scorpio",
+        "horns": "aquarius",
         "mouth": "taurus",
-        "pants": "gemini",
-        "shirt": "english",
-        "shoes": "leo",
+        "pants": "leo",
+        "shirt": "lalobbe",
+        "shoes": "aquarius",
         "coat": "leo",
         "color": [68, 10, 127],
         "style_dict": style_dict,
