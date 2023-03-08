@@ -1331,6 +1331,7 @@ if __name__ == "__main__":
     # computer()
     # make_symbol()
     title() # normal game start
+    # render.Vial(100, 100, 150, 50, 100, "hp")
     # test_overmap()
     # continue to render until render.render() returns False
     # imp = render.Enemy(0.5, 0.5, "shale", "imp") 

@@ -213,6 +213,15 @@ gristcategories = {
     "wealth": ["aquamarine", "amethyst", "topaz", "ruby", "gold", "silk", "emerald", "star sapphire", "diamond"]
     }
 
+vials = {
+    "hp": { 
+        "name": "HEALTH VIAL",
+        "gel_vial": True,
+        "fill_color": Color(191, 75, 153), 
+        "shade_color": Color(159, 54, 145),
+        },
+}
+
 # first is light color, second is dark color
 pickable_colors = [
     # kids colors

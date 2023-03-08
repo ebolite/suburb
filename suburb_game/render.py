@@ -73,6 +73,8 @@ class UIElement(pygame.sprite.Sprite):
         self.absolute = False
         self.x = 0
         self.y = 0
+        self.rect_x_offset = 0
+        self.rect_y_offset = 0
         self.theme: themes.Theme = suburb.current_theme()
         self.bound_elements: list[UIElement] = []
         # temporary elements are meant to be disposed of
@@ -156,7 +158,7 @@ class UIElement(pygame.sprite.Sprite):
             else:
                 rect_x = int(self.relative_binding.rect.x - secondary_surf_width/2) + self.x*self.relative_binding.rect.w
                 rect_y = int(self.relative_binding.rect.y - secondary_surf_height/2) + self.y*self.relative_binding.rect.h
-        return rect_x, rect_y
+        return rect_x+self.rect_x_offset, rect_y+self.rect_y_offset
 
 class SolidColor(UIElement):
     def __init__(self, x, y, w, h, color: pygame.Color, binding:Optional[UIElement]=None):
@@ -173,6 +175,7 @@ class SolidColor(UIElement):
         self.outline_width = 2
         self.border_radius: int = 0
         self.absolute = True
+        self.draw_sprite = True
         if binding:
             self.bind_to(binding)
         update_check.append(self)
@@ -202,8 +205,9 @@ class SolidColor(UIElement):
             else:
                 width = SCREEN_WIDTH
                 height = SCREEN_HEIGHT
-            self.rect.x = int(width * self.x) - self.w//2
-            self.rect.y = int(height * self.y) - self.h//2
+            self.rect.x = int(width * self.x) - self.w//2 + self.rect_x_offset
+            self.rect.y = int(height * self.y) - self.h//2 + self.rect_y_offset
+        if not self.draw_sprite: return
         if self.outline_color is not None: 
             self.outline_rect = self.outline_surf.get_rect()
             self.outline_rect.x, self.outline_rect.y = self.rect.x-self.outline_width, self.rect.y-self.outline_width
@@ -1459,6 +1463,53 @@ class Window(SolidColor):
         self.xbutton.delete()
         if self in self.task_bar.open_windows: self.task_bar.open_windows.remove(self)
         super().delete()
+
+class Vial(SolidColor):
+    def __init__(self, x, y, w: int, current: int, maximum: int, vial_type: str):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = 8
+        self.current = current
+        self.maximum = maximum
+        self.vial_type = vial_type
+        super().__init__(x, y, w, self.h, themes.default.white)
+        self.padding = 1
+        self.border_radius = 2
+        self.outline_width = 3
+        self.outline_color = themes.default.black
+        self.name = config.vials[self.vial_type]["name"]
+        self.gel_vial: bool = config.vials[self.vial_type]["gel_vial"]
+        self.fill_color = config.vials[self.vial_type]["fill_color"]
+        self.shade_color = config.vials[self.vial_type]["shade_color"]
+        self.make_fill_surf()
+        self.label = Text(0.5, 2, self.name)
+        self.label.bind_to(self)
+        self.label.color = self.fill_color
+        self.label.fontsize = 8
+
+    def make_fill_surf(self):
+        shade_surf = pygame.Surface((self.w-self.padding*4, self.h-self.padding*2))
+        shade_surf.fill(self.shade_color)
+        fill_surf = pygame.Surface((self.w-self.padding*4, self.h-self.padding*2 - 1))
+        fill_surf.fill(self.fill_color)
+        shade_surf.blit(fill_surf, (0, 0))
+        self.fill_surf = shade_surf
+
+    def update(self):
+        if self.gel_vial: 
+            self.rect_x_offset = -int((1 - self.filled_percent) * self.w)
+            self.label.rect_x_offset = -self.rect_x_offset
+        super().update()
+        fill_width = int(self.fill_surf.get_width() * self.filled_percent)
+        fill_rect = pygame.Rect(0, 0, fill_width, self.fill_surf.get_height())
+        if self.gel_vial: x_offset = self.fill_surf.get_width() - fill_width
+        else: x_offset = 0
+        self.blit_surf.blit(self.fill_surf, (self.rect.x+self.padding*2+x_offset, self.rect.y+self.padding), fill_rect)     
+
+    @property
+    def filled_percent(self) -> float:
+        return self.current / self.maximum   
 
 class Enemy(Image):
     def __init__(self, x, y, grist_type, monster_type):
