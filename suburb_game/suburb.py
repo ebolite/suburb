@@ -316,7 +316,7 @@ def make_symbol():
             current_item_name = character_info["symbol_dict"][part]
             current_index = config.part_styles[part][current_item_name].index(current_style)
             if direction == "left": new_index = current_index - 1
-            else: new_index = current_index - 1
+            else: new_index = current_index + 1
             try:
                 new_style_name = config.part_styles[part][current_item_name][new_index]
             except IndexError:
