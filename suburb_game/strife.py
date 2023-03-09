@@ -20,8 +20,6 @@ class Griefer():
         return self.vials[vial_name]["current"]
     
     def get_maximum_vial(self, vial_name) -> int:
-        print(self.griefer_dict)
-        print(self.vials)
         return self.vials[vial_name]["maximum"]
     
     def get_starting_vial(self, vial_name) -> int:
