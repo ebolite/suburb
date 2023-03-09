@@ -1633,11 +1633,12 @@ class GrieferElement(UIElement):
 
     def add_vial(self, vial_type):
         if vial_type not in self.vials:
-            current = self.griefer.get_vial(vial_type)
-            maximum = self.griefer.get_maximum_vial(vial_type)
             new_vial = Vial(0.5, 0, 150, self.griefer, vial_type)
             new_vial.absolute = False
-            new_vial.rect_y_offset = -25
+            if isinstance(self, Enemy):
+                new_vial.rect_y_offset = -25
+            else:
+                new_vial.rect_y_offset = 50
             new_vial.bind_to(self)
             self.vials[vial_type] = new_vial
 
