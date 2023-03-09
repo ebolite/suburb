@@ -83,10 +83,6 @@ class UIElement(pygame.sprite.Sprite):
         self.blit_surf = screen
         ui_elements.append(self)
 
-    def mouseover(self): # returns True if mouse is over this element
-        mousepos = pygame.mouse.get_pos()
-        return True if self.rect.collidepoint(mousepos[0], mousepos[1]) else False
-
     def collidepoint(self, pos):
         return self.rect.collidepoint(pos)
     
@@ -525,6 +521,7 @@ class Image(UIElement):
         self.absolute = False
         self.animated = False
         self.hover_to_top = False
+        self.crop: Optional[tuple[int, int, int, int]] = None
         self.animframe = 1
         self.animframes = 1
         self.speed = 3
@@ -890,7 +887,7 @@ class Tile(UIElement):
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly
         if self.x == len(self.tile_map.map[0]) - 1 or self.y == len(self.tile_map.map) - 1: return # ^
-        if self.server_view and sburbserver.current_mode == "revise" and self.mouseover() and pygame.mouse.get_pressed()[0]:
+        if self.server_view and sburbserver.current_mode == "revise" and self.is_mouseover() and pygame.mouse.get_pressed()[0]:
             self.onclick(True)
         self.update_image()
         self.surf = pygame.Surface((tile_wh, tile_wh))
@@ -937,7 +934,7 @@ class Tile(UIElement):
                 icon_image = self.convert_to_theme(icon_image)
                 icon_image.set_colorkey(pygame.Color(0, 0, 0))
                 self.surf.blit(icon_image, (0, 0), (0, 0, tile_wh, tile_wh))
-        if self.server_view and self.mouseover():
+        if self.server_view and self.is_mouseover():
             if sburbserver.current_mode == "deploy":
                 cursor_image_path = config.icons["deploy"]
             elif sburbserver.current_mode == "revise":
@@ -1537,6 +1534,8 @@ class Vial(SolidColor):
         return self.current / self.maximum   
 
 class Symbol(Image):
+    player_image_crop = (144, 98, 114, 196)
+
     def __init__(self, x, y, parts: dict):
        self.parts = parts
        self.base = parts["base"]
@@ -1614,6 +1613,13 @@ class Symbol(Image):
         base.replace(pygame.Color(0, 0, 0), pygame.Color(1, 1, 1))
         base = base.make_surface()
         return base
+    
+    def collidepoint(self, pos):
+        x, y, w, h = self.player_image_crop
+        x += self.rect.x
+        y += self.rect.y
+        hitbox_rect = pygame.Rect(x, y, w, h)
+        return hitbox_rect.collidepoint(pos)
 
 class GrieferElement(UIElement):
     griefer: Griefer
@@ -1621,6 +1627,7 @@ class GrieferElement(UIElement):
 
     def onclick(self, clicked:bool):
         if clicked:
+            print("clicked")
             self.griefer.strife.selected_target = self.griefer.name
         else:
             if self.griefer.strife.selected_target == self.griefer.name:
@@ -1663,7 +1670,6 @@ class PlayerGriefer(Symbol, GrieferElement):
         self.griefer = griefer
         self.add_vial("hp")
         click_check.append(self)
-
 
 def make_grist_display(x, y, w: int, h: int, padding: int, 
                        grist_name: str, grist_amount: int, 
