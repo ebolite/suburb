@@ -69,6 +69,7 @@ class Strife():
         self.griefer_sprites: dict[str, Union[render.Enemy, render.PlayerGriefer]] = {}
         self.griefers: dict[str, Griefer] = {}
         self.vials: dict[str, render.Vial] = {}
+        self.selected_target: Optional[str] = None
         self.verify_griefers()
 
     def add_griefer(self, griefer_name):

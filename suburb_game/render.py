@@ -206,8 +206,11 @@ class SolidColor(UIElement):
             else:
                 width = SCREEN_WIDTH
                 height = SCREEN_HEIGHT
-            self.rect.x = int(width * self.x) - self.w//2 + self.rect_x_offset
-            self.rect.y = int(height * self.y) - self.h//2 + self.rect_y_offset
+            self.rect.x = int(width * self.x) - (self.w//2) + self.rect_x_offset
+            self.rect.y = int(height * self.y) - (self.h//2) + self.rect_y_offset
+            if self.relative_binding is not None:
+                self.rect.x += self.relative_binding.rect.x
+                self.rect.y += self.relative_binding.rect.y
         if not self.draw_sprite: return
         if self.outline_color is not None: 
             self.outline_rect = self.outline_surf.get_rect()
@@ -1471,6 +1474,7 @@ class Vial(SolidColor):
         self.y = y
         self.w = w
         self.h = 8
+        self.vial_y_offset = 0
         self.current = current
         self.maximum = maximum
         self.vial_type = vial_type
@@ -1611,7 +1615,36 @@ class Symbol(Image):
         base = base.make_surface()
         return base
 
-class Enemy(Image):
+class GrieferElement(UIElement):
+    griefer: Griefer
+    vials: dict[str, Vial]
+
+    def onclick(self, clicked:bool):
+        if clicked:
+            self.griefer.strife.selected_target = self.griefer.name
+        else:
+            if self.griefer.strife.selected_target == self.griefer.name:
+                self.griefer.strife.selected_target = None
+
+    def add_vial(self, vial_type):
+        if vial_type not in self.vials:
+            current = self.griefer.get_vial(vial_type)
+            maximum = self.griefer.get_maximum_vial(vial_type)
+            new_vial = Vial(0.5, 0, 150, current, maximum, vial_type)
+            new_vial.absolute = False
+            new_vial.rect_y_offset = -25
+            new_vial.bind_to(self)
+            self.vials[vial_type] = new_vial
+
+    def update_vials(self):
+        for vial_type in self.vials:
+            current = self.griefer.get_vial(vial_type)
+            maximum = self.griefer.get_maximum_vial(vial_type)
+            vial = self.vials[vial_type]
+            vial.current = current
+            vial.maximum = maximum
+
+class Enemy(Image, GrieferElement):
     def __init__(self, x, y, griefer: Griefer):
         self.vials: dict[str, Vial] = {}
         self.griefer = griefer
@@ -1621,45 +1654,15 @@ class Enemy(Image):
         new_color = config.gristcolors[grist_type]
         self.convert_colors.append((themes.default.dark, new_color)) 
         self.add_vial("hp")
+        click_check.append(self)
 
-    def add_vial(self, vial_type):
-        if vial_type not in self.vials:
-            current = self.griefer.get_vial(vial_type)
-            maximum = self.griefer.get_maximum_vial(vial_type)
-            new_vial = Vial(0, -30, 150, current, maximum, vial_type)
-            new_vial.bind_to(self)
-            self.vials[vial_type] = new_vial
-
-    def update_vials(self):
-        for vial_type in self.vials:
-            current = self.griefer.get_vial(vial_type)
-            maximum = self.griefer.get_maximum_vial(vial_type)
-            vial = self.vials[vial_type]
-            vial.current = current
-            vial.maximum = maximum
-
-class PlayerGriefer(Symbol):
+class PlayerGriefer(Symbol, GrieferElement):
     def __init__(self, x, y, griefer: Griefer):
         super().__init__(x, y, griefer.symbol_dict)
         self.vials: dict[str, Vial] = {}
         self.griefer = griefer
         self.add_vial("hp")
-
-    def add_vial(self, vial_type):
-        if vial_type not in self.vials:
-            current = self.griefer.vials[vial_type]["current"]
-            maximum = self.griefer.vials[vial_type]["maximum"]
-            new_vial = Vial(120, 30, 150, current, maximum, vial_type)
-            new_vial.bind_to(self)
-            self.vials[vial_type] = new_vial
-
-    def update_vials(self):
-        for vial_type in self.vials:
-            current = self.griefer.vials[vial_type]["current"]
-            maximum = self.griefer.vials[vial_type]["maximum"]
-            vial = self.vials[vial_type]
-            vial.current = current
-            vial.maximum = maximum
+        click_check.append(self)
 
 
 def make_grist_display(x, y, w: int, h: int, padding: int, 
