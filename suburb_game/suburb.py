@@ -939,7 +939,7 @@ def map_scene():
 
 @scene
 def strife_scene(strife_dict: Optional[dict]=None):
-    strife.strife_scene(strife_dict)
+    strife.Strife(strife_dict).draw_scene()
 
 @scene
 def overmap():

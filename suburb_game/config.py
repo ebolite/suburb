@@ -217,22 +217,26 @@ default_vial = {
     "gel_vial": False,
     "segmented_vial": False,
     "middle_color": None,
+    "hidden": True,
 }
 
 vials: dict[str, dict] = {
     "hp": { 
         "name": "HEALTH VIAL",
+        "hidden": False,
         "gel_vial": True,
         "fill_color": Color(191, 75, 153), 
         "shade_color": Color(159, 54, 145),
         },
     "vim": {
         "name": "VIM GAUGE",
+        "hidden": False,
         "fill_color": Color(54, 159, 54),
         "shade_color": Color(17, 119, 17),
     },
     "aspect": {
         "name": "ASPECT METER",
+        "hidden": False,
         "fill_color": Color(54, 54, 159),
         "shade_color": Color(41, 41, 130),
     },
@@ -253,16 +257,19 @@ vials: dict[str, dict] = {
     },
     "mangrit": {
         "name": "MANGRIT",
+        "hidden": False,
         "fill_color": Color(150, 224, 53),
         "shade_color": Color(106, 173, 19),
     },
     "imagination": {
         "name": "IMAGINATION",
+        "hidden": False,
         "fill_color": Color(255, 182, 24),
         "shade_color": Color(188, 128, 0),
     },
     "horseshitometer": {
         "name": "FBATSH-OMETER",
+        "hidden": False,
         "segmented_vial": True,
         "fill_color": Color(20, 135, 56),
         "shade_color": Color(4, 96, 32),
@@ -270,6 +277,7 @@ vials: dict[str, dict] = {
     },
     "gambit": {
         "name": "PRANKSTER'S GAMBIT",
+        "hidden": False,
         "segmented_vial": True,
         "fill_color": Color(213, 73, 232),
         "shade_color": Color(147, 28, 165),
