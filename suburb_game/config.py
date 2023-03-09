@@ -213,14 +213,66 @@ gristcategories = {
     "wealth": ["aquamarine", "amethyst", "topaz", "ruby", "gold", "silk", "emerald", "star sapphire", "diamond"]
     }
 
-vials = {
+default_vial = {
+    "gel_vial": False,
+    "segmented_gauge": False,
+    "middle_color": None,
+}
+
+vials: dict[str, dict] = {
     "hp": { 
         "name": "HEALTH VIAL",
         "gel_vial": True,
         "fill_color": Color(191, 75, 153), 
         "shade_color": Color(159, 54, 145),
         },
+    "vim": {
+        "name": "VIM GAUGE",
+        "fill_color": Color(54, 159, 54),
+        "shade_color": Color(17, 119, 17),
+    },
+    "aspect": {
+        "name": "ASPECT METER",
+        "fill_color": Color(54, 54, 159),
+        "shade_color": Color(41, 41, 130),
+    },
+    "blood": {
+        "name": "BLOOD WELL",
+        "fill_color": Color(184, 15, 20),
+        "shade_color": Color(112, 3, 6),
+    },
+    "hope": {
+        "name": "HOPE",
+        "fill_color": Color(255, 224, 148),
+        "shade_color": Color(198, 163, 81),
+    },
+    "rage": {
+        "name": "RAGE VAULT",
+        "fill_color": Color(57, 30, 114),
+        "shade_color": Color(29, 11, 68),
+    },
+    "mangrit": {
+        "name": "MANGRIT",
+        "fill_color": Color(150, 224, 53),
+        "shade_color": Color(106, 173, 19),
+    },
+    "imagination": {
+        "name": "IMAGINATION",
+        "fill_color": Color(255, 182, 24),
+        "shade_color": Color(188, 128, 0),
+    },
+    "horseshitometer": {
+        "name": "FBATSH-OMETER",
+        "fill_color": Color(20, 135, 56),
+        "shade_color": Color(4, 96, 32),
+        "middle_color": Color(44, 146, 88),
+    }
 }
+
+for vial_name in vials:
+    new_dict = default_vial.copy()
+    new_dict.update(vials[vial_name])
+    vials[vial_name] = new_dict
 
 # first is light color, second is dark color
 pickable_colors = [

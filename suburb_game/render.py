@@ -1,4 +1,5 @@
 import pygame
+from pygame import Color
 import sys
 import os
 import pathlib
@@ -1480,8 +1481,9 @@ class Vial(SolidColor):
         self.outline_color = themes.default.black
         self.name = config.vials[self.vial_type]["name"]
         self.gel_vial: bool = config.vials[self.vial_type]["gel_vial"]
-        self.fill_color = config.vials[self.vial_type]["fill_color"]
-        self.shade_color = config.vials[self.vial_type]["shade_color"]
+        self.fill_color: Color = config.vials[self.vial_type]["fill_color"]
+        self.shade_color: Color = config.vials[self.vial_type]["shade_color"]
+        self.middle_color: Optional[Color] = config.vials[self.vial_type]["middle_color"]
         self.make_fill_surf()
         self.label = Text(0.5, 2, self.name)
         self.label.bind_to(self)
@@ -1489,12 +1491,17 @@ class Vial(SolidColor):
         self.label.fontsize = 8
 
     def make_fill_surf(self):
-        shade_surf = pygame.Surface((self.w-self.padding*4, self.h-self.padding*2))
+        fill_width = self.w-self.padding*4
+        shade_surf = pygame.Surface((fill_width, self.h-self.padding*2))
         shade_surf.fill(self.shade_color)
-        fill_surf = pygame.Surface((self.w-self.padding*4, self.h-self.padding*2 - 1))
+        fill_surf = pygame.Surface((fill_width, self.h-self.padding*2 - 1))
         fill_surf.fill(self.fill_color)
         shade_surf.blit(fill_surf, (0, 0))
         self.fill_surf = shade_surf
+        if self.middle_color is not None:
+            middle_surf = pygame.Surface((fill_width, 1))
+            middle_surf.fill(self.middle_color)
+            self.fill_surf.blit(middle_surf, (0, 2))
 
     def update(self):
         if self.gel_vial: 
