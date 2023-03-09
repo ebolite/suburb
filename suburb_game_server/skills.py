@@ -138,3 +138,4 @@ light.balance_mult = 1.3
 void = NegativeAspect("void")
 void.is_vial = True
 void.vials = ["vim", "aspect", "hope", "rage"] + SECONDARY_VIALS
+void.adjustment_divisor = 0.5
