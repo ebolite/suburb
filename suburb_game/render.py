@@ -1627,7 +1627,6 @@ class GrieferElement(UIElement):
 
     def onclick(self, clicked:bool):
         if clicked:
-            print("clicked")
             self.griefer.strife.selected_target = self.griefer.name
         else:
             if self.griefer.strife.selected_target == self.griefer.name:
