@@ -1322,8 +1322,15 @@ def test_overmap():
 
 @scene
 def connection_screen():
+    @scene
+    def try_again():
+        if client.connect():
+            title()
+        else:
+            connection_screen()
     text = render.Text(0.5, 0.1, "Could not connect to server.")
     text.color = themes.default.dark
+    try_again_button = render.TextButton(0.5, 0.7, 196, 32, ">TRY AGAIN", try_again)
     spiro = render.get_spirograph(0.5, 0.3, False)
 
 if __name__ == "__main__":
