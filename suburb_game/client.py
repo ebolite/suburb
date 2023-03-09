@@ -21,7 +21,7 @@ dic = {
 def connect():
     print("Waiting for connection")
     try:
-        ClientSocket.settimeout(10)
+        ClientSocket.settimeout(2)
         ClientSocket.connect((HOST, PORT))
         return True
     except socket.error as e:
