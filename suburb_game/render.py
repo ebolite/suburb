@@ -1505,10 +1505,10 @@ class Vial(SolidColor):
             middle_surf.fill(self.middle_color)
             self.fill_surf.blit(middle_surf, (0, 2))
         if self.segmented_vial:
-            segments = 10
+            segments = 20
             segmented_surf = pygame.Surface((2, fill_height))
             segmented_surf.fill(Color(0, 0, 0))
-            midpoint_x = fill_height//2 - round(fill_width/segments/2) + 1
+            midpoint_x = fill_height//2 - round(fill_width/segments/2)
             for i in range(segments):
                 print(i)
                 xdiff = (i+1) * round(fill_width/segments)

@@ -267,7 +267,14 @@ vials: dict[str, dict] = {
         "fill_color": Color(20, 135, 56),
         "shade_color": Color(4, 96, 32),
         "middle_color": Color(44, 146, 88),
-    }
+    },
+    "gambit": {
+        "name": "PRANKSTER'S GAMBIT",
+        "segmented_vial": True,
+        "fill_color": Color(213, 73, 232),
+        "shade_color": Color(147, 28, 165),
+        "middle_color": Color(255, 148, 198),
+    },
 }
 
 for vial_name in vials:
