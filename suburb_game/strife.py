@@ -96,8 +96,6 @@ class Strife():
         for vial_name in self.player_griefer.vials:
             hidden = config.vials[vial_name]["hidden"]
             if vial_name in self.vials: 
-                self.vials[vial_name].current = self.player_griefer.get_vial(vial_name)
-                self.vials[vial_name].maximum = self.player_griefer.get_maximum_vial(vial_name)
                 continue
             elif hidden and self.player_griefer.get_vial(vial_name) == self.player_griefer.get_starting_vial(vial_name): continue
             else: self.make_vials()
@@ -114,7 +112,7 @@ class Strife():
             hidden = config.vials[vial_name]["hidden"]
             if hidden and self.player_griefer.get_vial(vial_name) == self.player_griefer.get_starting_vial(vial_name): continue
             vial_y += vial_y_increase
-            new_vial = render.Vial(vial_x, vial_y, 150, self.player_griefer.get_vial(vial_name), self.player_griefer.get_vial(vial_name), vial_name)
+            new_vial = render.Vial(vial_x, vial_y, 150, self.player_griefer, vial_name)
             new_vial.absolute = False
             self.vials[vial_name] = new_vial
 
