@@ -21,7 +21,7 @@ dic = {
 def connect():
     print("Waiting for connection")
     try:
-        ClientSocket.send(str.encode("data"))
+        ClientSocket.send(str.encode(json.dumps({"intent": "connect"})))
         return True
     except:
         try:
