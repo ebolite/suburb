@@ -21,10 +21,11 @@ dic = {
 def connect():
     print("Waiting for connection")
     try:
+        ClientSocket.settimeout(10)
         ClientSocket.connect((HOST, PORT))
-        return "Connected!"
+        return True
     except socket.error as e:
-        return str(e)
+        return False
 
 def hash(str): # returns encoded and hashed data
     encoded = str.encode()

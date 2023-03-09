@@ -1320,8 +1320,20 @@ def test_overmap():
     render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
     render.Overmap(0.5, 0.5, test_overmap_tiles, theme=theme)
 
+@scene
+def connection_screen():
+    text = render.Text(0.5, 0.1, "Could not connect to server.")
+    text.color = themes.default.dark
+    spiro = render.get_spirograph(0.5, 0.3, False)
+
 if __name__ == "__main__":
-    client.connect() # connect to server
+    connecting_text = render.Text(0.5, 0.5, "CONNECTING...")
+    connecting_text.color = themes.default.dark
+    render.render()
+    if client.connect(): # connect to server
+        title() # normal game start
+    else:
+        connection_screen()
     # aspectcharacter() # choose scene to test
     # chooseinterests()
     # choosegrists()
@@ -1330,7 +1342,6 @@ if __name__ == "__main__":
     # render.TileMap(0.5, 0.5, map)
     # computer()
     # make_symbol()
-    title() # normal game start
     # test_overmap()
     # continue to render until render.render() returns False
     # imp = render.Enemy(0.5, 0.5, "shale", "imp") 
