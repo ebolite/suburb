@@ -15,25 +15,48 @@ class Griefer():
     def __init__(self, name, griefer_dict):
         self.name = name
         self.griefer_dict = griefer_dict
-        self.type: str = griefer_dict["type"]
-        self.grist_type: Optional[str] = griefer_dict["grist_type"]
-        self.symbol_dict: dict = griefer_dict["symbol_dict"]
-        self.player_name: Optional[str] = griefer_dict["player_name"]
-        self.nickname: str = griefer_dict["nickname"]
-        self.stats: dict = griefer_dict["stats_dict"]
-        self.vials: dict = griefer_dict["vials_dict"]
 
     def get_vial(self, vial_name) -> int:
         return self.vials[vial_name]["current"]
     
     def get_maximum_vial(self, vial_name) -> int:
+        print(self.griefer_dict)
+        print(self.vials)
         return self.vials[vial_name]["maximum"]
     
     def get_starting_vial(self, vial_name) -> int:
         return self.vials[vial_name]["starting"]
 
     @property
-    def power(self):
+    def symbol_dict(self) -> dict:
+        return self.griefer_dict["symbol_dict"]
+    
+    @property
+    def player_name(self) -> Optional[str]:
+        return self.griefer_dict["player_name"]
+    
+    @property
+    def nickname(self) -> str:
+        return self.griefer_dict["nickname"]
+    
+    @property
+    def stats(self) -> dict:
+        return self.griefer_dict["stats"]
+
+    @property
+    def vials(self) -> dict:
+        return self.griefer_dict["vials_dict"]
+
+    @property
+    def grist_type(self) -> Optional[str]:
+        return self.griefer_dict["grist_type"]
+
+    @property
+    def type(self) -> str:
+        return self.griefer_dict["type"]
+
+    @property
+    def power(self) -> int:
         return self.stats["power"]
 
 class Strife():

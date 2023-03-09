@@ -1624,16 +1624,16 @@ class Enemy(Image):
 
     def add_vial(self, vial_type):
         if vial_type not in self.vials:
-            current = self.griefer.vials[vial_type]["current"]
-            maximum = self.griefer.vials[vial_type]["maximum"]
+            current = self.griefer.get_vial(vial_type)
+            maximum = self.griefer.get_maximum_vial(vial_type)
             new_vial = Vial(0, -30, 150, current, maximum, vial_type)
             new_vial.bind_to(self)
             self.vials[vial_type] = new_vial
 
     def update_vials(self):
         for vial_type in self.vials:
-            current = self.griefer.vials[vial_type]["current"]
-            maximum = self.griefer.vials[vial_type]["maximum"]
+            current = self.griefer.get_vial(vial_type)
+            maximum = self.griefer.get_maximum_vial(vial_type)
             vial = self.vials[vial_type]
             vial.current = current
             vial.maximum = maximum
