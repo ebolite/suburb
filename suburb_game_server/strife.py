@@ -192,7 +192,7 @@ class Griefer():
             self.stat_bonuses[game_attr] += amount
             self.change_vial(game_attr, amount)
         else:
-            raise AttributeError
+            print(f"bonus does not exist {game_attr}")
         
     def add_permanent_bonus(self, game_attr: str, amount: int):
         if self.player is not None: self.player.add_permanent_bonus(game_attr, amount)

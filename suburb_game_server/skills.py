@@ -1,12 +1,14 @@
 import strife
 
 aspects = {}
+SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 
 class Aspect():
     def __init__(self, name):
         aspects[name] = self
         self.name = name
         self.stat_name: str = "placeholder"
+        self.vials = []
         self.is_vial = False
         self.check_vials = False
         self.compare_starting_vial = False
@@ -44,7 +46,8 @@ class Aspect():
         else: old_vials = {}
         adjustment = int(value/self.adjustment_divisor)
         if self.is_vial:
-            target.change_vial(self.stat_name, adjustment)
+            for vial_name in self.vials:
+                target.change_vial(vial_name, adjustment)
         else:
             target.add_bonus(self.stat_name, adjustment)
         if self.check_vials:
@@ -57,12 +60,29 @@ class Aspect():
         if self.check_vials: old_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
         else: old_vials = {}
         adjustment = int(value/self.adjustment_divisor)
-        target.add_permanent_bonus(self.stat_name, adjustment)
+        if self.is_vial:
+            for vial_name in self.vials:
+                target.add_permanent_bonus(vial_name, adjustment)
+        else:
+            target.add_permanent_bonus(self.stat_name, adjustment)
         if self.check_vials:
             new_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
             for vial_name in old_vials:
                 if old_vials[vial_name] != new_vials[vial_name]:
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
+
+class NegativeAspect(Aspect):
+    def ratio(self, target: "strife.Griefer", raw=False) -> float:
+        return super().inverse_ratio(target)
+    
+    def inverse_ratio(self, target: "strife.Griefer") -> float:
+        return super().ratio(target)
+    
+    def adjust(self, target: "strife.Griefer", value: int):
+        return super().adjust(target, -value)
+
+    def permanent_adjust(self, target: "strife.Griefer", value: int):
+        return super().permanent_adjust(target, -value)
 
 space = Aspect("space")
 space.stat_name = "mettle"
@@ -71,7 +91,6 @@ time = Aspect("time")
 time.stat_name = "spunk"
 time.balance_mult = 0.8
 
-# todo: mind increases all vials whose maximum changes
 mind = Aspect("mind")
 mind.stat_name = "tact"
 mind.check_vials = True
@@ -81,9 +100,15 @@ heart = Aspect("heart")
 heart.stat_name = "vigor"
 heart.check_vials = True
 
-# hope
+hope = Aspect("hope")
+hope.is_vial = True
+hope.vials = ["hope"]
+hope.adjustment_divisor = 0.5
 
-# rage
+rage = Aspect("rage")
+rage.is_vial = True
+rage.vials = ["rage"]
+rage.adjustment_divisor
 
 breath = Aspect("breath")
 breath.stat_name = "savvy"
@@ -91,21 +116,24 @@ breath.balance_mult = 1.3
 
 blood = Aspect("blood")
 blood.is_vial = True
-blood.stat_name = "vim"
+blood.vials = ["vim"]
 blood.adjustment_divisor = 0.5
 
 life = Aspect("life")
 life.is_vial = True
-life.stat_name = "hp"
+life.vials = ["hp"]
 life.adjustment_divisor = 0.5
 
-# doom
+doom = NegativeAspect("doom")
+doom.is_vial = True
+doom.vials = ["hp"]
+doom.adjustment_divisor = 0.5
 
 light = Aspect("light")
 light.stat_name = "luck"
 light.balance_mult = 1.3
 
 # void
-
-
-    
+void = NegativeAspect("void")
+void.is_vial = True
+void.vials = ["vim", "aspect", "hope", "rage"] + SECONDARY_VIALS
