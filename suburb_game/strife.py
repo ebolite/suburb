@@ -12,9 +12,9 @@ class Npc():
         self.type = npc_dict["type"]
 
 class Griefer():
-    def __init__(self, name, griefer_dict):
+    def __init__(self, name, strife: "Strife"):
         self.name = name
-        self.griefer_dict = griefer_dict
+        self.strife = strife
 
     def get_vial(self, vial_name) -> int:
         return self.vials[vial_name]["current"]
@@ -24,6 +24,10 @@ class Griefer():
     
     def get_starting_vial(self, vial_name) -> int:
         return self.vials[vial_name]["starting"]
+
+    @property
+    def griefer_dict(self) -> dict:
+        return self.strife.strife_dict["griefers"][self.name]
 
     @property
     def symbol_dict(self) -> dict:
@@ -63,13 +67,23 @@ class Strife():
         if strife_dict is None: strife_dict = client.requestdic(intent="strife_info")
         self.strife_dict = strife_dict
         self.griefer_sprites: dict[str, Union[render.Enemy, render.PlayerGriefer]] = {}
+        self.griefers: dict[str, Griefer] = {}
         self.vials: dict[str, render.Vial] = {}
+        self.verify_griefers()
+
+    def add_griefer(self, griefer_name):
+        if griefer_name in self.griefers: return
+        self.griefers[griefer_name] = Griefer(griefer_name, self)
+
+    def verify_griefers(self):
+        for griefer_name in self.strife_dict["griefers"]:
+            if griefer_name not in self.griefers:
+                self.add_griefer(griefer_name)
 
     def draw_scene(self):
         for griefer_name in self.griefers:
             griefer = self.griefers[griefer_name]
             if griefer.type != "player":
-                grist_type = griefer.grist_type or "build"
                 sprite = render.Enemy(0.66, 0.5, griefer)
                 self.griefer_sprites[griefer_name] = sprite
             else:
@@ -106,10 +120,6 @@ class Strife():
     @property
     def turn_num(self) -> int:
         return self.strife_dict["turn_num"]
-
-    @property
-    def griefers(self) -> dict[str, Griefer]:
-        return {griefer_name:Griefer(griefer_name, self.strife_dict["griefers"][griefer_name]) for griefer_name in self.strife_dict["griefers"]}
 
     @property
     def player_griefer(self) -> Griefer:

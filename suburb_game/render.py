@@ -17,7 +17,7 @@ import suburb
 import themes
 import binaryoperations
 import sburbserver
-from strife import Npc, Griefer
+from strife import Npc, Griefer, Strife
 from sylladex import Instance, Sylladex
 
 pygame.init()
@@ -1612,7 +1612,7 @@ class Symbol(Image):
         return base
 
 class Enemy(Image):
-    def __init__(self, x, y, griefer: "Griefer"):
+    def __init__(self, x, y, griefer: Griefer):
         self.vials: dict[str, Vial] = {}
         self.griefer = griefer
         path = f"sprites/strife/{griefer.type}.png"
