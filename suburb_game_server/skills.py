@@ -129,6 +129,7 @@ doom = NegativeAspect("doom")
 doom.is_vial = True
 doom.vials = ["hp"]
 doom.adjustment_divisor = 0.5
+doom.ratio_mult = 2
 
 light = Aspect("light")
 light.stat_name = "luck"
