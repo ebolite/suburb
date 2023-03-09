@@ -1481,6 +1481,7 @@ class Vial(SolidColor):
         self.outline_color = themes.default.black
         self.name = config.vials[self.vial_type]["name"]
         self.gel_vial: bool = config.vials[self.vial_type]["gel_vial"]
+        self.segmented_vial: bool = config.vials[self.vial_type]["segmented_vial"]
         self.fill_color: Color = config.vials[self.vial_type]["fill_color"]
         self.shade_color: Color = config.vials[self.vial_type]["shade_color"]
         self.middle_color: Optional[Color] = config.vials[self.vial_type]["middle_color"]
@@ -1492,9 +1493,10 @@ class Vial(SolidColor):
 
     def make_fill_surf(self):
         fill_width = self.w-self.padding*4
-        shade_surf = pygame.Surface((fill_width, self.h-self.padding*2))
+        fill_height = self.h-self.padding*2
+        shade_surf = pygame.Surface((fill_width, fill_height))
         shade_surf.fill(self.shade_color)
-        fill_surf = pygame.Surface((fill_width, self.h-self.padding*2 - 1))
+        fill_surf = pygame.Surface((fill_width, fill_height - 1))
         fill_surf.fill(self.fill_color)
         shade_surf.blit(fill_surf, (0, 0))
         self.fill_surf = shade_surf
@@ -1502,6 +1504,18 @@ class Vial(SolidColor):
             middle_surf = pygame.Surface((fill_width, 1))
             middle_surf.fill(self.middle_color)
             self.fill_surf.blit(middle_surf, (0, 2))
+        if self.segmented_vial:
+            segments = 10
+            segmented_surf = pygame.Surface((2, fill_height))
+            segmented_surf.fill(Color(0, 0, 0))
+            midpoint_x = fill_height//2 - round(fill_width/segments/2) + 1
+            for i in range(segments):
+                print(i)
+                xdiff = (i+1) * round(fill_width/segments)
+                self.fill_surf.blit(segmented_surf, (midpoint_x+xdiff, 0))
+                self.fill_surf.blit(segmented_surf, (midpoint_x-xdiff, 0))
+            self.fill_surf = self.fill_surf.convert()
+            self.fill_surf.set_colorkey(Color(0, 0, 0))
 
     def update(self):
         if self.gel_vial: 

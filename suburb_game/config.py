@@ -215,7 +215,7 @@ gristcategories = {
 
 default_vial = {
     "gel_vial": False,
-    "segmented_gauge": False,
+    "segmented_vial": False,
     "middle_color": None,
 }
 
@@ -263,6 +263,7 @@ vials: dict[str, dict] = {
     },
     "horseshitometer": {
         "name": "FBATSH-OMETER",
+        "segmented_vial": True,
         "fill_color": Color(20, 135, 56),
         "shade_color": Color(4, 96, 32),
         "middle_color": Color(44, 146, 88),
