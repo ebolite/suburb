@@ -73,7 +73,8 @@ class Aspect():
 
 class NegativeAspect(Aspect):
     def ratio(self, target: "strife.Griefer", raw=False) -> float:
-        return super().inverse_ratio(target)
+        if not raw: return super().inverse_ratio(target)
+        else: return super().ratio(target, raw=True)
     
     def inverse_ratio(self, target: "strife.Griefer") -> float:
         return super().ratio(target)
