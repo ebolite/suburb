@@ -171,7 +171,7 @@ class Griefer():
         griefer = cls(npc.name, strife)
         griefer.type = npc.type
         griefer.grist_type = npc.grist_type
-        griefer.nickname = npc.nickname
+        griefer.nickname = npc.nickname.upper()
         griefer.base_power = npc.power
         griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)
         if npc.hostile: griefer.team = "red"

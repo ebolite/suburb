@@ -20,11 +20,15 @@ class Skill():
         self.num_targets = 1
         self.cooldown = 0
         self.damage_formula = ""
+        self.use_message = ""
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
 
     # affect each target in list
     def use(self, user: "strife.Griefer", targets_list: list["strife.Griefer"]):
+        message = self.use_message
+        message = message.replace("{user}", user.nickname)
+        if message: user.strife.log(message)
         for target in targets_list:
             self.affect(user, target)
         if self.additional_skill is not None: 
@@ -48,6 +52,7 @@ class Skill():
         return out
 
 aggrieve = Skill("aggrieve")
+aggrieve.use_message = "{user} aggrieves!"
 aggrieve.damage_formula = "1*user.power + 1*user.spk"
 aggrieve.category = "none"
 base_skills.append("aggrieve")
