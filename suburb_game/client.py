@@ -23,7 +23,7 @@ def receive_data() -> str:
     while True:
         chunk = ClientSocket.recv(10000).decode()
         data_fragments.append(chunk)
-        if "\n" in chunk: break
+        if "\n" in chunk or not chunk: break
     return "".join(data_fragments)
 
 def connect():
