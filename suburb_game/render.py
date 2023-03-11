@@ -1241,7 +1241,8 @@ class CaptchalogueButton(Button):
         return output_func
 
 class LogWindow(UIElement):
-    def __init__(self, last_scene: Optional[Callable], tilemap: Optional[TileMap]=None, draw_console=False, x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=4, fontsize=16):
+    def __init__(self, last_scene: Optional[Callable], tilemap: Optional[TileMap]=None, draw_console=False, 
+                 x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=4, fontsize=16, log_list: Optional[list[str]]=None):
         super().__init__()
         self.last_scene = last_scene
         self.x = x
@@ -1252,7 +1253,10 @@ class LogWindow(UIElement):
         self.padding = 4
         self.tilemap = tilemap
         self.draw_console = draw_console
-        util.log_window = self
+        if log_list is None:
+            util.log_window = self
+            self.log_list = None
+        else: self.log_list = log_list
         self.scroll_offset = 0
         self.background: Optional[UIElement] = None
         self.console: Optional[InputTextBox] = None
@@ -1281,7 +1285,10 @@ class LogWindow(UIElement):
         for loop_index, position_index in enumerate(reversed(range(self.lines_to_display))):
             y = self.y + position_index*self.fontsize + position_index*self.padding
             try:
-                line = util.current_log()[-loop_index - 1 - self.scroll_offset]
+                if self.log_list is None:
+                    log = util.current_log()
+                else: log = self.log_list
+                line = log[-loop_index - 1 - self.scroll_offset]
                 text = Text(x, y, line)
                 text.fontsize = self.fontsize
                 text.color = self.theme.light
