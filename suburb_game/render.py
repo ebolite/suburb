@@ -1627,10 +1627,7 @@ class GrieferElement(UIElement):
 
     def onclick(self, clicked:bool):
         if clicked:
-            self.griefer.strife.selected_target = self.griefer.name
-        else:
-            if self.griefer.strife.selected_target == self.griefer.name:
-                self.griefer.strife.selected_target = None
+            self.griefer.strife.click_griefer(self.griefer)
 
     def add_vial(self, vial_type):
         if vial_type not in self.vials:

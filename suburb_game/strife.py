@@ -107,8 +107,8 @@ class Strife():
         self.griefer_sprites: dict[str, Union[render.Enemy, render.PlayerGriefer]] = {}
         self.griefers: dict[str, Griefer] = {}
         self.vials: dict[str, render.Vial] = {}
-        self.selected_target: Optional[str] = None
-        self.selected_skill: Optional[str] = None
+        self.selected_targets: list[str] = []
+        self.selected_skill_name: Optional[str] = None
         self.verify_griefers()
 
     def add_griefer(self, griefer_name):
@@ -137,20 +137,35 @@ class Strife():
                 self.griefer_sprites[griefer_name] = sprite
         # todo: make skill categories
         def get_button_func(skill_name):
-            def button_func(): self.selected_skill = skill_name
+            def button_func(): 
+                if skill_name != self.selected_skill_name: self.selected_targets =[]
+                self.selected_skill_name = skill_name
             return button_func
         for i, skill_name in enumerate(self.player_griefer.known_skills):
             y = 200 + 48*i
             skill_button = render.TextButton(4, y, 196, 32, f">{skill_name.upper()}", get_button_func(skill_name))
             skill_button.absolute = True
         def submit_button_func():
-            ...
+            reply = client.requestdic(intent="strife_ready")
+            if reply: self.strife_dict = reply
         submit_button = render.TextButton(0.8, 0.4, 196, 32, ">SUBMIT", submit_button_func)
         self.update_vials()
         render.update_check.append(self)
 
     def update(self):
         self.update_vials()
+
+    def click_griefer(self, griefer: Griefer):
+        if self.selected_skill is None: return
+        self.selected_targets.append(griefer.name)
+        if len(self.selected_targets) == self.selected_skill.num_targets:
+            self.submit_skill()
+
+    def submit_skill(self):
+        reply = client.requestplusdic(intent="submit_strife_action", content={"skill_name": self.selected_skill_name, "targets": self.selected_targets})
+        if reply: self.strife_dict = reply
+        self.selected_skill_name = None
+        self.selected_targets = []
 
     def update_vials(self):
         for vial_name in self.player_griefer.vials:
@@ -175,6 +190,11 @@ class Strife():
             new_vial = render.Vial(vial_x, vial_y, 150, self.player_griefer, vial_name)
             new_vial.absolute = False
             self.vials[vial_name] = new_vial
+
+    @property
+    def selected_skill(self) -> Optional[Skill]:
+        if self.selected_skill_name is None: return None
+        skill = self.player_griefer.get_skill(self.selected_skill_name)
 
     @property
     def turn_num(self) -> int:
