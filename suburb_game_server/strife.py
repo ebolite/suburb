@@ -325,8 +325,8 @@ class Strife():
         self.__dict__["room_name"] = room.name
         if not room.strife_dict:
             self.griefers = {}
-            self.turn_num: int = 0
-            self.strife_log = ["STRIFE BEGIN!"]
+            self.turn_num: int = 1
+            self.strife_log = ["STRIFE BEGIN! TURN 1!"]
 
     def add_griefer(self, identifier: Union["sessions.Player", "npcs.Npc"]):
         if isinstance(identifier, sessions.Player):
@@ -347,7 +347,7 @@ class Strife():
 
     def increase_turn(self):
         self.turn_num += 1
-        self.log(f"TURN {self.turn_num}")
+        self.log(f"TURN {self.turn_num}!")
 
     def clear_submitted_skills(self):
         for griefer in self.griefer_list:
