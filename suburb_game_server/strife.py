@@ -116,8 +116,8 @@ class Griefer():
             }
             self.stat_bonuses: dict[str, int] = {}
             self.known_skills = skills.base_skills.copy()
-            # submitted_actions: [{"skill_name": "aggrieve", "targets": ["jet impq", "shale ogrea"]}]
-            self.submitted_actions: list[dict]
+            # submitted_skills: [{"skill_name": "aggrieve", "targets": ["jet impq", "shale ogrea"]}]
+            self.submitted_skills: list[dict] = []
             self.player_name: Optional[str] = None
             self.vials: dict[str, dict] = {}
             # vials still need to be initialized
@@ -139,8 +139,13 @@ class Griefer():
             "skill_name": skill_name,
             "targets": targets,
         }
-        self.submitted_actions.append(skill_dict)
+        self.submitted_skills.append(skill_dict)
         return True
+
+    def use_skills(self):
+        for skill_dict in self.submitted_skills:
+            skill = skills.skills[skill_dict["skill_name"]]
+            skill.use(self, [self.strife.get_griefer(griefer_name) for griefer_name in skill_dict["targets"]])
 
     @classmethod
     def from_player(cls, strife: "Strife", player: "sessions.Player") -> "Griefer":
@@ -290,7 +295,7 @@ class Griefer():
     @property
     def remaining_actions(self) -> int:
         actions = self.actions
-        for skill_dict in self.submitted_actions:
+        for skill_dict in self.submitted_skills:
             skill = skills.skills[skill_dict["skill_name"]]
             actions -= skill.action_cost
         return actions
@@ -328,7 +333,20 @@ class Strife():
             Griefer.from_npc(self, identifier)
 
     def ready_check(self):
-        ...
+        if not self.ready: return
+        self.resolve_skills()
+        self.clear_submitted_skills()
+        self.turn_num += 1
+        print("next turn")
+
+    def resolve_skills(self):
+        # sorted by savvy in descending order
+        for griefer in sorted(self.griefer_list, key=lambda x: x.get_stat("savvy"), reverse=True):
+            griefer.use_skills()
+
+    def clear_submitted_skills(self):
+        for griefer in self.griefer_list:
+            griefer.submitted_skills = []
 
     def end(self):
         self.room.strife_dict = {}
@@ -361,6 +379,17 @@ class Strife():
     
     def get_griefer(self, name: str) -> "Griefer":
         return Griefer(name, self)
+
+    @property
+    def ready(self) -> bool:
+        for griefer in self.griefer_list:
+            if griefer.player is None: continue # debug, enemies cant submit actions yet
+            if not griefer.ready: return False
+        return True
+
+    @property
+    def griefer_list(self) -> list[Griefer]:
+        return [self.get_griefer(griefer_name) for griefer_name in self.griefers]
 
     @property
     def session(self) -> "sessions.Session":

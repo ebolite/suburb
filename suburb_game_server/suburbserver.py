@@ -251,8 +251,12 @@ def handle_request(dict):
         case "submit_strife_action":
             skill_name = content["skill_name"]
             targets = content["targets"]
-            if player.strife is None: return json.dumps({})
+            print("submitting skill")
+            print(player.strife)
+            if player.strife is None: print("strife is none"); return json.dumps({})
+            print("strife is not None")
             success = player.strife.get_griefer(player.name).submit_skill(skill_name, targets)
+            print("determined success", success)
             if success: return json.dumps(player.strife.get_dict())
             else: return json.dumps({})
         case "strife_ready":

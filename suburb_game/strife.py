@@ -138,7 +138,7 @@ class Strife():
         # todo: make skill categories
         def get_button_func(skill_name):
             def button_func(): 
-                if skill_name != self.selected_skill_name: self.selected_targets =[]
+                if skill_name != self.selected_skill_name: self.selected_targets = []
                 self.selected_skill_name = skill_name
             return button_func
         for i, skill_name in enumerate(self.player_griefer.known_skills):
@@ -156,7 +156,9 @@ class Strife():
         self.update_vials()
 
     def click_griefer(self, griefer: Griefer):
+        print(f"griefer clicked {griefer.name}")
         if self.selected_skill is None: return
+        print("add to targets")
         self.selected_targets.append(griefer.name)
         if len(self.selected_targets) == self.selected_skill.num_targets:
             self.submit_skill()
@@ -195,6 +197,7 @@ class Strife():
     def selected_skill(self) -> Optional[Skill]:
         if self.selected_skill_name is None: return None
         skill = self.player_griefer.get_skill(self.selected_skill_name)
+        return skill
 
     @property
     def turn_num(self) -> int:
