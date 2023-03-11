@@ -33,7 +33,7 @@ def connect():
         return True
     except:
         try:
-            ClientSocket.settimeout(2)
+            ClientSocket.settimeout(5)
             ClientSocket.connect((HOST, PORT))
             return True
         except socket.error as e:
