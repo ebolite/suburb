@@ -50,6 +50,7 @@ def threaded_client(connection):
                         reply = f"Incorrect session password."
                 else:
                     reply = f"Invalid session name `{session_name}`."
+            # \n is end of reply character so client knows when to stop receiving data
             connection.sendall(str.encode(str(reply)+"\n"))
         conns.remove(connection)
         connection.close()

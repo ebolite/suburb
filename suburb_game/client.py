@@ -24,7 +24,7 @@ def receive_data() -> str:
         chunk = ClientSocket.recv(10000).decode()
         data_fragments.append(chunk)
         if "\n" in chunk or not chunk: break
-    return "".join(data_fragments)
+    return "".join(data_fragments).replace("\n", "")
 
 def connect():
     print("Waiting for connection")
