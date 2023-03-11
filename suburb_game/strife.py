@@ -136,16 +136,21 @@ class Strife():
                 sprite = render.PlayerGriefer(*pos, griefer)
                 self.griefer_sprites[griefer_name] = sprite
         # todo: make skill categories
+        def get_button_func(skill_name):
+            def button_func(): self.selected_skill = skill_name
+            return button_func
         for i, skill_name in enumerate(self.player_griefer.known_skills):
             y = 200 + 48*i
-            def button_func(): self.selected_skill = skill_name
-            skill_button = render.TextButton(4, y, 196, 32, f">{skill_name.upper()}", button_func)
+            skill_button = render.TextButton(4, y, 196, 32, f">{skill_name.upper()}", get_button_func(skill_name))
             skill_button.absolute = True
+        def submit_button_func():
+            ...
+        submit_button = render.TextButton(0.8, 0.4, 196, 32, ">SUBMIT", submit_button_func)
         self.update_vials()
         render.update_check.append(self)
 
     def update(self):
-        ...
+        self.update_vials()
 
     def update_vials(self):
         for vial_name in self.player_griefer.vials:

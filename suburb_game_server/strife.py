@@ -104,6 +104,7 @@ class Griefer():
             self.symbol_dict = {}
             self.grist_type: Optional[str] = None
             self.actions = 1
+            self.ready: bool = False
             self.base_power: int = 0
             self.base_stats: dict[str, int] = {
                 "spunk": 0,
@@ -115,7 +116,7 @@ class Griefer():
             }
             self.stat_bonuses: dict[str, int] = {}
             self.known_skills = skills.base_skills.copy()
-            # submitted_actions: [{"skill": "aggrieve", "targets": ["jet impq", "shale ogrea"]}]
+            # submitted_actions: [{"skill_name": "aggrieve", "targets": ["jet impq", "shale ogrea"]}]
             self.submitted_actions: list[dict]
             self.player_name: Optional[str] = None
             self.vials: dict[str, dict] = {}
@@ -127,6 +128,19 @@ class Griefer():
 
     def take_damage(self, damage: int):
         self.change_vial("hp", -damage)
+
+    def submit_skill(self, skill_name, targets: list[str]) -> bool:
+        skill = skills.skills[skill_name]
+        if len(targets) > skill.num_targets: return False
+        for target_name in targets: 
+            if target_name not in self.strife.griefers: return False
+        if self.remaining_actions < skill.action_cost: return False
+        skill_dict = {
+            "skill_name": skill_name,
+            "targets": targets,
+        }
+        self.submitted_actions.append(skill_dict)
+        return True
 
     @classmethod
     def from_player(cls, strife: "Strife", player: "sessions.Player") -> "Griefer":
@@ -248,21 +262,6 @@ class Griefer():
                 if f"{identifier}.{term}" in formula: formula = formula.replace(f"{identifier}.{term}", str(terms[term]))
         return formula
 
-    def __setattr__(self, attr, value):
-        self.__dict__[attr] = value
-        self.strife.griefers[self.__dict__["name"]][attr] = value
-
-    def __getattr__(self, attr):
-        self.__dict__[attr] = self.strife.griefers[self.__dict__["name"]][attr]
-        return self.__dict__[attr]
-    
-    def get_dict(self) -> dict:
-        out = deepcopy(self.strife.griefers[self.__dict__["name"]])
-        out["stats_dict"] = self.stats_dict
-        out["vials_dict"] = self.vials_dict
-        out["known_skills"] = {skill_name:skills.skills[skill_name].get_dict() for skill_name in self.known_skills}
-        return out
-
     @property
     def session(self) -> "sessions.Session":
         return self.strife.session
@@ -287,6 +286,29 @@ class Griefer():
     @property
     def power(self) -> int:
         return self.base_power
+    
+    @property
+    def remaining_actions(self) -> int:
+        actions = self.actions
+        for skill_dict in self.submitted_actions:
+            skill = skills.skills[skill_dict["skill_name"]]
+            actions -= skill.action_cost
+        return actions
+    
+    def __setattr__(self, attr, value):
+        self.__dict__[attr] = value
+        self.strife.griefers[self.__dict__["name"]][attr] = value
+
+    def __getattr__(self, attr):
+        self.__dict__[attr] = self.strife.griefers[self.__dict__["name"]][attr]
+        return self.__dict__[attr]
+    
+    def get_dict(self) -> dict:
+        out = deepcopy(self.strife.griefers[self.__dict__["name"]])
+        out["stats_dict"] = self.stats_dict
+        out["vials_dict"] = self.vials_dict
+        out["known_skills"] = {skill_name:skills.skills[skill_name].get_dict() for skill_name in self.known_skills}
+        return out
 
 # each room can only have one Strife in it
 class Strife():
