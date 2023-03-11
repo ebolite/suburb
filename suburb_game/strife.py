@@ -149,7 +149,7 @@ class Strife():
             reply = client.requestdic(intent="strife_ready")
             if reply: self.strife_dict = reply
         submit_button = render.TextButton(0.8, 0.4, 196, 32, ">SUBMIT", submit_button_func)
-        self.strife_log_window = render.LogWindow(None, None, x=int(render.SCREEN_WIDTH*0.75), lines_to_display=6, log_list=self.strife_log)
+        self.strife_log_window = render.LogWindow(None, None, x=int(render.SCREEN_WIDTH*0.75) - 125, lines_to_display=6, log_list=self.strife_log)
         self.update_vials()
         render.update_check.append(self)
 

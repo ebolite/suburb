@@ -1285,10 +1285,7 @@ class LogWindow(UIElement):
         for loop_index, position_index in enumerate(reversed(range(self.lines_to_display))):
             y = self.y + position_index*self.fontsize + position_index*self.padding
             try:
-                if self.log_list is None:
-                    log = util.current_log()
-                else: log = self.log_list
-                line = log[-loop_index - 1 - self.scroll_offset]
+                line = self.log[-loop_index - 1 - self.scroll_offset]
                 text = Text(x, y, line)
                 text.fontsize = self.fontsize
                 text.color = self.theme.light
@@ -1319,11 +1316,17 @@ class LogWindow(UIElement):
     def scroll(self, y: int):
         if self.background is None: return
         if not self.background.is_mouseover(): return
-        max_offset = len(util.current_log()) - self.lines_to_display
+        max_offset = max(len(self.log) - self.lines_to_display, 0)
         self.scroll_offset += y
         if self.scroll_offset < 0: self.scroll_offset = 0
         if self.scroll_offset > max_offset: self.scroll_offset = max_offset
         self.update_logs()
+
+    @property
+    def log(self) -> list[str]:
+        if self.log_list is None:
+            return util.current_log()
+        else: return self.log_list
 
 class ItemImage():
     def __new__(cls, x, y, item_name: str):
