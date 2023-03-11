@@ -48,7 +48,7 @@ class Skill():
         return out
 
 aggrieve = Skill("aggrieve")
-aggrieve.damage_formula = "1 * user.power"
+aggrieve.damage_formula = "1*user.power + 1*user.spk"
 aggrieve.category = "none"
 base_skills.append("aggrieve")
 
