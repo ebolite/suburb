@@ -1,7 +1,34 @@
+from typing import Optional
+
 import strife
 
 aspects = {}
+skills = {}
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
+
+class Skill():
+    def __init__(self, name):
+        self.name = name
+        skills[name] = self
+        self.num_targets = 1
+        self.cooldown = 0
+        self.damage_formula = ""
+        self.user_skill: Optional[Skill] = None
+        self.additional_skill: Optional[Skill] = None
+
+    # affect each target in list
+    def use(self, user: "strife.Griefer", targets_list: list["strife.Griefer"]):
+        for target in targets_list:
+            self.affect(user, target)
+        if self.additional_skill is not None: self.additional_skill.use(user, targets_list)
+        if self.user_skill is not None: self.user_skill.affect(user, user)
+
+    # apply skill effects to individual target
+    def affect(self, user: "strife.Griefer", target: "strife.Griefer"):
+        damage_formula = user.format_formula(self.damage_formula, "user")
+        damage_formula = target.format_formula(damage_formula, "target")
+        damage = eval(damage_formula)
+        if damage != 0: target.take_damage(damage)
 
 class Aspect():
     def __init__(self, name):

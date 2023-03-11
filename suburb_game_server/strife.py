@@ -122,6 +122,9 @@ class Griefer():
                 if not vial.optional_vial:
                     self.add_vial(vial_name)
 
+    def take_damage(self, damage: int):
+        self.change_vial("hp", -damage)
+
     @classmethod
     def from_player(cls, strife: "Strife", player: "sessions.Player") -> "Griefer":
         griefer = cls(player.name, strife)
@@ -197,10 +200,6 @@ class Griefer():
     def add_permanent_bonus(self, game_attr: str, amount: int):
         if self.player is not None: self.player.add_permanent_bonus(game_attr, amount)
         self.add_bonus(game_attr, amount)
-
-    @property
-    def power(self) -> int:
-        return self.base_power
     
     @property
     def stats_dict(self) -> dict:
@@ -229,7 +228,7 @@ class Griefer():
             stat += self.stat_bonuses[stat_name]
         return stat
 
-    def format_formula(self, formula: str) -> str:
+    def format_formula(self, formula: str, identifier: Optional[str] = None) -> str:
         terms = {
             "power": self.power,
             "spk": self.get_stat("spunk"),
@@ -240,7 +239,10 @@ class Griefer():
             "met": self.get_stat("mettle"),
         }
         for term in terms:
-            if f"{{{term}}}" in formula: formula = formula.replace(f"{{{term}}}", str(terms[term]))
+            if identifier is None:
+                if f"{{{term}}}" in formula: formula = formula.replace(f"{{{term}}}", str(terms[term]))
+            else:
+                if f"{identifier}.{term}" in formula: formula = formula.replace(f"{identifier}.{term}", str(terms[term]))
         return formula
 
     def __setattr__(self, attr, value):
@@ -296,6 +298,10 @@ class Griefer():
     def player(self) -> Optional["sessions.Player"]:
         if self.player_name is None: return None
         return sessions.Player(self.player_name)
+    
+    @property
+    def power(self) -> int:
+        return self.base_power
 
 # each room can only have one Strife in it
 class Strife():
