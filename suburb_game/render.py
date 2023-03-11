@@ -1261,6 +1261,10 @@ class LogWindow(UIElement):
         self.background: Optional[UIElement] = None
         self.console: Optional[InputTextBox] = None
         self.elements: list[UIElement] = []
+        self.background_color: Color = self.theme.black
+        self.text_color: Color = self.theme.light
+        self.active_color: Color = self.theme.light
+        self.active_text_color: Color = self.theme.white
         self.spawn_logger_lines()
         scroll_check.append(self)
 
@@ -1281,14 +1285,14 @@ class LogWindow(UIElement):
 
     def spawn_logger_lines(self):
         x = self.x - int(self.width/2)
-        self.background = SolidColor(x, self.y, self.width, self.fontsize*self.lines_to_display + self.padding*self.lines_to_display, self.theme.black)
+        self.background = SolidColor(x, self.y, self.width, self.fontsize*self.lines_to_display + self.padding*self.lines_to_display, self.background_color)
         for loop_index, position_index in enumerate(reversed(range(self.lines_to_display))):
             y = self.y + position_index*self.fontsize + position_index*self.padding
             try:
                 line = self.log[-loop_index - 1 - self.scroll_offset]
                 text = Text(x, y, line)
                 text.fontsize = self.fontsize
-                text.color = self.theme.light
+                text.color = self.text_color
                 text.absolute = True
                 text.set_fontsize_by_width(self.width)
                 self.elements.append(text)
@@ -1305,10 +1309,10 @@ class LogWindow(UIElement):
         self.console = InputTextBox(x, console_y, self.width, self.fontsize+self.padding)
         self.console.absolute = True
         self.console.enter_func = console_enter_func
-        self.console.inactive_color = self.theme.black
-        self.console.active_color = self.theme.dark
+        self.console.inactive_color = self.background_color
+        self.console.active_color = self.active_color
         self.console.outline_color = None
-        self.console.text_color = self.theme.white
+        self.console.text_color = self.active_text_color
         self.console.fontsize = self.fontsize
         self.console.suffix = ">"
         if self.tilemap is not None: self.tilemap.input_text_box = self.console
