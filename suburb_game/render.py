@@ -230,13 +230,14 @@ class Div(SolidColor):
         self.rect.x, self.rect.y = self.get_rect_xy()
 
 class TextButton(UIElement):
-    def __init__(self, x, y, w, h, text, onpress: Callable, hover=True, truncate_text=False, theme: Optional["themes.Theme"]=None):
+    def __init__(self, x, y, w, h, text, onpress: Optional[Callable], hover=True, truncate_text=False, theme: Optional["themes.Theme"]=None):
         super(TextButton, self).__init__()
         self.x = x
         self.y = y
         self.w = w
         self.h = h
-        self.onpress = onpress
+        if onpress is None: self.onpress = lambda *args: None
+        else: self.onpress = onpress
         self.active = False
         self.hover = hover
         self.truncate_text = truncate_text

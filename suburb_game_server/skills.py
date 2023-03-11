@@ -1,9 +1,10 @@
 from typing import Optional
+from copy import deepcopy
 
 import strife
 
-aspects = {}
-skills = {}
+aspects: dict["str", "Aspect"] = {}
+skills: dict["str", "Skill"] = {}
 base_skills = []
 
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
@@ -18,15 +19,19 @@ class Skill():
         self.num_targets = 1
         self.cooldown = 0
         self.damage_formula = ""
-        self.user_skill: Optional[Skill] = None
-        self.additional_skill: Optional[Skill] = None
+        self.user_skill: Optional[str] = None
+        self.additional_skill: Optional[str] = None
 
     # affect each target in list
     def use(self, user: "strife.Griefer", targets_list: list["strife.Griefer"]):
         for target in targets_list:
             self.affect(user, target)
-        if self.additional_skill is not None: self.additional_skill.use(user, targets_list)
-        if self.user_skill is not None: self.user_skill.affect(user, user)
+        if self.additional_skill is not None: 
+            skill = skills[self.additional_skill]
+            skill.use(user, targets_list)
+        if self.user_skill is not None: 
+            skill = skills[self.user_skill]
+            skill.affect(user, user)
 
     # apply skill effects to individual target
     def affect(self, user: "strife.Griefer", target: "strife.Griefer"):
@@ -34,6 +39,12 @@ class Skill():
         damage_formula = target.format_formula(damage_formula, "target")
         damage = eval(damage_formula)
         if damage != 0: target.take_damage(damage)
+
+    def get_dict(self) -> dict:
+        out = deepcopy(self.__dict__)
+        if self.user_skill is not None: out["user_skill"] = skills[self.user_skill].get_dict()
+        if self.additional_skill is not None: out["additional_skill"] = skills[self.additional_skill].get_dict()
+        return out
 
 aggrieve = Skill("aggrieve")
 aggrieve.damage_formula = "1 * user.power"

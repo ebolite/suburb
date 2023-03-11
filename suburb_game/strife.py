@@ -4,6 +4,16 @@ import client
 import render
 import config
 
+class Skill():
+    def __init__(self, name, skill_dict):
+        self.name = name
+        self.category = skill_dict["category"]
+        self.num_targets = skill_dict["num_targets"]
+        self.cooldown = skill_dict["cooldown"]
+        self.damage_formula = skill_dict["damage_formula"]
+        self.user_skill: Optional[dict] = skill_dict["user_skill"]
+        self.additional_skill: Optional[dict] = skill_dict["additional_skill"]
+
 class Npc():
     def __init__(self, name, npc_dict):
         self.name = name
@@ -33,6 +43,10 @@ class Griefer():
     def symbol_dict(self) -> dict:
         return self.griefer_dict["symbol_dict"]
     
+    @property
+    def known_skills(self) -> dict[str, dict]:
+        return self.griefer_dict["known_skills"]
+
     @property
     def player_name(self) -> Optional[str]:
         return self.griefer_dict["player_name"]
@@ -74,6 +88,7 @@ class Strife():
         self.griefers: dict[str, Griefer] = {}
         self.vials: dict[str, render.Vial] = {}
         self.selected_target: Optional[str] = None
+        self.selected_skill: Optional[str] = None
         self.verify_griefers()
 
     def add_griefer(self, griefer_name):
@@ -100,6 +115,11 @@ class Strife():
             else:
                 sprite = render.PlayerGriefer(*pos, griefer)
                 self.griefer_sprites[griefer_name] = sprite
+        # todo: make skill categories
+        for i, skill_name in enumerate(self.player_griefer.known_skills):
+            y = 200 + 48*i
+            skill_button = render.TextButton(4, y, 196, 32, f">{skill_name.upper()}", None)
+            skill_button.absolute = True
         self.update_vials()
 
     def update_vials(self):
