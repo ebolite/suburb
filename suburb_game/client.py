@@ -18,6 +18,14 @@ dic = {
 "content": ""
 }
 
+def receive_data() -> str:
+    data_fragments = []
+    while True:
+        chunk = ClientSocket.recv(10000).decode()
+        data_fragments.append(chunk)
+        if "\n" in chunk: break
+    return "".join(data_fragments)
+
 def connect():
     print("Waiting for connection")
     try:
@@ -40,14 +48,14 @@ def request(intent) -> str:
     dic["intent"] = intent
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
-    return ClientSocket.recv(1024).decode()
+    return receive_data()
 
 #request, returns decoded JSON as dict
 def requestdic(intent) -> dict:
     dic["intent"] = intent
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
-    reply = ClientSocket.recv(65536).decode()
+    reply = receive_data()
     return json.loads(reply)
 
 #request, but with additional content sent to the server
@@ -57,7 +65,7 @@ def requestplus(intent, content) -> str:
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
     dic["content"] = ""
-    return ClientSocket.recv(1024).decode()
+    return receive_data()
 
 def requestplusdic(intent, content) -> dict:
     dic["intent"] = intent
@@ -65,4 +73,5 @@ def requestplusdic(intent, content) -> dict:
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
     dic["content"] = ""
-    return json.loads(ClientSocket.recv(65536).decode())
+    reply = receive_data()
+    return json.loads(ClientSocket.recv(524288).decode())

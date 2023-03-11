@@ -50,7 +50,7 @@ def threaded_client(connection):
                         reply = f"Incorrect session password."
                 else:
                     reply = f"Invalid session name `{session_name}`."
-            connection.sendall(str.encode(str(reply)))
+            connection.sendall(str.encode(str(reply)+"\n"))
         conns.remove(connection)
         connection.close()
     except (ConnectionResetError, UnicodeDecodeError, json.JSONDecodeError) as e:

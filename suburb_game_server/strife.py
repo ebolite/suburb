@@ -90,13 +90,11 @@ gambit.starting_formula = "{maximum}//2"
 gambit.optional_vial = True
 
 class Griefer():
+    strife: "Strife"
     def __init__(self, name, strife: "Strife"):
+        self.__dict__["strife"] = strife
         self.__dict__["name"] = name
-        self.__dict__["session_name"] = strife.session.name
-        self.__dict__["overmap_name"] = strife.overmap.name
-        self.__dict__["map_name"] = strife.map.name
-        self.__dict__["room_name"] = strife.room.name
-        if name not in util.sessions[strife.session.name]["overmaps"][strife.overmap.name]["maps"][strife.map.name]["rooms"][strife.room.name]["strife_dict"]["griefers"]:
+        if name not in strife.griefers:
             strife.griefers[name] = {}
             self.nickname = name
             # blue: players, red: enemies
@@ -249,52 +247,33 @@ class Griefer():
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        (util.sessions[self.__dict__["session_name"]]
-         ["overmaps"][self.__dict__["overmap_name"]]
-         ["maps"][self.__dict__["map_name"]]
-         ["rooms"][self.__dict__["room_name"]]
-         ["strife_dict"]["griefers"]
-         [self.__dict__["name"]][attr]) = value
+        self.strife.griefers[self.__dict__["name"]][attr] = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
-                               ["overmaps"][self.__dict__["overmap_name"]]
-                               ["maps"][self.__dict__["map_name"]]
-                               ["rooms"][self.__dict__["room_name"]]
-                               ["strife_dict"]["griefers"]
-                               [self.__dict__["name"]][attr])
+        self.__dict__[attr] = self.strife.griefers[self.__dict__["name"]][attr]
         return self.__dict__[attr]
     
     def get_dict(self) -> dict:
-        out = deepcopy(util.sessions[self.__dict__["session_name"]]
-                        ["overmaps"][self.__dict__["overmap_name"]]
-                        ["maps"][self.__dict__["map_name"]]
-                        ["rooms"][self.__dict__["room_name"]]
-                        ["strife_dict"]["griefers"]
-                        [self.__dict__["name"]])
+        out = deepcopy(self.strife.griefers[self.__dict__["name"]])
         out["stats_dict"] = self.stats_dict
         out["vials_dict"] = self.vials_dict
         return out
 
     @property
     def session(self) -> "sessions.Session":
-        return sessions.Session(self.__dict__["session_name"])
+        return self.strife.session
     
     @property
     def overmap(self) -> "sessions.Overmap":
-        return sessions.Overmap(self.__dict__["overmap_name"], self.session)
+        return self.strife.overmap
     
     @property
     def map(self) -> "sessions.Map":
-        return sessions.Map(self.__dict__["map_name"], self.session, self.overmap)
+        return self.strife.map
     
     @property
     def room(self) -> "sessions.Room":
-        return sessions.Room(self.__dict__["room_name"], self.session, self.overmap, self.map)
-    
-    @property
-    def strife(self) -> "Strife":
-        return Strife(self.room)
+        return self.strife.room
     
     @property
     def player(self) -> Optional["sessions.Player"]:
