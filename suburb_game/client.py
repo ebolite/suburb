@@ -74,4 +74,4 @@ def requestplusdic(intent, content) -> dict:
     ClientSocket.send(str.encode(Input))
     dic["content"] = ""
     reply = receive_data()
-    return json.loads(ClientSocket.recv(524288).decode())
+    return json.loads(reply)
