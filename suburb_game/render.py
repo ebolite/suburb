@@ -1624,6 +1624,8 @@ class Symbol(Image):
 class GrieferElement(UIElement):
     griefer: Griefer
     vials: dict[str, Vial]
+    surf: Union[pygame.Surface, pygame.surface.Surface]
+    hover_intensity = 30
 
     def onclick(self, clicked:bool):
         if clicked:
@@ -1640,7 +1642,15 @@ class GrieferElement(UIElement):
             new_vial.bind_to(self)
             self.vials[vial_type] = new_vial
 
-class Enemy(Image, GrieferElement):
+    def update(self):
+        super().update()
+        if self.is_mouseover():
+            hover_surf = self.surf.copy()
+            hover_surf.fill((self.hover_intensity, self.hover_intensity, self.hover_intensity), None, pygame.BLEND_ADD)
+            hover_surf.set_colorkey((self.hover_intensity, self.hover_intensity, self.hover_intensity))
+            self.blit_surf.blit(hover_surf, (self.rect.x, self.rect.y))
+
+class Enemy(GrieferElement, Image):
     def __init__(self, x, y, griefer: Griefer):
         self.vials: dict[str, Vial] = {}
         self.griefer = griefer
@@ -1652,7 +1662,7 @@ class Enemy(Image, GrieferElement):
         self.add_vial("hp")
         click_check.append(self)
 
-class PlayerGriefer(Symbol, GrieferElement):
+class PlayerGriefer(GrieferElement, Symbol):
     def __init__(self, x, y, griefer: Griefer):
         super().__init__(x, y, griefer.symbol_dict)
         self.vials: dict[str, Vial] = {}
