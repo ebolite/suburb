@@ -327,6 +327,9 @@ class Strife():
         elif isinstance(identifier, npcs.Npc):
             Griefer.from_npc(self, identifier)
 
+    def ready_check(self):
+        ...
+
     def end(self):
         self.room.strife_dict = {}
 

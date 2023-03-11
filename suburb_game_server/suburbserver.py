@@ -248,6 +248,20 @@ def handle_request(dict):
                 chains.append(chain)
                 for username in chain: chained.append(username)
             return json.dumps({"chains": chains, "no_server": no_server, "server_client": server_client, "player_names": player_names})
+        case "submit_strife_action":
+            skill_name = content["skill_name"]
+            targets = content["targets"]
+            if player.strife is None: return json.dumps({})
+            success = player.strife.get_griefer(player.name).submit_skill(skill_name, targets)
+            if success: return json.dumps(player.strife.get_dict())
+            else: return json.dumps({})
+        case "strife_ready":
+            if player.strife is None: return json.dumps({})
+            player.strife.get_griefer(player.name).ready = True
+            player.strife.ready_check()
+            return json.dumps(player.strife.get_dict())
+
+
             
 def get_first_member_of_chain(player_name: str, checked=[]):
     player = sessions.Player(player_name)
