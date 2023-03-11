@@ -38,6 +38,10 @@ class Griefer():
         return self.griefer_dict["player_name"]
     
     @property
+    def team(self) -> str:
+        return self.griefer_dict["team"]
+    
+    @property
     def nickname(self) -> str:
         return self.griefer_dict["nickname"]
     
@@ -84,11 +88,17 @@ class Strife():
     def draw_scene(self):
         for griefer_name in self.griefers:
             griefer = self.griefers[griefer_name]
+            # todo: make positions differ with more griefers
+            # todo: flip sprites on different team
+            if griefer.team == "blue":
+                pos = (0.33, 0.5)
+            else:
+                pos = (0.66, 0.5)
             if griefer.type != "player":
-                sprite = render.Enemy(0.66, 0.5, griefer)
+                sprite = render.Enemy(*pos, griefer)
                 self.griefer_sprites[griefer_name] = sprite
             else:
-                sprite = render.PlayerGriefer(0.33, 0.5, griefer)
+                sprite = render.PlayerGriefer(*pos, griefer)
                 self.griefer_sprites[griefer_name] = sprite
         self.update_vials()
 
