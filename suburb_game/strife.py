@@ -124,7 +124,7 @@ class Strife():
 
     def draw_scene(self):
         bar_br = 30
-        top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 150+bar_br, self.theme.light)
+        top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 100+bar_br, self.theme.light)
         top_bar.outline_color = self.theme.dark
         top_bar.border_radius = bar_br
         for griefer_name in self.griefers:
@@ -155,8 +155,8 @@ class Strife():
             reply = client.requestdic(intent="strife_ready")
             if reply: self.strife_dict = reply
         submit_button = render.TextButton(0.8, 0.4, 196, 32, ">SUBMIT", submit_button_func)
-        self.strife_log_window = render.LogWindow(None, None, lines_to_display=6, log_list=self.strife_log)
-        self.submitted_skills_window = render.LogWindow(None, None, lines_to_display=6, x=1080, width=300, log_list=[])
+        self.strife_log_window = render.LogWindow(None, None, lines_to_display=4, log_list=self.strife_log)
+        self.submitted_skills_window = render.LogWindow(None, None, lines_to_display=4, x=1080, width=300, log_list=[])
         self.submitted_skills_window.background_color = self.theme.dark
         self.submitted_skills_window.text_color = self.theme.black
         self.update_submitted_skills()
@@ -191,7 +191,7 @@ class Strife():
             skill = self.player_griefer.get_skill(skill_name)
             submitted_skills_log.append(f"{i+1}. {skill_name} ({skill.action_cost})")
         if len(submitted_skills_log) == 1: submitted_skills_log.append("...")
-        while len(submitted_skills_log) < 6:
+        while len(submitted_skills_log) < self.submitted_skills_window.lines_to_display:
             submitted_skills_log.append("")
         if self.submitted_skills_window.log_list != submitted_skills_log:
             self.submitted_skills_window.log_list = submitted_skills_log
