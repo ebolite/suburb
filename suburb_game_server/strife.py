@@ -114,6 +114,8 @@ class Griefer():
                 "mettle": 0,
             }
             self.stat_bonuses: dict[str, int] = {}
+            # submitted_actions: [{"skill": "aggrieve", "targets": ["jet impq", "shale ogrea"]}]
+            self.submitted_actions: list[dict]
             self.player_name: Optional[str] = None
             self.vials: dict[str, dict] = {}
             # vials still need to be initialized
@@ -313,8 +315,6 @@ class Strife():
         if not room.strife_dict:
             self.griefers = {}
             self.turn_num: int = 0
-            # key: griefer name value: list of Skill dict (skill name and target/s)
-            self.submitted_actions: dict[str, list[dict]] = {}
 
     def add_griefer(self, identifier: Union["sessions.Player", "npcs.Npc"]):
         if isinstance(identifier, sessions.Player):
