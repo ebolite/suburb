@@ -138,9 +138,14 @@ class Strife():
         # todo: make skill categories
         for i, skill_name in enumerate(self.player_griefer.known_skills):
             y = 200 + 48*i
-            skill_button = render.TextButton(4, y, 196, 32, f">{skill_name.upper()}", None)
+            def button_func(): self.selected_skill = skill_name
+            skill_button = render.TextButton(4, y, 196, 32, f">{skill_name.upper()}", button_func)
             skill_button.absolute = True
         self.update_vials()
+        render.update_check.append(self)
+
+    def update(self):
+        ...
 
     def update_vials(self):
         for vial_name in self.player_griefer.vials:
