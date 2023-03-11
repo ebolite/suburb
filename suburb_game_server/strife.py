@@ -128,6 +128,7 @@ class Griefer():
 
     def take_damage(self, damage: int):
         self.change_vial("hp", -damage)
+        self.strife.log(f"{self.nickname} takes {damage} damage!")
 
     def submit_skill(self, skill_name, targets: list[str]) -> bool:
         skill = skills.skills[skill_name]
@@ -325,6 +326,7 @@ class Strife():
         if not room.strife_dict:
             self.griefers = {}
             self.turn_num: int = 0
+            self.strife_log = ["STRIFE BEGIN!"]
 
     def add_griefer(self, identifier: Union["sessions.Player", "npcs.Npc"]):
         if isinstance(identifier, sessions.Player):
@@ -336,13 +338,16 @@ class Strife():
         if not self.ready: return
         self.resolve_skills()
         self.clear_submitted_skills()
-        self.turn_num += 1
-        print("next turn")
+        self.increase_turn()
 
     def resolve_skills(self):
         # sorted by savvy in descending order
         for griefer in sorted(self.griefer_list, key=lambda x: x.get_stat("savvy"), reverse=True):
             griefer.use_skills()
+
+    def increase_turn(self):
+        self.turn_num += 1
+        self.log(f"TURN {self.turn_num}")
 
     def clear_submitted_skills(self):
         for griefer in self.griefer_list:
@@ -350,6 +355,9 @@ class Strife():
 
     def end(self):
         self.room.strife_dict = {}
+
+    def log(self, text: str):
+        self.strife_log.append(text)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value

@@ -109,7 +109,6 @@ class Strife():
         self.vials: dict[str, render.Vial] = {}
         self.selected_targets: list[str] = []
         self.selected_skill_name: Optional[str] = None
-        self.strife_log: list[str] = ["STRIFE BEGIN"]
         self.verify_griefers()
 
     def add_griefer(self, griefer_name):
@@ -207,6 +206,10 @@ class Strife():
     @property
     def turn_num(self) -> int:
         return self.strife_dict["turn_num"]
+    
+    @property
+    def strife_log(self) -> list[str]:
+        return self.strife_dict["strife_log"]
 
     @property
     def player_griefer(self) -> Griefer:
