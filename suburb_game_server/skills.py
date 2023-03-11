@@ -26,9 +26,10 @@ class Skill():
 
     # affect each target in list
     def use(self, user: "strife.Griefer", targets_list: list["strife.Griefer"]):
-        message = self.use_message
-        message = message.replace("{user}", user.nickname)
-        if message: user.strife.log(message)
+        if self.use_message: 
+            message = self.use_message
+            message = message.replace("{user}", user.nickname)
+            user.strife.log(message)
         for target in targets_list:
             self.affect(user, target)
         if self.additional_skill is not None: 
