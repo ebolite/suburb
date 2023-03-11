@@ -1644,7 +1644,7 @@ class GrieferElement(UIElement):
 
     def update(self):
         super().update()
-        if self.is_mouseover():
+        if self.is_mouseover() and self.griefer.strife.selected_skill is not None:
             hover_surf = self.surf.copy()
             hover_surf.fill((self.hover_intensity, self.hover_intensity, self.hover_intensity), None, pygame.BLEND_ADD)
             hover_surf.set_colorkey((self.hover_intensity, self.hover_intensity, self.hover_intensity))
