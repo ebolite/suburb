@@ -4,12 +4,17 @@ import strife
 
 aspects = {}
 skills = {}
+base_skills = []
+
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
+
+SKILL_CATEGORIES = ["aggressive", "abstinent", "abusive", "aspected", "arsenal", "none"]
 
 class Skill():
     def __init__(self, name):
         self.name = name
         skills[name] = self
+        self.category = "none"
         self.num_targets = 1
         self.cooldown = 0
         self.damage_formula = ""
@@ -29,6 +34,11 @@ class Skill():
         damage_formula = target.format_formula(damage_formula, "target")
         damage = eval(damage_formula)
         if damage != 0: target.take_damage(damage)
+
+aggrieve = Skill("aggrieve")
+aggrieve.damage_formula = "1 * user.power"
+aggrieve.category = "none"
+base_skills.append("aggrieve")
 
 class Aspect():
     def __init__(self, name):

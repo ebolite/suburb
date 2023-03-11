@@ -4,6 +4,7 @@ from typing import Optional, Union
 import util
 import sessions
 import npcs
+import skills
 
 vials: dict[str, "Vial"] = {}
 
@@ -112,6 +113,7 @@ class Griefer():
                 "mettle": 0,
             }
             self.stat_bonuses: dict[str, int] = {}
+            self.known_skills = skills.base_skills.copy()
             # submitted_actions: [{"skill": "aggrieve", "targets": ["jet impq", "shale ogrea"]}]
             self.submitted_actions: list[dict]
             self.player_name: Optional[str] = None
