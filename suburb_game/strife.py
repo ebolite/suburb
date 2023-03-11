@@ -3,6 +3,7 @@ from typing import Optional, Union
 import client
 import render
 import config
+import suburb
 
 class Skill():
     def __init__(self, name: str, skill_dict: dict):
@@ -121,6 +122,10 @@ class Strife():
                 self.add_griefer(griefer_name)
 
     def draw_scene(self):
+        bar_br = 30
+        top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 150+bar_br, suburb.current_theme().light)
+        top_bar.outline_color = suburb.current_theme().dark
+        top_bar.border_radius = bar_br
         for griefer_name in self.griefers:
             griefer = self.griefers[griefer_name]
             # todo: make positions differ with more griefers
@@ -149,7 +154,7 @@ class Strife():
             reply = client.requestdic(intent="strife_ready")
             if reply: self.strife_dict = reply
         submit_button = render.TextButton(0.8, 0.4, 196, 32, ">SUBMIT", submit_button_func)
-        self.strife_log_window = render.LogWindow(None, None, x=int(render.SCREEN_WIDTH*0.75) - 125, lines_to_display=6, log_list=self.strife_log)
+        self.strife_log_window = render.LogWindow(None, None, lines_to_display=6, log_list=self.strife_log)
         self.update_vials()
         render.update_check.append(self)
 
@@ -185,7 +190,7 @@ class Strife():
         for vial_name in self.vials:
             self.vials[vial_name].delete()
         self.vials = {}
-        vial_x = 0.25
+        vial_x = 0.1
         vial_y = 0
         vial_y_increase = 0.035
         for vial_name in self.player_griefer.vials:
