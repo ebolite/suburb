@@ -53,7 +53,7 @@ class Skill():
 
 aggrieve = Skill("aggrieve")
 aggrieve.use_message = "{user} aggrieves!"
-aggrieve.damage_formula = "1*user.power + 1*user.spk"
+aggrieve.damage_formula = "user.power + user.spk"
 aggrieve.category = "none"
 base_skills.append("aggrieve")
 
