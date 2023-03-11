@@ -43,7 +43,7 @@ class Griefer():
     @property
     def available_actions(self) -> int:
         actions = self.actions
-        for skill_name in self.submitted_actions:
+        for skill_name in self.submitted_skills:
             skill = self.get_skill(skill_name)
             actions -= skill.action_cost
         return actions
@@ -57,8 +57,8 @@ class Griefer():
         return self.griefer_dict["symbol_dict"]
     
     @property
-    def submitted_actions(self) -> dict:
-        return self.griefer_dict["submitted_actions"]
+    def submitted_skills(self) -> dict:
+        return self.griefer_dict["submitted_skills"]
     
     @property
     def known_skills(self) -> dict[str, dict]:
@@ -110,6 +110,7 @@ class Strife():
         self.vials: dict[str, render.Vial] = {}
         self.selected_targets: list[str] = []
         self.selected_skill_name: Optional[str] = None
+        self.theme = suburb.current_theme()
         self.verify_griefers()
 
     def add_griefer(self, griefer_name):
@@ -123,8 +124,8 @@ class Strife():
 
     def draw_scene(self):
         bar_br = 30
-        top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 150+bar_br, suburb.current_theme().light)
-        top_bar.outline_color = suburb.current_theme().dark
+        top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 150+bar_br, self.theme.light)
+        top_bar.outline_color = self.theme.dark
         top_bar.border_radius = bar_br
         for griefer_name in self.griefers:
             griefer = self.griefers[griefer_name]
@@ -155,6 +156,10 @@ class Strife():
             if reply: self.strife_dict = reply
         submit_button = render.TextButton(0.8, 0.4, 196, 32, ">SUBMIT", submit_button_func)
         self.strife_log_window = render.LogWindow(None, None, lines_to_display=6, log_list=self.strife_log)
+        self.submitted_skills_window = render.LogWindow(None, None, lines_to_display=6, x=1080, width=300, log_list=[])
+        self.submitted_skills_window.background_color = self.theme.dark
+        self.submitted_skills_window.text_color = self.theme.black
+        self.update_submitted_skills()
         self.update_vials()
         render.update_check.append(self)
 
@@ -162,6 +167,7 @@ class Strife():
         if self.strife_log_window.log_list != self.strife_log:
             self.strife_log_window.log_list = self.strife_log
             self.strife_log_window.update_logs()
+        self.update_submitted_skills()
         self.update_vials()
 
     def click_griefer(self, griefer: Griefer):
@@ -177,6 +183,19 @@ class Strife():
         if reply: self.strife_dict = reply
         self.selected_skill_name = None
         self.selected_targets = []
+
+    def update_submitted_skills(self):
+        submitted_skills_log = ["CURRENT ACTIONS:"]
+        for i, skill_dict in enumerate(self.player_griefer.submitted_skills):
+            skill_name = skill_dict["skill_name"]
+            skill = self.player_griefer.get_skill(skill_name)
+            submitted_skills_log.append(f"{i+1}. {skill_name} ({skill.action_cost})")
+        if len(submitted_skills_log) == 1: submitted_skills_log.append("...")
+        while len(submitted_skills_log) < 6:
+            submitted_skills_log.append("")
+        if self.submitted_skills_window.log_list != submitted_skills_log:
+            self.submitted_skills_window.log_list = submitted_skills_log
+            self.submitted_skills_window.update_logs()
 
     def update_vials(self):
         for vial_name in self.player_griefer.vials:
@@ -221,8 +240,8 @@ class Strife():
         return self.griefers[client.dic["character"]]
 
     @property
-    def submitted_actions(self) -> dict[str, list[dict]]:
-        return self.strife_dict["submitted_actions"]
+    def submitted_skills(self) -> dict[str, list[dict]]:
+        return self.strife_dict["submitted_skills"]
     
 
     
