@@ -103,6 +103,7 @@ class Griefer():
             self.type = ""
             self.symbol_dict = {}
             self.grist_type: Optional[str] = None
+            self.actions = 1
             self.base_power: int = 0
             self.base_stats: dict[str, int] = {
                 "spunk": 0,

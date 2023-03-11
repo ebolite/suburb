@@ -5,12 +5,13 @@ import render
 import config
 
 class Skill():
-    def __init__(self, name, skill_dict):
-        self.name = name
-        self.category = skill_dict["category"]
-        self.num_targets = skill_dict["num_targets"]
-        self.cooldown = skill_dict["cooldown"]
-        self.damage_formula = skill_dict["damage_formula"]
+    def __init__(self, name: str, skill_dict: dict):
+        self.name: str = name
+        self.category: str = skill_dict["category"]
+        self.action_cost: int = skill_dict["action_cost"]
+        self.num_targets: int = skill_dict["num_targets"]
+        self.cooldown: int = skill_dict["cooldown"]
+        self.damage_formula: str = skill_dict["damage_formula"]
         self.user_skill: Optional[dict] = skill_dict["user_skill"]
         self.additional_skill: Optional[dict] = skill_dict["additional_skill"]
 
@@ -35,6 +36,17 @@ class Griefer():
     def get_starting_vial(self, vial_name) -> int:
         return self.vials[vial_name]["starting"]
 
+    def get_skill(self, skill_name) -> Skill:
+        return Skill(skill_name, self.known_skills[skill_name])
+
+    @property
+    def available_actions(self) -> int:
+        actions = self.actions
+        for skill_name in self.submitted_actions:
+            skill = self.get_skill(skill_name)
+            actions -= skill.action_cost
+        return actions
+
     @property
     def griefer_dict(self) -> dict:
         return self.strife.strife_dict["griefers"][self.name]
@@ -42,6 +54,10 @@ class Griefer():
     @property
     def symbol_dict(self) -> dict:
         return self.griefer_dict["symbol_dict"]
+    
+    @property
+    def submitted_actions(self) -> dict:
+        return self.griefer_dict["submitted_actions"]
     
     @property
     def known_skills(self) -> dict[str, dict]:
@@ -59,6 +75,10 @@ class Griefer():
     def nickname(self) -> str:
         return self.griefer_dict["nickname"]
     
+    @property
+    def actions(self) -> int:
+        return self.griefer_dict["actions"]
+
     @property
     def stats(self) -> dict:
         return self.griefer_dict["stats"]
