@@ -120,6 +120,7 @@ class Griefer():
             # submitted_skills: [{"skill_name": "aggrieve", "targets": ["jet impq", "shale ogrea"]}]
             self.submitted_skills: list[dict] = []
             self.player_name: Optional[str] = None
+            self.npc_name: Optional[str] = None
             self.vials: dict[str, dict] = {}
             # vials still need to be initialized
             for vial_name in vials:
@@ -138,6 +139,8 @@ class Griefer():
     def die(self):
         self.strife.log(f"The {self.nickname} explodes into grist!")
         # todo: explode into grist
+        if self.npc is not None:
+            self.room.remove_npc(self.npc)
         self.strife.remove_griefer(self)
 
     def submit_skill(self, skill_name, targets: list[str]) -> bool:
@@ -315,6 +318,11 @@ class Griefer():
         return sessions.Player(self.player_name)
     
     @property
+    def npc(self) -> Optional["npcs.Npc"]:
+        if self.npc_name is None: return None
+        return npcs.Npc(self.npc_name)
+    
+    @property
     def power(self) -> int:
         return self.base_power
     
@@ -378,6 +386,14 @@ class Strife():
         self.log(f"TURN {self.turn_num}!")
         for griefer in self.griefer_list:
             griefer.new_turn()
+        self.verify_strife()
+    
+    def verify_strife(self):
+        teams = []
+        for griefer in self.griefer_list:
+            if griefer.team not in teams: teams.append(griefer.team)
+        if len(teams) <= 1:
+            self.end()
 
     def clear_submitted_skills(self):
         for griefer in self.griefer_list:

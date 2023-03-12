@@ -112,6 +112,10 @@ class Strife():
         self.theme = suburb.current_theme()
 
     def update_strife_dict(self, strife_dict):
+        if not strife_dict:
+            # todo: loot screen
+            suburb.map_scene()
+            return
         self.strife_dict = strife_dict
         for griefer_name in self.griefer_sprites:
             if griefer_name not in self.griefers:
@@ -157,7 +161,7 @@ class Strife():
             skill_button.absolute = True
         def submit_button_func():
             reply = client.requestdic(intent="strife_ready")
-            if reply: self.strife_dict = reply
+            self.update_strife_dict(reply)
         submit_button = render.TextButton(0.8, 0.4, 196, 32, ">SUBMIT", submit_button_func)
         self.strife_log_window = render.LogWindow(None, None, lines_to_display=4, log_list=self.strife_log)
         self.submitted_skills_window = render.LogWindow(None, None, lines_to_display=4, x=1080, width=300, log_list=[])
@@ -184,7 +188,7 @@ class Strife():
 
     def submit_skill(self):
         reply = client.requestplusdic(intent="submit_strife_action", content={"skill_name": self.selected_skill_name, "targets": self.selected_targets})
-        if reply: self.strife_dict = reply
+        self.update_strife_dict(reply)
         self.selected_skill_name = None
         self.selected_targets = []
 

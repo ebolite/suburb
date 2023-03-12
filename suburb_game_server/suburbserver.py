@@ -263,7 +263,8 @@ def handle_request(dict):
             if player.strife is None: return json.dumps({})
             player.strife.get_griefer(player.name).ready = True
             player.strife.ready_check()
-            return json.dumps(player.strife.get_dict())
+            if player.strife is None: return json.dumps({})
+            else: return json.dumps(player.strife.get_dict())
 
 
             
