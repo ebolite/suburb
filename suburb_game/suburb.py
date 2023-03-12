@@ -1022,8 +1022,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
                 reply = client.requestplus(intent="move_to_strife_deck", content={"instance_name": instance.name, "kind_name": kind_name})
                 if reply:
                     Sylladex.current_sylladex().remove_instance(instance.name)
-                    # todo: switch to strife portfolio scene
-                    last_scene()
+                    strife_portfolio_scene()
             elif player_dict["unassigned_specibi"] <= 0:
                 util.log("You don't have any unassigned specibi.")
                 return
@@ -1031,7 +1030,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
                 util.log(f"You must captchalogue this first.")
                 return
             else:
-                assign_strife_specibus(kind_name, last_scene)
+                assign_strife_specibus(kind_name, instance.name, last_scene)
         return kind_button_func
     for i, kind in enumerate(instance.item.kinds):
         x = 1.2
@@ -1067,12 +1066,14 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
 
 @scene
-def assign_strife_specibus(kind_name: str, last_scene: Callable = map_scene):
+def assign_strife_specibus(kind_name: str, assigning_instance_name:str, last_scene: Callable = map_scene):
     confirm_text = render.Text(0.5, 0.1, f"Do you want to assign {kind_name} as a new strife specibus?")
     confirm_text.color = current_theme().dark
     def confirm():
         reply = client.requestplus("assign_specibus", {"kind_name": kind_name})
-        if reply: util.log(f"You assigned {kind_name}!")
+        if reply: 
+            util.log(f"You assigned {kind_name}!")
+            reply = client.requestplus(intent="move_to_strife_deck", content={"instance_name": assigning_instance_name, "kind_name": kind_name})
         else: util.log("Failed to assign.")
         strife_portfolio_scene()
     confirm_button = render.Button(0.5, 0.2, "sprites/buttons/confirm.png", "sprites/buttons/confirmpressed.png", confirm)
