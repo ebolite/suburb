@@ -198,6 +198,7 @@ class Griefer():
         griefer.nickname = npc.nickname.upper()
         griefer.base_power = npc.power
         griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)
+        griefer.npc_name = npc.name
         if npc.hostile: griefer.team = "red"
         else: griefer.team = "blue"
         griefer.initialize_vials()
