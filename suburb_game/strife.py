@@ -106,21 +106,35 @@ class Strife():
         if strife_dict is None: strife_dict = client.requestdic(intent="strife_info")
         self.strife_dict = strife_dict
         self.griefer_sprites: dict[str, Union[render.Enemy, render.PlayerGriefer]] = {}
-        self.griefers: dict[str, Griefer] = {}
         self.vials: dict[str, render.Vial] = {}
         self.selected_targets: list[str] = []
         self.selected_skill_name: Optional[str] = None
         self.theme = suburb.current_theme()
-        self.verify_griefers()
 
-    def add_griefer(self, griefer_name):
-        if griefer_name in self.griefers: return
-        self.griefers[griefer_name] = Griefer(griefer_name, self)
-
-    def verify_griefers(self):
-        for griefer_name in self.strife_dict["griefers"]:
+    def update_strife_dict(self, strife_dict):
+        self.strife_dict = strife_dict
+        for griefer_name in self.griefer_sprites:
             if griefer_name not in self.griefers:
-                self.add_griefer(griefer_name)
+                self.griefer_sprites[griefer_name].delete()
+                self.griefer_sprites.pop(griefer_name)
+        for griefer_name in self.griefers:
+            if griefer_name not in self.griefer_sprites:
+                self.make_griefer_sprite(self.get_griefer(griefer_name))
+
+    def make_griefer_sprite(self, griefer: Griefer) -> Union["render.Enemy", "render.PlayerGriefer"]:
+        # todo: make positions differ with more griefers
+        # todo: flip sprites on different team
+        if griefer.team == "blue":
+            pos = (0.33, 0.5)
+        else:
+            pos = (0.66, 0.5)
+        if griefer.type != "player":
+            sprite = render.Enemy(*pos, griefer)
+            self.griefer_sprites[griefer.name] = sprite
+        else:
+            sprite = render.PlayerGriefer(*pos, griefer)
+            self.griefer_sprites[griefer.name] = sprite
+        return sprite
 
     def draw_scene(self):
         bar_br = 30
@@ -128,19 +142,9 @@ class Strife():
         top_bar.outline_color = self.theme.dark
         top_bar.border_radius = bar_br
         for griefer_name in self.griefers:
-            griefer = self.griefers[griefer_name]
-            # todo: make positions differ with more griefers
-            # todo: flip sprites on different team
-            if griefer.team == "blue":
-                pos = (0.33, 0.5)
-            else:
-                pos = (0.66, 0.5)
-            if griefer.type != "player":
-                sprite = render.Enemy(*pos, griefer)
-                self.griefer_sprites[griefer_name] = sprite
-            else:
-                sprite = render.PlayerGriefer(*pos, griefer)
-                self.griefer_sprites[griefer_name] = sprite
+            griefer = self.get_griefer(griefer_name)
+            self.make_griefer_sprite(griefer)
+            
         # todo: make skill categories
         def get_button_func(skill_name):
             def button_func(): 
@@ -221,6 +225,9 @@ class Strife():
             new_vial.absolute = False
             self.vials[vial_name] = new_vial
 
+    def get_griefer(self, griefer_name) -> Griefer:
+        return Griefer(griefer_name, self)
+
     @property
     def selected_skill(self) -> Optional[Skill]:
         if self.selected_skill_name is None: return None
@@ -237,7 +244,11 @@ class Strife():
 
     @property
     def player_griefer(self) -> Griefer:
-        return self.griefers[client.dic["character"]]
+        return self.get_griefer(client.dic["character"])
+    
+    @property
+    def griefers(self) -> dict:
+        return self.strife_dict["griefers"]
 
     @property
     def submitted_skills(self) -> dict[str, list[dict]]:

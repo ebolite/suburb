@@ -127,9 +127,18 @@ class Griefer():
                 if not vial.optional_vial:
                     self.add_vial(vial_name)
 
+    def new_turn(self):
+        if self.player is None: self.ai_use_skills()
+        if self.get_vial("hp") <= 0: self.die()
+
     def take_damage(self, damage: int):
         self.change_vial("hp", -damage)
         self.strife.log(f"{self.nickname} takes {damage} damage!")
+
+    def die(self):
+        self.strife.log(f"The {self.nickname} explodes into grist!")
+        # todo: explode into grist
+        self.strife.remove_griefer(self)
 
     def submit_skill(self, skill_name, targets: list[str]) -> bool:
         skill = skills.skills[skill_name]
@@ -350,6 +359,9 @@ class Strife():
         elif isinstance(identifier, npcs.Npc):
             Griefer.from_npc(self, identifier)
 
+    def remove_griefer(self, griefer: Griefer):
+        self.griefers.pop(griefer.name)
+
     def ready_check(self):
         if not self.ready: return
         self.resolve_skills()
@@ -365,8 +377,7 @@ class Strife():
         self.turn_num += 1
         self.log(f"TURN {self.turn_num}!")
         for griefer in self.griefer_list:
-            if griefer.player is None:
-                griefer.ai_use_skills()
+            griefer.new_turn()
 
     def clear_submitted_skills(self):
         for griefer in self.griefer_list:
