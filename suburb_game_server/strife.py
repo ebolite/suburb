@@ -1,5 +1,6 @@
 from copy import deepcopy
 from typing import Optional, Union
+import random
 
 import util
 import sessions
@@ -148,6 +149,17 @@ class Griefer():
             skill = skills.skills[skill_dict["skill_name"]]
             skill.use(self, [self.strife.get_griefer(griefer_name) for griefer_name in skill_dict["targets"]])
 
+    def ai_use_skills(self):
+        while self.remaining_actions:
+            random_skill_name = random.choice(self.known_skills)
+            skill = skills.skills[random_skill_name]
+            if skill.beneficial:
+                valid_targets = filter(lambda x: x.team == self.team, self.strife.griefer_list)
+            else:
+                valid_targets = filter(lambda x: x.team != self.team, self.strife.griefer_list)
+            targets = random.choices(list(valid_targets), k=skill.num_targets)
+            self.submit_skill(random_skill_name, [target.name for target in targets])
+
     @classmethod
     def from_player(cls, strife: "Strife", player: "sessions.Player") -> "Griefer":
         griefer = cls(player.name, strife)
@@ -269,6 +281,10 @@ class Griefer():
         return formula
 
     @property
+    def name(self) -> str:
+        return self.__dict__["name"]
+
+    @property
     def session(self) -> "sessions.Session":
         return self.strife.session
     
@@ -325,8 +341,8 @@ class Strife():
         self.__dict__["room_name"] = room.name
         if not room.strife_dict:
             self.griefers = {}
-            self.turn_num: int = 1
-            self.strife_log = ["STRIFE BEGIN! TURN 1!"]
+            self.turn_num: int = 0
+            self.strife_log = ["STRIFE BEGIN!"]
 
     def add_griefer(self, identifier: Union["sessions.Player", "npcs.Npc"]):
         if isinstance(identifier, sessions.Player):
@@ -348,6 +364,9 @@ class Strife():
     def increase_turn(self):
         self.turn_num += 1
         self.log(f"TURN {self.turn_num}!")
+        for griefer in self.griefer_list:
+            if griefer.player is None:
+                griefer.ai_use_skills()
 
     def clear_submitted_skills(self):
         for griefer in self.griefer_list:

@@ -16,6 +16,7 @@ class Skill():
         self.name = name
         skills[name] = self
         self.category = "none"
+        self.beneficial = False
         self.action_cost = 1
         self.num_targets = 1
         self.cooldown = 0
