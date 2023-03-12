@@ -1302,6 +1302,7 @@ def title():
         conntextcontent = f"No session."
     conntext = render.Text(0, 30, conntextcontent)
     conntext.absolute = True
+    character_creator_button = render.TextButton(0.13, .5, 256, 32, "debug character creator", make_symbol)
     debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
     debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
 
