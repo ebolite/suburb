@@ -136,8 +136,11 @@ rage.hidden_vial = True
 
 class MangritVial(Vial):
     def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
-        flat_add = self.get_current(griefer)
-        return damage + flat_add
+        value = self.get_current(griefer)
+        power = griefer.power
+        mod = (value**2) / (value + power)
+        mod += 1
+        return int(damage * mod)
 
 mangrit = MangritVial("mangrit")
 mangrit.maximum_formula = "{power} + {tac}*6"
