@@ -5,7 +5,7 @@ max_wielded_size = 20
 overmap_width = 96
 terrain_decay = 0.01
 
-base_parry_chance = 0.1
+base_parry_chance = 0.2
 
 sburb = "<a:suburbspirograph:820899074986606613>"
 
