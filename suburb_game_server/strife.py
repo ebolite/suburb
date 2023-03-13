@@ -90,6 +90,14 @@ vim.maximum_formula = "{power} + {tac}*6"
 vim.starting_formula = "{maximum}"
 vim.tact_vial = True
 
+class AspectVial(Vial):
+    def add_value(self, griefer: "Griefer", amount: int) -> int:
+        difference = super().add_value(griefer, amount)
+        # imagination increases when aspect vial decreases
+        if difference < 0 and griefer.has_vial("imagination"):
+            griefer.change_vial("imagination", -difference//2)
+        return difference
+
 aspect = Vial("aspect")
 aspect.maximum_formula = "{power}*2"
 aspect.starting_formula = "{maximum}"
@@ -302,6 +310,10 @@ class Griefer():
         if vial_name in self.stat_bonuses:
             maximum += self.stat_bonuses[vial_name]
         return maximum
+    
+    def has_vial(self, vial_name: str) -> bool:
+        if vial_name in self.vials: return True
+        else: return False
 
     def initialize_vials(self):
         for vial_name in self.vials:
