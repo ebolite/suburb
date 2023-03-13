@@ -1,4 +1,5 @@
 from typing import Optional, Union
+import pygame
 
 import client
 import render
@@ -93,7 +94,7 @@ class Griefer():
 
     @property
     def skill_categories(self) -> dict[str, list[Skill]]:
-        categories: dict[str, list[Skill]] = {}
+        categories: dict[str, list[Skill]] = {"none": []}
         for skill in self.known_skills_list:
             if skill.category not in categories: categories[skill.category] = []
             categories[skill.category].append(skill)
@@ -250,6 +251,12 @@ class Strife():
         if self.strife_log_window.log_list != self.strife_log:
             self.strife_log_window.log_list = self.strife_log
             self.strife_log_window.update_logs()
+        # if we clicked off the menu, close the menu
+        if pygame.mouse.get_pressed()[0] and self.layer_2_buttons:
+            for button in self.layer_2_buttons:
+                if button.is_mouseover(): break
+            else:
+                self.clear_next_layer_buttons()
         self.update_submitted_skills()
         self.update_vials()
 
