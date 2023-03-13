@@ -6,6 +6,7 @@ import util
 import sessions
 import npcs
 import skills
+import config
 
 vials: dict[str, "Vial"] = {}
 
@@ -146,6 +147,12 @@ class Griefer():
 
     def take_damage(self, damage: int):
         if damage > 0: damage = skills.modify_damage(damage, self.get_stat("mettle"))
+        if self.player is not None:
+            threshold = self.get_vial_maximum("hp") / 3
+            if damage > threshold:
+                modified_damage = damage - threshold
+                modified_damage *= config.player_hp_threshold_damage_mult
+                damage = int(threshold + modified_damage)
         self.change_vial("hp", -damage)
         self.strife.log(f"{self.nickname} takes {damage} damage!")
 
