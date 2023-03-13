@@ -226,7 +226,7 @@ class Griefer():
             vial.new_turn(self) 
         if self.player is None: self.ai_use_skills()
 
-    def take_damage(self, damage: int):
+    def take_damage(self, damage: int, coin: Optional[bool] = None):
         if damage > 0: 
             damage = skills.modify_damage(damage, self.get_stat("mettle"))
             for vial in self.vials_list:
@@ -238,7 +238,10 @@ class Griefer():
                 modified_damage *= config.player_hp_threshold_damage_mult
                 damage = int(threshold + modified_damage)
         self.change_vial("hp", -damage)
-        self.strife.log(f"{self.nickname} takes {damage} damage!")
+        if coin is None:
+            self.strife.log(f"{self.nickname} takes {damage} damage!")
+        else:
+            self.strife.log(f"{self.nickname} takes {damage} damage! ({'heads' if coin else 'scratch'})")
 
     def die(self):
         self.strife.log(f"The {self.nickname} explodes into grist!")

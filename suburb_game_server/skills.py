@@ -67,6 +67,8 @@ class Skill():
         if "coin" in damage_formula:
             coin = flip_coin(user.get_stat("luck"), target.get_stat("luck"))
             damage_formula = damage_formula.replace("coin", str(int(coin)))
+        else:
+            coin = None
         damage = eval(damage_formula)
         for vial in user.vials_list:
             damage = vial.modify_damage_dealt(damage, user)
@@ -82,7 +84,7 @@ class Skill():
                 for vial in target.vials_list:
                     vial.on_parry(target, damage)
                 return
-        if damage != 0: target.take_damage(damage)
+        if damage != 0: target.take_damage(damage, coin=coin)
 
     def get_dict(self) -> dict:
         out = deepcopy(self.__dict__)
