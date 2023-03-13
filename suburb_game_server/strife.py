@@ -76,7 +76,13 @@ class Vial():
     def modify_stat(self, stat_name: str, value: int, griefer: "Griefer") -> int:
         return value
     
+    def parry_roll_modifier(self, griefer: "Griefer") -> float:
+        return 1.0
+    
     def new_turn(self, griefer: "Griefer"):
+        pass
+
+    def on_parry(self, griefer: "Griefer", damage_parried: int):
         pass
     
 hp = Vial("hp")
@@ -98,7 +104,7 @@ class AspectVial(Vial):
             griefer.change_vial("imagination", -difference//2)
         return difference
 
-aspect = Vial("aspect")
+aspect = AspectVial("aspect")
 aspect.maximum_formula = "{power}*2"
 aspect.starting_formula = "{maximum}"
 aspect.optional_vial = True
@@ -148,7 +154,17 @@ imagination.maximum_formula = "{power} + {tac}*6"
 imagination.starting_formula = "0"
 imagination.optional_vial = True
 
-horseshitometer = Vial("horseshitometer")
+class HorseshitometerVial(Vial):
+    def parry_roll_modifier(self, griefer: "Griefer") -> float:
+        diff = self.difference_from_starting(griefer)
+        power = griefer.power
+        mod = (power**2) / (power + diff)
+        return mod
+
+    def on_parry(self, griefer: "Griefer", damage_parried: int):
+        self.add_value(griefer, damage_parried//2)
+
+horseshitometer = HorseshitometerVial("horseshitometer")
 horseshitometer.maximum_formula = "{power} + {tac}*6"
 horseshitometer.starting_formula = "{maximum}//2"
 horseshitometer.optional_vial = True

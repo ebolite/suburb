@@ -76,8 +76,11 @@ class Skill():
             edge = stat_edge(user.get_stat("savvy"), target.get_stat("savvy"))
             edge = edge ** 2
             edge *= stat_edge(user.get_stat("luck"), target.get_stat("luck"))
+            for vial in target.vials_list: edge *= vial.parry_roll_modifier(target)
             if random.random() * edge < config.base_parry_chance:
                 target.strife.log(f"{target.name} AUTO-PARRIES!")
+                for vial in target.vials_list:
+                    vial.on_parry(target, damage)
                 return
         if damage != 0: target.take_damage(damage)
 
