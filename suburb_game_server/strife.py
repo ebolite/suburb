@@ -48,7 +48,7 @@ class Vial():
         return int(eval(formula))
     
 hp = Vial("hp")
-hp.maximum_formula = "{power} + {vig}*6"
+hp.maximum_formula = "{power}*3 + {vig}*18"
 hp.starting_formula = "{maximum}"
 hp.gel_vial = True
 
