@@ -445,6 +445,13 @@ class Strife():
     @property
     def griefer_list(self) -> list[Griefer]:
         return [self.get_griefer(griefer_name) for griefer_name in self.griefers]
+    
+    @property
+    def player_griefers(self) -> list[Griefer]:
+        out = []
+        for griefer in self.griefer_list:
+            if griefer.player is not None: out.append(griefer)
+        return out
 
     @property
     def session(self) -> "sessions.Session":
