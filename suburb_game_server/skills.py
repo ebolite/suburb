@@ -14,7 +14,7 @@ SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 SKILL_CATEGORIES = ["aggressive", "abstinent", "abusive", "aspected", "arsenal", "none"]
 
 def modify_damage(damage: int, mettle: int):
-    new_damage = damage * (damage / (damage + mettle*6))
+    new_damage = damage * (damage / (damage + mettle*6)) # damage squared over damage plus mettle*6
     return int(new_damage)
 
 def stat_edge(user_stat: int, target_stat: int) -> float:
