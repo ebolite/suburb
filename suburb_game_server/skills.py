@@ -68,6 +68,8 @@ class Skill():
             coin = flip_coin(user.get_stat("luck"), target.get_stat("luck"))
             damage_formula = damage_formula.replace("coin", str(int(coin)))
         damage = eval(damage_formula)
+        for vial in user.vials_list:
+            damage = vial.modify_damage_dealt(damage, user)
         # only players can parry, enemies simply miss less with more savvy
         if self.parryable and target.player is not None:
             # higher target savvy = lower roll = more likely to parry

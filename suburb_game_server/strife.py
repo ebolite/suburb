@@ -50,6 +50,15 @@ class Vial():
         if "{maximum}" in formula: formula = formula.replace("{maximum}", str(self.get_maximum(griefer)))
         return int(eval(formula))
     
+    def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
+        return damage
+
+    def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
+        return damage
+    
+    def modify_stat(self, stat_name: str, value: int, griefer: "Griefer") -> int:
+        return value
+    
 hp = Vial("hp")
 hp.maximum_formula = "{power}*3 + {vig}*18"
 hp.starting_formula = "{maximum}"
@@ -146,7 +155,10 @@ class Griefer():
         if self.player is None: self.ai_use_skills()
 
     def take_damage(self, damage: int):
-        if damage > 0: damage = skills.modify_damage(damage, self.get_stat("mettle"))
+        if damage > 0: 
+            damage = skills.modify_damage(damage, self.get_stat("mettle"))
+            for vial in self.vials_list:
+                damage = vial.modify_damage_received(damage, self)
         if self.player is not None:
             threshold = self.get_vial_maximum("hp") / 3
             if damage > threshold:
@@ -294,11 +306,17 @@ class Griefer():
                          }
         return out
     
+    @property
+    def vials_list(self) -> list[Vial]:
+        return [vials[vial_name] for vial_name in self.vials]
+    
     def get_stat(self, stat_name) -> int:
         if stat_name == "power": return self.power
         stat = self.base_stats[stat_name]
         if stat_name in self.stat_bonuses:
             stat += self.stat_bonuses[stat_name]
+        for vial in self.vials_list:
+            stat = vial.modify_stat(stat_name, stat, self)
         return stat
 
     def format_formula(self, formula: str, identifier: Optional[str] = None) -> str:
