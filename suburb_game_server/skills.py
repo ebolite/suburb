@@ -101,10 +101,12 @@ class Skill():
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
         return True
 
-    def get_dict(self) -> dict:
+    def get_dict(self, griefer: "strife.Griefer") -> dict:
         out = deepcopy(self.__dict__)
-        if self.user_skill is not None: out["user_skill"] = skills[self.user_skill].get_dict()
-        if self.additional_skill is not None: out["additional_skill"] = skills[self.additional_skill].get_dict()
+        if self.user_skill is not None: out["user_skill"] = skills[self.user_skill].get_dict(griefer)
+        if self.additional_skill is not None: out["additional_skill"] = skills[self.additional_skill].get_dict(griefer)
+        if griefer is not None:
+            out["costs"] = self.get_costs(griefer)
         return out
 
 aggrieve = Skill("aggrieve")

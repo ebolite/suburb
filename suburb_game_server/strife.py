@@ -475,7 +475,7 @@ class Griefer():
         out = deepcopy(self.strife.griefers[self.__dict__["name"]])
         out["stats_dict"] = self.stats_dict
         out["vials_dict"] = self.vials_dict
-        out["known_skills"] = {skill_name:skills.skills[skill_name].get_dict() for skill_name in self.known_skills}
+        out["known_skills"] = {skill_name:skills.skills[skill_name].get_dict(self) for skill_name in self.known_skills}
         return out
 
 # each room can only have one Strife in it
