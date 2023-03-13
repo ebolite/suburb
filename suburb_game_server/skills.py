@@ -111,12 +111,21 @@ base_skills.append("aggrieve")
 
 assail = Skill("assail")
 assail.use_message = "{user} assails!"
-assail.damage_formula = "(user.power + user.spk*6) * (1.5 + 0.5*coin)"
+assail.damage_formula = "(user.power + user.spk*6) * (1.5 + 0.75*coin)"
 assail.category = "none"
 assail.vial_cost_formulas = {
     "vim": "user.power//2",
 }
 base_skills.append("assail")
+
+assault = Skill("assault")
+assault.use_message = "{user} assaults!"
+assault.damage_formula = "(user.power + user.spk*6) * (2 + 0.75*coin)"
+assault.category = "none"
+assault.vial_cost_formulas = {
+    "vim": "user.power",
+}
+base_skills.append("assault")
 
 class Aspect():
     def __init__(self, name):
