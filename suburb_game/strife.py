@@ -235,6 +235,12 @@ class Strife():
         self.remaining_skills_text.text_func = lambda *args: f"Actions left: {self.player_griefer.available_actions}"
         self.remaining_skills_text.color = self.theme.dark
         self.remaining_skills_text.fontsize = 28
+        def currently_selected_text_func():
+            if self.selected_skill is None: return ""
+            else: return f"{self.selected_skill.name.upper()}? (target {self.selected_skill.num_targets - len(self.selected_targets)})"
+        self.selected_skill_text = render.Text(0.5, 0.19, "")
+        self.selected_skill_text.text_func = currently_selected_text_func
+        self.selected_skill_text.color = self.theme.dark
         self.update_submitted_skills()
         self.update_vials()
         render.update_check.append(self)
