@@ -1691,8 +1691,8 @@ class Enemy(GrieferElement, Image):
         grist_type = griefer.grist_type or "build"
         new_color = config.gristcolors[grist_type]
         self.convert_colors.append((themes.default.dark, new_color)) 
-        self.add_vial("hp")
         self.add_vial("vim")
+        self.add_vial("hp")
         click_check.append(self)
 
 class PlayerGriefer(GrieferElement, Symbol):
