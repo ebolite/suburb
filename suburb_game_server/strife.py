@@ -111,9 +111,10 @@ aspect.optional_vial = True
 aspect.tact_vial = True
 
 class HopeVial(Vial):
-    def modify_stat(self, stat_name: str, value: int, griefer: "Griefer") -> int:
-        flat_add = self.difference_from_starting(griefer)
-        return value + flat_add
+    def new_turn(self, griefer: "Griefer"):
+        flat_add = self.difference_from_starting(griefer)//18
+        for stat_name in griefer.base_stats:
+            griefer.add_bonus(stat_name, flat_add)
 
 hope = HopeVial("hope")
 hope.maximum_formula = "{power}*3"
