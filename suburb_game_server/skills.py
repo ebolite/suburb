@@ -18,7 +18,7 @@ def modify_damage(damage: int, mettle: int):
     return int(new_damage)
 
 def stat_edge(user_stat: int, target_stat: int) -> float:
-    edge = (user_stat - target_stat) / (user_stat + target_stat) # edge gets higher the more lucky the user is than the target
+    edge = (user_stat - target_stat) / (user_stat + target_stat)
     edge += 1
     return edge
 
@@ -66,9 +66,10 @@ class Skill():
         damage = eval(damage_formula)
         # only players can parry, enemies simply miss less with more savvy
         if self.parryable and target.player is not None:
-            edge = stat_edge(target.get_stat("savvy"), user.get_stat("savvy"))
+            # higher target savvy = lower roll = more likely to parry
+            edge = stat_edge(user.get_stat("savvy"), target.get_stat("savvy"))
             edge = edge ** 2
-            edge *= stat_edge(target.get_stat("luck"), user.get_stat("luck"))
+            edge *= stat_edge(user.get_stat("luck"), target.get_stat("luck"))
             if random.random() * edge < config.base_parry_chance:
                 target.strife.log(f"{target.name} AUTO-PARRIES!")
                 return
