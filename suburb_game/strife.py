@@ -56,7 +56,8 @@ class Griefer():
     @property
     def available_actions(self) -> int:
         actions = self.actions
-        for skill_name in self.submitted_skills:
+        for skill_dict in self.submitted_skills:
+            skill_name = skill_dict["skill_name"]
             skill = self.get_skill(skill_name)
             actions -= skill.action_cost
         return actions
@@ -88,6 +89,14 @@ class Griefer():
     @property
     def known_skills_list(self) -> list[Skill]:
         return [Skill(skill_name, self.known_skills[skill_name]) for skill_name in self.known_skills]
+
+    @property
+    def skill_categories(self) -> dict[str, list[Skill]]:
+        categories: dict[str, list[Skill]] = {}
+        for skill in self.known_skills_list:
+            if skill.category not in categories: categories[skill.category] = []
+            categories[skill.category].append(skill)
+        return categories
 
     @property
     def player_name(self) -> Optional[str]:
@@ -135,6 +144,7 @@ class Strife():
         self.selected_targets: list[str] = []
         self.selected_skill_name: Optional[str] = None
         self.theme = suburb.current_theme()
+        self.layer_2_buttons: list[render.UIElement] = []
         render.ui_elements.append(self)
 
     def update_strife_dict(self, strife_dict):
@@ -166,6 +176,22 @@ class Strife():
             self.griefer_sprites[griefer.name] = sprite
         return sprite
 
+    def get_skill_button_func(self, skill_name):
+        def button_func(): 
+            skill = self.player_griefer.get_skill(skill_name)
+            costs = skill.costs
+            if not self.player_griefer.can_pay_costs(costs): return
+            if self.player_griefer.available_actions < skill.action_cost: return
+            if skill_name != self.selected_skill_name: self.selected_targets = []
+            self.selected_skill_name = skill_name
+            self.clear_next_layer_buttons()
+        return button_func
+    
+    def get_category_button_func(self, category_name):
+        def button_func():
+            self.make_next_layer_buttons(category_name)
+        return button_func
+
     def draw_scene(self):
         bar_br = 30
         top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 100+bar_br, self.theme.light)
@@ -174,21 +200,17 @@ class Strife():
         for griefer_name in self.griefers:
             griefer = self.get_griefer(griefer_name)
             self.make_griefer_sprite(griefer)
-            
         # todo: make skill categories
-        def get_button_func(skill_name):
-            def button_func(): 
-                skill = self.player_griefer.get_skill(skill_name)
-                costs = skill.costs
-                if not self.player_griefer.can_pay_costs(costs): return
-                if self.player_griefer.available_actions < skill.action_cost: return
-                if skill_name != self.selected_skill_name: self.selected_targets = []
-                self.selected_skill_name = skill_name
-            return button_func
-        for i, skill_name in enumerate(self.player_griefer.known_skills):
-            y = 200 + 48*i
-            skill_button = render.TextButton(4, y, 196, 32, f">{skill_name.upper()}", get_button_func(skill_name))
+        y = 200
+        for category_name in self.player_griefer.skill_categories:
+            if category_name == "none": continue
+            category_button = render.TextButton(4, y, 196, 32, f"{category_name.upper()}", self.get_category_button_func(category_name))
+            category_button.absolute = True
+            y += 48
+        for skill in self.player_griefer.skill_categories["none"]:
+            skill_button = render.TextButton(4, y, 196, 32, f">{skill.name.upper()}", self.get_skill_button_func(skill.name))
             skill_button.absolute = True
+            y += 48
         def submit_button_func():
             reply = client.requestdic(intent="strife_ready")
             self.update_strife_dict(reply)
@@ -200,6 +222,19 @@ class Strife():
         self.update_submitted_skills()
         self.update_vials()
         render.update_check.append(self)
+
+    def make_next_layer_buttons(self, category_name: str):
+        self.clear_next_layer_buttons()
+        for i, skill in enumerate(self.player_griefer.skill_categories[category_name]):
+            y = 200 + 48*i
+            skill_button = render.TextButton(204, y, 196, 32, f">{skill.name.upper()}", self.get_skill_button_func(skill.name))
+            skill_button.absolute = True
+            self.layer_2_buttons.append(skill_button)
+
+    def clear_next_layer_buttons(self):
+        for button in self.layer_2_buttons.copy():
+            button.delete()
+            self.layer_2_buttons.remove(button)
 
     def update(self):
         if self.strife_log_window.log_list != self.strife_log:
