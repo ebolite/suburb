@@ -259,6 +259,10 @@ def handle_request(dict):
             print("determined success", success)
             if success: return json.dumps(player.strife.get_dict())
             else: return json.dumps({})
+        case "unsubmit_skill":
+            if player.strife is None: return json.dumps({})
+            player.strife.get_griefer(player.name).unsubmit_skill()
+            return json.dumps(player.strife.get_dict())
         case "strife_ready":
             if player.strife is None: return json.dumps({})
             player.strife.get_griefer(player.name).ready = True

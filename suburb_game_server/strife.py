@@ -275,6 +275,10 @@ class Griefer():
         }
         self.submitted_skills.append(skill_dict)
         return True
+    
+    def unsubmit_skill(self):
+        if self.submitted_skills:
+            self.submitted_skills.pop()
 
     def use_skills(self):
         for skill_dict in self.submitted_skills:

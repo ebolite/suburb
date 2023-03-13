@@ -196,7 +196,7 @@ class Strife():
 
     def draw_scene(self):
         bar_br = 30
-        top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 100+bar_br, self.theme.light)
+        top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 120+bar_br, self.theme.light)
         top_bar.outline_color = self.theme.dark
         top_bar.border_radius = bar_br
         for griefer_name in self.griefers:
@@ -222,11 +222,19 @@ class Strife():
         def submit_button_func():
             reply = client.requestdic(intent="strife_ready")
             self.update_strife_dict(reply)
-        submit_button = render.TextButton(0.8, 0.4, 196, 32, ">SUBMIT", submit_button_func)
-        self.strife_log_window = render.LogWindow(None, None, lines_to_display=4, log_list=self.strife_log)
+        def revert_button_func():
+            reply = client.requestdic(intent="unsubmit_skill")
+            self.update_strife_dict(reply)
+        revert_button = render.TextButton(0.85, 0.2, 196, 32, ">REVERT", revert_button_func)
+        submit_button = render.TextButton(0.85, 0.25, 196, 32, ">SUBMIT", submit_button_func)
+        self.strife_log_window = render.LogWindow(None, None, lines_to_display=5, log_list=self.strife_log)
         self.submitted_skills_window = render.LogWindow(None, None, lines_to_display=4, x=1080, width=300, log_list=[])
         self.submitted_skills_window.background_color = self.theme.dark
         self.submitted_skills_window.text_color = self.theme.black
+        self.remaining_skills_text = render.Text(0.8425, 0.14, "")
+        self.remaining_skills_text.text_func = lambda *args: f"Actions left: {self.player_griefer.available_actions}"
+        self.remaining_skills_text.color = self.theme.dark
+        self.remaining_skills_text.fontsize = 28
         self.update_submitted_skills()
         self.update_vials()
         render.update_check.append(self)
