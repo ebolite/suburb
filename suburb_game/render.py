@@ -254,6 +254,7 @@ class TextButton(UIElement):
         self.fill_color: pygame.Color = self.theme.white
         self.hover_color: pygame.Color = self.theme.dark
         self.draw_condition: Optional[Callable] = None
+        self.inactive_condition: Optional[Callable] = None
         self.draw_sprite = True
         self.toggle = False
         self.click_on_mouse_down = False
@@ -277,7 +278,11 @@ class TextButton(UIElement):
         self.outline_surf.fill(self.outline_color)
         self.surf = pygame.Surface((self.w-2*self.outline_width, self.h-2*self.outline_width))
         self.surf.fill(self.fill_color)
-        if self.active:
+        if self.inactive_condition is not None and self.inactive_condition():
+            self.hoversurf = pygame.Surface((self.w, self.h))
+            self.hoversurf.fill(self.hover_color)
+            self.hoversurf.set_alpha(150)
+        elif self.active:
             self.hoversurf = pygame.Surface((self.w, self.h))
             self.hoversurf.fill(self.hover_color)
             self.hoversurf.set_alpha(89)
@@ -293,6 +298,7 @@ class TextButton(UIElement):
                 self.blit_surf.blit(self.hoversurf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
+        if self.inactive_condition is not None and self.inactive_condition(): return
         if self not in click_check: return
         if isclicked:
             if self.click_on_mouse_down: self.onpress()

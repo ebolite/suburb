@@ -46,6 +46,11 @@ class Griefer():
             if self.get_usable_vial(vial_name) < costs[vial_name]: return False
         return True
     
+    def can_use_skill(self, skill: Skill) -> bool:
+        if not self.can_pay_costs(skill.costs): return False
+        if self.available_actions < skill.action_cost: return False
+        return True
+    
     def get_maximum_vial(self, vial_name) -> int:
         return self.vials[vial_name]["maximum"]
     
@@ -181,18 +186,36 @@ class Strife():
     def get_skill_button_func(self, skill_name):
         def button_func(): 
             skill = self.player_griefer.get_skill(skill_name)
-            costs = skill.costs
-            if not self.player_griefer.can_pay_costs(costs): return
+            if not self.player_griefer.can_use_skill(skill): return
             if self.player_griefer.available_actions < skill.action_cost: return
             if skill_name != self.selected_skill_name: self.selected_targets = []
             self.selected_skill_name = skill_name
             self.clear_next_layer_buttons()
         return button_func
     
+    def get_skill_inactive_condition(self, skill_name):
+        def inactive_condition():
+            skill = self.player_griefer.get_skill(skill_name)
+            if self.player_griefer.can_use_skill(skill):
+                return False
+            else:
+                return True
+        return inactive_condition
+    
     def get_category_button_func(self, category_name):
         def button_func():
             self.make_next_layer_buttons(category_name)
         return button_func
+
+    def make_skill_button(self, skill: Skill, x: int, y: int) -> "render.TextButton":
+        skill_button = render.TextButton(x, y, 196, 32, f">{skill.name.upper()}", self.get_skill_button_func(skill.name))
+        skill_button.absolute = True
+        skill_button.fill_color = themes.default.white
+        skill_button.outline_color = config.get_category_color(skill.category)
+        skill_button.text_color = config.get_category_color(skill.category)
+        skill_button.hover_color = pygame.Color(225, 225, 225)
+        skill_button.inactive_condition = self.get_skill_inactive_condition(skill.name)
+        return skill_button
 
     def draw_scene(self):
         bar_br = 30
@@ -203,6 +226,7 @@ class Strife():
             griefer = self.get_griefer(griefer_name)
             self.make_griefer_sprite(griefer)
         # todo: make skill categories
+        x = 4
         y = 200
         for category_name in self.player_griefer.skill_categories:
             if category_name == "none": continue
@@ -213,11 +237,7 @@ class Strife():
             category_button.text_color = config.get_category_color(category_name)
             y += 48
         for skill in self.player_griefer.skill_categories["none"]:
-            skill_button = render.TextButton(4, y, 196, 32, f">{skill.name.upper()}", self.get_skill_button_func(skill.name))
-            skill_button.absolute = True
-            skill_button.fill_color = themes.default.white
-            skill_button.outline_color = config.get_category_color(skill.category)
-            skill_button.text_color = config.get_category_color(skill.category)
+            self.make_skill_button(skill, x, y)
             y += 48
         def submit_button_func():
             reply = client.requestdic(intent="strife_ready")
@@ -247,13 +267,10 @@ class Strife():
 
     def make_next_layer_buttons(self, category_name: str):
         self.clear_next_layer_buttons()
+        x = 204
         for i, skill in enumerate(self.player_griefer.skill_categories[category_name]):
             y = 200 + 48*i
-            skill_button = render.TextButton(204, y, 196, 32, f">{skill.name.upper()}", self.get_skill_button_func(skill.name))
-            skill_button.absolute = True
-            skill_button.fill_color = themes.default.white
-            skill_button.outline_color = config.get_category_color(skill.category)
-            skill_button.text_color = config.get_category_color(skill.category)
+            skill_button = self.make_skill_button(skill, x, y)
             self.layer_2_buttons.append(skill_button)
 
     def clear_next_layer_buttons(self):
