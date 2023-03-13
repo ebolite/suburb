@@ -30,6 +30,7 @@ def stats_from_ratios(stat_ratios: dict[str, int], power: int):
 class Vial():
     def __init__(self, name):
         vials[name] = self
+        self.name = name
         self.maximum_formula = "0"
         self.starting_formula = "0"
         # hidden vials don't display unless they change from their starting value
@@ -41,6 +42,9 @@ class Vial():
         # tact vials regenerate by tact each turn
         self.tact_vial = False
 
+    def get_current(self, griefer: "Griefer") -> int:
+        return griefer.get_vial(self.name)
+
     def get_maximum(self, griefer: "Griefer") -> int:
         formula = griefer.format_formula(self.maximum_formula)
         return int(eval(formula))
@@ -49,6 +53,9 @@ class Vial():
         formula = griefer.format_formula(self.starting_formula)
         if "{maximum}" in formula: formula = formula.replace("{maximum}", str(self.get_maximum(griefer)))
         return int(eval(formula))
+    
+    def difference_from_starting(self, griefer: "Griefer") -> int:
+        return self.get_current(griefer) - self.get_starting(griefer)
     
     def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
         return damage
@@ -76,17 +83,36 @@ aspect.starting_formula = "{maximum}"
 aspect.optional_vial = True
 aspect.tact_vial = True
 
-hope = Vial("hope")
+class HopeVial(Vial):
+    def modify_stat(self, stat_name: str, value: int, griefer: "Griefer") -> int:
+        flat_add = self.difference_from_starting(griefer)
+        return value + flat_add
+
+hope = HopeVial("hope")
 hope.maximum_formula = "{power}*3"
 hope.starting_formula = "{maximum}//2"
 hope.hidden_vial = True
 
-rage = Vial("rage")
+class RageVial(Vial):
+    def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
+        flat_add = self.difference_from_starting(griefer)
+        return damage + flat_add
+
+    def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
+        flat_add = self.difference_from_starting(griefer)
+        return damage + flat_add
+
+rage = RageVial("rage")
 rage.maximum_formula = "{power}*3"
 rage.starting_formula = "{maximum}//2"
 rage.hidden_vial = True
 
-mangrit = Vial("mangrit")
+class MangritVial(Vial):
+    def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
+        flat_add = self.get_current(griefer)
+        return damage + flat_add
+
+mangrit = MangritVial("mangrit")
 mangrit.maximum_formula = "{power} + {tac}*6"
 mangrit.starting_formula = "0"
 mangrit.optional_vial = True
