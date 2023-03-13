@@ -15,6 +15,7 @@ class Skill():
         self.damage_formula: str = skill_dict["damage_formula"]
         self.user_skill: Optional[dict] = skill_dict["user_skill"]
         self.additional_skill: Optional[dict] = skill_dict["additional_skill"]
+        self.costs: dict[str, int] = skill_dict["costs"]
 
 class Npc():
     def __init__(self, name, npc_dict):
@@ -30,6 +31,18 @@ class Griefer():
 
     def get_vial(self, vial_name) -> int:
         return self.vials[vial_name]["current"]
+    
+    def get_usable_vial(self, vial_name: str) -> int:
+        total = self.get_vial(vial_name)
+        for skill in self.submitted_skills_list:
+            if vial_name in skill.costs:
+                total -= skill.costs[vial_name]
+        return total
+    
+    def can_pay_costs(self, costs: dict[str, int]) -> bool:
+        for vial_name in costs:
+            if self.get_usable_vial(vial_name) < costs[vial_name]: return False
+        return True
     
     def get_maximum_vial(self, vial_name) -> int:
         return self.vials[vial_name]["maximum"]
@@ -57,12 +70,24 @@ class Griefer():
         return self.griefer_dict["symbol_dict"]
     
     @property
-    def submitted_skills(self) -> dict:
+    def submitted_skills(self) -> list[dict]:
         return self.griefer_dict["submitted_skills"]
+    
+    @property
+    def submitted_skills_list(self) -> list[Skill]:
+        out = []
+        for skill_dict in self.submitted_skills:
+            skill_name = skill_dict["skill_name"]
+            out.append(Skill(skill_name, self.known_skills[skill_name]))
+        return out
     
     @property
     def known_skills(self) -> dict[str, dict]:
         return self.griefer_dict["known_skills"]
+    
+    @property
+    def known_skills_list(self) -> list[Skill]:
+        return [Skill(skill_name, self.known_skills[skill_name]) for skill_name in self.known_skills]
 
     @property
     def player_name(self) -> Optional[str]:
@@ -153,6 +178,8 @@ class Strife():
         # todo: make skill categories
         def get_button_func(skill_name):
             def button_func(): 
+                costs = self.player_griefer.get_skill(skill_name).costs
+                if not self.player_griefer.can_pay_costs(costs): return
                 if skill_name != self.selected_skill_name: self.selected_targets = []
                 self.selected_skill_name = skill_name
             return button_func
