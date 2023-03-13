@@ -37,6 +37,8 @@ class Vial():
         self.optional_vial = False
         # gel vials are fucked and weird
         self.gel_vial = False
+        # tact vials regenerate by tact each turn
+        self.tact_vial = False
 
     def get_maximum(self, griefer: "Griefer") -> int:
         formula = griefer.format_formula(self.maximum_formula)
@@ -51,15 +53,18 @@ hp = Vial("hp")
 hp.maximum_formula = "{power}*3 + {vig}*18"
 hp.starting_formula = "{maximum}"
 hp.gel_vial = True
+hp.tact_vial = True
 
 vim = Vial("vim")
 vim.maximum_formula = "{power} + {tac}*6"
 vim.starting_formula = "{maximum}"
+vim.tact_vial = True
 
 aspect = Vial("aspect")
 aspect.maximum_formula = "{power}*2"
 aspect.starting_formula = "{maximum}"
 aspect.optional_vial = True
+aspect.tact_vial = True
 
 hope = Vial("hope")
 hope.maximum_formula = "{power}*3"
@@ -75,6 +80,7 @@ mangrit = Vial("mangrit")
 mangrit.maximum_formula = "{power} + {tac}*6"
 mangrit.starting_formula = "0"
 mangrit.optional_vial = True
+mangrit.tact_vial = True
 
 imagination = Vial("imagination")
 imagination.maximum_formula = "{power} + {tac}*6"
@@ -130,8 +136,13 @@ class Griefer():
                     self.add_vial(vial_name)
 
     def new_turn(self):
+        if self.get_vial("hp") <= 0: 
+            self.die()
+            return
+        for vial_name in self.vials:
+            if vials[vial_name].tact_vial:
+                self.change_vial(vial_name, self.get_stat("tact"))
         if self.player is None: self.ai_use_skills()
-        if self.get_vial("hp") <= 0: self.die()
 
     def take_damage(self, damage: int):
         if damage > 0: damage = skills.modify_damage(damage, self.get_stat("mettle"))
