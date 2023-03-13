@@ -71,6 +71,7 @@ def saveall():
     print("Saving...")
     writejson(sessions, "sessions")
     writejson(players, "players")
+    writejson(npcs, "npcs")
     writejson(items, "items")
     writejson(instances, "instances")
     writejson(codes, "codes")
