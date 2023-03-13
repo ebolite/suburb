@@ -3,6 +3,7 @@ from copy import deepcopy
 
 import strife
 import random
+import config
 
 aspects: dict["str", "Aspect"] = {}
 skills: dict["str", "Skill"] = {}
@@ -16,10 +17,14 @@ def modify_damage(damage: int, mettle: int):
     new_damage = damage * (damage / (damage + mettle*6))
     return int(new_damage)
 
+def stat_edge(user_stat: int, target_stat: int) -> float:
+    edge = (user_stat - target_stat) / (user_stat + target_stat) # edge gets higher the more lucky the user is than the target
+    edge += 1
+    return edge
+
 # todo: make this matter
 def flip_coin(user_luck: int, target_luck: int) -> bool:
-    edge = (user_luck - target_luck) / (user_luck + target_luck) # edge gets higher the more lucky the user is than the target
-    edge = 1 + edge
+    edge = stat_edge(user_luck, target_luck)
     roll = random.random() * edge
     if roll > 0.5: return True
     else: return False
@@ -30,6 +35,7 @@ class Skill():
         skills[name] = self
         self.category = "none"
         self.beneficial = False
+        self.parryable = True
         self.action_cost = 1
         self.num_targets = 1
         self.cooldown = 0
@@ -58,6 +64,13 @@ class Skill():
         damage_formula = user.format_formula(self.damage_formula, "user")
         damage_formula = target.format_formula(damage_formula, "target")
         damage = eval(damage_formula)
+        # only players can parry, enemies simply miss less with more savvy
+        if self.parryable and target.player is not None:
+            edge = stat_edge(target.get_stat("savvy"), user.get_stat("savvy"))
+            edge = edge ** 2
+            if random.random() * edge < config.base_parry_chance:
+                target.strife.log(f"{target.name} AUTO-PARRIES!")
+                return
         if damage != 0: target.take_damage(damage)
 
     def get_dict(self) -> dict:

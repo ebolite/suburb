@@ -5,6 +5,8 @@ max_wielded_size = 20
 overmap_width = 96
 terrain_decay = 0.01
 
+base_parry_chance = 0.1
+
 sburb = "<a:suburbspirograph:820899074986606613>"
 
 # items which appear as icons to clients
