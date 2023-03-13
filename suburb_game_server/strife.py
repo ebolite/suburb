@@ -42,6 +42,16 @@ class Vial():
         # tact vials regenerate by tact each turn
         self.tact_vial = False
 
+    def add_value(self, griefer: "Griefer", amount: int) -> int:
+        current = griefer.vials[self.name]["current"]
+        griefer.vials[self.name]["current"] += amount
+        maximum = griefer.get_vial_maximum(self.name)
+        if griefer.vials[self.name]["current"] > maximum:
+            griefer.vials[self.name]["current"] = maximum
+        if griefer.vials[self.name]["current"] < 0:
+            griefer.vials[self.name]["current"] = 0
+        return griefer.vials[self.name]["current"] - current
+
     def get_current(self, griefer: "Griefer") -> int:
         return griefer.get_vial(self.name)
 
@@ -275,13 +285,9 @@ class Griefer():
         griefer.initialize_vials()
         return griefer
 
-    def change_vial(self, vial_name: str, amount: int):
-        self.vials[vial_name]["current"] += amount
-        maximum = self.get_vial_maximum(vial_name)
-        if self.vials[vial_name]["current"] > maximum:
-            self.vials[vial_name]["current"] = maximum
-        if self.vials[vial_name]["current"] < 0:
-            self.vials[vial_name]["current"] = 0
+    def change_vial(self, vial_name: str, amount: int) -> int:
+        vial = vials[vial_name]
+        return vial.add_value(self, amount)
 
     def add_vial(self, vial_name: str):
         self.vials[vial_name] = {}
