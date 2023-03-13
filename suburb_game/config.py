@@ -290,6 +290,21 @@ for vial_name in vials:
     new_dict.update(vials[vial_name])
     vials[vial_name] = new_dict
 
+strife_category_colors = {
+    "aggressive": Color(255, 75, 45),
+    "abstinent": Color(56, 213, 244),
+    "abusive": Color(255, 184, 45),
+    "aspected": Color(54, 54, 159),
+    "arsenal": Color(155, 56, 244),
+    "none": Color(0, 175, 255),
+}
+
+def get_category_color(category) -> Color:
+    if category in strife_category_colors:
+        return strife_category_colors[category]
+    else:
+        return strife_category_colors["none"]
+
 # first is light color, second is dark color
 pickable_colors = [
     # kids colors

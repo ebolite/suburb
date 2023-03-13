@@ -4,6 +4,7 @@ import client
 import render
 import config
 import suburb
+import themes
 
 class Skill():
     def __init__(self, name: str, skill_dict: dict):
@@ -206,10 +207,16 @@ class Strife():
             if category_name == "none": continue
             category_button = render.TextButton(4, y, 196, 32, f"{category_name.upper()}", self.get_category_button_func(category_name))
             category_button.absolute = True
+            category_button.fill_color = themes.default.white
+            category_button.outline_color = config.get_category_color(category_name)
+            category_button.text_color = config.get_category_color(category_name)
             y += 48
         for skill in self.player_griefer.skill_categories["none"]:
             skill_button = render.TextButton(4, y, 196, 32, f">{skill.name.upper()}", self.get_skill_button_func(skill.name))
             skill_button.absolute = True
+            skill_button.fill_color = themes.default.white
+            skill_button.outline_color = config.get_category_color(skill.category)
+            skill_button.text_color = config.get_category_color(skill.category)
             y += 48
         def submit_button_func():
             reply = client.requestdic(intent="strife_ready")
@@ -229,6 +236,9 @@ class Strife():
             y = 200 + 48*i
             skill_button = render.TextButton(204, y, 196, 32, f">{skill.name.upper()}", self.get_skill_button_func(skill.name))
             skill_button.absolute = True
+            skill_button.fill_color = themes.default.white
+            skill_button.outline_color = config.get_category_color(skill.category)
+            skill_button.text_color = config.get_category_color(skill.category)
             self.layer_2_buttons.append(skill_button)
 
     def clear_next_layer_buttons(self):
