@@ -40,12 +40,23 @@ class Skill():
         self.num_targets = 1
         self.cooldown = 0
         self.damage_formula = ""
+        self.vial_cost_formulas = {}
         self.use_message = ""
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
 
+    def get_costs(self, user: "strife.Griefer") -> dict[str, int]:
+        true_costs = {}
+        for vial_name, formula in self.vial_cost_formulas.items():
+            true_cost = user.format_formula(formula, "user")
+            true_costs[vial_name] = int(eval(true_cost))
+        return true_costs
+
     # affect each target in list
     def use(self, user: "strife.Griefer", targets_list: list["strife.Griefer"]):
+        costs = self.get_costs(user)
+        if not user.can_pay_vial_costs(costs): return
+        user.pay_costs(costs)
         if self.use_message: 
             message = self.use_message
             message = message.replace("{user}", user.nickname)
@@ -69,7 +80,7 @@ class Skill():
             damage_formula = damage_formula.replace("coin", str(int(coin)))
         else:
             coin = None
-        damage = eval(damage_formula)
+        damage = int(eval(damage_formula))
         for vial in user.vials_list:
             damage = vial.modify_damage_dealt(damage, user)
         # only players can parry, enemies simply miss less with more savvy
@@ -94,9 +105,18 @@ class Skill():
 
 aggrieve = Skill("aggrieve")
 aggrieve.use_message = "{user} aggrieves!"
-aggrieve.damage_formula = "user.power*(1 + 0.5*coin) + user.spk*6"
+aggrieve.damage_formula = "(user.power + user.spk*6) * (1 + 0.5*coin)"
 aggrieve.category = "none"
 base_skills.append("aggrieve")
+
+assail = Skill("assail")
+assail.use_message = "{user} assails!"
+assail.damage_formula = "(user.power + user.spk*6) * (1.5 + 0.5*coin)"
+assail.category = "none"
+assail.vial_cost_formulas = {
+    "vim": "user.power//2",
+}
+base_skills.append("assail")
 
 class Aspect():
     def __init__(self, name):

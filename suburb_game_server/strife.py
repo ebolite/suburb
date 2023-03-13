@@ -338,6 +338,15 @@ class Griefer():
         if vial_name in self.vials: return True
         else: return False
 
+    def can_pay_vial_costs(self, costs: dict) -> bool:
+        for vial_name in costs:
+            if self.get_vial(vial_name) < costs[vial_name]: return False
+        return True
+    
+    def pay_costs(self, costs: dict):
+        for vial_name in costs:
+            self.change_vial(vial_name, -costs[vial_name])
+
     def initialize_vials(self):
         for vial_name in self.vials:
             vial = vials[vial_name]
@@ -519,6 +528,7 @@ class Strife():
             griefer.submitted_skills = []
 
     def end(self):
+        print(self.strife_log)
         self.room.strife_dict = {}
 
     def log(self, text: str):
