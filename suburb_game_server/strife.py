@@ -134,6 +134,7 @@ class Griefer():
         if self.get_vial("hp") <= 0: self.die()
 
     def take_damage(self, damage: int):
+        if damage > 0: damage = skills.modify_damage(damage, self.get_stat("mettle"))
         self.change_vial("hp", -damage)
         self.strife.log(f"{self.nickname} takes {damage} damage!")
 
