@@ -66,6 +66,9 @@ class Vial():
     def modify_stat(self, stat_name: str, value: int, griefer: "Griefer") -> int:
         return value
     
+    def new_turn(self, griefer: "Griefer"):
+        pass
+    
 hp = Vial("hp")
 hp.maximum_formula = "{power}*3 + {vig}*18"
 hp.starting_formula = "{maximum}"
@@ -118,7 +121,11 @@ mangrit.starting_formula = "0"
 mangrit.optional_vial = True
 mangrit.tact_vial = True
 
-imagination = Vial("imagination")
+class ImaginationVial(Vial):
+    def new_turn(self, griefer: "Griefer"):
+        griefer.change_vial("aspect", self.get_current(griefer)//2)
+
+imagination = ImaginationVial("imagination")
 imagination.maximum_formula = "{power} + {tac}*6"
 imagination.starting_formula = "0"
 imagination.optional_vial = True
@@ -175,9 +182,10 @@ class Griefer():
         if self.get_vial("hp") <= 0: 
             self.die()
             return
-        for vial_name in self.vials:
-            if vials[vial_name].tact_vial:
-                self.change_vial(vial_name, self.get_stat("tact"))
+        for vial in self.vials_list:
+            if vial.tact_vial:
+                self.change_vial(vial.name, self.get_stat("tact"))
+            vial.new_turn(self) 
         if self.player is None: self.ai_use_skills()
 
     def take_damage(self, damage: int):
