@@ -1655,6 +1655,7 @@ class GrieferElement(UIElement):
                 new_vial.rect_y_offset = -25
             else:
                 new_vial.rect_y_offset = 50
+            new_vial.rect_y_offset -= len(self.vials) * 30
             new_vial.bind_to(self)
             self.vials[vial_type] = new_vial
 
@@ -1676,6 +1677,7 @@ class Enemy(GrieferElement, Image):
         new_color = config.gristcolors[grist_type]
         self.convert_colors.append((themes.default.dark, new_color)) 
         self.add_vial("hp")
+        self.add_vial("vim")
         click_check.append(self)
 
 class PlayerGriefer(GrieferElement, Symbol):
