@@ -1539,11 +1539,26 @@ class Vial(SolidColor):
             self.rect_x_offset = -int((1 - self.filled_percent) * self.w)
             self.label.rect_x_offset = -self.rect_x_offset
         super().update()
-        fill_width = int(self.fill_surf.get_width() * self.filled_percent)
+        # unusuable vial fill
+        unusable_fill_width = int(self.fill_surf.get_width() * self.filled_percent)
+        unusable_fill_rect = pygame.Rect(0, 0, unusable_fill_width, self.fill_surf.get_height())
+        unusable_fill_surf = pygame.Surface((unusable_fill_width, self.fill_surf.get_height()))
+        unusable_fill_surf.fill(Color(255, 0, 0))
+        # usable vial fill
+        fill_width = int(self.fill_surf.get_width() * self.usable_filled_percent)
         fill_rect = pygame.Rect(0, 0, fill_width, self.fill_surf.get_height())
-        if self.gel_vial: x_offset = self.fill_surf.get_width() - fill_width
+        # blit coords
+        # offset by unusable fill width because vial hasn't changed yet
+        if self.gel_vial: x_offset = self.fill_surf.get_width() - unusable_fill_width
         else: x_offset = 0
-        self.blit_surf.blit(self.fill_surf, (self.rect.x+self.padding*2+x_offset, self.rect.y+self.padding), fill_rect)     
+        blit_x = self.rect.x+self.padding*2+x_offset
+        blit_y = self.rect.y+self.padding
+        self.blit_surf.blit(unusable_fill_surf, (blit_x, blit_y), unusable_fill_rect)
+        self.blit_surf.blit(self.fill_surf, (blit_x, blit_y), fill_rect)
+
+    @property
+    def usable_filled_percent(self) -> float:
+        return min(self.griefer.get_usable_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type), 1)
 
     @property
     def filled_percent(self) -> float:

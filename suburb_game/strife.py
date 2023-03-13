@@ -178,8 +178,10 @@ class Strife():
         # todo: make skill categories
         def get_button_func(skill_name):
             def button_func(): 
-                costs = self.player_griefer.get_skill(skill_name).costs
+                skill = self.player_griefer.get_skill(skill_name)
+                costs = skill.costs
                 if not self.player_griefer.can_pay_costs(costs): return
+                if self.player_griefer.available_actions < skill.action_cost: return
                 if skill_name != self.selected_skill_name: self.selected_targets = []
                 self.selected_skill_name = skill_name
             return button_func
