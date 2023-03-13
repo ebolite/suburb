@@ -63,6 +63,10 @@ class Skill():
     def affect(self, user: "strife.Griefer", target: "strife.Griefer"):
         damage_formula = user.format_formula(self.damage_formula, "user")
         damage_formula = target.format_formula(damage_formula, "target")
+        # coin is 1 if user wins, 0 if target wins
+        if "coin" in damage_formula:
+            coin = flip_coin(user.get_stat("luck"), target.get_stat("luck"))
+            damage_formula = damage_formula.replace("coin", str(int(coin)))
         damage = eval(damage_formula)
         # only players can parry, enemies simply miss less with more savvy
         if self.parryable and target.player is not None:
@@ -83,7 +87,7 @@ class Skill():
 
 aggrieve = Skill("aggrieve")
 aggrieve.use_message = "{user} aggrieves!"
-aggrieve.damage_formula = "user.power + user.spk*6"
+aggrieve.damage_formula = "user.power*(1+coin/2) + user.spk*6"
 aggrieve.category = "none"
 base_skills.append("aggrieve")
 
