@@ -217,7 +217,7 @@ class Griefer():
                     self.add_vial(vial_name)
 
     def new_turn(self):
-        if self.get_vial("hp") <= 0: 
+        if self.should_be_dead(): 
             self.die()
             return
         for vial in self.vials_list:
@@ -242,16 +242,25 @@ class Griefer():
             self.strife.log(f"{self.nickname} takes {damage} damage!")
         else:
             self.strife.log(f"{self.nickname} takes {damage} damage! ({'heads' if coin else 'scratch'})")
+        if self.should_be_dead():
+            self.die()
+
+    def should_be_dead(self) -> bool:
+        if self.get_vial("hp") <= 0:
+            return True
+        else: return False
 
     def die(self):
-        self.strife.log(f"The {self.nickname} explodes into grist!")
         # todo: explode into grist
         if self.npc is not None:
+            self.strife.log(f"The {self.nickname} explodes into grist!")
             self.room.remove_npc(self.npc)
             spoils_dict = self.npc.make_spoils(len(self.strife.player_griefers))
             for player_griefer in self.strife.player_griefers:
                 if player_griefer.player is None: raise AttributeError
                 player_griefer.player.add_unclaimed_grist(spoils_dict)
+        else:
+            self.strife.log(f"{self.nickname}: DEAD.")
         self.strife.remove_griefer(self)
 
     def submit_skill(self, skill_name, targets: list[str]) -> bool:
@@ -270,7 +279,11 @@ class Griefer():
     def use_skills(self):
         for skill_dict in self.submitted_skills:
             skill = skills.skills[skill_dict["skill_name"]]
-            skill.use(self, [self.strife.get_griefer(griefer_name) for griefer_name in skill_dict["targets"]])
+            targets_list = []
+            for griefer_name in skill_dict["targets"]:
+                if griefer_name in self.strife.griefers:
+                    targets_list.append(self.strife.get_griefer(griefer_name))
+            skill.use(self, targets_list)
 
     def ai_use_skills(self):
         while self.remaining_actions:
@@ -507,8 +520,11 @@ class Strife():
 
     def resolve_skills(self):
         # sorted by savvy in descending order
-        for griefer in sorted(self.griefer_list, key=lambda x: x.get_stat("savvy"), reverse=True):
-            griefer.use_skills()
+        for griefer_name in sorted(self.griefers.keys(), key=lambda x: self.get_griefer(x).get_stat("savvy"), reverse=True):
+            # mf died
+            if griefer_name not in self.griefers:
+                continue
+            self.get_griefer(griefer_name).use_skills()
 
     def increase_turn(self):
         self.turn_num += 1
