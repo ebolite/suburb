@@ -110,6 +110,7 @@ class Strife():
         self.selected_targets: list[str] = []
         self.selected_skill_name: Optional[str] = None
         self.theme = suburb.current_theme()
+        render.ui_elements.append(self)
 
     def update_strife_dict(self, strife_dict):
         if not strife_dict:
@@ -177,6 +178,12 @@ class Strife():
             self.strife_log_window.update_logs()
         self.update_submitted_skills()
         self.update_vials()
+
+    def delete(self):
+        if self in render.ui_elements: render.ui_elements.remove(self)
+        for check_list in render.checks:
+            if self in check_list:
+                check_list.remove(self)
 
     def click_griefer(self, griefer: Griefer):
         print(f"griefer clicked {griefer.name}")

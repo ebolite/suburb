@@ -58,6 +58,8 @@ pygame.display.set_caption(f"SUBURB CLIENT {util.VERSION}")
 def clear_elements():
     for element in ui_elements.copy():
         element.delete()
+    for check_list in checks:
+        check_list = []
 
 def palette_swap(surf: Union[pygame.Surface, pygame.surface.Surface], old_color: pygame.Color, new_color: pygame.Color):
     new_surf = pygame.Surface(surf.get_size())
