@@ -388,7 +388,7 @@ def console_commands(player: sessions.Player, content: str):
             grist_name = config.gristcategories[player.gristcategory][random.randint(0,8)]
             imp = npcs.underlings["imp"]
             for i in range(num):
-                imp.make_npc(grist_name, player.room)
+                imp.make_npc(grist_name, player.land.gristcategory, player.room)
             print(player.room.npcs)
         case "gushoverload":
             try:

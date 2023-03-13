@@ -559,6 +559,9 @@ class Player():
             # phernalia registry is a default list of deployable objects minus the deployed phernalia
             self.deployed_phernalia = []
             self.server_storage = []
+            # key: grist value: amount
+            self.unclaimed_grist = {}
+            self.unclaimed_rungs = 0
             self.client_player_name: Optional[str] = None
             self.server_player_name: Optional[str] = None
             self.setup = False
@@ -591,6 +594,13 @@ class Player():
         out["power"] = self.power
         return out
     
+    def add_unclaimed_grist(self, spoils_dict: dict):
+        for grist_name, amount in spoils_dict.items():
+            if grist_name in self.unclaimed_grist:
+                self.unclaimed_grist[grist_name] += amount
+            else:
+                self.unclaimed_grist[grist_name] = amount
+
     def add_permanent_bonus(self, game_attr: str, amount: int):
         if game_attr in self.stat_ratios:
             if game_attr not in self.permanent_stat_bonuses: self.permanent_stat_bonuses[game_attr] = 0

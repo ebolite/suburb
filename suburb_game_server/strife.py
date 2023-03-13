@@ -104,6 +104,7 @@ class Griefer():
             self.type = ""
             self.symbol_dict = {}
             self.grist_type: Optional[str] = None
+            self.grist_category: Optional[str] = None
             self.actions = 1
             self.ready: bool = False
             self.base_power: int = 0
@@ -141,6 +142,10 @@ class Griefer():
         # todo: explode into grist
         if self.npc is not None:
             self.room.remove_npc(self.npc)
+            spoils_dict = self.npc.make_spoils(len(self.strife.player_griefers))
+            for player_griefer in self.strife.player_griefers:
+                if player_griefer.player is None: raise AttributeError
+                player_griefer.player.add_unclaimed_grist(spoils_dict)
         self.strife.remove_griefer(self)
 
     def submit_skill(self, skill_name, targets: list[str]) -> bool:
@@ -195,6 +200,7 @@ class Griefer():
         griefer = cls(npc.name, strife)
         griefer.type = npc.type
         griefer.grist_type = npc.grist_type
+        griefer.grist_category = npc.grist_category
         griefer.nickname = npc.nickname.upper()
         griefer.base_power = npc.power
         griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)
