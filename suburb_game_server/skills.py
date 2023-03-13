@@ -68,6 +68,7 @@ class Skill():
         if self.parryable and target.player is not None:
             edge = stat_edge(target.get_stat("savvy"), user.get_stat("savvy"))
             edge = edge ** 2
+            edge *= stat_edge(target.get_stat("luck"), user.get_stat("luck"))
             if random.random() * edge < config.base_parry_chance:
                 target.strife.log(f"{target.name} AUTO-PARRIES!")
                 return
