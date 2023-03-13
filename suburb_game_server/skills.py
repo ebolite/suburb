@@ -97,6 +97,10 @@ class Skill():
                 return
         if damage != 0: target.take_damage(damage, coin=coin)
 
+    def is_usable_by(self, griefer: "strife.Griefer"):
+        if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
+        return True
+
     def get_dict(self) -> dict:
         out = deepcopy(self.__dict__)
         if self.user_skill is not None: out["user_skill"] = skills[self.user_skill].get_dict()

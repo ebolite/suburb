@@ -204,7 +204,7 @@ class Griefer():
                 "mettle": 0,
             }
             self.stat_bonuses: dict[str, int] = {}
-            self.known_skills = skills.base_skills.copy()
+            self.known_skills: list[str] = skills.base_skills.copy()
             # submitted_skills: [{"skill_name": "aggrieve", "targets": ["jet impq", "shale ogrea"]}]
             self.submitted_skills: list[dict] = []
             self.player_name: Optional[str] = None
@@ -274,7 +274,8 @@ class Griefer():
 
     def ai_use_skills(self):
         while self.remaining_actions:
-            random_skill_name = random.choice(self.known_skills)
+            usable_skills = list(filter(lambda skill_name: skills.skills[skill_name].is_usable_by(self), self.known_skills))
+            random_skill_name = random.choice(usable_skills)
             skill = skills.skills[random_skill_name]
             if skill.beneficial:
                 valid_targets = filter(lambda x: x.team == self.team, self.strife.griefer_list)
