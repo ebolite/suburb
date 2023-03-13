@@ -2,6 +2,7 @@ from typing import Optional
 from copy import deepcopy
 
 import strife
+import random
 
 aspects: dict["str", "Aspect"] = {}
 skills: dict["str", "Skill"] = {}
@@ -14,6 +15,14 @@ SKILL_CATEGORIES = ["aggressive", "abstinent", "abusive", "aspected", "arsenal",
 def modify_damage(damage: int, mettle: int):
     new_damage = damage * (damage / (damage + mettle*6))
     return int(new_damage)
+
+# todo: make this matter
+def flip_coin(user_luck: int, target_luck: int) -> bool:
+    edge = (user_luck - target_luck) / (user_luck + target_luck) # edge gets higher the more lucky the user is than the target
+    edge = 1 + edge
+    roll = random.random() * edge
+    if roll > 0.5: return True
+    else: return False
 
 class Skill():
     def __init__(self, name):
