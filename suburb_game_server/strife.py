@@ -355,6 +355,7 @@ class Griefer():
         base_stats = {stat_name:player.get_base_stat(stat_name) for stat_name in player.stat_ratios}
         griefer.base_stats = base_stats
         griefer.stat_bonuses = player.permanent_stat_bonuses
+        griefer.known_skills = player.get_known_skills()
         griefer.add_vial("aspect")
         griefer.add_vial(player.secondaryvial)
         griefer.initialize_vials()

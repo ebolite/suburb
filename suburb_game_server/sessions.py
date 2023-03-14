@@ -13,6 +13,7 @@ import alchemy
 import binaryoperations
 import npcs
 import strife
+import skills
 from strife import Strife
 
 
@@ -809,6 +810,10 @@ class Player():
         if stat in self.permanent_stat_bonuses:
             amount += self.permanent_stat_bonuses[stat]
         return amount
+    
+    def get_known_skills(self):
+        known_skills = skills.base_skills + skills.player_skills
+        return known_skills
 
     @property
     def session(self) -> Session:

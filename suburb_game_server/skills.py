@@ -7,7 +7,8 @@ import config
 
 aspects: dict["str", "Aspect"] = {}
 skills: dict["str", "Skill"] = {}
-base_skills = []
+base_skills = [] # everyone has these
+player_skills = [] # only players get these
 
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 
@@ -42,6 +43,7 @@ class Skill():
         self.cooldown = 0
         self.damage_formula = ""
         self.apply_states = {}
+        self.vial_change_formulas = {}
         self.need_damage_to_apply_states = True
         self.vial_cost_formulas = {}
         self.use_message = ""
@@ -87,6 +89,9 @@ class Skill():
     # apply skill effects to individual target
     def affect(self, user: "strife.Griefer", target: "strife.Griefer"):
         if target.name not in self.get_valid_targets(user): return
+
+        # damage step
+
         damage_formula = user.format_formula(self.damage_formula, "user")
         damage_formula = target.format_formula(damage_formula, "target")
         # coin is 1 if user wins, 0 if target wins
@@ -118,6 +123,17 @@ class Skill():
                 potency = self.apply_states[state_name]["potency"]
                 duration = self.apply_states[state_name]["duration"]
                 target.apply_state(state_name, user, potency, duration)
+
+        # vial change step
+
+        for vial_name in self.vial_change_formulas:
+            vial_formula = self.vial_change_formulas[vial_name]
+            vial_formula = user.format_formula(vial_formula, "user")
+            vial_formula = target.format_formula(vial_formula, "target")
+            if vial_name in target.vials:
+                change = target.change_vial(vial_name, int(eval(vial_formula)))
+                if change > 0: user.strife.log(f"{user.nickname}'s {vial_name.upper()} increased by {change}!")
+                elif change < 0: user.strife.log(f"{user.nickname}'s {vial_name.upper()} decreased by {-change}!")
 
     def is_usable_by(self, griefer: "strife.Griefer"):
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
@@ -165,9 +181,21 @@ abjure.category = "abstinent"
 abjure.add_apply_state("abjure", 2, 1.0)
 abjure.need_damage_to_apply_states = False
 abjure.vial_cost_formulas = {
-    "vim": "user.power",
+    "vim": "user.power//2",
 }
 base_skills.append("abjure")
+
+abstain = Skill("abstain")
+abstain.use_message = "{user} abstains!"
+abstain.parryable = False
+abstain.beneficial = True
+abstain.target_self = True
+abstain.damage_formula = "0"
+abstain.category = "abstinent"
+abstain.vial_change_formulas = {
+    "vim": "user.power"
+}
+player_skills.append("abstain")
 
 class Aspect():
     def __init__(self, name):
