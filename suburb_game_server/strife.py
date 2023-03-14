@@ -335,11 +335,11 @@ class Griefer():
             skill = skills.skills[random_skill_name]
             valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
             if skill.beneficial:
-                valid_targets = filter(lambda x: x.team == self.team, valid_targets)
+                valid_targets = [griefer for griefer in valid_targets if griefer.team == self.team]
             else:
-                valid_targets = filter(lambda x: x.team != self.team, valid_targets)
+                valid_targets = [griefer for griefer in valid_targets if griefer.team != self.team]
             try:
-                targets = random.choices(list(valid_targets), k=skill.num_targets)
+                targets = random.choices(valid_targets, k=skill.num_targets)
             except IndexError: return
             self.submit_skill(random_skill_name, [target.name for target in targets])
 
