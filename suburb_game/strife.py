@@ -207,40 +207,70 @@ class Strife():
             sprite = self.make_griefer_sprite(griefer)
             if griefer.team == "blue": blue_sprites.append(sprite)
             else: red_sprites.append(sprite)
+        self.reposition_sprites(red_sprites, "right")
+        self.reposition_sprites(blue_sprites, "left")   
+
+    def reposition_sprites(self, sprites_list: list["render.UIElement"], direction: str):
         sprite_points = []
-        for i, sprite in enumerate(red_sprites):
+        for i, sprite in enumerate(sprites_list):
             if i == 0: 
-                sprite_points.append((sprite.rect.x+sprite.rect.w//2, sprite.rect.y+sprite.rect.h//2))
+                sprite_x = sprite.x * self.canvas.w
+                sprite_y = sprite.y * self.canvas.h
+                sprite_points.append((sprite_x+sprite.rect.w//2, sprite_y+sprite.rect.h//2))
                 continue
             if isinstance(sprite, render.Enemy):
-                distance = int(math.sqrt(sprite.rect.w**2 + sprite.rect.h**2))*2
+                image = pygame.image.load(sprite.path)
+                distance = int(math.sqrt(image.get_width()**2 + image.get_height()**2))
             else:
-                distance = 465
-            x, y = self.get_random_distance_from_all_points(distance, sprite_points)
+                distance = 234
+            x, y = self.get_random_distance_from_all_points(distance, sprite_points, direction)
             sprite.x = x - sprite.rect.w//2
             sprite.y = y - sprite.rect.h//2
             sprite.absolute = True
             sprite_points.append((x, y))
+        def key_func(sprite: "render.UIElement"):
+            if sprite.absolute: return sprite.y
+            else: return self.canvas.h * sprite.y
+        # sprites higher up should draw behind
+        ordered_sprites = sorted(sprites_list, key=key_func)
+        for sprite in ordered_sprites:
+            sprite.send_to_bottom()
+        self.canvas.send_to_bottom()
             
     # behold my brilliant bogo solution       
-    def get_random_distance_from_all_points(self, distance: int, points: list[tuple[int, int]]) -> tuple[int, int]:
+    def get_random_distance_from_all_points(self, distance: int, points: list[tuple[int, int]], direction: Optional[str] = None) -> tuple[int, int]:
         # essentially we're picking a random point on a circle
-        dx = random.randint(-distance, distance)
-        dy = distance - dx
+        print(distance)
+        if direction == "left":
+            dx = random.randint(-distance, 0)
+        elif direction == "right":
+            dx = random.randint(0, distance)
+        else:
+            dx = random.randint(-distance, distance)
+        dy = distance - abs(dx)
+        if random.choice([True, False]):
+            dy *= -1
+        print(f"dx {dx} dy {dy}")
         random.shuffle(points)
         # loop through each point and act as if we drew that circle centered on the point
+        best_distance = 0
+        best_distance_coords= (0, 0)
         for new_pointx, new_pointy in points:
-            x = new_pointx + dx
-            y = new_pointy + dy
-            p1 = np.array((x, y))
+            x1 = new_pointx + dx
+            y1 = new_pointy + dy
+            print(f"x1 {x1} y1 {y1}")
             # calculate distance between this new point and all other points
-            for pointx, pointy in points:
-                p2 = np.array((pointx, pointy))
-                d = np.linalg.norm(p1-p2)
-                if d >= distance: return x, y
+            # since the circle algorithm isnt perfect distance this will fail sometimes
+            for x2, y2 in points:
+                print(f"x2 {x1}, y2 {y2}")
+                d = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
+                print(f"d {d} distance {distance}")
+                if d >= distance: return x1, y1
+                elif d > best_distance:
+                    best_distance = d
+                    best_distance_coords = x1, y1
             # for at least one circle, the distance is always far enough away from all points
-        # this should never happen i think
-        raise AssertionError
+        return best_distance_coords
         # i think i may have stumbled into a decent solution
 
     def make_griefer_sprite(self, griefer: Griefer) -> Union["render.Enemy", "render.PlayerGriefer"]:
