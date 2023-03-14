@@ -1,5 +1,8 @@
 from typing import Optional, Union
 import pygame
+import math
+import numpy as np
+import random
 
 import client
 import render
@@ -185,21 +188,70 @@ class Strife():
                 suburb.map_scene()
             return
         self.strife_dict = strife_dict
-        for griefer_name in self.griefer_sprites:
+        for griefer_name in self.griefer_sprites.copy():
             if griefer_name not in self.griefers:
                 self.griefer_sprites[griefer_name].delete()
                 self.griefer_sprites.pop(griefer_name)
         for griefer_name in self.griefers:
             if griefer_name not in self.griefer_sprites:
-                self.make_griefer_sprite(self.get_griefer(griefer_name))
+                self.make_griefer_sprites()
+
+    def make_griefer_sprites(self):
+        for sprite in self.griefer_sprites.values():
+            sprite.delete()
+        self.griefer_sprites = {}
+        blue_sprites: list[render.UIElement] = []
+        red_sprites: list[render.UIElement] = []
+        for griefer_name in self.griefers:
+            griefer = self.get_griefer(griefer_name)
+            sprite = self.make_griefer_sprite(griefer)
+            if griefer.team == "blue": blue_sprites.append(sprite)
+            else: red_sprites.append(sprite)
+        sprite_points = []
+        for i, sprite in enumerate(red_sprites):
+            if i == 0: 
+                sprite_points.append((sprite.rect.x+sprite.rect.w//2, sprite.rect.y+sprite.rect.h//2))
+                continue
+            if isinstance(sprite, render.Enemy):
+                distance = int(math.sqrt(sprite.rect.w**2 + sprite.rect.h**2))*2
+            else:
+                distance = 465
+            x, y = self.get_random_distance_from_all_points(distance, sprite_points)
+            sprite.x = x - sprite.rect.w//2
+            sprite.y = y - sprite.rect.h//2
+            sprite.absolute = True
+            sprite_points.append((x, y))
+            
+    # behold my brilliant bogo solution       
+    def get_random_distance_from_all_points(self, distance: int, points: list[tuple[int, int]]) -> tuple[int, int]:
+        # essentially we're picking a random point on a circle
+        dx = random.randint(-distance, distance)
+        dy = distance - dx
+        random.shuffle(points)
+        # loop through each point and act as if we drew that circle centered on the point
+        for new_pointx, new_pointy in points:
+            x = new_pointx + dx
+            y = new_pointy + dy
+            p1 = np.array((x, y))
+            # calculate distance between this new point and all other points
+            for pointx, pointy in points:
+                p2 = np.array((pointx, pointy))
+                d = np.linalg.norm(p1-p2)
+                if d >= distance: return x, y
+            # for at least one circle, the distance is always far enough away from all points
+        # this should never happen i think
+        raise AssertionError
+        # i think i may have stumbled into a decent solution
 
     def make_griefer_sprite(self, griefer: Griefer) -> Union["render.Enemy", "render.PlayerGriefer"]:
         # todo: make positions differ with more griefers
         # todo: flip sprites on different team
+        blue_pos = (0.33, 0.5)
+        red_pos = (0.66, 0.5)
         if griefer.team == "blue":
-            pos = (0.33, 0.5)
+            pos = blue_pos
         else:
-            pos = (0.66, 0.5)
+            pos = red_pos
         if griefer.type != "player":
             sprite = render.Enemy(*pos, griefer)
             sprite.bind_to(self.canvas)
@@ -258,9 +310,7 @@ class Strife():
         self.canvas = render.SolidColor(0.5, 0.5, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, self.theme.light)
         self.canvas.right_click_pan = True
         self.canvas.absolute = True
-        for griefer_name in self.griefers:
-            griefer = self.get_griefer(griefer_name)
-            self.make_griefer_sprite(griefer)
+        self.make_griefer_sprites()
         top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 120+bar_br, self.theme.light)
         top_bar.outline_color = self.theme.dark
         top_bar.border_radius = bar_br
