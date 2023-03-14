@@ -202,9 +202,11 @@ class Strife():
             pos = (0.66, 0.5)
         if griefer.type != "player":
             sprite = render.Enemy(*pos, griefer)
+            sprite.bind_to(self.canvas)
             self.griefer_sprites[griefer.name] = sprite
         else:
             sprite = render.PlayerGriefer(*pos, griefer)
+            sprite.bind_to(self.canvas)
             self.griefer_sprites[griefer.name] = sprite
         return sprite
 
@@ -253,12 +255,15 @@ class Strife():
 
     def draw_scene(self):
         bar_br = 30
-        top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 120+bar_br, self.theme.light)
-        top_bar.outline_color = self.theme.dark
-        top_bar.border_radius = bar_br
+        self.canvas = render.SolidColor(0.5, 0.5, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, self.theme.light)
+        self.canvas.right_click_pan = True
+        self.canvas.absolute = True
         for griefer_name in self.griefers:
             griefer = self.get_griefer(griefer_name)
             self.make_griefer_sprite(griefer)
+        top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 120+bar_br, self.theme.light)
+        top_bar.outline_color = self.theme.dark
+        top_bar.border_radius = bar_br
         # todo: make skill categories
         x = 4
         y = 200

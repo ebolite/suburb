@@ -78,13 +78,16 @@ class UIElement(pygame.sprite.Sprite):
         self.y = 0
         self.rect_x_offset = 0
         self.rect_y_offset = 0
+        # why are there two offsets? because i am bad at coding
+        self.offsetx = 0
+        self.offsety = 0
         self.theme: themes.Theme = suburb.current_theme()
         self.bound_elements: list[UIElement] = []
         # temporary elements are meant to be disposed of
         self.temporary_elements: list[UIElement] = []
         self.blitting_elements: list[UIElement] = []
         self.blit_surf: Union[pygame.Surface, pygame.surface.Surface] = screen
-        self.blit_element: Optional[UIElement]
+        self.blit_element: Optional[UIElement] = None
         ui_elements.append(self)
 
     def collidepoint(self, pos):
@@ -169,6 +172,19 @@ class UIElement(pygame.sprite.Sprite):
                 rect_x = int(self.relative_binding.rect.x - secondary_surf_width/2) + self.x*self.relative_binding.rect.w
                 rect_y = int(self.relative_binding.rect.y - secondary_surf_height/2) + self.y*self.relative_binding.rect.h
         return rect_x+self.rect_x_offset, rect_y+self.rect_y_offset
+    
+    def mousepan(self, mousebutton:int):
+        if pygame.mouse.get_pressed()[mousebutton]:
+            if self.last_mouse_pos is None:
+                self.last_mouse_pos = pygame.mouse.get_pos()
+            else:
+                last_x, last_y = self.last_mouse_pos
+                self.last_mouse_pos = pygame.mouse.get_pos()
+                current_x, current_y = self.last_mouse_pos
+                self.offsetx += current_x - last_x
+                self.offsety += current_y - last_y
+        else:
+            self.last_mouse_pos = None
 
 class SolidColor(UIElement):
     def __init__(self, x, y, w, h, color: pygame.Color, binding:Optional[UIElement]=None):
@@ -187,6 +203,8 @@ class SolidColor(UIElement):
         self.absolute = True
         self.draw_sprite = True
         self.follow_mouse = False
+        self.right_click_pan = False
+        self.offsetx, self.offsety = 0, 0
         if binding:
             self.bind_to(binding)
         update_check.append(self)
@@ -196,6 +214,8 @@ class SolidColor(UIElement):
         else: return self.color_func()
 
     def update(self):
+        if self.right_click_pan:
+            self.mousepan(2)
         if self.absolute and self.follow_mouse:
             self.x, self.y = pygame.mouse.get_pos()
         self.surf = pygame.Surface((self.w, self.h))
@@ -223,6 +243,7 @@ class SolidColor(UIElement):
             if self.relative_binding is not None:
                 self.rect.x += self.relative_binding.rect.x
                 self.rect.y += self.relative_binding.rect.y
+        self.rect.x, self.rect.y = self.rect.x+self.offsetx, self.rect.y+self.offsety
         if not self.draw_sprite: return
         if self.outline_color is not None: 
             self.outline_rect = self.outline_surf.get_rect()
@@ -1192,17 +1213,7 @@ class Overmap(UIElement):
                 overmap_tile.draw_to_surface()
 
     def update(self):
-        if pygame.mouse.get_pressed()[0]:
-            if self.last_mouse_pos is None:
-                self.last_mouse_pos = pygame.mouse.get_pos()
-            else:
-                last_x, last_y = self.last_mouse_pos
-                self.last_mouse_pos = pygame.mouse.get_pos()
-                current_x, current_y = self.last_mouse_pos
-                self.offsetx += current_x - last_x
-                self.offsety += current_y - last_y
-        else:
-            self.last_mouse_pos = None
+        self.mousepan(0)
         try: self.rotation_surfs[self.rotation]
         except KeyError: self.initialize_map(self.rotation)
         screen.blit(self.rotation_surfs[self.rotation],(self.rect.x+self.offsetx, self.rect.y+self.offsety))
