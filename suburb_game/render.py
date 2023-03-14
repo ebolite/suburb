@@ -175,6 +175,7 @@ class SolidColor(UIElement):
         self.border_radius: int = 0
         self.absolute = True
         self.draw_sprite = True
+        self.follow_mouse = False
         if binding:
             self.bind_to(binding)
         update_check.append(self)
@@ -184,6 +185,8 @@ class SolidColor(UIElement):
         else: return self.color_func()
 
     def update(self):
+        if self.absolute and self.follow_mouse:
+            self.x, self.y = pygame.mouse.get_pos()
         self.surf = pygame.Surface((self.w, self.h))
         if isinstance(self.get_color(), pygame.Color):
             fill_color = self.get_color()
@@ -1659,6 +1662,7 @@ class Symbol(Image):
         return hitbox_rect.collidepoint(pos)
 
 class StateIcon(Image):
+    tooltip_padding = 5
     def __init__(self, x, y, griefer: "Griefer", state_name: str):
         path = f"sprites/strife/states/{state_name}.png"
         if not os.path.isfile(path):
@@ -1666,6 +1670,25 @@ class StateIcon(Image):
         super().__init__(x, y, path)
         self.griefer = griefer
         self.state_name = state_name
+        self.popup: Optional[SolidColor] = None
+    
+    def update(self):
+        super().update()
+        if not self.is_mouseover() and self.popup is not None: 
+            self.popup.delete()
+            self.popup = None
+        if self.is_mouseover() and self.popup is None:
+            x, y = pygame.mouse.get_pos()
+            tooltip = self.griefer.get_state_tooltip(self.state_name)
+            popup_text = Text(0.5, 0.5, f"{self.state_name.upper()} ({round(self.griefer.get_state_potency(self.state_name), 1)}): {tooltip}")
+            popup_text.fontsize = 14
+            popup_text.color = self.theme.dark
+            self.popup = SolidColor(x, y, popup_text.get_width()+self.tooltip_padding*2, popup_text.fontsize+self.tooltip_padding*2, self.theme.white)
+            self.popup.outline_color = self.theme.dark
+            self.popup.follow_mouse = True
+            self.popup.rect_x_offset = 10
+            popup_text.bring_to_top()
+            popup_text.bind_to(self.popup)
 
 class GrieferElement(UIElement):
     griefer: Griefer

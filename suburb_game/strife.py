@@ -44,6 +44,12 @@ class Griefer():
     def get_state_duration(self, state_name) -> int:
         return self.states[state_name]["duration"]
     
+    def get_state_potency(self, state_name) -> float:
+        return self.states[state_name]["potency"]
+    
+    def get_state_tooltip(self, state_name) -> str:
+        return self.states[state_name]["tooltip"]
+    
     def can_pay_costs(self, costs: dict[str, int]) -> bool:
         for vial_name in costs:
             if self.get_usable_vial(vial_name) < costs[vial_name]: return False
