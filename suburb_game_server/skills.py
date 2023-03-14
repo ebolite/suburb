@@ -34,6 +34,7 @@ class Skill():
         self.name = name
         skills[name] = self
         self.category = "none"
+        self.target_self = False
         self.beneficial = False
         self.parryable = True
         self.action_cost = 1
@@ -59,6 +60,11 @@ class Skill():
             true_cost = user.format_formula(formula, "user")
             true_costs[vial_name] = int(eval(true_cost))
         return true_costs
+    
+    def get_valid_targets(self, user: "strife.Griefer") -> list[str]:
+        if self.target_self: return [user.name]
+        valid_targets = [griefer.name for griefer in user.strife.griefer_list]
+        return valid_targets
 
     # affect each target in list
     def use(self, user: "strife.Griefer", targets_list: list["strife.Griefer"]):
@@ -80,6 +86,7 @@ class Skill():
 
     # apply skill effects to individual target
     def affect(self, user: "strife.Griefer", target: "strife.Griefer"):
+        if target.name not in self.get_valid_targets(user): return
         damage_formula = user.format_formula(self.damage_formula, "user")
         damage_formula = target.format_formula(damage_formula, "target")
         # coin is 1 if user wins, 0 if target wins
@@ -120,8 +127,8 @@ class Skill():
         out = deepcopy(self.__dict__)
         if self.user_skill is not None: out["user_skill"] = skills[self.user_skill].get_dict(griefer)
         if self.additional_skill is not None: out["additional_skill"] = skills[self.additional_skill].get_dict(griefer)
-        if griefer is not None:
-            out["costs"] = self.get_costs(griefer)
+        out["costs"] = self.get_costs(griefer)
+        out["valid_targets"] = self.get_valid_targets(griefer)
         return out
 
 aggrieve = Skill("aggrieve")
@@ -150,6 +157,9 @@ base_skills.append("assault")
 
 abjure = Skill("abjure")
 abjure.use_message = "{user} abjures!"
+abjure.parryable = False
+abjure.beneficial = True
+abjure.target_self = True
 abjure.damage_formula = "0"
 abjure.category = "abstinent"
 abjure.add_apply_state("abjure", 2, 1.0)

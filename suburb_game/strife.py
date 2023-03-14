@@ -17,6 +17,7 @@ class Skill():
         self.damage_formula: str = skill_dict["damage_formula"]
         self.user_skill: Optional[dict] = skill_dict["user_skill"]
         self.additional_skill: Optional[dict] = skill_dict["additional_skill"]
+        self.valid_targets: list[str] = skill_dict["valid_targets"]
         self.costs: dict[str, int] = skill_dict["costs"]
 
 class Npc():
@@ -207,6 +208,9 @@ class Strife():
             if self.player_griefer.available_actions < skill.action_cost: return
             if skill_name != self.selected_skill_name: self.selected_targets = []
             self.selected_skill_name = skill_name
+            if self.selected_skill is not None and len(self.selected_skill.valid_targets) == 1:
+                self.selected_targets.append(self.selected_skill.valid_targets[0])
+                self.submit_skill()
             self.clear_next_layer_buttons()
         return button_func
     
