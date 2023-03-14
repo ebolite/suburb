@@ -149,7 +149,7 @@ class Skill():
         return out
 
 aggrieve = Skill("aggrieve")
-aggrieve.description = "Deals damage and is free. A pretty decent skill."
+aggrieve.description = "Deals damage and is free. An acceptable technique."
 aggrieve.use_message = "{user} aggrieves!"
 aggrieve.damage_formula = "user.base_damage * (1 + 0.5*coin)"
 aggrieve.category = "aggressive"
