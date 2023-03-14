@@ -76,6 +76,7 @@ class UIElement(pygame.sprite.Sprite):
         self.absolute = False
         self.x = 0
         self.y = 0
+        self.scale: float = 1.0
         self.rect_x_offset = 0
         self.rect_y_offset = 0
         # why are there two offsets? because i am bad at coding
