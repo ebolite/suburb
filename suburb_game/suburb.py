@@ -1280,7 +1280,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
 
 @scene
 def spoils(grist_dict: dict, echeladder_rungs: int):
-    text = render.Text(0.5, 0.1, "You make off with the following spoils:")
+    text = render.Text(0.5, 0.2, "You make off with the following spoils:")
     text.color = current_theme().dark
     grist_display = render.make_grist_cost_display(0.5, 0.3, 24, grist_dict, None, absolute=False)
     if echeladder_rungs > 0:
