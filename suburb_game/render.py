@@ -1680,7 +1680,7 @@ class StateIcon(Image):
         if self.is_mouseover() and self.popup is None:
             x, y = pygame.mouse.get_pos()
             tooltip = self.griefer.get_state_tooltip(self.state_name)
-            popup_text = Text(0.5, 0.5, f"{self.state_name.upper()} ({round(self.griefer.get_state_potency(self.state_name), 1)}): {tooltip}")
+            popup_text = Text(0.5, 0.5, f"{self.state_name.upper()} ({self.griefer.get_state_potency(self.state_name):.1f}): {tooltip}")
             popup_text.fontsize = 14
             popup_text.color = self.theme.dark
             self.popup = SolidColor(x, y, popup_text.get_width()+self.tooltip_padding*2, popup_text.fontsize+self.tooltip_padding*2, self.theme.white)
