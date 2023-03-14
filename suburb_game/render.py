@@ -1706,6 +1706,12 @@ class GrieferElement(UIElement):
         self.power_label.rect_y_offset = 44
         self.power_label.bind_to(self)
 
+    def get_duration_label_func(self, state_name):
+        def label_func():
+            if state_name not in self.griefer.states: return ""
+            else: return f"{self.griefer.get_state_duration(state_name)}"
+        return label_func
+
     def make_state_boxes(self):
         for state_icon in self.state_icons.copy():
             self.state_icons.remove(state_icon)
@@ -1726,6 +1732,11 @@ class GrieferElement(UIElement):
             new_state_icon = StateIcon(x, y, self.griefer, state_name)
             new_state_icon.absolute = absolute
             new_state_icon.bind_to(binding)
+            duration_label = Text(0.5, 1.4, "")
+            duration_label.text_func = self.get_duration_label_func(state_name)
+            duration_label.color = self.theme.dark
+            duration_label.fontsize = 14
+            duration_label.bind_to(new_state_icon)
             self.state_icons.append(new_state_icon)
         first_element = self.state_icons[0]
         first_element.rect_y_offset = 60

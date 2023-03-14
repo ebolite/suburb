@@ -41,6 +41,9 @@ class Griefer():
                 total -= skill.costs[vial_name]
         return total
     
+    def get_state_duration(self, state_name) -> int:
+        return self.states[state_name]["duration"]
+    
     def can_pay_costs(self, costs: dict[str, int]) -> bool:
         for vial_name in costs:
             if self.get_usable_vial(vial_name) < costs[vial_name]: return False
