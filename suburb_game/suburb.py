@@ -1280,13 +1280,13 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
 
 @scene
 def spoils(grist_dict: dict, echeladder_rungs: int):
-    text = render.Text(0.5, 0.2, "You make off with the following spoils:")
+    text = render.Text(0.5, 0.3, "You make off with the following spoils:")
     text.color = current_theme().dark
-    grist_display = render.make_grist_cost_display(0.5, 0.3, 24, grist_dict, None, absolute=False)
+    grist_display = render.make_grist_cost_display(0.5, 0.4, 24, grist_dict, None, absolute=False)
     if echeladder_rungs > 0:
         player_info = client.requestdic(intent="player_info")
         cache_limit = player_info["grist_cache_limit"]
-        echeladder_notification = render.Text(0.5, 0.5, f"You ascend {echeladder_rungs} on your ECHELADDER!")
+        echeladder_notification = render.Text(0.5, 0.5, f"You ascend {echeladder_rungs} rung{'s' if echeladder_rungs > 1 else ''} on your ECHELADDER!")
         echeladder_notification.color = current_theme().dark
         echeladder_line_2 = render.Text(0.5, 0.6, f"Your grist cache limit is now {cache_limit}!")
         echeladder_line_2.color = current_theme().dark
