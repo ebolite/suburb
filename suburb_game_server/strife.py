@@ -56,7 +56,17 @@ class AbjureState(State):
     
 abjure = AbjureState("abjure")
 abjure.beneficial = True
-abjure.tooltip = "Reducing damage based on mettle."
+abjure.tooltip = "Reduces damage taken based on mettle."
+
+class DemoralizeState(State):
+    def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
+        new_damage = damage
+        new_damage *= 1 - (0.33 * self.potency(griefer))
+        new_damage = int(new_damage)
+        return max(new_damage, 0)
+    
+demoralize = DemoralizeState("demoralize")
+demoralize.tooltip = "Reduces damage dealt."
 
 class Vial():
     def __init__(self, name):

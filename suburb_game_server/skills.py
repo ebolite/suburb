@@ -197,6 +197,16 @@ abstain.vial_change_formulas = {
 }
 player_skills.append("abstain")
 
+abuse = Skill("abuse")
+abuse.use_message = "{user} abuses!"
+abuse.damage_formula = "(user.power + user.spk*6) * (0.5 + 1.5*coin)"
+abuse.add_apply_state("demoralize", 3, 1.0)
+abuse.vial_cost_formulas = {
+    "vim": "user.power",
+}
+abuse.category = "abusive"
+base_skills.append("abuse")
+
 class Aspect():
     def __init__(self, name):
         aspects[name] = self
