@@ -83,6 +83,8 @@ class Skill():
         damage = int(eval(damage_formula))
         for vial in user.vials_list:
             damage = vial.modify_damage_dealt(damage, user)
+        for state in user.states_list:
+            damage = state.modify_damage_dealt(damage, user)
         # only players can parry, enemies simply miss less with more savvy
         if self.parryable and target.player is not None:
             # higher target savvy = lower roll = more likely to parry

@@ -9,6 +9,7 @@ import skills
 import config
 
 vials: dict[str, "Vial"] = {}
+states: dict[str, "State"] = {}
 
 def stats_from_ratios(stat_ratios: dict[str, int], power: int):
     total_ratios = 0
@@ -26,6 +27,31 @@ def stats_from_ratios(stat_ratios: dict[str, int], power: int):
         stats[stat_name] += 1
         remainder -= 1
     return stats
+
+class State():
+    def __init__(self, name):
+        states[name] = self
+        self.name = name
+        self.beneficial = False
+
+    def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
+        return damage
+
+    def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
+        return damage
+    
+    def new_turn(self, griefer: "Griefer"):
+        pass
+
+class AbjureState(State):
+    def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
+        new_damage = damage - griefer.get_stat("mettle")*3
+        new_damage *= 0.75
+        new_damage = int(new_damage)
+        return max(new_damage, 0)
+    
+abjure = AbjureState("abjure")
+abjure.beneficial = True
 
 class Vial():
     def __init__(self, name):
@@ -210,6 +236,7 @@ class Griefer():
             self.player_name: Optional[str] = None
             self.npc_name: Optional[str] = None
             self.vials: dict[str, dict] = {}
+            self.states: dict[str, dict] = {}
             # vials still need to be initialized
             for vial_name in vials:
                 vial = vials[vial_name]
@@ -224,6 +251,8 @@ class Griefer():
             if vial.tact_vial:
                 self.change_vial(vial.name, self.get_stat("tact"))
             vial.new_turn(self) 
+        for state in self.states_list:
+            state.new_turn(self)
         if self.player is None: self.ai_use_skills()
 
     def take_damage(self, damage: int, coin: Optional[bool] = None):
@@ -231,6 +260,8 @@ class Griefer():
             damage = skills.modify_damage(damage, self.get_stat("mettle"))
             for vial in self.vials_list:
                 damage = vial.modify_damage_received(damage, self)
+            for state in self.states_list:
+                damage = state.modify_damage_received(damage, self)
         if self.player is not None:
             threshold = self.get_vial_maximum("hp") / 3
             if damage > threshold:
@@ -334,6 +365,27 @@ class Griefer():
         griefer.initialize_vials()
         return griefer
 
+    def apply_state(self, state_name: str, applier: "Griefer", potency: float, duration: int):
+        if state_name not in self.states: self.states[state_name] = {
+                "applier_stats": applier.stats_dict,
+                "potency": potency,
+                "duration": 0,
+        }
+        if potency > self.get_state_potency(state_name):
+            self.states[state_name]["potency"] = potency
+            self.states[state_name]["applier_stats"] = applier.stats_dict
+        self.states[state_name]["duration"] += duration
+
+    def remove_state(self, state_name):
+        if state_name in self.states:
+            self.states.pop(state_name)
+
+    def get_state_potency(self, state_name: str) -> float:
+        return self.states[state_name]["potency"]
+    
+    def get_state_duration(self, state_name: str) -> int:
+        return self.states[state_name]["duration"]
+
     def change_vial(self, vial_name: str, amount: int) -> int:
         vial = vials[vial_name]
         return vial.add_value(self, amount)
@@ -400,17 +452,33 @@ class Griefer():
     def vials_dict(self) -> dict:
         out = {}
         for vial in self.vials:
-            out[vial] = {"current": self.get_vial(vial), 
-                         "maximum": self.get_vial_maximum(vial),
-                         "starting": self.vials[vial]["starting"],
-                         "hidden": vials[vial].hidden_vial,
-                         "gel": vials[vial].gel_vial
-                         }
+            out[vial] = {
+                "current": self.get_vial(vial), 
+                "maximum": self.get_vial_maximum(vial),
+                "starting": self.vials[vial]["starting"],
+                "hidden": vials[vial].hidden_vial,
+                "gel": vials[vial].gel_vial
+            }
         return out
     
     @property
     def vials_list(self) -> list[Vial]:
         return [vials[vial_name] for vial_name in self.vials]
+    
+    @property
+    def states_dict(self) -> dict:
+        out = {}
+        for state_name in self.states:
+            out[state_name] = {
+                "applier_stats": self.states[state_name]["applier_stats"],
+                "potency": self.get_state_potency(state_name),
+                "duration": self.get_state_duration(state_name),
+            }
+        return out
+
+    @property
+    def states_list(self) -> list[State]:
+        return [states[state_name] for state_name in self.states]
     
     def get_stat(self, stat_name) -> int:
         if stat_name == "power": return self.power
