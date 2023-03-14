@@ -844,7 +844,11 @@ class Player():
 
     @property
     def strife(self) -> Optional["Strife"]:
-        return self.room.strife
+        if self.room.strife is None: return None
+        for griefer in self.room.strife.griefer_list:
+            if griefer.player is self: return self.room.strife
+        else:
+            return None
 
     @property
     def grist_cache_limit(self):
