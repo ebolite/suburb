@@ -216,7 +216,7 @@ class Strife():
             if i == 0: 
                 sprite_x = sprite.x * self.canvas.w
                 sprite_y = sprite.y * self.canvas.h
-                sprite_points.append((sprite_x+sprite.rect.w//2, sprite_y+sprite.rect.h//2))
+                sprite_points.append((sprite_x, sprite_y))
                 continue
             if isinstance(sprite, render.Enemy):
                 image = pygame.image.load(sprite.path)
@@ -224,8 +224,8 @@ class Strife():
             else:
                 distance = 234
             x, y = self.get_random_distance_from_all_points(distance, sprite_points, direction)
-            sprite.x = x - sprite.rect.w//2
-            sprite.y = y - sprite.rect.h//2
+            sprite.x = x
+            sprite.y = y
             sprite.absolute = True
             sprite_points.append((x, y))
         def key_func(sprite: "render.UIElement"):
