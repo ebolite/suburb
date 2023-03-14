@@ -333,10 +333,11 @@ class Griefer():
             usable_skills = list(filter(lambda skill_name: skills.skills[skill_name].is_usable_by(self), self.known_skills))
             random_skill_name = random.choice(usable_skills)
             skill = skills.skills[random_skill_name]
+            valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
             if skill.beneficial:
-                valid_targets = filter(lambda x: x.team == self.team, self.strife.griefer_list)
+                valid_targets = filter(lambda x: x.team == self.team, valid_targets)
             else:
-                valid_targets = filter(lambda x: x.team != self.team, self.strife.griefer_list)
+                valid_targets = filter(lambda x: x.team != self.team, valid_targets)
             if len(list(valid_targets)) == 0: break
             targets = random.choices(list(valid_targets), k=skill.num_targets)
             self.submit_skill(random_skill_name, [target.name for target in targets])
