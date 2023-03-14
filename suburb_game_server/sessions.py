@@ -846,7 +846,8 @@ class Player():
     def strife(self) -> Optional["Strife"]:
         if self.room.strife is None: return None
         for griefer in self.room.strife.griefer_list:
-            if griefer.player is self: return self.room.strife
+            if griefer.player is None: continue
+            if griefer.player.name == self.name: return self.room.strife
         else:
             return None
 

@@ -108,7 +108,9 @@ class Skill():
         if damage != 0: target.take_damage(damage, coin=coin)
         if damage != 0 or not self.need_damage_to_apply_states:
             for state_name in self.apply_states:
-                target.apply_state(state_name, user, self.apply_states["potency"], self.apply_states["duration"])
+                potency = self.apply_states[state_name]["potency"]
+                duration = self.apply_states[state_name]["duration"]
+                target.apply_state(state_name, user, potency, duration)
 
     def is_usable_by(self, griefer: "strife.Griefer"):
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
