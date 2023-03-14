@@ -19,6 +19,7 @@ class Skill():
         self.additional_skill: Optional[dict] = skill_dict["additional_skill"]
         self.valid_targets: list[str] = skill_dict["valid_targets"]
         self.costs: dict[str, int] = skill_dict["costs"]
+        self.description = skill_dict["description"]
 
 class Npc():
     def __init__(self, name, npc_dict):
@@ -306,12 +307,19 @@ class Strife():
         self.skill_name_label.color = self.theme.dark
         self.skill_name_label.absolute = True
         self.skill_name_label.bind_to(self.hovered_skill_info_box)
+        self.skill_tooltip_display = render.Text(8, 40, "")
+        self.skill_tooltip_display.color = self.theme.dark
+        self.skill_tooltip_display.absolute = True
+        self.skill_tooltip_display.fontsize = 20
+        self.skill_tooltip_display.bind_to(self.hovered_skill_info_box)
 
     def update_skill_info_window(self):
         if self.hovered_skill is None:
             self.skill_name_label.text = "SELECT A TECHNIQUE"
+            self.skill_tooltip_display.text = ""
         else:
             self.skill_name_label.text = f"{self.hovered_skill.name.upper()}"
+            self.skill_tooltip_display.text = f"{self.hovered_skill.description}"
 
     def make_next_layer_buttons(self, category_name: str):
         self.clear_next_layer_buttons()
