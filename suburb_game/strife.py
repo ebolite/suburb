@@ -287,6 +287,7 @@ class Strife():
         self.selected_skill_text = render.Text(0.5, 0.19, "")
         self.selected_skill_text.text_func = currently_selected_text_func
         self.selected_skill_text.color = self.theme.dark
+        self.selected_skill_info_box = render.SolidColor(0, render.SCREEN_HEIGHT-200, render.SCREEN_WIDTH, 200, self.theme.white)
         self.update_submitted_skills()
         self.update_vials()
         render.update_check.append(self)
