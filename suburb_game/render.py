@@ -243,6 +243,7 @@ class TextButton(UIElement):
         self.h = h
         if onpress is None: self.onpress = lambda *args: None
         else: self.onpress = onpress
+        self.hover_func: Optional[Callable] = None
         self.active = False
         self.hover = hover
         self.truncate_text = truncate_text
@@ -268,6 +269,8 @@ class TextButton(UIElement):
     def update(self):
         if self.draw_condition is not None:
             if not self.draw_condition(): return
+        if self.hover_func is not None and self.is_mouseover():
+            self.hover_func()
         if self.truncated == True:
             self.text_surf = self.font.render(self.text+"...", True, self.text_color)
         else:
@@ -307,7 +310,6 @@ class TextButton(UIElement):
             if self.click_on_mouse_down: self.onpress()
             elif not self.toggle:
                 self.active = True
-
 
     def mouseup(self, isclicked):
         if self.click_on_mouse_down: return
@@ -371,7 +373,7 @@ class Button(UIElement):
                 if self.overlay_on_click:
                     self.surf.fill((self.overlay_intensity, self.overlay_intensity, self.overlay_intensity), None, pygame.BLEND_ADD)
             else:
-                if self.hover != None and self.collidepoint(pygame.mouse.get_pos()):
+                if self.hover != None and self.is_mouseover():
                     self.surf = pygame.image.load(self.hover)
                 else:
                     self.surf = pygame.image.load(self.unpressed_img_path)

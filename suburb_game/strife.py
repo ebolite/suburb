@@ -168,6 +168,7 @@ class Strife():
         self.vials: dict[str, render.Vial] = {}
         self.selected_targets: list[str] = []
         self.selected_skill_name: Optional[str] = None
+        self.hovered_skill_name: Optional[str] = None
         self.theme = suburb.current_theme()
         self.layer_2_buttons: list[render.UIElement] = []
         render.ui_elements.append(self)
@@ -219,6 +220,11 @@ class Strife():
             self.clear_next_layer_buttons()
         return button_func
     
+    def get_skill_hover_func(self, skill_name):
+        def hover_func():
+            self.hovered_skill_name = skill_name
+        return hover_func
+    
     def get_skill_inactive_condition(self, skill_name):
         def inactive_condition():
             skill = self.player_griefer.get_skill(skill_name)
@@ -241,6 +247,7 @@ class Strife():
         skill_button.text_color = config.get_category_color(skill.category)
         skill_button.hover_color = pygame.Color(225, 225, 225)
         skill_button.inactive_condition = self.get_skill_inactive_condition(skill.name)
+        skill_button.hover_func = self.get_skill_hover_func(skill.name)
         return skill_button
 
     def draw_scene(self):
@@ -293,18 +300,18 @@ class Strife():
         render.update_check.append(self)
 
     def make_skill_info_window(self):
-        self.selected_skill_info_box = render.SolidColor(0, render.SCREEN_HEIGHT-180, render.SCREEN_WIDTH, 180, self.theme.light)
-        self.selected_skill_info_box.outline_color = self.theme.dark
+        self.hovered_skill_info_box = render.SolidColor(0, render.SCREEN_HEIGHT-180, render.SCREEN_WIDTH, 180, self.theme.light)
+        self.hovered_skill_info_box.outline_color = self.theme.dark
         self.skill_name_label = render.Text(8, 8, "")
         self.skill_name_label.color = self.theme.dark
         self.skill_name_label.absolute = True
-        self.skill_name_label.bind_to(self.selected_skill_info_box)
+        self.skill_name_label.bind_to(self.hovered_skill_info_box)
 
     def update_skill_info_window(self):
-        if self.selected_skill is None:
+        if self.hovered_skill is None:
             self.skill_name_label.text = "SELECT A TECHNIQUE"
         else:
-            self.skill_name_label.text = f"{self.selected_skill.name.upper()}"
+            self.skill_name_label.text = f"{self.hovered_skill.name.upper()}"
 
     def make_next_layer_buttons(self, category_name: str):
         self.clear_next_layer_buttons()
@@ -397,6 +404,12 @@ class Strife():
     def selected_skill(self) -> Optional[Skill]:
         if self.selected_skill_name is None: return None
         skill = self.player_griefer.get_skill(self.selected_skill_name)
+        return skill
+    
+    @property
+    def hovered_skill(self) -> Optional[Skill]:
+        if self.hovered_skill_name is None: return None
+        skill = self.player_griefer.get_skill(self.hovered_skill_name)
         return skill
 
     @property
