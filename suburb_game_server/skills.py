@@ -48,7 +48,10 @@ class Skill():
         self.additional_skill: Optional[str] = None
 
     def add_apply_state(self, state_name: str, duration: int, potency: float):
-        ...
+        self.apply_states[state_name] = {
+            "duration": duration,
+            "potency": potency,
+        }
 
     def get_costs(self, user: "strife.Griefer") -> dict[str, int]:
         true_costs = {}
@@ -103,6 +106,9 @@ class Skill():
                     vial.on_parry(target, damage)
                 return
         if damage != 0: target.take_damage(damage, coin=coin)
+        if damage != 0 or not self.need_damage_to_apply_states:
+            for state_name in self.apply_states:
+                target.apply_state(state_name, user, self.apply_states["potency"], self.apply_states["duration"])
 
     def is_usable_by(self, griefer: "strife.Griefer"):
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
@@ -139,6 +145,17 @@ assault.vial_cost_formulas = {
     "vim": "user.power",
 }
 base_skills.append("assault")
+
+abjure = Skill("abjure")
+abjure.use_message = "{user} abjures!"
+abjure.damage_formula = "0"
+abjure.category = "abstinent"
+abjure.add_apply_state("abjure", 2, 1.0)
+abjure.need_damage_to_apply_states = False
+abjure.vial_cost_formulas = {
+    "vim": "user.power",
+}
+base_skills.append("abjure")
 
 class Aspect():
     def __init__(self, name):
