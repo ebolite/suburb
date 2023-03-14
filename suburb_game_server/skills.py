@@ -40,10 +40,15 @@ class Skill():
         self.num_targets = 1
         self.cooldown = 0
         self.damage_formula = ""
+        self.apply_states = {}
+        self.need_damage_to_apply_states = True
         self.vial_cost_formulas = {}
         self.use_message = ""
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
+
+    def add_apply_state(self, state_name: str, duration: int, potency: float):
+        ...
 
     def get_costs(self, user: "strife.Griefer") -> dict[str, int]:
         true_costs = {}

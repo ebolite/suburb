@@ -34,6 +34,9 @@ class State():
         self.name = name
         self.beneficial = False
 
+    def potency(self, griefer: "Griefer") -> float:
+        return griefer.get_state_potency(self.name)
+
     def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
         return damage
 
@@ -45,7 +48,7 @@ class State():
 
 class AbjureState(State):
     def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
-        new_damage = damage - griefer.get_stat("mettle")*3
+        new_damage = damage - griefer.get_stat("mettle")*3*self.potency(griefer)
         new_damage *= 0.75
         new_damage = int(new_damage)
         return max(new_damage, 0)
@@ -251,8 +254,11 @@ class Griefer():
             if vial.tact_vial:
                 self.change_vial(vial.name, self.get_stat("tact"))
             vial.new_turn(self) 
-        for state in self.states_list:
+        for state in self.states_list.copy():
             state.new_turn(self)
+            self.add_state_duration(state.name, -1)
+            if self.get_state_duration(state.name) <= 0:
+                self.remove_state(state.name)
         if self.player is None: self.ai_use_skills()
 
     def take_damage(self, damage: int, coin: Optional[bool] = None):
@@ -385,6 +391,9 @@ class Griefer():
     
     def get_state_duration(self, state_name: str) -> int:
         return self.states[state_name]["duration"]
+    
+    def add_state_duration(self, state_name: str, duration: int):
+        self.states[state_name]["duration"] += duration
 
     def change_vial(self, vial_name: str, amount: int) -> int:
         vial = vials[vial_name]
