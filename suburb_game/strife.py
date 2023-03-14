@@ -123,7 +123,7 @@ class Griefer():
 
     @property
     def stats(self) -> dict:
-        return self.griefer_dict["stats"]
+        return self.griefer_dict["stats_dict"]
 
     @property
     def vials(self) -> dict:

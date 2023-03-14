@@ -1680,6 +1680,22 @@ class GrieferElement(UIElement):
             new_vial.bind_to(self)
             self.vials[vial_type] = new_vial
 
+    def make_labels(self):
+        if isinstance(self, Enemy):
+            x, y = 0.5, 1
+        else:
+            x, y = 0.47, 0.7
+        name_label = Text(x, y, self.griefer.nickname)
+        name_label.color = self.theme.dark
+        name_label.fontsize = 20
+        name_label.rect_y_offset = 30
+        name_label.bind_to(self)
+        power_label = Text(x, y, f"POWER: {self.griefer.power}")
+        power_label.color = self.theme.dark
+        power_label.fontsize = 10
+        power_label.rect_y_offset = 44
+        power_label.bind_to(self)
+
     def update(self):
         super().update()
         if self.is_mouseover() and self.griefer.strife.selected_skill is not None:
@@ -1699,6 +1715,7 @@ class Enemy(GrieferElement, Image):
         self.convert_colors.append((themes.default.dark, new_color)) 
         self.add_vial("vim")
         self.add_vial("hp")
+        self.make_labels()
         click_check.append(self)
 
 class PlayerGriefer(GrieferElement, Symbol):
@@ -1707,6 +1724,7 @@ class PlayerGriefer(GrieferElement, Symbol):
         self.vials: dict[str, Vial] = {}
         self.griefer = griefer
         self.add_vial("hp")
+        self.make_labels()
         click_check.append(self)
 
 def make_grist_display(x, y, w: int, h: int, padding: int, 
