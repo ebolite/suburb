@@ -337,6 +337,7 @@ class Griefer():
                 valid_targets = filter(lambda x: x.team == self.team, self.strife.griefer_list)
             else:
                 valid_targets = filter(lambda x: x.team != self.team, self.strife.griefer_list)
+            if len(list(valid_targets)) == 0: break
             targets = random.choices(list(valid_targets), k=skill.num_targets)
             self.submit_skill(random_skill_name, [target.name for target in targets])
 
