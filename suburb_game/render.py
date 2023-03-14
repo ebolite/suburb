@@ -1755,7 +1755,7 @@ class GrieferElement(UIElement):
             new_state_icon = StateIcon(x, y, self.griefer, state_name)
             new_state_icon.absolute = absolute
             new_state_icon.bind_to(binding)
-            duration_label = Text(0.5, 1.4, "")
+            duration_label = Text(0.5, 1.5, "")
             duration_label.text_func = self.get_duration_label_func(state_name)
             duration_label.color = self.theme.dark
             duration_label.fontsize = 14
