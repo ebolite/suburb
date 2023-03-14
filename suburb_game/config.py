@@ -299,6 +299,9 @@ strife_category_colors = {
     "none": Color(0, 175, 255),
 }
 
+state_icons = {
+}
+
 def get_category_color(category) -> Color:
     if category in strife_category_colors:
         return strife_category_colors[category]

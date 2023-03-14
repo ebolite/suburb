@@ -1658,9 +1658,20 @@ class Symbol(Image):
         hitbox_rect = pygame.Rect(x, y, w, h)
         return hitbox_rect.collidepoint(pos)
 
+class StateIcon(Image):
+    def __init__(self, x, y, griefer: "Griefer", state_name: str):
+        if state_name in config.state_icons:
+            path = config.state_icons[state_name]
+        else:
+            path = "sprites/strife/states/unknown_state.png"
+        super().__init__(x, y, path)
+        self.griefer = griefer
+        self.state_name = state_name
+
 class GrieferElement(UIElement):
     griefer: Griefer
     vials: dict[str, Vial]
+    state_icons: list[StateIcon]
     surf: Union[pygame.Surface, pygame.surface.Surface]
     hover_intensity = 30
 
@@ -1685,16 +1696,41 @@ class GrieferElement(UIElement):
             x, y = 0.5, 1
         else:
             x, y = 0.47, 0.7
-        name_label = Text(x, y, self.griefer.nickname)
-        name_label.color = self.theme.dark
-        name_label.fontsize = 20
-        name_label.rect_y_offset = 30
-        name_label.bind_to(self)
-        power_label = Text(x, y, f"POWER: {self.griefer.power}")
-        power_label.color = self.theme.dark
-        power_label.fontsize = 10
-        power_label.rect_y_offset = 44
-        power_label.bind_to(self)
+        self.name_label = Text(x, y, self.griefer.nickname)
+        self.name_label.color = self.theme.dark
+        self.name_label.fontsize = 20
+        self.name_label.rect_y_offset = 30
+        self.name_label.bind_to(self)
+        self.power_label = Text(x, y, f"POWER: {self.griefer.power}")
+        self.power_label.color = self.theme.dark
+        self.power_label.fontsize = 10
+        self.power_label.rect_y_offset = 44
+        self.power_label.bind_to(self)
+
+    def make_state_boxes(self):
+        for state_icon in self.state_icons.copy():
+            self.state_icons.remove(state_icon)
+            state_icon.delete()
+        if len(self.griefer.states) == 0: return
+        for state_name in self.griefer.states:
+            if len(self.state_icons) > 0:
+                x, y = 24, 0
+                absolute = True
+                binding = self.state_icons[-1]
+            else:
+                if isinstance(self, Enemy):
+                    x, y = 0.5, 1
+                else:
+                    x, y = 0.47, 0.7
+                absolute = False
+                binding = self
+            new_state_icon = StateIcon(x, y, self.griefer, state_name)
+            new_state_icon.absolute = absolute
+            new_state_icon.bind_to(binding)
+            self.state_icons.append(new_state_icon)
+        first_element = self.state_icons[0]
+        first_element.rect_y_offset = 60
+        first_element.rect_x_offset = (len(self.state_icons) - 1) * -12
 
     def update(self):
         super().update()
@@ -1703,10 +1739,16 @@ class GrieferElement(UIElement):
             hover_surf.fill((self.hover_intensity, self.hover_intensity, self.hover_intensity), None, pygame.BLEND_ADD)
             hover_surf.set_colorkey((self.hover_intensity, self.hover_intensity, self.hover_intensity))
             self.blit_surf.blit(hover_surf, (self.rect.x, self.rect.y))
+        for state_icon in self.state_icons.copy():
+            if not self.griefer.is_state_affected(state_icon.state_name):
+                self.state_icons.remove(state_icon)
+                state_icon.delete()
+        if len(self.griefer.states) != len(self.state_icons): self.make_state_boxes()
 
 class Enemy(GrieferElement, Image):
     def __init__(self, x, y, griefer: Griefer):
         self.vials: dict[str, Vial] = {}
+        self.state_icons: list[StateIcon] = []
         self.griefer = griefer
         path = f"sprites/strife/{griefer.type}.png"
         super().__init__(x, y, path)
@@ -1722,6 +1764,7 @@ class PlayerGriefer(GrieferElement, Symbol):
     def __init__(self, x, y, griefer: Griefer):
         super().__init__(x, y, griefer.symbol_dict)
         self.vials: dict[str, Vial] = {}
+        self.state_icons: list[StateIcon] = []
         self.griefer = griefer
         self.add_vial("hp")
         self.make_labels()

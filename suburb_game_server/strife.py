@@ -33,6 +33,7 @@ class State():
         states[name] = self
         self.name = name
         self.beneficial = False
+        self.tooltip = ""
 
     def potency(self, griefer: "Griefer") -> float:
         return griefer.get_state_potency(self.name)
@@ -55,6 +56,7 @@ class AbjureState(State):
     
 abjure = AbjureState("abjure")
 abjure.beneficial = True
+abjure.tooltip = "Reducing damage based on mettle."
 
 class Vial():
     def __init__(self, name):
@@ -482,6 +484,7 @@ class Griefer():
                 "applier_stats": self.states[state_name]["applier_stats"],
                 "potency": self.get_state_potency(state_name),
                 "duration": self.get_state_duration(state_name),
+                "tooltip": states[state_name].tooltip,
             }
         return out
 
@@ -569,6 +572,7 @@ class Griefer():
         out = deepcopy(self.strife.griefers[self.__dict__["name"]])
         out["stats_dict"] = self.stats_dict
         out["vials_dict"] = self.vials_dict
+        out["states_dict"] = self.states_dict
         out["known_skills"] = {skill_name:skills.skills[skill_name].get_dict(self) for skill_name in self.known_skills}
         return out
 

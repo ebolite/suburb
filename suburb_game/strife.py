@@ -60,6 +60,10 @@ class Griefer():
     def get_skill(self, skill_name) -> Skill:
         return Skill(skill_name, self.known_skills[skill_name])
 
+    def is_state_affected(self, state_name) -> bool:
+        if state_name in self.states: return True
+        else: return False
+
     @property
     def available_actions(self) -> int:
         actions = self.actions
@@ -124,6 +128,10 @@ class Griefer():
     @property
     def stats(self) -> dict:
         return self.griefer_dict["stats_dict"]
+    
+    @property
+    def states(self) -> dict:
+        return self.griefer_dict["states_dict"]
 
     @property
     def vials(self) -> dict:
