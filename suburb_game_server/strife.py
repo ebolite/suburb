@@ -308,6 +308,7 @@ class Griefer():
             for player_griefer in self.strife.player_griefers:
                 if player_griefer.player is None: raise AttributeError
                 player_griefer.player.add_unclaimed_grist(spoils_dict)
+                player_griefer.player.unclaimed_rungs += 1
         else:
             self.strife.log(f"{self.nickname}: DEAD.")
         self.strife.remove_griefer(self)
