@@ -7,8 +7,8 @@ import config
 
 aspects: dict["str", "Aspect"] = {}
 skills: dict["str", "Skill"] = {}
-base_skills = [] # everyone has these
-player_skills = [] # only players get these
+base_skills: list[str] = [] # everyone has these
+player_skills: list[str] = [] # only players get these
 
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 
@@ -173,7 +173,7 @@ aggress.category = "aggressive"
 aggress.vial_cost_formulas = {
     "vim": "user.power//2"
 }
-player_skills.append(aggress)
+player_skills.append("aggress")
 
 assault = Skill("assault")
 assault.description = "Deals a lot of extra damage, but costs a lot of VIM."
