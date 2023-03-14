@@ -287,11 +287,24 @@ class Strife():
         self.selected_skill_text = render.Text(0.5, 0.19, "")
         self.selected_skill_text.text_func = currently_selected_text_func
         self.selected_skill_text.color = self.theme.dark
-        self.selected_skill_info_box = render.SolidColor(0, render.SCREEN_HEIGHT-180, render.SCREEN_WIDTH, 180, self.theme.light)
-        self.selected_skill_info_box.outline_color = self.theme.dark
+        self.make_skill_info_window()
         self.update_submitted_skills()
         self.update_vials()
         render.update_check.append(self)
+
+    def make_skill_info_window(self):
+        self.selected_skill_info_box = render.SolidColor(0, render.SCREEN_HEIGHT-180, render.SCREEN_WIDTH, 180, self.theme.light)
+        self.selected_skill_info_box.outline_color = self.theme.dark
+        self.skill_name_label = render.Text(8, 8, "")
+        self.skill_name_label.color = self.theme.dark
+        self.skill_name_label.absolute = True
+        self.skill_name_label.bind_to(self.selected_skill_info_box)
+
+    def update_skill_info_window(self):
+        if self.selected_skill is None:
+            self.skill_name_label.text = "SELECT A TECHNIQUE"
+        else:
+            self.skill_name_label.text = f"{self.selected_skill.name.upper()}"
 
     def make_next_layer_buttons(self, category_name: str):
         self.clear_next_layer_buttons()
@@ -317,6 +330,7 @@ class Strife():
             else:
                 self.clear_next_layer_buttons()
         self.update_submitted_skills()
+        self.update_skill_info_window()
         self.update_vials()
 
     def delete(self):
