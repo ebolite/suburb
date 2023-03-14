@@ -149,13 +149,13 @@ class Skill():
 
 aggrieve = Skill("aggrieve")
 aggrieve.use_message = "{user} aggrieves!"
-aggrieve.damage_formula = "(user.power + user.spk*6) * (1 + 0.5*coin)"
+aggrieve.damage_formula = "user.base_damage * (1 + 0.5*coin)"
 aggrieve.category = "aggressive"
 base_skills.append("aggrieve")
 
 assail = Skill("assail")
 assail.use_message = "{user} assails!"
-assail.damage_formula = "(user.power + user.spk*6) * (1.5 + 0.75*coin)"
+assail.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
 assail.category = "aggressive"
 assail.vial_cost_formulas = {
     "vim": "user.power//2",
@@ -164,7 +164,7 @@ base_skills.append("assail")
 
 assault = Skill("assault")
 assault.use_message = "{user} assaults!"
-assault.damage_formula = "(user.power + user.spk*6) * (2 + 0.75*coin)"
+assault.damage_formula = "user.base_damage * (2 + 0.75*coin)"
 assault.category = "aggressive"
 assault.vial_cost_formulas = {
     "vim": "user.power",
@@ -199,7 +199,7 @@ player_skills.append("abstain")
 
 abuse = Skill("abuse")
 abuse.use_message = "{user} abuses!"
-abuse.damage_formula = "(user.power + user.spk*6) * (0.5 + 1.5*coin)"
+abuse.damage_formula = "user.base_damage * (0.5 + 1.5*coin)"
 abuse.add_apply_state("demoralize", 3, 1.0)
 abuse.vial_cost_formulas = {
     "vim": "user.power",

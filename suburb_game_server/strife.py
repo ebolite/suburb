@@ -518,6 +518,7 @@ class Griefer():
 
     def format_formula(self, formula: str, identifier: Optional[str] = None) -> str:
         terms = {
+            "base_damage": self.power//2 + self.get_stat("spunk")*3,
             "power": self.power,
             "spk": self.get_stat("spunk"),
             "vig": self.get_stat("vigor"),
