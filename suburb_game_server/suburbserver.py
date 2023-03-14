@@ -269,8 +269,11 @@ def handle_request(dict):
             player.strife.ready_check()
             if player.strife is None: return json.dumps({})
             else: return json.dumps(player.strife.get_dict())
-
-
+        case "collect_spoils":
+            unclaimed_grist = player.unclaimed_grist.copy()
+            unclaimed_rungs = player.unclaimed_rungs
+            player.claim_spoils()
+            return json.dumps({"unclaimed_grist": unclaimed_grist, "unclaimed_rungs": unclaimed_rungs})
             
 def get_first_member_of_chain(player_name: str, checked=[]):
     player = sessions.Player(player_name)

@@ -174,8 +174,13 @@ class Strife():
 
     def update_strife_dict(self, strife_dict):
         if not strife_dict:
-            # todo: loot screen
-            suburb.map_scene()
+            spoils_dict = client.requestdic(intent="collect_spoils")
+            unclaimed_grist = spoils_dict["unclaimed_grist"]
+            unclaimed_rungs = spoils_dict["unclaimed_rungs"]
+            if unclaimed_grist or unclaimed_rungs:
+                suburb.spoils(unclaimed_grist, unclaimed_rungs)
+            else:
+                suburb.map_scene()
             return
         self.strife_dict = strife_dict
         for griefer_name in self.griefer_sprites:

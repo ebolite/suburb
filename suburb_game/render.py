@@ -672,7 +672,7 @@ def get_spirograph(x, y, thick=True) -> Image:
     spirograph.animframes = 164
     return spirograph
 
-def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding: Optional[UIElement], text_color: pygame.Color, temporary=True, absolute=True, scale_mult=1.0) -> UIElement:
+def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict]=None, binding: Optional[UIElement]=None, text_color: pygame.Color=suburb.current_theme().dark, temporary=True, absolute=True, scale_mult=1.0) -> UIElement:
     elements: list[Union[Image, Text]] = []
     padding = 5
     scale = (h / 45) * scale_mult
@@ -697,7 +697,7 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: dict, binding
             elements.append(icon)
         label_x = padding + int(45*scale)
         label = Text(label_x, 0, str(grist_cost))
-        if grist_cost <= grist_cache[grist_name]:
+        if grist_cache is None or grist_cost <= grist_cache[grist_name]:
             label.color = text_color
         else:
             label.color = pygame.Color(255, 0, 0)

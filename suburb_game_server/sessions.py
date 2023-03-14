@@ -601,6 +601,13 @@ class Player():
                 self.unclaimed_grist[grist_name] += amount
             else:
                 self.unclaimed_grist[grist_name] = amount
+    
+    def claim_spoils(self):
+        self.echeladder_rung += self.unclaimed_rungs
+        self.unclaimed_rungs = 0
+        for grist_name, amount in self.unclaimed_grist.items():
+            self.add_grist(grist_name, amount)
+        self.unclaimed_grist = {}
 
     def add_permanent_bonus(self, game_attr: str, amount: int):
         if game_attr in self.stat_ratios:
