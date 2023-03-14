@@ -1660,9 +1660,8 @@ class Symbol(Image):
 
 class StateIcon(Image):
     def __init__(self, x, y, griefer: "Griefer", state_name: str):
-        if state_name in config.state_icons:
-            path = config.state_icons[state_name]
-        else:
+        path = f"sprites/strife/states/{state_name}.png"
+        if not os.path.isfile(path):
             path = "sprites/strife/states/unknown_state.png"
         super().__init__(x, y, path)
         self.griefer = griefer
