@@ -44,6 +44,7 @@ always_on_top_check = []
 keypress_update_check = []
 scroll_check = []
 move_to_top = []
+move_to_bottom = []
 
 ui_elements = []
 
@@ -138,6 +139,9 @@ class UIElement(pygame.sprite.Sprite):
 
     def bring_to_top(self):
         move_to_top.append(self)
+
+    def send_to_bottom(self):
+        move_to_bottom.append(self)
 
     def convert_to_theme(self, surf: Union[pygame.Surface, pygame.surface.Surface], theme: Optional["themes.Theme"]=None) -> pygame.Surface:
         if theme is not None: new_theme = theme
@@ -1875,6 +1879,10 @@ def render():
         update_check.remove(ui_element)
         update_check.append(ui_element)
         move_to_top.remove(ui_element)
+    for ui_element in move_to_bottom.copy():
+        update_check.remove(ui_element)
+        update_check.insert(0, ui_element)
+        move_to_bottom.remove(ui_element)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return False
