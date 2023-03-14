@@ -35,6 +35,7 @@ class Skill():
         self.name = name
         skills[name] = self
         self.category = "none"
+        self.description = ""
         self.target_self = False
         self.beneficial = False
         self.parryable = True
@@ -148,12 +149,14 @@ class Skill():
         return out
 
 aggrieve = Skill("aggrieve")
+aggrieve.description = "Deals damage and is free. A pretty decent skill."
 aggrieve.use_message = "{user} aggrieves!"
 aggrieve.damage_formula = "user.base_damage * (1 + 0.5*coin)"
 aggrieve.category = "aggressive"
 base_skills.append("aggrieve")
 
 assail = Skill("assail")
+assail.description = "Deals additional damage compared to aggrieve, but costs a bit of VIM."
 assail.use_message = "{user} assails!"
 assail.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
 assail.category = "aggressive"
@@ -162,7 +165,18 @@ assail.vial_cost_formulas = {
 }
 base_skills.append("assail")
 
+aggress = Skill("aggress")
+aggress.description = "An all-or-nothing attack which does either massive damage or a very pitiful amount of it."
+aggress.use_message = "{user} aggresses!"
+aggress.damage_formula = "user.base_damage * (0.25 + 3*coin)"
+aggress.category = "aggressive"
+aggress.vial_cost_formulas = {
+    "vim": "user.power//2"
+}
+player_skills.append(aggress)
+
 assault = Skill("assault")
+assault.description = "Deals a lot of extra damage, but costs a lot of VIM."
 assault.use_message = "{user} assaults!"
 assault.damage_formula = "user.base_damage * (2 + 0.75*coin)"
 assault.category = "aggressive"
@@ -172,6 +186,7 @@ assault.vial_cost_formulas = {
 base_skills.append("assault")
 
 abjure = Skill("abjure")
+abjure.description = "The user ABJURES, reducing oncoming damage for 2 turns."
 abjure.use_message = "{user} abjures!"
 abjure.parryable = False
 abjure.beneficial = True
@@ -186,6 +201,7 @@ abjure.vial_cost_formulas = {
 base_skills.append("abjure")
 
 abstain = Skill("abstain")
+abstain.description = "The user ABSTAINS, regenerating some VIM but accomplishing nothing else."
 abstain.use_message = "{user} abstains!"
 abstain.parryable = False
 abstain.beneficial = True
@@ -198,6 +214,7 @@ abstain.vial_change_formulas = {
 player_skills.append("abstain")
 
 abuse = Skill("abuse")
+abuse.description = "The user ABUSES the enemy, causing them to become DEMORALIZED and lowering their damage output."
 abuse.use_message = "{user} abuses!"
 abuse.damage_formula = "user.base_damage * (0.5 + 1.5*coin)"
 abuse.add_apply_state("demoralize", 3, 1.0)
