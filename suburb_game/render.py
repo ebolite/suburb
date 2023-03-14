@@ -82,7 +82,9 @@ class UIElement(pygame.sprite.Sprite):
         self.bound_elements: list[UIElement] = []
         # temporary elements are meant to be disposed of
         self.temporary_elements: list[UIElement] = []
-        self.blit_surf = screen
+        self.blitting_elements: list[UIElement] = []
+        self.blit_surf: Union[pygame.Surface, pygame.surface.Surface] = screen
+        self.blit_element: Optional[UIElement]
         ui_elements.append(self)
 
     def collidepoint(self, pos):
@@ -98,9 +100,18 @@ class UIElement(pygame.sprite.Sprite):
         else:
             element.bound_elements.append(self)
 
+    def blit_to(self, element: "UIElement"):
+        if self in update_check:
+            update_check.remove(self)
+        element.blitting_elements.append(self)
+        self.blit_element = element
+
     def delete(self):
         for element in self.bound_elements + self.temporary_elements:
             element.delete()
+        if self.blit_element is not None:
+            if self in self.blit_element.blitting_elements:
+                self.blit_element.blitting_elements.remove(self)
         if self in ui_elements:
             ui_elements.remove(self)
         if self.relative_binding is not None:
