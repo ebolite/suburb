@@ -94,6 +94,9 @@ punch_card.use_prompt = "You punch the card with the code for {tname_lower}."
 
 #todo: add support for custom punch
 
+unseal = ItemAction("unseal")
+unseal.use_prompt = "You unseal the {iname}!... A KERNEL appears!"
+
 cruxtrude = ItemAction("cruxtrude")
 cruxtrude.use_prompt = "A CRUXITE DOWEL flies out of the {iname}!"
 
