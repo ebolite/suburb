@@ -133,6 +133,7 @@ class KernelSprite(Npc):
     def spawn_new(cls):
         name = Npc.make_valid_name("kernelsprite")
         sprite = cls(name)
+        sprite.type = "kernelsprite"
         sprite.hostile = False
         sprite.power = 1
         sprite.nickname = "kernelsprite"

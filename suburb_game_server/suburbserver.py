@@ -508,6 +508,11 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             new_instance = alchemy.Instance(new_item)
             player.room.add_instance(new_instance.name)
             return True
+        case "unseal":
+            instance.item_name = "cruxtruder"
+            sprite = npcs.KernelSprite.spawn_new()
+            player.room.add_npc(sprite)
+            return True
         case "cruxtrude":
             dowel_instance = alchemy.Instance(alchemy.Item("cruxite dowel"))
             player.room.add_instance(dowel_instance.name)
