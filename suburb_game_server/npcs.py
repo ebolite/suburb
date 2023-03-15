@@ -128,5 +128,15 @@ class Npc():
             spoils_dict[grist_name] = new_amount
         return spoils_dict
 
+class KernelSprite(Npc):
+    @classmethod
+    def spawn_new(cls):
+        name = Npc.make_valid_name("kernelsprite")
+        sprite = cls(name)
+        sprite.hostile = False
+        sprite.power = 1
+        sprite.nickname = "kernelsprite"
+        return sprite
+
 if __name__ == "__main__":
     ...
