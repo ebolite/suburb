@@ -71,6 +71,7 @@ icons = {
     "deploy": "sprites/icons/deploy.png",
     "select": "sprites/icons/select.png",
     "imp": "sprites/icons/imp.png",
+    "ogre": "sprites/icons/ogre.png",
 }
 
 header_icons = {

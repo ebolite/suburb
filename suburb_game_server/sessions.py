@@ -428,6 +428,7 @@ class Room():
             item = alchemy.Item("punched card")
             instance = alchemy.Instance(item)
             instance.punched_code = "I11w1a11"
+            instance.punched_item_name = "entry item"
             self.add_instance(instance.name)
         else:
             item = alchemy.Item(item_name)
@@ -896,7 +897,7 @@ class Player():
     @property
     def available_phernalia(self):
         connected = self.session.connected
-        available_phernalia = ["cruxtruder", "totem lathe", "alchemiter", "punch designix", "pre-punched card"]
+        available_phernalia = ["sealed cruxtruder", "totem lathe", "alchemiter", "punch designix", "pre-punched card"]
         if len(connected) >= 2:
             # todo: add more phernalia with more connections
             ...
