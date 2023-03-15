@@ -260,6 +260,26 @@ class Map():
         coords = random.choice(valid_coords)
         return self.find_room(coords[0], coords[1])
 
+    def populate_with_underlings(self, underling_type: str, cluster_size: int, number: int, min_tier:int, max_tier: int):
+        valid_rooms: list[Room] = []
+        for y, line in enumerate(self.map_tiles):
+            for x, char in enumerate(line):
+                if not self.is_tile_in_bounds(x, y): continue
+                if self.map_tiles[x][y+1] == ".": continue
+                room = self.find_room(x, y)
+                if room.tile.impassible: continue
+                if not room.above_solid_ground(): continue
+                valid_rooms.append(room)
+        remaining_spawns = number
+        while remaining_spawns:
+            room = random.choice(valid_rooms)
+            underling = npcs.underlings[underling_type]
+            for i in range(random.randint(1, min(cluster_size, remaining_spawns))):
+                grist_tier = random.randint(min_tier, max_tier)
+                grist_name = config.gristcategories[self.overmap.gristcategory][grist_tier-1]
+                underling.make_npc(grist_name, self.overmap.gristcategory, room)
+                remaining_spawns -= 1
+
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
         (util.sessions[self.__dict__["session_name"]]
@@ -418,6 +438,11 @@ class Room():
         client.deployed_phernalia.append(item_name)
         return True
     
+    def above_solid_ground(self) -> bool:
+        if not self.map.is_tile_in_bounds(self.x, self.y+1): return False
+        below_room = self.map.find_room(self.x, self.y+1)
+        return below_room.tile.infallible or below_room.tile.impassible
+
     def get_surrounding_tiles(self) -> list[tiles.Tile]:
         out_tiles = []
         for y in range(-1, 2):
