@@ -1,6 +1,7 @@
 from copy import deepcopy
 from typing import Optional, Union
 import random
+import math
 
 import util
 import sessions
@@ -313,7 +314,8 @@ class Griefer():
             for player_griefer in self.strife.player_griefers:
                 if player_griefer.player is None: raise AttributeError
                 player_griefer.player.add_unclaimed_grist(spoils_dict)
-                player_griefer.player.unclaimed_rungs += 1
+                rungs_to_gain = 1 + round((self.power / player_griefer.player.power) * (1 + random.random()/2))
+                player_griefer.player.unclaimed_rungs += rungs_to_gain
         else:
             self.strife.log(f"{self.nickname}: DEAD.")
         self.strife.remove_griefer(self)
