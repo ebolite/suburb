@@ -21,7 +21,7 @@ def modify_damage(damage: int, mettle: int):
 def stat_edge(user_stat: int, target_stat: int) -> float:
     edge = (user_stat - target_stat) / (user_stat + target_stat)
     edge += 1
-    return edge
+    return max(edge, 0.1)
 
 # todo: make this matter
 def flip_coin(user_luck: int, target_luck: int) -> bool:
@@ -109,11 +109,14 @@ class Skill():
         # only players can parry, enemies simply miss less with more savvy
         if self.parryable and target.player is not None:
             # higher target savvy = lower roll = more likely to parry
-            edge = stat_edge(user.get_stat("savvy"), target.get_stat("savvy"))
-            edge = edge ** 2
-            edge *= stat_edge(user.get_stat("luck"), target.get_stat("luck"))
-            for vial in target.vials_list: edge *= vial.parry_roll_modifier(target)
-            if random.random() * edge < config.base_parry_chance:
+            edge = stat_edge(target.get_stat("savvy"), user.get_stat("savvy")) - 1
+            for vial in target.vials_list: edge += vial.parry_roll_modifier(target) - 1
+            edge += (stat_edge(target.get_stat("luck"), user.get_stat("luck"))/4) - 0.25
+            if edge >= 0:
+                roll = random.uniform(0-edge, 1)
+            else:
+                roll = random.uniform(0, 1+-edge)
+            if roll < config.base_parry_chance:
                 target.strife.log(f"{target.name} AUTO-PARRIES!")
                 for vial in target.vials_list:
                     vial.on_parry(target, damage)
