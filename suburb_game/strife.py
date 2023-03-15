@@ -62,8 +62,19 @@ class Griefer():
     
     def can_use_skill(self, skill: Skill) -> bool:
         if not self.can_pay_costs(skill.costs): return False
+        if self.get_skill_cooldown(skill) > 0: return False
         if self.available_actions < skill.action_cost: return False
         return True
+    
+    def get_skill_cooldown(self, skill: Skill) -> int:
+        cooldown = 0
+        if skill.name not in self.skill_cooldowns:
+            cooldown = 0
+        else:
+            cooldown = self.skill_cooldowns[skill.name]
+        if skill.name in self.submitted_skills:
+            cooldown += skill.cooldown * self.submitted_skills.count(skill.name)
+        return cooldown
     
     def get_maximum_vial(self, vial_name) -> int:
         return self.vials[vial_name]["maximum"]
@@ -122,6 +133,10 @@ class Griefer():
             if skill.category not in categories: categories[skill.category] = []
             categories[skill.category].append(skill)
         return categories
+    
+    @property
+    def skill_cooldowns(self) -> dict[str, int]:
+        return self.griefer_dict["skill_cooldowns"]
 
     @property
     def player_name(self) -> Optional[str]:
@@ -291,7 +306,11 @@ class Strife():
         return button_func
 
     def make_skill_button(self, skill: Skill, x: int, y: int) -> "render.TextButton":
-        skill_button = render.TextButton(x, y, 196, 32, f">{skill.name.upper()}", self.get_skill_button_func(skill.name))
+        if self.player_griefer.get_skill_cooldown(skill) > 0:
+            button_text = f">{skill.name.upper()} (CD{self.player_griefer.get_skill_cooldown(skill)})"
+        else:
+            button_text = f">{skill.name.upper()}"
+        skill_button = render.TextButton(x, y, 196, 32, button_text, self.get_skill_button_func(skill.name))
         skill_button.absolute = True
         skill_button.fill_color = themes.default.white
         skill_button.outline_color = config.get_category_color(skill.category)

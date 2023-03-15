@@ -74,6 +74,7 @@ class Skill():
         costs = self.get_costs(user)
         if not user.can_pay_vial_costs(costs): return
         user.pay_costs(costs)
+        user.add_cooldown(self.name, self.cooldown)
         if self.use_message: 
             message = self.use_message
             message = message.replace("{user}", user.nickname)
@@ -141,6 +142,7 @@ class Skill():
 
     def is_usable_by(self, griefer: "strife.Griefer"):
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
+        if griefer.get_skill_cooldown(self.name) > 0: return False
         return True
 
     def get_dict(self, griefer: "strife.Griefer") -> dict:
@@ -195,6 +197,7 @@ abjure.parryable = False
 abjure.beneficial = True
 abjure.target_self = True
 abjure.damage_formula = "0"
+abjure.cooldown = 2
 abjure.category = "abstinent"
 abjure.add_apply_state("abjure", 2, 1.0)
 abjure.need_damage_to_apply_states = False

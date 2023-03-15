@@ -245,6 +245,7 @@ class Griefer():
                 "mettle": 0,
             }
             self.stat_bonuses: dict[str, int] = {}
+            self.skill_cooldowns: dict[str, int] = {}
             self.known_skills: list[str] = skills.base_skills.copy()
             # submitted_skills: [{"skill_name": "aggrieve", "targets": ["jet impq", "shale ogrea"]}]
             self.submitted_skills: list[dict] = []
@@ -271,6 +272,10 @@ class Griefer():
             self.add_state_duration(state.name, -1)
             if self.get_state_duration(state.name) <= 0:
                 self.remove_state(state.name)
+        for skill_name in self.skill_cooldowns.copy():
+            self.skill_cooldowns[skill_name] -= 1
+            if self.skill_cooldowns[skill_name] <= 0:
+                self.skill_cooldowns.pop(skill_name)
         if self.player is None: self.ai_use_skills()
 
     def take_damage(self, damage: int, coin: Optional[bool] = None):
@@ -312,6 +317,15 @@ class Griefer():
         else:
             self.strife.log(f"{self.nickname}: DEAD.")
         self.strife.remove_griefer(self)
+
+    def get_skill_cooldown(self, skill_name) -> int:
+        if skill_name not in self.skill_cooldowns: return 0
+        else: return self.skill_cooldowns[skill_name]
+
+    def add_cooldown(self, skill_name: str, cooldown: int):
+        if cooldown == 0: return
+        if skill_name not in self.skill_cooldowns: self.skill_cooldowns[skill_name] = 0
+        self.skill_cooldowns[skill_name] += cooldown
 
     def submit_skill(self, skill_name, targets: list[str]) -> bool:
         skill = skills.skills[skill_name]
