@@ -211,70 +211,35 @@ class Strife():
         self.reposition_sprites(blue_sprites, "left")   
 
     def reposition_sprites(self, sprites_list: list[Union["render.Enemy", "render.PlayerGriefer"]], direction: str):
-        sprite_points = []
+        sprites_xy = []
+        sprites_sprites = []
         for i, sprite in enumerate(sprites_list):
-            if i == 0: 
-                sprite_x = sprite.x * self.canvas.w
-                sprite_y = sprite.y * self.canvas.h
-                sprite_points.append((sprite_x, sprite_y))
+            if i == 0:
+                sprite_x = sprite.x * self.canvas.w - sprite.get_width()//2
+                sprite_y = sprite.y * self.canvas.h - sprite.get_height()//2
+                sprites_xy.append((sprite_x, sprite_y))
+                sprites_sprites.append(sprite)
                 if isinstance(sprite, render.Enemy):
-                    image = pygame.image.load(sprite.path)
-                    sprite.rect_y_offset = image.get_height()//3 * -1
+                    sprite.rect_y_offset = sprite.get_height()//3 * -1
                 continue
-            if isinstance(sprite, render.Enemy):
-                image = pygame.image.load(sprite.path)
-                distance = int(math.sqrt(image.get_width()**2 + image.get_height()**2))
+            print(f"{sprites_sprites} {i-1}")
+            previous_sprite = sprites_sprites[i-1]
+            new_width = sprite.get_width()
+            old_width = previous_sprite.get_width()
+            dx = new_width + old_width
+            dx = int(old_width)
+            old_x, old_y = sprites_xy[i-1]
+            if direction == "right":
+                new_x = old_x + dx
             else:
-                distance = 234
-            x, y = self.get_random_distance_from_all_points(distance, sprite_points, direction)
-            sprite.x = x
-            sprite.y = y
+                new_x = old_x - dx
+            new_y = render.SCREEN_HEIGHT//2 + 100
+            if isinstance(sprite, render.Enemy):
+                new_y -= sprite.get_height()
+            sprite.x, sprite.y = new_x, new_y
             sprite.absolute = True
-            sprite_points.append((x, y))
-        def key_func(sprite: "render.UIElement"):
-            if sprite.absolute: return sprite.y
-            else: return self.canvas.h * sprite.y
-        # sprites higher up should draw behind
-        ordered_sprites = sorted(sprites_list, key=key_func)
-        for sprite in ordered_sprites:
-            sprite.send_to_bottom()
-        self.canvas.send_to_bottom()
-            
-    # behold my brilliant bogo solution       
-    def get_random_distance_from_all_points(self, distance: int, points: list[tuple[int, int]], direction: Optional[str] = None) -> tuple[int, int]:
-        # essentially we're picking a random point on a circle
-        print(distance)
-        if direction == "left":
-            dx = random.randint(-distance, 0)
-        elif direction == "right":
-            dx = random.randint(0, distance)
-        else:
-            dx = random.randint(-distance, distance)
-        dy = distance - abs(dx)
-        if random.choice([True, False]):
-            dy *= -1
-        print(f"dx {dx} dy {dy}")
-        random.shuffle(points)
-        # loop through each point and act as if we drew that circle centered on the point
-        best_distance = 0
-        best_distance_coords= (0, 0)
-        for new_pointx, new_pointy in points:
-            x1 = new_pointx + dx
-            y1 = new_pointy + dy
-            print(f"x1 {x1} y1 {y1}")
-            # calculate distance between this new point and all other points
-            # since the circle algorithm isnt perfect distance this will fail sometimes
-            for x2, y2 in points:
-                print(f"x2 {x1}, y2 {y2}")
-                d = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
-                print(f"d {d} distance {distance}")
-                if d >= distance: return x1, y1
-                elif d > best_distance:
-                    best_distance = d
-                    best_distance_coords = x1, y1
-            # for at least one circle, the distance is always far enough away from all points
-        return best_distance_coords
-        # i think i may have stumbled into a decent solution
+            sprites_xy.append((new_x, new_y))
+            sprites_sprites.append(sprite)
 
     def make_griefer_sprite(self, griefer: Griefer) -> Union["render.Enemy", "render.PlayerGriefer"]:
         # todo: make positions differ with more griefers

@@ -1635,6 +1635,12 @@ class Symbol(Image):
         r, g, b = max(r, 0), max(g, 0), max(b, 0)
         return pygame.Color(r, g, b)
 
+    def get_width(self):
+        return 114
+    
+    def get_height(self):
+        return 196
+
     def get_image_path(self, part, item_name):
         style = self.style_dict[part]
         if style == "standard":
@@ -1812,8 +1818,8 @@ class Enemy(GrieferElement, Image):
         self.vials: dict[str, Vial] = {}
         self.state_icons: list[StateIcon] = []
         self.griefer = griefer
-        path = f"sprites/strife/{griefer.type}.png"
-        super().__init__(x, y, path)
+        self.path = f"sprites/strife/{griefer.type}.png"
+        super().__init__(x, y, self.path)
         grist_type = griefer.grist_type or "build"
         new_color = config.gristcolors[grist_type]
         self.convert_colors.append((themes.default.dark, new_color)) 
@@ -1821,6 +1827,14 @@ class Enemy(GrieferElement, Image):
         self.add_vial("hp")
         self.make_labels()
         click_check.append(self)
+
+    def get_width(self):
+        image = pygame.image.load(self.path)
+        return image.get_width()
+    
+    def get_height(self):
+        image = pygame.image.load(self.path)
+        return image.get_height()
 
 class PlayerGriefer(GrieferElement, Symbol):
     def __init__(self, x, y, griefer: Griefer):
