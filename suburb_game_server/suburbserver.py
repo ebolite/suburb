@@ -392,10 +392,25 @@ def console_commands(player: sessions.Player, content: str):
         case "impify":
             if args: num = int(args[0])
             else: num = 1
-            grist_name = config.gristcategories[player.gristcategory][random.randint(0,8)]
+            if len(args) > 1:
+                tier = int(args[1])
+            else:
+                tier = random.randint(0,8)
+            grist_name = config.gristcategories[player.gristcategory][tier]
             imp = npcs.underlings["imp"]
             for i in range(num):
                 imp.make_npc(grist_name, player.land.gristcategory, player.room)
+        case "ogreify":
+            if args: num = int(args[0])
+            else: num = 1
+            if len(args) > 1:
+                tier = int(args[1])
+            else:
+                tier = random.randint(0,8)
+            grist_name = config.gristcategories[player.gristcategory][tier]
+            ogre = npcs.underlings["ogre"]
+            for i in range(num):
+                ogre.make_npc(grist_name, player.land.gristcategory, player.room)
             print(player.room.npcs)
         case "gushoverload":
             try:

@@ -200,8 +200,8 @@ class Strife():
         for sprite in self.griefer_sprites.values():
             sprite.delete()
         self.griefer_sprites = {}
-        blue_sprites: list[render.UIElement] = []
-        red_sprites: list[render.UIElement] = []
+        blue_sprites: list[Union["render.Enemy", "render.PlayerGriefer"]] = []
+        red_sprites: list[Union["render.Enemy", "render.PlayerGriefer"]] = []
         for griefer_name in self.griefers:
             griefer = self.get_griefer(griefer_name)
             sprite = self.make_griefer_sprite(griefer)
@@ -210,13 +210,16 @@ class Strife():
         self.reposition_sprites(red_sprites, "right")
         self.reposition_sprites(blue_sprites, "left")   
 
-    def reposition_sprites(self, sprites_list: list["render.UIElement"], direction: str):
+    def reposition_sprites(self, sprites_list: list[Union["render.Enemy", "render.PlayerGriefer"]], direction: str):
         sprite_points = []
         for i, sprite in enumerate(sprites_list):
             if i == 0: 
                 sprite_x = sprite.x * self.canvas.w
                 sprite_y = sprite.y * self.canvas.h
                 sprite_points.append((sprite_x, sprite_y))
+                if isinstance(sprite, render.Enemy):
+                    image = pygame.image.load(sprite.path)
+                    sprite.rect_y_offset = image.get_height()//3 * -1
                 continue
             if isinstance(sprite, render.Enemy):
                 image = pygame.image.load(sprite.path)

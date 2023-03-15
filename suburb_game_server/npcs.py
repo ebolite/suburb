@@ -43,6 +43,12 @@ class Underling():
 imp = Underling("imp")
 imp.stat_ratios["luck"] = 3
 
+ogre = Underling("ogre")
+ogre.base_power = 16
+ogre.stat_ratios["vigor"] = 3
+ogre.stat_ratios["spunk"] = 2
+ogre.stat_ratios["luck"] = 0
+
 class Npc():
     @staticmethod
     def make_valid_name(name):
