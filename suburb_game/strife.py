@@ -224,9 +224,7 @@ class Strife():
                 continue
             print(f"{sprites_sprites} {i-1}")
             previous_sprite = sprites_sprites[i-1]
-            new_width = sprite.get_width()
             old_width = previous_sprite.get_width()
-            dx = new_width + old_width
             dx = int(old_width)
             old_x, old_y = sprites_xy[i-1]
             if direction == "right":
