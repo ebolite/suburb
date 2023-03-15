@@ -49,6 +49,7 @@ class Session():
             util.sessions[name] = {}
             self.starting_players = []
             self.connected = []
+            self.entered_players = []
             # atheneum is a list of items that have been alchemized by all players in the session
             self.atheneum = []
             self.overmaps = {}          
@@ -264,10 +265,11 @@ class Map():
         valid_rooms: list[Room] = []
         for y, line in enumerate(self.map_tiles):
             for x, char in enumerate(line):
-                if not self.is_tile_in_bounds(x, y): continue
-                if self.map_tiles[x][y+1] == ".": continue
+                if not self.is_tile_in_bounds(x, y+1): continue
+                if self.map_tiles[y+1][x] == ".": continue
                 room = self.find_room(x, y)
                 if room.tile.impassible: continue
+                if room.tile.ramp: continue
                 if not room.above_solid_ground(): continue
                 valid_rooms.append(room)
         remaining_spawns = number
@@ -725,6 +727,9 @@ class Player():
         return True
     
     def consume_instance(self, instance_name: str) -> bool:
+        if instance_name in self.room.instances:
+            self.room.remove_instance(instance_name)
+            return True
         if instance_name not in self.sylladex: return False
         self.sylladex.remove(instance_name)
         print(f"consuming {instance_name}")
@@ -908,6 +913,9 @@ class Player():
             phernalia_dict[item_name] = alchemy.Item(item_name).get_dict()
         return phernalia_dict
 
+    @property
+    def entered(self):
+        return self.name in self.land.session.entered_players
 
     @property
     def coords(self):

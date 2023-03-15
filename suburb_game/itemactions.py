@@ -56,6 +56,9 @@ add_card.use_prompt = "You add the {iname} to your sylladex."
 computer = ItemAction("computer")
 computer.use_prompt = "You boot up the {iname}."
 
+enter = ItemAction("enter")
+enter.use_prompt = "The world goes white."
+
 install_sburb = ItemAction("install_sburb")
 install_sburb.targeted = True
 install_sburb.prompt = "What should you install Sburb on?"

@@ -438,11 +438,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             if instance.contained != "":
                 contained_instance = alchemy.Instance(instance.contained)
                 player.sylladex.append(contained_instance.name)
-            if instance.name in player.sylladex:
-                return player.consume_instance(instance.name)
-            else:
-                player.room.remove_instance(instance.name)
-                return True
+            return player.consume_instance(instance.name)
         case "computer":
             return True
         case "install_sburb":
@@ -487,16 +483,20 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             return True
         case "uncombine_card":
             if instance.combined == []: print("not combined"); return False
-            if instance.name in player.sylladex:
-                if not player.consume_instance(instance.name): print("couldnt consume"); return False
-            else:
-                if instance.name not in player.room.instances: print("item not in room"); return False
-                player.room.remove_instance(instance.name)
+            if not player.consume_instance(instance.name): print("couldnt consume"); return False
             card_1 = alchemy.Instance(instance.combined[0])
             card_2 = alchemy.Instance(instance.combined[1])
             player.room.add_instance(card_1.name)
             player.room.add_instance(card_2.name)
             return True
+        case "enter":
+            if not player.entered:
+                if not player.consume_instance(instance.name): return False
+                player.land.session.entered_players.append(player.name)
+                player.map.populate_with_underlings("imp", 4, random.randint(40, 60), 1, 7)
+                player.map.populate_with_underlings("ogre", 1, random.randint(1, 4), 1, 2)
+                return True
+            else: return False
         case "alchemize":
             if not instance.inserted: print("nothing inserted"); return False
             inserted_instance = alchemy.Instance(instance.inserted)
