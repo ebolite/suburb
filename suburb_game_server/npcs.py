@@ -46,8 +46,27 @@ imp.stat_ratios["luck"] = 3
 ogre = Underling("ogre")
 ogre.base_power = 16
 ogre.stat_ratios["vigor"] = 3
+ogre.stat_ratios["mettle"] = 2
 ogre.stat_ratios["spunk"] = 2
-ogre.stat_ratios["luck"] = 0
+ogre.stat_ratios["savvy"] = 0
+
+lich = Underling("lich")
+lich.base_power = 20
+lich.stat_ratios["savvy"] = 2
+lich.stat_ratios["luck"] = 2
+lich.stat_ratios["spunk"] = 2
+
+basilisk = Underling("basilisk")
+basilisk.base_power = 26
+basilisk.stat_ratios["savvy"] = 3
+basilisk.stat_ratios["spunk"] = 2
+basilisk.stat_ratios["vigor"] = 2
+
+giclops = Underling("giclops")
+giclops.base_power = 68
+giclops.stat_ratios["mettle"] = 4
+giclops.stat_ratios["vigor"] = 2
+giclops.stat_ratios["spunk"] = 2
 
 class Npc():
     @staticmethod
