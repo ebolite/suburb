@@ -69,6 +69,11 @@ class Skill():
         valid_targets = [griefer.name for griefer in user.strife.griefer_list]
         return valid_targets
 
+    def format_formula(self, formula: str, user: "strife.Griefer", target: "strife.Griefer") -> str:
+        formula = user.format_formula(formula, "user")
+        formula = target.format_formula(formula, "target")
+        return formula
+
     # affect each target in list
     def use(self, user: "strife.Griefer", targets_list: list["strife.Griefer"]):
         costs = self.get_costs(user)
@@ -93,9 +98,7 @@ class Skill():
         if target.name not in self.get_valid_targets(user): return
 
         # damage step
-
-        damage_formula = user.format_formula(self.damage_formula, "user")
-        damage_formula = target.format_formula(damage_formula, "target")
+        damage_formula = self.format_formula(self.damage_formula, user, target)
         # coin is 1 if user wins, 0 if target wins
         if "coin" in damage_formula:
             coin = flip_coin(user.get_stat("luck"), target.get_stat("luck"))
@@ -133,8 +136,7 @@ class Skill():
 
         for vial_name in self.vial_change_formulas:
             vial_formula = self.vial_change_formulas[vial_name]
-            vial_formula = user.format_formula(vial_formula, "user")
-            vial_formula = target.format_formula(vial_formula, "target")
+            vial_formula = self.format_formula(vial_formula, user, target)
             if vial_name in target.vials:
                 change = target.change_vial(vial_name, int(eval(vial_formula)))
                 if change > 0: user.strife.log(f"{user.nickname}'s {vial_name.upper()} increased by {change}!")

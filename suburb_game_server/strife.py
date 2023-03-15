@@ -533,7 +533,7 @@ class Griefer():
         return stat
 
     def format_formula(self, formula: str, identifier: Optional[str] = None) -> str:
-        terms = {
+        terms: dict[str, Union[int, float]] = {
             "base_damage": self.power//2 + self.get_stat("spunk")*3,
             "power": self.power,
             "spk": self.get_stat("spunk"),
@@ -543,12 +543,21 @@ class Griefer():
             "sav": self.get_stat("savvy"),
             "met": self.get_stat("mettle"),
         }
+        for aspect_name in skills.aspects:
+            terms[f"{aspect_name}.ratio"] = self.get_aspect_ratio(aspect_name)
+            terms[f"{aspect_name}.inverse_ratio"] = self.get_inverse_aspect_ratio(aspect_name)
         for term in terms:
             if identifier is None:
                 if f"{{{term}}}" in formula: formula = formula.replace(f"{{{term}}}", str(terms[term]))
             else:
                 if f"{identifier}.{term}" in formula: formula = formula.replace(f"{identifier}.{term}", str(terms[term]))
         return formula
+
+    def get_aspect_ratio(self, aspect_name: str) -> float:
+        return skills.aspects[aspect_name].ratio(self)
+    
+    def get_inverse_aspect_ratio(self, aspect_name: str) -> float:
+        return skills.aspects[aspect_name].inverse_ratio(self)
 
     @property
     def name(self) -> str:
