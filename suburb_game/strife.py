@@ -389,7 +389,7 @@ class Strife():
         render.update_check.append(self)
 
     def make_skill_info_window(self):
-        self.hovered_skill_info_box = render.SolidColor(0, render.SCREEN_HEIGHT-180, render.SCREEN_WIDTH, 180, self.theme.light)
+        self.hovered_skill_info_box = render.SolidColor(0, render.SCREEN_HEIGHT-120, render.SCREEN_WIDTH, 120, self.theme.light)
         self.hovered_skill_info_box.outline_color = self.theme.dark
         self.skill_name_label = render.Text(8, 8, "")
         self.skill_name_label.color = self.theme.dark
