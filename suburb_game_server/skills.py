@@ -361,8 +361,8 @@ class Aspect():
             for vial_name in old_vials:
                 if old_vials[vial_name] != new_vials[vial_name]:
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
-        if isinstance(self, NegativeAspect): value *= -1 # just for proper printing
-        return f"{target.name.upper()}'s {self.name.upper()} {'increased' if value >= 0 else 'decreased'} by {value}!"
+        if isinstance(self, NegativeAspect): adjustment *= -1 # just for proper printing
+        return f"{target.name.upper()}'s {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} by {adjustment}!"
 
     def permanent_adjust(self, target: "strife.Griefer", value: int):
         value = int(value*self.balance_mult)
@@ -379,8 +379,8 @@ class Aspect():
             for vial_name in old_vials:
                 if old_vials[vial_name] != new_vials[vial_name]:
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
-        if isinstance(self, NegativeAspect): value *= -1 # just for proper printing
-        return f"{target.name.upper()}'s {self.name.upper()} {'increased' if value >= 0 else 'decreased'} PERMANENTLY by {value}!"
+        if isinstance(self, NegativeAspect): adjustment *= -1 # just for proper printing
+        return f"{target.name.upper()}'s {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} PERMANENTLY by {adjustment}!"
 
 class NegativeAspect(Aspect):
     def ratio(self, target: "strife.Griefer", raw=False) -> float:
