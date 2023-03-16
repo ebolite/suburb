@@ -356,7 +356,8 @@ class Aspect():
             for vial_name in old_vials:
                 if old_vials[vial_name] != new_vials[vial_name]:
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
-        return f"{target.name}'s {self.name.upper()} {'increased' if value >= 0 else 'decreased'} by {value}!"
+        if isinstance(self, NegativeAspect): value *= -1 # just for proper printing
+        return f"{target.name.upper()}'s {self.name.upper()} {'increased' if value >= 0 else 'decreased'} by {value}!"
 
     def permanent_adjust(self, target: "strife.Griefer", value: int):
         value = int(value*self.balance_mult)
@@ -373,7 +374,8 @@ class Aspect():
             for vial_name in old_vials:
                 if old_vials[vial_name] != new_vials[vial_name]:
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
-        return f"{target.name}'s {self.name.upper()} {'increased' if value >= 0 else 'decreased'} PERMANENTLY by {value}!"
+        if isinstance(self, NegativeAspect): value *= -1 # just for proper printing
+        return f"{target.name.upper()}'s {self.name.upper()} {'increased' if value >= 0 else 'decreased'} PERMANENTLY by {value}!"
 
 class NegativeAspect(Aspect):
     def ratio(self, target: "strife.Griefer", raw=False) -> float:
@@ -667,4 +669,3 @@ def make_class_skill(skill_name: str, class_name: str, aspect_name: str, require
     if class_name not in class_skills: class_skills[class_name] = {}
     if aspect_name not in class_skills[class_name]: class_skills[class_name][aspect_name] = {}
     class_skills[class_name][aspect_name][skill_name] = required_rung
-    

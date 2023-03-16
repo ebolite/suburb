@@ -640,7 +640,12 @@ class Strife():
         self.__dict__["overmap_name"] = room.overmap.name
         self.__dict__["map_name"] = room.map.name
         self.__dict__["room_name"] = room.name
-        if not room.strife_dict:
+        try:
+            self.griefers
+            self.turn_num
+            self.strife_log
+            self.dead_players
+        except KeyError:
             self.griefers = {}
             self.turn_num: int = 0
             self.strife_log = ["STRIFE BEGIN!"]
