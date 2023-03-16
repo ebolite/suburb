@@ -728,9 +728,33 @@ for aspect_name, aspect in aspects.items():
 
     # mage
     aspectpursuitstate = PursuitState(f"pursuit of {aspect.name}", aspect)
-    findaspect = ClassSkill(f"find {aspect}", aspect, "mage", 25)
+    findaspect = ClassSkill(f"find {aspect.name}", aspect, "mage", 25)
     findaspect.description = f"Applies a state for 5 turns which increases the target's {aspect.name.upper()} each turn."
     findaspect.add_vial_cost("aspect", "user.power//2")
     findaspect.cooldown = 1
     findaspect.action_cost = 0
     findaspect.add_apply_state(f"pursuit of {aspect.name}", 5, "1.0")
+
+    # witch
+    userwork = Skill(f"user_{aspect.name}work")
+    userwork.add_aspect_change(aspect.name, f"user.power//1.5")
+
+    aspectwork = ClassSkill(f"{aspect.name}work", aspect, "witch", 25)
+    aspectwork.description = f"Reduces the {aspect.name.upper()} of the target and increases the {aspect.name.upper()} of the user."
+    aspectwork.add_vial_cost("aspect", "user.power")
+    aspectwork.cooldown = 1
+    aspectwork.action_cost = 0
+    aspectwork.user_skill = f"user_{aspect.name}work"
+    aspectwork.add_aspect_change(aspect.name, f"-1 * user.power//1.5")
+
+    userplay = Skill(f"user_{aspect.name}play")
+    userplay.add_aspect_change(aspect.name, f"-1 * user.power//1.5")
+
+    aspectplay = ClassSkill(f"{aspect.name}play", aspect, "witch", 25)
+    aspectplay.description = f"Increases the {aspect.name.upper()} of the target and decreases the {aspect.name.upper()} of the user."
+    aspectplay.add_vial_cost("aspect", "user.power")
+    aspectplay.cooldown = 1
+    aspectplay.action_cost = 0
+    aspectplay.user_skill = f"user_{aspect.name}play"
+    aspectplay.add_aspect_change(aspect.name, f"user.power//1.5")
+    
