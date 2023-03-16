@@ -197,7 +197,7 @@ class MangritVial(Vial):
         return int(damage * mod)
 
 mangrit = MangritVial("mangrit")
-mangrit.maximum_formula = "{power} + {tac}*6"
+mangrit.maximum_formula = "{power}//2 + {tac}*3"
 mangrit.starting_formula = "0"
 mangrit.optional_vial = True
 mangrit.tact_vial = True
