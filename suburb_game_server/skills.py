@@ -541,7 +541,7 @@ vigil.add_vial_cost("vim", "user.power//2")
 vigil.add_aspect_change("hope", "-user.power")
 vigil.damage_formula = "user.base_damage * user.hope.ratio * (7 + 3*coin)"
 
-#rage
+# rage
 seethe = AspectSkill("seethe", rage, 10)
 seethe.description = "Increases the target's RAGE, which increases both damage dealt and taken."
 seethe.parryable = False
@@ -591,7 +591,7 @@ bleed.description = "Deals damage equal to your VIM."
 bleed.add_vial_cost("aspect", "user.power")
 bleed.damage_formula = "user.get_vial('vim') * (1.5 + 0.5*coin)"
 
-#life
+# life
 heal = AspectSkill("heal", life, 10)
 heal.description = "Restores health to the target."
 heal.beneficial = True
@@ -615,5 +615,51 @@ def cure_func(user: "strife.Griefer", target: "strife.Griefer"):
     target.remove_state(cured_state.name)
     return f"{target.name} was cured of {cured_state.name}!"
 cure.special_effect = cure_func
+
+# doom
+curse = AspectSkill("curse", doom, 10)
+curse.description = "Increases the target's DOOM."
+curse.action_cost = 0
+curse.cooldown = 1
+curse.parryable = False
+curse.add_vial_cost("aspect", "user.power")
+curse.add_aspect_change("doom", "user.power")
+
+execute = AspectSkill("execute", doom, 50)
+execute.description = "Deals more damage the higher the target's DOOM."
+execute.add_vial_cost("aspect", "user.power//2")
+execute.add_vial_cost("vim", "user.power//2")
+execute.damage_formula = "user.base_power * target.doom.ratio * (5 + 2*coin)"
+
+# light
+roll = AspectSkill("roll", light, 10)
+roll.description = "Does a large amount of damage on HEADS, but nothing on SCRATCH."
+roll.action_cost = 0
+roll.cooldown = 1
+roll.add_vial_cost("aspect", "user.power")
+roll.damage_formula = "user.base_power * 3 * coin"
+
+stack_deck = AspectSkill("stack deck", light, 50)
+stack_deck.description = "Lowers the LIGHT (luck) of the target and all their friends."
+stack_deck.parryable = False
+stack_deck.target_team
+stack_deck.add_vial_cost("aspect", "user.power")
+stack_deck.add_aspect_change("light", "-user.power")
+
+# void
+erase = AspectSkill("erase", void, 10)
+erase.description = "Increases the target's VOID, draining all their vials."
+erase.parryable = False
+erase.action_cost = 0
+erase.cooldown = 1
+erase.add_vial_cost("aspect", "user.power//2")
+erase.add_aspect_change("void", "user.power")
+
+strike_between = AspectSkill("strike between", void, 50)
+strike_between.description = "Deals damage based on your VOID and drains the target's VOID."
+strike_between.add_vial_cost("aspect", "user.power//2")
+strike_between.add_vial_cost("vim", "user.power//2")
+strike_between.add_aspect_change("void", "user.power")
+strike_between.damage_formula = "user.base_power * user.void.ratio * 4 * (1 + 0.5*coin)"
 
 # class skills
