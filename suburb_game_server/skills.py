@@ -575,7 +575,21 @@ whirlwind.add_vial_cost("aspect", "user.power*1.5")
 whirlwind.add_vial_cost("vim", "user.power")
 whirlwind.damage_formula = "user.base_damage * user.breath.ratio * (1 + coin)"
 
-# blah blah
+# blood
+circulate = AspectSkill("circulate", blood, 10)
+circulate.description = "Increases the BLOOD (vim) of the target and all their friends."
+circulate.beneficial = True
+circulate.parryable = False
+circulate.action_cost = 0
+circulate.cooldown = 2
+circulate.target_team = True
+circulate.add_vial_cost("aspect", "user.power")
+circulate.add_aspect_change("blood", "user.power")
+
+bleed = AspectSkill("bleed", blood, 50)
+bleed.description = "Deals damage equal to your VIM."
+bleed.add_vial_cost("aspect", "user.power")
+bleed.damage_formula = "user.get_vial('vim') * (1.5 + 0.5*coin)"
 
 #life
 heal = AspectSkill("heal", life, 10)
