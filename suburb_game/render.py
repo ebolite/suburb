@@ -1736,6 +1736,14 @@ class GrieferElement(UIElement):
         if clicked:
             self.griefer.strife.click_griefer(self.griefer)
 
+    def update_vials(self):
+        for vial_name in reversed(self.griefer.vials):
+            if vial_name in self.vials: continue
+            hidden = config.vials[vial_name]["hidden"]
+            if hidden and self.griefer.get_vial(vial_name) == self.griefer.get_starting_vial(vial_name): continue
+            else:
+                self.add_vial(vial_name)
+
     def add_vial(self, vial_type):
         if vial_type not in self.vials:
             new_vial = Vial(0.5, 0, 150, self.griefer, vial_type)
