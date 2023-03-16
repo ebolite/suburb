@@ -1827,7 +1827,6 @@ class GrieferElement(UIElement):
                 self.state_icons.remove(state_icon)
                 state_icon.delete()
         if len(self.griefer.states) != len(self.state_icons): self.make_state_boxes()
-        self.update_vials()
 
 class Enemy(GrieferElement, Image):
     def __init__(self, x, y, griefer: Griefer):
@@ -1906,19 +1905,19 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
 
 def render():
     for ui_element in move_to_top.copy():
-        for element in ui_element.bound_elements:
-            update_check.remove(element)
-            update_check.append(element)
         update_check.remove(ui_element)
         update_check.append(ui_element)
         move_to_top.remove(ui_element)
+        for element in ui_element.bound_elements:
+            update_check.remove(element)
+            update_check.append(element)
     for ui_element in move_to_bottom.copy():
-        update_check.remove(ui_element)
-        update_check.insert(0, ui_element)
-        move_to_bottom.remove(ui_element)
         for element in ui_element.bound_elements:
             update_check.remove(element)
             update_check.insert(0, element)
+        update_check.remove(ui_element)
+        update_check.insert(0, ui_element)
+        move_to_bottom.remove(ui_element)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return False

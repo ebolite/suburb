@@ -250,7 +250,10 @@ class Strife():
                 continue
             print(f"{sprites_sprites} {i-1}")
             previous_sprite = sprites_sprites[i-1]
-            old_width = previous_sprite.get_width()
+            if isinstance(previous_sprite, render.Enemy):
+                old_width = previous_sprite.get_width()
+            else:
+                old_width = 400
             dx = int(old_width)
             old_x, old_y = sprites_xy[i-1]
             if direction == "right":
@@ -260,6 +263,8 @@ class Strife():
             new_y = render.SCREEN_HEIGHT//2 + 100
             if isinstance(sprite, render.Enemy):
                 new_y -= sprite.get_height()
+            else:
+                new_y -= 300
             sprite.x, sprite.y = new_x, new_y
             sprite.absolute = True
             sprites_xy.append((new_x, new_y))
