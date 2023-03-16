@@ -64,6 +64,7 @@ icons = {
     "player": "sprites/icons/player_alt.png",
     "alchemiter": "sprites/icons/alchemiter.png",
     "cruxtruder": "sprites/icons/cruxtruder.png",
+    "sealed cruxtruder": "sprites/icons/sealed cruxtruder.png",
     "punch designix": "sprites/icons/punch designix.png",
     "totem lathe": "sprites/icons/totem lathe.png",
     "Sburb disc": "sprites/icons/Sburb disc.png",
