@@ -8,9 +8,9 @@ import sessions
 import npcs
 import skills
 import config
+import stateseffects
 
 vials: dict[str, "Vial"] = {}
-states: dict[str, "State"] = {}
 
 def stats_from_ratios(stat_ratios: dict[str, int], power: int):
     total_ratios = 0
@@ -28,60 +28,6 @@ def stats_from_ratios(stat_ratios: dict[str, int], power: int):
         stats[stat_name] += 1
         remainder -= 1
     return stats
-
-class State():
-    def __init__(self, name):
-        states[name] = self
-        self.name = name
-        self.beneficial = False
-        self.tooltip = ""
-
-    def potency(self, griefer: "Griefer") -> float:
-        return griefer.get_state_potency(self.name)
-    
-    def applier_stats(self, griefer: "Griefer") -> dict:
-        return griefer.get_applier_stats(self.name)
-
-    def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
-        return damage
-
-    def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
-        return damage
-    
-    def parry_roll_modifier(self, griefer: "Griefer") -> float:
-        return 1.0
-    
-    def new_turn(self, griefer: "Griefer"):
-        pass
-
-class AbjureState(State):
-    def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
-        new_damage = damage - griefer.get_stat("mettle")*3*self.potency(griefer)
-        new_damage *= 0.75
-        new_damage = int(new_damage)
-        return max(new_damage, 0)
-    
-abjure = AbjureState("abjure")
-abjure.beneficial = True
-abjure.tooltip = "Reduces damage taken based on mettle."
-
-class DemoralizeState(State):
-    def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
-        new_damage = damage
-        new_damage *= 1 - (0.33 * self.potency(griefer))
-        new_damage = int(new_damage)
-        return max(new_damage, 0)
-    
-demoralize = DemoralizeState("demoralize")
-demoralize.tooltip = "Reduces damage dealt."
-
-class AiryState(State):
-    def parry_roll_modifier(self, griefer: "Griefer") -> float:
-        reduction = 0.4 * self.potency(griefer)
-        return 1 - reduction
-    
-airy = AiryState("airy")
-airy.tooltip = "Increases AUTO-PARRY chance."
 
 class Vial():
     def __init__(self, name):
@@ -537,13 +483,13 @@ class Griefer():
                 "applier_stats": self.states[state_name]["applier_stats"],
                 "potency": self.get_state_potency(state_name),
                 "duration": self.get_state_duration(state_name),
-                "tooltip": states[state_name].tooltip,
+                "tooltip": stateseffects.states[state_name].tooltip,
             }
         return out
 
     @property
-    def states_list(self) -> list[State]:
-        return [states[state_name] for state_name in self.states]
+    def states_list(self) -> list["stateseffects.State"]:
+        return [stateseffects.states[state_name] for state_name in self.states]
     
     def get_stat(self, stat_name) -> int:
         if stat_name == "power": return self.power

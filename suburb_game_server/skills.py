@@ -690,17 +690,6 @@ def steal_effect_constructor(aspect: Aspect) -> Callable:
             return f"{user.nickname} stole {value} {aspect.name.upper()} from {target.nickname}!"
         return steal_effect
 
-class PursuitState(strife.State):
-    def __init__(self, name, aspect: Aspect):
-        super().__init__(name)
-        self.aspect = aspect
-
-    def new_turn(self, griefer: "strife.Griefer"):
-        bonus = self.potency(griefer) * self.applier_stats(griefer)["power"] / 2
-        bonus = int(bonus)
-        logmessage = self.aspect.adjust(griefer, bonus)
-        griefer.strife.log(logmessage)
-
 for aspect_name, aspect in aspects.items():
     # knight
     aspectblade = ClassSkill(f"{aspect.name}blade", aspect, "knight", 25)
@@ -721,15 +710,17 @@ for aspect_name, aspect in aspects.items():
     # thief
     aspectsteal = ClassSkill(f"{aspect.name}-steal", aspect, "thief", 25)
     aspectsteal.description = f"Permanently steals {aspect.name.upper()} from the target based on their POWER and gives it to the user. Can be used once per target."
+    aspectsteal.parryable = False
     aspectsteal.add_vial_cost("vim", "user.power//2")
     aspectsteal.add_vial_cost("aspect", "user.power")
     aspectsteal.cooldown = 2
     aspectsteal.special_effect = steal_effect_constructor(aspect)
 
     # mage
-    aspectpursuitstate = PursuitState(f"pursuit of {aspect.name}", aspect)
     findaspect = ClassSkill(f"find {aspect.name}", aspect, "mage", 25)
     findaspect.description = f"Applies a state for 5 turns which increases the target's {aspect.name.upper()} each turn."
+    findaspect.parryable = False
+    findaspect.need_damage_to_apply_states = False
     findaspect.add_vial_cost("aspect", "user.power//2")
     findaspect.cooldown = 1
     findaspect.action_cost = 0
@@ -738,10 +729,12 @@ for aspect_name, aspect in aspects.items():
     # witch
     userwork = Skill(f"user_{aspect.name}work")
     userwork.add_aspect_change(aspect.name, f"user.power//1.5")
+    userwork.parryable = False
 
     aspectwork = ClassSkill(f"{aspect.name}work", aspect, "witch", 25)
     aspectwork.description = f"Reduces the {aspect.name.upper()} of the target and increases the {aspect.name.upper()} of the user."
     aspectwork.add_vial_cost("aspect", "user.power")
+    aspectwork.parryable = False
     aspectwork.cooldown = 1
     aspectwork.action_cost = 0
     aspectwork.user_skill = f"user_{aspect.name}work"
@@ -749,10 +742,12 @@ for aspect_name, aspect in aspects.items():
 
     userplay = Skill(f"user_{aspect.name}play")
     userplay.add_aspect_change(aspect.name, f"-1 * user.power//1.5")
+    userplay.parryable = False
 
     aspectplay = ClassSkill(f"{aspect.name}play", aspect, "witch", 25)
     aspectplay.description = f"Increases the {aspect.name.upper()} of the target and decreases the {aspect.name.upper()} of the user."
     aspectplay.add_vial_cost("aspect", "user.power")
+    aspectplay.parryable = False
     aspectplay.cooldown = 1
     aspectplay.action_cost = 0
     aspectplay.user_skill = f"user_{aspect.name}play"
