@@ -87,7 +87,16 @@ class Skill():
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
 
+    def add_vial_cost(self, vial_name: str, formula: str):
+        assert vial_name in strife.vials
+        self.vial_cost_formulas[vial_name] = formula
+
+    def add_vial_change(self, vial_name: str, formula: str):
+        assert vial_name in strife.vials
+        self.vial_change_formulas[vial_name] = formula
+
     def add_apply_state(self, state_name: str, duration: int, potency: float):
+        assert state_name in strife.states
         self.apply_states[state_name] = {
             "duration": duration,
             "potency": potency,
@@ -169,7 +178,6 @@ class Skill():
                 target.apply_state(state_name, user, potency, duration)
 
         # vial change step
-
         for vial_name in self.vial_change_formulas:
             vial_formula = self.vial_change_formulas[vial_name]
             vial_formula = self.format_formula(vial_formula, user, target)
@@ -203,9 +211,7 @@ assail.description = "Deals additional damage compared to aggrieve, but costs a 
 assail.use_message = "{user} assails!"
 assail.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
 assail.category = "aggressive"
-assail.vial_cost_formulas = {
-    "vim": "user.power//2",
-}
+assail.add_vial_cost("vim", "user.power//2")
 base_skills.append("assail")
 
 aggress = Skill("aggress")
@@ -213,9 +219,7 @@ aggress.description = "An all-or-nothing attack which does either massive damage
 aggress.use_message = "{user} aggresses!"
 aggress.damage_formula = "user.base_damage * (0.25 + 3*coin)"
 aggress.category = "aggressive"
-aggress.vial_cost_formulas = {
-    "vim": "user.power//2"
-}
+aggress.add_vial_cost("vim", "user.power//2")
 player_skills.append("aggress")
 
 assault = Skill("assault")
@@ -223,9 +227,7 @@ assault.description = "Deals a lot of extra damage, but costs a lot of VIM."
 assault.use_message = "{user} assaults!"
 assault.damage_formula = "user.base_damage * (2 + 0.75*coin)"
 assault.category = "aggressive"
-assault.vial_cost_formulas = {
-    "vim": "user.power",
-}
+assault.add_vial_cost("vim", "user.power")
 base_skills.append("assault")
 
 abjure = Skill("abjure")
@@ -239,9 +241,7 @@ abjure.cooldown = 2
 abjure.category = "abstinent"
 abjure.add_apply_state("abjure", 2, 1.0)
 abjure.need_damage_to_apply_states = False
-abjure.vial_cost_formulas = {
-    "vim": "user.power//2",
-}
+abjure.add_vial_cost("vim", "user.power//2")
 base_skills.append("abjure")
 
 abstain = Skill("abstain")
@@ -252,9 +252,7 @@ abstain.beneficial = True
 abstain.target_self = True
 abstain.damage_formula = "0"
 abstain.category = "abstinent"
-abstain.vial_change_formulas = {
-    "vim": "user.power"
-}
+abstain.add_vial_change("vim", "user.power")
 player_skills.append("abstain")
 
 abuse = Skill("abuse")
@@ -262,9 +260,7 @@ abuse.description = "The user ABUSES the enemy, causing them to become DEMORALIZ
 abuse.use_message = "{user} abuses!"
 abuse.damage_formula = "user.base_damage * (0.5 + 1.5*coin)"
 abuse.add_apply_state("demoralize", 3, 1.0)
-abuse.vial_cost_formulas = {
-    "vim": "user.power",
-}
+abuse.add_vial_cost("vim", "user.power")
 abuse.category = "abusive"
 base_skills.append("abuse")
 
@@ -307,6 +303,7 @@ class Aspect():
         return stat_ratio
     
     def adjust(self, target: "strife.Griefer", value: int):
+        value = int(value*self.balance_mult)
         if self.check_vials: old_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
         else: old_vials = {}
         adjustment = int(value/self.adjustment_divisor)
@@ -322,6 +319,7 @@ class Aspect():
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
 
     def permanent_adjust(self, target: "strife.Griefer", value: int):
+        value = int(value*self.balance_mult)
         if self.check_vials: old_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
         else: old_vials = {}
         adjustment = int(value/self.adjustment_divisor)
@@ -423,11 +421,10 @@ tick = AspectSkill("tick", time, 10)
 tick.use_message = "{user}: Tick."
 tick.description = "Perform an additional action this turn."
 tick.beneficial = True
+tick.parryable = False
 tick.action_cost = -1
 tick.cooldown = 3
-tick.vial_cost_formulas = {
-    "aspect": "user.power"
-}
+tick.add_vial_cost("aspect", "user.power//2")
 tick.target_self = True
 
 tock = AspectSkill("tock", time, 50)
@@ -435,9 +432,7 @@ tock.description = "Deals damage, and uses no actions."
 tock.use_message = "{user}: Tock."
 tock.action_cost = 0
 tock.cooldown = 2
-tock.vial_cost_formulas = {
-    "aspect": "user.power"
-}
+tock.add_vial_cost("aspect", "user.power//2")
 tock.damage_formula = "user.base_damage * (1 + 0.5*coin)"
 
 # class skills
