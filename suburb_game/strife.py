@@ -264,7 +264,7 @@ class Strife():
             if isinstance(sprite, render.Enemy):
                 new_y -= sprite.get_height()
             else:
-                new_y -= 300
+                new_y -= 250
             sprite.x, sprite.y = new_x, new_y
             sprite.absolute = True
             sprites_xy.append((new_x, new_y))
