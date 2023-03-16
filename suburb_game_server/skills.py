@@ -472,6 +472,7 @@ heal.parryable = False
 heal.action_cost = 0
 heal.cooldown = 1
 heal.add_vial_cost("aspect", "user.power//3")
+heal.add_aspect_change("life", "user.power//2")
 
 cure = AspectSkill("cure", life, 50)
 cure.description = "Removes a negative state from the target."
