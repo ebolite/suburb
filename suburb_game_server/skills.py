@@ -684,7 +684,7 @@ def steal_effect_constructor(aspect: Aspect) -> Callable:
                 return f"{target.nickname} already had {aspect.name.upper()} stolen!"
             else:
                 target.tags.append(f"stolen{aspect.name}")
-            value = max(target.power//18, 1)
+            value = max(target.power//6, 1)
             aspect.permanent_adjust(target, -value)
             aspect.permanent_adjust(user, value)
             return f"{user.nickname} stole {value} {aspect.name.upper()} from {target.nickname}!"
