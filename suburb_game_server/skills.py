@@ -701,7 +701,13 @@ for aspect_name, aspect in aspects.items():
     aspectblade.damage_formula = f"user.base_power * user.{aspect.name}.ratio * 3 + (1 + 0.5*coin)"
 
     # prince
-    aspectblast = ClassSkill(f"{aspect.name}blast", aspect, "prince", 25)
+    aspectloss = ClassSkill(f"{aspect.name}loss", aspect, "prince", 25)
+    aspectloss.description = f"Sharpy lowers the target's {aspect.name.upper()}."
+    aspectloss.add_vial_cost("aspect", "user.power//2")
+    aspectloss.add_aspect_change(aspect.name, f"-user.power*1.5")
+    aspectloss.parryable = False
+
+    aspectblast = ClassSkill(f"{aspect.name}blast", aspect, "prince", 100)
     aspectblast.description = f"Deals damage based on your {aspect.name.upper()} and lowers the target's {aspect.name.upper()}"
     aspectblast.add_vial_cost("vim", "user.power//2")
     aspectblast.add_vial_cost("aspect", "user.power")
