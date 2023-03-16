@@ -87,7 +87,7 @@ class Skill():
         self.use_message = ""
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
-        self.special_effect: Optional[Callable[[strife.Griefer, strife.Griefer], Optional[str]]]
+        self.special_effect: Optional[Callable[[strife.Griefer, strife.Griefer], Optional[str]]] = None
 
     def add_vial_cost(self, vial_name: str, formula: str):
         self.vial_cost_formulas[vial_name] = formula
@@ -303,8 +303,13 @@ class Aspect():
             present_vials = []
             for vial_name in self.vials:
                 if vial_name not in target.vials: continue
-                ratios += target.get_vial(vial_name) / target.get_vial_maximum(vial_name)
-                present_vials.append(vial_name)
+                try:
+                    current = target.get_vial(vial_name)
+                    maximum = target.get_vial_maximum(vial_name)
+                    ratios += current / maximum
+                    present_vials.append(vial_name)
+                except KeyError: continue
+            if len(present_vials) == 0: return 0.0
             stat_ratio = ratios / len(present_vials)         
         if not raw:
             stat_ratio *= self.balance_mult

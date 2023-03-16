@@ -544,8 +544,10 @@ class Griefer():
             "met": self.get_stat("mettle"),
         }
         for aspect_name in skills.aspects:
-            terms[f"{aspect_name}.ratio"] = self.get_aspect_ratio(aspect_name)
-            terms[f"{aspect_name}.inverse_ratio"] = self.get_inverse_aspect_ratio(aspect_name)
+            if f"{aspect_name}.ratio" in formula:
+                terms[f"{aspect_name}.ratio"] = self.get_aspect_ratio(aspect_name)
+            if f"{aspect_name}.inverse_ratio" in formula:
+                terms[f"{aspect_name}.inverse_ratio"] = self.get_inverse_aspect_ratio(aspect_name)
         for term in terms:
             if identifier is None:
                 if f"{{{term}}}" in formula: formula = formula.replace(f"{{{term}}}", str(terms[term]))
