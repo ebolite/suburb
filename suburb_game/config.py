@@ -297,6 +297,7 @@ strife_category_colors = {
     "abstinent": Color(56, 213, 244),
     "abusive": Color(255, 184, 45),
     "aspected": Color(54, 54, 159),
+    "accolades": Color(54, 54, 159),
     "arsenal": Color(155, 56, 244),
     "none": Color(0, 175, 255),
 }
