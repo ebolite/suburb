@@ -90,7 +90,7 @@ class AspectyState(ClassPassive):
         super().__init__(name, aspect, "heir", required_rung)
 
     def new_turn(self, griefer: "strife.Griefer"):
-        adjust_reply = self.aspect.adjust(griefer, griefer.power//6)
+        adjust_reply = self.aspect.adjust(griefer, griefer.power//2)
         griefer.strife.log(adjust_reply)
 
 for _, aspect in skills.aspects.items():
