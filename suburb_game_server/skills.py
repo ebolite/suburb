@@ -53,7 +53,7 @@ SKILL_CATEGORIES = ["aggressive", "abstinent", "abusive", "aspected", "arsenal",
 def modify_damage(damage: int, griefer: "strife.Griefer"):
     mettle = griefer.get_stat("mettle")
     if damage == 0 and mettle == 0: return 0
-    mod = griefer.power / (griefer.power + mettle) # damage squared over damage plus mettle
+    mod = griefer.power / (griefer.power + 6*mettle)
     new_damage = int(damage * mod)
     return int(new_damage)
 
