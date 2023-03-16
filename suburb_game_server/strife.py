@@ -192,7 +192,7 @@ class MangritVial(Vial):
     def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
         value = self.get_current(griefer)
         power = griefer.power
-        mod = (value**2) / (value + power)
+        mod = value / (value + power)
         mod += 1
         return int(damage * mod)
 
