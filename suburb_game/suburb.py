@@ -795,7 +795,7 @@ def debug_speedrun_2():
     character_info["interests"] = ["garbage", "anime"]
     character_info["aspect"] = "doom"
     character_info["class"] = "bard"
-    character_info["secondaryvial"] = "gambit"
+    character_info["secondaryvial"] = "mangrit"
     character_info["modus"] = "array"
     character_info["gristcategory"] = "dark"
     style_dict = config.default_style_dict.copy()

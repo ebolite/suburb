@@ -635,7 +635,7 @@ execute = AspectSkill("execute", doom, 50)
 execute.description = "Deals more damage the higher the target's DOOM."
 execute.add_vial_cost("aspect", "user.power//2")
 execute.add_vial_cost("vim", "user.power//2")
-execute.damage_formula = "user.base_power * target.doom.ratio * (5 + 2*coin)"
+execute.damage_formula = "user.base_power * target.doom.ratio * (7 + 3*coin)"
 
 # light
 roll = AspectSkill("roll", light, 10)

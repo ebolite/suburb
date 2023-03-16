@@ -427,6 +427,9 @@ def console_commands(player: sessions.Player, content: str):
             for i in range(num):
                 underling.make_npc(grist_name, player.land.gristcategory, player.room)
             print(player.room.npcs)
+        case "change_vial":
+            vial = args[0]
+            player.secondaryvial = vial
         case "enter_imps":
             player.map.populate_with_underlings("imp", 3, random.randint(40, 60), 1, 5)
         case "gushoverload":
