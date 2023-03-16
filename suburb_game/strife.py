@@ -73,8 +73,9 @@ class Griefer():
             cooldown = 0
         else:
             cooldown = self.skill_cooldowns[skill.name]
-        if skill.name in self.submitted_skills:
-            cooldown += skill.cooldown * self.submitted_skills.count(skill.name)
+        for submitted_skill in self.submitted_skills_list:
+            if submitted_skill.name == skill.name:
+                cooldown += skill.cooldown
         return cooldown
     
     def get_maximum_vial(self, vial_name) -> int:

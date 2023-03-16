@@ -134,8 +134,8 @@ class Skill():
                     if user.team == "red": team = "blue"
                     else: team = "red"
             targets_list = [griefer for griefer in user.strife.griefer_list if griefer.team == team]
+        if not self.is_usable_by(user): return
         costs = self.get_costs(user)
-        if not user.can_pay_vial_costs(costs): return
         user.pay_costs(costs)
         user.add_cooldown(self.name, self.cooldown)
         if self.use_message: 

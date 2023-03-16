@@ -344,6 +344,7 @@ class Griefer():
 
     def submit_skill(self, skill_name, targets: list[str]) -> bool:
         skill = skills.skills[skill_name]
+        if not skill.is_usable_by(self): return False
         if len(targets) > skill.num_targets: return False
         for target_name in targets: 
             if target_name not in self.strife.griefers: return False
