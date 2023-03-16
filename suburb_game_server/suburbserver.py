@@ -425,6 +425,18 @@ def console_commands(player: sessions.Player, content: str):
         case "bankgushry":
             for grist_name in player.grist_cache:
                 player.grist_cache[grist_name] = 0
+        case "homestuck":
+            player.goto_room(player.land.housemap.random_valid_room(config.starting_tiles))
+        case "tp":
+            target_name = " ".join(args)
+            if target_name in util.players:
+                target = sessions.Player(target_name)
+                player.goto_room(target.room)
+        case "summon":
+            target_name = " ".join(args)
+            if target_name in util.players:
+                target = sessions.Player(target_name)
+                target.goto_room(player.room)
 
 # return True on success, return False on failure
 def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:
