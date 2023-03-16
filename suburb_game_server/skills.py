@@ -568,12 +568,12 @@ aerate.add_vial_cost("aspect", "user.power//1.5")
 aerate.add_apply_state("airy", 3, "user.breath.ratio")
 
 whirlwind = AspectSkill("whirlwind", breath, 50)
-whirlwind.description = "Deals mass damage based on your SAVVY."
+whirlwind.description = "Deals mass damage based on your BREATH (savvy)."
 whirlwind.cooldown = 2
 whirlwind.target_team = True
 whirlwind.add_vial_cost("aspect", "user.power*1.5")
 whirlwind.add_vial_cost("vim", "user.power")
-whirlwind.damage_formula = "user.base_damage * (2 + coin)"
+whirlwind.damage_formula = "user.base_damage * user.breath.ratio * (1 + coin)"
 
 # blah blah
 
