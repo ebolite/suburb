@@ -752,7 +752,7 @@ def debug_speedrun():
     client.dic["character"] = "alienatingParticles"
     client.dic["character_pass_hash"] = client.hash("ass")
     client.request("create_character")
-    character_info["name"] = "Iness"
+    character_info["name"] = "Inness"
     character_info["noun"] = "rabbit girl"
     character_info["pronouns"] = ["she", "her", "her", "hers"]
     character_info["interests"] = ["music", "technology"]
