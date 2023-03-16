@@ -307,9 +307,9 @@ class Strife():
 
     def make_skill_button(self, skill: Skill, x: int, y: int) -> "render.TextButton":
         if self.player_griefer.get_skill_cooldown(skill) > 0:
-            button_text = f">{skill.name.upper()} (CD{self.player_griefer.get_skill_cooldown(skill)})"
+            button_text = f"{'[I] ' if skill.action_cost <= 0 else ''}>{skill.name.upper()} (CD{self.player_griefer.get_skill_cooldown(skill)})"
         else:
-            button_text = f">{skill.name.upper()}"
+            button_text = f"{'[I] ' if skill.action_cost <= 0 else ''}>{skill.name.upper()}"
         skill_button = render.TextButton(x, y, 196, 32, button_text, self.get_skill_button_func(skill.name))
         skill_button.absolute = True
         skill_button.fill_color = themes.default.white
