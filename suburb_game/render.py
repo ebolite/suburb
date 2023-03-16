@@ -1908,7 +1908,7 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
             grist_image = Image(x, y, grist_image_path)
         grist_image.scale = grist_image_scale
         grist_image.bind_to(grist_box)
-    bar_background = SolidColor(0.2, 0.25, w//1.3, h//3.5, box_color)
+    bar_background = SolidColor(0.585, 0.4, w//1.3, h//3.5, box_color)
     bar_background.border_radius = 2
     bar_background.outline_color = theme.black
     bar_background.absolute = False
