@@ -292,13 +292,12 @@ class Aspect():
         self.adjustment_divisor = 3.0
 
     # skills that depend on how much ASPECT the target has use ratio
-    # ratio should "generally" cap out at 6.0, meaning 100% ASPECT, though can get higher with perma bonuses
+    # ratio should "generally" cap out at 1.0, meaning 100% ASPECT, though can get higher with perma bonuses
     def ratio(self, target: "strife.Griefer", raw=False) -> float:
         if not self.is_vial:
             stat_ratio = target.get_stat(self.stat_name) / target.get_stat("power")
         else:
             stat_ratio = target.get_vial(self.stat_name) / target.get_vial_maximum(self.stat_name)
-            stat_ratio *= 6
         if not raw:
             stat_ratio *= self.balance_mult
             stat_ratio *= self.ratio_mult
@@ -308,7 +307,7 @@ class Aspect():
     # should "generally" cap out at 3.0 because usually having less of an aspect is easier than having more of it
     def inverse_ratio(self, target: "strife.Griefer") -> float:
         stat_ratio = self.ratio(target, raw=True)
-        stat_ratio = 6 - stat_ratio
+        stat_ratio = 1 - stat_ratio
         stat_ratio = stat_ratio / 2
         stat_ratio *= self.balance_mult
         stat_ratio *= self.ratio_mult
