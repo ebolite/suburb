@@ -452,26 +452,41 @@ tick.beneficial = True
 tick.parryable = False
 tick.action_cost = -1
 tick.cooldown = 3
-tick.add_vial_cost("aspect", "user.power//2")
+tick.add_vial_cost("aspect", "user.power")
 tick.target_self = True
 
 tock = AspectSkill("tock", time, 50)
-tock.description = "Deals damage, and uses no actions."
+tock.description = "Deals damage and uses no actions."
 tock.action_cost = 0
 tock.cooldown = 2
 tock.add_vial_cost("aspect", "user.power//2")
 tock.damage_formula = "user.base_damage * (1 + 0.5*coin)"
 
+# space
+enlarge = AspectSkill("enlarge", space, 10)
+enlarge.description = "Increases the target's SPACE (mettle) for this battle."
+enlarge.beneficial = True
+enlarge.parryable = False
+enlarge.action_cost = 0
+enlarge.cooldown = 1
+enlarge.add_vial_cost("aspect", "user.power//2")
+enlarge.add_aspect_change("space", "user.power")
+
+gravity = AspectSkill("gravity", space, 50)
+gravity.description = "Deals damage based on how much SPACE (mettle) the target has."
+gravity.add_vial_cost("aspect", "user.power")
+gravity.damage_formula = "user.base_damage * (1 + 0.5*coin) * target.space.ratio * 9"
+
 # blah blah
 
 #life
-heal = AspectSkill("heal", life, 5)
+heal = AspectSkill("heal", life, 10)
 heal.description = "Restores health to the target."
 heal.beneficial = True
 heal.parryable = False
 heal.action_cost = 0
 heal.cooldown = 1
-heal.add_vial_cost("aspect", "user.power//3")
+heal.add_vial_cost("aspect", "user.power//2")
 heal.add_aspect_change("life", "user.power//2")
 
 cure = AspectSkill("cure", life, 50)
@@ -480,7 +495,7 @@ cure.beneficial = True
 cure.parryable = False
 cure.action_cost = 0
 cure.cooldown = 1
-cure.add_vial_cost("aspect", "user.power//3")
+cure.add_vial_cost("aspect", "user.power//2")
 def cure_func(user: "strife.Griefer", target: "strife.Griefer"):
     possible_states = [state for state in target.states_list if not state.beneficial]
     if len(possible_states) == 0: return
