@@ -436,6 +436,9 @@ def console_commands(player: sessions.Player, content: str):
         case "change_aspect":
             aspect = args[0]
             player.aspect = aspect
+        case "add_rungs":
+            rungs = int(args[0])
+            player.echeladder_rung += rungs
         case "enter_imps":
             player.map.populate_with_underlings("imp", 3, random.randint(40, 60), 1, 5)
         case "gushoverload":

@@ -341,13 +341,13 @@ class Griefer():
         griefer.player_name = player.name
         griefer.type = "player"
         # todo: add player symbol dict here
-        griefer.symbol_dict = player.symbol_dict
+        griefer.symbol_dict = player.symbol_dict.copy()
         griefer.nickname = player.nickname
         griefer.base_power = player.power
         griefer.team = "blue"
         base_stats = {stat_name:player.get_base_stat(stat_name) for stat_name in player.stat_ratios}
-        griefer.base_stats = base_stats
-        griefer.stat_bonuses = player.permanent_stat_bonuses
+        griefer.base_stats = base_stats.copy()
+        griefer.stat_bonuses = player.permanent_stat_bonuses.copy()
         griefer.known_skills = player.get_known_skills()
         griefer.add_vial("aspect")
         griefer.add_vial(player.secondaryvial)
@@ -447,7 +447,8 @@ class Griefer():
             print(f"bonus does not exist {game_attr}")
         
     def add_permanent_bonus(self, game_attr: str, amount: int):
-        if self.player is not None: self.player.add_permanent_bonus(game_attr, amount)
+        if self.player is not None: 
+            self.player.add_permanent_bonus(game_attr, amount)
         self.add_bonus(game_attr, amount)
     
     @property
