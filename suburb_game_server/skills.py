@@ -346,7 +346,7 @@ class Aspect():
         stat_ratio *= self.ratio_mult
         return stat_ratio
     
-    def adjust(self, target: "strife.Griefer", value: int):
+    def adjust(self, target: "strife.Griefer", value: int, return_value=False):
         value = int(value*self.balance_mult)
         if self.check_vials: old_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
         else: old_vials = {}
@@ -362,9 +362,10 @@ class Aspect():
                 if old_vials[vial_name] != new_vials[vial_name]:
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
         if isinstance(self, NegativeAspect): adjustment *= -1 # just for proper printing
+        if return_value: return str(adjustment)
         return f"{target.nickname}'s {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} by {adjustment}!"
 
-    def permanent_adjust(self, target: "strife.Griefer", value: int):
+    def permanent_adjust(self, target: "strife.Griefer", value: int, return_value=False):
         value = int(value*self.balance_mult)
         if self.check_vials: old_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
         else: old_vials = {}
@@ -380,6 +381,7 @@ class Aspect():
                 if old_vials[vial_name] != new_vials[vial_name]:
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
         if isinstance(self, NegativeAspect): adjustment *= -1 # just for proper printing
+        if return_value: return str(adjustment)
         return f"{target.nickname}'s {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} PERMANENTLY by {adjustment}!"
 
 class NegativeAspect(Aspect):
@@ -685,9 +687,9 @@ def steal_effect_constructor(aspect: Aspect) -> Callable:
             else:
                 target.tags.append(f"stolen{aspect.name}")
             value = max(target.power//6, 1)
-            aspect.permanent_adjust(target, -value)
-            aspect.permanent_adjust(user, value)
-            return f"{user.nickname} stole {value} {aspect.name.upper()} from {target.nickname}!"
+            stolen_target = aspect.permanent_adjust(target, -value)
+            stolen = aspect.permanent_adjust(user, value, return_value=True)
+            return f"{user.nickname} stole {stolen} {aspect.name.upper()} from {target.nickname}!"
         return steal_effect
 
 for aspect_name, aspect in aspects.items():
