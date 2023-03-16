@@ -477,6 +477,23 @@ gravity.description = "Deals damage based on how much SPACE (mettle) the target 
 gravity.add_vial_cost("aspect", "user.power")
 gravity.damage_formula = "user.base_damage * (1 + 0.5*coin) * target.space.ratio * 9"
 
+# mind
+reassess = AspectSkill("reasses", mind, 10)
+reassess.description = "Recover HP, ASPECT and VIM equal to 3x your MIND (tact)."
+reassess.target_self = True
+reassess.beneficial = True
+reassess.parryable = False
+reassess.add_vial_cost("vim", "-user.tact*3")
+reassess.add_vial_cost("aspect", "-user.tact*3")
+reassess.add_vial_change("hp", "user.tact*3")
+reassess.action_cost = 0
+reassess.cooldown = 2
+
+tactics = AspectSkill("tactics", mind, 50)
+tactics.description = "Deals damage based on how much MIND (tact) you have. Unaffected by coin flips >:)."
+tactics.add_vial_cost("aspect", "user.power")
+tactics.damage_formula = "user.base_damage * user.mind.ratio * 9)"
+
 # blah blah
 
 #life
@@ -486,7 +503,7 @@ heal.beneficial = True
 heal.parryable = False
 heal.action_cost = 0
 heal.cooldown = 1
-heal.add_vial_cost("aspect", "user.power//2")
+heal.add_vial_cost("aspect", "user.power//3")
 heal.add_aspect_change("life", "user.power//2")
 
 cure = AspectSkill("cure", life, 50)
