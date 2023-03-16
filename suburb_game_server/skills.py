@@ -73,6 +73,7 @@ class Skill():
         self.category = "none"
         self.description = ""
         self.target_self = False
+        self.target_team = False
         self.beneficial = False
         self.parryable = True
         self.action_cost = 1
@@ -123,6 +124,16 @@ class Skill():
 
     # affect each target in list
     def use(self, user: "strife.Griefer", targets_list: list["strife.Griefer"]):
+        if self.target_team:
+            if len(targets_list) != 0:
+                team = targets_list[0].team
+            else:
+                if self.beneficial:
+                    team = user.team
+                else:
+                    if user.team == "red": team = "blue"
+                    else: team = "red"
+            targets_list = [griefer for griefer in user.strife.griefer_list if griefer.team == team]
         costs = self.get_costs(user)
         if not user.can_pay_vial_costs(costs): return
         user.pay_costs(costs)
@@ -555,6 +566,14 @@ aerate.beneficial = True
 aerate.parryable = False
 aerate.add_vial_cost("aspect", "user.power//1.5")
 aerate.add_apply_state("airy", 3, "user.breath.ratio")
+
+whirlwind = AspectSkill("whirlwind", breath, 50)
+whirlwind.description = "Deals mass damage based on your SAVVY."
+whirlwind.cooldown = 2
+whirlwind.target_team = True
+whirlwind.add_vial_cost("aspect", "user.power*1.5")
+whirlwind.add_vial_cost("vim", "user.power")
+whirlwind.damage_formula = "user.base_damage * (2 + coin)"
 
 # blah blah
 
