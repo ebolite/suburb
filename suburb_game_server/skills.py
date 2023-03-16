@@ -687,9 +687,10 @@ def steal_effect_constructor(aspect: Aspect) -> Callable:
             else:
                 target.tags.append(f"stolen{aspect.name}")
             value = max(target.power//6, 1)
-            stolen_target = aspect.permanent_adjust(target, -value)
-            stolen = aspect.permanent_adjust(user, value, return_value=True)
-            return f"{user.nickname} stole {stolen} {aspect.name.upper()} from {target.nickname}!"
+            value *= 4
+            stolen_target = aspect.permanent_adjust(target, -value, return_value=True)
+            stolen = aspect.permanent_adjust(user, value//4, return_value=True)
+            return f"{user.nickname} stole {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
         return steal_effect
 
 for aspect_name, aspect in aspects.items():
@@ -717,7 +718,7 @@ for aspect_name, aspect in aspects.items():
 
     # thief
     aspectsteal = ClassSkill(f"{aspect.name}-steal", aspect, "thief", 25)
-    aspectsteal.description = f"Permanently steals {aspect.name.upper()} from the target based on their POWER and gives it to the user. Can be used once per target."
+    aspectsteal.description = f"Permanently steals {aspect.name.upper()} from the target based on their POWER and gives 1/4 of it to the user. Can be used once per target."
     aspectsteal.parryable = False
     aspectsteal.add_vial_cost("vim", "user.power//2")
     aspectsteal.add_vial_cost("aspect", "user.power")
