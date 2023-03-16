@@ -230,6 +230,7 @@ class Skill():
         if self.additional_skill is not None: out["additional_skill"] = skills[self.additional_skill].get_dict(griefer)
         out["costs"] = self.get_costs(griefer)
         out["valid_targets"] = self.get_valid_targets(griefer)
+        out["special_effect"] = ""
         return out
 
 aggrieve = Skill("aggrieve")
