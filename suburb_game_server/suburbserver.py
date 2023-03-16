@@ -146,9 +146,9 @@ def handle_request(dict):
         case "strife_data":
             if player.strife is None: 
                 if player.room.strife is not None:
-                    player.room.strife.add_griefer(player)
-                    if player.strife is None: return json.dumps({})
-                    else: json.dumps(player.strife.get_dict())
+                    griefer = player.room.strife.add_griefer(player)
+                    if griefer is None: return json.dumps({})
+                    else: return json.dumps(player.room.strife.get_dict())
                 else: return json.dumps({})
             else: return json.dumps(player.strife.get_dict())
         # todo: this is not optional

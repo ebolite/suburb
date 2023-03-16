@@ -328,8 +328,9 @@ class Griefer():
                 player_griefer.player.add_unclaimed_grist(spoils_dict)
                 rungs_to_gain = 1 + round((self.power / player_griefer.player.power) * (1 + random.random()/2))
                 player_griefer.player.unclaimed_rungs += rungs_to_gain
-        else:
+        elif self.player is not None:
             self.strife.log(f"{self.nickname}: DEAD.")
+            self.strife.dead_players.append(self.player.name)
         self.strife.remove_griefer(self)
 
     def get_skill_cooldown(self, skill_name) -> int:
@@ -383,7 +384,8 @@ class Griefer():
             self.submit_skill(random_skill_name, [target.name for target in targets])
 
     @classmethod
-    def from_player(cls, strife: "Strife", player: "sessions.Player") -> "Griefer":
+    def from_player(cls, strife: "Strife", player: "sessions.Player") -> Optional["Griefer"]:
+        if player.name in strife.dead_players: return None
         griefer = cls(player.name, strife)
         griefer.player_name = player.name
         griefer.type = "player"
@@ -642,6 +644,7 @@ class Strife():
             self.griefers = {}
             self.turn_num: int = 0
             self.strife_log = ["STRIFE BEGIN!"]
+            self.dead_players = []
 
     def add_griefer(self, identifier: Union["sessions.Player", "npcs.Npc"]):
         if isinstance(identifier, sessions.Player):
