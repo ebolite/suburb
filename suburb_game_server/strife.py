@@ -232,6 +232,7 @@ class Griefer():
             vial.new_turn(self) 
         for state in self.states_list.copy():
             state.new_turn(self)
+            if state.passive: continue
             self.add_state_duration(state.name, -1)
             if self.get_state_duration(state.name) <= 0:
                 self.remove_state(state.name)
@@ -352,6 +353,8 @@ class Griefer():
         griefer.add_vial("aspect")
         griefer.add_vial(player.secondaryvial)
         griefer.initialize_vials()
+        for passive_name in player.get_current_passives():
+            griefer.apply_state(passive_name, griefer, 1.0, 99)
         return griefer
     
     @classmethod
@@ -485,6 +488,7 @@ class Griefer():
                 "potency": self.get_state_potency(state_name),
                 "duration": self.get_state_duration(state_name),
                 "tooltip": stateseffects.states[state_name].tooltip,
+                "passive": stateseffects.states[state_name].passive,
             }
         return out
 

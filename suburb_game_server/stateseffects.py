@@ -2,12 +2,14 @@ import strife
 import skills
 
 states: dict[str, "State"] = {}
+class_passives: dict[str, dict[str, dict[str, int]]] = {}
 
 class State():
     def __init__(self, name):
         states[name] = self
         self.name = name
         self.beneficial = False
+        self.passive = False
         self.tooltip = ""
 
     def potency(self, griefer: "strife.Griefer") -> float:
@@ -27,6 +29,8 @@ class State():
     
     def new_turn(self, griefer: "strife.Griefer"):
         pass
+
+# aspect states
 
 class PursuitState(State):
     def __init__(self, name, aspect: "skills.Aspect"):
@@ -72,3 +76,23 @@ class AiryState(State):
 airy = AiryState("airy")
 airy.tooltip = "Increases AUTO-PARRY chance."
 
+class ClassPassive(State):
+    def __init__(self, name, aspect: "skills.Aspect", class_name: str, required_rung: int):
+        if class_name not in class_passives: class_passives[class_name] = {}
+        if aspect.name not in class_passives[class_name]: class_passives[class_name][aspect.name] = {}
+        class_passives[class_name][aspect.name][name] = required_rung
+        super().__init__(name)
+        self.passive = True
+        self.aspect = aspect
+
+class AspectyState(ClassPassive):
+    def __init__(self, name, aspect: "skills.Aspect", required_rung: int):
+        super().__init__(name, aspect, "heir", required_rung)
+
+    def new_turn(self, griefer: "strife.Griefer"):
+        adjust_reply = self.aspect.adjust(griefer, griefer.power//6)
+        griefer.strife.log(adjust_reply)
+
+for _, aspect in skills.aspects.items():
+    aspectystate = AspectyState(f"{aspect.name}y", aspect, 25)
+    aspectystate.tooltip = f"{aspect.name.upper()} increases each turn."

@@ -1737,7 +1737,11 @@ class StateIcon(Image):
         if self.is_mouseover() and self.popup is None:
             x, y = pygame.mouse.get_pos()
             tooltip = self.griefer.get_state_tooltip(self.state_name)
-            popup_text = Text(0.5, 0.5, f"{self.state_name.upper()} ({self.griefer.get_state_potency(self.state_name):.1f}): {tooltip}")
+            if self.griefer.is_state_passive:
+                popup_text_content = f"{self.state_name.upper()} (P): {tooltip}"
+            else:
+                popup_text_content = f"{self.state_name.upper()} ({self.griefer.get_state_potency(self.state_name):.1f}): {tooltip}"
+            popup_text = Text(0.5, 0.5, popup_text_content)
             popup_text.fontsize = 14
             popup_text.color = self.theme.dark
             self.popup = SolidColor(x, y, popup_text.get_width()+self.tooltip_padding*2, popup_text.fontsize+self.tooltip_padding*2, self.theme.white)
@@ -1824,11 +1828,12 @@ class GrieferElement(UIElement):
             new_state_icon = StateIcon(x, y, self.griefer, state_name)
             new_state_icon.absolute = absolute
             new_state_icon.bind_to(binding)
-            duration_label = Text(0.5, 1.5, "")
-            duration_label.text_func = self.get_duration_label_func(state_name)
-            duration_label.color = self.theme.dark
-            duration_label.fontsize = 14
-            duration_label.bind_to(new_state_icon)
+            if not self.griefer.is_state_passive(state_name):
+                duration_label = Text(0.5, 1.5, "")
+                duration_label.text_func = self.get_duration_label_func(state_name)
+                duration_label.color = self.theme.dark
+                duration_label.fontsize = 14
+                duration_label.bind_to(new_state_icon)
             self.state_icons.append(new_state_icon)
         first_element = self.state_icons[0]
         first_element.rect_y_offset = 60

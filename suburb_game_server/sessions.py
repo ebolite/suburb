@@ -14,6 +14,7 @@ import binaryoperations
 import npcs
 import strife
 import skills
+import stateseffects
 from strife import Strife
 
 
@@ -859,6 +860,14 @@ class Player():
                 for skill_name, required_rung in skills.class_skills[self.gameclass][self.aspect].items():
                     if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
         return known_skills
+    
+    def get_current_passives(self):
+        current_passives = []
+        if self.gameclass in stateseffects.class_passives:
+            if self.aspect in stateseffects.class_passives[self.gameclass]:
+                for passive_name, required_rung in stateseffects.class_passives[self.gameclass][self.aspect].items():
+                    if self.echeladder_rung >= required_rung: current_passives.append(passive_name)
+        return current_passives
 
     @property
     def session(self) -> Session:

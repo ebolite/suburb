@@ -58,6 +58,9 @@ class Griefer():
             return self.states[state_name]["tooltip"]
         except KeyError:
             return ""
+        
+    def is_state_passive(self, state_name) -> bool:
+        return self.states[state_name]["passive"]
     
     def can_pay_costs(self, costs: dict[str, int]) -> bool:
         for vial_name in costs:

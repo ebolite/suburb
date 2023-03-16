@@ -674,7 +674,7 @@ strike_between.damage_formula = "user.base_power * user.void.ratio * 4 * (1 + 0.
 class ClassSkill(Skill):
     def __init__(self, name: str, aspect: Aspect, class_name: str, required_rung: int):
         if class_name not in class_skills: class_skills[class_name] = {}
-        if aspect_name not in class_skills[class_name]: class_skills[class_name][aspect_name] = {}
+        if aspect.name not in class_skills[class_name]: class_skills[class_name][aspect.name] = {}
         class_skills[class_name][aspect.name][name] = required_rung
         super().__init__(name)
         self.category = "accolades"
@@ -768,4 +768,3 @@ for aspect_name, aspect in aspects.items():
     aspectpiece.add_vial_cost("aspect", "user.power//2")
     aspectpiece.add_aspect_change(aspect.name, f"user.power*2")
     aspectpiece.parryable = False
-    
