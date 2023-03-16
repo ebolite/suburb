@@ -38,6 +38,9 @@ class State():
 
     def potency(self, griefer: "Griefer") -> float:
         return griefer.get_state_potency(self.name)
+    
+    def applier_stats(self, griefer: "Griefer") -> dict:
+        return griefer.get_applier_stats(self.name)
 
     def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
         return damage
@@ -440,6 +443,9 @@ class Griefer():
     
     def get_state_duration(self, state_name: str) -> int:
         return self.states[state_name]["duration"]
+    
+    def get_applier_stats(self, state_name: str) -> dict:
+        return self.states[state_name]["applier_stats"]
     
     def add_state_duration(self, state_name: str, duration: int):
         self.states[state_name]["duration"] += duration

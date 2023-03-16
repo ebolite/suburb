@@ -679,16 +679,27 @@ class ClassSkill(Skill):
         self.use_message = f">{{user}}: {name.capitalize()}."
 
 def steal_effect_constructor(aspect: Aspect) -> Callable:
-    def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
-        if f"stolen{aspect.name}" in target.tags:
-            return f"{target.nickname} already had {aspect.name.upper()} stolen!"
-        else:
-            target.tags.append(f"stolen{aspect.name}")
-        value = target.power//18
-        aspect.permanent_adjust(target, -value)
-        aspect.permanent_adjust(user, value)
-        return f"{user.nickname} stole {value} {aspect.name.upper()} from {target.nickname}!"
-    return steal_effect
+        def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
+            if f"stolen{aspect.name}" in target.tags:
+                return f"{target.nickname} already had {aspect.name.upper()} stolen!"
+            else:
+                target.tags.append(f"stolen{aspect.name}")
+            value = target.power//18
+            aspect.permanent_adjust(target, -value)
+            aspect.permanent_adjust(user, value)
+            return f"{user.nickname} stole {value} {aspect.name.upper()} from {target.nickname}!"
+        return steal_effect
+
+class PursuitState(strife.State):
+    def __init__(self, name, aspect: Aspect):
+        super().__init__(name)
+        self.aspect = aspect
+
+    def new_turn(self, griefer: "strife.Griefer"):
+        bonus = self.potency(griefer) * self.applier_stats(griefer)["power"] / 2
+        bonus = int(bonus)
+        logmessage = self.aspect.adjust(griefer, bonus)
+        griefer.strife.log(logmessage)
 
 for aspect_name, aspect in aspects.items():
     # knight
@@ -714,4 +725,12 @@ for aspect_name, aspect in aspects.items():
     aspectsteal.add_vial_cost("aspect", "user.power")
     aspectsteal.cooldown = 2
     aspectsteal.special_effect = steal_effect_constructor(aspect)
-    
+
+    # mage
+    aspectpursuitstate = PursuitState(f"pursuit of {aspect.name}", aspect)
+    findaspect = ClassSkill(f"find {aspect}", aspect, "mage", 25)
+    findaspect.description = f"Applies a state for 5 turns which increases the target's {aspect.name.upper()} each turn."
+    findaspect.add_vial_cost("aspect", "user.power//2")
+    findaspect.cooldown = 1
+    findaspect.action_cost = 0
+    findaspect.add_apply_state(f"pursuit of {aspect.name}", 5, "1.0")
