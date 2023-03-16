@@ -80,9 +80,10 @@ class Skill():
         self.cooldown = 0
         self.damage_formula = "0"
         self.apply_states = {}
-        self.vial_change_formulas = {}
         self.need_damage_to_apply_states = True
+        self.vial_change_formulas = {}
         self.vial_cost_formulas = {}
+        self.aspect_change_formulas = {}
         self.use_message = ""
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
@@ -101,6 +102,10 @@ class Skill():
             "duration": duration,
             "potency": potency,
         }
+
+    def add_aspect_change(self, aspect_name: str, formula: str):
+        assert aspect_name in aspects
+        self.aspect_change_formulas[aspect_name] = formula
 
     def get_costs(self, user: "strife.Griefer") -> dict[str, int]:
         true_costs = {}
@@ -185,6 +190,13 @@ class Skill():
                 change = target.change_vial(vial_name, int(eval(vial_formula)))
                 if change > 0: user.strife.log(f"{user.nickname}'s {vial_name.upper()} increased by {change}!")
                 elif change < 0: user.strife.log(f"{user.nickname}'s {vial_name.upper()} decreased by {-change}!")
+        
+        #aspect change step
+        for aspect_name in self.aspect_change_formulas:
+            aspect_formula = self.aspect_change_formulas[aspect_name]
+            aspect_formula = self.format_formula(aspect_formula, user, target)
+            aspect = aspects[aspect_name]
+            aspect.adjust(target, int(eval(aspect_formula)))
 
     def is_usable_by(self, griefer: "strife.Griefer"):
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
