@@ -248,6 +248,9 @@ def handle_request(dict):
                 chains.append(chain)
                 for username in chain: chained.append(username)
             return json.dumps({"chains": chains, "no_server": no_server, "server_client": server_client, "player_names": player_names})
+        case "strife_info":
+            if player.strife is None: return json.dumps({})
+            else: return json.dumps(player.strife.get_dict())
         case "submit_strife_action":
             skill_name = content["skill_name"]
             targets = content["targets"]
@@ -269,6 +272,10 @@ def handle_request(dict):
             player.strife.ready_check()
             if player.strife is None: return json.dumps({})
             else: return json.dumps(player.strife.get_dict())
+        case "strife_unready":
+            if player.strife is None: return json.dumps({})
+            player.strife.get_griefer(player.name).ready = False
+            return json.dumps(player.strife.get_dict())
         case "collect_spoils":
             unclaimed_grist = player.unclaimed_grist.copy()
             unclaimed_rungs = player.unclaimed_rungs

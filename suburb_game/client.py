@@ -56,6 +56,7 @@ def requestdic(intent) -> dict:
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
     reply = receive_data()
+    print(reply)
     return json.loads(reply)
 
 #request, but with additional content sent to the server

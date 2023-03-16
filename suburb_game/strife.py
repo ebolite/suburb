@@ -3,6 +3,7 @@ import pygame
 import math
 import numpy as np
 import random
+import time
 
 import client
 import render
@@ -127,6 +128,10 @@ class Griefer():
         return [Skill(skill_name, self.known_skills[skill_name]) for skill_name in self.known_skills]
 
     @property
+    def ready(self) -> bool:
+        return self.griefer_dict["ready"]
+
+    @property
     def skill_categories(self) -> dict[str, list[Skill]]:
         categories: dict[str, list[Skill]] = {"none": []}
         for skill in self.known_skills_list:
@@ -190,6 +195,7 @@ class Strife():
         self.hovered_skill_name: Optional[str] = None
         self.theme = suburb.current_theme()
         self.layer_2_buttons: list[render.UIElement] = []
+        self.last_update = time.time()
         render.ui_elements.append(self)
 
     def update_strife_dict(self, strife_dict):
@@ -349,8 +355,12 @@ class Strife():
         def revert_button_func():
             reply = client.requestdic(intent="unsubmit_skill")
             self.update_strife_dict(reply)
+        def button_condition():
+            return not self.player_griefer.ready
         revert_button = render.TextButton(0.85, 0.2, 196, 32, ">REVERT", revert_button_func)
+        revert_button.draw_condition = button_condition
         submit_button = render.TextButton(0.85, 0.25, 196, 32, ">SUBMIT", submit_button_func)
+        submit_button.draw_condition = button_condition
         self.strife_log_window = render.LogWindow(None, None, lines_to_display=5, log_list=self.strife_log)
         self.submitted_skills_window = render.LogWindow(None, None, lines_to_display=4, x=1080, width=300, log_list=[])
         self.submitted_skills_window.background_color = self.theme.dark
@@ -360,7 +370,8 @@ class Strife():
         self.remaining_skills_text.color = self.theme.dark
         self.remaining_skills_text.fontsize = 28
         def currently_selected_text_func():
-            if self.selected_skill is None: return ""
+            if self.player_griefer.ready: return "Waiting for others..."
+            elif self.selected_skill is None: return ""
             else: return f"{self.selected_skill.name.upper()}? (target {self.selected_skill.num_targets - len(self.selected_targets)})"
         self.selected_skill_text = render.Text(0.5, 0.19, "")
         self.selected_skill_text.text_func = currently_selected_text_func
@@ -405,6 +416,10 @@ class Strife():
             self.layer_2_buttons.remove(button)
 
     def update(self):
+        if time.time() - self.last_update > 1:
+            reply = client.requestdic(intent="strife_info")
+            self.update_strife_dict(reply)
+            self.last_update = time.time()
         if self.strife_log_window.log_list != self.strife_log:
             self.strife_log_window.log_list = self.strife_log
             self.strife_log_window.update_logs()
