@@ -272,6 +272,7 @@ class Griefer():
                     self.add_vial(vial_name)
 
     def new_turn(self):
+        self.ready = False
         if self.should_be_dead(): 
             self.die()
             return
