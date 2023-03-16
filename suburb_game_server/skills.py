@@ -456,7 +456,7 @@ class AspectSkill(Skill):
         super().__init__(skill_name)
         aspect_skills[aspect.name][skill_name] = rung_required
         self.category = "aspected"
-        self.use_message = f"{{user}}: {skill_name.capitalize()}."
+        self.use_message = f">{{user}}: {skill_name.capitalize()}."
 
 # time
 
