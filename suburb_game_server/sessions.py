@@ -851,6 +851,13 @@ class Player():
     
     def get_known_skills(self):
         known_skills = skills.base_skills + skills.player_skills
+        if self.aspect in skills.aspect_skills:
+            for skill_name, required_rung in skills.aspect_skills[self.aspect].items():
+                if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
+        if self.gameclass in skills.class_skills:
+            if self.aspect in skills.class_skills[self.gameclass]:
+                for skill_name, required_rung in skills.class_skills[self.gameclass][self.aspect].items():
+                    if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
         return known_skills
 
     @property
