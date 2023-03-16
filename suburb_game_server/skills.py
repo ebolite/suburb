@@ -422,7 +422,7 @@ hope.adjustment_divisor = 0.5
 rage = Aspect("rage")
 rage.is_vial = True
 rage.vials = ["rage"]
-rage.adjustment_divisor
+rage.adjustment_divisor = 0.5
 
 breath = Aspect("breath")
 breath.stat_name = "savvy"
