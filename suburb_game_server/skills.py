@@ -9,6 +9,42 @@ aspects: dict["str", "Aspect"] = {}
 skills: dict["str", "Skill"] = {}
 base_skills: list[str] = [] # everyone has these
 player_skills: list[str] = [] # only players get these
+aspect_skills: dict[str, dict[str, int]] = {}
+# aspect_skills looks like this
+# aspect_skills = {
+#     "time": {
+#         "tick": 10,
+#         "tock": 50,
+#     },
+#     "space": {
+#         "expand": 10,
+#         "big bang": 250,
+#     }
+# }
+class_skills: dict[str, dict[str, dict[str, int]]] = {}
+# class_skills looks like this
+# class_skills = {
+#     "knight": {
+#         "time": {
+#             "timeblade": 20, # where the int is the echeladder rung needed to access the skill
+#             "timebreak": 100,
+#         },
+#         "space": {
+#             "spaceblade": 20,
+#             "spacebreak": 100,
+#         }
+#     },
+#     "seer": {
+#         "time": {
+#             "timesight": 15,
+#             "timemap": 50,
+#         },
+#         "space": {
+#             "spacesight": 15,
+#             "spacemap": 50,
+#         },
+#     },
+# }
 
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 
@@ -42,7 +78,7 @@ class Skill():
         self.action_cost = 1
         self.num_targets = 1
         self.cooldown = 0
-        self.damage_formula = ""
+        self.damage_formula = "0"
         self.apply_states = {}
         self.vial_change_formulas = {}
         self.need_damage_to_apply_states = True
@@ -369,3 +405,39 @@ void = NegativeAspect("void")
 void.is_vial = True
 void.vials = ["vim", "aspect", "hope", "rage"] + SECONDARY_VIALS
 void.adjustment_divisor = 0.5
+
+
+# aspect skills
+for aspect_name in aspects:
+    aspect_skills[aspect_name] = {}
+
+class AspectSkill(Skill):
+    def __init__(self, skill_name: str, aspect: Aspect, rung_required: int):
+        super().__init__(skill_name)
+        aspect_skills[aspect.name][skill_name] = rung_required
+        self.category = "aspected"
+
+# time
+
+tick = AspectSkill("tick", time, 10)
+tick.use_message = "{user}: Tick."
+tick.description = "Perform an additional action this turn."
+tick.beneficial = True
+tick.action_cost = -1
+tick.cooldown = 3
+tick.vial_cost_formulas = {
+    "aspect": "user.power"
+}
+tick.target_self = True
+
+tock = AspectSkill("tock", time, 50)
+tock.description = "Deals damage, and uses no actions."
+tock.use_message = "{user}: Tock."
+tock.action_cost = 0
+tock.cooldown = 2
+tock.vial_cost_formulas = {
+    "aspect": "user.power"
+}
+tock.damage_formula = "user.base_damage * (1 + 0.5*coin)"
+
+# class skills
