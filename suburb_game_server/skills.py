@@ -193,7 +193,8 @@ class Skill():
             aspect_formula = self.aspect_change_formulas[aspect_name]
             aspect_formula = self.format_formula(aspect_formula, user, target)
             aspect = aspects[aspect_name]
-            aspect.adjust(target, int(eval(aspect_formula)))
+            log_message = aspect.adjust(target, int(eval(aspect_formula)))
+            user.strife.log(log_message)
 
         # special effect step
         if self.special_effect is not None:
@@ -281,7 +282,7 @@ base_skills.append("abuse")
 class Aspect():
     def __init__(self, name):
         aspects[name] = self
-        self.name = name
+        self.name: str = name
         self.stat_name: str = "placeholder"
         self.vials = []
         self.is_vial = False
@@ -341,6 +342,7 @@ class Aspect():
             for vial_name in old_vials:
                 if old_vials[vial_name] != new_vials[vial_name]:
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
+        return f"{target.name}'s {self.name.upper()} changed by {value}!"
 
     def permanent_adjust(self, target: "strife.Griefer", value: int):
         value = int(value*self.balance_mult)
@@ -357,6 +359,7 @@ class Aspect():
             for vial_name in old_vials:
                 if old_vials[vial_name] != new_vials[vial_name]:
                     target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
+        return f"{target.name}'s {self.name.upper()} changed PERMANENTLY by {value}!"
 
 class NegativeAspect(Aspect):
     def ratio(self, target: "strife.Griefer", raw=False) -> float:
