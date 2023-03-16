@@ -54,7 +54,10 @@ class Griefer():
         return self.states[state_name]["potency"]
     
     def get_state_tooltip(self, state_name) -> str:
-        return self.states[state_name]["tooltip"]
+        try:
+            return self.states[state_name]["tooltip"]
+        except KeyError:
+            return ""
     
     def can_pay_costs(self, costs: dict[str, int]) -> bool:
         for vial_name in costs:
