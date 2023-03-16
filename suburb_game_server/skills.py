@@ -299,7 +299,13 @@ class Aspect():
         if not self.is_vial:
             stat_ratio = target.get_stat(self.stat_name) / target.get_stat("power")
         else:
-            stat_ratio = target.get_vial(self.stat_name) / target.get_vial_maximum(self.stat_name)
+            ratios = 0
+            present_vials = []
+            for vial_name in self.vials:
+                if vial_name not in target.vials: continue
+                ratios += target.get_vial(vial_name) / target.get_vial_maximum(vial_name)
+                present_vials.append(vial_name)
+            stat_ratio = ratios / len(present_vials)         
         if not raw:
             stat_ratio *= self.balance_mult
             stat_ratio *= self.ratio_mult
@@ -415,6 +421,7 @@ light.balance_mult = 1.3
 void = NegativeAspect("void")
 void.is_vial = True
 void.vials = ["vim", "aspect", "hope", "rage"] + SECONDARY_VIALS
+void.ratio_mult = 2
 void.adjustment_divisor = 0.5
 
 
