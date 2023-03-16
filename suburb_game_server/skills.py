@@ -95,10 +95,10 @@ class Skill():
     def add_vial_change(self, vial_name: str, formula: str):
         self.vial_change_formulas[vial_name] = formula
 
-    def add_apply_state(self, state_name: str, duration: int, potency: float):
+    def add_apply_state(self, state_name: str, duration: int, potency_formula: str):
         self.apply_states[state_name] = {
             "duration": duration,
-            "potency": potency,
+            "potency_formula": potency_formula,
         }
 
     def add_aspect_change(self, aspect_name: str, formula: str):
@@ -162,6 +162,7 @@ class Skill():
             # higher target savvy = lower roll = more likely to parry
             edge = stat_edge(target.get_stat("savvy"), user.get_stat("savvy")) - 1
             for vial in target.vials_list: edge += vial.parry_roll_modifier(target) - 1
+            for state in target.states_list: edge += state.parry_roll_modifier(target) - 1
             edge += (stat_edge(target.get_stat("luck"), user.get_stat("luck"))/4) - 0.25
             if edge >= 0:
                 roll = random.uniform(0-edge, 1)
@@ -175,7 +176,9 @@ class Skill():
         if damage != 0: target.take_damage(damage, coin=coin)
         if damage != 0 or not self.need_damage_to_apply_states:
             for state_name in self.apply_states:
-                potency = self.apply_states[state_name]["potency"]
+                potency_formula = self.apply_states[state_name]["potency_formula"]
+                potency_formula = self.format_formula(potency_formula, user, target)
+                potency = float(eval(potency_formula))
                 duration = self.apply_states[state_name]["duration"]
                 target.apply_state(state_name, user, potency, duration)
 
@@ -254,7 +257,7 @@ abjure.target_self = True
 abjure.damage_formula = "0"
 abjure.cooldown = 2
 abjure.category = "abstinent"
-abjure.add_apply_state("abjure", 2, 1.0)
+abjure.add_apply_state("abjure", 2, "1.0")
 abjure.need_damage_to_apply_states = False
 abjure.add_vial_cost("vim", "user.power//2")
 base_skills.append("abjure")
@@ -274,7 +277,7 @@ abuse = Skill("abuse")
 abuse.description = "The user ABUSES the enemy, causing them to become DEMORALIZED and lowering their damage output."
 abuse.use_message = "{user} abuses!"
 abuse.damage_formula = "user.base_damage * (0.5 + 1.5*coin)"
-abuse.add_apply_state("demoralize", 3, 1.0)
+abuse.add_apply_state("demoralize", 3, "1.0")
 abuse.add_vial_cost("vim", "user.power")
 abuse.category = "abusive"
 base_skills.append("abuse")
@@ -523,8 +526,35 @@ vigil = AspectSkill("vigil", hope, 50)
 vigil.description = "Deals damage based on your HOPE and lowers the target's HOPE."
 vigil.cooldown = 2
 vigil.add_vial_cost("aspect", "user.power*1.5")
+vigil.add_vial_cost("vim", "user.power//2")
 vigil.add_aspect_change("hope", "-user.power")
 vigil.damage_formula = "user.base_damage * user.hope.ratio * (7 + 3*coin)"
+
+#rage
+seethe = AspectSkill("seethe", rage, 10)
+seethe.description = "Increases the target's RAGE, which increases both damage dealt and taken."
+seethe.parryable = False
+seethe.action_cost = 0
+seethe.cooldown = 1
+seethe.add_vial_cost("aspect", "user.power")
+seethe.add_aspect_change("rage", "user.power")
+
+subjugate = AspectSkill("subjugate", rage, 50)
+subjugate.description = "Deals a lot of fucking damage."
+subjugate.cooldown = 3
+subjugate.add_vial_cost("aspect", "user.power")
+subjugate.add_vial_cost("vim", "user.power")
+subjugate.damage_formula = "user.base_damage * (4 + 3*coin)"
+
+# breath
+aerate = AspectSkill("aerate", breath, 10)
+aerate.description = "Applies AIRY based on your BREATH (savvy) for 3 turns, which increases AUTO-PARRY chance."
+aerate.cooldown = 1
+aerate.action_cost = 0
+aerate.beneficial = True
+aerate.parryable = False
+aerate.add_vial_cost("aspect", "user.power//1.5")
+aerate.add_apply_state("airy", 3, "user.breath.ratio")
 
 # blah blah
 

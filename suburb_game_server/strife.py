@@ -45,6 +45,9 @@ class State():
     def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
         return damage
     
+    def parry_roll_modifier(self, griefer: "Griefer") -> float:
+        return 1.0
+    
     def new_turn(self, griefer: "Griefer"):
         pass
 
@@ -68,6 +71,14 @@ class DemoralizeState(State):
     
 demoralize = DemoralizeState("demoralize")
 demoralize.tooltip = "Reduces damage dealt."
+
+class AiryState(State):
+    def parry_roll_modifier(self, griefer: "Griefer") -> float:
+        reduction = 0.4 * self.potency(griefer)
+        return 1 - reduction
+    
+airy = AiryState("airy")
+airy.tooltip = "Increases AUTO-PARRY chance."
 
 class Vial():
     def __init__(self, name):
