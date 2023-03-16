@@ -41,6 +41,7 @@ key_check = []
 mouseup_check = []
 update_check = []
 always_on_top_check = []
+always_on_bottom_check = []
 keypress_update_check = []
 scroll_check = []
 move_to_top = []
@@ -138,10 +139,12 @@ class UIElement(pygame.sprite.Sprite):
             element.delete()
 
     def bring_to_top(self):
-        move_to_top.append(self)
+        if self not in move_to_top:
+            move_to_top.append(self)
 
     def send_to_bottom(self):
-        move_to_bottom.append(self)
+        if self not in move_to_bottom:
+            move_to_bottom.append(self)
 
     def convert_to_theme(self, surf: Union[pygame.Surface, pygame.surface.Surface], theme: Optional["themes.Theme"]=None) -> pygame.Surface:
         if theme is not None: new_theme = theme
@@ -1737,12 +1740,16 @@ class GrieferElement(UIElement):
             self.griefer.strife.click_griefer(self.griefer)
 
     def update_vials(self):
+        made_new_vial = False
         for vial_name in reversed(self.griefer.vials):
             if vial_name in self.vials: continue
             hidden = config.vials[vial_name]["hidden"]
             if hidden and self.griefer.get_vial(vial_name) == self.griefer.get_starting_vial(vial_name): continue
             else:
                 self.add_vial(vial_name)
+            made_new_vial = True
+        if made_new_vial: 
+            self.send_to_bottom()
 
     def add_vial(self, vial_type):
         if vial_type not in self.vials:
@@ -1936,6 +1943,9 @@ def render():
 
     screen.fill(suburb.current_theme().light)
     keys = pygame.key.get_pressed()
+
+    for sprite in always_on_bottom_check:
+        sprite.update()
 
     for sprite in update_check:
         sprite.update()

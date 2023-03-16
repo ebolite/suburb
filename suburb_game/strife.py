@@ -232,8 +232,9 @@ class Strife():
             sprite = self.make_griefer_sprite(griefer)
             if griefer.team == "blue": blue_sprites.append(sprite)
             else: red_sprites.append(sprite)
+            sprite.send_to_bottom()
         self.reposition_sprites(red_sprites, "right")
-        self.reposition_sprites(blue_sprites, "left")   
+        self.reposition_sprites(blue_sprites, "left")
 
     def reposition_sprites(self, sprites_list: list[Union["render.Enemy", "render.PlayerGriefer"]], direction: str):
         sprites_xy = []
@@ -335,6 +336,8 @@ class Strife():
         self.canvas = render.SolidColor(0.5, 0.5, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, self.theme.light)
         self.canvas.right_click_pan = True
         self.canvas.absolute = True
+        render.update_check.remove(self.canvas)
+        render.always_on_bottom_check.append(self.canvas)
         self.make_griefer_sprites()
         top_bar = render.SolidColor(0, -bar_br, render.SCREEN_WIDTH, 120+bar_br, self.theme.light)
         top_bar.outline_color = self.theme.dark
