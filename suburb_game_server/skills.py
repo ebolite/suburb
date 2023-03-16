@@ -705,7 +705,7 @@ for aspect_name, aspect in aspects.items():
     aspectloss = ClassSkill(f"{aspect.name}loss", aspect, "prince", 25)
     aspectloss.description = f"Sharpy lowers the target's {aspect.name.upper()}."
     aspectloss.add_vial_cost("aspect", "user.power//2")
-    aspectloss.add_aspect_change(aspect.name, f"-user.power*1.5")
+    aspectloss.add_aspect_change(aspect.name, f"-user.power*2")
     aspectloss.parryable = False
 
     aspectblast = ClassSkill(f"{aspect.name}blast", aspect, "prince", 100)
@@ -761,4 +761,11 @@ for aspect_name, aspect in aspects.items():
     aspectplay.action_cost = 0
     aspectplay.user_skill = f"user_{aspect.name}play"
     aspectplay.add_aspect_change(aspect.name, f"user.power//1.5")
+
+    # maid
+    aspectpiece = ClassSkill(f"{aspect.name}piece", aspect, "maid", 25)
+    aspectpiece.description = f"Sharply increases the {aspect.name.upper()} of the target."
+    aspectpiece.add_vial_cost("aspect", "user.power//2")
+    aspectpiece.add_aspect_change(aspect.name, f"user.power*2")
+    aspectpiece.parryable = False
     
