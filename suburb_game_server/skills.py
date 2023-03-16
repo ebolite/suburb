@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union, Callable
 from copy import deepcopy
 
 import strife
@@ -87,6 +87,7 @@ class Skill():
         self.use_message = ""
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
+        self.special_effect: Optional[Callable[[strife.Griefer, strife.Griefer], Optional[str]]]
 
     def add_vial_cost(self, vial_name: str, formula: str):
         assert vial_name in strife.vials
@@ -197,6 +198,11 @@ class Skill():
             aspect_formula = self.format_formula(aspect_formula, user, target)
             aspect = aspects[aspect_name]
             aspect.adjust(target, int(eval(aspect_formula)))
+
+        # special effect step
+        if self.special_effect is not None:
+            effect_log = self.special_effect(user, target)
+            if effect_log is not None: user.strife.log(effect_log)
 
     def is_usable_by(self, griefer: "strife.Griefer"):
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
@@ -425,11 +431,11 @@ class AspectSkill(Skill):
         super().__init__(skill_name)
         aspect_skills[aspect.name][skill_name] = rung_required
         self.category = "aspected"
+        self.use_message = f"{{user}}: {skill_name.capitalize()}."
 
 # time
 
 tick = AspectSkill("tick", time, 10)
-tick.use_message = "{user}: Tick."
 tick.description = "Perform an additional action this turn."
 tick.beneficial = True
 tick.parryable = False
@@ -440,10 +446,35 @@ tick.target_self = True
 
 tock = AspectSkill("tock", time, 50)
 tock.description = "Deals damage, and uses no actions."
-tock.use_message = "{user}: Tock."
 tock.action_cost = 0
 tock.cooldown = 2
 tock.add_vial_cost("aspect", "user.power//2")
 tock.damage_formula = "user.base_damage * (1 + 0.5*coin)"
+
+# blah blah
+
+#life
+heal = AspectSkill("heal", life, 5)
+heal.description = "Restores health to the target."
+heal.beneficial = True
+heal.parryable = False
+heal.action_cost = 0
+heal.cooldown = 1
+heal.add_vial_cost("aspect", "user.power//3")
+
+cure = AspectSkill("cure", life, 50)
+cure.description = "Removes a negative state from the target."
+cure.beneficial = True
+cure.parryable = False
+cure.action_cost = 0
+cure.cooldown = 1
+cure.add_vial_cost("aspect", "user.power//3")
+def cure_func(user: "strife.Griefer", target: "strife.Griefer"):
+    possible_states = [state for state in target.states_list if not state.beneficial]
+    if len(possible_states) == 0: return
+    cured_state = random.choice(possible_states)
+    target.remove_state(cured_state.name)
+    return f"{target.name} was cured of {cured_state.name}!"
+cure.special_effect = cure_func
 
 # class skills
