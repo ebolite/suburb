@@ -483,16 +483,48 @@ reassess.description = "Recover HP, ASPECT and VIM equal to 3x your MIND (tact).
 reassess.target_self = True
 reassess.beneficial = True
 reassess.parryable = False
-reassess.add_vial_cost("vim", "-user.tact*3")
-reassess.add_vial_cost("aspect", "-user.tact*3")
-reassess.add_vial_change("hp", "user.tact*3")
+reassess.add_vial_cost("vim", "-user.tac*3")
+reassess.add_vial_cost("aspect", "-user.tac*3")
+reassess.add_vial_change("hp", "user.tac*3")
 reassess.action_cost = 0
 reassess.cooldown = 2
 
 tactics = AspectSkill("tactics", mind, 50)
 tactics.description = "Deals damage based on how much MIND (tact) you have. Unaffected by coin flips >:)."
 tactics.add_vial_cost("aspect", "user.power")
-tactics.damage_formula = "user.base_damage * user.mind.ratio * 9)"
+tactics.damage_formula = "user.base_damage * user.mind.ratio * 9"
+
+# heart
+invigorate = AspectSkill("invigorate", heart, 10)
+invigorate.description = "Increases the HEART (vigor) of the target."
+invigorate.beneficial = True
+invigorate.parryable = False
+invigorate.action_cost = 0
+invigorate.cooldown = 2
+invigorate.add_vial_cost("aspect", "user.power")
+invigorate.add_aspect_change("heart", "user.power")
+
+throb = AspectSkill("throb", heart, 50)
+throb.description = "Deals damage equal to the target's HEART (vigor)."
+throb.add_vial_cost("aspect", "user.power")
+throb.damage_formula = "target.vig * (1 + 1*coin)"
+
+# hope
+pray = AspectSkill("pray", hope, 10)
+pray.description = "Increases the target's HOPE, which gives a stat buff each turn."
+pray.beneficial = True
+pray.parryable = False
+pray.action_cost = 0
+pray.cooldown = 1
+pray.add_vial_cost("aspect", "user.power//2")
+pray.add_aspect_change("hope", "user.power//2")
+
+vigil = AspectSkill("vigil", hope, 50)
+vigil.description = "Deals damage based on your HOPE and lowers the target's HOPE."
+vigil.cooldown = 2
+vigil.add_vial_cost("aspect", "user.power*1.5")
+vigil.add_aspect_change("hope", "-user.power")
+vigil.damage_formula = "user.base_damage * user.hope.ratio * (7 + 3*coin)"
 
 # blah blah
 
