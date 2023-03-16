@@ -90,22 +90,18 @@ class Skill():
         self.special_effect: Optional[Callable[[strife.Griefer, strife.Griefer], Optional[str]]]
 
     def add_vial_cost(self, vial_name: str, formula: str):
-        assert vial_name in strife.vials
         self.vial_cost_formulas[vial_name] = formula
 
     def add_vial_change(self, vial_name: str, formula: str):
-        assert vial_name in strife.vials
         self.vial_change_formulas[vial_name] = formula
 
     def add_apply_state(self, state_name: str, duration: int, potency: float):
-        assert state_name in strife.states
         self.apply_states[state_name] = {
             "duration": duration,
             "potency": potency,
         }
 
     def add_aspect_change(self, aspect_name: str, formula: str):
-        assert aspect_name in aspects
         self.aspect_change_formulas[aspect_name] = formula
 
     def get_costs(self, user: "strife.Griefer") -> dict[str, int]:
