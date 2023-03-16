@@ -265,6 +265,7 @@ class Griefer():
             self.npc_name: Optional[str] = None
             self.vials: dict[str, dict] = {}
             self.states: dict[str, dict] = {}
+            self.tags = []
             # vials still need to be initialized
             for vial_name in vials:
                 vial = vials[vial_name]

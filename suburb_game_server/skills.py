@@ -48,7 +48,7 @@ class_skills: dict[str, dict[str, dict[str, int]]] = {}
 
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 
-SKILL_CATEGORIES = ["aggressive", "abstinent", "abusive", "aspected", "arsenal", "none"]
+SKILL_CATEGORIES = ["aggressive", "abstinent", "abusive", "aspected", "accolades", "arsenal", "none"]
 
 def modify_damage(damage: int, griefer: "strife.Griefer"):
     mettle = griefer.get_stat("mettle")
@@ -663,14 +663,55 @@ erase.add_vial_cost("aspect", "user.power//2")
 erase.add_aspect_change("void", "user.power")
 
 strike_between = AspectSkill("strike between", void, 50)
-strike_between.description = "Deals damage based on your VOID and drains the target's VOID."
+strike_between.description = "Deals damage based on your VOID and increases the target's VOID."
 strike_between.add_vial_cost("aspect", "user.power//2")
 strike_between.add_vial_cost("vim", "user.power//2")
 strike_between.add_aspect_change("void", "user.power")
 strike_between.damage_formula = "user.base_power * user.void.ratio * 4 * (1 + 0.5*coin)"
 
-# class skills
-def make_class_skill(skill_name: str, class_name: str, aspect_name: str, required_rung: int):
-    if class_name not in class_skills: class_skills[class_name] = {}
-    if aspect_name not in class_skills[class_name]: class_skills[class_name][aspect_name] = {}
-    class_skills[class_name][aspect_name][skill_name] = required_rung
+class ClassSkill(Skill):
+    def __init__(self, name: str, aspect: Aspect, class_name: str, required_rung: int):
+        if class_name not in class_skills: class_skills[class_name] = {}
+        if aspect_name not in class_skills[class_name]: class_skills[class_name][aspect_name] = {}
+        class_skills[class_name][aspect.name][name] = required_rung
+        super().__init__(name)
+        self.category = "accolades"
+        self.use_message = f">{{user}}: {name.capitalize()}."
+
+def steal_effect_constructor(aspect: Aspect) -> Callable:
+    def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
+        if f"stolen{aspect.name}" in target.tags:
+            return f"{target.nickname} already had {aspect.name.upper()} stolen!"
+        else:
+            target.tags.append(f"stolen{aspect.name}")
+        value = target.power//18
+        aspect.permanent_adjust(target, -value)
+        aspect.permanent_adjust(user, value)
+        return f"{user.nickname} stole {value} {aspect.name.upper()} from {target.nickname}!"
+    return steal_effect
+
+for aspect_name, aspect in aspects.items():
+    # knight
+    aspectblade = ClassSkill(f"{aspect.name}blade", aspect, "knight", 25)
+    aspectblade.description = f"Deals damage based on your {aspect.name.upper()}."
+    aspectblade.add_vial_cost("vim", "user.power//3")
+    aspectblade.add_vial_cost("aspect", "user.power//3")
+    aspectblade.damage_formula = f"user.base_power * user.{aspect.name}.ratio * 3 + (1 + 0.5*coin)"
+
+    # prince
+    aspectblast = ClassSkill(f"{aspect.name}blast", aspect, "prince", 25)
+    aspectblast.description = f"Deals damage based on your {aspect.name.upper()} and lowers the target's {aspect.name.upper()}"
+    aspectblast.add_vial_cost("vim", "user.power//2")
+    aspectblast.add_vial_cost("aspect", "user.power")
+    aspectblast.damage_formula = f"user.base_power * user.{aspect.name}.ratio * 4 + (1 + coin)"
+    aspectblast.cooldown = 2
+    aspectblast.add_aspect_change(aspect.name, f"user.power")
+
+    # thief
+    aspectsteal = ClassSkill(f"{aspect.name}-steal", aspect, "thief", 25)
+    aspectsteal.description = f"Permanently steals {aspect.name.upper()} from the target based on their POWER and gives it to the user. Can be used once per target."
+    aspectsteal.add_vial_cost("vim", "user.power//2")
+    aspectsteal.add_vial_cost("aspect", "user.power")
+    aspectsteal.cooldown = 2
+    aspectsteal.special_effect = steal_effect_constructor(aspect)
+    
