@@ -27,6 +27,9 @@ class State():
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:
         return 1.0
     
+    def on_apply(self, griefer: "strife.Griefer"):
+        pass
+
     def new_turn(self, griefer: "strife.Griefer"):
         pass
 
@@ -93,6 +96,16 @@ class AspectyState(ClassPassive):
         adjust_reply = self.aspect.adjust(griefer, griefer.power//2)
         griefer.strife.log(adjust_reply)
 
+class TragedyState(ClassPassive):
+    def __init__(self, name, aspect: "skills.Aspect", required_rung: int):
+        super().__init__(name, aspect, "bard", required_rung)
+
+    def new_turn(self, griefer: "strife.Griefer"):
+        adjust_reply = self.aspect.adjust(griefer, -griefer.power)
+        griefer.strife.log(adjust_reply)
+
 for _, aspect in skills.aspects.items():
     aspectystate = AspectyState(f"{aspect.name}y", aspect, 25)
     aspectystate.tooltip = f"{aspect.name.upper()} increases each turn."
+    tragedystate = AspectyState(f"{aspect.name} tragedy", aspect, 25)
+    tragedystate.tooltip = f"{aspect.name.upper()} decreases sharply each turn."

@@ -337,7 +337,7 @@ class Aspect():
         return stat_ratio
 
     # skills that depend on how little ASPECT the target has use inverse_ratio
-    # should "generally" cap out at 3.0 because usually having less of an aspect is easier than having more of it
+    # should "generally" cap out at 0.5 because usually having less of an aspect is easier than having more of it
     def inverse_ratio(self, target: "strife.Griefer") -> float:
         stat_ratio = self.ratio(target, raw=True)
         stat_ratio = 1 - stat_ratio
@@ -768,3 +768,8 @@ for aspect_name, aspect in aspects.items():
     aspectpiece.add_vial_cost("aspect", "user.power//2")
     aspectpiece.add_aspect_change(aspect.name, f"user.power*2")
     aspectpiece.parryable = False
+
+    # bard
+    aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)
+    aspectclub.description = f"Deals damage depending on how low your {aspect.name.upper()} is. Is free."
+    aspectclub.damage_formula = f"user.base_power * user.{aspect.name}.inverse_ratio * 4 + (1 + coin)"
