@@ -663,3 +663,8 @@ strike_between.add_aspect_change("void", "user.power")
 strike_between.damage_formula = "user.base_power * user.void.ratio * 4 * (1 + 0.5*coin)"
 
 # class skills
+def make_class_skill(skill_name: str, class_name: str, aspect_name: str, required_rung: int):
+    if class_name not in class_skills: class_skills[class_name] = {}
+    if aspect_name not in class_skills[class_name]: class_skills[class_name][aspect_name] = {}
+    class_skills[class_name][aspect_name][skill_name] = required_rung
+    
