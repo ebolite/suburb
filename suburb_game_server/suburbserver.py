@@ -430,6 +430,12 @@ def console_commands(player: sessions.Player, content: str):
         case "change_vial":
             vial = args[0]
             player.secondaryvial = vial
+        case "change_class":
+            class_name = args[0]
+            player.gameclass = class_name
+        case "change_aspect":
+            aspect = args[0]
+            player.aspect = aspect
         case "enter_imps":
             player.map.populate_with_underlings("imp", 3, random.randint(40, 60), 1, 5)
         case "gushoverload":
