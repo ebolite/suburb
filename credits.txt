@@ -1,2 +1,3 @@
 DaFluffyPotato - Palette swapping pygame tutorial
 poehlmans on deviantart - Stole the gristtorrent icon from them
+cerisuu @cerisuuu on twitter - provided symbol sprite assets
