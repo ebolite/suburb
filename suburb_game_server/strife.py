@@ -293,7 +293,7 @@ class Griefer():
 
     def take_damage(self, damage: int, coin: Optional[bool] = None):
         if damage > 0: 
-            damage = skills.modify_damage(damage, self.get_stat("mettle"))
+            damage = skills.modify_damage(damage, self)
             for vial in self.vials_list:
                 damage = vial.modify_damage_received(damage, self)
             for state in self.states_list:

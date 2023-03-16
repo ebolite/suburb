@@ -50,9 +50,11 @@ SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 
 SKILL_CATEGORIES = ["aggressive", "abstinent", "abusive", "aspected", "arsenal", "none"]
 
-def modify_damage(damage: int, mettle: int):
+def modify_damage(damage: int, griefer: "strife.Griefer"):
+    mettle = griefer.get_stat("mettle")
     if damage == 0 and mettle == 0: return 0
-    new_damage = damage * (damage / (damage + mettle)) # damage squared over damage plus mettle
+    mod = griefer.power / (griefer.power + mettle) # damage squared over damage plus mettle
+    new_damage = int(damage * mod)
     return int(new_damage)
 
 def stat_edge(user_stat: int, target_stat: int) -> float:
