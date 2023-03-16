@@ -16,13 +16,12 @@ current_info_window = "grist_cache"
 current_selected_phernalia = None
 current_selected_tile = "."
 viewport_dic = {}
-server_tiles: Optional[dict[str, int]] = None
 
 def get_server_tiles():
-    global server_tiles
-    if server_tiles is None:
-        server_tiles = client.requestdic("server_tiles")
-    return server_tiles
+    reply_dict = client.requestdic("server_tiles")
+    server_tiles = reply_dict["server_tiles"]
+    tile_labels = reply_dict["labels"]
+    return server_tiles, tile_labels
 
 def placeholder(): pass
 
@@ -360,7 +359,7 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
     border_width = 2
     cost_label_h = 16
     grist_cache: dict = viewport_dic["client_grist_cache"]
-    server_tiles = get_server_tiles()
+    server_tiles, tile_labels = get_server_tiles()
     tile_scale = 2
     tile_wh = int(render.tile_wh * tile_scale)
     num_rows = info_window.h // (tile_wh + cost_label_h + border_width*2 + padding*2 )
@@ -394,6 +393,7 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
             tile = render.TileDisplay(tile_x, tile_y, tile_char)
             tile.absolute = True
             tile.scale = tile_scale
+            tile.tooltip = tile_labels[tile_char]
             tile.bind_to(info_window, True)
             tile_button = render.TextButton(0, 0, tile_wh, tile_wh, "", get_tile_button_func(tile_char))
             tile_button.absolute = True

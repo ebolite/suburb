@@ -1032,6 +1032,7 @@ class Tile(UIElement):
             return "sprites\\tiles\\missingtile.png"
 
 class TileDisplay(UIElement):
+    tooltip_padding = 9
     def __init__(self, x, y, tile_char):
         super().__init__()
         self.x = x
@@ -1040,6 +1041,8 @@ class TileDisplay(UIElement):
         self.offsetx, self.offsety = 0, 0
         self.scale = 1
         self.click_func: Optional[Callable] = None
+        self.tooltip: Optional[str] = None
+        self.popup: Optional[SolidColor] = None
         update_check.append(self)
         click_check.append(self)
 
@@ -1060,15 +1063,31 @@ class TileDisplay(UIElement):
             return "sprites\\tiles\\missingtile.png"
 
     def update(self):
+        if not self.is_mouseover() and self.popup is not None: 
+            self.popup.delete()
+            self.popup = None
+        if self.tooltip is not None and self.is_mouseover() and self.popup is None:
+            x, y = pygame.mouse.get_pos()
+            tooltip = self.tooltip
+            popup_text = Text(0.5, 0.5, f"{tooltip}")
+            popup_text.fontsize = 14
+            popup_text.color = self.theme.dark
+            popup_width = popup_text.get_width()+self.tooltip_padding*2
+            self.popup = SolidColor(x, y, popup_width, popup_text.fontsize+self.tooltip_padding*2, self.theme.white)
+            self.popup.outline_color = self.theme.dark
+            self.popup.follow_mouse = True
+            self.popup.rect_x_offset = -popup_width
+            popup_text.bring_to_top()
+            popup_text.bind_to(self.popup)
         self.update_image()
         self.surf = pygame.Surface((tile_wh, tile_wh))
-        self.rect = self.surf.get_rect()
-        self.rect.x, self.rect.y = self.get_rect_xy()
         self.surf.blit(self.image, (0, 0), (self.offsetx, self.offsety, tile_wh, tile_wh))
         if self.scale != 1: 
             w = self.surf.get_width()
             h = self.surf.get_height()
             self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
+        self.rect = self.surf.get_rect()
+        self.rect.x, self.rect.y = self.get_rect_xy()
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
 class RoomItemDisplay(UIElement):
