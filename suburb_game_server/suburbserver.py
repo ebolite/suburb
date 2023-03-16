@@ -250,6 +250,8 @@ def handle_request(dict):
             return json.dumps({"chains": chains, "no_server": no_server, "server_client": server_client, "player_names": player_names})
         case "strife_info":
             if player.strife is None: return json.dumps({})
+            player.strife.ready_check()
+            if player.strife is None: return json.dumps({})
             else: return json.dumps(player.strife.get_dict())
         case "submit_strife_action":
             skill_name = content["skill_name"]
