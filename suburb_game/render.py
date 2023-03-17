@@ -1290,7 +1290,6 @@ class OvermapTile(UIElement):
                 draw_y -= 16
         if self.name in self.overmap.map_types:
             map_type = self.overmap.map_types[self.name]
-            print(map_type)
             path = f"sprites/overmap/{map_type}.png"
             if os.path.isfile(path):
                 special_surf = pygame.image.load(path)
