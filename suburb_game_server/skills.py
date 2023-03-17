@@ -728,7 +728,7 @@ def rogue_steal_effect_constructor(aspect: Aspect) -> Callable:
 def scatter_effect_constructor(aspect: Aspect) -> Callable:
         def scatter_effect(user: "strife.Griefer", target: "strife.Griefer"):
             if user.player is None: return "What."
-            bonus = user.power//6
+            bonus = user.power//12
             for player_name in user.player.session.starting_players:
                 player = sessions.Player(player_name)
                 if player.strife is not None:
