@@ -51,6 +51,7 @@ class Session():
             self.starting_players = []
             self.connected = []
             self.entered_players = []
+            self.current_players = []
             # atheneum is a list of items that have been alchemized by all players in the session
             self.atheneum = []
             self.overmaps = {}          
@@ -112,7 +113,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         housemap_x, housemap_y = get_random_land_coords(self.map_tiles)
         housemap = self.find_map(housemap_x, housemap_y)
         housemap.gen_map("house")
-        housemap.special = "housemap"
+        housemap.special_type = "house"
         self.housemap_name = housemap.name
         self.specials.append(housemap.name)
         last_gate_x, last_gate_y = 0, 0
@@ -124,7 +125,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
                 gate_x, gate_y = get_tile_at_distance(self.map_tiles, last_gate_x, last_gate_y, gate_num*4, self.specials)
             gate_map = self.find_map(gate_x, gate_y)
             gate_map.gen_map(f"gate{gate_num}")
-            gate_map.special = f"gate{gate_num}"
+            gate_map.special_type = "gate"
             self.specials.append(gate_map.name)
             if gate_num == 1 or gate_num == 2:
                 # first and second gates are in a bowl
@@ -133,8 +134,6 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         self.map_tiles = make_height_map(self.map_tiles, steepness, smoothness)
         self.map_tiles = set_height(self.map_tiles, housemap_x, housemap_y, 1, 3)
         self.map_tiles = set_height(self.map_tiles, housemap_x, housemap_y, 9)
-        # todo: we're not doing this right now
-        # housemap.gen_rooms()
 
     def gen_land_name(self):
         print(f"{self.gristcategory} {self.player.aspect}")
@@ -154,6 +153,30 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         for word in words:
             acronym += f"{word[0].upper()}"
         self.acronym = acronym
+
+    def get_view(self, target_x: int, target_y: int, view_tiles: int) -> tuple[list, dict]:
+        if not self.is_tile_in_bounds(target_x, target_y): return ([], {})
+        out_map_tiles = []
+        out_specials = {}
+        map_tiles = self.map_tiles
+        for map_tile_y, real_y in enumerate(range(target_y-view_tiles, target_y+view_tiles+1)):
+            new_line = []
+            for map_tile_x, real_x in enumerate(range(target_x-view_tiles, target_x+view_tiles+1)):
+                if real_y < 0 or real_y >= len(map_tiles): new_line.append("?") # out of bounds
+                elif real_x < 0 or real_x >= len(map_tiles[0]): new_line.append("?") # out of bounds
+                else: 
+                    new_line.append(map_tiles[real_y][real_x])
+                    specials = self.find_map(real_x, real_y).specials
+                    if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
+            out_map_tiles.append(new_line)
+        return out_map_tiles, out_specials
+
+    def is_tile_in_bounds(self, x: int, y: int) -> bool:
+        if y < 0: return False
+        if x < 0: return False
+        if y >= len(self.map_tiles): return False
+        if x >= len(self.map_tiles[0]): return False
+        return True
 
     def get_map(self, name:str) -> "Map":
         return Map(name, self.session, self)
@@ -205,6 +228,7 @@ class Map():
             self.x = x
             self.y = y
             self.map_tiles = []
+            self.special_type = ""
 
     def gen_map(self, type=None):
         map = None
@@ -212,28 +236,20 @@ class Map():
             case "house":
                 map = map_from_file("gates.txt")
                 map += deepcopy(random.choice(map_tiles["house"]))
-                self.overmaptile = "H"
             case "gate1":
                 map = deepcopy(random.choice(map_tiles["gateframe"]))
-                self.overmaptile = "1"
             case "gate2":
                 map = deepcopy(random.choice(map_tiles["gateframe"]))
-                self.overmaptile = "2"
             case "gate3":
                 map = deepcopy(random.choice(map_tiles["gateframe"]))
-                self.overmaptile = "3"
             case "gate4":
                 map = deepcopy(random.choice(map_tiles["gateframe"]))
-                self.overmaptile = "4"
             case "gate5":
                 map = deepcopy(random.choice(map_tiles["gateframe"]))
-                self.overmaptile = "5"
             case "gate6":
                 map = deepcopy(random.choice(map_tiles["gateframe"]))
-                self.overmaptile = "6"
             case "gate7":
                 map = deepcopy(random.choice(map_tiles["gateframe"]))
-                self.overmaptile = "7"
             case _:
                 map = deepcopy(random.choice(map_tiles["land"]))
                 self.overmaptile = "#"
@@ -338,6 +354,14 @@ class Map():
                     if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
             out_map_tiles.append(new_line)
         return out_map_tiles, out_specials
+
+    @property
+    def specials(self) -> dict:
+        special_dict = {}
+        if self.special_type is not None:
+            special_dict[self.name] = self.special_type
+        # todo: other specials
+        return special_dict
 
     @property
     def height(self) -> int:
@@ -928,17 +952,25 @@ class Player():
         if self.strife is None: strife = {}
         else: strife = self.strife.get_dict()
         return map_tiles, map_specials, room_instances, room_npcs, strife
+    
+    def get_overmap_view(self, view_tiles=12):
+        theme = self.overmap.theme
+        map_tiles, map_specials = self.overmap.get_view(self.map.x, self.map.y, view_tiles)
+        return map_tiles, map_specials, theme
 
     @property
     def room(self) -> Room:
         return Room(self.room_name, self.session, self.overmap, self.map)
     
     def goto_room(self, room: Room):
+        if self.session is not None and self.session != room.session:
+            self.session.current_players.remove(self.name)
         if self.room_name is not None: self.room.remove_player(self)
         self.session_name = room.session.name
         self.overmap_name = room.overmap.name
         self.map_name = room.map.name
         self.room_name = room.name
+        if self.name not in self.session.current_players: self.session.current_players.append(self.name)
         room.add_player(self)
 
     @property
