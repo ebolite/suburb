@@ -452,7 +452,7 @@ breath.balance_mult = 1.3
 blood = Aspect("blood")
 blood.is_vial = True
 blood.vials = ["vim"]
-blood.adjustment_divisor = 2
+blood.adjustment_divisor = 1
 
 life = Aspect("life")
 life.is_vial = True
@@ -569,7 +569,7 @@ vigil.cooldown = 2
 vigil.add_vial_cost("aspect", "user.power*1.5")
 vigil.add_vial_cost("vim", "user.power//2")
 vigil.add_aspect_change("hope", "-user.power")
-vigil.damage_formula = "user.base_damage * user.hope.ratio * (7 + 3*coin)"
+vigil.damage_formula = "user.base_damage * user.hope.ratio * (5 + 2*coin)"
 
 # rage
 seethe = AspectSkill("seethe", rage, 10)
