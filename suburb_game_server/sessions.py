@@ -154,10 +154,11 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             acronym += f"{word[0].upper()}"
         self.acronym = acronym
 
-    def get_view(self, target_x: int, target_y: int, view_tiles: int) -> tuple[list, dict]:
-        if not self.is_tile_in_bounds(target_x, target_y): return ([], {})
+    def get_view(self, target_x: int, target_y: int, view_tiles: int) -> tuple[list, dict, dict]:
+        if not self.is_tile_in_bounds(target_x, target_y): return ([], {}, {})
         out_map_tiles = []
         out_specials = {}
+        map_types = {}
         map_tiles = self.map_tiles
         for map_tile_y, real_y in enumerate(range(target_y-view_tiles, target_y+view_tiles+1)):
             new_line = []
@@ -166,10 +167,12 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
                 elif real_x < 0 or real_x >= len(map_tiles[0]): new_line.append("?") # out of bounds
                 else: 
                     new_line.append(map_tiles[real_y][real_x])
-                    specials = self.find_map(real_x, real_y).specials
+                    map = self.find_map(real_x, real_y)
+                    specials = map.specials
                     if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
+                    if map.special_type: map_types[f"{map_tile_x}, {map_tile_y}"] = map.special_type
             out_map_tiles.append(new_line)
-        return out_map_tiles, out_specials
+        return out_map_tiles, out_specials, map_types
 
     def is_tile_in_bounds(self, x: int, y: int) -> bool:
         if y < 0: return False
@@ -362,8 +365,6 @@ class Map():
             player = Player(player_name)
             if player.map.name == self.name:
                 special_dict[player.name] = "player"
-        if self.special_type is not None:
-            special_dict[self.name] = self.special_type
         # todo: other specials
         return special_dict
 
@@ -959,8 +960,8 @@ class Player():
     
     def get_overmap_view(self, view_tiles=12):
         theme = self.overmap.theme
-        map_tiles, map_specials = self.overmap.get_view(self.map.x, self.map.y, view_tiles)
-        return map_tiles, map_specials, theme
+        map_tiles, map_specials, map_types = self.overmap.get_view(self.map.x, self.map.y, view_tiles)
+        return map_tiles, map_specials, map_types, theme
 
     @property
     def room(self) -> Room:
