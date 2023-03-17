@@ -1192,12 +1192,16 @@ class RoomItemDisplay(UIElement):
                 self.buttons.append(new_button)
 
 class Overmap(UIElement):
-    def __init__(self, x, y, map_tiles:list[list[str]], theme=themes.default):
+    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, theme=themes.default):
         super().__init__()
         self.x = x
         self.y = y
         self.theme = theme
         self.map_tiles = map_tiles
+        if specials is None:
+            self.specials = {}
+        else:
+            self.specials = specials
         self.rotation_surfs = {}
         self.rotation = 0
         self.extra_height = 32 * 9
@@ -1279,6 +1283,18 @@ class OvermapTile(UIElement):
             for i in range(self.height):
                 self.blit_surf.blit(self.overmap.block_image, ((draw_x, draw_y)))
                 draw_y -= 16
+        if self.name in self.overmap.specials:
+            if self.name in self.overmap.specials[self.name]:
+                special = self.overmap.specials[self.name][self.name]
+                path = f"sprites/overmap/{special}.png"
+                if os.path.isfile(path):
+                    special_surf = pygame.image.load(path)
+                    self.blit_surf.blit(special_surf, ((draw_x, draw_y)))
+                    draw_y -= 16
+
+    @property
+    def name(self) -> str:
+        return f"{self.x}, {self.y}"
 
 class CaptchalogueButton(Button):
     def __init__(self, x, y, instance_name: str, instances: dict):

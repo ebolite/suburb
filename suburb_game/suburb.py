@@ -945,10 +945,11 @@ def strife_scene(strife_dict: Optional[dict]=None):
 def overmap():
     reply = client.requestdic(intent="current_overmap")
     map_tiles = reply["map_tiles"]
+    map_specials = reply["map_specials"]
     theme_name = reply["theme"]
     theme = themes.themes[theme_name]
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
-    overmap = render.Overmap(0.5, 0.5, map_tiles, theme=theme)
+    overmap = render.Overmap(0.5, 0.5, map_tiles, map_specials, theme=theme)
     backbutton = render.Button(0.1, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", map_scene, theme=theme)
 
 @scene
