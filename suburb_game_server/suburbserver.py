@@ -439,6 +439,14 @@ def console_commands(player: sessions.Player, content: str):
         case "add_rungs":
             rungs = int(args[0])
             player.echeladder_rung += rungs
+        case "end_strife":
+            if args:
+                player_name = args[0]
+            else:
+                player_name = player.name
+            ending_player = sessions.Player(player_name)
+            if ending_player.strife is not None:
+                ending_player.strife.end()
         case "set_rung":
             rung = int(args[0])
             player.echeladder_rung = rung
