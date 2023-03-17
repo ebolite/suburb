@@ -1298,6 +1298,17 @@ class OvermapTile(UIElement):
                 special_surf.set_colorkey(Color(0, 0, 0))
                 self.blit_surf.blit(special_surf, ((draw_x, draw_y)))
                 draw_y -= 16
+        if self.name in self.overmap.specials:
+            draw_y -= 16
+            specials = self.overmap.specials[self.name]
+            for _, special_type in specials.items():
+                path = f"sprites/overmap/{special_type}.png"
+                if os.path.isfile(path):
+                    special_surf = pygame.image.load(path)
+                    special_surf = self.overmap.convert_to_theme(special_surf)
+                    special_surf.set_colorkey(Color(0, 0, 0))
+                    self.blit_surf.blit(special_surf, ((draw_x, draw_y)))
+                    draw_y -= 32
 
     @property
     def name(self) -> str:
