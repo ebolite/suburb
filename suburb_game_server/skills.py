@@ -356,7 +356,8 @@ class Aspect():
         adjustment = int(value/self.adjustment_divisor)
         if self.is_vial:
             for vial_name in self.vials:
-                target.change_vial(vial_name, adjustment)
+                if vial_name in target.vials:
+                    target.change_vial(vial_name, adjustment)
         else:
             target.add_bonus(self.stat_name, adjustment)
         if self.check_vials:
@@ -375,7 +376,8 @@ class Aspect():
         adjustment = int(value/self.adjustment_divisor)
         if self.is_vial:
             for vial_name in self.vials:
-                target.add_permanent_bonus(vial_name, adjustment)
+                if vial_name in target.vials:
+                    target.add_permanent_bonus(vial_name, adjustment)
         else:
             target.add_permanent_bonus(self.stat_name, adjustment)
         if self.check_vials:
