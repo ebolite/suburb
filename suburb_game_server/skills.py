@@ -635,7 +635,7 @@ christen = AspectSkill("christen", life, 50)
 christen.description = "Deals more damage the higher the target's LIFE."
 christen.add_vial_cost("aspect", "user.power//2")
 christen.add_vial_cost("vim", "user.power//2")
-christen.damage_formula = "user.base_damage * target.life.ratio * (6 + 2*coin)"
+christen.damage_formula = "user.base_damage * target.life.ratio * (5 + 2*coin)"
 
 # doom
 curse = AspectSkill("curse", doom, 10)
