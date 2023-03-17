@@ -513,8 +513,8 @@ enlarge.beneficial = True
 enlarge.parryable = False
 enlarge.action_cost = 0
 enlarge.cooldown = 1
-enlarge.add_vial_cost("aspect", "user.power//2")
-enlarge.add_aspect_change("space", "user.power")
+enlarge.add_vial_cost("aspect", "user.power//1.5")
+enlarge.add_aspect_change("space", "user.power//2")
 
 gravity = AspectSkill("gravity", space, 50)
 gravity.description = "Deals damage based on how much SPACE (mettle) the target has."
