@@ -104,8 +104,21 @@ class TragedyState(ClassPassive):
         adjust_reply = self.aspect.adjust(griefer, -griefer.power)
         griefer.strife.log(adjust_reply)
 
+class FaeState(ClassPassive):
+    def __init__(self, name, aspect: "skills.Aspect", required_rung: int):
+        super().__init__(name, aspect, "sylph", required_rung)
+
+    def new_turn(self, griefer: "strife.Griefer"):
+        healing = griefer.power
+        adjustment = griefer.power//4
+        for allied_griefer in griefer.team_members:
+            allied_griefer.change_vial("hp", healing)
+            griefer.strife.log(self.aspect.adjust(allied_griefer, adjustment))
+
 for _, aspect in skills.aspects.items():
     aspectystate = AspectyState(f"{aspect.name}y", aspect, 25)
     aspectystate.tooltip = f"{aspect.name.upper()} increases each turn."
-    tragedystate = AspectyState(f"{aspect.name} tragedy", aspect, 25)
+    tragedystate = TragedyState(f"{aspect.name} tragedy", aspect, 25)
     tragedystate.tooltip = f"{aspect.name.upper()} decreases sharply each turn."
+    faestate = FaeState(f"{aspect.name} fae", aspect, 25)
+    faestate.tooltip = f"Heals all allies and increases their {aspect.name.upper()} each turn."
