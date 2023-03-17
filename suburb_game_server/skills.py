@@ -420,7 +420,7 @@ space.stat_name = "mettle"
 
 time = Aspect("time")
 time.stat_name = "spunk"
-time.balance_mult = 0.8
+time.balance_mult = 1
 
 mind = Aspect("mind")
 mind.stat_name = "tact"
@@ -547,7 +547,7 @@ invigorate.add_aspect_change("heart", "user.power")
 throb = AspectSkill("throb", heart, 50)
 throb.description = "Deals damage equal to the target's HEART (vigor)."
 throb.add_vial_cost("aspect", "user.power")
-throb.damage_formula = "target.vig * (1 + 1*coin)"
+throb.damage_formula = "target.vig * (1 + coin)"
 
 # hope
 pray = AspectSkill("pray", hope, 10)
@@ -746,7 +746,7 @@ for aspect_name, aspect in aspects.items():
     aspectblade.description = f"Deals damage based on your {aspect.name.upper()}."
     aspectblade.add_vial_cost("vim", "user.power//3")
     aspectblade.add_vial_cost("aspect", "user.power//3")
-    aspectblade.damage_formula = f"user.base_power * user.{aspect.name}.ratio * 4 + (1 + coin)"
+    aspectblade.damage_formula = f"user.base_power * user.{aspect.name}.ratio * (4 + coin)"
 
     # prince
     aspectloss = ClassSkill(f"{aspect.name}loss", aspect, "prince", 25)
@@ -759,7 +759,7 @@ for aspect_name, aspect in aspects.items():
     aspectblast.description = f"Deals damage based on your {aspect.name.upper()} and lowers the target's {aspect.name.upper()}"
     aspectblast.add_vial_cost("vim", "user.power//2")
     aspectblast.add_vial_cost("aspect", "user.power")
-    aspectblast.damage_formula = f"user.base_power * user.{aspect.name}.ratio * 5 + (1.5 + 1.5*coin)"
+    aspectblast.damage_formula = f"user.base_power * user.{aspect.name}.ratio * (5 + 2*coin)"
     aspectblast.cooldown = 2
     aspectblast.add_aspect_change(aspect.name, f"user.power")
 
@@ -829,7 +829,7 @@ for aspect_name, aspect in aspects.items():
     # bard
     aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)
     aspectclub.description = f"Deals damage depending on how low your {aspect.name.upper()} is. Is free."
-    aspectclub.damage_formula = f"user.base_power * user.{aspect.name}.inverse_ratio * 4 + (1 + coin)"
+    aspectclub.damage_formula = f"user.base_power * user.{aspect.name}.inverse_ratio * (4 + coin)"
 
     # rogue
     aspectloot = ClassSkill(f"{aspect.name}-loot", aspect, "rogue", 25)
