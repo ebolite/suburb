@@ -439,6 +439,9 @@ def console_commands(player: sessions.Player, content: str):
         case "add_rungs":
             rungs = int(args[0])
             player.echeladder_rung += rungs
+        case "set_rung":
+            rung = int(args[0])
+            player.echeladder_rung = rung
         case "reset_permanent_bonuses":
             player.permanent_stat_bonuses = {}
             player.permanent_vial_bonuses = {}
