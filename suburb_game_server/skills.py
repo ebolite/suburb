@@ -4,6 +4,7 @@ from copy import deepcopy
 import strife
 import random
 import config
+import sessions
 
 aspects: dict["str", "Aspect"] = {}
 skills: dict["str", "Skill"] = {}
@@ -383,6 +384,19 @@ class Aspect():
         if isinstance(self, NegativeAspect): adjustment *= -1 # just for proper printing
         if return_value: return str(adjustment)
         return f"{target.nickname}'s {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} PERMANENTLY by {adjustment}!"
+    
+    def permanent_adjust_player(self, player: "sessions.Player", value: int):
+        adjustment = self.calculate_adjustment(value)
+        if self.is_vial:
+            for vial_name in self.vials:
+                player.add_permanent_bonus(vial_name, adjustment)
+        else:
+            player.add_permanent_bonus(self.stat_name, adjustment)
+
+    def calculate_adjustment(self, value: int):
+        adjustment = value * self.balance_mult
+        adjustment = int(adjustment/self.adjustment_divisor)
+        return adjustment
 
 class NegativeAspect(Aspect):
     def ratio(self, target: "strife.Griefer", raw=False) -> float:
@@ -397,6 +411,9 @@ class NegativeAspect(Aspect):
 
     def permanent_adjust(self, target: "strife.Griefer", value: int):
         return super().permanent_adjust(target, -value)
+    
+    def permanent_adjust_player(self, player: "sessions.Player", value: int):
+        return super().permanent_adjust_player(player, -value)
 
 space = Aspect("space")
 space.stat_name = "mettle"
@@ -708,6 +725,21 @@ def rogue_steal_effect_constructor(aspect: Aspect) -> Callable:
             return f"{user.nickname} looted {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
         return steal_effect
 
+def scatter_effect_constructor(aspect: Aspect) -> Callable:
+        def scatter_effect(user: "strife.Griefer", target: "strife.Griefer"):
+            if user.player is None: return "What."
+            bonus = user.power//6
+            for player_name in user.player.session.starting_players:
+                player = sessions.Player(player_name)
+                if player.strife is not None:
+                    player_griefer = player.strife.get_griefer(player.name)
+                    log_message = aspect.permanent_adjust(player_griefer, bonus)
+                    player_griefer.strife.log(log_message)
+                else:
+                    aspect.permanent_adjust_player(player, bonus)
+            return f"{aspect.calculate_adjustment(bonus)} {aspect.name.upper()} was scattered!"
+        return scatter_effect
+
 for aspect_name, aspect in aspects.items():
     # knight
     aspectblade = ClassSkill(f"{aspect.name}blade", aspect, "knight", 25)
@@ -783,6 +815,14 @@ for aspect_name, aspect in aspects.items():
     aspectpiece.add_vial_cost("aspect", "user.power//2")
     aspectpiece.add_aspect_change(aspect.name, f"user.power*2")
     aspectpiece.parryable = False
+
+    # page
+    scatteraspect = ClassSkill(f"scatter {aspect.name}", aspect, "page", 25)
+    scatteraspect.description = f"Increases the {aspect.name.upper()} of everyone in the session."
+    scatteraspect.add_vial_cost("aspect", "user.power//2")
+    scatteraspect.target_self = True
+    scatteraspect.parryable = False
+    scatteraspect.special_effect = scatter_effect_constructor(aspect)
 
     # bard
     aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)

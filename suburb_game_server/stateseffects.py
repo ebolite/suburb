@@ -93,7 +93,7 @@ for _, aspect in skills.aspects.items():
     aspectretreatstate = RetreatState(f"retreat from {aspect.name}", aspect)
     aspectretreatstate.tooltip = f"{aspect.name.upper()} decreases each turn."
 
-# class passives
+# class passives and globals
 
 class ClassPassive(State):
     def __init__(self, name, aspect: "skills.Aspect", class_name: str, required_rung: int):
