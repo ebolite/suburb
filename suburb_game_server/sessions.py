@@ -358,6 +358,10 @@ class Map():
     @property
     def specials(self) -> dict:
         special_dict = {}
+        for player_name in self.session.current_players:
+            player = Player(player_name)
+            if player.map.name == self.name:
+                special_dict[player.name] = "player"
         if self.special_type is not None:
             special_dict[self.name] = self.special_type
         # todo: other specials
