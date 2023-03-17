@@ -826,7 +826,7 @@ class Player():
             case _:
                 return False
         target_map = self.overmap.find_map(target_x, target_y)
-        if abs(target_map.height - self.map.height) > 1: return False
+        # if abs(target_map.height - self.map.height) > 1: return False
         if not target_map.map_tiles:
             target_map.gen_map()
         if direction == "north" or direction == "east": entry_direction = "left"
