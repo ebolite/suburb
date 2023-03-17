@@ -11,7 +11,7 @@ player_hp_threshold_damage_mult: float = 0.25
 sburb = "<a:suburbspirograph:820899074986606613>"
 
 # items which appear as icons to clients
-special_items = ["punch designix", "cruxtruder", "totem lathe", "alchemiter", "Sburb disc"]
+special_items = ["punch designix", "cruxtruder", "sealed cruxtruder", "totem lathe", "alchemiter", "Sburb disc"]
 
 verbs = [
     "Transforming",
