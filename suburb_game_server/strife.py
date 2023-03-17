@@ -455,6 +455,10 @@ class Griefer():
         self.add_bonus(game_attr, amount)
     
     @property
+    def team_members(self) -> list["Griefer"]:
+        return [griefer for griefer in self.strife.griefer_list if griefer.team == self.team]
+
+    @property
     def stats_dict(self) -> dict:
         out = {}
         for stat in self.base_stats:

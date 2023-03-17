@@ -693,6 +693,21 @@ def steal_effect_constructor(aspect: Aspect) -> Callable:
             return f"{user.nickname} stole {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
         return steal_effect
 
+def rogue_steal_effect_constructor(aspect: Aspect) -> Callable:
+        def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
+            if f"looted{aspect.name}" in target.tags:
+                return f"{target.nickname} already had {aspect.name.upper()} looted!"
+            else:
+                target.tags.append(f"looted{aspect.name}")
+            value = max(target.power//6, 1)
+            value *= 4
+            stolen_target = aspect.permanent_adjust(target, -value, return_value=True)
+            stolen = "0"
+            for griefer in user.team_members:
+                stolen = aspect.permanent_adjust(griefer, value//8, return_value=True)
+            return f"{user.nickname} looted {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
+        return steal_effect
+
 for aspect_name, aspect in aspects.items():
     # knight
     aspectblade = ClassSkill(f"{aspect.name}blade", aspect, "knight", 25)
@@ -722,7 +737,7 @@ for aspect_name, aspect in aspects.items():
     aspectsteal.parryable = False
     aspectsteal.add_vial_cost("vim", "user.power//2")
     aspectsteal.add_vial_cost("aspect", "user.power")
-    aspectsteal.cooldown = 2
+    aspectsteal.cooldown = 1
     aspectsteal.special_effect = steal_effect_constructor(aspect)
 
     # mage
@@ -773,3 +788,12 @@ for aspect_name, aspect in aspects.items():
     aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)
     aspectclub.description = f"Deals damage depending on how low your {aspect.name.upper()} is. Is free."
     aspectclub.damage_formula = f"user.base_power * user.{aspect.name}.inverse_ratio * 4 + (1 + coin)"
+
+    # rogue
+    aspectloot = ClassSkill(f"{aspect.name}-loot", aspect, "thief", 25)
+    aspectloot.description = f"Permanently steals {aspect.name.upper()} from the target based on their POWER and gives 1/8 of it to the user's team. Can be used once per target."
+    aspectloot.parryable = False
+    aspectloot.add_vial_cost("vim", "user.power//2")
+    aspectloot.add_vial_cost("aspect", "user.power")
+    aspectloot.cooldown = 1
+    aspectloot.special_effect = rogue_steal_effect_constructor(aspect)
