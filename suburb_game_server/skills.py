@@ -797,3 +797,13 @@ for aspect_name, aspect in aspects.items():
     aspectloot.add_vial_cost("aspect", "user.power")
     aspectloot.cooldown = 1
     aspectloot.special_effect = rogue_steal_effect_constructor(aspect)
+
+    # seer
+    denyaspect = ClassSkill(f"deny {aspect.name}", aspect, "seer", 25)
+    denyaspect.description = f"Applies a state for 5 turns which decreases the target's {aspect.name.upper()} each turn."
+    denyaspect.parryable = False
+    denyaspect.need_damage_to_apply_states = False
+    denyaspect.add_vial_cost("aspect", "user.power//2")
+    denyaspect.cooldown = 1
+    denyaspect.action_cost = 0
+    denyaspect.add_apply_state(f"retreat from {aspect.name}", 5, "1.0")

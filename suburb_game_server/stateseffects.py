@@ -33,23 +33,7 @@ class State():
     def new_turn(self, griefer: "strife.Griefer"):
         pass
 
-# aspect states
-
-class PursuitState(State):
-    def __init__(self, name, aspect: "skills.Aspect"):
-        super().__init__(name)
-        self.aspect = aspect
-
-    def new_turn(self, griefer: "strife.Griefer"):
-        bonus = self.potency(griefer) * self.applier_stats(griefer)["power"] / 2
-        bonus = int(bonus)
-        logmessage = self.aspect.adjust(griefer, bonus)
-        griefer.strife.log(logmessage)
-
-for _, aspect in skills.aspects.items():
-    aspectpursuitstate = PursuitState(f"pursuit of {aspect.name}", aspect)
-    aspectpursuitstate.tooltip = f"{aspect.name.upper()} increases each turn."
-
+# basic states
 class AbjureState(State):
     def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
         new_damage = damage - griefer.get_stat("mettle")*3*self.potency(griefer)
@@ -78,6 +62,38 @@ class AiryState(State):
     
 airy = AiryState("airy")
 airy.tooltip = "Increases AUTO-PARRY chance."
+
+# aspect states
+
+class PursuitState(State):
+    def __init__(self, name, aspect: "skills.Aspect"):
+        super().__init__(name)
+        self.aspect = aspect
+
+    def new_turn(self, griefer: "strife.Griefer"):
+        bonus = self.potency(griefer) * self.applier_stats(griefer)["power"] / 2
+        bonus = int(bonus)
+        logmessage = self.aspect.adjust(griefer, bonus)
+        griefer.strife.log(logmessage)
+
+class RetreatState(State):
+    def __init__(self, name, aspect: "skills.Aspect"):
+        super().__init__(name)
+        self.aspect = aspect
+
+    def new_turn(self, griefer: "strife.Griefer"):
+        bonus = self.potency(griefer) * self.applier_stats(griefer)["power"] / 2
+        bonus = int(bonus)
+        logmessage = self.aspect.adjust(griefer, -bonus)
+        griefer.strife.log(logmessage)
+
+for _, aspect in skills.aspects.items():
+    aspectpursuitstate = PursuitState(f"pursuit of {aspect.name}", aspect)
+    aspectpursuitstate.tooltip = f"{aspect.name.upper()} increases each turn."
+    aspectretreatstate = RetreatState(f"retreat from {aspect.name}", aspect)
+    aspectretreatstate.tooltip = f"{aspect.name.upper()} decreases each turn."
+
+# class passives
 
 class ClassPassive(State):
     def __init__(self, name, aspect: "skills.Aspect", class_name: str, required_rung: int):
