@@ -439,6 +439,9 @@ def console_commands(player: sessions.Player, content: str):
         case "add_rungs":
             rungs = int(args[0])
             player.echeladder_rung += rungs
+        case "reset_permanent_bonuses":
+            player.permanent_stat_bonuses = {}
+            player.permanent_vial_bonuses = {}
         case "enter_imps":
             player.map.populate_with_underlings("imp", 3, random.randint(40, 60), 1, 5)
         case "gushoverload":

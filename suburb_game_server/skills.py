@@ -746,7 +746,7 @@ for aspect_name, aspect in aspects.items():
     aspectblade.description = f"Deals damage based on your {aspect.name.upper()}."
     aspectblade.add_vial_cost("vim", "user.power//3")
     aspectblade.add_vial_cost("aspect", "user.power//3")
-    aspectblade.damage_formula = f"user.base_power * user.{aspect.name}.ratio * 3 + (1 + 0.5*coin)"
+    aspectblade.damage_formula = f"user.base_power * user.{aspect.name}.ratio * 4 + (1 + coin)"
 
     # prince
     aspectloss = ClassSkill(f"{aspect.name}loss", aspect, "prince", 25)
@@ -759,7 +759,7 @@ for aspect_name, aspect in aspects.items():
     aspectblast.description = f"Deals damage based on your {aspect.name.upper()} and lowers the target's {aspect.name.upper()}"
     aspectblast.add_vial_cost("vim", "user.power//2")
     aspectblast.add_vial_cost("aspect", "user.power")
-    aspectblast.damage_formula = f"user.base_power * user.{aspect.name}.ratio * 4 + (1 + coin)"
+    aspectblast.damage_formula = f"user.base_power * user.{aspect.name}.ratio * 5 + (1.5 + 1.5*coin)"
     aspectblast.cooldown = 2
     aspectblast.add_aspect_change(aspect.name, f"user.power")
 
