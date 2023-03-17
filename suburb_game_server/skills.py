@@ -631,20 +631,11 @@ heal.cooldown = 1
 heal.add_vial_cost("aspect", "user.power//3")
 heal.add_aspect_change("life", "user.power//2")
 
-cure = AspectSkill("cure", life, 50)
-cure.description = "Removes a negative state from the target."
-cure.beneficial = True
-cure.parryable = False
-cure.action_cost = 0
-cure.cooldown = 1
-cure.add_vial_cost("aspect", "user.power//2")
-def cure_func(user: "strife.Griefer", target: "strife.Griefer"):
-    possible_states = [state for state in target.states_list if not state.beneficial]
-    if len(possible_states) == 0: return
-    cured_state = random.choice(possible_states)
-    target.remove_state(cured_state.name)
-    return f"{target.name} was cured of {cured_state.name}!"
-cure.special_effect = cure_func
+christen = AspectSkill("christen", life, 50)
+christen.description = "Deals more damage the higher the target's LIFE."
+christen.add_vial_cost("aspect", "user.power//2")
+christen.add_vial_cost("vim", "user.power//2")
+christen.damage_formula = "user.base_damage * target.life.ratio * (6 + 2*coin)"
 
 # doom
 curse = AspectSkill("curse", doom, 10)
