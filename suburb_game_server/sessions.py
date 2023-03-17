@@ -204,6 +204,7 @@ class Map():
             y = int(coords[1])
             self.x = x
             self.y = y
+            self.map_tiles = []
 
     def gen_map(self, type=None):
         map = None
@@ -261,6 +262,17 @@ class Map():
         valid_coords = self.find_tiles_coords(valid_tiles)
         coords = random.choice(valid_coords)
         return self.find_room(coords[0], coords[1])
+    
+    def get_starting_room(self, direction) -> "Room":
+        for y, line in reversed(list(enumerate(self.map_tiles))):
+            if direction == "right": loop_line = list(enumerate(line))
+            else: loop_line = reversed(list(enumerate(line)))
+            for x, tile_char in loop_line:
+                room = self.find_room(x, y)
+                if room.tile.impassible: continue
+                if room.tile.ramp: continue
+                return room
+        else: raise AssertionError
 
     def populate_with_underlings(self, underling_type: str, cluster_size: int, number: int, min_tier:int, max_tier: int):
         valid_rooms: list[Room] = []
@@ -327,6 +339,12 @@ class Map():
                     if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
             out_map_tiles.append(new_line)
         return out_map_tiles, out_specials
+
+    @property
+    def height(self) -> int:
+        tile_char = self.overmap.map_tiles[self.y][self.x]
+        try: return int(tile_char)
+        except ValueError: return 0
 
     @property
     def session(self) -> Session:
@@ -789,6 +807,33 @@ class Player():
         if modus_name not in self.moduses: self.moduses.append(modus_name)
         return True
     
+    def attempt_overmap_move(self, direction: str) -> bool:
+        player_x = self.map.x
+        player_y = self.map.y
+        match direction:
+            case "north":
+                target_x = player_x
+                target_y = player_y - 1
+            case "south":
+                target_x = player_x
+                target_y = player_y + 1
+            case "east":
+                target_x = player_x + 1
+                target_y = player_y
+            case "west":
+                target_x = player_x - 1
+                target_y = player_y
+            case _:
+                return False
+        target_map = self.overmap.find_map(target_x, target_y)
+        if abs(target_map.height - self.map.height) > 1: return False
+        if not target_map.map_tiles:
+            target_map.gen_map()
+        if direction == "north" or direction == "east": entry_direction = "left"
+        else: entry_direction = "right"
+        self.goto_room(target_map.get_starting_room(entry_direction))
+        return True
+
     def attempt_move(self, direction: str) -> bool:
         player_x = self.room.x
         player_y = self.room.y

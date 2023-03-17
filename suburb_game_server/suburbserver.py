@@ -228,6 +228,9 @@ def handle_request(dict):
         case "move":
             player.attempt_move(content)
             return
+        case "overmap_move":
+            player.attempt_overmap_move(content)
+            return
         case "console_command":
             try:
                 console_commands(player, content)
