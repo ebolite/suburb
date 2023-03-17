@@ -446,7 +446,7 @@ def console_commands(player: sessions.Player, content: str):
                 player_name = player.name
             ending_player = sessions.Player(player_name)
             if ending_player.strife is not None:
-                ending_player.strife.end()
+                ending_player.room.strife_dict = {}
         case "set_rung":
             rung = int(args[0])
             player.echeladder_rung = rung

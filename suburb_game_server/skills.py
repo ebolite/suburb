@@ -438,12 +438,12 @@ heart.check_vials = True
 hope = Aspect("hope")
 hope.is_vial = True
 hope.vials = ["hope"]
-hope.adjustment_divisor = 0.5
+hope.adjustment_divisor = 3
 
 rage = Aspect("rage")
 rage.is_vial = True
 rage.vials = ["rage"]
-rage.adjustment_divisor = 0.5
+rage.adjustment_divisor = 3
 
 breath = Aspect("breath")
 breath.stat_name = "savvy"
@@ -452,7 +452,7 @@ breath.balance_mult = 1.3
 blood = Aspect("blood")
 blood.is_vial = True
 blood.vials = ["vim"]
-blood.adjustment_divisor = 0.5
+blood.adjustment_divisor = 3
 
 life = Aspect("life")
 life.is_vial = True
@@ -474,7 +474,7 @@ void = NegativeAspect("void")
 void.is_vial = True
 void.vials = ["vim", "aspect"] + SECONDARY_VIALS
 void.ratio_mult = 2
-void.adjustment_divisor = 0.5
+void.adjustment_divisor = 4
 
 
 # aspect skills
