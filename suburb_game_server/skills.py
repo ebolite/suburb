@@ -763,7 +763,7 @@ for aspect_name, aspect in aspects.items():
     aspectblast.add_vial_cost("aspect", "user.power")
     aspectblast.damage_formula = f"user.base_damage * user.{aspect.name}.ratio * (5 + 2*coin)"
     aspectblast.cooldown = 2
-    aspectblast.add_aspect_change(aspect.name, f"user.power")
+    aspectblast.add_aspect_change(aspect.name, f"-user.power")
 
     # thief
     aspectsteal = ClassSkill(f"{aspect.name}-steal", aspect, "thief", 25)
