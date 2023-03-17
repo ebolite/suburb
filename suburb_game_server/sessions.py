@@ -585,7 +585,6 @@ class Player():
                 "mettle": 1,
             }
             self.permanent_stat_bonuses = {}
-            self.permanent_vial_bonuses = {}
             # phernalia registry is a default list of deployable objects minus the deployed phernalia
             self.deployed_phernalia = []
             self.server_storage = []
