@@ -1855,7 +1855,7 @@ class GrieferElement(UIElement):
             if not self.griefer.is_state_affected(state_icon.state_name):
                 self.state_icons.remove(state_icon)
                 state_icon.delete()
-        if self.cached_vials_list != list(self.griefer.states): self.update_vials()
+        self.update_vials()
         if self.cached_states_list != list(self.griefer.states): self.make_state_boxes()
 
 class Enemy(GrieferElement, Image):
