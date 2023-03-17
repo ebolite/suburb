@@ -430,6 +430,9 @@ def console_commands(player: sessions.Player, content: str):
             for i in range(num):
                 underling.make_npc(grist_name, player.land.gristcategory, player.room)
             print(player.room.npcs)
+        case "overmap_move":
+            direction = args[0]
+            player.attempt_overmap_move(direction)
         case "change_vial":
             vial = args[0]
             player.secondaryvial = vial
