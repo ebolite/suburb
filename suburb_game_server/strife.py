@@ -64,7 +64,12 @@ class Vial():
     def get_starting(self, griefer: "Griefer") -> int:
         formula = griefer.format_formula(self.starting_formula)
         if "{maximum}" in formula: formula = formula.replace("{maximum}", str(self.get_maximum(griefer)))
-        return int(eval(formula))
+        starting_value = int(eval(formula))
+        if self.name in griefer.stat_bonuses:
+            # x2 to account for the maximum bonus plus some initial starting for 1/2 vials
+            starting_value += griefer.stat_bonuses[self.name]*2
+        starting_value = min(starting_value, self.get_maximum(griefer))
+        return starting_value
     
     def difference_from_starting(self, griefer: "Griefer") -> int:
         return self.get_current(griefer) - self.get_starting(griefer)

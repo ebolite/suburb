@@ -639,12 +639,9 @@ class Player():
         self.unclaimed_grist = {}
 
     def add_permanent_bonus(self, game_attr: str, amount: int):
-        if game_attr in self.stat_ratios:
+        if game_attr in self.stat_ratios or game_attr in strife.vials:
             if game_attr not in self.permanent_stat_bonuses: self.permanent_stat_bonuses[game_attr] = 0
             self.permanent_stat_bonuses[game_attr] += amount
-        elif game_attr in strife.vials:
-            if game_attr not in self.permanent_vial_bonuses: self.permanent_vial_bonuses[game_attr] = 0
-            self.permanent_vial_bonuses[game_attr] += amount
         else:
             raise AttributeError
 
