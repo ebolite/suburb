@@ -565,7 +565,9 @@ class Griefer():
     
     @property
     def player(self) -> Optional["sessions.Player"]:
-        if self.player_name is None: return None
+        try:
+            if self.player_name is None: return None
+        except KeyError: return None
         return sessions.Player(self.player_name)
     
     @property

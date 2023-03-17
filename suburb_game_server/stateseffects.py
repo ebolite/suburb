@@ -102,6 +102,7 @@ class ClassPassive(State):
         class_passives[class_name][aspect.name][name] = required_rung
         super().__init__(name)
         self.passive = True
+        self.beneficial = True
         self.aspect = aspect
 
 class AspectyState(ClassPassive):
