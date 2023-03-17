@@ -968,7 +968,8 @@ class Player():
     
     def goto_room(self, room: Room):
         if self.session is not None and self.session != room.session:
-            self.session.current_players.remove(self.name)
+            if self.name in self.session.current_players:
+                self.session.current_players.remove(self.name)
         if self.room_name is not None: self.room.remove_player(self)
         self.session_name = room.session.name
         self.overmap_name = room.overmap.name
