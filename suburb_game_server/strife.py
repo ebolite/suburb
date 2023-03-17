@@ -249,12 +249,12 @@ class Griefer():
                 damage = vial.modify_damage_received(damage, self)
             for state in self.states_list:
                 damage = state.modify_damage_received(damage, self)
-        if self.player is not None:
-            threshold = self.get_vial_maximum("hp") / 3
-            if damage > threshold:
-                modified_damage = damage - threshold
-                modified_damage *= config.player_hp_threshold_damage_mult
-                damage = int(threshold + modified_damage)
+        # if self.player is not None:
+        #     threshold = self.get_vial_maximum("hp") / 3
+        #     if damage > threshold:
+        #         modified_damage = damage - threshold
+        #         modified_damage *= config.player_hp_threshold_damage_mult
+        #         damage = int(threshold + modified_damage)
         self.change_vial("hp", -damage)
         if coin is None:
             self.strife.log(f"{self.nickname} takes {damage} damage!")
