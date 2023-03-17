@@ -114,7 +114,7 @@ aspect.tact_vial = True
 
 class HopeVial(Vial):
     def new_turn(self, griefer: "Griefer"):
-        flat_add = self.difference_from_starting(griefer)//18
+        flat_add = self.difference_from_starting(griefer)//36
         for stat_name in griefer.base_stats:
             griefer.add_bonus(stat_name, flat_add)
 
