@@ -832,7 +832,7 @@ for aspect_name, aspect in aspects.items():
     aspectclub.damage_formula = f"user.base_power * user.{aspect.name}.inverse_ratio * 4 + (1 + coin)"
 
     # rogue
-    aspectloot = ClassSkill(f"{aspect.name}-loot", aspect, "thief", 25)
+    aspectloot = ClassSkill(f"{aspect.name}-loot", aspect, "rogue", 25)
     aspectloot.description = f"Permanently steals {aspect.name.upper()} from the target based on their POWER and gives 1/8 of it to the user's team. Can be used once per target."
     aspectloot.parryable = False
     aspectloot.add_vial_cost("vim", "user.power//2")
