@@ -1757,6 +1757,8 @@ class GrieferElement(UIElement):
     state_icons: list[StateIcon]
     surf: Union[pygame.Surface, pygame.surface.Surface]
     hover_intensity = 30
+    cached_vials_list = []
+    cached_states_list = []
 
     def onclick(self, clicked:bool):
         if clicked:
@@ -1773,6 +1775,7 @@ class GrieferElement(UIElement):
             made_new_vial = True
         if made_new_vial: 
             self.send_to_bottom()
+            self.cached_vials_list = list(self.griefer.vials)
 
     def add_vial(self, vial_type):
         if vial_type not in self.vials:
@@ -1828,6 +1831,7 @@ class GrieferElement(UIElement):
             new_state_icon = StateIcon(x, y, self.griefer, state_name)
             new_state_icon.absolute = absolute
             new_state_icon.bind_to(binding)
+            new_state_icon.send_to_bottom()
             if not self.griefer.is_state_passive(state_name):
                 duration_label = Text(0.5, 1.5, "")
                 duration_label.text_func = self.get_duration_label_func(state_name)
@@ -1838,6 +1842,7 @@ class GrieferElement(UIElement):
         first_element = self.state_icons[0]
         first_element.rect_y_offset = 60
         first_element.rect_x_offset = (len(self.state_icons) - 1) * -12
+        self.cached_states_list = list(self.griefer.states)
 
     def update(self):
         super().update()
@@ -1850,7 +1855,8 @@ class GrieferElement(UIElement):
             if not self.griefer.is_state_affected(state_icon.state_name):
                 self.state_icons.remove(state_icon)
                 state_icon.delete()
-        if len(self.griefer.states) != len(self.state_icons): self.make_state_boxes()
+        if self.cached_vials_list != list(self.griefer.states): self.update_vials()
+        if self.cached_states_list != list(self.griefer.states): self.make_state_boxes()
 
 class Enemy(GrieferElement, Image):
     def __init__(self, x, y, griefer: Griefer):
