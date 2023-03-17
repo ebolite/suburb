@@ -125,6 +125,7 @@ class Skill():
     def format_formula(self, formula: str, user: "strife.Griefer", target: "strife.Griefer") -> str:
         formula = user.format_formula(formula, "user")
         formula = target.format_formula(formula, "target")
+        print(f"{self.name} formula {formula}")
         return formula
 
     # affect each target in list
@@ -335,6 +336,7 @@ class Aspect():
         if not raw:
             stat_ratio *= self.balance_mult
             stat_ratio *= self.ratio_mult
+        print(f"{self.name} ratio {stat_ratio}")
         return stat_ratio
 
     # skills that depend on how little ASPECT the target has use inverse_ratio
@@ -655,7 +657,7 @@ execute = AspectSkill("execute", doom, 50)
 execute.description = "Deals more damage the higher the target's DOOM."
 execute.add_vial_cost("aspect", "user.power//2")
 execute.add_vial_cost("vim", "user.power//2")
-execute.damage_formula = "user.base_power * target.doom.ratio * (7 + 3*coin)"
+execute.damage_formula = "user.base_damage * target.doom.ratio * (7 + 3*coin)"
 
 # light
 roll = AspectSkill("roll", light, 10)
@@ -663,7 +665,7 @@ roll.description = "Does a large amount of damage on HEADS, but nothing on SCRAT
 roll.action_cost = 0
 roll.cooldown = 1
 roll.add_vial_cost("aspect", "user.power")
-roll.damage_formula = "user.base_power * 3 * coin"
+roll.damage_formula = "user.base_damage * 3 * coin"
 
 stack_deck = AspectSkill("stack deck", light, 50)
 stack_deck.description = "Lowers the LIGHT (luck) of the target and all their friends."
@@ -686,7 +688,7 @@ strike_between.description = "Deals damage based on your VOID and increases the 
 strike_between.add_vial_cost("aspect", "user.power//2")
 strike_between.add_vial_cost("vim", "user.power//2")
 strike_between.add_aspect_change("void", "user.power")
-strike_between.damage_formula = "user.base_power * user.void.ratio * 4 * (1 + 0.5*coin)"
+strike_between.damage_formula = "user.base_damage * user.void.ratio * 4 * (1 + 0.5*coin)"
 
 class ClassSkill(Skill):
     def __init__(self, name: str, aspect: Aspect, class_name: str, required_rung: int):
@@ -744,9 +746,7 @@ for aspect_name, aspect in aspects.items():
     # knight
     aspectblade = ClassSkill(f"{aspect.name}blade", aspect, "knight", 25)
     aspectblade.description = f"Deals damage based on your {aspect.name.upper()}."
-    aspectblade.add_vial_cost("vim", "user.power//3")
-    aspectblade.add_vial_cost("aspect", "user.power//3")
-    aspectblade.damage_formula = f"user.base_power * user.{aspect.name}.ratio * (4 + coin)"
+    aspectblade.damage_formula = f"user.base_damage * user.{aspect.name}.ratio * (4 + coin)"
 
     # prince
     aspectloss = ClassSkill(f"{aspect.name}loss", aspect, "prince", 25)
@@ -759,7 +759,7 @@ for aspect_name, aspect in aspects.items():
     aspectblast.description = f"Deals damage based on your {aspect.name.upper()} and lowers the target's {aspect.name.upper()}"
     aspectblast.add_vial_cost("vim", "user.power//2")
     aspectblast.add_vial_cost("aspect", "user.power")
-    aspectblast.damage_formula = f"user.base_power * user.{aspect.name}.ratio * (5 + 2*coin)"
+    aspectblast.damage_formula = f"user.base_damage * user.{aspect.name}.ratio * (5 + 2*coin)"
     aspectblast.cooldown = 2
     aspectblast.add_aspect_change(aspect.name, f"user.power")
 
@@ -829,7 +829,7 @@ for aspect_name, aspect in aspects.items():
     # bard
     aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)
     aspectclub.description = f"Deals damage depending on how low your {aspect.name.upper()} is. Is free."
-    aspectclub.damage_formula = f"user.base_power * user.{aspect.name}.inverse_ratio * (4 + coin)"
+    aspectclub.damage_formula = f"user.base_damage * user.{aspect.name}.inverse_ratio * (4 + coin)"
 
     # rogue
     aspectloot = ClassSkill(f"{aspect.name}-loot", aspect, "rogue", 25)
