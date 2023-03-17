@@ -823,6 +823,8 @@ for aspect_name, aspect in aspects.items():
     scatteraspect.target_self = True
     scatteraspect.parryable = False
     scatteraspect.special_effect = scatter_effect_constructor(aspect)
+    scatteraspect.action_cost = 0
+    scatteraspect.cooldown = 2
 
     # bard
     aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)
