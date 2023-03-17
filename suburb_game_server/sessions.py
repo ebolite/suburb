@@ -264,14 +264,13 @@ class Map():
         return self.find_room(coords[0], coords[1])
     
     def get_starting_room(self, direction) -> "Room":
-        for y, line in reversed(list(enumerate(self.map_tiles))):
-            if direction == "right": loop_line = list(enumerate(line))
-            else: loop_line = reversed(list(enumerate(line)))
-            for x, tile_char in loop_line:
-                room = self.find_room(x, y)
-                if room.tile.impassible: continue
-                if room.tile.ramp: continue
-                return room
+        if direction == "right": x = len(self.map_tiles[0]) - 1
+        else: x = 0
+        for y in reversed(range(len(self.map_tiles))):
+            room = self.find_room(x, y)
+            if room.tile.impassible: continue
+            if room.tile.ramp: continue
+            return room
         else: raise AssertionError
 
     def populate_with_underlings(self, underling_type: str, cluster_size: int, number: int, min_tier:int, max_tier: int):
