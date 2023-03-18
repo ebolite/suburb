@@ -57,6 +57,12 @@ icon_surf = pygame.image.load("sprites\\icon.png").convert()
 pygame.display.set_icon(icon_surf)
 pygame.display.set_caption(f"SUBURB CLIENT {util.VERSION}")
 
+def rotate_points_about_origin(x: int, y: int, rotation: int) -> tuple[int, int]:
+    if rotation == 90: return -y, x
+    elif rotation == 180: return -x, -y
+    elif rotation == 270: return y, -x
+    else: return x, y
+
 def clear_elements():
     for element in ui_elements.copy():
         element.delete()
@@ -1245,10 +1251,7 @@ class Overmap(UIElement):
             x, y = int(coords[0]), int(coords[1])
             x = len(self.map_tiles[0]) - x - 1
             true_x, true_y = x-cx, y-cy
-            if rotation == 90: true_x, true_y = -true_y, true_x
-            elif rotation == 180: true_x, true_y = -true_x, -true_y
-            elif rotation == 270: true_x, true_y = true_y, -true_x
-            else: true_x, true_y = true_x, true_y
+            true_x, true_y = rotate_points_about_origin(true_x, true_y, rotation)
             true_x, true_y = true_x+cx, true_y+cy
             new_map_types[f"{true_x}, {true_y}"] = self.map_types[name]
         return new_map_types
@@ -1261,10 +1264,7 @@ class Overmap(UIElement):
             x, y = int(coords[0]), int(coords[1])
             x = len(self.map_tiles[0]) - x - 1
             true_x, true_y = x-cx, y-cy
-            if rotation == 90: true_x, true_y = -true_y, true_x
-            elif rotation == 180: true_x, true_y = -true_x, -true_y
-            elif rotation == 270: true_x, true_y = true_y, -true_x
-            else: true_x, true_y = true_x, true_y
+            true_x, true_y = rotate_points_about_origin(true_x, true_y, rotation)
             true_x, true_y = true_x+cx, true_y+cy
             new_specials[f"{true_x}, {true_y}"] = self.specials[name]
         return new_specials
@@ -1341,7 +1341,7 @@ class OvermapTile(UIElement):
 
     def get_button_func(self, input_dx, input_dy, rotation):
         def button_func():
-            directions = {
+            directions: dict[tuple[int, int], str] = {
                 (0, 1): "north",
                 (0, -1): "south",
                 (1, 0): "east",
@@ -1350,11 +1350,8 @@ class OvermapTile(UIElement):
             dx, dy = input_dx, input_dy
             # i don't understand math but for some reason the directions flip on every other rotation idk why
             if (rotation // 90) % 2: dx, dy = -dx, -dy
-            if rotation == 90: true_dx, true_dy = -dy, dx
-            elif rotation == 180: true_dx, true_dy = -dx, -dy
-            elif rotation == 270: true_dx, true_dy = dy, -dx
-            else: true_dx, true_dy = dx, dy
-            direction = directions[(true_dx, true_dy)]
+            dx, dy = rotate_points_about_origin(dx, dy, rotation)
+            direction = directions[(dx, dy)]
             client.requestplus(intent="overmap_move", content=direction)
             self.overmap.update_map()
         return button_func
@@ -1391,6 +1388,10 @@ class OvermapTile(UIElement):
             button.bind_to(self.overmap)
             button.draw_sprite = False
             button.inactive_condition = self.get_inactive_condition(rotation)
+            for existing_button in self.overmap.buttons.copy():
+               if existing_button.x == button.x and existing_button.y == button.y:
+                   existing_button.delete()
+                   self.overmap.buttons.remove(existing_button)
             self.overmap.buttons.append(button)
         if self.name in self.overmap.rotation_map_types[rotation]:
             map_type = self.overmap.rotation_map_types[rotation][self.name]
