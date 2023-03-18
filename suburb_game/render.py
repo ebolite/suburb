@@ -2037,6 +2037,8 @@ class Enemy(GrieferElement, Image):
         super().__init__(x, y, self.path)
         grist_type = griefer.grist_type or "build"
         new_color = config.gristcolors[grist_type]
+        if isinstance(new_color, list):
+            new_color = random.choice(new_color)
         self.convert_colors.append((themes.default.dark, new_color)) 
         self.make_labels()
         click_check.append(self)

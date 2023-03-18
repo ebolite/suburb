@@ -336,7 +336,11 @@ class Sylladex():
 
     @property
     def modus(self) -> Modus:
-        return moduses[self.modus_name] 
+        try:
+            return moduses[self.modus_name] 
+        except KeyError:
+            self.modus_name = self.moduses[0]
+            return moduses[self.modus_name]
     
     @property
     def moduses(self) -> list[str]:
