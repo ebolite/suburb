@@ -61,6 +61,11 @@ def play():
         loginbutton = render.Button(.5, .4, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", login_scene)
         registerbutton = render.Button(.5, .52, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
         back = render.Button(.5, .64, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
+        def disconnect_func():
+            client.dic["session_name"] = ""
+            client.dic["session_pass_hash"] = ""
+            connect()
+        disconnect_button = render.TextButton(0.5, .76, 128, 32, "Disconnect", disconnect_func)
     else:
         connect()
 
@@ -208,6 +213,8 @@ def connect():
         if "Success" not in log.text:
             client.dic["session_name"] = ""
             client.dic["session_pass_hash"] = ""
+        else:
+            play()
         print(f"log text {log.text}")
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
