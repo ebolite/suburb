@@ -837,6 +837,12 @@ for aspect_name, aspect in aspects.items():
     aspectpiece.add_aspect_change(aspect.name, f"user.power*2")
     aspectpiece.parryable = False
 
+    aspectsweep = ClassSkill(f"{aspect.name}sweep", aspect, "maid", 100)
+    aspectsweep.description = f"Increases the {aspect.name.upper()} of the target."
+    aspectsweep.add_vial_cost("aspect", "user.power//2")
+    aspectsweep.add_aspect_change(aspect.name, f"user.power")
+    aspectsweep.parryable = False
+
     # page
     scatteraspect = ClassSkill(f"scatter {aspect.name}", aspect, "page", 25)
     scatteraspect.description = f"Increases the {aspect.name.upper()} of everyone in the session."
