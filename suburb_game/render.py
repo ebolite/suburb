@@ -394,6 +394,7 @@ class Button(UIElement):
         self.alpha = 255
         self.alt = alt
         self.alt_alpha = 255
+        self.draw_condition: Optional[Callable] = None
         self.absolute = False
         self.convert = True
         self.theme = theme
@@ -408,6 +409,7 @@ class Button(UIElement):
         mouseup_check.append(self)
 
     def update(self):
+        if self.draw_condition is not None and not self.draw_condition(): return
         if self.alt is not None and self.alt() and self.alt_img_path is not None: # alternative display condition
             self.surf = pygame.image.load(self.alt_img_path)
             self.surf.set_alpha(self.alt_alpha)
@@ -457,6 +459,7 @@ class Button(UIElement):
             self.active = True
 
     def mouseup(self, isclicked):
+        if self.draw_condition is not None and not self.draw_condition(): return
         self.active = False
         if isclicked:
             if self.double_click and time.time() - self.last_clicked > 0.5: # 500 ms allowance

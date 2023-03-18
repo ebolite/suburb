@@ -81,3 +81,6 @@ def current_log() -> list[str]:
 
 sylladexes = {}
 sylladexes = readjson(sylladexes, "sylladexes")
+
+last_client_data = {}
+last_client_data = readjson(last_client_data, "last_client_data")

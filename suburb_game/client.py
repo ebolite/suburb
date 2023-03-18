@@ -1,6 +1,7 @@
 import pygame
 import sys
 import pathlib
+import util
 import hashlib
 import socket
 import json
@@ -17,6 +18,19 @@ dic = {
 "character_pass_hash": "",
 "content": ""
 }
+
+def save_client_data():
+    util.last_client_data["session_name"] = dic["session_name"]
+    util.last_client_data["session_pass_hash"] = dic["session_pass_hash"]
+    util.last_client_data["character"] = dic["character"]
+    util.last_client_data["character_pass_hash"] = dic["character_pass_hash"]
+    util.writejson(util.last_client_data, "last_client_data")
+
+def load_client_data():
+    dic["session_name"] = util.last_client_data["session_name"]
+    dic["session_pass_hash"] = util.last_client_data["session_pass_hash"]
+    dic["character"] = util.last_client_data["character"]
+    dic["character_pass_hash"] = util.last_client_data["character_pass_hash"]
 
 def receive_data() -> str:
     data_fragments = []

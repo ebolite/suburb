@@ -56,10 +56,13 @@ def placeholder():
 
 @scene
 def play():
-    text = render.Text(0.5, 0.3, f"Login to an existing character or register a new character?")
-    loginbutton = render.Button(.5, .4, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", login)
-    registerbutton = render.Button(.5, .52, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
-    back = render.Button(.5, .64, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
+    if client.dic["session_name"] != "":
+        text = render.Text(0.5, 0.3, f"Login to an existing character or register a new character?")
+        loginbutton = render.Button(.5, .4, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", login_scene)
+        registerbutton = render.Button(.5, .52, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
+        back = render.Button(.5, .64, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
+    else:
+        connect()
 
 @scene
 def register():
@@ -93,13 +96,29 @@ def register():
             client.dic["character"] = ""
             client.dic["character_pass_hash"] = ""
         else:
+            client.save_client_data()
             namecharacter()
         print(f"log text {log.text}")
     confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
 
-@scene
 def login():
+    reply = client.request("login")
+    if "Success" not in reply:
+        client.dic["character"] = ""
+        client.dic["character_pass_hash"] = ""
+    else:
+        client.save_client_data()
+        player_info = client.requestdic("player_info")
+        if player_info["setup"]:
+            Sylladex.current_sylladex().validate()
+            map_scene()
+        else:
+            namecharacter() # todo: change to play game function
+    return reply
+
+@scene
+def login_scene():
     log = render.Text(0.5, 0.20, "")
     name = render.Text(0.5, 0.30, f"Character Name (Case-sensitive)")
     name.color = current_theme().dark
@@ -116,18 +135,7 @@ def login():
         log.text = "Connecting..."
         client.dic["character"] = namebox.text
         client.dic["character_pass_hash"] = client.hash(pwbox.text)
-        log.text = client.request("login")
-        if "Success" not in log.text:
-            client.dic["character"] = ""
-            client.dic["character_pass_hash"] = ""
-        else:
-            player_info = client.requestdic("player_info")
-            if player_info["setup"]:
-                Sylladex.current_sylladex().validate()
-                map_scene()
-            else:
-                namecharacter() # todo: change to play game function
-        print(f"log text {log.text}")
+        log.text = login()
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
 
@@ -178,6 +186,9 @@ def newsession():
 @scene
 def connect():
     log = render.Text(0.5, 0.20, "")
+    title_text = render.Text(0.5, 0.2, f"Connect to a session.")
+    title_text.color = current_theme().dark
+    title_text.outline_color = current_theme().black
     name = render.Text(0.5, 0.30, f"Session Name")
     name.color = current_theme().dark
     name.outline_color = current_theme().black
@@ -1299,20 +1310,24 @@ def spoils(grist_dict: dict, echeladder_rungs: int):
         echeladder_line_2.color = current_theme().dark
     back_button = render.Button(0.08, 0.95, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", map_scene)
 
+def continue_button_func():
+    client.load_client_data()
+    login()
+
+def continue_button_draw_condition():
+    if util.last_client_data: return True
+    else: return False
+
 @scene
 def title():
     logo = render.Image(.5, .20, "sprites\\largeicon.png")
     logotext = render.Image(.5, .47, "sprites\\suburb.png")
-    def isconnected():
-        if client.dic["session_name"] != "":
-            return False # return False because the alternative condition is unclickable
-        else:
-            return True
-    play_button = render.Button(.5, .59, "sprites\\buttons\\play.png", "sprites\\buttons\\playpressed.png", play, alt=isconnected, alt_img_path="sprites\\buttons\\playgrey.png", altclick = None)
+    play_button = render.Button(.5, .59, "sprites\\buttons\\play.png", "sprites\\buttons\\playpressed.png", play)
     play_button.alt_alpha = 100
-    connect_button = render.Button(.5, .70, "sprites\\buttons\\connect.png", "sprites\\buttons\\connectpressed.png", connect)
-    new_session_button = render.Button(.5, .81, "sprites\\buttons\\newsession.png", "sprites\\buttons\\newsessionpressed.png", newsessionprompt)
-    options_button = render.Button(.5, .92, "sprites\\buttons\\options.png", "sprites\\buttons\\optionspressed.png", newsessionprompt)
+    new_session_button = render.Button(.5, .70, "sprites\\buttons\\newsession.png", "sprites\\buttons\\newsessionpressed.png", newsessionprompt)
+    options_button = render.Button(.5, .81, "sprites\\buttons\\options.png", "sprites\\buttons\\optionspressed.png", newsessionprompt)
+    continue_button = render.Button(.5, .92, "sprites\\buttons\\continue.png", "sprites\\buttons\\continuepressed.png", continue_button_func)
+    continue_button.draw_condition = continue_button_draw_condition
     versiontext = render.Text(0, 0, f"SUBURB Version {util.VERSION}")
     versiontext.absolute = True
     versiontext.color = current_theme().dark
