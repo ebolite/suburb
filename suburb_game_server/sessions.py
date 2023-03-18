@@ -392,7 +392,9 @@ class Map():
         return self.__dict__[attr]
 
     def get_tile(self, x: int, y: int) -> tiles.Tile:
-        return tiles.tiles[self.map_tiles[y][x]]
+        try:
+            return tiles.tiles[self.map_tiles[y][x]]
+        except KeyError: return tiles.tiles["."]
     
     def change_tile(self, x: int, y: int, tile_char: str):
         self.map_tiles[y][x] = tile_char
