@@ -1136,8 +1136,7 @@ class Player():
         connected = self.session.connected
         available_phernalia = ["sealed cruxtruder", "totem lathe", "alchemiter", "punch designix", "pre-punched card"]
         if len(connected) >= 2:
-            # todo: add more phernalia with more connections
-            ...
+            available_phernalia.append("gristTorrent disc")
         for item in self.deployed_phernalia:
             available_phernalia.remove(item)
         phernalia_dict = {}
