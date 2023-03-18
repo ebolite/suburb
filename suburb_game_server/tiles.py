@@ -167,6 +167,18 @@ stairwell = Tile("-", "stairwell")
 stairwell.stair = True
 stairwell.build_cost = 200
 
+# ladder = Tile("=", "ladder")
+# ladder.stair = True
+# ladder.infallible = True
+# ladder.build_cost = 200
+
+rope = Tile("i", "rope")
+rope.stair = True
+rope.infallible = True
+rope.build_cost = 150
+rope.solid = False
+rope.supported = True
+
 elevator_shaft = Tile("v", "elevator shaft")
 elevator_shaft.stair = True
 elevator_shaft.automove = True

@@ -60,7 +60,8 @@ tiles = {
     "'": "sprites\\tiles\\stalactite.png",
     "$": "sprites\\tiles\\stash.png",
     "n": "sprites\\tiles\\nest.png",
-    "_": "sprites\\tiles\\_.png"
+    "_": "sprites\\tiles\\_.png",
+    "i": "sprites\\tiles\\rope.png",
     }
 
 icons = {

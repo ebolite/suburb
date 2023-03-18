@@ -876,7 +876,8 @@ allowedtiles = {
 "=": ["#", "\\", "/", "^", "|", "+"],
 "+": ["#", "\\", "/", "^", "|", "="],
 "'": ["#"],
-"_": ["#"]
+"_": ["#"],
+"i": ["#", "|"]
 } # tiles allowed for tiling
 
 nonselftiles = ["/", "\\"] # tiles that don't tile with themselves
@@ -887,6 +888,8 @@ directiontiles = { # tiles that only tile from certain directions
 "X": ["left", "right", "down"],
 "'": ["up", "left", "right"]
 }
+
+disallow_other_tiles_from_below = ["i"] # basically just rope
 
 def dircheck(tile, direction):
     if tile in directiontiles:
@@ -960,7 +963,7 @@ class Tile(UIElement):
         offsety = 0
         offsetx = 0
         if (len(self.tile_map.map) > self.y + 1 and 
-            self.tile_map.map[self.y+1][self.x] in self.allowedtiles and 
+            self.tile_map.map[self.y+1][self.x] in self.allowed_below_tiles and 
             dircheck(self.tile_map.map[self.y+1][self.x], "up")): # tile below is the same
             offsety += tile_wh
             if (self.y != 0 and 
@@ -1031,6 +1034,11 @@ class Tile(UIElement):
             if self.tile not in nonselftiles:
                 allowed = [self.tile]
         return allowed
+
+    @property
+    def allowed_below_tiles(self):
+        if self.tile in disallow_other_tiles_from_below: return [self.tile]
+        else: return self.allowedtiles
 
     @property
     def tile(self):
