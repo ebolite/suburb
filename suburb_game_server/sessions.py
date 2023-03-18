@@ -246,19 +246,19 @@ class Map():
                 map = map_from_file("gates.txt")
                 map += deepcopy(random.choice(map_tiles["house"]))
             case "gate1":
-                map = deepcopy(random.choice(map_tiles["gateframe"]))
+                map = map_from_file(f"frame1", "gateframe")
             case "gate2":
-                map = deepcopy(random.choice(map_tiles["gateframe"]))
+                map = map_from_file(f"frame2", "gateframe")
             case "gate3":
-                map = deepcopy(random.choice(map_tiles["gateframe"]))
+                map = map_from_file(f"frame3", "gateframe")
             case "gate4":
-                map = deepcopy(random.choice(map_tiles["gateframe"]))
+                map = map_from_file(f"frame4", "gateframe")
             case "gate5":
-                map = deepcopy(random.choice(map_tiles["gateframe"]))
+                map = map_from_file(f"frame5", "gateframe")
             case "gate6":
-                map = deepcopy(random.choice(map_tiles["gateframe"]))
+                map = map_from_file(f"frame6", "gateframe")
             case "gate7":
-                map = deepcopy(random.choice(map_tiles["gateframe"]))
+                map = map_from_file(f"frame7", "gateframe")
             case _:
                 map = deepcopy(random.choice(map_tiles["land"]))
                 self.overmaptile = "#"
