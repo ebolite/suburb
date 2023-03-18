@@ -217,6 +217,8 @@ bedroom = Tile("B", "bedroom")
 bathroom = Tile("b", "bathroom")
 
 foyer = Tile("F", "foyer")
+foyer.stair = True
+foyer.build_cost = 200
 
 living_room = Tile("L", "living room")
 
