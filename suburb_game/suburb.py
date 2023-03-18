@@ -1099,6 +1099,8 @@ def assign_strife_specibus(kind_name: str, assigning_instance_name:str, last_sce
         if reply: 
             util.log(f"You assigned {kind_name}!")
             reply = client.requestplus(intent="move_to_strife_deck", content={"instance_name": assigning_instance_name, "kind_name": kind_name})
+            if reply:
+                Sylladex.current_sylladex().remove_instance(assigning_instance_name)
         else: util.log("Failed to assign.")
         strife_portfolio_scene()
     confirm_button = render.Button(0.5, 0.2, "sprites/buttons/confirm.png", "sprites/buttons/confirmpressed.png", confirm)
