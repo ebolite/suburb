@@ -45,14 +45,14 @@ def filter_item_name(name: str) -> str:
     return name.replace("+", " ")
 
 def shorten_item_name(old_name: str) -> str:
-    words = old_name.replace("+", " ").replace("-", " ").split(" ")
-    if len(words) > 2:
-        base = words.pop()
-        text = ""
-        for word in words:
-            text += f"{word[0]}."
-        new_name = f"{text} {base}"
-    else: new_name = " ".join(words)
+    words = old_name.replace("+", " ")
+    if len(words) <= 2: return words
+    words = words.replace("-", " ").split(" ")
+    base = words.pop()
+    text = ""
+    for word in words:
+        text += f"{word[0]}."
+    new_name = f"{text} {base}"
     return new_name
 
 def captchalogue_instance(instance_name: str, modus_name: str):
