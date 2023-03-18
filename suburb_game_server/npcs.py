@@ -129,11 +129,11 @@ class Npc():
         grist_index = grist_list.index(self.grist_type)
         tier = config.grists[self.grist_type]["tier"]
         spoils_dict["build"] = self.power
-        spoils_dict[self.grist_type] = self.power // tier
+        spoils_dict[self.grist_type] = self.power
         for i in reversed(range(grist_index)):
             next_grist = grist_list[i]
             tier = config.grists[next_grist]["tier"]
-            amount = (self.power // (tier)) // (i + 2)
+            amount = (self.power // (tier)) // (i*0.5 + 2)
             if amount == 0: break
             spoils_dict[next_grist] = amount
         for grist_name, amount in spoils_dict.copy().items():
