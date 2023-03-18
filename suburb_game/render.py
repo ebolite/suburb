@@ -1071,6 +1071,11 @@ class TileDisplay(UIElement):
         else:
             return "sprites\\tiles\\missingtile.png"
 
+    def delete(self):
+        if self.popup is not None:
+            self.popup.delete()
+        return super().delete()
+
     def update(self):
         if not self.is_mouseover() and self.popup is not None: 
             self.popup.delete()
@@ -1078,16 +1083,19 @@ class TileDisplay(UIElement):
         if self.tooltip is not None and self.is_mouseover() and self.popup is None:
             x, y = pygame.mouse.get_pos()
             tooltip = self.tooltip
-            popup_text = Text(0.5, 0.5, f"{tooltip}")
-            popup_text.fontsize = 14
-            popup_text.color = self.theme.dark
-            popup_width = popup_text.get_width()+self.tooltip_padding*2
-            self.popup = SolidColor(x, y, popup_width, popup_text.fontsize+self.tooltip_padding*2, self.theme.white)
+            self.popup_text = Text(0.5, 0.5, f"{tooltip}")
+            self.popup_text.fontsize = 14
+            self.popup_text.color = self.theme.dark
+            popup_width = self.popup_text.get_width()+self.tooltip_padding*2
+            self.popup = SolidColor(x, y, popup_width, self.popup_text.fontsize+self.tooltip_padding*2, self.theme.white)
             self.popup.outline_color = self.theme.dark
             self.popup.follow_mouse = True
             self.popup.rect_x_offset = -popup_width
-            popup_text.bring_to_top()
-            popup_text.bind_to(self.popup)
+            always_on_top_check.append(self.popup)
+            always_on_top_check.append(self.popup_text)
+            update_check.remove(self.popup)
+            update_check.remove(self.popup_text)
+            self.popup_text.bind_to(self.popup)
         self.update_image()
         self.surf = pygame.Surface((tile_wh, tile_wh))
         self.surf.blit(self.image, (0, 0), (self.offsetx, self.offsety, tile_wh, tile_wh))
