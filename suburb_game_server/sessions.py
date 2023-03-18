@@ -169,8 +169,8 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
                 if map_x < 0: map_x += len(map_tiles[0])
                 if map_x >= len(map_tiles[0]): map_y -= len(map_tiles[0])
                 else: 
-                    new_line.append(map_tiles[real_y][real_x])
-                    map = self.find_map(real_x, real_y)
+                    new_line.append(map_tiles[map_y][map_x])
+                    map = self.find_map(map_x, map_y)
                     specials = map.specials
                     if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
                     if map.special_type: map_types[f"{map_tile_x}, {map_tile_y}"] = map.special_type
@@ -188,10 +188,10 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         return Map(name, self.session, self)
 
     def find_map(self, x, y) -> "Map":
-        if y < 0: y += len(map_tiles)
-        if y >= len(map_tiles): y -= len(map_tiles) # loop if out of bounds
-        if x < 0: x += len(map_tiles[0])
-        if x >= len(map_tiles[0]): y -= len(map_tiles[0])
+        if y < 0: y += len(self.map_tiles)
+        if y >= len(self.map_tiles): y -= len(self.map_tiles) # loop if out of bounds
+        if x < 0: x += len(self.map_tiles[0])
+        if x >= len(self.map_tiles[0]): y -= len(self.map_tiles[0])
         return Map(f"{x}, {y}", self.session, self)
 
     def __setattr__(self, attr, value):
