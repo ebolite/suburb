@@ -105,25 +105,33 @@ class ClassPassive(State):
         self.beneficial = True
         self.aspect = aspect
 
+# heir
+
 class AspectyState(ClassPassive):
-    def __init__(self, name, aspect: "skills.Aspect", required_rung: int):
-        super().__init__(name, aspect, "heir", required_rung)
 
     def new_turn(self, griefer: "strife.Griefer"):
         adjust_reply = self.aspect.adjust(griefer, griefer.power//3)
         griefer.strife.log(adjust_reply)
 
+# bard
+
 class TragedyState(ClassPassive):
-    def __init__(self, name, aspect: "skills.Aspect", required_rung: int):
-        super().__init__(name, aspect, "bard", required_rung)
 
     def new_turn(self, griefer: "strife.Griefer"):
         adjust_reply = self.aspect.adjust(griefer, -griefer.power//3)
         griefer.strife.log(adjust_reply)
 
+class DemiseState(ClassPassive):
+    def new_turn(self, griefer: "strife.Griefer"):
+        adjustment = -griefer.power//6
+        adjust_reply = self.aspect.calculate_adjustment(adjustment)
+        for other_griefer in griefer.strife.griefer_list:
+            aspect.adjust(other_griefer, adjustment)
+        griefer.strife.log(f"Everyone's {aspect.name.upper()} decreased by {-adjust_reply}!")
+
+# sylph
+
 class FaeState(ClassPassive):
-    def __init__(self, name, aspect: "skills.Aspect", required_rung: int):
-        super().__init__(name, aspect, "sylph", required_rung)
 
     def new_turn(self, griefer: "strife.Griefer"):
         healing = griefer.power
@@ -133,8 +141,6 @@ class FaeState(ClassPassive):
             griefer.strife.log(self.aspect.adjust(allied_griefer, adjustment))
 
 class BreakState(ClassPassive):
-    def __init__(self, name, aspect: "skills.Aspect", required_rung: int):
-        super().__init__(name, aspect, "knight", required_rung)
 
     def on_apply(self, griefer: "strife.Griefer"):
         adjust = int(griefer.get_aspect_ratio(self.aspect.name) * griefer.power)
@@ -142,11 +148,13 @@ class BreakState(ClassPassive):
         griefer.strife.log(log_message)
 
 for _, aspect in skills.aspects.items():
-    aspectystate = AspectyState(f"{aspect.name}y", aspect, 25)
+    aspectystate = AspectyState(f"{aspect.name}y", aspect, "heir", 25)
     aspectystate.tooltip = f"{aspect.name.upper()} increases each turn."
-    tragedystate = TragedyState(f"{aspect.name} tragedy", aspect, 25)
-    tragedystate.tooltip = f"{aspect.name.upper()} decreases sharply each turn."
-    faestate = FaeState(f"{aspect.name} fae", aspect, 25)
+    tragedystate = TragedyState(f"{aspect.name} tragedy", aspect, "bard", 25)
+    tragedystate.tooltip = f"{aspect.name.upper()} decreases each turn."
+    demisestate = DemiseState(f"demise of {aspect.name}", aspect, "bard", 100)
+    demisestate.tooltip = f"The {aspect.name.upper()} of everyone in the strife decreases each turn."
+    faestate = FaeState(f"{aspect.name} fae", aspect, "sylph", 25)
     faestate.tooltip = f"Heals all allies and increases their {aspect.name.upper()} each turn."
-    breakstate = BreakState(f"{aspect.name}break", aspect, 100)
+    breakstate = BreakState(f"{aspect.name}break", aspect, "knight", 100)
     breakstate.tooltip = f"Your {aspect.maximum_name} is increased at the start of combat based on your {aspect}."
