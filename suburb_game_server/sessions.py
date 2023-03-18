@@ -167,13 +167,12 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
                 if map_y < 0: map_y += len(map_tiles)
                 if map_y >= len(map_tiles): map_y -= len(map_tiles) # loop if out of bounds
                 if map_x < 0: map_x += len(map_tiles[0])
-                if map_x >= len(map_tiles[0]): map_y -= len(map_tiles[0])
-                else: 
-                    new_line.append(map_tiles[map_y][map_x])
-                    map = self.find_map(map_x, map_y)
-                    specials = map.specials
-                    if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
-                    if map.special_type: map_types[f"{map_tile_x}, {map_tile_y}"] = map.special_type
+                if map_x >= len(map_tiles[0]): map_x -= len(map_tiles[0])
+                new_line.append(map_tiles[map_y][map_x])
+                map = self.find_map(map_x, map_y)
+                specials = map.specials
+                if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
+                if map.special_type: map_types[f"{map_tile_x}, {map_tile_y}"] = map.special_type
             out_map_tiles.append(new_line)
         return out_map_tiles, out_specials, map_types
 
@@ -191,7 +190,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         if y < 0: y += len(self.map_tiles)
         if y >= len(self.map_tiles): y -= len(self.map_tiles) # loop if out of bounds
         if x < 0: x += len(self.map_tiles[0])
-        if x >= len(self.map_tiles[0]): y -= len(self.map_tiles[0])
+        if x >= len(self.map_tiles[0]): x -= len(self.map_tiles[0])
         return Map(f"{x}, {y}", self.session, self)
 
     def __setattr__(self, attr, value):
@@ -883,7 +882,6 @@ class Player():
             case _:
                 return False
         target_map = self.overmap.find_map(target_x, target_y)
-        if abs(target_map.height - self.map.height) > 1: return False
         if not target_map.map_tiles:
             target_map.gen_map()
         if direction == "north" or direction == "east": entry_direction = "left"
