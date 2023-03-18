@@ -1220,7 +1220,6 @@ class Overmap(UIElement):
         for rotation in [0, 90, 180, 270]:
             self.rotation_specials[rotation] = self.get_specials(rotation)
             self.rotation_map_types[rotation] = self.get_map_types(rotation)
-        self.rotation_surfs = {}
         self.rotation = 0
         self.extra_height = 32 * 9
         self.offsetx = offsetx
@@ -1285,10 +1284,8 @@ class Overmap(UIElement):
 
     def initialize_map(self, rotation):
         self.rect = pygame.Rect(0, 0, self.w, self.h)
-        self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2))
-        self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2))
-        self.rotation_surfs[rotation] = pygame.Surface((self.w, self.h))
-        self.rotation_surfs[rotation].fill(self.theme.black)
+        self.surf = pygame.Surface((self.w, self.h))
+        self.surf.fill(self.theme.black)
         match rotation:
             case 90:
                 draw_tiles = np.rot90(self.map_tiles, 1, axes=(0, 1))
@@ -1301,16 +1298,16 @@ class Overmap(UIElement):
         for y, line in enumerate(draw_tiles):
             for x, char in enumerate(reversed(line)):
                 overmap_tile = OvermapTile(x, y, int(char), self)
-                overmap_tile.blit_surf = self.rotation_surfs[rotation]
+                overmap_tile.blit_surf = self.surf
                 overmap_tile.draw_to_surface(rotation)
 
     def update(self):
         self.mousepan(0)
+        try: self.surf
+        except AttributeError: self.initialize_map(self.rotation)
         self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2)) + self.offsetx
         self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2)) + self.offsety
-        try: self.rotation_surfs[self.rotation]
-        except KeyError: self.initialize_map(self.rotation)
-        screen.blit(self.rotation_surfs[self.rotation],(self.rect.x, self.rect.y))
+        screen.blit(self.surf, (self.rect.x, self.rect.y))
 
     def rotate(self, direction: int):
         if direction == -90:
@@ -1319,6 +1316,7 @@ class Overmap(UIElement):
         if direction == 90:
             self.rotation += 90
             if self.rotation == 360: self.rotation = 0
+        self.initialize_map(self.rotation)
 
     def keypress(self, event):
         match event.key:
