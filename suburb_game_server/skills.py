@@ -154,8 +154,13 @@ class Skill():
             skill = skills[self.additional_skill]
             skill.use(user, targets_list)
         if self.user_skill is not None: 
-            skill = skills[self.user_skill]
-            skill.affect(user, user)
+            # user_skill is not used if the target is the user
+            for griefer in targets_list:
+                if griefer.name == user.name:
+                    break
+            else:
+                skill = skills[self.user_skill]
+                skill.affect(user, user)
 
     # apply skill effects to individual target
     def affect(self, user: "strife.Griefer", target: "strife.Griefer"):
@@ -803,6 +808,19 @@ for aspect_name, aspect in aspects.items():
     findaspect.action_cost = 0
     findaspect.add_apply_state(f"pursuit of {aspect.name}", 5, "1.0")
 
+    usershared = Skill(f"user_{aspect.name}shared")
+    usershared.add_aspect_change(aspect.name, "user.power")
+    usershared.parryable = False
+
+    sharedaspect = ClassSkill(f"shared {aspect.name}", aspect, "mage", 100)
+    sharedaspect.description = f"Increases the {aspect.name.upper()} of the user and sharply increases the {aspect.name.upper()} of the target."
+    sharedaspect.parryable = False
+    sharedaspect.add_vial_cost("aspect", "user.power//2")
+    sharedaspect.action_cost = 0
+    sharedaspect.cooldown = 1
+    sharedaspect.add_aspect_change(aspect.name, f"user.power*2")
+    sharedaspect.user_skill = f"user_{aspect.name}shared"
+
     # witch
     userwork = Skill(f"user_{aspect.name}work")
     userwork.add_aspect_change(aspect.name, f"user.power//1.5")
@@ -832,9 +850,9 @@ for aspect_name, aspect in aspects.items():
 
     # maid
     aspectpiece = ClassSkill(f"{aspect.name}piece", aspect, "maid", 25)
-    aspectpiece.description = f"Sharply increases the {aspect.name.upper()} of the target."
+    aspectpiece.description = f"Very sharply increases the {aspect.name.upper()} of the target."
     aspectpiece.add_vial_cost("aspect", "user.power//2")
-    aspectpiece.add_aspect_change(aspect.name, f"user.power*2")
+    aspectpiece.add_aspect_change(aspect.name, f"user.power*3")
     aspectpiece.parryable = False
 
     aspectsweep = ClassSkill(f"{aspect.name}sweep", aspect, "maid", 100)
