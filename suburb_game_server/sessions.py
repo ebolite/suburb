@@ -533,6 +533,9 @@ class Room():
             npc = npcs.Npc(npc_name)
             out_dict[npc_name] = npc.get_dict()
         return out_dict
+    
+    def get_players(self) -> list:
+        return [Player(player_name).nickname for player_name in self.players if player_name != self.name]
 
     def deploy(self, client: "Player", item_name: str) -> bool:
         if item_name not in client.available_phernalia: print("not in phernalia"); return False
@@ -1097,7 +1100,8 @@ class Player():
         map_tiles, map_specials = self.map.get_view(self.room.x, self.room.y, view_tiles)
         room_instances = self.room.get_instances()
         room_npcs = self.room.get_npcs()
-        room_players = [Player(player_name).nickname for player_name in self.room.players if player_name != self.name]
+        room_players = self.room.get_players()
+        if self.nickname in room_players: room_players.remove(self.nickname)
         if self.strife is None: strife = {}
         else: strife = self.strife.get_dict()
         return map_tiles, map_specials, room_instances, room_npcs, room_players, strife
