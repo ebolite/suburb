@@ -203,6 +203,8 @@ class Strife():
         self.theme = suburb.current_theme()
         self.layer_2_buttons: list[render.UIElement] = []
         self.last_update = time.time()
+        self.tooltips: list[render.Text] = []
+        self.last_displayed_skill_name: str = ""
         render.ui_elements.append(self)
 
     def update_strife_dict(self, strife_dict):
@@ -397,25 +399,49 @@ class Strife():
         render.update_check.append(self)
 
     def make_skill_info_window(self):
-        self.hovered_skill_info_box = render.SolidColor(0, render.SCREEN_HEIGHT-120, render.SCREEN_WIDTH, 120, self.theme.light)
+        PADDING = 8
+        BOX_HEIGHT = 120
+        self.hovered_skill_info_box = render.SolidColor(0, render.SCREEN_HEIGHT-BOX_HEIGHT, render.SCREEN_WIDTH, BOX_HEIGHT, self.theme.light)
         self.hovered_skill_info_box.outline_color = self.theme.dark
-        self.skill_name_label = render.Text(8, 8, "")
+        self.skill_name_label = render.Text(PADDING, PADDING, "")
         self.skill_name_label.color = self.theme.dark
         self.skill_name_label.absolute = True
         self.skill_name_label.bind_to(self.hovered_skill_info_box)
-        self.skill_tooltip_display = render.Text(8, 40, "")
-        self.skill_tooltip_display.color = self.theme.dark
-        self.skill_tooltip_display.absolute = True
-        self.skill_tooltip_display.fontsize = 20
-        self.skill_tooltip_display.bind_to(self.hovered_skill_info_box)
+
+    def make_skill_tooltip_display(self):
+        PADDING = 8
+        LINE_PADDING = 4
+        LINE_CHARACTERS = 55
+        assert self.hovered_skill is not None
+        for element in self.tooltips.copy():
+            element.delete()
+            self.tooltips.remove(element)
+        tooltip: str = self.hovered_skill.description
+        lines: list[list[str]] = [[]]
+        index = 0
+        for word in tooltip.split(" "):
+            if len(" ".join(lines[index])) + len(word) > LINE_CHARACTERS: 
+                index += 1
+                lines.append([])
+            lines[index].append(word)
+        joined_lines: list[str] = [" ".join(line) for line in lines]
+        fontsize = min(self.hovered_skill_info_box.h//len(joined_lines) - LINE_PADDING, 20)
+        for i, line in enumerate(joined_lines):
+            line_text = render.Text(PADDING, PADDING*5 + (fontsize+LINE_PADDING)*i, line)
+            line_text.color = self.theme.dark
+            line_text.absolute = True
+            line_text.fontsize = fontsize
+            line_text.bind_to(self.hovered_skill_info_box)
+            self.tooltips.append(line_text)
+        self.last_displayed_skill_name = self.hovered_skill.name
 
     def update_skill_info_window(self):
         if self.hovered_skill is None:
             self.skill_name_label.text = "SELECT A TECHNIQUE"
-            self.skill_tooltip_display.text = ""
         else:
             self.skill_name_label.text = f"{self.hovered_skill.name.upper()}"
-            self.skill_tooltip_display.text = f"{self.hovered_skill.description}"
+            if self.hovered_skill.name != self.last_displayed_skill_name:
+                self.make_skill_tooltip_display()
 
     def make_next_layer_buttons(self, category_name: str):
         self.clear_next_layer_buttons()
