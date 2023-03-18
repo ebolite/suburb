@@ -306,6 +306,7 @@ def abscond_func(user: "strife.Griefer", target: "strife.Griefer"):
 abscond = Skill("abscond")
 abscond.description = "Sweet abscond bro!"
 abscond.use_message = "{user} absconds!"
+abscond.target_self = True
 abscond.special_effect = abscond_func
 player_skills.append("abscond")
 
