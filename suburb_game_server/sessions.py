@@ -1009,6 +1009,11 @@ class Player():
             at_house = True
         else:
             at_house = False
+        if gate_num == 0: # return gate
+            destination_player = self.overmap.player
+            if destination_player is None: return False
+            destination_map = destination_player.land.housemap
+            room = destination_map.random_valid_room([str(1)]) # go back to first gate
         destination_player = self.overmap.gate_location(gate_num, at_house)
         if destination_player is None: return False
         if at_house:
