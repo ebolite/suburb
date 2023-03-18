@@ -485,6 +485,7 @@ blood = Aspect("blood")
 blood.is_vial = True
 blood.vials = ["vim"]
 blood.adjustment_divisor = 1
+breath.ratio_mult = 1.3
 
 life = Aspect("life")
 life.is_vial = True
