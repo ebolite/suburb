@@ -133,7 +133,6 @@ terrain.forbidden = True
 terrain_change = Tile("_", "terrain_change")
 terrain_change.ramp = True
 terrain_change.ramp_direction = "both"
-terrain_change.infallible = True
 terrain_change.forbidden = True
 
 # junction = Tile(";", "junction")

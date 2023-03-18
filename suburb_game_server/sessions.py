@@ -991,9 +991,18 @@ class Player():
             fall_tile = map.get_tile(target_x, target_y+1)
             if fall_tile.infallible or fall_tile.impassible: break
             # fall in opposite direction that ramps face
-            if fall_tile.ramp and fall_tile.ramp_direction == "left": target_x += 1
-            if fall_tile.ramp and fall_tile.ramp_direction == "right": target_x -= 1
-            target_y += 1
+            if fall_tile.ramp and fall_tile.ramp_direction == "left": 
+                target_x += 1
+                target_y += 1
+            elif fall_tile.ramp and fall_tile.ramp_direction == "right": 
+                target_x -= 1
+                target_y += 1
+            elif fall_tile.ramp and fall_tile.ramp_direction == "both":
+                if direction == "right": target_x += 1
+                if direction == "left": target_x -= 1
+            else:
+                target_y += 1
+            target_tile = map.get_tile(target_x, target_y)
         new_room = map.find_room(target_x, target_y)
         # check if entered gate room
         try: 

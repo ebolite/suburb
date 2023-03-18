@@ -869,13 +869,14 @@ class TileMap(UIElement):
         super(TileMap, self).delete()
 
 allowedtiles = {
-"#": ["|", "=", "+", "'"],
+"#": ["|", "=", "+", "'", "_"],
 "|": ["#", "\\", "/", "^", "=", "+"],
 "\\": ["#", "/", "X", "|", "=", "+"],
 "/": ["#", "\\", "X", "|", "=", "+"],
 "=": ["#", "\\", "/", "^", "|", "+"],
 "+": ["#", "\\", "/", "^", "|", "="],
 "'": ["#"],
+"_": ["#"]
 } # tiles allowed for tiling
 
 nonselftiles = ["/", "\\"] # tiles that don't tile with themselves
