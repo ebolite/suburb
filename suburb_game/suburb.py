@@ -1416,9 +1416,9 @@ def main():
         while render.render():
             ...
     except TimeoutError:
-        main()
+        connection_screen()
     except ConnectionResetError:
-        main()
+        connection_screen()
 
 if __name__ == "__main__":
     main()
