@@ -869,12 +869,13 @@ class TileMap(UIElement):
         super(TileMap, self).delete()
 
 allowedtiles = {
-"#": ["|", "=", "+"],
+"#": ["|", "=", "+", "'"],
 "|": ["#", "\\", "/", "^", "=", "+"],
 "\\": ["#", "/", "X", "|", "=", "+"],
 "/": ["#", "\\", "X", "|", "=", "+"],
 "=": ["#", "\\", "/", "^", "|", "+"],
-"+": ["#", "\\", "/", "^", "|", "="]
+"+": ["#", "\\", "/", "^", "|", "="],
+"'": ["#"],
 } # tiles allowed for tiling
 
 nonselftiles = ["/", "\\"] # tiles that don't tile with themselves
@@ -883,6 +884,7 @@ directiontiles = { # tiles that only tile from certain directions
 "/": ["right", "down"],
 "\\": ["left", "down"],
 "X": ["left", "right", "down"],
+"'": ["up", "left", "right"]
 }
 
 def dircheck(tile, direction):

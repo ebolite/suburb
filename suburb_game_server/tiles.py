@@ -232,9 +232,9 @@ stash.forbidden = True
 nest = Tile("n", "nest")
 nest.forbidden = True
 
-stalagtite = Tile("'", "stalagtite")
-stalagtite.forbidden = True
-stalagtite.solid = False
+stalactite = Tile("'", "stalactite")
+stalactite.forbidden = True
+stalactite.solid = False
 
 return_gate = Tile("0", "return gate")
 return_gate.forbidden = True
