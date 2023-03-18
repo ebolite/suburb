@@ -650,7 +650,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             if target_instance.name in player.sylladex:
                 if not player.consume_instance(target_instance.name): print("couldn't consume"); return False
             else:
-                if target_instance.name not in player.room: print("couldn't find dowel in room"); return False
+                if target_instance.name not in player.room.instances: print("couldn't find dowel in room"); return False
                 player.room.remove_instance(target_instance.name)
             instance.inserted = target_instance.name
             return True

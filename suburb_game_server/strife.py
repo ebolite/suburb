@@ -445,7 +445,7 @@ class Griefer():
             }
             if vial_name in self.stat_bonuses:
                 # to account for the maximum bonus plus some initial starting for 1/2 vials
-                self.vials[vial_name]["current"] += self.stat_bonuses[vial_name]
+                self.vials[vial_name]["current"] += self.stat_bonuses[vial_name] * 2
                 self.vials[vial_name]["current"] = min(self.vials[vial_name]["current"], self.get_vial_maximum(vial_name))
 
     def add_bonus(self, game_attr: str, amount: int):
