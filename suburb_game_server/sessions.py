@@ -348,6 +348,7 @@ class Map():
                 room = self.find_room(x, y)
                 if room.tile.impassible: continue
                 if room.tile.ramp: continue
+                if room.tile.automove: continue
                 if not room.above_solid_ground(): continue
                 valid_rooms.append(room)
         remaining_spawns = number
