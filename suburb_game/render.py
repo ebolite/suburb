@@ -1200,6 +1200,20 @@ class RoomItemDisplay(UIElement):
                 new_button.absolute = True
                 self.buttons.append(new_button)
 
+def get_cardinal_direction(input_dx, input_dy, rotation):
+    directions: dict[tuple[int, int], str] = {
+        (0, 1): "north",
+        (0, -1): "south",
+        (1, 0): "east",
+        (-1, 0): "west",
+    }
+    dx, dy = input_dx, input_dy
+    # i don't understand math but for some reason the directions flip on every other rotation idk why
+    if (rotation // 90) % 2: dx, dy = -dx, -dy
+    dx, dy = rotate_points_about_origin(dx, dy, rotation)
+    direction = directions[(dx, dy)]
+    return direction
+
 class Overmap(UIElement):
     def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, map_types: Optional[dict[str, str]]=None, theme=themes.default, offsetx=0, offsety=0):
         super().__init__()
@@ -1318,13 +1332,18 @@ class Overmap(UIElement):
             if self.rotation == 360: self.rotation = 0
         self.initialize_map(self.rotation)
 
+    def move_by_relative_vector(self, dx, dy):
+        direction = get_cardinal_direction(dx, dy, self.rotation)
+        client.requestplus(intent="overmap_move", content=direction)
+        self.update_map()
+
     def keypress(self, event):
-        match event.key:
-            case pygame.K_q: 
-                self.rotate(-90)
-            case pygame.K_e:
-                self.rotate(90)
-            case _: return
+        if event.key == pygame.K_q: self.rotate(-90)
+        elif event.key == pygame.K_e: self.rotate(90)
+        elif event.key == pygame.K_w or event.key == pygame.K_UP: self.move_by_relative_vector(0, 1)
+        elif event.key == pygame.K_s or event.key == pygame.K_DOWN: self.move_by_relative_vector(0, -1)
+        elif event.key == pygame.K_d or event.key == pygame.K_RIGHT: self.move_by_relative_vector(1, 0)
+        elif event.key == pygame.K_a or event.key == pygame.K_LEFT: self.move_by_relative_vector(-1, 0)
 
     @property
     def center(self) -> tuple[int, int]:
@@ -1339,17 +1358,7 @@ class OvermapTile(UIElement):
 
     def get_button_func(self, input_dx, input_dy, rotation):
         def button_func():
-            directions: dict[tuple[int, int], str] = {
-                (0, 1): "north",
-                (0, -1): "south",
-                (1, 0): "east",
-                (-1, 0): "west",
-            }
-            dx, dy = input_dx, input_dy
-            # i don't understand math but for some reason the directions flip on every other rotation idk why
-            if (rotation // 90) % 2: dx, dy = -dx, -dy
-            dx, dy = rotate_points_about_origin(dx, dy, rotation)
-            direction = directions[(dx, dy)]
+            direction = get_cardinal_direction(input_dx, input_dy, rotation)
             client.requestplus(intent="overmap_move", content=direction)
             self.overmap.update_map()
         return button_func
