@@ -78,6 +78,7 @@ icons = {
     "select": "sprites/icons/select.png",
     "imp": "sprites/icons/imp.png",
     "ogre": "sprites/icons/ogre.png",
+    "lich": "sprites/icons/lich.png",
 }
 
 header_icons = {

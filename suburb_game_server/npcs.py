@@ -64,7 +64,7 @@ lich.stat_ratios["savvy"] = 2
 lich.stat_ratios["luck"] = 2
 lich.stat_ratios["spunk"] = 2
 lich.cluster_size = 1
-lich.difficulty = 4
+lich.difficulty = 3
 
 basilisk = Underling("basilisk")
 basilisk.base_power = 26
