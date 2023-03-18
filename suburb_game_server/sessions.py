@@ -842,7 +842,29 @@ class Player():
         if modus_name not in self.moduses: self.moduses.append(modus_name)
         return True
     
+    def get_illegal_overmap_moves(self) -> list[str]:
+        player_x = self.map.x
+        player_y = self.map.y
+        illegal_moves = []
+        for direction in ["north", "south", "east", "west"]:
+            if direction == "north":
+                target_x = player_x
+                target_y = player_y - 1
+            elif direction == "south":
+                target_x = player_x
+                target_y = player_y + 1
+            elif direction == "east":
+                target_x = player_x + 1
+                target_y = player_y
+            else: # west
+                target_x = player_x - 1
+                target_y = player_y
+            target_map = self.overmap.find_map(target_x, target_y)
+            if abs(target_map.height - self.map.height) > 1 or target_map.height == 0: illegal_moves.append(direction)
+        return illegal_moves
+
     def attempt_overmap_move(self, direction: str) -> bool:
+        if direction in self.get_illegal_overmap_moves(): return False
         player_x = self.map.x
         player_y = self.map.y
         match direction:
@@ -861,7 +883,7 @@ class Player():
             case _:
                 return False
         target_map = self.overmap.find_map(target_x, target_y)
-        # if abs(target_map.height - self.map.height) > 1: return False
+        if abs(target_map.height - self.map.height) > 1: return False
         if not target_map.map_tiles:
             target_map.gen_map()
         if direction == "north" or direction == "east": entry_direction = "left"

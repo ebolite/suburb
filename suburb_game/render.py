@@ -1215,7 +1215,9 @@ def get_cardinal_direction(input_dx, input_dy, rotation):
     return direction
 
 class Overmap(UIElement):
-    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, map_types: Optional[dict[str, str]]=None, theme=themes.default, offsetx=0, offsety=0):
+    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, 
+                 map_types: Optional[dict[str, str]]=None, illegal_moves: list[str]=[], 
+                 theme=themes.default, offsetx=0, offsety=0):
         super().__init__()
         self.x = x
         self.y = y
@@ -1229,6 +1231,7 @@ class Overmap(UIElement):
             self.map_types = {}
         else:
             self.map_types = map_types
+        self.illegal_moves = illegal_moves
         self.rotation_map_types = {}
         self.rotation_specials = {}
         for rotation in [0, 90, 180, 270]:
@@ -1287,12 +1290,13 @@ class Overmap(UIElement):
         map_tiles = reply["map_tiles"]
         specials = reply["map_specials"]
         map_types = reply["map_types"]
+        illegal_moves = reply["illegal_moves"]
         self.rotation_surfs = {}
         for button in self.buttons.copy(): 
             button.delete()
             self.buttons.remove(button)
         self.delete()
-        new_overmap = Overmap(self.x, self.y, map_tiles, specials, map_types, self.theme, self.offsetx, self.offsety)
+        new_overmap = Overmap(self.x, self.y, map_tiles, specials, map_types, illegal_moves, self.theme, self.offsetx, self.offsety)
         for i in range(self.rotation//90):
             new_overmap.rotate(90)
 
@@ -1389,17 +1393,19 @@ class OvermapTile(UIElement):
         centerx, centery = self.overmap.center
         dx, dy = centerx - self.x, centery - self.y
         if not (dx == 0 and dy == 0) and abs(dy) != abs(dx) and abs(dx) <= 1 and abs(dy) <= 1:
-            self.blit_surf.blit(self.overmap.select_image, ((draw_x, draw_y)))
-            button = TextButton(draw_x, draw_y+16, 32, 16, "", self.get_button_func(dx, dy, rotation))
-            button.absolute = True
-            button.bind_to(self.overmap)
-            button.draw_sprite = False
-            button.inactive_condition = self.get_inactive_condition(rotation)
-            for existing_button in self.overmap.buttons.copy():
-               if existing_button.x == button.x and existing_button.y == button.y:
-                   existing_button.delete()
-                   self.overmap.buttons.remove(existing_button)
-            self.overmap.buttons.append(button)
+            direction = get_cardinal_direction(dx, dy, rotation)
+            if direction not in self.overmap.illegal_moves:
+                self.blit_surf.blit(self.overmap.select_image, ((draw_x, draw_y)))
+                button = TextButton(draw_x, draw_y+16, 32, 16, "", self.get_button_func(dx, dy, rotation))
+                button.absolute = True
+                button.bind_to(self.overmap)
+                button.draw_sprite = False
+                button.inactive_condition = self.get_inactive_condition(rotation)
+                for existing_button in self.overmap.buttons.copy():
+                    if existing_button.x == button.x and existing_button.y == button.y:
+                        existing_button.delete()
+                        self.overmap.buttons.remove(existing_button)
+                self.overmap.buttons.append(button)
         if self.name in self.overmap.rotation_map_types[rotation]:
             map_type = self.overmap.rotation_map_types[rotation][self.name]
             path = f"sprites/overmap/{map_type}.png"
