@@ -300,6 +300,15 @@ abuse.add_vial_cost("vim", "user.power")
 abuse.category = "abusive"
 base_skills.append("abuse")
 
+def abscond_func(user: "strife.Griefer", target: "strife.Griefer"):
+    user.strife.remove_griefer(user)
+
+abscond = Skill("abscond")
+abscond.description = "Sweet abscond bro!"
+abscond.use_message = "{user} absconds!"
+abscond.special_effect = abscond_func
+player_skills.append("abscond")
+
 class Aspect():
     def __init__(self, name):
         aspects[name] = self
