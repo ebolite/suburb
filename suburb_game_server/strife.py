@@ -126,10 +126,12 @@ hope.hidden_vial = True
 
 class RageVial(Vial):
     def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
+        if damage <= 0: return damage
         flat_add = self.difference_from_starting(griefer)
         return damage + flat_add
 
     def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
+        if damage <= 0: return damage
         flat_add = self.difference_from_starting(griefer)
         return damage + flat_add
 
