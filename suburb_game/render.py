@@ -1195,7 +1195,7 @@ class RoomItemDisplay(UIElement):
                 self.buttons.append(new_button)
 
 class Overmap(UIElement):
-    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, map_types: Optional[dict[str, str]]=None, theme=themes.default, offsetx=0, offsety=0, rotation=0):
+    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, map_types: Optional[dict[str, str]]=None, theme=themes.default, offsetx=0, offsety=0):
         super().__init__()
         self.x = x
         self.y = y
@@ -1214,8 +1214,6 @@ class Overmap(UIElement):
         for rotation in [0, 90, 180, 270]:
             self.rotation_specials[rotation] = self.get_specials(rotation)
             self.rotation_map_types[rotation] = self.get_map_types(rotation)
-        print(map_types)
-        print(self.rotation_map_types)
         self.rotation_surfs = {}
         self.rotation = 0
         self.extra_height = 32 * 9
@@ -1281,7 +1279,9 @@ class Overmap(UIElement):
             button.delete()
             self.buttons.remove(button)
         self.delete()
-        Overmap(self.x, self.y, map_tiles, specials, map_types, self.theme, self.offsetx, self.offsety, self.rotation)
+        new_overmap = Overmap(self.x, self.y, map_tiles, specials, map_types, self.theme, self.offsetx, self.offsety)
+        for i in range(self.rotation//90):
+            new_overmap.rotate(90)
 
     def initialize_map(self, rotation):
         self.rect = pygame.Rect(0, 0, self.w, self.h)
@@ -1339,7 +1339,7 @@ class OvermapTile(UIElement):
         self.height = height
         self.overmap = overmap
 
-    def get_button_func(self, dx, dy, rotation):
+    def get_button_func(self, input_dx, input_dy, rotation):
         def button_func():
             directions = {
                 (0, 1): "north",
@@ -1347,6 +1347,11 @@ class OvermapTile(UIElement):
                 (1, 0): "east",
                 (-1, 0): "west",
             }
+            dx, dy = input_dx, input_dy
+            # i don't understand math but for some reason the directions flip on every other rotation idk why
+            if (rotation // 90) % 2: 
+                print('flip')
+                dx, dy = -dx, -dy
             if rotation == 90: true_dx, true_dy = -dy, dx
             elif rotation == 180: true_dx, true_dy = -dx, -dy
             elif rotation == 270: true_dx, true_dy = dy, -dx
