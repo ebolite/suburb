@@ -862,7 +862,7 @@ for aspect_name, aspect in aspects.items():
     aspectplay.add_aspect_change(aspect.name, f"user.power//1.5")
 
     swayaspect = ClassSkill(f"sway {aspect.name}", aspect, "witch", 100)
-    swayaspect.description = f"Decreases the {aspect.name.upper()} of one team and give it to the other."
+    swayaspect.description = f"Decreases the {aspect.name.upper()} of one team and gives it to the other."
     swayaspect.add_vial_cost("aspect", "user.power")
     swayaspect.cooldown = 2
     swayaspect.parryable = False
