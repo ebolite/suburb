@@ -809,7 +809,7 @@ for aspect_name, aspect in aspects.items():
     findaspect.add_apply_state(f"pursuit of {aspect.name}", 5, "1.0")
 
     usershared = Skill(f"user_{aspect.name}shared")
-    usershared.add_aspect_change(aspect.name, "user.power")
+    usershared.add_aspect_change(aspect.name, "user.power//2")
     usershared.parryable = False
 
     sharedaspect = ClassSkill(f"shared {aspect.name}", aspect, "mage", 100)
@@ -894,6 +894,19 @@ for aspect_name, aspect in aspects.items():
     denyaspect.cooldown = 1
     denyaspect.action_cost = 0
     denyaspect.add_apply_state(f"retreat from {aspect.name}", 5, "1.0")
+
+    userward = Skill(f"user_{aspect.name}ward")
+    userward.add_aspect_change(aspect.name, "-user.power//2")
+    userward.parryable = False
+
+    wardaspect = ClassSkill(f"shared {aspect.name}", aspect, "seer", 100)
+    wardaspect.description = f"Decreases the {aspect.name.upper()} of the user and sharply decreases the {aspect.name.upper()} of the target."
+    wardaspect.parryable = False
+    wardaspect.add_vial_cost("aspect", "-user.power//2")
+    wardaspect.action_cost = 0
+    wardaspect.cooldown = 1
+    wardaspect.add_aspect_change(aspect.name, f"-user.power*2")
+    wardaspect.user_skill = f"user_{aspect.name}ward"
 
     # heir
 
