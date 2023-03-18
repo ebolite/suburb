@@ -137,7 +137,7 @@ class BreakState(ClassPassive):
         super().__init__(name, aspect, "knight", required_rung)
 
     def on_apply(self, griefer: "strife.Griefer"):
-        adjust = int(griefer.get_aspect_ratio(self.aspect.name) * griefer.power/3)
+        adjust = int(griefer.get_aspect_ratio(self.aspect.name) * griefer.power)
         log_message = self.aspect.maximum_adjust(griefer, adjust)
         griefer.strife.log(log_message)
 
