@@ -1112,8 +1112,8 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
     padding = 8
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.dark)
     player_dict = client.requestdic(intent="player_info")
-    # todo: get player power
     power = player_dict["power"]
+    echeladder_rung = player_dict["echeladder_rung"]
     stat_ratios = player_dict["stat_ratios"]
     permanent_stat_bonuses = player_dict["permanent_stat_bonuses"]
     # kind_name:dict[instance_name:instance_dict]
@@ -1145,10 +1145,15 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             kind_image.bind_to(abstratus_display)
             kind_image.scale = 3
         # power label
-        power_label = render.Text(padding, padding*3, f"power: {power}")
+        power_label = render.Text(padding, padding*1, f"power: {power}")
         power_label.absolute = True
         power_label.color = theme.light
         power_label.set_fontsize_by_width(300)
+        echeladder_label = render.Text(padding, padding*6, f"echeladder rung: {echeladder_rung}")
+        echeladder_label.absolute = True
+        echeladder_label.color = theme.light
+        echeladder_label.fontsize = 20
+        echeladder_label.set_fontsize_by_width(300)
         # stat ratios
         stat_boxes: dict[str, render.InputTextBox] = {}
         labels = {
