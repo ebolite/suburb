@@ -679,7 +679,6 @@ erase.add_aspect_change("void", "user.power")
 strike_between = AspectSkill("strike between", void, 50)
 strike_between.description = "Deals damage based on your VOID and increases the target's VOID."
 strike_between.add_vial_cost("aspect", "user.power//2")
-strike_between.add_vial_cost("vim", "user.power//2")
 strike_between.add_aspect_change("void", "user.power")
 strike_between.damage_formula = "user.base_damage * user.void.ratio * 4 * (1 + 0.5*coin)"
 
