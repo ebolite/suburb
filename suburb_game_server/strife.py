@@ -280,6 +280,7 @@ class Griefer():
                 player_griefer.player.add_unclaimed_grist(spoils_dict)
                 rungs_to_gain = 1 + round((self.power / player_griefer.player.power) * (1 + random.random()/2))
                 player_griefer.player.unclaimed_rungs += rungs_to_gain
+                player_griefer.player.add_gutter_and_leech()
         elif self.player is not None:
             self.strife.log(f"{self.nickname}: DEAD.")
             self.strife.dead_players.append(self.player.name)
