@@ -91,8 +91,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         if player != None:
             self.player_name = player.name
             self.gristcategory = player.gristcategory
-            # todo: theme defaults to "default" and changes to aspect when entering
-            self.theme = player.aspect
+            self.theme = "default"
             self.gate_maps: dict[str, str] = {}
             self.gen_overmap()
             self.gen_land_name()
