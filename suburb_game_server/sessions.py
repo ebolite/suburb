@@ -730,6 +730,7 @@ class Player():
         for kind_name in self.strife_portfolio:
             out["strife_portfolio"][kind_name] = {instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in self.strife_portfolio[kind_name]}
         out["power"] = self.power
+        out["entered"] = self.entered
         return out
     
     def add_unclaimed_grist(self, spoils_dict: dict):

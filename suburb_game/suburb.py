@@ -927,6 +927,7 @@ def map_scene():
     if strife_data: 
         strife_scene(strife_data)
         return
+    player_data = client.requestdic(intent="player_info")
     ui_bar = Sylladex.current_sylladex().draw_ui_bar(map_scene)
     tilemap = render.TileMap(0.5, 0.5)
     portfolio_button = render.TextButton(render.SCREEN_WIDTH-256, render.SCREEN_HEIGHT-166-64, 256, 64, "strife portfolio", strife_portfolio_scene, theme=themes.strife)
@@ -934,7 +935,8 @@ def map_scene():
     portfolio_button.fill_color = themes.strife.dark
     portfolio_button.text_color = themes.strife.light
     portfolio_button.outline_color = themes.strife.black
-    overmap_button = render.TextButton(0.9, 0.1, 196, 64, ">OVERMAP", overmap)
+    if player_data["entered"]:
+        overmap_button = render.TextButton(0.9, 0.1, 196, 64, ">OVERMAP", overmap)
     log = render.LogWindow(map_scene, tilemap=tilemap, draw_console=True)
 
 @scene
