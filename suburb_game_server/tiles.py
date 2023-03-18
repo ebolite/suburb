@@ -177,7 +177,6 @@ rope.stair = True
 rope.infallible = True
 rope.build_cost = 150
 rope.solid = False
-rope.supported = True
 
 elevator_shaft = Tile("v", "elevator shaft")
 elevator_shaft.stair = True
