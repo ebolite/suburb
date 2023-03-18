@@ -41,6 +41,8 @@ def threaded_client(connection):
                     session.pass_hash = dict["session_pass_hash"]
                     print(f"session created {session_name}")
                     reply = f"The session `{session_name}` has been successfully registered."
+            elif intent == "crash_me":
+                raise AssertionError
             else:
                 if session_name in util.sessions:
                     session = sessions.Session(session_name)

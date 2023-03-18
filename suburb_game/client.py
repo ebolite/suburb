@@ -41,6 +41,8 @@ def receive_data() -> str:
     return "".join(data_fragments).replace("\n", "")
 
 def connect():
+    global ClientSocket
+    ClientSocket = socket.socket()
     print("Waiting for connection")
     try:
         ClientSocket.send(str.encode(json.dumps({"intent": "connect"})))

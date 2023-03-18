@@ -1341,6 +1341,9 @@ def title():
     character_creator_button = render.TextButton(0.13, .5, 256, 32, "debug character creator", make_symbol)
     debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
     debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
+    def crash_button_func():
+        client.request(intent="crash_me")
+    crash_button = render.TextButton(0.8, 0.5, 128, 32, "crash me", crash_button_func)
 
 def map_from_file(file):
     with open(f"maps/{file}", "r") as f:
@@ -1365,15 +1368,17 @@ def connection_screen():
         if client.connect():
             title()
         else:
+            print("couldn't connect")
             connection_screen()
     text = render.Text(0.5, 0.1, "Could not connect to server.")
     text.color = themes.default.dark
     try_again_button = render.TextButton(0.5, 0.7, 196, 32, ">TRY AGAIN", try_again)
     spiro = render.get_spirograph(0.5, 0.3, False)
 
-if __name__ == "__main__":
+def main():
     connecting_text = render.Text(0.5, 0.5, "CONNECTING...")
     connecting_text.color = themes.default.dark
+    connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
         title() # normal game start
@@ -1393,6 +1398,15 @@ if __name__ == "__main__":
     # render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, themes.default.black)
     # render.Overmap(0.5, 0.5, test_map)
     # render.Symbol(0.5, 0.5, config.get_random_symbol())
-    while render.render():
-        ...
+    try:
+        while render.render():
+            ...
+    except TimeoutError:
+        main()
+    except ConnectionResetError:
+        main()
+
+if __name__ == "__main__":
+    main()
+    
 
