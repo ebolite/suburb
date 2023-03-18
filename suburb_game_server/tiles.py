@@ -14,6 +14,7 @@ class Tile():
         self.name = name
         self.solid = True       # tile can support other tiles
         self.supported = False      # tile can only be placed above a solid tile
+        self.below_allowed = True # can be placed below itself even if it would be otherwise unsupported
         self.impassible = False     # cannot be moved into or fallen through
         self.infallible = False     # can be moved into, but not fallen through
         self.ramp = False       # tiles that can take you up and to the side
@@ -176,6 +177,7 @@ rope.stair = True
 rope.infallible = True
 rope.build_cost = 150
 rope.solid = False
+rope.below_allowed = True
 
 elevator_shaft = Tile("v", "elevator shaft")
 elevator_shaft.stair = True

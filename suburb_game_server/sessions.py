@@ -583,7 +583,10 @@ class Room():
         # can't place an impassible tile where instances of items are
         if new_tile.impassible and self.instances: return False
         surrounding_tiles = self.get_orthogonal_tiles()
-        if new_tile.solid:
+        supported_from_above = False
+        if new_tile.below_allowed and self.map.find_room(self.x, self.y-1).tile.tile_char == new_tile.tile_char:
+            pass
+        else:
             for tile in surrounding_tiles:
                 if tile.solid: break
             else: return False
