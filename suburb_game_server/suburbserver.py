@@ -487,6 +487,13 @@ def console_commands(player: sessions.Player, content: str):
             if target_name in util.players:
                 target = sessions.Player(target_name)
                 player.goto_room(target.room)
+        case "unchain":
+            if player.server_player is not None:
+                player.server_player_name = None
+                player.server_player.client_player_name = None
+            if player.client_player is not None:
+                player.client_player_name = None
+                player.client_player.server_player_name = None
         case "summon":
             target_name = " ".join(args)
             if target_name in util.players:
