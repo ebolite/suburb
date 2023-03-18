@@ -977,16 +977,22 @@ class Player():
             if fall_tile.ramp and fall_tile.ramp_direction == "right": target_x -= 1
             target_y += 1
         new_room = map.find_room(target_x, target_y)
-        self.goto_room(new_room)
+        # check if entered gate room
+        try: 
+            gate_num = int(new_room.tile.tile_char)
+            entered_gate = self.enter_gate(gate_num)
+            if not entered_gate: self.goto_room(new_room)
+        except ValueError:
+            self.goto_room(new_room)
         return True
 
-    def enter_gate(self, gate_num: int):
+    def enter_gate(self, gate_num: int) -> bool:
         if self.overmap.housemap.name == self.map.name:
             at_house = True
         else:
             at_house = False
         destination_player = self.overmap.gate_location(gate_num, at_house)
-        if destination_player is None: return
+        if destination_player is None: return False
         if at_house:
             destination_map = destination_player.land.get_map(destination_player.land.gate_maps[str(gate_num)])
             room = destination_map.random_valid_room([str(gate_num)])
@@ -994,6 +1000,7 @@ class Player():
             destination_map = destination_player.land.housemap
             room = destination_map.random_valid_room([str(gate_num)])
         self.goto_room(room)
+        return True
 
     def get_base_stat(self, stat):
         stats = strife.stats_from_ratios(self.stat_ratios, self.power)
