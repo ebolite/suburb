@@ -153,7 +153,7 @@ def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", in
             update_buttons()
             update_info_window(info_window, info_text)
         return button_func
-    selectbutton.onpress = get_mode_change_button("select")
+    selectbutton.onpress = get_mode_change_button("select", "grist_cache")
     revisebutton.onpress = get_mode_change_button("revise", "revise")
     deploybutton.onpress = get_mode_change_button("deploy", "phernalia_registry")
     phernaliaregistrybutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
