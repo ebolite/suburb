@@ -831,6 +831,7 @@ class TileMap(UIElement):
         self.specials = map_dict["specials"]
         self.instances: dict[str, dict] = map_dict["instances"]
         self.npcs: dict[str, dict] = map_dict["npcs"]
+        self.players: list[str] = map_dict["players"]
         self.room_name: str = map_dict["room_name"]
         self.theme = themes.themes[map_dict["theme"]]
         self.item_display.update_instances()
@@ -1153,7 +1154,7 @@ class RoomItemDisplay(UIElement):
         for button in self.buttons:
             button.delete()
         # instances and npcs are a dict so we need to convert to list to slice
-        all_items = list(self.tile_map.npcs.keys()) + list(self.tile_map.instances.keys())
+        all_items = self.tile_map.players + list(self.tile_map.npcs.keys()) + list(self.tile_map.instances.keys())
         display_items = list(all_items)[self.page*self.rows:self.page*self.rows + self.rows]
         if self.outline is not None:
             self.outline.delete()
@@ -1216,6 +1217,11 @@ class RoomItemDisplay(UIElement):
                 npc = Npc(item_name, self.tile_map.npcs[item_name])
                 display_name = npc.nickname
                 new_button = TextButton(self.x, y, self.w, self.h, display_name, get_button_func(npc.name), truncate_text=True)
+                new_button.absolute = True
+                self.buttons.append(new_button)
+            elif item_name in self.tile_map.players:
+                display_name = item_name
+                new_button = TextButton(self.x, y, self.w, self.h, display_name, lambda *args: None, truncate_text=True)
                 new_button.absolute = True
                 self.buttons.append(new_button)
 

@@ -1093,13 +1093,14 @@ class Player():
     def map(self) -> Map:
         return Map(self.map_name, self.session, self.overmap)
     
-    def get_view(self, view_tiles=6) -> tuple[list, dict, dict, dict, dict]:
+    def get_view(self, view_tiles=6) -> tuple[list, dict, dict, dict, list, dict]:
         map_tiles, map_specials = self.map.get_view(self.room.x, self.room.y, view_tiles)
         room_instances = self.room.get_instances()
         room_npcs = self.room.get_npcs()
+        room_players = [Player(player_name).nickname for player_name in self.room.players if player_name != self.name]
         if self.strife is None: strife = {}
         else: strife = self.strife.get_dict()
-        return map_tiles, map_specials, room_instances, room_npcs, strife
+        return map_tiles, map_specials, room_instances, room_npcs, room_players, strife
     
     def get_overmap_view(self, view_tiles=12):
         view_tiles = view_tiles + self.map.height*2

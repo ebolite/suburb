@@ -60,8 +60,9 @@ def threaded_client(connection):
         connection.close()
 
 def map_data(player: "sessions.Player"):
-    map_tiles, map_specials, room_instances, room_npcs, strife = player.get_view()
-    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "strife": strife,
+    map_tiles, map_specials, room_instances, room_npcs, room_players, strife = player.get_view()
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "players": room_players,
+                       "strife": strife,
                        "room_name": player.room.tile.name, "theme": player.overmap.theme})
 
 def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
