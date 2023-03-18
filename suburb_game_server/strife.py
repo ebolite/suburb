@@ -384,6 +384,8 @@ class Griefer():
             self.states[state_name]["potency"] = potency
             self.states[state_name]["applier_stats"] = applier.stats_dict
         self.states[state_name]["duration"] += duration
+        state = stateseffects.states[state_name]
+        state.on_apply(self)
 
     def remove_state(self, state_name):
         if state_name in self.states:

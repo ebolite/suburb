@@ -379,6 +379,18 @@ class Aspect():
         if return_value: return str(adjustment)
         return f"{target.nickname}'s {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} by {adjustment}!"
 
+    def maximum_adjust(self, target: "strife.Griefer", value: int, return_value=False):
+        if not self.is_vial:
+            return self.adjust(target, value, return_value=return_value)
+        else:
+            adjustment = self.calculate_adjustment(value)
+            for vial_name in self.vials:
+                if vial_name in target.vials:
+                    target.add_bonus(vial_name, adjustment)
+                    target.change_vial(vial_name, adjustment) # for half vials
+            if return_value: return str(adjustment)
+            else: return f"{target.nickname}'s maximum {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} by {adjustment}!"
+
     def permanent_adjust(self, target: "strife.Griefer", value: int, return_value=False):
         value = int(value*self.balance_mult)
         if self.check_vials: old_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
@@ -411,6 +423,11 @@ class Aspect():
         adjustment = value * self.balance_mult
         adjustment = int(adjustment/self.adjustment_divisor)
         return adjustment
+    
+    @property
+    def maximum_name(self) -> str:
+        if self.is_vial: return f"maximum {self.name.upper()}"
+        else: return self.name.upper()
 
 class NegativeAspect(Aspect):
     def ratio(self, target: "strife.Griefer", raw=False) -> float:
@@ -750,6 +767,8 @@ for aspect_name, aspect in aspects.items():
     aspectblade.description = f"Deals damage based on your {aspect.name.upper()}."
     aspectblade.damage_formula = f"user.base_damage * user.{aspect.name}.ratio * (4 + coin)"
 
+    # 100 - passive
+
     # prince
     aspectloss = ClassSkill(f"{aspect.name}loss", aspect, "prince", 25)
     aspectloss.description = f"Sharpy lowers the target's {aspect.name.upper()}."
@@ -851,3 +870,11 @@ for aspect_name, aspect in aspects.items():
     denyaspect.cooldown = 1
     denyaspect.action_cost = 0
     denyaspect.add_apply_state(f"retreat from {aspect.name}", 5, "1.0")
+
+    # heir
+
+    # 25: passive
+
+    # sylph
+
+    # 25: passive

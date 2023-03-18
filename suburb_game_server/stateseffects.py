@@ -132,6 +132,15 @@ class FaeState(ClassPassive):
             allied_griefer.change_vial("hp", healing)
             griefer.strife.log(self.aspect.adjust(allied_griefer, adjustment))
 
+class BreakState(ClassPassive):
+    def __init__(self, name, aspect: "skills.Aspect", required_rung: int):
+        super().__init__(name, aspect, "knight", required_rung)
+
+    def on_apply(self, griefer: "strife.Griefer"):
+        adjust = int(griefer.get_aspect_ratio(self.aspect.name) * griefer.power/3)
+        log_message = self.aspect.maximum_adjust(griefer, adjust)
+        griefer.strife.log(log_message)
+
 for _, aspect in skills.aspects.items():
     aspectystate = AspectyState(f"{aspect.name}y", aspect, 25)
     aspectystate.tooltip = f"{aspect.name.upper()} increases each turn."
@@ -139,3 +148,5 @@ for _, aspect in skills.aspects.items():
     tragedystate.tooltip = f"{aspect.name.upper()} decreases sharply each turn."
     faestate = FaeState(f"{aspect.name} fae", aspect, 25)
     faestate.tooltip = f"Heals all allies and increases their {aspect.name.upper()} each turn."
+    breakstate = BreakState(f"{aspect.name}break", aspect, 100)
+    breakstate.tooltip = f"Your {aspect.maximum_name} is increased at the start of combat based on your {aspect}."
