@@ -344,6 +344,7 @@ class TextButton(UIElement):
                 self.blit_surf.blit(self.hoversurf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
+        if self.draw_condition is not None and not self.draw_condition(): return
         if self.inactive_condition is not None and self.inactive_condition(): return
         if self not in click_check: return
         if isclicked:
@@ -353,6 +354,8 @@ class TextButton(UIElement):
 
     def mouseup(self, isclicked):
         if self.click_on_mouse_down: return
+        if self.draw_condition is not None and not self.draw_condition(): return
+        if self.inactive_condition is not None and self.inactive_condition(): return
         if not self.toggle:
             self.active = False
         if isclicked:
@@ -1192,7 +1195,7 @@ class RoomItemDisplay(UIElement):
                 self.buttons.append(new_button)
 
 class Overmap(UIElement):
-    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, map_types: Optional[dict[str, str]]=None, theme=themes.default):
+    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, map_types: Optional[dict[str, str]]=None, theme=themes.default, offsetx=0, offsety=0):
         super().__init__()
         self.x = x
         self.y = y
@@ -1206,12 +1209,17 @@ class Overmap(UIElement):
             self.map_types = {}
         else:
             self.map_types = map_types
+        self.rotation_map_types = {}
+        self.rotation_specials = {}
+        for rotation in [0, 90, 180, 270]:
+            self.rotation_specials[rotation] = self.get_specials(rotation)
+            self.rotation_map_types[rotation] = self.get_map_types(rotation)
         print("specials", self.specials)
         self.rotation_surfs = {}
         self.rotation = 0
         self.extra_height = 32 * 9
-        self.offsetx = 0
-        self.offsety = -self.extra_height
+        self.offsetx = offsetx
+        self.offsety = offsety or -self.extra_height
         self.last_mouse_pos: Optional[tuple[int, int]] = None
         self.block_image = pygame.image.load("sprites/overmap/block.png").convert()
         self.block_image = self.convert_to_theme(self.block_image)
@@ -1219,13 +1227,58 @@ class Overmap(UIElement):
         self.water_image = pygame.image.load("sprites/overmap/water.png").convert()
         self.water_image = self.convert_to_theme(self.water_image)
         self.water_image.set_colorkey(pygame.Color(0, 0, 0))
-        # self.water_image = self.convert_to_theme(self.water_image)
+        self.select_image = pygame.image.load("sprites/overmap/selectable.png").convert()
+        self.select_image = self.convert_to_theme(self.select_image)
+        self.select_image.set_colorkey(pygame.Color(0, 0, 0))
+        self.buttons: list[TextButton] = []
         self.w = (len(self.map_tiles[0]) + len(self.map_tiles))*16
         self.h = (len(self.map_tiles[0]) + len(self.map_tiles))*8
         self.h += self.extra_height # extra tile height
         self.initialize_map(0)
         update_check.append(self)
         key_check.append(self)
+
+    def get_map_types(self, rotation):
+        new_map_types = {}
+        cx, cy = self.center
+        for name in self.map_types:
+            coords = name.split(", ")
+            x, y = int(coords[0]), int(coords[1])
+            true_x, true_y = x-cx, y-cy
+            if rotation == 90: true_x, true_y = -true_y, true_x
+            elif rotation == 180: true_x, true_y = -true_x, -true_y
+            elif rotation == 270: true_x, true_y = true_y, -true_x
+            else: true_x, true_y = true_x, true_y
+            true_x, true_y = true_x+cx, true_y+cy
+            new_map_types[f"{true_x}, {true_y}"] = self.map_types[name]
+        return new_map_types
+    
+    def get_specials(self, rotation): 
+        new_specials = {}
+        cx, cy = self.center
+        for name in self.specials:
+            coords = name.split(", ")
+            x, y = int(coords[0]), int(coords[1])
+            true_x, true_y = x-cx, y-cy
+            if rotation == 90: true_x, true_y = -true_y, true_x
+            elif rotation == 180: true_x, true_y = -true_x, -true_y
+            elif rotation == 270: true_x, true_y = true_y, -true_x
+            else: true_x, true_y = true_x, true_y
+            true_x, true_y = true_x+cx, true_y+cy
+            new_specials[f"{true_x}, {true_y}"] = self.specials[name]
+        return new_specials
+
+    def update_map(self):
+        reply = client.requestdic(intent="current_overmap")
+        map_tiles = reply["map_tiles"]
+        specials = reply["map_specials"]
+        map_types = reply["map_types"]
+        self.rotation_surfs = {}
+        for button in self.buttons.copy(): 
+            button.delete()
+            self.buttons.remove(button)
+        self.delete()
+        Overmap(self.x, self.y, map_tiles, specials, map_types, self.theme, self.offsetx, self.offsety)
 
     def initialize_map(self, rotation):
         self.rect = pygame.Rect(0, 0, self.w, self.h)
@@ -1246,23 +1299,35 @@ class Overmap(UIElement):
             for x, char in enumerate(reversed(line)):
                 overmap_tile = OvermapTile(x, y, int(char), self)
                 overmap_tile.blit_surf = self.rotation_surfs[rotation]
-                overmap_tile.draw_to_surface()
+                overmap_tile.draw_to_surface(rotation)
 
     def update(self):
         self.mousepan(0)
+        self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2)) + self.offsetx
+        self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2)) + self.offsety
         try: self.rotation_surfs[self.rotation]
         except KeyError: self.initialize_map(self.rotation)
-        screen.blit(self.rotation_surfs[self.rotation],(self.rect.x+self.offsetx, self.rect.y+self.offsety))
+        screen.blit(self.rotation_surfs[self.rotation],(self.rect.x, self.rect.y))
+
+    def rotate(self, direction: int):
+        if direction == -90:
+            self.rotation -= 90
+            if self.rotation < 0: self.rotation = 270
+        if direction == 90:
+            self.rotation += 90
+            if self.rotation == 360: self.rotation = 0
 
     def keypress(self, event):
         match event.key:
             case pygame.K_q: 
-                self.rotation -= 90
-                if self.rotation < 0: self.rotation = 270
+                self.rotate(-90)
             case pygame.K_e:
-                self.rotation += 90
-                if self.rotation == 360: self.rotation = 0
+                self.rotate(90)
             case _: return
+
+    @property
+    def center(self) -> tuple[int, int]:
+        return len(self.map_tiles[0])//2, len(self.map_tiles)//2
 
 class OvermapTile(UIElement):
     def __init__(self, x, y, height:int, overmap: Overmap):
@@ -1271,7 +1336,34 @@ class OvermapTile(UIElement):
         self.height = height
         self.overmap = overmap
 
-    def draw_to_surface(self):
+    def get_button_func(self, dx, dy, rotation):
+        def button_func():
+            directions = {
+                (0, 1): "north",
+                (0, -1): "south",
+                (1, 0): "east",
+                (-1, 0): "west",
+            }
+            print(rotation)
+            print("original", dx, dy)
+            if rotation == 90: true_dx, true_dy = -dy, dx
+            elif rotation == 180: true_dx, true_dy = -dx, -dy
+            elif rotation == 270: true_dx, true_dy = dy, -dx
+            else: true_dx, true_dy = dx, dy
+            print("true", true_dx, true_dy)
+            direction = directions[(true_dx, true_dy)]
+            print(direction)
+            client.requestplus(intent="overmap_move", content=direction)
+            self.overmap.update_map()
+        return button_func
+    
+    def get_inactive_condition(self, rotation):
+        def condition():
+            if self.overmap.rotation != rotation: return True
+            return False
+        return condition
+
+    def draw_to_surface(self, rotation: int):
         # each block starts 16 left and 8 down from the last
         # basically It Just Works(TM) don't fucking ask questions
         draw_x = -16
@@ -1288,8 +1380,18 @@ class OvermapTile(UIElement):
             for i in range(self.height):
                 self.blit_surf.blit(self.overmap.block_image, ((draw_x, draw_y)))
                 draw_y -= 16
-        if self.name in self.overmap.map_types:
-            map_type = self.overmap.map_types[self.name]
+        centerx, centery = self.overmap.center
+        dx, dy = centerx - self.x, centery - self.y
+        if not (dx == 0 and dy == 0) and abs(dy) != abs(dx) and abs(dx) <= 1 and abs(dy) <= 1:
+            self.blit_surf.blit(self.overmap.select_image, ((draw_x, draw_y)))
+            button = TextButton(draw_x, draw_y+16, 32, 16, "", self.get_button_func(dx, dy, rotation))
+            button.absolute = True
+            button.bind_to(self.overmap)
+            button.draw_sprite = False
+            button.inactive_condition = self.get_inactive_condition(rotation)
+            self.overmap.buttons.append(button)
+        if self.name in self.overmap.rotation_map_types[rotation]:
+            map_type = self.overmap.rotation_map_types[rotation][self.name]
             path = f"sprites/overmap/{map_type}.png"
             if os.path.isfile(path):
                 special_surf = pygame.image.load(path)
@@ -1297,9 +1399,9 @@ class OvermapTile(UIElement):
                 special_surf.set_colorkey(Color(0, 0, 0))
                 self.blit_surf.blit(special_surf, ((draw_x, draw_y)))
                 draw_y -= 16
-        if self.name in self.overmap.specials:
+        if self.name in self.overmap.rotation_specials[rotation]:
             draw_y -= 16
-            specials = self.overmap.specials[self.name]
+            specials = self.overmap.rotation_specials[rotation][self.name]
             for _, special_type in specials.items():
                 path = f"sprites/overmap/{special_type}.png"
                 if os.path.isfile(path):
