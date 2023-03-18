@@ -766,6 +766,19 @@ def scatter_effect_constructor(aspect: Aspect) -> Callable:
             return f"{aspect.calculate_adjustment(bonus)} {aspect.name.upper()} was scattered!"
         return scatter_effect
 
+def sway_effect_constructor(aspect: Aspect) -> Callable:
+        def sway_effect(user: "strife.Griefer", target: "strife.Griefer"):
+            bonus = int(user.power*1.5)
+            decrease_team = target.team
+            if decrease_team == "blue": increase_team = "red"
+            else: increase_team = "blue"
+            for griefer in user.strife.griefer_list:
+                if griefer.team == increase_team: adjustment = bonus
+                else: adjustment = -bonus
+                aspect.adjust(griefer, adjustment)
+            return f"{aspect.calculate_adjustment(bonus)} {aspect.name.upper()} was swayed!"
+        return sway_effect
+
 for aspect_name, aspect in aspects.items():
     # knight
     aspectblade = ClassSkill(f"{aspect.name}blade", aspect, "knight", 25)
@@ -828,7 +841,7 @@ for aspect_name, aspect in aspects.items():
 
     aspectwork = ClassSkill(f"{aspect.name}work", aspect, "witch", 25)
     aspectwork.description = f"Reduces the {aspect.name.upper()} of the target and increases the {aspect.name.upper()} of the user."
-    aspectwork.add_vial_cost("aspect", "user.power")
+    aspectwork.add_vial_cost("aspect", "user.power//2")
     aspectwork.parryable = False
     aspectwork.cooldown = 1
     aspectwork.action_cost = 0
@@ -841,12 +854,19 @@ for aspect_name, aspect in aspects.items():
 
     aspectplay = ClassSkill(f"{aspect.name}play", aspect, "witch", 25)
     aspectplay.description = f"Increases the {aspect.name.upper()} of the target and decreases the {aspect.name.upper()} of the user."
-    aspectplay.add_vial_cost("aspect", "user.power")
+    aspectplay.add_vial_cost("aspect", "user.power//2")
     aspectplay.parryable = False
     aspectplay.cooldown = 1
     aspectplay.action_cost = 0
     aspectplay.user_skill = f"user_{aspect.name}play"
     aspectplay.add_aspect_change(aspect.name, f"user.power//1.5")
+
+    swayaspect = ClassSkill(f"sway {aspect.name}", aspect, "witch", 100)
+    swayaspect.description = f"Decreases the {aspect.name.upper()} of one team and give it to the other."
+    swayaspect.add_vial_cost("aspect", "user.power")
+    swayaspect.cooldown = 2
+    swayaspect.parryable = False
+    swayaspect.special_effect = sway_effect_constructor(aspect)
 
     # maid
     aspectpiece = ClassSkill(f"{aspect.name}piece", aspect, "maid", 25)
