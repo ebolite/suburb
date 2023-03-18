@@ -1349,9 +1349,7 @@ class OvermapTile(UIElement):
             }
             dx, dy = input_dx, input_dy
             # i don't understand math but for some reason the directions flip on every other rotation idk why
-            if (rotation // 90) % 2: 
-                print('flip')
-                dx, dy = -dx, -dy
+            if (rotation // 90) % 2: dx, dy = -dx, -dy
             if rotation == 90: true_dx, true_dy = -dy, dx
             elif rotation == 180: true_dx, true_dy = -dx, -dy
             elif rotation == 270: true_dx, true_dy = dy, -dx
