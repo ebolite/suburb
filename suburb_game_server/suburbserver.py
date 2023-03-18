@@ -234,10 +234,10 @@ def handle_request(dict):
             player.attempt_overmap_move(content)
             return
         case "console_command":
-            try:
+            # try:
                 console_commands(player, content)
-            except Exception as e:
-                print(f"Error in command {content}", e)
+            # except Exception as e:
+            #     print(f"Error in command {content}", e)
         case "get_client_server_chains":
             server_client = {player_username:sessions.Player(player_username).client_player_name for player_username in session.starting_players}
             player_names = {player_username:sessions.Player(player_username).nickname for player_username in session.starting_players}
@@ -455,6 +455,9 @@ def console_commands(player: sessions.Player, content: str):
             ending_player = sessions.Player(player_name)
             if ending_player.strife is not None:
                 ending_player.room.strife_dict = {}
+        case "enter_gate":
+            gate_num = int(args[0])
+            player.enter_gate(gate_num)
         case "set_rung":
             rung = int(args[0])
             player.echeladder_rung = rung

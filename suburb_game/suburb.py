@@ -948,9 +948,10 @@ def overmap():
     map_specials = reply["map_specials"]
     map_types = reply["map_types"]
     theme_name = reply["theme"]
+    illegal_moves = reply["illegal_moves"]
     theme = themes.themes[theme_name]
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
-    overmap = render.Overmap(0.5, 0.75, map_tiles, map_specials, map_types, theme=theme)
+    overmap = render.Overmap(0.5, 0.75, map_tiles, map_specials, map_types, illegal_moves=illegal_moves, theme=theme)
     backbutton = render.Button(0.1, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", map_scene, theme=theme)
     render.always_on_top_check.append(backbutton)
     render.update_check.remove(backbutton)

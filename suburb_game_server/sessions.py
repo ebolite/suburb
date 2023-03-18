@@ -93,6 +93,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             self.gristcategory = player.gristcategory
             # todo: theme defaults to "default" and changes to aspect when entering
             self.theme = player.aspect
+            self.gate_maps: dict[str, str] = {}
             self.gen_overmap()
             self.gen_land_name()
             print(f"{self.title.upper()}")
@@ -126,7 +127,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
             gate_map = self.find_map(gate_x, gate_y)
             gate_map.gen_map(f"gate{gate_num}")
             gate_map.special_type = "gate"
-            self.specials.append(gate_map.name)
+            self.gate_maps[str(gate_num)] = gate_map.name
             if gate_num == 1 or gate_num == 2:
                 # first and second gates are in a bowl
                 self.map_tiles = set_height(self.map_tiles, gate_x, gate_y, 2, 4, 2)
@@ -136,6 +137,7 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         self.map_tiles = set_height(self.map_tiles, housemap_x, housemap_y, 9)
 
     def gen_land_name(self):
+        assert self.player is not None
         print(f"{self.gristcategory} {self.player.aspect}")
         print(f"Player {self.player} {self.player.name} {self.player_name}")
         print(f"grist {self.gristcategory} aspect {self.player.aspect}")
@@ -193,6 +195,43 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         if x >= len(self.map_tiles[0]): x -= len(self.map_tiles[0])
         return Map(f"{x}, {y}", self.session, self)
 
+    def clientdepth(self, depth):
+        output_player = self.player
+        if output_player is None: return None
+        for i in range(depth):
+            if output_player.client_player is not None:
+                output_player = output_player.client_player
+            else:
+                output_player = None
+                return output_player
+        return output_player
+    
+    def serverdepth(self, depth):
+        output_player = self.player
+        if output_player is None: return None
+        for i in range(depth):
+            if output_player.server_player is not None:
+                output_player = output_player.server_player
+            else:
+                output_player = None
+                return output_player
+        return output_player
+
+    def gate_location(self, gate_num: int, at_house: bool) -> Optional["Player"]:
+        landowner = self.player
+        gates = { # left: housegate right: landgate
+            0: [landowner, landowner], # return gate
+            1: [landowner, landowner],
+            2: [self.clientdepth(1), self.serverdepth(1)],
+            3: [landowner, landowner],
+            4: [self.clientdepth(2), self.serverdepth(2)],
+            5: [landowner, landowner],
+            6: [self.clientdepth(3), self.serverdepth(3)],
+            7: [landowner, landowner] # not implemented, second gate leads to denizen
+            }
+        if at_house: return gates[gate_num][0]
+        else: return gates[gate_num][1]
+
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
         util.sessions[self.__dict__["session_name"]]["overmaps"][self.__dict__["name"]][attr] = value
@@ -208,8 +247,10 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         return Session(self.__dict__["session_name"])
 
     @property
-    def player(self) -> "Player":
-        return Player(self.__dict__["player_name"])
+    def player(self) -> Optional["Player"]:
+        try:
+            return Player(self.player_name)
+        except KeyError: return None
 
     @property
     def name(self) -> str:
@@ -246,19 +287,19 @@ class Map():
                 map = map_from_file("gates.txt")
                 map += deepcopy(random.choice(map_tiles["house"]))
             case "gate1":
-                map = map_from_file(f"frame1", "gateframe")
+                map = map_from_file(f"frame1.txt", "gateframe")
             case "gate2":
-                map = map_from_file(f"frame2", "gateframe")
+                map = map_from_file(f"frame2.txt", "gateframe")
             case "gate3":
-                map = map_from_file(f"frame3", "gateframe")
+                map = map_from_file(f"frame3.txt", "gateframe")
             case "gate4":
-                map = map_from_file(f"frame4", "gateframe")
+                map = map_from_file(f"frame4.txt", "gateframe")
             case "gate5":
-                map = map_from_file(f"frame5", "gateframe")
+                map = map_from_file(f"frame5.txt", "gateframe")
             case "gate6":
-                map = map_from_file(f"frame6", "gateframe")
+                map = map_from_file(f"frame6.txt", "gateframe")
             case "gate7":
-                map = map_from_file(f"frame7", "gateframe")
+                map = map_from_file(f"frame7.txt", "gateframe")
             case _:
                 map = deepcopy(random.choice(map_tiles["land"]))
                 self.overmaptile = "#"
@@ -573,7 +614,7 @@ class Room():
         return Map(self.__dict__["map_name"], self.session, self.overmap)
 
     @property
-    def player(self) -> "Player":
+    def player(self) -> Optional["Player"]:
         return self.overmap.player
     
     @property
@@ -938,6 +979,21 @@ class Player():
         new_room = map.find_room(target_x, target_y)
         self.goto_room(new_room)
         return True
+
+    def enter_gate(self, gate_num: int):
+        if self.overmap.housemap.name == self.map.name:
+            at_house = True
+        else:
+            at_house = False
+        destination_player = self.overmap.gate_location(gate_num, at_house)
+        if destination_player is None: return
+        if at_house:
+            destination_map = destination_player.land.get_map(destination_player.land.gate_maps[str(gate_num)])
+            room = destination_map.random_valid_room([str(gate_num)])
+        else:
+            destination_map = destination_player.land.housemap
+            room = destination_map.random_valid_room([str(gate_num)])
+        self.goto_room(room)
 
     def get_base_stat(self, stat):
         stats = strife.stats_from_ratios(self.stat_ratios, self.power)
