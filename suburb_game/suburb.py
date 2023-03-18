@@ -1350,7 +1350,7 @@ def title():
     debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
     def crash_button_func():
         client.request(intent="crash_me")
-    crash_button = render.TextButton(0.8, 0.5, 128, 32, "crash me", crash_button_func)
+    # crash_button = render.TextButton(0.8, 0.5, 128, 32, "crash me", crash_button_func)
 
 def map_from_file(file):
     with open(f"maps/{file}", "r") as f:
