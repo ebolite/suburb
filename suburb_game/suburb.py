@@ -952,6 +952,8 @@ def overmap():
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
     overmap = render.Overmap(0.5, 0.75, map_tiles, map_specials, map_types, theme=theme)
     backbutton = render.Button(0.1, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", map_scene, theme=theme)
+    render.always_on_top_check.append(backbutton)
+    render.update_check.remove(backbutton)
 
 @scene
 def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False, strife=False):

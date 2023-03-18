@@ -163,8 +163,11 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         for map_tile_y, real_y in enumerate(range(target_y-view_tiles, target_y+view_tiles+1)):
             new_line = []
             for map_tile_x, real_x in enumerate(range(target_x-view_tiles, target_x+view_tiles+1)):
-                if real_y < 0 or real_y >= len(map_tiles): new_line.append("?") # out of bounds
-                elif real_x < 0 or real_x >= len(map_tiles[0]): new_line.append("?") # out of bounds
+                map_x, map_y = real_x, real_y
+                if map_y < 0: map_y += len(map_tiles)
+                if map_y >= len(map_tiles): map_y -= len(map_tiles) # loop if out of bounds
+                if map_x < 0: map_x += len(map_tiles[0])
+                if map_x >= len(map_tiles[0]): map_y -= len(map_tiles[0])
                 else: 
                     new_line.append(map_tiles[real_y][real_x])
                     map = self.find_map(real_x, real_y)
@@ -185,6 +188,10 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         return Map(name, self.session, self)
 
     def find_map(self, x, y) -> "Map":
+        if y < 0: y += len(map_tiles)
+        if y >= len(map_tiles): y -= len(map_tiles) # loop if out of bounds
+        if x < 0: x += len(map_tiles[0])
+        if x >= len(map_tiles[0]): y -= len(map_tiles[0])
         return Map(f"{x}, {y}", self.session, self)
 
     def __setattr__(self, attr, value):
