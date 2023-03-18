@@ -1195,7 +1195,7 @@ class RoomItemDisplay(UIElement):
                 self.buttons.append(new_button)
 
 class Overmap(UIElement):
-    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, map_types: Optional[dict[str, str]]=None, theme=themes.default, offsetx=0, offsety=0):
+    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, map_types: Optional[dict[str, str]]=None, theme=themes.default, offsetx=0, offsety=0, rotation=0):
         super().__init__()
         self.x = x
         self.y = y
@@ -1214,7 +1214,8 @@ class Overmap(UIElement):
         for rotation in [0, 90, 180, 270]:
             self.rotation_specials[rotation] = self.get_specials(rotation)
             self.rotation_map_types[rotation] = self.get_map_types(rotation)
-        print("specials", self.specials)
+        print(map_types)
+        print(self.rotation_map_types)
         self.rotation_surfs = {}
         self.rotation = 0
         self.extra_height = 32 * 9
@@ -1244,6 +1245,7 @@ class Overmap(UIElement):
         for name in self.map_types:
             coords = name.split(", ")
             x, y = int(coords[0]), int(coords[1])
+            x = len(self.map_tiles[0]) - x - 1
             true_x, true_y = x-cx, y-cy
             if rotation == 90: true_x, true_y = -true_y, true_x
             elif rotation == 180: true_x, true_y = -true_x, -true_y
@@ -1259,6 +1261,7 @@ class Overmap(UIElement):
         for name in self.specials:
             coords = name.split(", ")
             x, y = int(coords[0]), int(coords[1])
+            x = len(self.map_tiles[0]) - x - 1
             true_x, true_y = x-cx, y-cy
             if rotation == 90: true_x, true_y = -true_y, true_x
             elif rotation == 180: true_x, true_y = -true_x, -true_y
@@ -1278,7 +1281,7 @@ class Overmap(UIElement):
             button.delete()
             self.buttons.remove(button)
         self.delete()
-        Overmap(self.x, self.y, map_tiles, specials, map_types, self.theme, self.offsetx, self.offsety)
+        Overmap(self.x, self.y, map_tiles, specials, map_types, self.theme, self.offsetx, self.offsety, self.rotation)
 
     def initialize_map(self, rotation):
         self.rect = pygame.Rect(0, 0, self.w, self.h)
@@ -1344,15 +1347,11 @@ class OvermapTile(UIElement):
                 (1, 0): "east",
                 (-1, 0): "west",
             }
-            print(rotation)
-            print("original", dx, dy)
             if rotation == 90: true_dx, true_dy = -dy, dx
             elif rotation == 180: true_dx, true_dy = -dx, -dy
             elif rotation == 270: true_dx, true_dy = dy, -dx
             else: true_dx, true_dy = dx, dy
-            print("true", true_dx, true_dy)
             direction = directions[(true_dx, true_dy)]
-            print(direction)
             client.requestplus(intent="overmap_move", content=direction)
             self.overmap.update_map()
         return button_func
