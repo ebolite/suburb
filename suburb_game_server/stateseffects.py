@@ -123,7 +123,7 @@ class TragedyState(ClassPassive):
 
 class DemiseState(ClassPassive):
     def new_turn(self, griefer: "strife.Griefer"):
-        adjustment = -griefer.power//6
+        adjustment = -griefer.power//3
         adjust_reply = self.aspect.calculate_adjustment(adjustment)
         for other_griefer in griefer.strife.griefer_list:
             aspect.adjust(other_griefer, adjustment)
