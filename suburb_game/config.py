@@ -79,6 +79,8 @@ icons = {
     "imp": "sprites/icons/imp.png",
     "ogre": "sprites/icons/ogre.png",
     "lich": "sprites/icons/lich.png",
+    "basilisk": "sprites/icons/basilisk.png",
+    "giclops": "sprites/icons/giclops.png"
 }
 
 header_icons = {
