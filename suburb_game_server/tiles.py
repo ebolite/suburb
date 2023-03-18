@@ -165,7 +165,7 @@ stairs.build_cost = 200
 
 stairwell = Tile("-", "stairwell")
 stairwell.stair = True
-stairwell.build_cost = 200
+stairwell.build_cost = 100
 
 # ladder = Tile("=", "ladder")
 # ladder.stair = True
@@ -186,7 +186,7 @@ elevator_shaft.build_cost = 600
 
 elevator = Tile("e", "elevator")
 elevator.stair = True
-elevator.build_cost = 200
+elevator.build_cost = 100
 
 girder = Tile("+", "girder")
 girder.infallible = True
@@ -218,7 +218,7 @@ bathroom = Tile("b", "bathroom")
 
 foyer = Tile("F", "foyer")
 foyer.stair = True
-foyer.build_cost = 200
+foyer.build_cost = 100
 
 living_room = Tile("L", "living room")
 
