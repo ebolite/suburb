@@ -339,6 +339,7 @@ class Map():
             return room
         else: raise AssertionError
 
+
     def populate_with_underlings(self, underling_type: str, cluster_size: int, number: int, min_tier:int, max_tier: int):
         valid_rooms: list[Room] = []
         for y, line in enumerate(self.map_tiles):
@@ -359,6 +360,22 @@ class Map():
                 grist_name = config.gristcategories[self.overmap.gristcategory][grist_tier-1]
                 underling.make_npc(grist_name, self.overmap.gristcategory, room)
                 remaining_spawns -= 1
+
+    def populate_with_scaled_underlings(self):
+        difficulty = self.height
+        valid_underlings: list["npcs.Underling"] = []
+        for underling in npcs.underlings.values():
+            if underling.difficulty <= difficulty: valid_underlings.append(underling)
+        num_clusters = 10 + difficulty
+        if len(valid_underlings) == 0: return
+        for i in range(num_clusters):
+            underling = random.choice(valid_underlings)
+            cluster_size = underling.cluster_size
+            diff_difference = difficulty - underling.difficulty
+            cluster_size += int(underling.cluster_size/2 * diff_difference)
+            min_tier = min(1 + diff_difference, 9)
+            max_tier = min(min_tier + difficulty//2 + underling.variance, 9)
+            self.populate_with_underlings(underling.monster_type, cluster_size, cluster_size, min_tier, max_tier)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -925,6 +942,7 @@ class Player():
         target_map = self.overmap.find_map(target_x, target_y)
         if not target_map.map_tiles:
             target_map.gen_map()
+            target_map.populate_with_scaled_underlings()
         if direction == "north" or direction == "east": entry_direction = "left"
         else: entry_direction = "right"
         self.goto_room(target_map.get_starting_room(entry_direction))

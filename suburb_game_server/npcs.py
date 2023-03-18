@@ -23,6 +23,9 @@ class Underling():
             "savvy": 1,
             "mettle": 1,
         }
+        self.cluster_size = 1
+        self.difficulty = 1
+        self.variance = 0
 
     def make_npc(self, grist_name: str, grist_category: str, room: "sessions.Room") -> "Npc":
         tier: int = config.grists[grist_name]["tier"]
@@ -42,6 +45,9 @@ class Underling():
 
 imp = Underling("imp")
 imp.stat_ratios["luck"] = 3
+imp.cluster_size = 3
+imp.difficulty = 1
+imp.variance = 4
 
 ogre = Underling("ogre")
 ogre.base_power = 16
@@ -49,24 +55,32 @@ ogre.stat_ratios["vigor"] = 3
 ogre.stat_ratios["mettle"] = 2
 ogre.stat_ratios["spunk"] = 2
 ogre.stat_ratios["savvy"] = 0
+ogre.cluster_size = 2
+ogre.difficulty = 1
 
 lich = Underling("lich")
 lich.base_power = 20
 lich.stat_ratios["savvy"] = 2
 lich.stat_ratios["luck"] = 2
 lich.stat_ratios["spunk"] = 2
+lich.cluster_size = 1
+lich.difficulty = 4
 
 basilisk = Underling("basilisk")
 basilisk.base_power = 26
 basilisk.stat_ratios["savvy"] = 3
 basilisk.stat_ratios["spunk"] = 2
 basilisk.stat_ratios["vigor"] = 2
+basilisk.cluster_size = 2
+basilisk.difficulty = 4
 
 giclops = Underling("giclops")
 giclops.base_power = 68
 giclops.stat_ratios["mettle"] = 4
 giclops.stat_ratios["vigor"] = 2
 giclops.stat_ratios["spunk"] = 2
+giclops.cluster_size = 1
+giclops.difficulty = 6
 
 class Npc():
     @staticmethod
