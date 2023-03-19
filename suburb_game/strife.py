@@ -376,8 +376,10 @@ class Strife():
             return not self.player_griefer.ready
         revert_button = render.TextButton(0.85, 0.2, 196, 32, ">REVERT", revert_button_func)
         revert_button.draw_condition = button_condition
-        submit_button = render.TextButton(0.85, 0.25, 196, 32, ">SUBMIT", submit_button_func)
+        submit_button = render.TextButton(0.5, 0.78, 256, 48, ">READY", submit_button_func)
         submit_button.draw_condition = button_condition
+        submit_button.text_color = self.theme.dark
+        submit_button.fontsize = 32
         self.strife_log_window = render.LogWindow(None, None, lines_to_display=5, log_list=self.strife_log)
         self.submitted_skills_window = render.LogWindow(None, None, lines_to_display=4, x=1080, width=300, log_list=[])
         self.submitted_skills_window.background_color = self.theme.dark
