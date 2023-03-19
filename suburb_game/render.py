@@ -1302,6 +1302,9 @@ class Overmap(UIElement):
         self.block_image = pygame.image.load("sprites/overmap/block.png").convert()
         self.block_image = self.convert_to_theme(self.block_image)
         self.block_image.set_colorkey(pygame.Color(0, 0, 0))
+        self.selected_block_image = pygame.image.load("sprites/overmap/current_block.png").convert()
+        self.selected_block_image = self.convert_to_theme(self.selected_block_image)
+        self.selected_block_image.set_colorkey(pygame.Color(0, 0, 0))
         self.water_image = pygame.image.load("sprites/overmap/water.png").convert()
         self.water_image = self.convert_to_theme(self.water_image)
         self.water_image.set_colorkey(pygame.Color(0, 0, 0))
@@ -1449,7 +1452,9 @@ class OvermapTile(UIElement):
                 draw_y -= 16
         centerx, centery = self.overmap.center
         dx, dy = centerx - self.x, centery - self.y
-        if not (dx == 0 and dy == 0) and abs(dy) != abs(dx) and abs(dx) <= 1 and abs(dy) <= 1:
+        if dx == 0 and dy == 0:
+            self.blit_surf.blit(self.overmap.selected_block_image, ((draw_x, draw_y)))
+        elif abs(dy) != abs(dx) and abs(dx) <= 1 and abs(dy) <= 1:
             direction = get_cardinal_direction(dx, dy, rotation)
             if direction not in self.overmap.illegal_moves:
                 self.blit_surf.blit(self.overmap.select_image, ((draw_x, draw_y)))
