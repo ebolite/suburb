@@ -1421,6 +1421,7 @@ def main():
     except ConnectionResetError:
         connection_screen()
     except Exception as e:
+        traceback.print_exception(e)
         with open(f"{util.homedir}/crashlog.txt", "w") as file: 
             traceback.print_exception(e, file=file)
 
