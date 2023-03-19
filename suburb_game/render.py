@@ -322,7 +322,7 @@ class TextButton(UIElement):
         mouseup_check.append(self)
         key_check.append(self)
 
-    def update(self, keys):
+    def update(self):
         if self.draw_condition is not None:
             if not self.draw_condition(): return
         if self.hover_func is not None and self.is_mouseover():
