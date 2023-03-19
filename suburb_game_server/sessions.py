@@ -52,13 +52,13 @@ class Session():
             self.connected = []
             self.entered_players = []
             self.current_players = []
-            # atheneum is a list of items that have been alchemized by players within a session
-            self.atheneum = ["captchalogue card"]
+            # excursus is a list of items that have been alchemized by players within a session
+            self.excursus = ["captchalogue card", "perfectly generic object"]
             self.overmaps = {}          
 
-    def add_to_atheneum(self, item_name):
-        if item_name not in self.atheneum:
-            self.atheneum.append(item_name)
+    def add_to_excursus(self, item_name):
+        if item_name not in self.excursus:
+            self.excursus.append(item_name)
 
     def __setattr__(self, attr, value):
         util.sessions[self.__dict__["session_name"]][attr] = value
@@ -1153,9 +1153,10 @@ class Player():
     @property
     def available_phernalia(self):
         connected = self.session.connected
-        available_phernalia = ["sealed cruxtruder", "totem lathe", "alchemiter", "punch designix", "pre-punched card"]
+        available_phernalia = ["sealed cruxtruder", "totem lathe", "alchemiter", "pre-punched card"]
         if len(connected) >= 2:
             available_phernalia.append("gristTorrent disc")
+            available_phernalia.append("punch designix")
         for item in self.deployed_phernalia:
             available_phernalia.remove(item)
         phernalia_dict = {}

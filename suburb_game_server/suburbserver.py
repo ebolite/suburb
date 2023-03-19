@@ -585,7 +585,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             if not player.pay_costs(new_item.true_cost): print("couldnt pay costs"); return False
             new_instance = alchemy.Instance(new_item)
             player.room.add_instance(new_instance.name)
-            player.session.add_to_atheneum(new_item.name)
+            player.session.add_to_excursus(new_item.name)
             return True
         case "unseal":
             instance.item_name = "cruxtruder"
