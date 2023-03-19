@@ -944,6 +944,7 @@ class Player():
         return illegal_moves
 
     def attempt_overmap_move(self, direction: str) -> bool:
+        if self.strife is not None: return False
         if direction in self.get_illegal_overmap_moves(): return False
         player_x = self.map.x
         player_y = self.map.y
@@ -972,6 +973,7 @@ class Player():
         return True
 
     def attempt_move(self, direction: str) -> bool:
+        if self.strife is not None: return False
         player_x = self.room.x
         player_y = self.room.y
         map = self.map
