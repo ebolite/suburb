@@ -1152,7 +1152,9 @@ class RoomItemDisplay(UIElement):
                         suburb.display_item(Instance(button_instance_name, self.tile_map.instances[button_instance_name]), suburb.map_scene)
                     else: # this is an npc
                         client.request(intent="start_strife")
-                        suburb.map_scene()
+                        strife_dict = client.requestdic(intent="strife_info")
+                        if strife_dict:
+                            suburb.strife_scene(strife_dict)
             return output_func
         for button in self.buttons:
             button.delete()
