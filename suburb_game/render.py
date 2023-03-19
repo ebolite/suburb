@@ -830,6 +830,7 @@ class TileMap(UIElement):
                 map_dict = sburbserver.viewport_dic
             else:
                 map_dict = client.requestdic("current_map")
+        old_theme = self.theme
         self.map = map_dict["map"]
         self.specials = map_dict["specials"]
         self.instances: dict[str, dict] = map_dict["instances"]
@@ -842,6 +843,7 @@ class TileMap(UIElement):
             tile.known_invalid_tiles = []
         if self.label is not None: self.label.text = self.room_name
         if update_info_window: self.update_info_window()
+        if old_theme != self.theme: self.background.color = self.theme.dark
         self.last_update = time.time()
 
     def update_info_window(self):
@@ -913,6 +915,7 @@ class Tile(UIElement):
         self.specials = specials
         self.server_view = server_view
         self.last_tile = self.tile
+        self.last_theme = self.tile_map.theme
         self.known_invalid_tiles: list[str] = []
         if server_view:
             click_check.append(self)
@@ -926,9 +929,10 @@ class Tile(UIElement):
     def update_image(self):
         try: self.image
         except AttributeError: self.load_image()
-        if self.last_tile != self.tile: 
+        if self.last_tile != self.tile or self.last_theme != self.tile_map.theme: 
             self.load_image()
             self.last_tile = self.tile
+            self.last_theme = self.tile_map.theme
 
     def onclick(self, isclicked: bool):
         if isclicked:
