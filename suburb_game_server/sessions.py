@@ -429,7 +429,7 @@ class Map():
         special_dict = {}
         for player_name in self.session.current_players:
             player = Player(player_name)
-            if player.map.name == self.name:
+            if player.overmap.name == self.overmap.name and player.map.name == self.name:
                 special_dict[player.name] = "player"
         # todo: other specials
         return special_dict
