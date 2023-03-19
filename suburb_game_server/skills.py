@@ -161,6 +161,8 @@ class Skill():
             else:
                 skill = skills[self.user_skill]
                 skill.affect(user, user)
+        for vial in user.vials_list:
+            vial.use_skill(user, self)
 
     # apply skill effects to individual target
     def affect(self, user: "strife.Griefer", target: "strife.Griefer"):

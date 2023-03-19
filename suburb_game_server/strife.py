@@ -87,6 +87,9 @@ class Vial():
 
     def on_parry(self, griefer: "Griefer", damage_parried: int):
         pass
+
+    def use_skill(self, griefer: "Griefer", skill: "skills.Skill"):
+        pass
     
 hp = Vial("hp")
 hp.maximum_formula = "{power}*3 + {vig}*18"
@@ -177,6 +180,47 @@ horseshitometer = HorseshitometerVial("horseshitometer")
 horseshitometer.maximum_formula = "{power} + {tac}*6"
 horseshitometer.starting_formula = "{maximum}//2"
 horseshitometer.optional_vial = True
+
+class GambitVial(Vial):
+    def __init__(self, name):
+        super().__init__(name)
+        self.gambit_skill_name: Optional[str] = None
+        self.already_picked_skills: list[str] = []
+        self.used_gambit_skill = False
+        self.combob = 0
+
+    def choose_random_skill(self, griefer: "Griefer") -> str:
+        pickable_skills = [skill_name for skill_name in griefer.known_skills if skill_name not in self.already_picked_skills]
+        if len(self.already_picked_skills) > len(griefer.known_skills)//4:
+            self.already_picked_skills = []
+        return random.choice(pickable_skills)
+
+    def new_turn(self, griefer: "Griefer"):
+        if self.gambit_skill_name is not None:
+            value = griefer.power//12 + griefer.get_stat("tact")//2
+            if self.used_gambit_skill:
+                self.add_value(griefer, value)
+                value = self.difference_from_starting(griefer)
+                griefer.change_vial("hp", value)
+                griefer.strife.log(f"{griefer.nickname} recovered {value} hp from GAMBIT!")
+            else:
+                self.add_value(griefer, -value)
+                if self.combob > 1:
+                    griefer.strife.log(f"GAMBIT COMBOB BROKEN D: {self.combob*'!'}")
+                self.combob = 0
+        self.gambit_skill_name = self.choose_random_skill(griefer)
+        griefer.strife.log(f"{griefer.nickname}'s GAMBIT skill is {self.gambit_skill_name.upper()}!")
+        self.used_gambit_skill = False
+
+    def use_skill(self, griefer: "Griefer", skill: "skills.Skill"):
+        if self.used_gambit_skill: return
+        if skill.name == self.gambit_skill_name:
+            self.used_gambit_skill = True
+            self.combob += 1
+            if self.combob == 1:
+                griefer.strife.log("The crowd goes wild!")
+            else:
+                griefer.strife.log(f"{self.combob}x GAMBIT COMBOB{self.combob*'!'}")
 
 gambit = Vial("gambit")
 gambit.maximum_formula = "{power} + {tac}*6"
