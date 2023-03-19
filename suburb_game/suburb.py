@@ -191,7 +191,7 @@ def newsession():
 
 @scene
 def connect():
-    log = render.Text(0.5, 0.20, "")
+    log = render.Text(0.5, 0.1, "")
     title_text = render.Text(0.5, 0.2, f"Connect to a session.")
     title_text.color = current_theme().dark
     title_text.outline_color = current_theme().black
