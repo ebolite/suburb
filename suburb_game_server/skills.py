@@ -49,7 +49,7 @@ class_skills: dict[str, dict[str, dict[str, int]]] = {}
 
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 
-SKILL_CATEGORIES = ["aggressive", "abstinent", "abusive", "aspected", "accolades", "arsenal", "none"]
+SKILL_CATEGORIES = ["aggressive", "abstinent", "aspected", "accolades", "arsenal", "none"]
 
 def modify_damage(damage: int, griefer: "strife.Griefer"):
     mettle = griefer.get_stat("mettle")
@@ -304,7 +304,7 @@ abuse.use_message = "{user} abuses!"
 abuse.damage_formula = "user.base_damage * (0.5 + 1.5*coin)"
 abuse.add_apply_state("demoralize", 3, "1.0")
 abuse.add_vial_cost("vim", "user.power")
-abuse.category = "abusive"
+abuse.category = "aggressive"
 base_skills.append("abuse")
 
 def abscond_func(user: "strife.Griefer", target: "strife.Griefer"):
