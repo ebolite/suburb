@@ -710,7 +710,8 @@ class Player():
             self.permanent_stat_bonuses = {}
             # phernalia registry is a default list of deployable objects minus the deployed phernalia
             self.deployed_phernalia = []
-            self.server_storage = []
+            # atheneum is the list of stored instances
+            self.atheneum = []
             # key: grist value: amount
             self.unclaimed_grist = {}
             self.unclaimed_rungs = 0

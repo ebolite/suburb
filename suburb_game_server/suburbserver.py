@@ -399,6 +399,16 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
                 return get_viewport(viewport_x, viewport_y, player.client_player)
             else:
                 return json.dumps({})
+        case "add_to_atheneum":
+            if player.client_player is None: return "No client."
+            viewport_x = content["viewport_x"]
+            viewport_y = content["viewport_y"]
+            instance_name = content["instance_name"]
+            target_room = player.client_player.land.housemap.find_room(viewport_x, viewport_y)
+            if instance_name not in target_room.instances: return False
+            target_room.remove_instance(instance_name)
+            player.client_player.atheneum.append(instance_name)
+            return True
 
 def console_commands(player: sessions.Player, content: str):
     args = content.split(" ")
