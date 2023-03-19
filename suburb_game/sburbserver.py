@@ -73,6 +73,11 @@ def revise_tile(target_x: int, target_y: int) -> Optional[dict]:
         return reply
     else:
         return None
+    
+def add_instance_to_atheneum(instance_name):
+    reply = client.requestplus(intent="computer", content={
+        "command": "add_to_atheneum", "viewport_x": current_x, "viewport_y": current_y, "instance_name": instance_name
+    })
 
 def update_viewport_dic(dic: Optional[dict]=None):
     global viewport_dic

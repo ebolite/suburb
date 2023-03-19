@@ -1173,7 +1173,8 @@ class RoomItemDisplay(UIElement):
     def update_instances(self):
         def get_button_func(button_instance_name):
             if self.server_view:
-                def output_func(): pass
+                def output_func(): 
+                    ...
             else:
                 def output_func():
                     if button_instance_name in self.tile_map.instances:
@@ -1184,6 +1185,12 @@ class RoomItemDisplay(UIElement):
                         if strife_dict:
                             suburb.strife_scene(strife_dict)
             return output_func
+        def get_add_to_atheneum_button_func(button_instance_name):
+            def add_to_atheneum_button_func():
+                if button_instance_name in self.tile_map.instances:
+                    sburbserver.add_instance_to_atheneum(button_instance_name)
+                    self.tile_map.update_map()
+            return add_to_atheneum_button_func
         for button in self.buttons:
             button.delete()
         # instances and npcs are a dict so we need to convert to list to slice
@@ -1225,7 +1232,8 @@ class RoomItemDisplay(UIElement):
                     captcha_button = CaptchalogueButton(self.x, y, instance.name, self.tile_map.instances)
                     captcha_button.absolute = True
                 else:
-                    captcha_button = None
+                    captcha_button = Button(self.x, y, "sprites/buttons/add_to_atheneum.png", "sprites/buttons/add_to_atheneum_pressed.png", get_add_to_atheneum_button_func(instance.name))
+                    captcha_button.absolute = True
                 use_buttons = 0
                 if not self.server_view:
                     for i, action_name in enumerate(reversed(instance.item.use)):
