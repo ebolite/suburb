@@ -134,6 +134,12 @@ def codeor(code1: str, code2: str) -> str: # codes as code string
     final = bintostring(finalbin)
     return final
 
+def is_valid_code(code) -> bool:
+    if len(code) != 8: return False
+    validated_code = "".join([char for char in code if char in bintable])
+    if code != validated_code: return False
+    return True
+
 if __name__ == "__main__":
     rows = captcha_code_to_bin_rows("nZ7Un6BI")
     for row in rows: print(row)

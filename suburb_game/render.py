@@ -506,6 +506,7 @@ class InputTextBox(UIElement):
         self.absolute_text = True
         self.suffix = ""
         self.secure = False
+        self.allowed_characters = []
         self.button: Union[Button, TextButton, None] = None
         self.enter_func: Optional[Callable] = None
         click_check.append(self)

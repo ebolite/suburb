@@ -180,11 +180,14 @@ def handle_request(dict):
             instance_name = content["instance_name"]
             action_name = content["action_name"]
             target_name = content["target_name"]
+            if "additional_data" in content:
+                additional_data = content["additional_data"]
+            else: additional_data = None
             if instance_name not in util.instances: return False
             instance = alchemy.Instance(instance_name)
             if target_name is not None: target_instance = alchemy.Instance(target_name)
             else: target_instance = None
-            return use_item(player, instance, action_name, target_instance)
+            return use_item(player, instance, action_name, target_instance, additional_data)
         case "computer":
             return computer_shit(player, content, session)
         case "assign_specibus":
@@ -619,6 +622,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             if len(code_to_punch) != 8: print("invalid code"); return False
             for char in code_to_punch:
                 if char not in binaryoperations.bintable: print("invalid code"); return False
+            if code_to_punch == "00000000": return True # no holes would be made
             inserted_instance = alchemy.Instance(instance.inserted)
             if inserted_instance.item_name != "punched card": inserted_instance.item_name = "punched card"
             if inserted_instance.punched_code == "":

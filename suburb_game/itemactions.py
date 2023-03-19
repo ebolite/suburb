@@ -5,8 +5,13 @@ import util
 import client
 import render
 import suburb
+import binaryoperations
 
 item_actions = {}
+
+def request_use_item(instance_name: str, action_name: str, target_name:Optional[str]=None, additional_data:Optional[str]=None):
+    return client.requestplus(intent="use_item", content={"instance_name": instance_name, "action_name": action_name, 
+                                                          "target_name": target_name, "additional_data": additional_data})
 
 class ItemAction():
 
@@ -96,6 +101,33 @@ punch_card.error_prompt = "No card is inserted."
 punch_card.use_prompt = "You punch the card with the code for {tname_lower}."
 
 #todo: add support for custom punch
+custom_punch_card = ItemAction("custom_punch_card")
+custom_punch_card.special = True
+def use_custom_punch(instance: "sylladex.Instance") -> bool:
+    inserted_instance = instance.inserted_instance()
+    if inserted_instance is None: 
+        util.log("You must first insert a card before you can punch it with a code!")
+        return False
+    render.clear_elements()
+    render.LogWindow(None)
+    instruction_text = render.Text(0.5, 0.2, "What code would you like to punch?")
+    instruction_text.color = suburb.current_theme().dark
+    input_box = render.InputTextBox(0.5, 0.3, 196, 32)
+    input_box.text = "00000000"
+    input_box.max_characters = 8
+    def punch_condition():
+        if binaryoperations.is_valid_code(input_box.text): return False
+        else: return True
+    def punch_button_func():
+        reply = request_use_item(instance.name, "punch_card", additional_data=input_box.text)
+        if reply: util.log(f"Punched the card with code '{input_box.text}'!")
+        suburb.map_scene()
+    punch_button = render.TextButton(0.5, 0.4, 128, 32, "PUNCH!", punch_button_func)
+    punch_button.inactive_condition = punch_condition
+    backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", suburb.map_scene)
+    return False
+custom_punch_card.use_func = use_custom_punch
+
 
 unseal = ItemAction("unseal")
 unseal.use_prompt = "You unseal the {iname}!... A KERNEL appears!"
