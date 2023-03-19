@@ -202,7 +202,7 @@ class GambitVial(Vial):
                 self.add_value(griefer, value)
                 value = self.difference_from_starting(griefer)
                 griefer.change_vial("hp", value)
-                griefer.strife.log(f"{griefer.nickname} recovered {value} hp from GAMBIT!")
+                griefer.strife.log(f"{griefer.nickname} recovered {value} hp from {griefer.their} GAMBIT!")
             else:
                 self.add_value(griefer, -value)
                 if self.combob > 1:
@@ -244,6 +244,7 @@ class Griefer():
             self.actions = 1
             self.ready: bool = False
             self.base_power: int = 0
+            self.pronouns: list[str] = ["it", "it", "its", "its"]
             self.base_stats: dict[str, int] = {
                 "spunk": 0,
                 "vigor": 0,
@@ -399,6 +400,7 @@ class Griefer():
         griefer.base_stats = base_stats.copy()
         griefer.stat_bonuses = player.permanent_stat_bonuses.copy()
         griefer.known_skills = player.get_known_skills()
+        griefer.pronouns = player.pronouns.copy()
         griefer.add_vial("aspect")
         griefer.add_vial(player.secondaryvial)
         griefer.initialize_vials()
@@ -636,6 +638,22 @@ class Griefer():
             skill = skills.skills[skill_dict["skill_name"]]
             actions -= skill.action_cost
         return actions
+    
+    @property
+    def they(self) -> str:
+        return self.pronouns[0]
+    
+    @property
+    def them(self) -> str:
+        return self.pronouns[1]
+    
+    @property
+    def their(self) -> str:
+        return self.pronouns[2]
+    
+    @property
+    def theirs(self) -> str:
+        return self.pronouns[3]
     
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
