@@ -3,6 +3,7 @@ import sys
 import pathlib
 import hashlib
 import socket
+import traceback
 import math
 import time
 from captcha.image import ImageCaptcha
@@ -1419,6 +1420,9 @@ def main():
         connection_screen()
     except ConnectionResetError:
         connection_screen()
+    except Exception as e:
+        with open(f"{util.homedir}/crashlog.txt", "w") as file: 
+            traceback.print_exception(e, file=file)
 
 if __name__ == "__main__":
     main()
