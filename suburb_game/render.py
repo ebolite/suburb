@@ -1810,10 +1810,15 @@ class Vial(SolidColor):
             self.label.rect_x_offset = -self.rect_x_offset
         super().update()
         # unusuable vial fill
-        unusable_fill_width = int(self.fill_surf.get_width() * self.filled_percent)
-        unusable_fill_rect = pygame.Rect(0, 0, unusable_fill_width, self.fill_surf.get_height())
-        unusable_fill_surf = pygame.Surface((unusable_fill_width, self.fill_surf.get_height()))
-        unusable_fill_surf.fill(Color(255, 0, 0))
+        if not self.segmented_vial:
+            unusable_fill_width = int(self.fill_surf.get_width() * self.filled_percent)
+            unusable_fill_rect = pygame.Rect(0, 0, unusable_fill_width, self.fill_surf.get_height())
+            unusable_fill_surf = pygame.Surface((unusable_fill_width, self.fill_surf.get_height()))
+            unusable_fill_surf.fill(Color(255, 0, 0))
+        else:
+            unusable_fill_surf = None
+            unusable_fill_rect = None
+            unusable_fill_width = 0
         # usable vial fill
         fill_width = int(self.fill_surf.get_width() * self.usable_filled_percent)
         fill_rect = pygame.Rect(0, 0, fill_width, self.fill_surf.get_height())
@@ -1823,7 +1828,7 @@ class Vial(SolidColor):
         else: x_offset = 0
         blit_x = self.rect.x+self.padding*2+x_offset
         blit_y = self.rect.y+self.padding
-        self.blit_surf.blit(unusable_fill_surf, (blit_x, blit_y), unusable_fill_rect)
+        if unusable_fill_surf is not None and unusable_fill_rect is not None: self.blit_surf.blit(unusable_fill_surf, (blit_x, blit_y), unusable_fill_rect)
         self.blit_surf.blit(self.fill_surf, (blit_x, blit_y), fill_rect)
 
     @property
