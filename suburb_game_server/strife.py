@@ -63,7 +63,7 @@ class Vial():
     
     def get_starting(self, griefer: "Griefer") -> int:
         formula = griefer.format_formula(self.starting_formula)
-        if "{maximum}" in formula: formula = formula.replace("{maximum}", str(griefer.get_vial_maximum(self.name)))
+        if "{maximum}" in formula: formula = formula.replace("{maximum}", str(self.get_maximum(griefer)))
         starting_value = int(eval(formula))
         return starting_value
     
