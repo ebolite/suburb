@@ -380,6 +380,7 @@ class Strife():
         submit_button.draw_condition = button_condition
         submit_button.text_color = self.theme.dark
         submit_button.fontsize = 32
+        submit_button.click_keys = [pygame.K_SPACE]
         self.strife_log_window = render.LogWindow(None, None, lines_to_display=5, log_list=self.strife_log)
         self.submitted_skills_window = render.LogWindow(None, None, lines_to_display=4, x=1080, width=300, log_list=[])
         self.submitted_skills_window.background_color = self.theme.dark

@@ -316,11 +316,13 @@ class TextButton(UIElement):
         self.draw_sprite = True
         self.toggle = False
         self.click_on_mouse_down = False
+        self.click_keys = []
         click_check.append(self)
         update_check.append(self)
         mouseup_check.append(self)
+        key_check.append(self)
 
-    def update(self):
+    def update(self, keys):
         if self.draw_condition is not None:
             if not self.draw_condition(): return
         if self.hover_func is not None and self.is_mouseover():
@@ -379,6 +381,9 @@ class TextButton(UIElement):
                 else:
                     self.active = True
             self.onpress()
+
+    def keypress(self, event):
+        if event.key in self.click_keys: self.onpress()
 
     @property
     def font(self):
