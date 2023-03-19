@@ -379,6 +379,7 @@ class Sylladex():
         return True
 
     def captchalogue(self, instance: Instance) -> bool:
+        if self.empty_cards == 0: return False
         if not self.can_captchalogue(instance): return False
         self.modus.add_to_modus_data(instance, self)
         ejected = self.modus.get_cards_to_eject(self)
