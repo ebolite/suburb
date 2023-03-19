@@ -431,7 +431,7 @@ class Map():
         for player_name in self.session.current_players:
             player = Player(player_name)
             if player.overmap.name == self.overmap.name and player.map.name == self.name:
-                special_dict[player.name] = "player"
+                special_dict[player.name] = ["player", player.symbol_dict["color"]]
         # todo: other specials
         return special_dict
 
@@ -616,14 +616,14 @@ class Room():
         special_dict = {}
         for player_username in self.players:
             player = Player(player_username)
-            special_dict[player.calledby] = "player"
+            special_dict[player.calledby] = ["player", player.symbol_dict["color"]]
         for instance_name in self.instances:
             instance = alchemy.Instance(instance_name)
             if instance.item.name in config.special_items:
-                special_dict[instance_name] = instance.item.name
+                special_dict[instance_name] = [instance.item.name, None]
         for npc_name in self.npcs:
             npc = npcs.Npc(npc_name)
-            special_dict[npc_name] = npc.type
+            special_dict[npc_name] = [npc.type, npc.grist_type]
         # todo: other specials
         return special_dict
 

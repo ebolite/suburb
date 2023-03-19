@@ -76,6 +76,14 @@ def palette_swap(surf: Union[pygame.Surface, pygame.surface.Surface], old_color:
     new_surf.blit(surf, (0, 0))
     return new_surf
 
+def get_dark_color(r, g, b) -> Color:
+    sub = 30
+    for color in (r, g, b):
+        if color < 20: sub+= 20
+    r, g, b = r-sub, g-sub, b-sub
+    r, g, b = max(r, 0), max(g, 0), max(b, 0)
+    return pygame.Color(r, g, b)
+
 class UIElement(pygame.sprite.Sprite):
     def __init__(self): # x and y as fractions of 1 (centered position on screen)
         super(UIElement, self).__init__()
@@ -1000,15 +1008,25 @@ class Tile(UIElement):
         self.surf.blit(self.image, (0, 0), (offsetx, offsety, tile_wh, tile_wh))
         if f"{self.x}, {self.y}" in self.tile_map.specials:
             room_specials = self.tile_map.specials[f"{self.x}, {self.y}"]
-            specials_keys = list(room_specials.keys()) + [None for i in range(len(room_specials.keys()))]
+            specials_keys = list(room_specials.keys()) # + [None for i in range(len(room_specials.keys()))]
             drawing_index = int(((pygame.time.get_ticks() / 15) % FPS_CAP) / (FPS_CAP / len(specials_keys))) # full cycle each second
             drawing_name = specials_keys[drawing_index]
             if drawing_name is not None: # if we're not drawing nothing (images should be flashing)
-                drawing_type = room_specials[drawing_name]
+                drawing_type, drawing_color = room_specials[drawing_name]
                 if drawing_type in config.icons: icon_image_filename = config.icons[drawing_type]
                 else: icon_image_filename = config.icons["no_icon"]
                 icon_image = pygame.image.load(icon_image_filename)
-                icon_image = self.convert_to_theme(icon_image)
+                if isinstance(drawing_color, list): # list of 3
+                    r, g, b = drawing_color[0], drawing_color[1], drawing_color[2]
+                    light = pygame.Color(r, g, b)
+                    dark = get_dark_color(r, g, b)
+                    icon_image = palette_swap(icon_image, themes.default.light, light)
+                    icon_image = palette_swap(icon_image, themes.default.dark, dark)
+                elif isinstance(drawing_color, str): # enemy grist type
+                    color = config.gristcolors[drawing_color]
+                    icon_image = palette_swap(icon_image, themes.default.black, color)
+                else: # drawing color is None
+                    icon_image = self.convert_to_theme(icon_image)
                 icon_image.set_colorkey(pygame.Color(0, 0, 0))
                 self.surf.blit(icon_image, (0, 0), (0, 0, tile_wh, tile_wh))
         if self.server_view and self.is_mouseover():
@@ -1452,10 +1470,17 @@ class OvermapTile(UIElement):
         if self.name in self.overmap.rotation_specials[rotation]:
             draw_y -= 16
             specials = self.overmap.rotation_specials[rotation][self.name]
-            for _, special_type in specials.items():
+            for _, special_tuple in specials.items():
+                special_type, special_color = special_tuple
                 path = f"sprites/overmap/{special_type}.png"
                 if os.path.isfile(path):
                     special_surf = pygame.image.load(path)
+                    if isinstance(special_color, list): # 3 color rgb
+                        r, g, b = special_color[0], special_color[1], special_color[2]
+                        light = pygame.Color(r, g, b)
+                        dark = get_dark_color(r, g, b)
+                        special_surf = palette_swap(special_surf, themes.default.light, light)
+                        special_surf = palette_swap(special_surf, themes.default.dark, dark)
                     special_surf = self.overmap.convert_to_theme(special_surf)
                     special_surf.set_colorkey(Color(0, 0, 0))
                     self.blit_surf.blit(special_surf, ((draw_x, draw_y)))
@@ -1831,16 +1856,12 @@ class Symbol(Image):
     @property
     def light(self):
         r, g, b = self.color[0], self.color[1], self.color[2]
-        return pygame.Color(r, g, b)
+        return Color(r, g, b)
     
     @property
-    def dark(self):
-        sub = 30
-        for color in self.color:
-            if color < 20: sub+= 20
-        r, g, b = self.color[0]-sub, self.color[1]-sub, self.color[2]-sub
-        r, g, b = max(r, 0), max(g, 0), max(b, 0)
-        return pygame.Color(r, g, b)
+    def dark(self) -> Color:
+        r, g, b = self.color[0], self.color[1], self.color[2]
+        return get_dark_color(r, g, b)
 
     def get_width(self):
         return 114
