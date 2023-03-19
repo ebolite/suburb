@@ -191,6 +191,33 @@ class Griefer():
         return self.stats["power"]
 
 class Strife():
+    first_layer_hotkeys = {
+        0: pygame.K_1,
+        1: pygame.K_2,
+        2: pygame.K_3,
+        3: pygame.K_4,
+        4: pygame.K_5,
+        5: pygame.K_6,
+        6: pygame.K_7,
+        7: pygame.K_8,
+        8: pygame.K_9,
+        9: pygame.K_0,
+    }
+    first_layer_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+    second_layer_hotkeys = {
+        0: pygame.K_q,
+        1: pygame.K_w,
+        2: pygame.K_e,
+        3: pygame.K_r,
+        4: pygame.K_t,
+        5: pygame.K_y,
+        6: pygame.K_u,
+        7: pygame.K_i,
+        8: pygame.K_o,
+        9: pygame.K_p,
+    }
+    second_layer_labels = ["q", "w", "e", "r", "t", "y", "i", "o", "p"]
+
     def __init__(self, strife_dict: Optional[dict]=None):
         print("init")
         if strife_dict is None: strife_dict = client.requestdic(intent="strife_info")
@@ -341,6 +368,21 @@ class Strife():
         skill_button.hover_func = self.get_skill_hover_func(skill.name)
         return skill_button
 
+    def make_hotkey_label(self, button: "render.TextButton", i, category_name, first_layer=True):
+        if first_layer:
+            if i not in self.first_layer_hotkeys: return
+            hotkey = self.first_layer_hotkeys[i]
+            label = self.first_layer_labels[i]
+        else:
+            if i not in self.second_layer_hotkeys: return
+            hotkey = self.second_layer_hotkeys[i]
+            label = self.second_layer_labels[i]
+        button.click_keys.append(hotkey)
+        hotkey_label = render.Text(0.9, 0.5, f"({label})")
+        hotkey_label.bind_to(button)
+        hotkey_label.fontsize = 12
+        hotkey_label.color = config.get_category_color(category_name)
+
     def draw_scene(self):
         bar_br = 30
         self.canvas = render.SolidColor(0.5, 0.5, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, self.theme.light)
@@ -355,6 +397,7 @@ class Strife():
         # todo: make skill categories
         x = 4
         y = 200
+        i = 0
         for category_name in self.player_griefer.skill_categories:
             if category_name == "none": continue
             category_button = render.TextButton(4, y, 196, 32, f"{category_name.upper()}", self.get_category_button_func(category_name))
@@ -362,9 +405,12 @@ class Strife():
             category_button.fill_color = themes.default.white
             category_button.outline_color = config.get_category_color(category_name)
             category_button.text_color = config.get_category_color(category_name)
+            self.make_hotkey_label(category_button, i, category_name)
             y += 48
+            i += 1
         for skill in self.player_griefer.skill_categories["none"]:
-            self.make_skill_button(skill, x, y)
+            skill_button = self.make_skill_button(skill, x, y)
+            self.make_hotkey_label(skill_button, i, "none")
             y += 48
         def submit_button_func():
             reply = client.requestdic(intent="strife_ready")
@@ -456,6 +502,7 @@ class Strife():
         for i, skill in enumerate(self.player_griefer.skill_categories[category_name]):
             y = 200 + 48*i
             skill_button = self.make_skill_button(skill, x, y)
+            self.make_hotkey_label(skill_button, i, category_name, first_layer=False)
             self.layer_2_buttons.append(skill_button)
 
     def clear_next_layer_buttons(self):
