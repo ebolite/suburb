@@ -1422,7 +1422,7 @@ def main():
         connection_screen()
     except Exception as e:
         traceback.print_exception(e)
-        with open(f"{util.homedir}/crashlog.txt", "w") as file: 
+        with open(f"{util.homedir}/crashlog-{time.time()}.txt", "w") as file: 
             traceback.print_exception(e, file=file)
 
 if __name__ == "__main__":
