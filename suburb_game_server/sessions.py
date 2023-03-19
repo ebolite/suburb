@@ -53,7 +53,7 @@ class Session():
             self.entered_players = []
             self.current_players = []
             # atheneum is a list of items that have been alchemized by players within a session
-            self.atheneum = []
+            self.atheneum = ["captchalogue card"]
             self.overmaps = {}          
 
     def add_to_atheneum(self, item_name):
