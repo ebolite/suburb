@@ -1390,15 +1390,11 @@ def connection_screen():
     try_again_button = render.TextButton(0.5, 0.7, 196, 32, ">TRY AGAIN", try_again)
     spiro = render.get_spirograph(0.5, 0.3, False)
 
+def render_loop():
+    while render.render():
+        pass
+
 def main():
-    connecting_text = render.Text(0.5, 0.5, "CONNECTING...")
-    connecting_text.color = themes.default.dark
-    connecting_text.outline_color = themes.default.black
-    render.render()
-    if client.connect(): # connect to server
-        title() # normal game start
-    else:
-        connection_screen()
     # aspectcharacter() # choose scene to test
     # chooseinterests()
     # choosegrists()
@@ -1414,18 +1410,27 @@ def main():
     # render.Overmap(0.5, 0.5, test_map)
     # render.Symbol(0.5, 0.5, config.get_random_symbol())
     try:
-        while render.render():
-            ...
+        render_loop()
     except TimeoutError:
         connection_screen()
+        main()
     except ConnectionResetError:
         connection_screen()
+        main()
     except Exception as e:
         traceback.print_exception(e)
         with open(f"{util.homedir}/crashlog-{time.time()}.txt", "w") as file: 
             traceback.print_exception(e, file=file)
 
 if __name__ == "__main__":
+    connecting_text = render.Text(0.5, 0.5, "CONNECTING...")
+    connecting_text.color = themes.default.dark
+    connecting_text.outline_color = themes.default.black
+    render.render()
+    if client.connect(): # connect to server
+        title() # normal game start
+    else:
+        connection_screen()
     main()
     
 
