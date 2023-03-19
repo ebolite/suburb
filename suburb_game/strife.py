@@ -523,7 +523,6 @@ class Strife():
         vial_y = 0
         vial_y_increase = 0.035
         for vial_name in self.player_griefer.vials:
-            if vial_name == "hp": continue
             hidden = config.vials[vial_name]["hidden"]
             if hidden and self.player_griefer.get_vial(vial_name) == self.player_griefer.get_starting_vial(vial_name): continue
             vial_y += vial_y_increase
