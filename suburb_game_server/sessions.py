@@ -52,9 +52,13 @@ class Session():
             self.connected = []
             self.entered_players = []
             self.current_players = []
-            # atheneum is a list of items that have been alchemized by all players in the session
+            # atheneum is a list of items that have been alchemized by players within a session
             self.atheneum = []
             self.overmaps = {}          
+
+    def add_to_atheneum(self, item_name):
+        if item_name not in self.atheneum:
+            self.atheneum.append(item_name)
 
     def __setattr__(self, attr, value):
         util.sessions[self.__dict__["session_name"]][attr] = value
