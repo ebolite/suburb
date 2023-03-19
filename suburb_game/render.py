@@ -843,7 +843,7 @@ class TileMap(UIElement):
             tile.known_invalid_tiles = []
         if self.label is not None: self.label.text = self.room_name
         if update_info_window: self.update_info_window()
-        if old_theme != self.theme: self.background.color = self.theme.dark
+        if old_theme != self.theme and hasattr(self, "background"): self.background.color = self.theme.dark
         self.last_update = time.time()
 
     def update_info_window(self):
