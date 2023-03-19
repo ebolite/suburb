@@ -374,7 +374,7 @@ class Map():
             diff_difference = difficulty - underling.difficulty
             cluster_size += int(underling.cluster_size/2 * diff_difference)
             min_tier = min(1 + diff_difference, 9)
-            max_tier = min(min_tier + difficulty//2 + underling.variance, 9)
+            max_tier = min(min_tier + difficulty + underling.variance, 9)
             self.populate_with_underlings(underling.monster_type, cluster_size, cluster_size, min_tier, max_tier)
 
     def __setattr__(self, attr, value):
