@@ -408,6 +408,8 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             if instance_name not in target_room.instances: return False
             target_room.remove_instance(instance_name)
             player.client_player.atheneum.append(instance_name)
+            instance = alchemy.Instance(instance_name)
+            player.client_player.session.add_to_excursus(instance.item.name)
             return True
 
 def console_commands(player: sessions.Player, content: str):
