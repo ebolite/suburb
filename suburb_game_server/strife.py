@@ -260,6 +260,7 @@ class Griefer():
             self.submitted_skills: list[dict] = []
             self.player_name: Optional[str] = None
             self.npc_name: Optional[str] = None
+            self.ai_type: str = "random"
             self.vials: dict[str, dict] = {}
             self.states: dict[str, dict] = {}
             self.tags = []
@@ -370,11 +371,30 @@ class Griefer():
                     targets_list.append(self.strife.get_griefer(griefer_name))
             skill.use(self, targets_list)
 
+    def get_random_submittable_skill(self) -> str:
+        usable_skills = [skill.name for skill in self.known_skills_list if skill.is_submittable_by(self)]
+        return random.choice(usable_skills)
+
+    def submit_random_skill(self):
+        random_skill_name = self.get_random_submittable_skill()
+        skill = skills.skills[random_skill_name]
+        valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
+        if skill.beneficial:
+            valid_targets = [griefer for griefer in valid_targets if griefer.team == self.team]
+        else:
+            valid_targets = [griefer for griefer in valid_targets if griefer.team != self.team]
+        try:
+            targets = random.choices(valid_targets, k=skill.num_targets)
+        except IndexError: 
+            return self.submit_random_skill()
+        self.submit_skill(random_skill_name, [target.name for target in targets])
+
     def ai_use_skills(self):
         while self.remaining_actions:
-            usable_skills = list(filter(lambda skill_name: skills.skills[skill_name].is_usable_by(self), self.known_skills))
-            random_skill_name = random.choice(usable_skills)
-            skill = skills.skills[random_skill_name]
+            assert self.ai_type in npcs.griefer_ai
+            ai = npcs.griefer_ai[self.ai_type]
+            chosen_skill_name = ai.ai_choose_skill(self)
+            skill = skills.skills[chosen_skill_name]
             valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
             if skill.beneficial:
                 valid_targets = [griefer for griefer in valid_targets if griefer.team == self.team]
@@ -382,8 +402,9 @@ class Griefer():
                 valid_targets = [griefer for griefer in valid_targets if griefer.team != self.team]
             try:
                 targets = random.choices(valid_targets, k=skill.num_targets)
-            except IndexError: return
-            self.submit_skill(random_skill_name, [target.name for target in targets])
+            except IndexError: 
+                return self.submit_random_skill()
+            self.submit_skill(chosen_skill_name, [target.name for target in targets])
 
     @classmethod
     def from_player(cls, strife: "Strife", player: "sessions.Player") -> Optional["Griefer"]:
@@ -417,7 +438,9 @@ class Griefer():
         griefer.nickname = npc.nickname.upper()
         griefer.base_power = npc.power
         griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)
+        griefer.actions = npc.actions
         griefer.npc_name = npc.name
+        griefer.ai_type = npc.ai_type
         if npc.hostile: griefer.team = "red"
         else: griefer.team = "blue"
         griefer.initialize_vials()
@@ -557,6 +580,10 @@ class Griefer():
     def states_list(self) -> list["stateseffects.State"]:
         return [stateseffects.states[state_name] for state_name in self.states]
     
+    @property
+    def known_skills_list(self) -> list["skills.Skill"]:
+        return [skills.skills[skill_name] for skill_name in self.known_skills]
+
     @property
     def submitted_skills_list(self) -> list["skills.Skill"]:
         return [skills.skills[skill_dict["skill_name"]] for skill_dict in self.submitted_skills]

@@ -127,6 +127,12 @@ class Skill():
         formula = target.format_formula(formula, "target")
         print(f"{self.name} formula {formula}")
         return formula
+    
+    def evaluate_theoretical_damage(self, user: "strife.Griefer") -> int:
+        formula = self.damage_formula
+        formula = user.format_formula(formula, "user")
+        formula = user.format_formula(formula, "target")
+        return int(eval(formula))
 
     # affect each target in list
     def use(self, user: "strife.Griefer", targets_list: list["strife.Griefer"]):
