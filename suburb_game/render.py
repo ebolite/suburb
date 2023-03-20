@@ -2043,7 +2043,10 @@ class GrieferElement(UIElement):
             if isinstance(self, Enemy):
                 new_vial.rect_y_offset = -25
             else:
-                new_vial.rect_y_offset = 50
+                if self.scale > 0.66:
+                    new_vial.rect_y_offset = 50
+                else:
+                    new_vial.rect_y_offset = 0
             new_vial.rect_y_offset -= len(self.vials) * 30
             new_vial.bind_to(self)
             self.vials[vial_type] = new_vial
