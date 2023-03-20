@@ -1059,6 +1059,8 @@ class Tile(UIElement):
                     icon_image = palette_swap(icon_image, themes.default.dark, dark)
                 elif isinstance(drawing_color, str): # enemy grist type
                     color = config.gristcolors[drawing_color]
+                    if isinstance(color, list):
+                        color = random.choice(color)
                     icon_image = palette_swap(icon_image, themes.default.black, color)
                 else: # drawing color is None
                     icon_image = self.convert_to_theme(icon_image)
