@@ -1,0 +1,6 @@
+{
+    "ip": "192.168.4.28",
+    "port": 25565,
+    "path_to_cert": "C:/Users/Maxim/AppData/Local/Posh-ACME/LE_PROD/1017421727/suburbgame.com/cert.cer",
+    "path_to_key": "C:/Users/Maxim/AppData/Local/Posh-ACME/LE_PROD/1017421727/suburbgame.com/cert.key"
+}

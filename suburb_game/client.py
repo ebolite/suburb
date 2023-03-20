@@ -5,10 +5,15 @@ import util
 import hashlib
 import socket
 import json
+import ssl
 
-ClientSocket = socket.socket()
-HOST = "135.134.43.197" # server host and port
-PORT = 25565
+HOSTNAME = "suburbgame.com"
+
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+context.load_verify_locations(util.CERT_LOCATION)
+
+unwrapped_sock = socket.socket()
+ClientSocket = context.wrap_socket(unwrapped_sock, server_hostname=HOSTNAME)
 
 dic = {
 "intent": "",
@@ -42,7 +47,8 @@ def receive_data() -> str:
 
 def connect():
     global ClientSocket
-    ClientSocket = socket.socket()
+    unwrapped_sock = socket.socket()
+    ClientSocket = context.wrap_socket(unwrapped_sock, server_hostname=HOSTNAME)
     print("Waiting for connection")
     try:
         ClientSocket.send(str.encode(json.dumps({"intent": "connect"})))
@@ -50,7 +56,7 @@ def connect():
     except:
         try:
             ClientSocket.settimeout(5)
-            ClientSocket.connect((HOST, PORT))
+            ClientSocket.connect(HOSTNAME)
             return True
         except socket.error as e:
             print(e)

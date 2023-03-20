@@ -5,6 +5,7 @@ import json
 import hashlib
 import time
 import random
+import ssl
 from typing import Optional
 
 import sessions
@@ -14,9 +15,6 @@ import config
 import tiles
 import binaryoperations
 import npcs
-
-HOST_IP = "192.168.4.28"
-PORT = 25565
 
 def threaded_client(connection):
     try:
@@ -764,11 +762,11 @@ def console():
             
     
 if __name__ == "__main__":
-    ServerSocket = socket.socket()
-    try:
-        ServerSocket.bind((HOST_IP, PORT))
-    except socket.error as e:
-        print(str(e))
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    context.load_cert_chain(util.path_to_cert, util.path_to_key)
+    sock = socket.socket()
+    sock.bind((util.ip, util.port))
+    ServerSocket = context.wrap_socket(sock, server_side=True)
 
     start_new_thread(autosave, ())
     start_new_thread(console, ())
@@ -778,7 +776,6 @@ if __name__ == "__main__":
 
     conns = []
     threads = 0
-    
 
     while True:
         Client, address = ServerSocket.accept()

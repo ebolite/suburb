@@ -8,6 +8,8 @@ subdirectories = next(os.walk("."))[1]
 if "suburb_game" in subdirectories: # if this is being run in vscode lol
     homedir += "\\suburb_game"
 
+CERT_LOCATION = f"{homedir}/cert.cer"
+
 def writejson(obj=None, fn=None):
     if not os.path.exists(f"{homedir}\\json"):
         os.makedirs(f"{homedir}\\json")

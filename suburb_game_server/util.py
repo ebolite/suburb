@@ -9,13 +9,12 @@ subdirectories = next(os.walk("."))[1]
 if "suburb_game_server" in subdirectories: # if this is being run in vscode lol
     homedir += "\\suburb_game_server"
 
-def writejson(obj=None, fn=None):
-    if not os.path.exists(f"{homedir}\\json"):
-        os.makedirs(f"{homedir}\\json")
-        print(f"Created {homedir}\\json")
-    os.chdir(f"{homedir}\\json")
+def writejson(obj=None, fn=None, dir=f"{homedir}\\json"):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+        print(f"Created {dir}")
     if fn != None:
-        with open(f"{fn}.json", "w") as f:
+        with open(f"{dir}/{fn}.json", "w") as f:
             if obj == None:
                 obj = eval(f"{fn}")
             if obj != None:
@@ -23,20 +22,19 @@ def writejson(obj=None, fn=None):
                     data = json.dump(obj, f, indent=4)
                     f = data
 
-def readjson(obj, filename):
+def readjson(obj, filename, dir=f"{homedir}\\json"):
     try:
-        os.chdir(f"{homedir}\\json")
-        with open(f"{filename}.json", "r") as f:
+        with open(f"{dir}/{filename}.json", "r") as f:
             try:
                 data = json.load(f)
             except json.JSONDecodeError:
                 print(f"UNABLE TO READ JSON {filename}")
-                writejson(obj, f"{homedir}\\json\\failed\\{filename}")
+                writejson(obj, filename, dir)
                 data = {}
             return data
     except FileNotFoundError:
         print(f"File not found when reading json: '{filename}.json'. Overwriting with {obj}.")
-        writejson(obj, filename)
+        writejson(obj, filename, dir)
         return obj
     
 sessions = {} 
@@ -59,6 +57,26 @@ instances = readjson(instances, "instances")
 
 codes = {} # key: item code value: item name
 codes = readjson(codes, "codes")
+
+serversettings = {
+    "ip": "",
+    "port": 0,
+    "path_to_cert": "",
+    "path_to_key": ""
+}
+serversettings = readjson(serversettings, "serversettings", homedir)
+
+ip = serversettings["ip"]
+port = serversettings["port"]
+path_to_cert = serversettings["path_to_cert"]
+path_to_key = serversettings["path_to_key"]
+
+if not path_to_cert or not path_to_key:
+    print("Please specify an ip address and port to host the server on.")
+    print("Please specify a location for the cert and key of your server in serversettings.json.")
+    raise AssertionError
+
+
 
 kinds: list[str] = []
 for base in bases:
