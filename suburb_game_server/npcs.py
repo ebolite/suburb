@@ -107,6 +107,15 @@ lich.stat_ratios["luck"] = 2
 lich.stat_ratios["spunk"] = 2
 lich.cluster_size = 1
 lich.difficulty = 3
+lich.additional_skills = ["abhor"]
+lich.ai_type = "lich"
+
+class LichAI(GrieferAI):
+    name = "lich"
+    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+        if skills.skills["abhor"].is_submittable_by(user): return "abhor"
+        return super().ai_choose_skill(user)
+LichAI()
 
 basilisk = Underling("basilisk")
 basilisk.base_power = 26
@@ -124,6 +133,15 @@ giclops.stat_ratios["vigor"] = 2
 giclops.stat_ratios["spunk"] = 2
 giclops.cluster_size = 1
 giclops.difficulty = 6
+giclops.additional_skills = ["awreak", "abstain"]
+
+class GiclopsAI(GrieferAI):
+    name = "giclops"
+    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+        if skills.skills["awreak"].is_submittable_by(user): return "awreak"
+        if random.random() < 0.5:
+            return super().ai_choose_skill(user)
+        else: return "abstain"
 
 class Npc():
     @staticmethod

@@ -335,6 +335,24 @@ abscond.special_effect = abscond_func
 abscond.beneficial = True
 player_skills.append("abscond")
 
+# enemy skills
+
+abhor = Skill("abhor")
+abhor.description = "Drains the VIM and ASPECT of the target."
+abhor.use_message = "{user} uses abhorrent magick!"
+abhor.parryable = False
+abhor.action_cost = 0
+abhor.cooldown = 2
+abhor.add_vial_cost("vim", "user.power//2")
+abhor.add_vial_change("vim", "-user.power//2")
+abhor.add_vial_change("aspect", "-user.power//2")
+
+awreak = Skill("awreak")
+awreak.description = "Does a lot of damage."
+awreak.use_message = "{user} awreaks!"
+awreak.add_vial_cost("vim", "user.power//2")
+awreak.damage_formula = "user.base_damage * (3 + 1.5*coin)"
+
 class Aspect():
     def __init__(self, name):
         aspects[name] = self
