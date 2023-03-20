@@ -308,7 +308,7 @@ class Modus():
 
     
 class Sylladex():
-    def __init__(self, player_name: str, connection_host_port: str = f"{client.HOST}:{client.PORT}"):
+    def __init__(self, player_name: str, connection_host_port: str = f"{client.HOSTNAME}"):
         self.__dict__["player"] = player_name
         self.__dict__["host_port"] = connection_host_port
         if connection_host_port not in util.sylladexes:
@@ -437,7 +437,7 @@ class Sylladex():
     
     @staticmethod
     def new_sylladex(player_name, modus_name) -> "Sylladex":
-        connection_host_port = f"{client.HOST}:{client.PORT}"
+        connection_host_port = f"{client.HOSTNAME}"
         if connection_host_port not in util.sylladexes: util.sylladexes[connection_host_port] = {}
         if player_name in util.sylladexes[connection_host_port]:
             return Sylladex(player_name, connection_host_port)
@@ -448,7 +448,7 @@ class Sylladex():
 
     @staticmethod
     def get_sylladex(player_name) -> "Sylladex":
-        connection_host_port = f"{client.HOST}:{client.PORT}"
+        connection_host_port = f"{client.HOSTNAME}"
         return Sylladex(player_name, connection_host_port)
 
     @staticmethod

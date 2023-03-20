@@ -1,14 +1,13 @@
 import os
 import json
 
-import client
 VERSION = "ALPHA 1.0.0"
 homedir = os.getcwd()
 subdirectories = next(os.walk("."))[1]
 if "suburb_game" in subdirectories: # if this is being run in vscode lol
     homedir += "\\suburb_game"
 
-CERT_LOCATION = f"{homedir}/cert.cer"
+import client
 
 def writejson(obj=None, fn=None):
     if not os.path.exists(f"{homedir}\\json"):

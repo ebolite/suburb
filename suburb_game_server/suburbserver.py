@@ -764,22 +764,22 @@ def console():
 if __name__ == "__main__":
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain(util.path_to_cert, util.path_to_key)
-    sock = socket.socket()
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
     sock.bind((util.ip, util.port))
-    ServerSocket = context.wrap_socket(sock, server_side=True)
+    with context.wrap_socket(sock, server_side=True) as ServerSocket:
 
-    start_new_thread(autosave, ())
-    start_new_thread(console, ())
+        start_new_thread(autosave, ())
+        start_new_thread(console, ())
 
-    print("Waiting for connections...")
-    ServerSocket.listen(5)
+        print("Waiting for connections...")
+        ServerSocket.listen(5)
 
-    conns = []
-    threads = 0
+        conns = []
+        threads = 0
 
-    while True:
-        Client, address = ServerSocket.accept()
-        print(f"Connected to: {address[0]} : {str(address[1])}")
-        start_new_thread(threaded_client, (Client, ))
-        threads += 1
-        print(f"Thread Number: {str(threads)}")
+        while True:
+            Client, address = ServerSocket.accept()
+            print(f"Connected to: {address[0]} : {str(address[1])}")
+            start_new_thread(threaded_client, (Client, ))
+            threads += 1
+            print(f"Thread Number: {str(threads)}")

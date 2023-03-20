@@ -6,14 +6,18 @@ import hashlib
 import socket
 import json
 import ssl
+import traceback
 
 HOSTNAME = "suburbgame.com"
+PORT = 25565
 
-context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-context.load_verify_locations(util.CERT_LOCATION)
+context = ssl.create_default_context()
+# context.load_verify_locations(util.CERT_LOCATION)
 
-unwrapped_sock = socket.socket()
+unwrapped_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
 ClientSocket = context.wrap_socket(unwrapped_sock, server_hostname=HOSTNAME)
+ClientSocket.connect((HOSTNAME, PORT))
+
 
 dic = {
 "intent": "",
@@ -47,7 +51,7 @@ def receive_data() -> str:
 
 def connect():
     global ClientSocket
-    unwrapped_sock = socket.socket()
+    unwrapped_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
     ClientSocket = context.wrap_socket(unwrapped_sock, server_hostname=HOSTNAME)
     print("Waiting for connection")
     try:
@@ -56,10 +60,10 @@ def connect():
     except:
         try:
             ClientSocket.settimeout(5)
-            ClientSocket.connect(HOSTNAME)
+            ClientSocket.connect((HOSTNAME, PORT))
             return True
         except socket.error as e:
-            print(e)
+            traceback.print_exception(e)
         return False
 
 def hash(str): # returns encoded and hashed data
