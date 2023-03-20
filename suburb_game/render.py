@@ -313,6 +313,7 @@ class TextButton(UIElement):
         self.hover_color: pygame.Color = self.theme.dark
         self.draw_condition: Optional[Callable] = None
         self.inactive_condition: Optional[Callable] = None
+        self.hotkey_inactive_condition: Optional[Callable] = None
         self.draw_sprite = True
         self.toggle = False
         self.click_on_mouse_down = False
@@ -383,6 +384,7 @@ class TextButton(UIElement):
             self.onpress()
 
     def keypress(self, event):
+        if self.hotkey_inactive_condition is not None and self.hotkey_inactive_condition(): return
         if event.key in self.click_keys: self.onpress()
 
     @property

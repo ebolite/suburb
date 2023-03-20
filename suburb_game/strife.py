@@ -191,32 +191,19 @@ class Griefer():
         return self.stats["power"]
 
 class Strife():
-    first_layer_hotkeys = {
-        0: pygame.K_1,
-        1: pygame.K_2,
-        2: pygame.K_3,
-        3: pygame.K_4,
-        4: pygame.K_5,
-        5: pygame.K_6,
-        6: pygame.K_7,
-        7: pygame.K_8,
-        8: pygame.K_9,
-        9: pygame.K_0,
-    }
-    first_layer_labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-    second_layer_hotkeys = {
+    hotkeys = {
         0: pygame.K_q,
         1: pygame.K_w,
         2: pygame.K_e,
         3: pygame.K_r,
         4: pygame.K_t,
-        5: pygame.K_y,
-        6: pygame.K_u,
-        7: pygame.K_i,
-        8: pygame.K_o,
-        9: pygame.K_p,
+        5: pygame.K_a,
+        6: pygame.K_s,
+        7: pygame.K_d,
+        8: pygame.K_f,
+        9: pygame.K_g,
     }
-    second_layer_labels = ["q", "w", "e", "r", "t", "y", "i", "o", "p"]
+    hotkey_labels = ["q", "w", "e", "r", "t", "a", "s", "d", "f", "g"]
 
     def __init__(self, strife_dict: Optional[dict]=None):
         print("init")
@@ -381,19 +368,25 @@ class Strife():
         return skill_button
 
     def make_hotkey_label(self, button: "render.TextButton", i, category_name, first_layer=True):
-        if first_layer:
-            if i not in self.first_layer_hotkeys: return
-            hotkey = self.first_layer_hotkeys[i]
-            label = self.first_layer_labels[i]
-        else:
-            if i not in self.second_layer_hotkeys: return
-            hotkey = self.second_layer_hotkeys[i]
-            label = self.second_layer_labels[i]
+        if i not in self.hotkeys: return
+        hotkey = self.hotkeys[i]
+        label = self.hotkey_labels[i]
         button.click_keys.append(hotkey)
         hotkey_label = render.Text(0.9, 0.5, f"({label})")
         hotkey_label.bind_to(button)
         hotkey_label.fontsize = 12
         hotkey_label.color = config.get_category_color(category_name)
+        if first_layer:
+            def inactive_condition():
+                if self.layer_2_buttons: return True
+                else: return False
+            button.hotkey_inactive_condition = inactive_condition
+        else:
+            current_time = render.clock.get_time()
+            def inactive_condition():
+                if render.clock.get_time() == current_time: return True
+                else: return False
+            button.hotkey_inactive_condition = inactive_condition
 
     def draw_scene(self):
         bar_br = 30
@@ -434,6 +427,10 @@ class Strife():
             return not self.player_griefer.ready
         revert_button = render.TextButton(0.85, 0.2, 196, 32, ">REVERT", revert_button_func)
         revert_button.draw_condition = button_condition
+        revert_button_label = render.Text(0.5, 1.2, "(escape)")
+        revert_button_label.bind_to(revert_button)
+        revert_button_label.fontsize = 12
+        revert_button_label.color = self.theme.dark
         submit_button = render.TextButton(0.5, 0.78, 256, 48, ">READY", submit_button_func)
         submit_button.draw_condition = button_condition
         submit_button.text_color = self.theme.dark
@@ -462,6 +459,7 @@ class Strife():
         self.update_submitted_skills()
         self.update_vials()
         render.update_check.append(self)
+        render.key_check.append(self)
 
     def make_skill_info_window(self):
         PADDING = 8
@@ -539,6 +537,13 @@ class Strife():
         self.update_submitted_skills()
         self.update_skill_info_window()
         self.update_vials()
+
+    def keypress(self, event):
+        if event.key == pygame.K_ESCAPE:
+            if self.layer_2_buttons: self.clear_next_layer_buttons()
+            else: 
+                reply = client.requestdic(intent="unsubmit_skill")
+                self.update_strife_dict(reply)
 
     def delete(self):
         if self in render.ui_elements: render.ui_elements.remove(self)
