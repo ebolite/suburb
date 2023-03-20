@@ -3,6 +3,7 @@ import sys
 import pathlib
 import hashlib
 import socket
+import ssl
 import traceback
 import math
 import time
@@ -1434,10 +1435,7 @@ def main():
     # render.Symbol(0.5, 0.5, config.get_random_symbol())
     try:
         render_loop()
-    except TimeoutError:
-        connection_screen()
-        main()
-    except ConnectionResetError:
+    except (TimeoutError, ConnectionResetError, ssl.SSLEOFError):
         connection_screen()
         main()
     except Exception as e:

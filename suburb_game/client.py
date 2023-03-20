@@ -16,7 +16,6 @@ context = ssl.create_default_context()
 
 unwrapped_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
 ClientSocket = context.wrap_socket(unwrapped_sock, server_hostname=HOSTNAME)
-ClientSocket.connect((HOSTNAME, PORT))
 
 
 dic = {
