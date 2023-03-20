@@ -497,6 +497,25 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
             item_label.bind_to(item_box)
             item_label.fontsize = 20
             item_label.set_fontsize_by_width(box_w)
+    def get_leftbutton_func(page_num):
+        def leftbutton_func():
+            display_atheneum(info_window, info_text, page_num-1)
+        return leftbutton_func
+    def get_rightbutton_func(page_num):
+        def rightbutton_func():
+            display_atheneum(info_window, info_text, page_num+1)
+        return rightbutton_func
+    page_button_w = info_window.w//2-padding*2
+    page_button_h = 20
+    page_button_y = info_window.h-page_button_h-padding
+    if page != 0:
+        left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<-", get_leftbutton_func(page))
+        left_button.absolute = True
+        left_button.bind_to(info_window, temporary=True)
+    if rows[(page+1)*num_rows:(page+1)*num_rows + num_rows] != []:
+        right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "->", get_rightbutton_func(page))
+        right_button.absolute = True
+        right_button.bind_to(info_window, temporary=True)
 
 
 
