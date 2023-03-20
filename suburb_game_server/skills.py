@@ -232,6 +232,17 @@ class Skill():
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
         if griefer.get_skill_cooldown(self.name) > 0: return False
         return True
+    
+    def is_submittable_by(self, griefer: "strife.Griefer"):
+        if not self.is_usable_by(griefer): return False
+        total_costs = self.get_costs(griefer)
+        for skill in griefer.submitted_skills_list:
+            if skill.name == self.name and self.cooldown > 0: return False
+            for vial_name, value in skill.get_costs(griefer).items():
+                if vial_name in total_costs: total_costs[vial_name] += value
+                else: total_costs[vial_name] = value
+        if not griefer.can_pay_vial_costs(total_costs): return False
+        return True
 
     def get_dict(self, griefer: "strife.Griefer") -> dict:
         out = deepcopy(self.__dict__)

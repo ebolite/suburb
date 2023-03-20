@@ -557,6 +557,10 @@ class Griefer():
     def states_list(self) -> list["stateseffects.State"]:
         return [stateseffects.states[state_name] for state_name in self.states]
     
+    @property
+    def submitted_skills_list(self) -> list["skills.Skill"]:
+        return [skills.skills[skill_dict["skill_name"]] for skill_dict in self.submitted_skills]
+    
     def get_stat(self, stat_name) -> int:
         if stat_name == "power": return self.power
         stat = self.base_stats[stat_name]
