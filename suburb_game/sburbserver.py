@@ -7,6 +7,7 @@ import sylladex
 import client
 import themes
 import config
+import util
 
 client_username = None
 current_x = None
@@ -54,16 +55,23 @@ def move_view_to_tile(target_x:int, target_y:int) -> bool:
         return True
 
 def deploy_item(target_x: int, target_y: int) -> Optional[dict]:
+    reply = False
     if current_info_window == "phernalia_registry":
         if current_selected_phernalia is None: return None
         reply = client.requestplusdic(intent="computer", content={
             "command": "deploy_phernalia", "x":target_x, "y":target_y, "item_name": current_selected_phernalia,
             "viewport_x": current_x, "viewport_y": current_y
             })
-        if reply:
-            return reply
-        else:
-            return None
+    elif current_info_window == "atheneum":
+        if current_selected_atheneum is None: return None
+        reply = client.requestplusdic(intent="computer", content={
+            "command": "deploy_atheneum", "x":target_x, "y":target_y, "instance_name": current_selected_atheneum,
+            "viewport_x": current_x, "viewport_y": current_y
+            })
+    if reply:
+        return reply
+    else:
+        return None
         
 def revise_tile(target_x: int, target_y: int) -> Optional[dict]:
     reply = client.requestplusdic(intent="computer", content={
@@ -322,7 +330,9 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
     def get_box_button_func(item_name: str) -> Callable:
         def button_func():
             global current_selected_phernalia
+            global current_selected_atheneum
             current_selected_phernalia = item_name
+            current_selected_atheneum = None
             display_phernalia_registry(info_window, info_text)
         return button_func
     for row_index, row in enumerate(rows):
@@ -430,7 +440,7 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
 
 def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text", page=0):
     info_window.kill_temporary_elements()
-    info_window.color = info_window.theme.white
+    info_window.color = info_window.theme.light
     info_text.text = "Atheneum"
     player_info = client.requestdic(intent="player_info")
     atheneum_dict: dict[str, str] = player_info["atheneum"]
@@ -453,7 +463,9 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
     def get_box_button_func(instance_name: str) -> Callable:
         def button_func():
             global current_selected_atheneum
+            global current_selected_phernalia
             current_selected_atheneum = instance_name
+            current_selected_phernalia = None
             display_atheneum(info_window, info_text, page)
         return button_func
     for row_index, row in enumerate(display_rows):
@@ -463,12 +475,11 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
             box_x = padding + column_index*(box_w + padding*2)
             if current_selected_atheneum == instance_name: box_color = info_window.theme.dark
             else: box_color = info_window.theme.white
-            item_box_h = box_h
-            item_box = render.SolidColor(box_x, box_y, box_w, item_box_h, box_color)
+            item_box = render.SolidColor(box_x, box_y, box_w, box_h, box_color)
             item_box.border_radius = 3
             item_box.bind_to(info_window, True)
             if current_selected_atheneum != instance_name:
-                box_button = render.TextButton(0, 0, box_w, item_box_h, "", get_box_button_func(item_name))
+                box_button = render.TextButton(0, 0, box_w, box_h, "", get_box_button_func(instance_name))
                 box_button.draw_sprite = False
                 box_button.absolute = True
                 box_button.click_on_mouse_down = True
@@ -479,9 +490,13 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
                 if card_image is not None:
                     card_image.convert = False
                     card_image.bind_to(item_box)
-                    card_image.scale = item_box_h / 240
+                    card_image.scale = box_h / 240
             else:
                 card_image = None
+            item_label = render.Text(0.5, 0.9, util.shorten_item_name(item_name))
+            item_label.bind_to(item_box)
+            item_label.fontsize = 20
+            item_label.set_fontsize_by_width(box_w)
 
 
 

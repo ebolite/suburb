@@ -381,7 +381,19 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             viewport_x = content["viewport_x"]
             viewport_y = content["viewport_y"]
             item_name = content["item_name"]
-            if player.client_player.deploy(item_name, x_coord, y_coord):
+            if player.client_player.deploy_phernalia(item_name, x_coord, y_coord):
+                return get_viewport(viewport_x, viewport_y, player.client_player)
+                # return get_viewport(viewport_x, viewport_y, player.client_player)
+            else:
+                return json.dumps({})
+        case "deploy_atheneum":
+            if player.client_player is None: return "No client."
+            x_coord = content["x"]
+            y_coord = content["y"]
+            viewport_x = content["viewport_x"]
+            viewport_y = content["viewport_y"]
+            instance_name = content["instance_name"]
+            if player.client_player.deploy_atheneum(instance_name, x_coord, y_coord):
                 return get_viewport(viewport_x, viewport_y, player.client_player)
                 # return get_viewport(viewport_x, viewport_y, player.client_player)
             else:

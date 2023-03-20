@@ -1191,7 +1191,7 @@ class RoomItemDisplay(UIElement):
             def add_to_atheneum_button_func():
                 if button_instance_name in self.tile_map.instances:
                     sburbserver.add_instance_to_atheneum(button_instance_name)
-                    self.tile_map.update_map()
+                    self.tile_map.update_map(update_info_window=True)
             return add_to_atheneum_button_func
         for button in self.buttons:
             button.delete()

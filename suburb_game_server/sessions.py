@@ -542,7 +542,7 @@ class Room():
     def get_players(self) -> list:
         return [Player(player_name).nickname for player_name in self.players if player_name != self.name]
 
-    def deploy(self, client: "Player", item_name: str) -> bool:
+    def deploy_phernalia(self, client: "Player", item_name: str) -> bool:
         if item_name not in client.available_phernalia: print("not in phernalia"); return False
         if not self.tile.deployable: print("undeployable tile"); return False
         below_room = self.map.find_room(self.x, self.y+1)
@@ -560,6 +560,15 @@ class Room():
             if not client.pay_costs(cost): print("couldn't pay cost"); return False
             self.add_instance(instance.name)
         client.deployed_phernalia.append(item_name)
+        return True
+    
+    def deploy_atheneum(self, client: "Player", instance_name: str) -> bool:
+        if instance_name not in client.atheneum: return False
+        if not self.tile.deployable: print("undeployable tile"); return False
+        below_room = self.map.find_room(self.x, self.y+1)
+        if not below_room.tile.infallible and not below_room.tile.impassible: print("below room not suitable"); return False
+        self.add_instance(instance_name)
+        client.atheneum.remove(instance_name)
         return True
     
     def above_solid_ground(self) -> bool:
@@ -867,9 +876,13 @@ class Player():
             return False
         
     # deploys an item to this user's map at the specified coordinates
-    def deploy(self, item_name, target_x, target_y) -> bool:
+    def deploy_phernalia(self, item_name, target_x, target_y) -> bool:
         room = self.land.housemap.find_room(target_x, target_y)
-        return room.deploy(self, item_name)
+        return room.deploy_phernalia(self, item_name)
+    
+    def deploy_atheneum(self, instance_name, target_x, target_y) -> bool:
+        room = self.land.housemap.find_room(target_x, target_y)
+        return room.deploy_atheneum(self, instance_name)
     
     def revise(self, tile_char, target_x, target_y) -> bool:
         room = self.land.housemap.find_room(target_x, target_y)
