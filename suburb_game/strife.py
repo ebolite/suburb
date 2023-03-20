@@ -254,8 +254,10 @@ class Strife():
             else: red_sprites.append(sprite)
             sprite.send_to_bottom()
         for sprite in red_sprites + blue_sprites:
-            if scale > 0.5 and sprite.get_height() > 800: scale = 0.5
+            if scale > 0.66 and sprite.get_height() > 800: scale = 0.66
             elif scale > 0.75 and sprite.get_height() > 500: scale = 0.75
+        if len(red_sprites+blue_sprites) > 4 and scale > 0.75: scale = 0.75
+        if len(red_sprites+blue_sprites) > 9 and scale > 0.66: scale = 0.66
         for sprite in red_sprites + blue_sprites:
             sprite.scale = scale
         self.reposition_sprites(red_sprites, "right", scale)
