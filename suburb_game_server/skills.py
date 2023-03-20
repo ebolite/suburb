@@ -332,6 +332,7 @@ abscond.description = "Sweet abscond bro!"
 abscond.use_message = "{user} absconds!"
 abscond.target_self = True
 abscond.special_effect = abscond_func
+abscond.beneficial = True
 player_skills.append("abscond")
 
 class Aspect():

@@ -438,6 +438,7 @@ class Griefer():
         griefer.nickname = npc.nickname.upper()
         griefer.base_power = npc.power
         griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)
+        griefer.known_skills += npc.additional_skills
         griefer.actions = npc.actions
         griefer.npc_name = npc.name
         griefer.ai_type = npc.ai_type

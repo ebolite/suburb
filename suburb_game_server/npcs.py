@@ -30,6 +30,7 @@ class Underling():
         self.cluster_size = 1
         self.difficulty = 1
         self.variance = 0
+        self.additional_skills = []
         self.ai_type: str = "random"
 
     def make_npc(self, grist_name: str, grist_category: str, room: "sessions.Room") -> "Npc":
@@ -46,6 +47,7 @@ class Underling():
         npc.stat_ratios = self.stat_ratios
         npc.actions = self.actions
         npc.ai_type = self.ai_type
+        npc.additional_skills = self.additional_skills
         npc.hostile = True
         room.add_npc(npc)
         return npc
@@ -65,6 +67,7 @@ imp.cluster_size = 3
 imp.difficulty = 1
 imp.variance = 4
 imp.ai_type = "imp"
+imp.additional_skills = ["abscond"]
 
 class ImpAI(GrieferAI):
     name = "imp"
@@ -151,6 +154,7 @@ class Npc():
                 "mettle": 1,
             }
             self.actions = 1
+            self.additional_skills: list[str] = []
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
