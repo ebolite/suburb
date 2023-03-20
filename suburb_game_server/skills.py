@@ -297,7 +297,7 @@ abjure.parryable = False
 abjure.beneficial = True
 abjure.target_self = True
 abjure.damage_formula = "0"
-abjure.cooldown = 2
+abjure.cooldown = 3
 abjure.category = "abstinent"
 abjure.add_apply_state("abjure", 2, "1.0")
 abjure.need_damage_to_apply_states = False
@@ -350,7 +350,7 @@ abhor.add_vial_change("aspect", "-user.power//2")
 awreak = Skill("awreak")
 awreak.description = "Does a lot of damage."
 awreak.use_message = "{user} awreaks!"
-awreak.add_vial_cost("vim", "user.power//2")
+awreak.add_vial_cost("vim", "user.power")
 awreak.damage_formula = "user.base_damage * (3 + 1.5*coin)"
 
 class Aspect():
