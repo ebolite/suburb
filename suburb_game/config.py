@@ -81,7 +81,8 @@ icons = {
     "ogre": "sprites/icons/ogre.png",
     "lich": "sprites/icons/lich.png",
     "basilisk": "sprites/icons/basilisk.png",
-    "giclops": "sprites/icons/giclops.png"
+    "giclops": "sprites/icons/giclops.png",
+    "acheron": "sprites/icons/acheron.png",
 }
 
 header_icons = {

@@ -143,6 +143,16 @@ class GiclopsAI(GrieferAI):
             return super().ai_choose_skill(user)
         else: return "abstain"
 
+acheron = Underling("acheron")
+acheron.base_power = 111
+acheron.stat_ratios["tact"] = 4
+acheron.stat_ratios["spunk"] = 2
+acheron.stat_ratios["mettle"] = 2
+acheron.cluster_size = 1
+acheron.difficulty = 7
+acheron.actions = 2
+acheron.ai_type = "ogre"
+
 class Npc():
     @staticmethod
     def make_valid_name(name):
