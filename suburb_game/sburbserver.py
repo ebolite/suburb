@@ -14,6 +14,7 @@ current_y = None
 current_mode = "select"
 current_info_window = "grist_cache"
 current_selected_phernalia = None
+current_selected_atheneum = None
 current_selected_tile = "."
 viewport_dic = {}
 
@@ -427,12 +428,69 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
         right_button.absolute = True
         right_button.bind_to(info_window, temporary=True)
 
+def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text", page=0):
+    info_window.kill_temporary_elements()
+    info_window.color = info_window.theme.white
+    info_text.text = "Atheneum"
+    player_info = client.requestdic(intent="player_info")
+    atheneum_dict: dict[str, str] = player_info["atheneum"]
+    padding=4
+    num_columns = 3
+    usable_area_w = info_window.w
+    usable_area_h = info_window.h - 25
+    box_w = usable_area_w//num_columns - padding*2
+    box_h = box_w
+    num_rows = usable_area_h // (box_h + padding*2)
+    rows = []
+    for instance_name in atheneum_dict:
+        for row in rows:
+            if len(row) != num_columns:
+                row.append(instance_name)
+                break
+        else:
+            rows.append([instance_name])
+    display_rows = rows[page*num_rows:page*num_rows + num_rows]
+    def get_box_button_func(instance_name: str) -> Callable:
+        def button_func():
+            global current_selected_atheneum
+            current_selected_atheneum = instance_name
+            display_atheneum(info_window, info_text, page)
+        return button_func
+    for row_index, row in enumerate(display_rows):
+        box_y = padding + row_index*(box_h + padding*2)
+        for column_index, instance_name in enumerate(row):
+            item_name = atheneum_dict[instance_name]
+            box_x = padding + column_index*(box_w + padding*2)
+            if current_selected_atheneum == instance_name: box_color = info_window.theme.dark
+            else: box_color = info_window.theme.white
+            item_box_h = box_h
+            item_box = render.SolidColor(box_x, box_y, box_w, item_box_h, box_color)
+            item_box.border_radius = 3
+            item_box.bind_to(info_window, True)
+            if current_selected_atheneum != instance_name:
+                box_button = render.TextButton(0, 0, box_w, item_box_h, "", get_box_button_func(item_name))
+                box_button.draw_sprite = False
+                box_button.absolute = True
+                box_button.click_on_mouse_down = True
+                box_button.bind_to(item_box)
+            image_path = f"sprites/items/{item_name}.png"
+            if os.path.isfile(image_path):
+                card_image = render.ItemImage(0.5, 0.5, item_name)
+                if card_image is not None:
+                    card_image.convert = False
+                    card_image.bind_to(item_box)
+                    card_image.scale = item_box_h / 240
+            else:
+                card_image = None
+
+
 
 def update_info_window(info_window, info_text):
     match current_info_window:
         case "grist_cache": display_grist_cache(info_window, info_text)
         case "phernalia_registry": display_phernalia_registry(info_window, info_text)
         case "revise": display_revise(info_window, info_text)
+        case "atheneum": display_atheneum(info_window, info_text)
         case _: ...
 
 def sburb(window: "render.Window"):
