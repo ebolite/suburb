@@ -77,7 +77,7 @@ def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
     return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "room_name": room.tile.name, 
                        "players": room_players,
                        "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
-                       "client_cache_limit": client.grist_cache_limit, "theme": client.land.theme})
+                       "client_cache_limit": client.grist_cache_limit, "atheneum": client.get_dict()["atheneum"], "theme": client.land.theme})
 
 def handle_request(dict):
     intent = dict["intent"]
@@ -421,6 +421,16 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             instance = alchemy.Instance(instance_name)
             player.client_player.session.add_to_excursus(instance.item.name)
             return True
+        case "recycle":
+            if player.client_player is None: return "No client."
+            instance_name = content["instance_name"]
+            if instance_name not in player.client_player.atheneum: return False
+            instance = alchemy.Instance(instance_name)
+            player.client_player.atheneum.remove(instance_name)
+            for grist_name, amount in instance.item.true_cost.items():
+                player.client_player.add_grist(grist_name, amount)
+            return True
+
 
 def console_commands(player: sessions.Player, content: str):
     args = content.split(" ")

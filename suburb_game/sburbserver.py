@@ -442,8 +442,8 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
     info_window.kill_temporary_elements()
     info_window.color = info_window.theme.light
     info_text.text = "Atheneum"
-    player_info = client.requestdic(intent="player_info")
-    atheneum_dict: dict[str, str] = player_info["atheneum"]
+    update_viewport_dic()
+    atheneum_dict: dict[str, str] = viewport_dic["atheneum"]
     padding=4
     num_columns = 3
     usable_area_w = info_window.w
@@ -468,6 +468,11 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
             current_selected_phernalia = None
             display_atheneum(info_window, info_text, page)
         return button_func
+    def get_recycle_button_func(instance_name: str) -> Callable:
+        def recycle_button_func():
+            client.requestplus(intent="computer", content={"command": "recycle", "instance_name": instance_name})
+            display_atheneum(info_window, info_text, page)
+        return recycle_button_func
     for row_index, row in enumerate(display_rows):
         box_y = padding + row_index*(box_h + padding*2)
         for column_index, instance_name in enumerate(row):
@@ -497,6 +502,9 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
             item_label.bind_to(item_box)
             item_label.fontsize = 20
             item_label.set_fontsize_by_width(box_w)
+            recycle_button = render.Button(box_w-16-padding, padding, "sprites/buttons/trash.png", None, get_recycle_button_func(instance_name))
+            recycle_button.bind_to(item_box)
+            recycle_button.absolute = True
     def get_leftbutton_func(page_num):
         def leftbutton_func():
             display_atheneum(info_window, info_text, page_num-1)
