@@ -306,7 +306,30 @@ def pronounscharacter():
     hehim = render.Button(.20, 0.62, "sprites\\buttons\\hehim.png", "sprites\\buttons\\hehimpressed.png", himnouns)
     sheher = render.Button(.4, .62, "sprites\\buttons\\sheher.png", "sprites\\buttons\\sheherpressed.png", hernouns)
     theyem = render.Button(.6, .62, "sprites\\buttons\\theyem.png", "sprites\\buttons\\theyempressed.png", themnouns)
-    other = render.Button(.8, .62, "sprites\\buttons\\other.png", "sprites\\buttons\\otherpressed.png", placeholder) # todo
+    other = render.Button(.8, .62, "sprites\\buttons\\other.png", "sprites\\buttons\\otherpressed.png", custom_pronouns)
+
+@scene
+def custom_pronouns():
+    example1 = f"        stands in        room. It surrounds       ."
+    example2 = f"Today        will play a game with some friends of        ."
+    name = render.Text(0.15, 0.2, str(character_info['name']))
+    name.set_fontsize_by_width(200)
+    name.color = current_theme().dark
+    log = render.Text(0.5, 0.20, example1)
+    log2 = render.Text(0.5, 0.30, example2)
+    their_box = render.InputTextBox(0.435, 0.2, 120, 32)
+    their_box.text = "their"
+    them_box = render.InputTextBox(0.815, 0.2, 120, 32)
+    them_box.text = "them"
+    they_box = render.InputTextBox(0.195, 0.3, 120, 32)
+    they_box.text = "they"
+    theirs_box = render.InputTextBox(0.865, 0.3, 120, 32)
+    theirs_box.text = "theirs"
+    def confirm_func():
+        character_info["pronouns"] = [they_box.text, them_box.text, their_box.text, theirs_box.text]
+        make_symbol()
+    confirm_button = render.Button(0.5, 0.5, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm_func)
+    backbutton = render.Button(0.5, 0.66, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", pronounscharacter)
 
 @scene
 def make_symbol():
