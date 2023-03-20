@@ -443,7 +443,7 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
     info_window.color = info_window.theme.light
     info_text.text = "Atheneum"
     update_viewport_dic()
-    atheneum_dict: dict[str, str] = viewport_dic["atheneum"]
+    atheneum_dict: dict[str, dict] = viewport_dic["atheneum"]
     padding=4
     num_columns = 3
     usable_area_w = info_window.w
@@ -476,7 +476,8 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
     for row_index, row in enumerate(display_rows):
         box_y = padding + row_index*(box_h + padding*2)
         for column_index, instance_name in enumerate(row):
-            item_name = atheneum_dict[instance_name]
+            item = sylladex.Item(atheneum_dict[instance_name]["name"], atheneum_dict[instance_name])
+            item_name = item.name
             box_x = padding + column_index*(box_w + padding*2)
             if current_selected_atheneum == instance_name: box_color = info_window.theme.dark
             else: box_color = info_window.theme.white
@@ -505,6 +506,12 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
             recycle_button = render.Button(box_w-16-padding, padding, "sprites/buttons/trash.png", None, get_recycle_button_func(instance_name))
             recycle_button.bind_to(item_box)
             recycle_button.absolute = True
+            tooltip = render.ToolTip(0, 0, 16, 16)
+            tooltip.tooltip_offsetx = -20
+            tooltip.bind_to(recycle_button)
+            value_display = render.make_grist_cost_display(padding, padding, 20, item.true_cost, binding=tooltip, flipped=True)
+            value_display.bind_to(tooltip)
+            value_display.bring_to_top()
     def get_leftbutton_func(page_num):
         def leftbutton_func():
             display_atheneum(info_window, info_text, page_num-1)

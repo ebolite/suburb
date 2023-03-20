@@ -378,7 +378,9 @@ class Item(): # Items are the base of instants.
         return util.items[self.__dict__["name"]][attr]
     
     def get_dict(self):
-        return util.items[self.__dict__["name"]]
+        out = deepcopy(util.items[self.__dict__["name"]])
+        out["name"] = self.__dict__["name"]
+        return out
 
 class Instance():
     def __init__(self, identifier: Union[Item, str]):

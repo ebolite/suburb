@@ -208,6 +208,28 @@ class UIElement(pygame.sprite.Sprite):
         else:
             self.last_mouse_pos = None
 
+class ToolTip(UIElement):
+    def __init__(self, x, y, w, h):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+        self.tooltip_offsetx = 0
+        self.tooltip_offsety = 0
+        self.absolute = True
+        update_check.append(self)
+
+    def update(self):
+        self.rect = pygame.Rect(0, 0, self.w, self.h)
+        self.rect.x, self.rect.y = self.get_rect_xy()
+        mousex, mousey = pygame.mouse.get_pos()
+        if self.rect.collidepoint((mousex, mousey)):
+            self.rect.x, self.rect.y = mousex+self.tooltip_offsetx, mousey+self.tooltip_offsety
+        else:
+            # just go really far off screen
+            self.rect.x, self.rect.y = 9999999, 9999999
+
 class SolidColor(UIElement):
     def __init__(self, x, y, w, h, color: pygame.Color, binding:Optional[UIElement]=None):
         super(SolidColor, self).__init__()
@@ -742,7 +764,9 @@ def get_spirograph(x, y, thick=True) -> Image:
     spirograph.animframes = 164
     return spirograph
 
-def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict]=None, binding: Optional[UIElement]=None, text_color: pygame.Color=suburb.current_theme().dark, temporary=True, absolute=True, scale_mult=1.0) -> UIElement:
+def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict]=None, binding: Optional[UIElement]=None, 
+                            text_color: pygame.Color=suburb.current_theme().dark, temporary=True, absolute=True, scale_mult=1.0,
+                            flipped=False) -> UIElement:
     elements: list[Union[Image, Text]] = []
     padding = 5
     scale = (h / 45) * scale_mult
@@ -756,7 +780,7 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
             icon_x = x
             icon_y = y
         icon = Image(icon_x, icon_y, icon_path)
-        icon.convert = False
+        icon.convert = True
         icon.scale = scale
         icon.absolute = True
         if len(elements) == 0:
@@ -775,6 +799,9 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
         label.bind_to(elements[-1])
         label.absolute = True
         elements.append(label)
+    total_element_w = 0
+    for element in elements:
+        total_element_w += element.get_width()
     if not absolute:
         if binding is None:
             binding_w = SCREEN_WIDTH
@@ -782,11 +809,11 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
         else:
             binding_w = binding.rect.w
             binding_h = binding.rect.h
-        total_element_w = 0
-        for element in elements:
-            total_element_w += element.get_width()
         elements[0].x = int(binding_w*x - total_element_w//2)
         elements[0].y = int(binding_h*y - h//2)
+    else:
+        if binding is not None and flipped:
+            elements[0].x = -total_element_w
     return elements[0]
 
 class TileMap(UIElement):
