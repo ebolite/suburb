@@ -148,61 +148,6 @@
         "forbiddencode": false,
         "inheritpower": 0
     },
-    "pre-punched card": {
-        "base": true,
-        "code": "11111110",
-        "power": 20,
-        "dicemin": 1,
-        "dicemax": 1,
-        "weight": 5,
-        "size": 5,
-        "kinds": {
-            "cardkind": [
-                1,
-                "card"
-            ]
-        },
-        "slots": {},
-        "tags": {
-            "cut": [
-                1,
-                "card"
-            ],
-            "mundane": [
-                0
-            ]
-        },
-        "description": "An empty captchalogue card, but its code is slightly different. Weird.",
-        "cost": {
-            "build": 0.1
-        },
-        "onhiteffect": {},
-        "weareffect": {},
-        "consumeeffect": {
-            "heal": [
-                1,
-                "captchalogue"
-            ]
-        },
-        "secretadjectives": [
-            "meta"
-        ],
-        "secreteffect": {
-            "weakness": [
-                0.7,
-                "empty"
-            ]
-        },
-        "use": [
-            "add_card"
-        ],
-        "forbiddencode": false,
-        "inheritpower": 0,
-        "truename": "card",
-        "adjectives": [
-            "pre-punched"
-        ]
-    },
     "punched card": {
         "base": true,
         "code": "11112222",
