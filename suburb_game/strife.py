@@ -259,21 +259,33 @@ class Strife():
         self.griefer_sprites = {}
         blue_sprites: list[Union["render.Enemy", "render.PlayerGriefer"]] = []
         red_sprites: list[Union["render.Enemy", "render.PlayerGriefer"]] = []
+        scale = 1.0
         for griefer_name in self.griefers:
             griefer = self.get_griefer(griefer_name)
             sprite = self.make_griefer_sprite(griefer)
             if griefer.team == "blue": blue_sprites.append(sprite)
             else: red_sprites.append(sprite)
             sprite.send_to_bottom()
-        self.reposition_sprites(red_sprites, "right")
-        self.reposition_sprites(blue_sprites, "left")
+        for sprite in red_sprites + blue_sprites:
+            if scale > 0.5 and sprite.get_height() > 800: scale = 0.5
+            elif scale > 0.75 and sprite.get_height() > 500: scale = 0.75
+        for sprite in red_sprites + blue_sprites:
+            sprite.scale = scale
+        self.reposition_sprites(red_sprites, "right", scale)
+        self.reposition_sprites(blue_sprites, "left", scale)
 
-    def reposition_sprites(self, sprites_list: list[Union["render.Enemy", "render.PlayerGriefer"]], direction: str):
+    def reposition_sprites(self, sprites_list: list[Union["render.Enemy", "render.PlayerGriefer"]], direction: str, scale: float):
         sprites_xy = []
         sprites_sprites = []
         for i, sprite in enumerate(sprites_list):
             if i == 0:
-                sprite_x = sprite.x * self.canvas.w - sprite.get_width()//2
+                if direction == "right":
+                    center_offset = 0.16
+                else:
+                    center_offset = -0.16
+                starting_x = 0.5 + (center_offset * scale)
+                sprite.x = starting_x
+                sprite_x = starting_x * self.canvas.w - sprite.get_width()//2
                 sprite_y = sprite.y * self.canvas.h - sprite.get_height()//2
                 sprites_xy.append((sprite_x, sprite_y))
                 sprites_sprites.append(sprite)

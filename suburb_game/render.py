@@ -1888,10 +1888,10 @@ class Symbol(Image):
         return get_dark_color(r, g, b)
 
     def get_width(self):
-        return 114
+        return int(114* self.scale)
     
     def get_height(self):
-        return 196
+        return int(196* self.scale)
 
     def get_image_path(self, part, item_name):
         style = self.style_dict[part]
@@ -2106,11 +2106,11 @@ class Enemy(GrieferElement, Image):
 
     def get_width(self):
         image = pygame.image.load(self.path)
-        return image.get_width()
+        return int(image.get_width() * self.scale)
     
     def get_height(self):
         image = pygame.image.load(self.path)
-        return image.get_height()
+        return int(image.get_height() * self.scale)
 
 class PlayerGriefer(GrieferElement, Symbol):
     def __init__(self, x, y, griefer: Griefer):
