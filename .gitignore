@@ -6,11 +6,11 @@ suburb_game/sprites/captchas/*
 suburb_game/maps/*
 suburb_game/crashlog*
 suburb_game_server/serversettings.json
+*.json
 bullshit
 *.env
 # Byte-compiled / optimized / DLL files
 __pycache__/
-json/
 backups/
 pickle/
 *.py[cod]
