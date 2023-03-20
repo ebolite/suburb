@@ -319,7 +319,9 @@ class Griefer():
 
     def die(self):
         # todo: explode into grist
-        if self.npc is not None:
+        if self.npc is not None and self.npc.invulnerable:
+            self.strife.log(f"{self.nickname} absconds!")
+        elif self.npc is not None:
             self.strife.log(f"The {self.nickname} explodes into grist!")
             self.room.remove_npc(self.npc)
             spoils_dict = self.npc.make_spoils(len(self.strife.player_griefers))

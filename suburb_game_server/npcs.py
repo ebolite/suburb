@@ -183,6 +183,7 @@ class Npc():
             }
             self.actions = 1
             self.additional_skills: list[str] = []
+            self.invulnerable = False
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -216,6 +217,11 @@ class Npc():
             spoils_dict[grist_name] = new_amount
         return spoils_dict
 
+class KernalAI(GrieferAI):
+    name = "kernel"
+    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+        return "abstain"
+
 class KernelSprite(Npc):
     @classmethod
     def spawn_new(cls):
@@ -225,6 +231,8 @@ class KernelSprite(Npc):
         sprite.hostile = False
         sprite.power = 1
         sprite.nickname = "kernel"
+        sprite.invulnerable = True
+        sprite.additional_skills.append("abstain")
         return sprite
 
 if __name__ == "__main__":
