@@ -800,8 +800,13 @@ if __name__ == "__main__":
         threads = 0
 
         while True:
-            Client, address = ServerSocket.accept()
-            print(f"Connected to: {address[0]} : {str(address[1])}")
-            start_new_thread(threaded_client, (Client, ))
-            threads += 1
-            print(f"Thread Number: {str(threads)}")
+            try:
+                Client, address = ServerSocket.accept()
+                print(f"Connected to: {address[0]} : {str(address[1])}")
+                start_new_thread(threaded_client, (Client, ))
+                threads += 1
+                print(f"Thread Number: {str(threads)}")
+            except ConnectionResetError as e:
+                print(e)
+            except ssl.SSLError as e:
+                print(e)
