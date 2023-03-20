@@ -479,9 +479,9 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
             item = sylladex.Item(atheneum_dict[instance_name]["name"], atheneum_dict[instance_name])
             item_name = item.name
             box_x = padding + column_index*(box_w + padding*2)
-            if current_selected_atheneum == instance_name: box_color = info_window.theme.dark
-            else: box_color = info_window.theme.white
+            box_color = info_window.theme.white
             item_box = render.SolidColor(box_x, box_y, box_w, box_h, box_color)
+            if current_selected_atheneum == instance_name: item_box.outline_color = info_window.theme.dark
             item_box.border_radius = 3
             item_box.bind_to(info_window, True)
             if current_selected_atheneum != instance_name:
