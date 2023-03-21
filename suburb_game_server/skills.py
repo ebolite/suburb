@@ -726,7 +726,7 @@ execute.damage_formula = "user.base_damage * target.doom.ratio * (7 + 3*coin)"
 
 # light
 roll = AspectSkill("roll", light, 10)
-roll.description = "Does a large amount of damage on HEADS, but nothing on SCRATCH."
+roll.description = "Does a large amount of damage on HEADS, but 1 damage on SCRATCH."
 roll.action_cost = 0
 roll.cooldown = 1
 roll.add_vial_cost("aspect", "user.power")
