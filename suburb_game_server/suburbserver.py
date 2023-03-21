@@ -616,6 +616,8 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             new_item = alchemy.Item(new_item_name)
             if not player.pay_costs(new_item.true_cost): print("couldnt pay costs"); return False
             new_instance = alchemy.Instance(new_item)
+            if new_instance.item.name == "entry item":
+                new_instance.color = inserted_instance.color
             player.room.add_instance(new_instance.name)
             player.session.add_to_excursus(new_item.name)
             return True

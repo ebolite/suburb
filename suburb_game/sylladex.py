@@ -288,16 +288,12 @@ class Modus():
                 card_thumb.alpha = 155
                 card_thumb.bind_to(sylladex_bar)
                 continue
-            image_path = f"sprites/items/{instance.item_name}.png"
-            if os.path.isfile(image_path):
-                card_image = render.make_item_image(0.49, 0.5, instance)
-                if card_image is not None:
-                    card_image.bind_to(card_thumb)
-                    if isinstance(card_image, render.Image):
-                        card_image.convert = False
-                        card_image.scale = 0.5
-            else:
-                card_image = None
+            card_image = render.make_item_image(0.49, 0.5, instance)
+            if card_image is not None:
+                card_image.bind_to(card_thumb)
+                if isinstance(card_image, render.Image):
+                    card_image.convert = False
+                    card_image.scale = 0.5
             label_text = instance.display_name(short=True)
             card_label = render.Text(0.49, 0.9, label_text)
             card_label.set_fontsize_by_width(90)
