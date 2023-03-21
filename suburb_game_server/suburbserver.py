@@ -79,7 +79,7 @@ def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
                        "players": room_players,
                        "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
                        "client_cache_limit": client.grist_cache_limit, "atheneum": client.get_dict()["atheneum"], "excursus": excursus_contents,
-                       "theme": client.land.theme})
+                       "theme": client.land.theme, "player_color": client.symbol_dict["color"]})
 
 def handle_request(dict):
     intent = dict["intent"]

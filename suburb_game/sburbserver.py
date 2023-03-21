@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Callable
+from typing import Optional, Tuple, Callable, Union
 from pygame import Color
 import os
 
@@ -99,7 +99,7 @@ def update_viewport_dic(dic: Optional[dict]=None):
     else:
         viewport_dic = dic
 
-def make_item_box(item: Optional["sylladex.Item"], x, y, w, h, theme: "themes.Theme", button_func: Optional[Callable]=None, selected=False, label=False) -> "render.SolidColor":
+def make_item_box(item: Optional["sylladex.Item"], x, y, w, h, theme: "themes.Theme", button_func: Optional[Callable]=None, selected=False, label=False, dowel=False) -> "render.SolidColor":
     item_box = render.SolidColor(x, y, w, h, theme.white)
     if selected: item_box.outline_color = theme.dark
     item_box.border_radius = 3
@@ -118,10 +118,20 @@ def make_item_box(item: Optional["sylladex.Item"], x, y, w, h, theme: "themes.Th
         card_image.scale = h / 240
     else:
         card_image = None
+    if dowel:
+        dowel_box_w, dowel_box_h = w//3, h//3
+        dowel_box = render.SolidColor(0, h-dowel_box_h, dowel_box_w, dowel_box_h, theme.white)
+        dowel_box.outline_color = theme.dark
+        dowel_box.bind_to(item_box)
+        dowel_image = render.Dowel(0.5, 0.5, item.code, color=viewport_dic["player_color"])
+        dowel_image.scale = 0.15
+        dowel_image.bind_to(dowel_box)
     if label:
-        item_label = render.Text(0.5, 0.9, util.shorten_item_name(item.name))
+        item_label = render.Text(0.5, 0.1, util.shorten_item_name(item.name))
         item_label.bind_to(item_box)
         item_label.fontsize = 20
+        item_label.color = theme.dark
+        item_label.outline_color = theme.white
         item_label.set_fontsize_by_width(w)
     return item_box
 
@@ -527,28 +537,33 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
         right_button.absolute = True
         right_button.bind_to(info_window, temporary=True)
 
-def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text"):
+def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", operation="&&"):
     info_window.kill_temporary_elements()
     info_window.color = info_window.theme.light
     info_text.text = "Alchemy"
     update_viewport_dic()
     box_w, box_h = 100, 100
-    item_1 = current_alchemy_item_1
-    item_2 = current_alchemy_item_2
+    item_1: Optional[sylladex.Item] = current_alchemy_item_1
+    item_2: Optional[sylladex.Item]  = current_alchemy_item_2
     def box_1_func():
         choose_alchemy_item(info_window, info_text, 1)
     item_1_box = make_item_box(current_alchemy_item_1, 0.25, 0.15, box_w, box_h, info_window.theme, box_1_func)
     item_1_box.absolute = False
     item_1_box.outline_color = info_window.theme.dark
     item_1_box.bind_to(info_window, True)
-    operation_box = render.TextButton(0.25, 0.35, 50, 50, "&&", placeholder)
+    if item_1 is None: item_1_label_text = "(choose item 1)"
+    else: item_1_label_text = item_1.display_name
+    item_1_label = render.Text(0.7, 0.15, item_1_label_text)
+    item_1_label.color = info_window.theme.dark
+    item_1_label.set_fontsize_by_width(200)
+    item_1_label.bind_to(info_window, True)
+    operation_box = render.TextButton(0.25, 0.35, 50, 50, operation, placeholder)
     operation_box.bind_to(info_window, True)
     def operation_box_button():
-        if operation_box.text == "&&":
-            operation_box.text = "||"
+        if operation == "&&":
+            display_alchemy(info_window, info_text, operation="||")
         else:
-            operation_box.text = "&&"
-        display_alchemy(info_window, info_text)
+            display_alchemy(info_window, info_text, operation="&&")
     operation_box.onpress = operation_box_button
     def box_2_func():
         choose_alchemy_item(info_window, info_text, 2)
@@ -556,6 +571,12 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text"):
     item_2_box.absolute = False
     item_2_box.outline_color = info_window.theme.dark
     item_2_box.bind_to(info_window, True)
+    if item_2 is None: item_2_label_text = "(choose item 2)"
+    else: item_2_label_text = item_2.display_name
+    item_2_label = render.Text(0.7, 0.55, item_2_label_text)
+    item_2_label.color = info_window.theme.dark
+    item_2_label.set_fontsize_by_width(200)
+    item_2_label.bind_to(info_window, True)
     equals_line = render.SolidColor(0.5, 0.7, info_window.w-50, 3, info_window.theme.dark)
     equals_line.absolute = False
     equals_line.bind_to(info_window, True)
@@ -607,7 +628,7 @@ def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Tex
             box_y = padding + row_index*(box_h + padding*2)
             for column_index, item in enumerate(row):
                 box_x = padding + column_index*(box_w + padding*2)
-                item_box = make_item_box(item, box_x, box_y, box_w, box_h, info_window.theme, get_button_func(item), selected=True, label=True)
+                item_box = make_item_box(item, box_x, box_y, box_w, box_h, info_window.theme, get_button_func(item), selected=True, label=True, dowel=True)
                 item_box.bind_to(info_window, True)
                 results_sprites.append(item_box)
         def get_leftbutton_func(page_num):
