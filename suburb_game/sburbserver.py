@@ -95,6 +95,26 @@ def update_viewport_dic(dic: Optional[dict]=None):
     else:
         viewport_dic = dic
 
+def make_item_box(item: "sylladex.Item", x, y, w, h, theme: "themes.Theme", button_func: Optional[Callable]=None, selected=False) -> "render.SolidColor":
+    item_box = render.SolidColor(x, y, w, h, theme.white)
+    if selected: item_box.outline_color = theme.dark
+    item_box.border_radius = 3
+    if button_func is not None:
+        box_button = render.TextButton(0, 0, w, h, "", button_func)
+        box_button.draw_sprite = False
+        box_button.absolute = True
+        box_button.click_on_mouse_down = True
+        box_button.bind_to(item_box)
+    image_path = f"sprites/items/{item.name}.png"
+    if os.path.isfile(image_path):
+        card_image = render.Image(0.5, 0.5, image_path)
+        card_image.convert = False
+        card_image.bind_to(item_box)
+        card_image.scale = h / 240
+    else:
+        card_image = None
+    return item_box
+
 def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", info_text: "render.Text", tilemap: Optional["render.TileMap"]=None):
     client_grist_cache = viewport_dic["client_grist_cache"]
     build_display_box = render.SolidColor(235, 50, 150, 50, window.theme.white)
@@ -338,33 +358,20 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
     for row_index, row in enumerate(rows):
         box_y = padding + row_index*(box_h + padding*2)
         for column_index, item_name in enumerate(row):
-            item = sylladex.Item(item_name, available_phernalia[item_name])
             box_x = padding + column_index*(box_w + padding*2)
-            if current_selected_phernalia == item_name: box_color = info_window.theme.dark
-            else: box_color = info_window.theme.white
+            item = sylladex.Item(item_name, available_phernalia[item_name])
+            if current_selected_phernalia == item_name: selected = True
+            else: selected = False
             cost_label_h = box_h//5
             item_box_h = box_h-cost_label_h
-            item_box = render.SolidColor(box_x, box_y, box_w, item_box_h, box_color)
-            item_box.border_radius = 3
+            item_box = make_item_box(item, box_x, box_y, box_w, item_box_h, info_window.theme, get_box_button_func(item_name), selected=selected)
             item_box.bind_to(info_window, True)
             cost_label_box = render.SolidColor(0, item_box_h, box_w, cost_label_h, info_window.theme.white)
             cost_label_box.border_radius = 3
             cost_label_box.bind_to(item_box)
+            if selected: cost_label_box.outline_color = info_window.theme.dark
             cost_label = render.make_grist_cost_display(0, 0, cost_label_h, item.true_cost, grist_cache, cost_label_box, info_window.theme.dark)
-            if current_selected_phernalia != item_name:
-                box_button = render.TextButton(0, 0, box_w, item_box_h, "", get_box_button_func(item_name))
-                box_button.draw_sprite = False
-                box_button.absolute = True
-                box_button.click_on_mouse_down = True
-                box_button.bind_to(item_box)
-            image_path = f"sprites/items/{item_name}.png"
-            if os.path.isfile(image_path):
-                card_image = render.Image(0.5, 0.5, image_path)
-                card_image.convert = False
-                card_image.bind_to(item_box)
-                card_image.scale = item_box_h / 240
-            else:
-                card_image = None
+            cost_label.bind_to(cost_label_box)
 
 def display_revise(info_window: "render.SolidColor", info_text: "render.Text", page=0):
     info_window.kill_temporary_elements()
