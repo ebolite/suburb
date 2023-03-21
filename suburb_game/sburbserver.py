@@ -572,6 +572,16 @@ def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Tex
         else:
             return False
     def make_results(search_text: Optional[str]):
+        def get_button_func(item: "sylladex.Item"):
+            def button_func():
+                if item_num == 1:
+                    global current_alchemy_item_1
+                    current_alchemy_item_1 = item
+                else:
+                    global current_alchemy_item_2
+                    current_alchemy_item_2 = item
+                display_alchemy(info_window, info_text)
+            return button_func
         results_sprites = []
         excursus: dict[str, dict] = viewport_dic["excursus"]
         excursus_items = [sylladex.Item(item_name, excursus[item_name]) for item_name in excursus]
@@ -597,7 +607,7 @@ def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Tex
             box_y = padding + row_index*(box_h + padding*2)
             for column_index, item in enumerate(row):
                 box_x = padding + column_index*(box_w + padding*2)
-                item_box = make_item_box(item, box_x, box_y, box_w, box_h, info_window.theme, placeholder, selected=True, label=True)
+                item_box = make_item_box(item, box_x, box_y, box_w, box_h, info_window.theme, get_button_func(item), selected=True, label=True)
                 item_box.bind_to(info_window, True)
                 results_sprites.append(item_box)
         def get_leftbutton_func(page_num):
