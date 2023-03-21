@@ -1280,6 +1280,8 @@ class RoomItemDisplay(UIElement):
     def delete(self):
         for button in self.buttons:
             button.delete()
+        if self.outline is not None:
+            self.outline.delete()
 
     def update_instances(self):
         def get_button_func(button_instance_name):
