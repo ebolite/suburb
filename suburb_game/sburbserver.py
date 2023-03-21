@@ -17,6 +17,8 @@ current_info_window = "grist_cache"
 current_selected_phernalia = None
 current_selected_atheneum = None
 current_selected_tile = "."
+current_alchemy_item_1: Optional["sylladex.Item"] = None
+current_alchemy_item_2: Optional["sylladex.Item"] = None
 viewport_dic = {}
 
 def get_server_tiles():
@@ -531,12 +533,21 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text"):
     info_text.text = "Alchemy"
     update_viewport_dic()
     box_w, box_h = 100, 100
-    item_1_box = make_item_box(None, 0.25, 0.15, box_w, box_h, info_window.theme)
+    item_1 = current_alchemy_item_1
+    item_2 = current_alchemy_item_2
+    item_1_box = make_item_box(current_alchemy_item_1, 0.25, 0.15, box_w, box_h, info_window.theme)
     item_1_box.absolute = False
     item_1_box.bind_to(info_window, True)
     operation_box = render.TextButton(0.25, 0.35, 50, 50, "&&", placeholder)
     operation_box.bind_to(info_window, True)
-    item_2_box = make_item_box(None, 0.25, 0.55, box_w, box_h, info_window.theme)
+    def operation_box_button():
+        if operation_box.text == "&&":
+            operation_box.text = "||"
+        else:
+            operation_box.text = "&&"
+        display_alchemy(info_window, info_text)
+    operation_box.onpress = operation_box_button
+    item_2_box = make_item_box(current_alchemy_item_2, 0.25, 0.55, box_w, box_h, info_window.theme)
     item_2_box.absolute = False
     item_2_box.bind_to(info_window, True)
     equals_line = render.SolidColor(0.5, 0.7, info_window.w-50, 3, info_window.theme.dark)
