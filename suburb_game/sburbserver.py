@@ -95,7 +95,7 @@ def update_viewport_dic(dic: Optional[dict]=None):
     else:
         viewport_dic = dic
 
-def make_item_box(item: "sylladex.Item", x, y, w, h, theme: "themes.Theme", button_func: Optional[Callable]=None, selected=False) -> "render.SolidColor":
+def make_item_box(item: "sylladex.Item", x, y, w, h, theme: "themes.Theme", button_func: Optional[Callable]=None, selected=False, label=False) -> "render.SolidColor":
     item_box = render.SolidColor(x, y, w, h, theme.white)
     if selected: item_box.outline_color = theme.dark
     item_box.border_radius = 3
@@ -113,6 +113,11 @@ def make_item_box(item: "sylladex.Item", x, y, w, h, theme: "themes.Theme", butt
         card_image.scale = h / 240
     else:
         card_image = None
+    if label:
+        item_label = render.Text(0.45, 0.9, util.shorten_item_name(item.name))
+        item_label.bind_to(item_box)
+        item_label.fontsize = 20
+        item_label.set_fontsize_by_width(w)
     return item_box
 
 def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", info_text: "render.Text", tilemap: Optional["render.TileMap"]=None):
@@ -486,28 +491,10 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
             item_name = item.name
             box_x = padding + column_index*(box_w + padding*2)
             box_color = info_window.theme.white
-            item_box = render.SolidColor(box_x, box_y, box_w, box_h, box_color)
-            if current_selected_atheneum == instance_name: item_box.outline_color = info_window.theme.dark
-            item_box.border_radius = 3
+            if current_selected_atheneum == instance_name: selected = True
+            else: selected = False
+            item_box = make_item_box(item, box_x, box_y, box_w, box_h, info_window.theme, get_box_button_func(instance_name), selected=selected, label=True)
             item_box.bind_to(info_window, True)
-            if current_selected_atheneum != instance_name:
-                box_button = render.TextButton(0, 0, box_w, box_h, "", get_box_button_func(instance_name))
-                box_button.draw_sprite = False
-                box_button.absolute = True
-                box_button.click_on_mouse_down = True
-                box_button.bind_to(item_box)
-            image_path = f"sprites/items/{item_name}.png"
-            if os.path.isfile(image_path):
-                card_image = render.Image(0.5, 0.5, image_path)
-                card_image.convert = False
-                card_image.bind_to(item_box)
-                card_image.scale = box_h / 240
-            else:
-                card_image = None
-            item_label = render.Text(0.5, 0.9, util.shorten_item_name(item_name))
-            item_label.bind_to(item_box)
-            item_label.fontsize = 20
-            item_label.set_fontsize_by_width(box_w)
             recycle_button = render.Button(box_w-16-padding, padding, "sprites/buttons/trash.png", None, get_recycle_button_func(instance_name))
             recycle_button.bind_to(item_box)
             recycle_button.absolute = True
