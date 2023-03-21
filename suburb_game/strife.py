@@ -265,33 +265,22 @@ class Strife():
 
     def reposition_sprites(self, sprites_list: list[Union["render.Enemy", "render.PlayerGriefer"]], direction: str, scale: float):
         sprites_xy = []
-        sprites_sprites = []
         for i, sprite in enumerate(sprites_list):
             if i == 0:
-                if direction == "right":
-                    center_offset = 0.16
-                else:
-                    center_offset = -0.16
+                center_offset = 0.16 if direction == "right" else -0.16
                 starting_x = 0.5 + (center_offset * scale)
                 sprite.x = starting_x
                 sprite_x = starting_x * self.canvas.w - sprite.get_width()//2
                 sprite_y = sprite.y * self.canvas.h - sprite.get_height()//2
                 sprites_xy.append((sprite_x, sprite_y))
-                sprites_sprites.append(sprite)
                 if isinstance(sprite, render.Enemy):
                     sprite.rect_y_offset = sprite.get_height()//3 * -1
                 continue
-            previous_sprite = sprites_sprites[i-1]
-            if isinstance(previous_sprite, render.Enemy):
-                old_width = previous_sprite.get_width()
-            else:
-                old_width = 400
+            previous_sprite = sprites_list[i-1]
+            old_width = previous_sprite.get_width() if isinstance(previous_sprite, render.Enemy) else 400
             dx = int(old_width)
             old_x, old_y = sprites_xy[i-1]
-            if direction == "right":
-                new_x = old_x + dx
-            else:
-                new_x = old_x - dx
+            new_x = old_x - dx if direction == "right" else old_x - dx
             new_y = render.SCREEN_HEIGHT//2 + 100
             if isinstance(sprite, render.Enemy):
                 new_y -= sprite.get_height()
@@ -300,7 +289,6 @@ class Strife():
             sprite.x, sprite.y = new_x, new_y
             sprite.absolute = True
             sprites_xy.append((new_x, new_y))
-            sprites_sprites.append(sprite)
 
     def make_griefer_sprite(self, griefer: Griefer) -> Union["render.Enemy", "render.PlayerGriefer"]:
         # todo: make positions differ with more griefers
