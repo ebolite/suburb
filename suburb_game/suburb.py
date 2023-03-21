@@ -1035,7 +1035,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             image = render.Image(0.5, 0.5, f"sprites\\items\\{instance.item_name}.png")
             image.convert = False
             image.bind_to(captcha_image)
-        label = render.Text(0.55, 0.91, util.filter_item_name(instance.item_name))
+        label = render.Text(0.55, 0.91, util.filter_item_name(instance.item.display_name))
         label.bind_to(captcha_image)
         label.color = text_color
         label.outline_color = text_outline_color

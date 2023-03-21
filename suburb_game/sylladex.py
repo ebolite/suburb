@@ -23,6 +23,7 @@ class Item():
         self.kinds = self.item_dict["kinds"]
         self.use = self.item_dict["use"] or []
         self.cost = self.item_dict["cost"]
+        self.display_name: str = self.item_dict["display_name"]
 
     @property
     def true_cost(self):
@@ -58,7 +59,7 @@ class Instance():
             elif self.carved_item_name != "perfectly+generic object":
                 return f")(-{util.shorten_item_name(self.carved_item_name)}"
             elif contained_instance is not None: return f"[ ]-{contained_instance.display_name(short)}"
-            else: return util.shorten_item_name(self.item_name)
+            else: return util.shorten_item_name(self.item.display_name)
         else:
             if self.punched_item_name != "":
                 return f"[:]-{self.punched_item_name}"

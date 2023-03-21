@@ -380,6 +380,7 @@ class Item(): # Items are the base of instants.
     def get_dict(self):
         out = deepcopy(util.items[self.__dict__["name"]])
         out["name"] = self.__dict__["name"]
+        out["display_name"] = self.displayname
         return out
 
 class Instance():
