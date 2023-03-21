@@ -293,6 +293,9 @@ class Modus():
                 card_image.bind_to(card_thumb)
                 if isinstance(card_image, render.Image):
                     card_image.scale = 0.5
+                if instance.item.name == "punched card":
+                    print(f"spawning punches {instance.punched_code}")
+                    render.spawn_punches(card_image, instance.punched_code, 18, 31, w=40, h=60)
             label_text = instance.display_name(short=True)
             card_label = render.Text(0.49, 0.9, label_text)
             card_label.set_fontsize_by_width(90)
