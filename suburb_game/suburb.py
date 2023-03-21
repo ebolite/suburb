@@ -1451,7 +1451,6 @@ if __name__ == "__main__":
     render.render()
     if client.connect(): # connect to server
         title() # normal game start
-        render.Dowel(0.75, 0.5, "cZCMY4Qf")
     else:
         connection_screen()
     main()

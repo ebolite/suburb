@@ -225,9 +225,15 @@ class Dowel(UIElement):
         self.surf = palette_swap(self.surf, themes.default.dark, self.dark)
         self.surf = palette_swap(self.surf, themes.default.white, self.white)
         self.surf.set_colorkey(Color(0, 0, 0))
+        self.scaled = False
         update_check.append(self)
 
     def update(self):
+        if self.scale != 1.0 and not self.scaled:
+            w = self.surf.get_width()
+            h = self.surf.get_height()
+            self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
+            self.scaled = True
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy()
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
