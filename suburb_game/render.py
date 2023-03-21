@@ -84,6 +84,12 @@ def get_dark_color(r, g, b) -> Color:
     r, g, b = max(r, 0), max(g, 0), max(b, 0)
     return pygame.Color(r, g, b)
 
+def get_white_color(r, g, b) -> Color:
+    MULT = 2
+    r, g, b = r*MULT, g*MULT, b*MULT
+    r, g, b = min(r, 255), min(g, 255), min(b, 255)
+    return Color(r, g, b)
+
 class UIElement(pygame.sprite.Sprite):
     def __init__(self): # x and y as fractions of 1 (centered position on screen)
         super(UIElement, self).__init__()
@@ -207,6 +213,72 @@ class UIElement(pygame.sprite.Sprite):
                 self.offsety += current_y - last_y
         else:
             self.last_mouse_pos = None
+
+class Dowel(UIElement):
+    def __init__(self, x, y, code: str, color=(235, 1, 76)):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.color = color
+        self.surf = self.make_dowel_surf(code)
+        self.surf = palette_swap(self.surf, themes.default.light, self.light)
+        self.surf = palette_swap(self.surf, themes.default.dark, self.dark)
+        self.surf = palette_swap(self.surf, themes.default.white, self.white)
+        self.surf.set_colorkey(Color(0, 0, 0))
+        update_check.append(self)
+
+    def update(self):
+        self.rect = self.surf.get_rect()
+        self.rect.x, self.rect.y = self.get_rect_xy()
+        self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
+
+    def make_dowel_surf(self, code: str) -> pygame.surface.Surface:
+        NUM_SLICES = 80
+        DOWEL_W, DOWEL_H = 62, 110
+        SLICE_H = 15
+        depths = [0] + [binaryoperations.bintable[char] for char in code] + [0]
+        slice_depths = []
+        for i, depth in enumerate(depths):
+            try: next_depth = depths[i+1]
+            except IndexError: next_depth = depths[0]
+            diff = next_depth - depth
+            for n in range(8):
+                slice_depth = depth + int(diff * (n / 8))
+                slice_depths.append(slice_depth)
+        slice_surf = pygame.image.load("sprites/components/dowel_slice.png")
+        cap_surf = pygame.image.load("sprites/components/dowel_cap.png")
+        dowel_surf = pygame.Surface((DOWEL_W, DOWEL_H))
+        for i in range(NUM_SLICES):
+            offsety = DOWEL_H - SLICE_H - i
+            depth = slice_depths[i]
+            old_depth = slice_depths[i-1]
+            if depth == 0: new_width = DOWEL_W
+            else: new_width = int(max(DOWEL_W - (45 * depth/62), 10))
+            old_width = int(max(DOWEL_W - (45 * old_depth/62), 10))
+            width_diff = abs(old_width - new_width)
+            if new_width < old_width: width_range = range(10, old_width)
+            else: width_range = range(old_width, new_width+1)
+            for width in width_range:
+                print(width)
+                offsetx = (DOWEL_W - width) // 2
+                scaled_surf = pygame.transform.scale(slice_surf, (width, SLICE_H))
+                dowel_surf.blit(scaled_surf, (offsetx, offsety))
+        dowel_surf.blit(cap_surf, (0, 0))
+        dowel_surf = dowel_surf.convert()
+        dowel_surf.set_colorkey(Color(0, 0, 0))
+        return dowel_surf
+
+    @property
+    def light(self):
+        return Color(*self.color)
+    
+    @property
+    def white(self):
+        return get_white_color(*self.color)
+
+    @property
+    def dark(self):
+        return get_dark_color(*self.color)
 
 class ToolTip(UIElement):
     def __init__(self, x, y, w, h):
