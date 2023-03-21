@@ -336,6 +336,7 @@ class Griefer():
             self.strife.log(f"{self.nickname}: DEAD.")
             self.strife.dead_players.append(self.player.name)
         self.strife.remove_griefer(self)
+        self.strife.verify_strife()
 
     def get_skill_cooldown(self, skill_name) -> int:
         if skill_name not in self.skill_cooldowns: return 0

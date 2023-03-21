@@ -327,6 +327,7 @@ base_skills.append("abuse")
 
 def abscond_func(user: "strife.Griefer", target: "strife.Griefer"):
     user.strife.remove_griefer(user)
+    user.strife.verify_strife()
 
 abscond = Skill("abscond")
 abscond.description = "Sweet abscond bro!"
