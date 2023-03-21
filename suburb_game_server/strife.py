@@ -409,6 +409,7 @@ class Griefer():
                 valid_targets = [griefer.name for griefer in valid_targets if griefer.team == self.team]
             else:
                 valid_targets = [griefer.name for griefer in valid_targets if griefer.team != self.team]
+            if len(valid_targets) == 0: return
             targets = []
             for i in range(skill.num_targets):
                 targets.append(random.choice(valid_targets))
