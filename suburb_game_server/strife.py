@@ -389,13 +389,13 @@ class Griefer():
         skill = skills.skills[random_skill_name]
         valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
         if skill.beneficial:
-            valid_targets = [griefer for griefer in valid_targets if griefer.team == self.team]
+            valid_targets = [griefer.name for griefer in valid_targets if griefer.team == self.team]
         else:
-            valid_targets = [griefer for griefer in valid_targets if griefer.team != self.team]
+            valid_targets = [griefer.name for griefer in valid_targets if griefer.team != self.team]
         targets = []
         for i in range(skill.num_targets):
             targets.append(random.choice(valid_targets))
-        self.submit_skill(random_skill_name, [target.name for target in targets])
+        self.submit_skill(random_skill_name, targets)
 
     def ai_use_skills(self):
         while self.remaining_actions:
@@ -405,14 +405,13 @@ class Griefer():
             skill = skills.skills[chosen_skill_name]
             valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
             if skill.beneficial:
-                valid_targets = [griefer for griefer in valid_targets if griefer.team == self.team]
+                valid_targets = [griefer.name for griefer in valid_targets if griefer.team == self.team]
             else:
-                valid_targets = [griefer for griefer in valid_targets if griefer.team != self.team]
-            try:
-                targets = random.choices(valid_targets, k=skill.num_targets)
-            except IndexError: 
-                return self.submit_random_skill()
-            self.submit_skill(chosen_skill_name, [target.name for target in targets])
+                valid_targets = [griefer.name for griefer in valid_targets if griefer.team != self.team]
+            targets = []
+            for i in range(skill.num_targets):
+                targets.append(random.choice(valid_targets))
+            self.submit_skill(chosen_skill_name, targets)
 
     @classmethod
     def from_player(cls, strife: "Strife", player: "sessions.Player") -> Optional["Griefer"]:

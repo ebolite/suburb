@@ -548,9 +548,7 @@ def sburb(window: "render.Window"):
     window.color = window.theme.dark
     window.xbutton.fill_color = window.theme.dark
     window.xbutton.outline_color = window.theme.dark
-    if client_username is None: 
-        connect(window)
-        return
+    if not connect(window): return
     global current_x
     global current_y
     if current_x is None or current_y is None:
@@ -571,7 +569,7 @@ def connect(window: "render.Window"):
         global client_username
         client_username = username
         sburb(window)
-        return
+        return True
     dic = client.requestdic(intent="get_client_server_chains")
     chains: list = dic["chains"]
     no_server: list = dic["no_server"]
@@ -611,3 +609,4 @@ def connect(window: "render.Window"):
         nickname = player_names[player_name]
         button = render.TextButton(connect_button_x, connect_button_y, 200, 50, nickname, get_connect_button(player_name))
         button.bind_to(window.viewport)
+    return False
