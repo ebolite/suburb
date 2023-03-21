@@ -95,7 +95,7 @@ def update_viewport_dic(dic: Optional[dict]=None):
     else:
         viewport_dic = dic
 
-def make_item_box(item: "sylladex.Item", x, y, w, h, theme: "themes.Theme", button_func: Optional[Callable]=None, selected=False, label=False) -> "render.SolidColor":
+def make_item_box(item: Optional["sylladex.Item"], x, y, w, h, theme: "themes.Theme", button_func: Optional[Callable]=None, selected=False, label=False) -> "render.SolidColor":
     item_box = render.SolidColor(x, y, w, h, theme.white)
     if selected: item_box.outline_color = theme.dark
     item_box.border_radius = 3
@@ -105,6 +105,7 @@ def make_item_box(item: "sylladex.Item", x, y, w, h, theme: "themes.Theme", butt
         box_button.absolute = True
         box_button.click_on_mouse_down = True
         box_button.bind_to(item_box)
+    if item is None: return item_box
     image_path = f"sprites/items/{item.name}.png"
     if os.path.isfile(image_path):
         card_image = render.Image(0.5, 0.5, image_path)
@@ -202,7 +203,7 @@ def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", in
     phernaliaregistrybutton.overlay_on_click = True
     gristcachebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     gristcachebutton_background.border_radius = 2
-    gristcachebutton = render.Button(55, 0, "sprites/computer/Sburb/grist_cache_button.png", None, get_mode_change_button(None, "grist_cache"))
+    gristcachebutton = render.Button(55, 0, "sprites/computer/Sburb/grist_cache_button.png", None, get_mode_change_button("select", "grist_cache"))
     gristcachebutton.absolute = True
     gristcachebutton.overlay_on_click = True
     atheneumbutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
@@ -212,7 +213,7 @@ def draw_sburb_bar(window: "render.Window", info_window: "render.SolidColor", in
     atheneumbutton.overlay_on_click = True
     alchemizebutton_background = render.SolidColor(-2, -2, 49, 49, window.theme.light)
     alchemizebutton_background.border_radius = 2
-    alchemizebutton = render.Button(55, 0, "sprites/computer/Sburb/alchemize_button.png", None, get_mode_change_button(None, "alchemize"))
+    alchemizebutton = render.Button(55, 0, "sprites/computer/Sburb/alchemize_button.png", None, get_mode_change_button("select", "alchemize"))
     alchemizebutton.absolute = True
     alchemizebutton.overlay_on_click = True
     selectbutton.bind_to(ui_bar)
@@ -524,7 +525,23 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
         right_button.absolute = True
         right_button.bind_to(info_window, temporary=True)
 
-
+def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text"):
+    info_window.kill_temporary_elements()
+    info_window.color = info_window.theme.light
+    info_text.text = "Alchemy"
+    update_viewport_dic()
+    box_w, box_h = 100, 100
+    item_1_box = make_item_box(None, 0.25, 0.15, box_w, box_h, info_window.theme)
+    item_1_box.absolute = False
+    item_1_box.bind_to(info_window, True)
+    operation_box = render.TextButton(0.25, 0.35, 50, 50, "&&", placeholder)
+    operation_box.bind_to(info_window, True)
+    item_2_box = make_item_box(None, 0.25, 0.55, box_w, box_h, info_window.theme)
+    item_2_box.absolute = False
+    item_2_box.bind_to(info_window, True)
+    equals_line = render.SolidColor(0.5, 0.7, info_window.w-50, 3, info_window.theme.dark)
+    equals_line.absolute = False
+    equals_line.bind_to(info_window, True)
 
 def update_info_window(info_window, info_text):
     match current_info_window:
@@ -532,6 +549,7 @@ def update_info_window(info_window, info_text):
         case "phernalia_registry": display_phernalia_registry(info_window, info_text)
         case "revise": display_revise(info_window, info_text)
         case "atheneum": display_atheneum(info_window, info_text)
+        case "alchemize": display_alchemy(info_window, info_text)
         case _: ...
 
 def sburb(window: "render.Window"):
