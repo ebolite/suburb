@@ -67,14 +67,10 @@ imp.cluster_size = 3
 imp.difficulty = 1
 imp.variance = 4
 imp.ai_type = "imp"
-imp.additional_skills = ["abscond"]
 
 class ImpAI(GrieferAI):
     name = "imp"
     def ai_choose_skill(self, user: "strife.Griefer") -> str:
-        for griefer in user.strife.griefer_list:
-            if griefer.team != user.team and griefer.power > user.power*10:
-                return "abscond"
         if skills.skills["abuse"].is_submittable_by(user): return "abuse"
         return super().ai_choose_skill(user)
 ImpAI()

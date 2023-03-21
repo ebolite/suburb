@@ -382,7 +382,6 @@ class Griefer():
                 valid_targets = [griefer for griefer in valid_targets if griefer.team == self.team]
             if len(valid_targets) > 0: return True
         usable_skills = [skill.name for skill in self.known_skills_list if skill.is_submittable_by(self) and is_usable_skill(skill)]
-        if "abscond" in usable_skills: usable_skills.remove("abscond")
         return random.choice(usable_skills)
 
     def submit_random_skill(self):
