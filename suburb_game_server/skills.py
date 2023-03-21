@@ -730,7 +730,7 @@ roll.description = "Does a large amount of damage on HEADS, but nothing on SCRAT
 roll.action_cost = 0
 roll.cooldown = 1
 roll.add_vial_cost("aspect", "user.power")
-roll.damage_formula = "user.base_damage * 3 * coin"
+roll.damage_formula = "(user.base_damage * 3 * coin) + 1"
 
 stack_deck = AspectSkill("stack deck", light, 50)
 stack_deck.description = "Lowers the LIGHT (luck) of the target and all their friends."
