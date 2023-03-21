@@ -90,6 +90,7 @@ class Skill():
         self.vial_change_formulas = {}
         self.vial_cost_formulas = {}
         self.aspect_change_formulas = {}
+        self.stat_bonus_formulas = {}
         self.use_message = ""
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
@@ -109,6 +110,9 @@ class Skill():
 
     def add_aspect_change(self, aspect_name: str, formula: str):
         self.aspect_change_formulas[aspect_name] = formula
+    
+    def add_stat_bonus(self, stat_name: str, formula: str):
+        self.stat_bonus_formulas[stat_name] = formula
 
     def get_costs(self, user: "strife.Griefer") -> dict[str, int]:
         true_costs = {}
@@ -222,6 +226,12 @@ class Skill():
                 if change > 0: user.strife.log(f"{user.nickname}'s {vial_name.upper()} increased by {change}!")
                 elif change < 0: user.strife.log(f"{user.nickname}'s {vial_name.upper()} decreased by {-change}!")
         
+        # stat change step
+        for stat_name in self.stat_bonus_formulas:
+            stat_formula = self.stat_bonus_formulas[stat_name]
+            stat_formula = self.format_formula(stat_formula, user, target)
+            target.add_bonus(stat_name, int(eval(stat_formula)))
+
         #aspect change step
         for aspect_name in self.aspect_change_formulas:
             aspect_formula = self.aspect_change_formulas[aspect_name]
@@ -975,6 +985,17 @@ for aspect_name, aspect in aspects.items():
     # heir
 
     # 25: passive
+
+    aspectbody = ClassSkill(f"{aspect.name} body", aspect, "heir", 100)
+    aspectbody.description = f"Heals the user based on their {aspect.name.upper()} and gives them a boost to their METTLE and VIGOR based on their {aspect.name.upper()}."
+    aspectbody.parryable = False
+    aspectbody.beneficial = True
+    aspectbody.add_vial_cost("aspect", "user.power")
+    aspectbody.action_cost = 0
+    aspectbody.cooldown = 3
+    aspectbody.add_vial_change("hp", f"user.power * 6 * user.{aspect.name}.ratio")
+    aspectbody.add_stat_bonus("mettle", f"user.power//2 * user.{aspect.name}.ratio")
+    aspectbody.add_stat_bonus("vigor", f"user.power//2 * user.{aspect.name}.ratio")
 
     # sylph
 
