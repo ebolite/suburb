@@ -132,6 +132,7 @@ class Skill():
         formula = self.damage_formula
         formula = user.format_formula(formula, "user")
         formula = user.format_formula(formula, "target")
+        formula = formula.replace("coin", "0.5")
         return int(eval(formula))
 
     # affect each target in list
