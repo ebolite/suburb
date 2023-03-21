@@ -267,7 +267,6 @@ class Dowel(UIElement):
             if new_width < old_width: width_range = range(10, old_width)
             else: width_range = range(old_width, new_width+1)
             for width in width_range:
-                print(width)
                 offsetx = (DOWEL_W - width) // 2
                 scaled_surf = pygame.transform.scale(slice_surf, (width, SLICE_H))
                 dowel_surf.blit(scaled_surf, (offsetx, offsety))
