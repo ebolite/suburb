@@ -18,7 +18,7 @@ import themes
 import binaryoperations
 import sburbserver
 from strife import Npc, Griefer, Strife
-from sylladex import Instance, Sylladex
+from sylladex import Instance, Item, Sylladex
 
 pygame.init()
 
@@ -220,6 +220,7 @@ class Dowel(UIElement):
         self.x = x
         self.y = y
         self.color = color
+        self.alpha = 255
         self.surf = self.make_dowel_surf(code)
         self.surf = palette_swap(self.surf, themes.default.light, self.light)
         self.surf = palette_swap(self.surf, themes.default.dark, self.dark)
@@ -234,8 +235,9 @@ class Dowel(UIElement):
             h = self.surf.get_height()
             self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
             self.scaled = True
+        if self.alpha != 255: self.surf.set_alpha(self.alpha)
         self.rect = self.surf.get_rect()
-        self.rect.x, self.rect.y = self.get_rect_xy()
+        self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
     def make_dowel_surf(self, code: str) -> pygame.surface.Surface:
@@ -1732,13 +1734,14 @@ class LogWindow(UIElement):
             return util.current_log()
         else: return self.log_list
 
-class ItemImage():
-    def __new__(cls, x, y, item_name: str):
-        image_path = f"sprites\\items\\{item_name}.png"
-        if os.path.isfile(image_path):
-            return Image(x, y, image_path)
+def make_item_image(x, y, instance: "Instance") -> Union[Dowel, Image, None]:
+    image_path = f"sprites\\items\\{instance.item.name}.png"
+    if instance.item.name == "cruxite dowel":
+        return Dowel(x, y, instance.carved)
+    elif os.path.isfile(image_path):
+        return Image(x, y, image_path)
+    else:
         return None
-
 
 def spawn_punches(bound_element: UIElement, code: str, base_x, base_y, flipped=False, w=172, h=240):
     padding = 1

@@ -289,11 +289,12 @@ class Modus():
                 continue
             image_path = f"sprites/items/{instance.item_name}.png"
             if os.path.isfile(image_path):
-                card_image = render.ItemImage(0.49, 0.5, instance.item_name)
+                card_image = render.make_item_image(0.49, 0.5, instance)
                 if card_image is not None:
-                    card_image.convert = False
                     card_image.bind_to(card_thumb)
-                    card_image.scale = 0.5
+                    if isinstance(card_image, render.Image):
+                        card_image.convert = False
+                        card_image.scale = 0.5
             else:
                 card_image = None
             label_text = instance.display_name(short=True)
