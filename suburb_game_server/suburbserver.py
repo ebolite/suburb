@@ -301,6 +301,21 @@ def handle_request(dict):
             unclaimed_rungs = player.unclaimed_rungs
             player.claim_spoils()
             return json.dumps({"unclaimed_grist": unclaimed_grist, "unclaimed_rungs": unclaimed_rungs})
+        case "get_resulting_alchemy":
+            code_1 = content["code_1"]
+            code_2 = content["code_2"]
+            operation = content["operation"]
+            if code_1 in util.codes and code_2 in util.codes:
+                item_1 = alchemy.Item(util.codes[code_1])
+                item_2 = alchemy.Item(util.codes[code_2])
+                alchemized_item_name = alchemy.alchemize(item_1.name, item_2.name, operation)
+                alchemized_item = alchemy.Item(alchemized_item_name)
+            else:
+                alchemized_item = None
+            if alchemized_item is not None:
+                return json.dumps(alchemized_item.get_dict())
+            else:
+                return json.dumps({})
             
 def get_first_member_of_chain(player_name: str, checked=[]):
     player = sessions.Player(player_name)

@@ -580,6 +580,28 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
     equals_line = render.SolidColor(0.5, 0.7, info_window.w-50, 3, info_window.theme.dark)
     equals_line.absolute = False
     equals_line.bind_to(info_window, True)
+    if item_1 is not None and item_2 is not None:
+        resulting_item_dict = client.requestplusdic(intent="get_resulting_alchemy", content={"code_1": item_1.code, "code_2": item_2.code, "operation": operation})
+        resulting_item_name = resulting_item_dict["name"]
+        resulting_item = sylladex.Item(resulting_item_name, resulting_item_dict)
+        item_3_box = make_item_box(resulting_item, 0.25, 0.85, box_w, box_h, info_window.theme, dowel=True)
+        item_3_box.absolute = False
+        item_3_box.outline_color = info_window.theme.dark
+        item_3_box.bind_to(info_window, True)
+        item_3_label = render.Text(0.7, 0.85, resulting_item.display_name)
+        item_3_label.color = info_window.theme.dark
+        item_3_label.set_fontsize_by_width(200)
+        item_3_label.bind_to(info_window, True)
+        power_label = render.Text(0.5, 1.3, f"POWER: {resulting_item.power}")
+        power_label.bind_to(item_3_label)
+        power_label.color = info_window.theme.dark
+        power_label.set_fontsize_by_width(75)
+        tooltip = render.ToolTip(0, 0, box_w, box_h)
+        tooltip.bind_to(item_3_box)
+        tooltip.tooltip_offsety = -25
+        cost_label = render.make_grist_cost_display(0, 0, 20, resulting_item.true_cost, 
+                                                    viewport_dic["client_grist_cache"], tooltip, text_color=info_window.theme.dark,
+                                                    flipped=True)
 
 def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Text", item_num: int, page=0, search: Optional[str]=None):
     info_window.kill_temporary_elements()
