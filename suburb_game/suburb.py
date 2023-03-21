@@ -1033,8 +1033,6 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         image = render.make_item_image(0.5, 0.5, instance)
         if image is not None:
             image.bind_to(captcha_image)
-            if isinstance(image, render.Image):
-                image.convert = False
             if isinstance(image, render.Dowel):
                 image.scale = 2
         label = render.Text(0.55, 0.91, util.filter_item_name(instance.item.display_name))
@@ -1284,7 +1282,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                 if card_image is not None:
                     card_image.bind_to(wielded_display)
                     if isinstance(card_image, render.Image):
-                        card_image.convert = False
                         card_image.scale = 0.5
             item_label = render.Text(0.6, 1.1, f"{wielded_instance.display_name(True)}")
         else:
@@ -1319,7 +1316,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                 if card_image is not None:
                     card_image.bind_to(card_thumb)
                     if isinstance(card_image, render.Image):
-                        card_image.convert = False
                         card_image.scale = 0.5
             else:
                 card_image = None

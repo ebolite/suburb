@@ -292,7 +292,6 @@ class Modus():
             if card_image is not None:
                 card_image.bind_to(card_thumb)
                 if isinstance(card_image, render.Image):
-                    card_image.convert = False
                     card_image.scale = 0.5
             label_text = instance.display_name(short=True)
             card_label = render.Text(0.49, 0.9, label_text)

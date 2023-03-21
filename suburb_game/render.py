@@ -1743,17 +1743,21 @@ def make_item_image(x, y, instance: "Instance") -> Union[Dowel, Image, None]:
         seed = "".join([str(color) for color in instance.color])
         random.seed(seed)
         filename = random.choice(filenames)
-        image = Image(x, y, f"sprites/items/entry_items/{filename}")
         r, g, b = instance.color
         light = Color(r, g, b)
         dark = get_dark_color(r, g, b)
         white = get_white_color(r, g, b)
-        image.convert_colors.append((themes.default.dark, dark))
-        image.convert_colors.append((themes.default.light, light))
-        image.convert_colors.append((themes.default.white, white))
+        theme = themes.Theme("")
+        theme.dark = dark
+        theme.white = white
+        theme.light = light
+        image = Image(x, y, f"sprites/items/entry_items/{filename}", theme=theme)
+        image.convert = True
         return image
     elif os.path.isfile(image_path):
-        return Image(x, y, image_path)
+        image = Image(x, y, image_path)
+        image.convert = False
+        return image
     else:
         return None
 
