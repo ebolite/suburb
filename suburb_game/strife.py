@@ -281,7 +281,6 @@ class Strife():
                 if isinstance(sprite, render.Enemy):
                     sprite.rect_y_offset = sprite.get_height()//3 * -1
                 continue
-            print(f"{sprites_sprites} {i-1}")
             previous_sprite = sprites_sprites[i-1]
             if isinstance(previous_sprite, render.Enemy):
                 old_width = previous_sprite.get_width()
