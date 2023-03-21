@@ -74,10 +74,12 @@ def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
     room_players = room.get_players()
     client_grist_cache = client.grist_cache
     client_available_phernalia = client.available_phernalia
+    excursus_contents = {item.name:item.get_dict() for item in [alchemy.Item(item_name) for item_name in client.session.excursus]}
     return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "room_name": room.tile.name, 
                        "players": room_players,
                        "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
-                       "client_cache_limit": client.grist_cache_limit, "atheneum": client.get_dict()["atheneum"], "theme": client.land.theme})
+                       "client_cache_limit": client.grist_cache_limit, "atheneum": client.get_dict()["atheneum"], "excursus": excursus_contents,
+                       "theme": client.land.theme})
 
 def handle_request(dict):
     intent = dict["intent"]

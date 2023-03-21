@@ -19,7 +19,9 @@ current_selected_atheneum = None
 current_selected_tile = "."
 current_alchemy_item_1: Optional["sylladex.Item"] = None
 current_alchemy_item_2: Optional["sylladex.Item"] = None
+last_tile_map: Optional["render.TileMap"] = None
 viewport_dic = {}
+results_sprites: list["render.UIElement"] = []
 
 def get_server_tiles():
     reply_dict = client.requestdic("server_tiles")
@@ -117,7 +119,7 @@ def make_item_box(item: Optional["sylladex.Item"], x, y, w, h, theme: "themes.Th
     else:
         card_image = None
     if label:
-        item_label = render.Text(0.45, 0.9, util.shorten_item_name(item.name))
+        item_label = render.Text(0.5, 0.9, util.shorten_item_name(item.name))
         item_label.bind_to(item_box)
         item_label.fontsize = 20
         item_label.set_fontsize_by_width(w)
@@ -491,9 +493,7 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
         box_y = padding + row_index*(box_h + padding*2)
         for column_index, instance_name in enumerate(row):
             item = sylladex.Item(atheneum_dict[instance_name]["name"], atheneum_dict[instance_name])
-            item_name = item.name
             box_x = padding + column_index*(box_w + padding*2)
-            box_color = info_window.theme.white
             if current_selected_atheneum == instance_name: selected = True
             else: selected = False
             item_box = make_item_box(item, box_x, box_y, box_w, box_h, info_window.theme, get_box_button_func(instance_name), selected=selected, label=True)
@@ -535,8 +535,11 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text"):
     box_w, box_h = 100, 100
     item_1 = current_alchemy_item_1
     item_2 = current_alchemy_item_2
-    item_1_box = make_item_box(current_alchemy_item_1, 0.25, 0.15, box_w, box_h, info_window.theme)
+    def box_1_func():
+        choose_alchemy_item(info_window, info_text, 1)
+    item_1_box = make_item_box(current_alchemy_item_1, 0.25, 0.15, box_w, box_h, info_window.theme, box_1_func)
     item_1_box.absolute = False
+    item_1_box.outline_color = info_window.theme.dark
     item_1_box.bind_to(info_window, True)
     operation_box = render.TextButton(0.25, 0.35, 50, 50, "&&", placeholder)
     operation_box.bind_to(info_window, True)
@@ -547,12 +550,98 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text"):
             operation_box.text = "&&"
         display_alchemy(info_window, info_text)
     operation_box.onpress = operation_box_button
-    item_2_box = make_item_box(current_alchemy_item_2, 0.25, 0.55, box_w, box_h, info_window.theme)
+    def box_2_func():
+        choose_alchemy_item(info_window, info_text, 2)
+    item_2_box = make_item_box(current_alchemy_item_2, 0.25, 0.55, box_w, box_h, info_window.theme, box_2_func)
     item_2_box.absolute = False
+    item_2_box.outline_color = info_window.theme.dark
     item_2_box.bind_to(info_window, True)
     equals_line = render.SolidColor(0.5, 0.7, info_window.w-50, 3, info_window.theme.dark)
     equals_line.absolute = False
     equals_line.bind_to(info_window, True)
+
+def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Text", item_num: int, page=0, search: Optional[str]=None):
+    info_window.kill_temporary_elements()
+    info_window.color = info_window.theme.light
+    info_text.text = "Alchemy Excursus"
+    update_viewport_dic()
+    def filter_func(item: "sylladex.Item", search_text):
+        assert search_text is not None
+        if search_text in item.name or search_text in item.display_name:
+            return True
+        else:
+            return False
+    def make_results(search_text: Optional[str]):
+        results_sprites = []
+        excursus: dict[str, dict] = viewport_dic["excursus"]
+        excursus_items = [sylladex.Item(item_name, excursus[item_name]) for item_name in excursus]
+        if search_text is not None:
+            excursus_items = [item for item in excursus_items if filter_func(item, search_text)]
+        padding=4
+        num_columns = 3
+        usable_area_w = info_window.w
+        usable_area_h = info_window.h - 25
+        box_w = usable_area_w//num_columns - padding*2
+        box_h = box_w
+        num_rows = usable_area_h // (box_h + padding*2)
+        rows = []
+        for item in excursus_items:
+            for row in rows:
+                if len(row) != num_columns:
+                    row.append(item)
+                    break
+            else:
+                rows.append([item])
+        display_rows = rows[page*num_rows:page*num_rows + num_rows]
+        for row_index, row in enumerate(display_rows):
+            box_y = padding + row_index*(box_h + padding*2)
+            for column_index, item in enumerate(row):
+                box_x = padding + column_index*(box_w + padding*2)
+                item_box = make_item_box(item, box_x, box_y, box_w, box_h, info_window.theme, placeholder, selected=True, label=True)
+                item_box.bind_to(info_window, True)
+                results_sprites.append(item_box)
+        def get_leftbutton_func(page_num):
+            def leftbutton_func():
+                choose_alchemy_item(info_window, info_text, item_num, page_num-1, search=search)
+            return leftbutton_func
+        def get_rightbutton_func(page_num):
+            def rightbutton_func():
+                choose_alchemy_item(info_window, info_text, item_num, page_num+1, search=search)
+            return rightbutton_func
+        page_button_w = info_window.w//2-padding*2
+        page_button_h = 20
+        page_button_y = info_window.h-page_button_h-padding
+        if page != 0:
+            left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<-", get_leftbutton_func(page))
+            left_button.absolute = True
+            left_button.bind_to(info_window, temporary=True)
+            results_sprites.append(left_button)
+        if rows[(page+1)*num_rows:(page+1)*num_rows + num_rows] != []:
+            right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "->", get_rightbutton_func(page))
+            right_button.absolute = True
+            right_button.bind_to(info_window, temporary=True)
+            results_sprites.append(right_button)
+        return results_sprites
+
+    search_bar = render.InputTextBox(0.5, 0.85, 256, 32)
+    search_init_time = render.clock.get_time()
+    global results_sprites
+    results_sprites = make_results(search)
+    def key_press_func():
+        if render.clock.get_time() == search_init_time: return
+        global results_sprites
+        for sprite in results_sprites: 
+            sprite.delete()
+        results_sprites = []
+        results_sprites = make_results(search_bar.text)
+    if search is not None: 
+        print(f"search is {search}")
+        search_bar.text = search
+        search_bar.active = True
+    search_bar.bind_to(info_window, True)
+    search_bar.key_press_func = key_press_func
+    if last_tile_map is not None:
+        last_tile_map.input_text_box = search_bar
 
 def update_info_window(info_window, info_text):
     match current_info_window:
@@ -577,12 +666,13 @@ def sburb(window: "render.Window"):
         current_x = coords["x"]
         current_y = coords["y"]
     update_viewport_dic()
-    tilemap = render.TileMap(0.5, 0.55, item_display_x=40, item_display_y=250, server_view=True)
-    tilemap.bind_to(window.viewport)
+    global last_tile_map
+    last_tile_map = render.TileMap(0.5, 0.55, item_display_x=40, item_display_y=250, server_view=True)
+    last_tile_map.bind_to(window.viewport)
     info_window, info_text = draw_info_window(window)
-    tilemap.info_window, tilemap.info_text = info_window, info_text
+    last_tile_map.info_window, last_tile_map.info_text = info_window, info_text
     update_info_window(info_window, info_text)
-    draw_sburb_bar(window, info_window, info_text, tilemap)
+    draw_sburb_bar(window, info_window, info_text, last_tile_map)
 
 def connect(window: "render.Window"):
     username = client.requestdic(intent="player_info")["client_player_name"]

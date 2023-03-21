@@ -613,6 +613,7 @@ class InputTextBox(UIElement):
         self.allowed_characters = []
         self.button: Union[Button, TextButton, None] = None
         self.enter_func: Optional[Callable] = None
+        self.key_press_func: Optional[Callable] = None
         click_check.append(self)
         key_check.append(self)
         keypress_update_check.append(self)
@@ -671,6 +672,7 @@ class InputTextBox(UIElement):
         if event.key == pygame.K_BACKSPACE:
             self.text = self.text[:-1]
             if self.numbers_only and self.text == "": self.text = "0"
+            if self.key_press_func is not None: self.key_press_func()
         elif event.key == pygame.K_RETURN and self.enter_func != None:
             self.enter_func(self)
         # if enter is pressed and this text box has a button assigned to it, press that button
@@ -678,7 +680,7 @@ class InputTextBox(UIElement):
             self.button.mouseup(True)
         else:
             if self.max_characters != 0 and len(self.text)+1 > self.max_characters: return
-            if event.unicode.isascii() and event.unicode not in  ["\n", "\t", "\r"]: #no newline, tab or carriage return
+            if event.unicode.isascii() and event.unicode not in ["\n", "\t", "\r"]: #no newline, tab or carriage return
                 if self.numbers_only:
                     try: int(event.unicode)
                     except ValueError: return
@@ -688,6 +690,7 @@ class InputTextBox(UIElement):
                     if self.maximum_value != 0:
                         number = min(number, self.maximum_value)
                     self.text = str(number)
+            if self.key_press_func is not None: self.key_press_func()
 
     @property
     def font(self):
