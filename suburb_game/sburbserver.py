@@ -359,11 +359,10 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
                 box_button.bind_to(item_box)
             image_path = f"sprites/items/{item_name}.png"
             if os.path.isfile(image_path):
-                card_image = render.ItemImage(0.5, 0.5, item_name)
-                if card_image is not None:
-                    card_image.convert = False
-                    card_image.bind_to(item_box)
-                    card_image.scale = item_box_h / 240
+                card_image = render.Image(0.5, 0.5, image_path)
+                card_image.convert = False
+                card_image.bind_to(item_box)
+                card_image.scale = item_box_h / 240
             else:
                 card_image = None
 
@@ -492,11 +491,10 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
                 box_button.bind_to(item_box)
             image_path = f"sprites/items/{item_name}.png"
             if os.path.isfile(image_path):
-                card_image = render.ItemImage(0.5, 0.5, item_name)
-                if card_image is not None:
-                    card_image.convert = False
-                    card_image.bind_to(item_box)
-                    card_image.scale = box_h / 240
+                card_image = render.Image(0.5, 0.5, image_path)
+                card_image.convert = False
+                card_image.bind_to(item_box)
+                card_image.scale = box_h / 240
             else:
                 card_image = None
             item_label = render.Text(0.5, 0.9, util.shorten_item_name(item_name))
@@ -568,7 +566,6 @@ def connect(window: "render.Window"):
     if username is not None: 
         global client_username
         client_username = username
-        sburb(window)
         return True
     dic = client.requestdic(intent="get_client_server_chains")
     chains: list = dic["chains"]
