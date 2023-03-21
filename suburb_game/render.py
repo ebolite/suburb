@@ -215,7 +215,7 @@ class UIElement(pygame.sprite.Sprite):
             self.last_mouse_pos = None
 
 class Dowel(UIElement):
-    def __init__(self, x, y, code: str, color=(235, 1, 76)):
+    def __init__(self, x, y, code: str, color:tuple[int, int, int]=(235, 1, 76)):
         super().__init__()
         self.x = x
         self.y = y
@@ -1736,7 +1736,7 @@ class LogWindow(UIElement):
 def make_item_image(x, y, instance: "Instance") -> Union[Dowel, Image, None]:
     image_path = f"sprites\\items\\{instance.item.name}.png"
     if instance.item.name == "cruxite dowel":
-        return Dowel(x, y, instance.carved)
+        return Dowel(x, y, instance.carved, instance.color)
     elif os.path.isfile(image_path):
         return Image(x, y, image_path)
     else:

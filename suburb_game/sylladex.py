@@ -44,6 +44,7 @@ class Instance():
         self.carved: str = instance_dict["carved"]
         self.carved_item_name: str = instance_dict["carved_item_name"]
         self.computer_data = instance_dict["computer_data"]
+        self.color: tuple[int, int, int] = instance_dict["color"]
 
     @property
     def item(self) -> Item:

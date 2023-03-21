@@ -405,6 +405,7 @@ class Instance():
             self.carved
             self.carved_item_name
             self.computer_data
+            self.color
         except KeyError:
             self.punched_code: str = ""
             self.punched_item_name: str = ""
@@ -414,6 +415,7 @@ class Instance():
             self.carved: str = "00000000"
             self.carved_item_name: str = "perfectly+generic object"
             self.computer_data: dict = {"installed_programs": []}
+            self.color: tuple[int, int, int] = (157, 224, 255)
 
     @property
     def name(self):
