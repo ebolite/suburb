@@ -1033,8 +1033,12 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         image = render.make_item_image(0.5, 0.5, instance)
         if image is not None:
             image.bind_to(captcha_image)
-            if isinstance(image, render.Dowel):
-                image.scale = 2
+            contained_instance = instance.contained_instance()
+            if contained_instance is not None:
+                contained_image = render.make_item_image(0.45, 0.5, contained_instance)
+                if contained_image is not None:
+                    contained_image.bind_to(image)
+                    contained_image.scale = 0.5
         label = render.Text(0.55, 0.91, util.filter_item_name(instance.item.display_name))
         label.bind_to(captcha_image)
         label.color = text_color
@@ -1281,8 +1285,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                 card_image = render.make_item_image(0.49, 0.5, wielded_instance)
                 if card_image is not None:
                     card_image.bind_to(wielded_display)
-                    if isinstance(card_image, render.Image):
-                        card_image.scale = 0.5
+                    card_image.scale = 0.5
             item_label = render.Text(0.6, 1.1, f"{wielded_instance.display_name(True)}")
         else:
             item_label = render.Text(0.6, 1.1, f"nothing")
@@ -1315,8 +1318,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                 card_image = render.make_item_image(0.49, 0.5, instance)
                 if card_image is not None:
                     card_image.bind_to(card_thumb)
-                    if isinstance(card_image, render.Image):
-                        card_image.scale = 0.5
+                    card_image.scale = 0.5
             else:
                 card_image = None
             label_text = instance.display_name(short=True)

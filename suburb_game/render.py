@@ -273,6 +273,7 @@ class Dowel(UIElement):
         dowel_surf.blit(cap_surf, (0, 0))
         dowel_surf = dowel_surf.convert()
         dowel_surf.set_colorkey(Color(0, 0, 0))
+        dowel_surf = pygame.transform.scale(dowel_surf, (int(DOWEL_W*2), int(DOWEL_H*2)))
         return dowel_surf
 
     @property

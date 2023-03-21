@@ -291,8 +291,13 @@ class Modus():
             card_image = render.make_item_image(0.49, 0.5, instance)
             if card_image is not None:
                 card_image.bind_to(card_thumb)
-                if isinstance(card_image, render.Image):
-                    card_image.scale = 0.5
+                card_image.scale = 0.5
+                contained_instance = instance.contained_instance()
+                if contained_instance is not None:
+                    contained_image = render.make_item_image(0.45, 0.5, contained_instance)
+                    if contained_image is not None:
+                        contained_image.bind_to(card_image)
+                        contained_image.scale = 0.25
                 if instance.item.name == "punched card":
                     print(f"spawning punches {instance.punched_code}")
                     render.spawn_punches(card_image, instance.punched_code, 18, 31, w=40, h=60)
