@@ -12,6 +12,7 @@ import cv2
 import os
 import numpy as np
 import random
+import json
 from typing import Callable, Optional
 
 import util
@@ -1448,7 +1449,8 @@ def main():
     # render.Symbol(0.5, 0.5, config.get_random_symbol())
     try:
         render_loop()
-    except (TimeoutError, ConnectionResetError, ssl.SSLEOFError):
+    except (TimeoutError, ConnectionResetError, ssl.SSLEOFError, json.decoder.JSONDecodeError) as e:
+        traceback.print_exception(e)
         connection_screen()
         main()
     except Exception as e:
