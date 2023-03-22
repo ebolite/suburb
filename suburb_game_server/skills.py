@@ -1315,6 +1315,7 @@ adonize.add_stat_bonus("savvy", "user.power//12")
 adonize.add_stat_bonus("tact", "user.power//12")
 
 # aerosolkind
+add_abstratus_skill("aerosolkind", attack, 50)
     # aflame
 
 # axekind
