@@ -1432,3 +1432,7 @@ add_abstratus_skill("shotgunkind", adjudge, 75)
 # woodwindkind
 add_abstratus_skill("woodwindkind", awaitskill, 50)
 add_abstratus_skill("woodwindkind", antagonize, 75)
+
+# yoyokind
+add_abstratus_skill("yoyokind", antagonize, 1)
+add_abstratus_skill("yoyokind", arraign, 50)
