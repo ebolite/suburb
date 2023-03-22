@@ -554,6 +554,7 @@ doom.is_vial = True
 doom.vials = ["hp"]
 doom.adjustment_divisor = 0.5
 doom.ratio_mult = 2
+doom.balance_mult = 1.5
 
 light = Aspect("light")
 light.stat_name = "luck"
@@ -564,6 +565,7 @@ void = NegativeAspect("void")
 void.is_vial = True
 void.vials = ["vim", "aspect"] + SECONDARY_VIALS
 void.ratio_mult = 2
+void.balance_mult = 1.5
 void.adjustment_divisor = 2
 
 
