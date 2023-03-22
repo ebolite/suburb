@@ -60,11 +60,12 @@ def modify_damage(damage: int, griefer: "strife.Griefer"):
 
 def stat_edge(user_stat: int, target_stat: int) -> float:
     if user_stat == 0 and target_stat == 0: return 1.0
+    if user_stat < 0: user_stat = 0
+    if target_stat < 0: target_stat = 0
     edge = (user_stat - target_stat) / (user_stat + target_stat)
     edge += 1
     return max(edge, 0.1)
 
-# todo: make this matter
 def flip_coin(user_luck: int, target_luck: int) -> bool:
     edge = stat_edge(user_luck, target_luck)
     roll = random.random() * edge
