@@ -280,7 +280,7 @@ class Strife():
             old_width = previous_sprite.get_width() if isinstance(previous_sprite, render.Enemy) else 400
             dx = int(old_width)
             old_x, old_y = sprites_xy[i-1]
-            new_x = old_x - dx if direction == "right" else old_x - dx
+            new_x = old_x + dx if direction == "right" else old_x - dx
             new_y = render.SCREEN_HEIGHT//2 + 100
             if isinstance(sprite, render.Enemy):
                 new_y -= sprite.get_height()
