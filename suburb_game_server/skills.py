@@ -1185,6 +1185,16 @@ aggerate.cooldown = 1
 aggerate.add_vial_cost("vim", "user.power//2")
 aggerate.target_team = True
 
+admonish = AbstratusSkill("admonish")
+admonish.description = f"Applies DEMORALIZE to the target for two turns and increases the potency by 0.1."
+admonish.use_message = "{user} is very disappointed!"
+admonish.parryable = False
+admonish.action_cost = 0
+admonish.cooldown = 1
+admonish.add_vial_cost("vim", "user.power//3")
+admonish.add_apply_state("demoralize", 2, "1.0")
+admonish.add_state_potency_change("demoralize", "0.1")
+
 # unique skills
 # bottlekind
 userabdicate = Skill("userabdicate")
@@ -1234,6 +1244,17 @@ aunter.cooldown = 2
 aunter.target_self = True
 aunter.parryable = False
 
+# hatkind
+adonize = AbstratusSkill("adonize")
+adonize.description = f"Raises your SAVVY and TACT."
+adonize.parryable = False
+adonize.action_cost = 0
+adonize.cooldown = 1
+adonize.add_vial_cost("vim", "user.power//3")
+adonize.target_self = True
+adonize.add_stat_bonus("savvy", "user.power//12")
+adonize.add_stat_bonus("tact", "user.power//12")
+
 # aerosolkind
     # aflame
 
@@ -1264,6 +1285,11 @@ add_abstratus_skill("cleaverkind", assemble, 75)
 
 # cordkind
 add_abstratus_skill("cordkind", asphyxiate, 1)
+
+# hatkind
+add_abstratus_skill("hatkind", adonize, 1)
+add_abstratus_skill("hatkind", awaitskill, 50)
+add_abstratus_skill("hatkind", admonish, 75)
 
 # jumpropekind
 add_abstratus_skill("jumpropekind", asphyxiate, 75)
