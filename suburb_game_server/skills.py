@@ -46,6 +46,7 @@ class_skills: dict[str, dict[str, dict[str, int]]] = {}
 #         },
 #     },
 # }
+abstratus_skills = {}
 
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 
@@ -1015,7 +1016,7 @@ for aspect_name, aspect in aspects.items():
     aspecttools.cooldown = 1
     aspecttools.add_vial_cost("vim", "user.power//2")
     aspecttools.target_self = True
-    aspecttools.add_vial_change("aspect", f"user.power*user.{aspect.name}.ratio")
+    aspecttools.add_vial_cost("aspect", f"-user.power*user.{aspect.name}.ratio")
 
     # seer
     denyaspect = ClassSkill(f"deny {aspect.name}", aspect, "seer", 25)
@@ -1058,3 +1059,82 @@ for aspect_name, aspect in aspects.items():
     stitchaspect.add_aspect_change(aspect.name, f"user.power//2*{get_balance_mult('sylph', aspect)}")
 
     # 100: passive
+
+def add_abstratus_skill(abstratus_name: str, skill: Skill, required_rung: int):
+    if abstratus_name not in abstratus_skills: abstratus_skills[abstratus_name] = {}
+    abstratus_skills[abstratus_name][skill.name] = required_rung
+
+class AbstratusSkill(Skill):
+    def __init__(self, name):
+        super().__init__(name)
+        self.category = "arsenal"
+
+attack = AbstratusSkill("attack")
+attack.description = f"Does as much damage as aggrieve, but gives you VIM instead of costing it."
+attack.use_message = "{user} attacks!"
+attack.damage_formula = "user.base_damage * (1 + 0.5*coin)"
+attack.add_vial_cost("vim", "-user.power//2")
+attack.category = "aggressive"
+
+arraign = AbstratusSkill("arraign")
+arraign.description = f"Does as much damage as assail, but is free."
+arraign.use_message = "{user} arraigns!"
+arraign.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
+
+artillerate = AbstratusSkill("artillerate")
+artillerate.description = f"Does as much damage as assault, but costs as much as assail."
+artillerate.use_message = "{user} artillerates!"
+artillerate.damage_formula = "user.base_damage * (2 + 0.75*coin)"
+artillerate.add_vial_cost("vim", "user.power//2")
+
+avenge = AbstratusSkill("avenge")
+avenge.description = f"Does more damage than assault, but costs more."
+avenge.use_message = "{user} avenges!"
+avenge.damage_formula = "user.base_damage * (3 + coin)"
+avenge.add_vial_cost("vim", "user.power*1.5")
+
+awaitskill = AbstratusSkill("await")
+awaitskill.description = "The user AWAITS, regenerating some VIM and ASPECT."
+awaitskill.use_message = "{user} awaits!"
+awaitskill.parryable = False
+awaitskill.beneficial = True
+awaitskill.target_self = True
+awaitskill.damage_formula = "0"
+awaitskill.add_vial_cost("vim", "-user.power")
+awaitskill.add_vial_cost("aspect", "-user.power//2")
+
+# shared skills
+asphyxiate = AbstratusSkill("asphyxiate")
+asphyxiate.description = "Deals damage and decreases the target's BREATH (savvy)."
+asphyxiate.use_message = "{user} asphyxiates!"
+asphyxiate.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
+asphyxiate.add_aspect_change("breath", "-user.power//2")
+asphyxiate.add_vial_cost("vim", "user.power//3")
+
+aslurp = AbstratusSkill("aslurp")
+aslurp.description = f"Heals you and increases your ASPECT."
+aslurp.use_message = "{user} aslurps!"
+aslurp.action_cost = 0
+aslurp.cooldown = 3
+aslurp.add_vial_cost("aspect", "-user.power//2")
+aslurp.add_vial_change("hp", "user.power//2")
+aslurp.parryable = False
+aslurp.beneficial = True
+aslurp.target_self = True
+
+# bottlekind
+add_abstratus_skill("bottlekind", aslurp, 1)
+add_abstratus_skill("bottlekind", attack, 50)
+
+# pillowkind
+add_abstratus_skill("pillowkind", asphyxiate, 1)
+
+#jumpropekind
+add_abstratus_skill("jumpropekind", asphyxiate, 75)
+
+#cordkind
+add_abstratus_skill("cordkind", asphyxiate, 1)
+
+#bagkind
+add_abstratus_skill("bagkind", asphyxiate, 1)
+# abduct
