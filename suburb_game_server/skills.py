@@ -1196,65 +1196,65 @@ assanguinate.add_state_potency_change("bleed", "0.2")
 # aerosolkind
     # aflame
 
-# bottlekind
-add_abstratus_skill("bottlekind", aslurp, 1)
-add_abstratus_skill("bottlekind", attack, 50)
-add_abstratus_skill("bottlekind", abdicate, 75)
-
-# rollingpinkind
-add_abstratus_skill("rollingpinkind", araze, 1)
-add_abstratus_skill("rollingpinkind", arraign, 50)
-add_abstratus_skill("rollingpinkind", assemble, 75)
-
-# potkind
-add_abstratus_skill("potkind", assemble, 1)
-add_abstratus_skill("pankind", awaitskill, 50)
-
-# pankind
-add_abstratus_skill("pankind", assemble, 1)
-add_abstratus_skill("pankind", arraign, 50)
-
-# ladlekind
-add_abstratus_skill("ladlekind", assemble, 1)
-add_abstratus_skill("ladlekind", attack, 50)
-
-# knifekind
-add_abstratus_skill("cleaverkind", artillerate, 50)
-
-# cleaverkind
-add_abstratus_skill("cleaverkind", avenge, 50)
-add_abstratus_skill("cleaverkind", assemble, 75)
-
 # axekind
 add_abstratus_skill("axekind", axe, 1)
 add_abstratus_skill("axekind", avenge, 50)
-
-# sawkind
-add_abstratus_skill("sawkind", assanguinate, 1)
-add_abstratus_skill("sawkind", avenge, 50)
-add_abstratus_skill("sawkind", axe, 75)
-
-# pillowkind
-add_abstratus_skill("pillowkind", asphyxiate, 1)
-add_abstratus_skill("pillowkind", awaitskill, 50)
-
-# jumpropekind
-add_abstratus_skill("jumpropekind", asphyxiate, 75)
-
-# cordkind
-add_abstratus_skill("cordkind", asphyxiate, 1)
 
 # bagkind
 add_abstratus_skill("bagkind", asphyxiate, 1)
 add_abstratus_skill("bagkind", awaitskill, 50)
     # abduct
 
+# bookkind
+    # ask
+
+# bottlekind
+add_abstratus_skill("bottlekind", aslurp, 1)
+add_abstratus_skill("bottlekind", attack, 50)
+add_abstratus_skill("bottlekind", abdicate, 75)
+
+# cleaverkind
+add_abstratus_skill("cleaverkind", avenge, 50)
+add_abstratus_skill("cleaverkind", assemble, 75)
+
+# cordkind
+add_abstratus_skill("cordkind", asphyxiate, 1)
+
+# jumpropekind
+add_abstratus_skill("jumpropekind", asphyxiate, 75)
+
+# knifekind
+add_abstratus_skill("cleaverkind", artillerate, 50)
+
+# ladlekind
+add_abstratus_skill("ladlekind", assemble, 1)
+add_abstratus_skill("ladlekind", attack, 50)
+
+# pankind
+add_abstratus_skill("pankind", assemble, 1)
+add_abstratus_skill("pankind", arraign, 50)
+
+# paperkind
+    # ask
+
 # penkind
     # ask
     # autograph
 
-# bookkind
-    # ask
+# pillowkind
+add_abstratus_skill("pillowkind", asphyxiate, 1)
+add_abstratus_skill("pillowkind", awaitskill, 50)
 
-# paperkind
-    # ask
+# potkind
+add_abstratus_skill("potkind", assemble, 1)
+add_abstratus_skill("pankind", awaitskill, 50)
+
+# rollingpinkind
+add_abstratus_skill("rollingpinkind", araze, 1)
+add_abstratus_skill("rollingpinkind", arraign, 50)
+add_abstratus_skill("rollingpinkind", assemble, 75)
+
+# sawkind
+add_abstratus_skill("sawkind", assanguinate, 1)
+add_abstratus_skill("sawkind", avenge, 50)
+add_abstratus_skill("sawkind", axe, 75)
