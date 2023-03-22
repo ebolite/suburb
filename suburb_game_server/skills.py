@@ -795,6 +795,18 @@ def steal_effect_constructor(aspect: Aspect) -> Callable:
             return f"{user.nickname} stole {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
         return steal_effect
 
+def robbery_effect_constructor(aspect: Aspect) -> Callable:
+        def robbery_effect(user: "strife.Griefer", target: "strife.Griefer"):
+            if target.npc is not None and user.player is not None:
+                spoils = target.npc.make_spoils(3)
+                user.player.add_unclaimed_grist(spoils)
+                user.strife.log(f"{user.nickname} stole grist!")
+            value = max(target.power//6, 1)
+            stolen_target = aspect.maximum_adjust(target, -value, return_value=True)
+            stolen = aspect.maximum_adjust(user, value//4, return_value=True)
+            return f"{user.nickname} robbed {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
+        return robbery_effect
+
 def rogue_steal_effect_constructor(aspect: Aspect) -> Callable:
         def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
             if f"looted{aspect.name}" in target.tags:
@@ -869,6 +881,14 @@ for aspect_name, aspect in aspects.items():
     aspectsteal.add_vial_cost("aspect", "user.power")
     aspectsteal.cooldown = 1
     aspectsteal.special_effect = steal_effect_constructor(aspect)
+
+    aspectrobbery = ClassSkill(f"{aspect.name} robbery", aspect, "thief", 100)
+    aspectrobbery.description = f"Deals damage, steals maximum {aspect.name.upper()} based on the target's power (for this fight) and steals grist from the target. No limit for use."
+    aspectrobbery.add_vial_cost("vim", "user.power//2")
+    aspectrobbery.add_vial_cost("aspect", "user.power")
+    aspectrobbery.damage_formula = "user.base_damage * (1.25 + 1.5*coin)"
+    aspectrobbery.cooldown = 2
+    aspectrobbery.special_effect = robbery_effect_constructor(aspect)
 
     # mage
     findaspect = ClassSkill(f"find {aspect.name}", aspect, "mage", 25)
