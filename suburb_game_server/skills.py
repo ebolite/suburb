@@ -1077,7 +1077,6 @@ attack.description = f"Does as much damage as aggrieve, but gives you VIM instea
 attack.use_message = "{user} attacks!"
 attack.damage_formula = "user.base_damage * (1 + 0.5*coin)"
 attack.add_vial_cost("vim", "-user.power//2")
-attack.category = "aggressive"
 
 arraign = AbstratusSkill("arraign")
 arraign.description = f"Does as much damage as assail, but is free."

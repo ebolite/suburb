@@ -61,9 +61,12 @@ class DemoralizeState(State):
 demoralize = DemoralizeState("demoralize")
 demoralize.tooltip = "Reduces damage dealt."
 
-class DisarmedState(State):
+class DisarmState(State):
     def lock_categories(self, griefer: "strife.Griefer") -> list[str]:
         return ["arsenal"]
+    
+disarm = DisarmState("disarm")
+disarm.tooltip = "Cannot use ARSENAL skills."
 
 class AiryState(State):
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:
