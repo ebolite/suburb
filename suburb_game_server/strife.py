@@ -767,7 +767,7 @@ class Strife():
             if griefer.team not in teams: teams.append(griefer.team)
         if len(teams) <= 1:
             if len(teams) > 0 and teams[0] == "blue" and self.map.name == self.overmap.housemap.name:
-                self.map.populate_with_underlings("imp", 1, 1, 1, 5)
+                self.map.populate_with_underlings("imp", 3, 3, 1, 6)
             self.end()
 
     def clear_submitted_skills(self):
