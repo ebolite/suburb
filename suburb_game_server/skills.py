@@ -680,6 +680,7 @@ aerate.cooldown = 1
 aerate.action_cost = 0
 aerate.beneficial = True
 aerate.parryable = False
+aerate.need_damage_to_apply_states = False
 aerate.add_vial_cost("aspect", "user.power//1.5")
 aerate.add_apply_state("airy", 3, "user.breath.ratio")
 
