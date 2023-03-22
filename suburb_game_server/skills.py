@@ -1006,6 +1006,16 @@ for aspect_name, aspect in aspects.items():
     aspectloot.cooldown = 1
     aspectloot.special_effect = rogue_steal_effect_constructor(aspect)
 
+    aspecttools = ClassSkill(f"{aspect.name} tools", aspect, "rogue", 100)
+    aspecttools.description = f"Increases your ASPECT based on your {aspect.name.upper()}."
+    aspecttools.parryable = False
+    aspecttools.beneficial = True
+    aspecttools.action_cost = 0
+    aspecttools.cooldown = 1
+    aspecttools.add_vial_cost("vim", "user.power//2")
+    aspecttools.target_self = True
+    aspecttools.add_vial_change("aspect", f"user.power*user.{aspect.name}.ratio")
+
     # seer
     denyaspect = ClassSkill(f"deny {aspect.name}", aspect, "seer", 25)
     denyaspect.description = f"Applies a state for 5 turns which decreases the target's {aspect.name.upper()} each turn."

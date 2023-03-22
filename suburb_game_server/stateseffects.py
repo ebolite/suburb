@@ -105,10 +105,16 @@ class ClassPassive(State):
         self.beneficial = True
         self.aspect = aspect
 
+# rogue
+class GritState(ClassPassive):
+    def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
+        mult = 1 - (self.aspect.ratio(griefer)/2)
+        mult = max(0.4, mult)
+        return int(damage*mult)
+
 # heir
 
 class AspectyState(ClassPassive):
-
     def new_turn(self, griefer: "strife.Griefer"):
         adjust_reply = self.aspect.adjust(griefer, griefer.power//3)
         griefer.strife.log(adjust_reply)
@@ -116,7 +122,6 @@ class AspectyState(ClassPassive):
 # bard
 
 class TragedyState(ClassPassive):
-
     def new_turn(self, griefer: "strife.Griefer"):
         adjust_reply = self.aspect.adjust(griefer, -griefer.power//3)
         griefer.strife.log(adjust_reply)
@@ -132,7 +137,6 @@ class DemiseState(ClassPassive):
 # sylph
 
 class FaeState(ClassPassive):
-
     def new_turn(self, griefer: "strife.Griefer"):
         healing = griefer.power
         adjustment = griefer.power//4
@@ -141,7 +145,6 @@ class FaeState(ClassPassive):
             griefer.strife.log(self.aspect.adjust(allied_griefer, adjustment))
 
 class BreakState(ClassPassive):
-
     def on_apply(self, griefer: "strife.Griefer"):
         adjust = int(griefer.get_aspect_ratio(self.aspect.name) * griefer.power)
         log_message = self.aspect.maximum_adjust(griefer, adjust)
@@ -158,3 +161,5 @@ for _, aspect in skills.aspects.items():
     faestate.tooltip = f"Heals all allies and increases their {aspect.name.upper()} each turn."
     breakstate = BreakState(f"{aspect.name}break", aspect, "knight", 100)
     breakstate.tooltip = f"Your {aspect.maximum_name} is increased at the start of combat based on your {aspect}."
+    gritstate = GritState(f"{aspect.name} grit", aspect, "rogue", 100)
+    gritstate.tooltip = f"Damage received is reduced by {aspect.name}."
