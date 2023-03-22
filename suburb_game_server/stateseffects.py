@@ -128,6 +128,7 @@ class BodyState(ClassPassive):
         extra_actions = 0
         if ratio > 0.5: extra_actions += 1
         if ratio > 0.9: extra_actions += 1
+        if not self.aspect.is_vial: return extra_actions
         if ratio > 1.4: extra_actions += 1
         if ratio > 1.9: extra_actions += 1
         return extra_actions
