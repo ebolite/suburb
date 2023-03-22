@@ -451,7 +451,15 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             if player.client_player is None: return "No client."
             alchemiter_location = player.client_player.land.housemap.get_alchemiter_location()
             return json.dumps({"alchemiter_location": alchemiter_location})
-
+        case "server_alchemy":
+            print("server alchemy")
+            if player.client_player is None: return "No client."
+            alchemiter_loc = player.client_player.land.housemap.get_alchemiter_location()
+            if alchemiter_loc is None: return "No alchemiter."
+            code = content["code"]
+            roomx, roomy = alchemiter_loc
+            room = player.client_player.land.housemap.find_room(roomx, roomy)
+            return alchemy.alchemize_instance(code, player.client_player, room)
 
 def console_commands(player: sessions.Player, content: str):
     args = content.split(" ")
@@ -632,16 +640,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             if not instance.inserted: print("nothing inserted"); return False
             inserted_instance = alchemy.Instance(instance.inserted)
             code = inserted_instance.carved
-            if code not in util.codes: print(f"code {code} not in codes"); return False
-            new_item_name = util.codes[code]
-            new_item = alchemy.Item(new_item_name)
-            if not player.pay_costs(new_item.true_cost): print("couldnt pay costs"); return False
-            new_instance = alchemy.Instance(new_item)
-            if new_instance.item.name == "entry item":
-                new_instance.color = inserted_instance.color
-            player.room.add_instance(new_instance.name)
-            player.session.add_to_excursus(new_item.name)
-            return True
+            return alchemy.alchemize_instance(code, player, player.room)
         case "unseal":
             instance.item_name = "cruxtruder"
             sprite = npcs.KernelSprite.spawn_new()

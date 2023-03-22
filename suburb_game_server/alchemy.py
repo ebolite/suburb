@@ -6,6 +6,7 @@ from copy import deepcopy
 import util
 import binaryoperations
 import adjectiveorder
+import sessions
 
 COMPOUND_NAME_CHANCE = 0.2 # chance for having compound names in && operations
 DICEMIN_MINIMUM_SOFTCAP = -2.8
@@ -468,6 +469,18 @@ def display_item(item: Item):
 
 def alchemize(item_name1: str, item_name2: str, operation: str):
     return f"({item_name1}{operation}{item_name2})"
+
+def alchemize_instance(code: str, player: "sessions.Player", room: "sessions.Room"):
+    if code not in util.codes: print(f"code {code} not in codes"); return False
+    new_item_name = util.codes[code]
+    new_item = Item(new_item_name)
+    if not player.pay_costs(new_item.true_cost): print("couldnt pay costs"); return False
+    new_instance = Instance(new_item)
+    if new_instance.item.name == "entry item":
+        new_instance.color = player.color
+    room.add_instance(new_instance.name)
+    player.session.add_to_excursus(new_item.name)
+    return True
 
 defaults = {
     #"code": None, #todo: add procedural hex generation for items

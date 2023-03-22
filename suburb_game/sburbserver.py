@@ -542,7 +542,7 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
     info_window.color = info_window.theme.light
     info_text.text = "Alchemy"
     update_viewport_dic()
-    reply = client.requestplusdic(intent="computer", content={"command": "alchemiter_location"})
+    reply = client.requestplusdic(intent="computer", content={"command": "get_alchemiter_location"})
     alchemiter_location = reply["alchemiter_location"]
     if alchemiter_location is None:
         text_box = render.Text(0.5, 0.5, "You must deploy an alchemiter before doing alchemy!")
@@ -602,8 +602,19 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
         else:
             can_make = True
         if can_make:
-            ...
-        item_3_box = make_item_box(resulting_item, 0.25, 0.85, box_w, box_h, info_window.theme, dowel=True)
+            def button_func():
+                reply = client.requestplus(intent="computer", content={"command": "server_alchemy", "code": resulting_item.code})
+                print(reply)
+                global current_x
+                global current_y
+                current_x, current_y = alchemiter_location
+                if last_tile_map is not None:
+                    last_tile_map.update_map(update_info_window=True)
+                update_viewport_dic()
+        else:
+            def button_func():
+                pass
+        item_3_box = make_item_box(resulting_item, 0.25, 0.85, box_w, box_h, info_window.theme, dowel=True, button_func=button_func)
         item_3_box.absolute = False
         item_3_box.outline_color = info_window.theme.dark
         item_3_box.bind_to(info_window, True)

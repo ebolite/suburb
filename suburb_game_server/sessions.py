@@ -1209,6 +1209,10 @@ class Player():
     @property
     def calledby(self):
         return self.nickname
+    
+    @property
+    def color(self):
+        return self.symbol_dict["color"]
 
     @property
     def land(self) -> Overmap:
