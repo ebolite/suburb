@@ -67,7 +67,7 @@ class Instance():
             elif self.carved_item_name != "perfectly+generic object":
                 return f")(-{self.carved_item_name}"
             elif contained_instance is not None: return f"[ ]-{contained_instance.display_name(short)}"
-            return self.item_name
+            return self.item.display_name
 
     # for captchalogue cards
     def contained_instance(self) -> Optional["Instance"]:
