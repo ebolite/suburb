@@ -1177,6 +1177,14 @@ aim.add_vial_cost("vim", "user.power//3")
 aim.add_apply_state("focus", 1, "1.0")
 aim.target_self = True
 
+aggerate = AbstratusSkill("aggerate")
+aggerate.description = f"Deals damage to the target and all their friends."
+aggerate.use_message = "{user} aggerates damage!"
+aggerate.action_cost = 0
+aggerate.cooldown = 1
+aggerate.add_vial_cost("vim", "user.power//2")
+aggerate.target_team = True
+
 # unique skills
 # bottlekind
 userabdicate = Skill("userabdicate")
@@ -1208,6 +1216,14 @@ assanguinate.add_vial_cost("vim", "user.power//2")
 assanguinate.add_apply_state("bleed", 3, "2.0")
 assanguinate.add_state_potency_change("bleed", "0.2")
 assanguinate.need_damage_to_apply_states = True
+
+# shotgunkind
+adjudge = AbstratusSkill("adjudge")
+adjudge.description = f"Uses two actions, but deals massive damage."
+adjudge.use_message = "{user} is the judge."
+adjudge.damage_formula = "user.base_damage * (6 + 3*coin)"
+adjudge.add_vial_cost("vim", "user.power")
+adjudge.action_cost = 2
 
 # pistolkind
 aunter = AbstratusSkill("aunter")
@@ -1296,3 +1312,8 @@ add_abstratus_skill("rollingpinkind", assemble, 75)
 add_abstratus_skill("sawkind", assanguinate, 1)
 add_abstratus_skill("sawkind", avenge, 50)
 add_abstratus_skill("sawkind", axe, 75)
+
+# shotgunkind
+add_abstratus_skill("shotgunkind", aggerate, 1)
+add_abstratus_skill("shotgunkind", avenge, 50)
+add_abstratus_skill("shotgunkind", adjudge, 75)
