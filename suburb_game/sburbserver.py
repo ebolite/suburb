@@ -19,6 +19,7 @@ current_selected_atheneum = None
 current_selected_tile = "."
 current_alchemy_item_1: Optional["sylladex.Item"] = None
 current_alchemy_item_2: Optional["sylladex.Item"] = None
+current_alchemy_item_3: Optional["sylladex.Item"] = None
 last_tile_map: Optional["render.TileMap"] = None
 viewport_dic = {}
 results_sprites: list["render.UIElement"] = []
@@ -537,7 +538,8 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
         right_button.absolute = True
         right_button.bind_to(info_window, temporary=True)
 
-def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", operation="&&"):
+def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", operation: Optional[str]="&&"):
+    target_item = current_alchemy_item_3
     info_window.kill_temporary_elements()
     info_window.color = info_window.theme.light
     info_text.text = "Alchemy"
@@ -550,35 +552,41 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
         text_box.color = info_window.theme.dark
         return
     box_w, box_h = 100, 100
-    item_1: Optional[sylladex.Item] = current_alchemy_item_1
-    item_2: Optional[sylladex.Item]  = current_alchemy_item_2
+    if target_item is None:
+        item_1: Optional[sylladex.Item] = current_alchemy_item_1
+        item_2: Optional[sylladex.Item]  = current_alchemy_item_2
+    else:
+        item_1, item_2 = None, None
     def box_1_func():
         choose_alchemy_item(info_window, info_text, 1)
-    item_1_box = make_item_box(current_alchemy_item_1, 0.25, 0.15, box_w, box_h, info_window.theme, box_1_func)
+    item_1_box = make_item_box(item_1, 0.25, 0.15, box_w, box_h, info_window.theme, box_1_func)
     item_1_box.absolute = False
     item_1_box.outline_color = info_window.theme.dark
     item_1_box.bind_to(info_window, True)
-    if item_1 is None: item_1_label_text = "(choose item 1)"
+    if target_item is not None: item_1_label_text = "(...)"
+    elif item_1 is None: item_1_label_text = "(choose item 1)"
     else: item_1_label_text = item_1.display_name
     item_1_label = render.Text(0.7, 0.15, item_1_label_text)
     item_1_label.color = info_window.theme.dark
     item_1_label.set_fontsize_by_width(200)
     item_1_label.bind_to(info_window, True)
-    operation_box = render.TextButton(0.25, 0.35, 50, 50, operation, placeholder)
-    operation_box.bind_to(info_window, True)
-    def operation_box_button():
-        if operation == "&&":
-            display_alchemy(info_window, info_text, operation="||")
-        else:
-            display_alchemy(info_window, info_text, operation="&&")
-    operation_box.onpress = operation_box_button
+    if operation is not None:
+        operation_box = render.TextButton(0.25, 0.35, 50, 50, operation, placeholder)
+        operation_box.bind_to(info_window, True)
+        def operation_box_button():
+            if operation == "&&":
+                display_alchemy(info_window, info_text, operation="||")
+            else:
+                display_alchemy(info_window, info_text, operation="&&")
+        operation_box.onpress = operation_box_button
     def box_2_func():
         choose_alchemy_item(info_window, info_text, 2)
-    item_2_box = make_item_box(current_alchemy_item_2, 0.25, 0.55, box_w, box_h, info_window.theme, box_2_func)
+    item_2_box = make_item_box(item_2, 0.25, 0.55, box_w, box_h, info_window.theme, box_2_func)
     item_2_box.absolute = False
     item_2_box.outline_color = info_window.theme.dark
     item_2_box.bind_to(info_window, True)
-    if item_2 is None: item_2_label_text = "(choose item 2)"
+    if target_item is not None: item_2_label_text = "(...)"
+    elif item_2 is None: item_2_label_text = "(choose item 2)"
     else: item_2_label_text = item_2.display_name
     item_2_label = render.Text(0.7, 0.55, item_2_label_text)
     item_2_label.color = info_window.theme.dark
@@ -591,6 +599,14 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
         resulting_item_dict = client.requestplusdic(intent="get_resulting_alchemy", content={"code_1": item_1.code, "code_2": item_2.code, "operation": operation})
         resulting_item_name = resulting_item_dict["name"]
         resulting_item = sylladex.Item(resulting_item_name, resulting_item_dict)
+    elif target_item is not None: resulting_item = target_item
+    else: resulting_item = None
+    def box_3_func(): choose_alchemy_item(info_window, info_text, item_num=3)
+    item_3_box = make_item_box(resulting_item, 0.25, 0.85, box_w, box_h, info_window.theme, dowel=True, button_func=box_3_func)
+    item_3_box.absolute = False
+    item_3_box.outline_color = info_window.theme.dark
+    item_3_box.bind_to(info_window, True)
+    if resulting_item is not None:
         grist_cache = viewport_dic["client_grist_cache"]
         for grist_type, value in resulting_item.true_cost.items():
             if grist_type not in grist_cache:
@@ -611,13 +627,9 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
                 if last_tile_map is not None:
                     last_tile_map.update_map(update_info_window=True)
                 update_viewport_dic()
-        else:
-            def button_func():
-                pass
-        item_3_box = make_item_box(resulting_item, 0.25, 0.85, box_w, box_h, info_window.theme, dowel=True, button_func=button_func)
-        item_3_box.absolute = False
-        item_3_box.outline_color = info_window.theme.dark
-        item_3_box.bind_to(info_window, True)
+            alchemize_button = render.TextButton(0.7, 0.95, 196, 32, ">ALCHEMIZE", button_func, theme=info_window.theme)
+            alchemize_button.text_color = info_window.theme.dark
+            alchemize_button.bind_to(info_window, True) 
         item_3_label = render.Text(0.7, 0.85, resulting_item.display_name)
         item_3_label.color = info_window.theme.dark
         item_3_label.set_fontsize_by_width(200)
@@ -647,12 +659,17 @@ def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Tex
     def make_results(search_text: Optional[str]):
         def get_button_func(item: "sylladex.Item"):
             def button_func():
+                global current_alchemy_item_3
                 if item_num == 1:
                     global current_alchemy_item_1
                     current_alchemy_item_1 = item
-                else:
+                    current_alchemy_item_3 = None
+                elif item_num == 2:
                     global current_alchemy_item_2
                     current_alchemy_item_2 = item
+                    current_alchemy_item_3 = None
+                else:
+                    current_alchemy_item_3 = item
                 display_alchemy(info_window, info_text)
             return button_func
         results_sprites = []
