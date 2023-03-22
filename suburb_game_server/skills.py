@@ -536,7 +536,7 @@ rage.adjustment_divisor = 1.5
 
 breath = Aspect("breath")
 breath.stat_name = "savvy"
-breath.balance_mult = 1.3
+breath.balance_mult = 1.2
 
 blood = Aspect("blood")
 blood.is_vial = True
@@ -554,11 +554,11 @@ doom.is_vial = True
 doom.vials = ["hp"]
 doom.adjustment_divisor = 0.5
 doom.ratio_mult = 2
-doom.balance_mult = 1.5
+doom.balance_mult = 1.3
 
 light = Aspect("light")
 light.stat_name = "luck"
-light.balance_mult = 1.3
+light.balance_mult = 1.2
 
 # void
 void = NegativeAspect("void")
@@ -775,6 +775,18 @@ strike_between.add_vial_cost("aspect", "user.power//2")
 strike_between.add_aspect_change("void", "user.power")
 strike_between.damage_formula = "user.base_damage * user.void.ratio * 4 * (1 + 0.5*coin)"
 
+balance_changes = {
+    "thief": {"doom": 3, "void": 3},
+    "rogue": {"doom": 4, "void": 4},
+    "page": {"doom": 5, "void": 5},
+    "heir": {"doom": 2, "void": 2}
+}
+
+def get_balance_mult(class_name, aspect: Aspect):
+    if class_name in balance_changes and aspect.name in balance_changes[class_name]:
+        return aspect.balance_mult * balance_changes[class_name][aspect.name]
+    else: return aspect.balance_mult
+
 class ClassSkill(Skill):
     def __init__(self, name: str, aspect: Aspect, class_name: str, required_rung: int):
         if class_name not in class_skills: class_skills[class_name] = {}
@@ -841,7 +853,7 @@ def scatter_effect_constructor(aspect: Aspect) -> Callable:
 
 def sway_effect_constructor(aspect: Aspect) -> Callable:
         def sway_effect(user: "strife.Griefer", target: "strife.Griefer"):
-            bonus = int(user.power*1.5)
+            bonus = int(user.power*1.5*get_balance_mult("witch", aspect))
             decrease_team = target.team
             if decrease_team == "blue": increase_team = "red"
             else: increase_team = "blue"
@@ -856,15 +868,15 @@ for aspect_name, aspect in aspects.items():
     # knight
     aspectblade = ClassSkill(f"{aspect.name}blade", aspect, "knight", 25)
     aspectblade.description = f"Deals damage based on your {aspect.name.upper()}."
-    aspectblade.damage_formula = f"user.base_damage * user.{aspect.name}.ratio * (4 + coin)"
+    aspectblade.damage_formula = f"user.base_damage * user.{aspect.name}.ratio * (4 + coin) * {get_balance_mult('knight', aspect)}"
 
     # 100 - passive
 
     # prince
     aspectloss = ClassSkill(f"{aspect.name}loss", aspect, "prince", 25)
-    aspectloss.description = f"Sharpy lowers the target's {aspect.name.upper()}."
+    aspectloss.description = f"Sharply lowers the target's {aspect.name.upper()}."
     aspectloss.add_vial_cost("aspect", "user.power//2")
-    aspectloss.add_aspect_change(aspect.name, f"-user.power*1.5")
+    aspectloss.add_aspect_change(aspect.name, f"-user.power*1.5 * {get_balance_mult('prince', aspect)}")
     aspectloss.parryable = False
 
     aspectblast = ClassSkill(f"{aspect.name}blast", aspect, "prince", 100)
@@ -873,7 +885,7 @@ for aspect_name, aspect in aspects.items():
     aspectblast.add_vial_cost("aspect", "user.power")
     aspectblast.damage_formula = f"user.base_damage * user.{aspect.name}.ratio * (5 + 2*coin)"
     aspectblast.cooldown = 2
-    aspectblast.add_aspect_change(aspect.name, f"-user.power")
+    aspectblast.add_aspect_change(aspect.name, f"-user.power * {get_balance_mult('prince', aspect)}")
 
     # thief
     aspectsteal = ClassSkill(f"{aspect.name}-steal", aspect, "thief", 25)
@@ -888,7 +900,7 @@ for aspect_name, aspect in aspects.items():
     aspectrobbery.description = f"Deals damage, steals maximum {aspect.name.upper()} based on the target's power (for this fight) and steals grist from the target. No limit for use."
     aspectrobbery.add_vial_cost("vim", "user.power//2")
     aspectrobbery.add_vial_cost("aspect", "user.power")
-    aspectrobbery.damage_formula = "user.base_damage * (1.25 + 1.5*coin)"
+    aspectrobbery.damage_formula = f"user.base_damage * (1.25 + 1.5*coin) * {aspect.name}.balance_mult"
     aspectrobbery.cooldown = 2
     aspectrobbery.special_effect = robbery_effect_constructor(aspect)
 
@@ -900,10 +912,10 @@ for aspect_name, aspect in aspects.items():
     findaspect.add_vial_cost("aspect", "user.power//2")
     findaspect.cooldown = 1
     findaspect.action_cost = 0
-    findaspect.add_apply_state(f"pursuit of {aspect.name}", 5, "1.0")
+    findaspect.add_apply_state(f"pursuit of {aspect.name}", 5, f"{get_balance_mult('mage', aspect)}")
 
     usershared = Skill(f"user_{aspect.name}shared")
-    usershared.add_aspect_change(aspect.name, "user.power//2")
+    usershared.add_aspect_change(aspect.name, f"user.power//2 * {get_balance_mult('mage', aspect)}")
     usershared.parryable = False
 
     sharedaspect = ClassSkill(f"shared {aspect.name}", aspect, "mage", 100)
@@ -912,12 +924,12 @@ for aspect_name, aspect in aspects.items():
     sharedaspect.add_vial_cost("aspect", "user.power//2")
     sharedaspect.action_cost = 0
     sharedaspect.cooldown = 1
-    sharedaspect.add_aspect_change(aspect.name, f"user.power*2")
+    sharedaspect.add_aspect_change(aspect.name, f"user.power*2 * {get_balance_mult('mage', aspect)}")
     sharedaspect.user_skill = f"user_{aspect.name}shared"
 
     # witch
     userwork = Skill(f"user_{aspect.name}work")
-    userwork.add_aspect_change(aspect.name, f"user.power//1.5")
+    userwork.add_aspect_change(aspect.name, f"user.power//1.5 * {get_balance_mult('witch', aspect)}")
     userwork.parryable = False
 
     aspectwork = ClassSkill(f"{aspect.name}work", aspect, "witch", 25)
@@ -927,10 +939,10 @@ for aspect_name, aspect in aspects.items():
     aspectwork.cooldown = 1
     aspectwork.action_cost = 0
     aspectwork.user_skill = f"user_{aspect.name}work"
-    aspectwork.add_aspect_change(aspect.name, f"-1 * user.power//1.5")
+    aspectwork.add_aspect_change(aspect.name, f"-1 * user.power//1.5 * {get_balance_mult('witch', aspect)}")
 
     userplay = Skill(f"user_{aspect.name}play")
-    userplay.add_aspect_change(aspect.name, f"-1 * user.power//1.5")
+    userplay.add_aspect_change(aspect.name, f"-1 * user.power//1.5 * {get_balance_mult('witch', aspect)}")
     userplay.parryable = False
 
     aspectplay = ClassSkill(f"{aspect.name}play", aspect, "witch", 25)
@@ -940,7 +952,7 @@ for aspect_name, aspect in aspects.items():
     aspectplay.cooldown = 1
     aspectplay.action_cost = 0
     aspectplay.user_skill = f"user_{aspect.name}play"
-    aspectplay.add_aspect_change(aspect.name, f"user.power//1.5")
+    aspectplay.add_aspect_change(aspect.name, f"user.power//1.5 * {get_balance_mult('witch', aspect)}")
 
     swayaspect = ClassSkill(f"sway {aspect.name}", aspect, "witch", 100)
     swayaspect.description = f"Decreases the {aspect.name.upper()} of one team and gives it to the other."
@@ -953,13 +965,13 @@ for aspect_name, aspect in aspects.items():
     aspectpiece = ClassSkill(f"{aspect.name}piece", aspect, "maid", 25)
     aspectpiece.description = f"Very sharply increases the {aspect.name.upper()} of the target."
     aspectpiece.add_vial_cost("aspect", "user.power//2")
-    aspectpiece.add_aspect_change(aspect.name, f"user.power*3")
+    aspectpiece.add_aspect_change(aspect.name, f"user.power*3*{get_balance_mult('maid', aspect)}")
     aspectpiece.parryable = False
 
     aspectsweep = ClassSkill(f"{aspect.name}sweep", aspect, "maid", 100)
     aspectsweep.description = f"Increases the {aspect.name.upper()} of the target."
     aspectsweep.add_vial_cost("aspect", "user.power//2")
-    aspectsweep.add_aspect_change(aspect.name, f"user.power")
+    aspectsweep.add_aspect_change(aspect.name, f"user.power*{get_balance_mult('maid', aspect)}")
     aspectsweep.parryable = False
 
     # page
@@ -975,7 +987,7 @@ for aspect_name, aspect in aspects.items():
     # bard
     aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)
     aspectclub.description = f"Deals damage depending on how low your {aspect.name.upper()} is. Is free."
-    aspectclub.damage_formula = f"user.base_damage * user.{aspect.name}.inverse_ratio * (4 + coin)"
+    aspectclub.damage_formula = f"user.base_damage * user.{aspect.name}.inverse_ratio * (4 + coin)*{get_balance_mult('bard', aspect)}"
 
     # rogue
     aspectloot = ClassSkill(f"{aspect.name}-loot", aspect, "rogue", 25)
@@ -994,10 +1006,10 @@ for aspect_name, aspect in aspects.items():
     denyaspect.add_vial_cost("aspect", "user.power//2")
     denyaspect.cooldown = 1
     denyaspect.action_cost = 0
-    denyaspect.add_apply_state(f"retreat from {aspect.name}", 5, "1.0")
+    denyaspect.add_apply_state(f"retreat from {aspect.name}", 5, f"*{get_balance_mult('seer', aspect)}")
 
     userward = Skill(f"user_{aspect.name}ward")
-    userward.add_aspect_change(aspect.name, "-user.power//2")
+    userward.add_aspect_change(aspect.name, f"-user.power//2**{get_balance_mult('seer', aspect)}")
     userward.parryable = False
 
     wardaspect = ClassSkill(f"{aspect.name} hope", aspect, "seer", 100)
@@ -1006,7 +1018,7 @@ for aspect_name, aspect in aspects.items():
     wardaspect.add_vial_cost("aspect", "-user.power//2")
     wardaspect.action_cost = 0
     wardaspect.cooldown = 1
-    wardaspect.add_aspect_change(aspect.name, f"-user.power*2")
+    wardaspect.add_aspect_change(aspect.name, f"-user.power*2*{get_balance_mult('seer', aspect)}")
     wardaspect.user_skill = f"user_{aspect.name}ward"
 
     # heir
