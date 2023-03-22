@@ -1110,6 +1110,12 @@ class Player():
             if self.aspect in skills.class_skills[self.gameclass]:
                 for skill_name, required_rung in skills.class_skills[self.gameclass][self.aspect].items():
                     if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
+        abstratus = self.current_strife_deck
+        if abstratus in skills.abstratus_skills:
+            for skill_name, required_rung in skills.abstratus_skills[abstratus].items():
+                if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
+        else:
+            print(f"{abstratus} needs skills doofus!!!")
         return known_skills
     
     def get_current_passives(self):
