@@ -147,7 +147,9 @@ def handle_request(dict):
         case "current_overmap":
             map_tiles, map_specials, map_types, theme = player.get_overmap_view()
             illegal_moves = player.get_illegal_overmap_moves()
-            return json.dumps({"map_tiles": map_tiles, "map_specials": map_specials, "map_types": map_types, "theme": theme, "illegal_moves": illegal_moves})
+            overmap_title = player.overmap.title
+            return json.dumps({"map_tiles": map_tiles, "map_specials": map_specials, "map_types": map_types, 
+                               "title": overmap_title, "theme": theme, "illegal_moves": illegal_moves})
         case "player_info":
             return json.dumps(player.get_dict())
         case "strife_data":

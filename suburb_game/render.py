@@ -796,6 +796,7 @@ class Text(UIElement):
         self.fontsize: int = 32
         self.scale: float = 1
         self.alpha = 255
+        self.antialias = True
         self.font_location = "./fonts/courbd.ttf"
         update_check.append(self)
 
@@ -809,13 +810,13 @@ class Text(UIElement):
         else: return self.text
 
     def set_fontsize_by_width(self, width):
-        text_surf = self.font.render(self.get_text(), True, self.color)
+        text_surf = self.font.render(self.get_text(), self.antialias, self.color)
         while text_surf.get_width() > width:
             self.fontsize -= 1
-            text_surf = self.font.render(self.get_text(), True, self.color)
+            text_surf = self.font.render(self.get_text(), self.antialias, self.color)
 
     def update(self):
-        self.text_surf = self.font.render(self.get_text(), True, self.color)
+        self.text_surf = self.font.render(self.get_text(), self.antialias, self.color)
         self.rect = self.text_surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.text_surf)
         if self.highlight_color is not None:
@@ -823,7 +824,7 @@ class Text(UIElement):
             self.highlight_surf.fill(self.highlight_color)
             self.blit_surf.blit(self.highlight_surf, (self.rect.x, self.rect.y))
         if self.outline_color != None:
-            self.outline_surf = self.font.render(self.get_text(), True, self.outline_color)
+            self.outline_surf = self.font.render(self.get_text(), self.antialias, self.outline_color)
             if self.alpha != 255: self.outline_surf.set_alpha(self.alpha)
             # self.blit_surf.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y + self.outline_depth)) # +y +x
             # self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y + self.outline_depth)) # +y -x
