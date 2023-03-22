@@ -1127,11 +1127,22 @@ aslurp.target_self = True
 
 # unique skills
 # bottlekind
+userabdicate = Skill("userabdicate")
+userabdicate.need_damage_to_apply_states = False
+userabdicate.add_apply_state("disarm", 3, "1.0")
+userabdicate.parryable = False
+
 abdicate = AbstratusSkill("abdicate")
+abdicate.description = f"Deals a lot of damage but applies DISARM to you for 3 turns, which prevents you from ARSENALIZING."
+abdicate.use_message = "{user} smashes the bottle!"
+abdicate.cooldown = 1
+abdicate.damage_formula = "user.base_damage * (3 + coin)"
+abdicate.user_skill = "userabdicate"
 
 # bottlekind
 add_abstratus_skill("bottlekind", aslurp, 1)
 add_abstratus_skill("bottlekind", attack, 50)
+add_abstratus_skill("bottlekind", abdicate, 75)
 
 # pillowkind
 add_abstratus_skill("pillowkind", asphyxiate, 1)
