@@ -1355,6 +1355,10 @@ add_abstratus_skill("cupkind", aslurp, 1)
 add_abstratus_skill("cupkind", awaitskill, 50)
 add_abstratus_skill("cupkind", assober, 75)
 
+# fancysantakind
+add_abstratus_skill("fancysantakind", antagonize, 1)
+add_abstratus_skill("fancysantakind", arraign, 50)
+
 # fistkind
 add_abstratus_skill("fistkind", arrest, 1)
 add_abstratus_skill("fistkind", attack, 50)
@@ -1366,10 +1370,11 @@ add_abstratus_skill("hatkind", awaitskill, 50)
 add_abstratus_skill("hatkind", admonish, 75)
 
 # jumpropekind
+add_abstratus_skill("jumpropekind", awaitskill, 50)
 add_abstratus_skill("jumpropekind", asphyxiate, 75)
 
 # knifekind
-add_abstratus_skill("cleaverkind", artillerate, 50)
+add_abstratus_skill("knifekind", artillerate, 50)
 
 # ladlekind
 add_abstratus_skill("ladlekind", assemble, 1)
@@ -1380,10 +1385,12 @@ add_abstratus_skill("pankind", assemble, 1)
 add_abstratus_skill("pankind", arraign, 50)
 
 # paperkind
+add_abstratus_skill("paperkind", awaitskill, 50)
     # ask
 
 # penkind
-    # ask
+add_abstratus_skill("penkind", antagonize, 1)
+add_abstratus_skill("penkind", awaitskill, 50)
     # autograph
 
 # pillowkind
@@ -1394,6 +1401,10 @@ add_abstratus_skill("pillowkind", awaitskill, 50)
 add_abstratus_skill("pistolkind", aim, 1)
 add_abstratus_skill("pistolkind", artillerate, 50)
 add_abstratus_skill("pistolkind", aunter, 75)
+
+# plungerkind
+add_abstratus_skill("plungerkind", arraign, 50)
+add_abstratus_skill("plungerkind", antagonize, 75)
 
 # potkind
 add_abstratus_skill("potkind", assemble, 1)
@@ -1417,3 +1428,7 @@ add_abstratus_skill("sawkind", axe, 75)
 add_abstratus_skill("shotgunkind", aggerate, 1)
 add_abstratus_skill("shotgunkind", avenge, 50)
 add_abstratus_skill("shotgunkind", adjudge, 75)
+
+# woodwindkind
+add_abstratus_skill("woodwindkind", awaitskill, 50)
+add_abstratus_skill("woodwindkind", antagonize, 75)
