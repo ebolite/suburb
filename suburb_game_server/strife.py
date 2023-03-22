@@ -329,6 +329,7 @@ class Griefer():
                 if player_griefer.player is None: raise AttributeError
                 player_griefer.player.add_unclaimed_grist(spoils_dict)
                 rungs_to_gain = round((self.power / player_griefer.player.power) * (1 + random.random()/2))
+                rungs_to_gain = rungs_to_gain**2
                 if player_griefer.player.echeladder_rung + player_griefer.player.unclaimed_rungs < 50: rungs_to_gain += 1
                 player_griefer.player.unclaimed_rungs += rungs_to_gain
                 player_griefer.player.add_gutter_and_leech()
