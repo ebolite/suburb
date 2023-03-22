@@ -508,7 +508,7 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
             else: selected = False
             item_box = make_item_box(item, box_x, box_y, box_w, box_h, info_window.theme, get_box_button_func(instance_name), selected=selected, label=True)
             item_box.bind_to(info_window, True)
-            recycle_button = render.Button(box_w-16-padding, padding, "sprites/buttons/trash.png", None, get_recycle_button_func(instance_name))
+            recycle_button = render.Button(box_w-16-padding, box_h-16-padding, "sprites/buttons/trash.png", None, get_recycle_button_func(instance_name))
             recycle_button.bind_to(item_box)
             recycle_button.absolute = True
             tooltip = render.ToolTip(0, 0, 16, 16)
