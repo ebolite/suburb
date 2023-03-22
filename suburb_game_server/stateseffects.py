@@ -30,7 +30,12 @@ class State():
     def extra_actions(self, griefer: "strife.Griefer") -> int:
         return 0
 
+    # lower is better
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:
+        return 1.0
+    
+    # lower is better
+    def coinflip_modifier(self, griefer: "strife.Griefer") -> float:
         return 1.0
     
     def on_apply(self, griefer: "strife.Griefer"):
@@ -89,6 +94,17 @@ class BleedState(State):
     def new_turn(self, griefer: "strife.Griefer"):
         damage = self.applier_stats(griefer)["power"]//3 * self.potency(griefer)
         griefer.take_damage(damage)
+
+bleed = BleedState("bleed")
+bleed.tooltip = "Taking damage at the start of each turn."
+
+class FocusState(State):
+    def coinflip_modifier(self, griefer: "strife.Griefer") -> float:
+        reduction = 0.25 * self.potency(griefer)
+        return 1 - reduction
+
+focus = FocusState("focus")
+focus.tooltip = "Chance to flip HEADS is increased."
 
 # aspect states
 

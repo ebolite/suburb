@@ -67,12 +67,16 @@ def stat_edge(user_stat: int, target_stat: int) -> float:
     edge += 1
     return max(edge, 0.1)
 
-def flip_coin(user_luck: int, target_luck: int) -> bool:
+def flip_coin(user: "strife.Griefer", target: "strife.Griefer") -> bool:
+    user_luck = user.get_stat("luck")
+    target_luck = target.get_stat("luck")
     edge = (stat_edge(user_luck, target_luck) - 1)*2
     if edge >= 0:
         roll = random.uniform(0-edge, 1)
     else:
         roll = random.uniform(0, 1+-edge)
+    for state in user.states_list:
+        roll *= state.coinflip_modifier(user)
     if roll < 0.5: return True
     else: return False
 
@@ -92,7 +96,7 @@ class Skill():
         self.damage_formula = "0"
         self.apply_states = {}
         self.state_potency_changes = {}
-        self.need_damage_to_apply_states = True
+        self.need_damage_to_apply_states = False
         self.vial_change_formulas = {}
         self.vial_cost_formulas = {}
         self.aspect_change_formulas = {}
@@ -192,7 +196,7 @@ class Skill():
         damage_formula = self.format_formula(self.damage_formula, user, target)
         # coin is 1 if user wins, 0 if target wins
         if "coin" in damage_formula:
-            coin = flip_coin(user.get_stat("luck"), target.get_stat("luck"))
+            coin = flip_coin(user, target)
             damage_formula = damage_formula.replace("coin", str(int(coin)))
         else:
             coin = None
@@ -1157,12 +1161,21 @@ useraxe.need_damage_to_apply_states = False
 useraxe.add_apply_state("vulnerable", 2, "1.0")
 
 axe = AbstratusSkill("axe")
-axe.description = f"Attacks recklessly, making the user VULNERABLE for 2 turns with a 1.0 potency."
+axe.description = f"Attacks recklessly, making you VULNERABLE for 2 turns with a 1.0 potency."
 axe.use_message = "{user} chops!"
 axe.action_cost = 0
 axe.cooldown = 1
 axe.damage_formula = AGGRIEVE_FORMULA
 axe.user_skill = "useraxe"
+
+aim = AbstratusSkill("aim")
+aim.description = f"Applies FOCUS to yourself this turn with potency 1.5, increasing the chance to flip HEADS."
+aim.use_message = "{user} aims!"
+aim.action_cost = 0
+aim.cooldown = 1
+aim.add_vial_cost("vim", "user.power//3")
+aim.add_apply_state("focus", 1, "1.0")
+aim.target_self = True
 
 # unique skills
 # bottlekind
@@ -1178,6 +1191,7 @@ abdicate.cooldown = 1
 abdicate.damage_formula = AVENGE_FORMULA
 abdicate.user_skill = "userabdicate"
 
+# rollingpinkind
 araze = AbstratusSkill("araze")
 araze.description = f"Deals damage and reduces the target's SPACE."
 araze.use_message = "{user} flattens the enemy!"
@@ -1185,6 +1199,7 @@ araze.damage_formula = ASSAIL_FORMULA
 araze.add_aspect_change("space", "-user.power//3")
 araze.add_vial_cost("vim", "user.power//3")
 
+# sawkind
 assanguinate = AbstratusSkill("assanguinate")
 assanguinate.description = f"Deals damage similar to assail and applies BLEED with potency 2 for 3 turns, which deals damage over time. Also increases BLEED potency by 0.2."
 assanguinate.use_message = "{user} assanguinates!"
@@ -1192,6 +1207,16 @@ assanguinate.damage_formula = ASSAIL_FORMULA
 assanguinate.add_vial_cost("vim", "user.power//2")
 assanguinate.add_apply_state("bleed", 3, "2.0")
 assanguinate.add_state_potency_change("bleed", "0.2")
+assanguinate.need_damage_to_apply_states = True
+
+# pistolkind
+aunter = AbstratusSkill("aunter")
+aunter.description = f"Gain an additional action this turn."
+aunter.add_vial_cost("vim", "user.power//3")
+aunter.action_cost = -1
+aunter.cooldown = 2
+aunter.target_self = True
+aunter.parryable = False
 
 # aerosolkind
     # aflame
@@ -1212,6 +1237,10 @@ add_abstratus_skill("bagkind", awaitskill, 50)
 add_abstratus_skill("bottlekind", aslurp, 1)
 add_abstratus_skill("bottlekind", attack, 50)
 add_abstratus_skill("bottlekind", abdicate, 75)
+
+# bowkind
+add_abstratus_skill("bowkind", artillerate, 50)
+add_abstratus_skill("bowkind", aim, 75)
 
 # cleaverkind
 add_abstratus_skill("cleaverkind", avenge, 50)
@@ -1245,9 +1274,18 @@ add_abstratus_skill("pankind", arraign, 50)
 add_abstratus_skill("pillowkind", asphyxiate, 1)
 add_abstratus_skill("pillowkind", awaitskill, 50)
 
+# pistolkind
+add_abstratus_skill("pistolkind", aim, 1)
+add_abstratus_skill("pistolkind", artillerate, 50)
+add_abstratus_skill("pistolkind", aunter, 75)
+
 # potkind
 add_abstratus_skill("potkind", assemble, 1)
 add_abstratus_skill("pankind", awaitskill, 50)
+
+# riflekind
+add_abstratus_skill("riflekind", aim, 1)
+add_abstratus_skill("riflekind", artillerate, 50)
 
 # rollingpinkind
 add_abstratus_skill("rollingpinkind", araze, 1)
