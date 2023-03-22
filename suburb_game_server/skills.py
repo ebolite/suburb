@@ -1209,6 +1209,23 @@ abdicate.cooldown = 1
 abdicate.damage_formula = AVENGE_FORMULA
 abdicate.user_skill = "userabdicate"
 
+# cupkind
+def assober_effect(user: "strife.Griefer", target: "strife.Griefer"):
+    bad_states = [state for state in user.states_list if not state.beneficial]
+    if len(bad_states) == 0: return
+    cured_state = random.choice(bad_states)
+    user.remove_state(cured_state.name)
+    user.strife.log(f"{user.nickname} was cured of {cured_state.name.upper()}!")
+
+assober = AbstratusSkill("assober")
+assober.description = f"Increases your ASPECT and cures a negative state."
+assober.use_message = "{user} sobers up!"
+assober.action_cost = 0
+assober.cooldown = 2
+assober.add_vial_cost("aspect", "-user.power//2")
+assober.add_vial_cost("vim", "user.power//3")
+assober.special_effect = assober_effect
+
 # rollingpinkind
 araze = AbstratusSkill("araze")
 araze.description = f"Deals damage and reduces the target's SPACE."
@@ -1285,6 +1302,11 @@ add_abstratus_skill("cleaverkind", assemble, 75)
 
 # cordkind
 add_abstratus_skill("cordkind", asphyxiate, 1)
+
+# cupkind
+add_abstratus_skill("cupkind", aslurp, 1)
+add_abstratus_skill("cupkind", awaitskill, 50)
+add_abstratus_skill("cupkind", assober, 75)
 
 # hatkind
 add_abstratus_skill("hatkind", adonize, 1)

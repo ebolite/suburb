@@ -64,6 +64,7 @@ class DemoralizeState(State):
         return max(new_damage, 0)
     
 demoralize = DemoralizeState("demoralize")
+demoralize.beneficial = False
 demoralize.tooltip = "Reduces damage dealt."
 
 class DisarmState(State):
@@ -71,6 +72,7 @@ class DisarmState(State):
         return ["arsenal"]
     
 disarm = DisarmState("disarm")
+disarm.beneficial = False
 disarm.tooltip = "Cannot use ARSENAL skills."
 
 class VulnerableState(State):
@@ -80,6 +82,7 @@ class VulnerableState(State):
         return int(damage*mod)
     
 vulnerable = VulnerableState("vulnerable")
+vulnerable.beneficial = False
 vulnerable.tooltip = "Takes more damage."
 
 class AiryState(State):
@@ -88,6 +91,7 @@ class AiryState(State):
         return 1 - reduction
     
 airy = AiryState("airy")
+airy.beneficial = True
 airy.tooltip = "Increases AUTO-PARRY chance."
 
 class BleedState(State):
@@ -96,6 +100,7 @@ class BleedState(State):
         griefer.take_damage(damage)
 
 bleed = BleedState("bleed")
+bleed.beneficial = False
 bleed.tooltip = "Taking damage at the start of each turn."
 
 class FocusState(State):
@@ -104,6 +109,7 @@ class FocusState(State):
         return 1 - reduction
 
 focus = FocusState("focus")
+focus.beneficial = True
 focus.tooltip = "Chance to flip HEADS is increased."
 
 # aspect states
@@ -133,8 +139,10 @@ class RetreatState(State):
 for _, aspect in skills.aspects.items():
     aspectpursuitstate = PursuitState(f"pursuit of {aspect.name}", aspect)
     aspectpursuitstate.tooltip = f"{aspect.name.upper()} increases each turn."
+    aspectpursuitstate.beneficial = True
     aspectretreatstate = RetreatState(f"retreat from {aspect.name}", aspect)
     aspectretreatstate.tooltip = f"{aspect.name.upper()} decreases each turn."
+    aspectretreatstate.beneficial = True
 
 # class passives and globals
 
