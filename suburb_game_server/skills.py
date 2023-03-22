@@ -750,7 +750,7 @@ roll.damage_formula = "(user.base_damage * 3 * coin) + 1"
 stack_deck = AspectSkill("stack deck", light, 50)
 stack_deck.description = "Lowers the LIGHT (luck) of the target and all their friends."
 stack_deck.parryable = False
-stack_deck.target_team
+stack_deck.target_team = True
 stack_deck.add_vial_cost("aspect", "user.power")
 stack_deck.add_aspect_change("light", "-user.power")
 
