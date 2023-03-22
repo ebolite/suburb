@@ -408,6 +408,7 @@ class TextButton(UIElement):
         self.outline_width = 2
         self.absolute = False
         self.fontsize = 16
+        self.antialias = True
         self.text = text
         self.text_color: pygame.Color = self.theme.black
         self.outline_color: pygame.Color = self.theme.dark
@@ -431,14 +432,14 @@ class TextButton(UIElement):
         if self.hover_func is not None and self.is_mouseover():
             self.hover_func()
         if self.truncated == True:
-            self.text_surf = self.font.render(self.text+"...", True, self.text_color)
+            self.text_surf = self.font.render(self.text+"...", self.antialias, self.text_color)
         else:
-            self.text_surf = self.font.render(self.text, True, self.text_color)
+            self.text_surf = self.font.render(self.text, self.antialias, self.text_color)
         while self.truncate_text and self.text_surf.get_width() > self.w:
             self.truncated = True
             self.text = self.text[:-1]
             if self.text[-1] == " ": self.text = self.text[:-1]
-            self.text_surf = self.font.render(self.text+"...", True, self.text_color)
+            self.text_surf = self.font.render(self.text+"...", self.antialias, self.text_color)
         self.outline_surf = pygame.Surface((self.w, self.h))
         self.outline_surf.fill(self.outline_color)
         self.surf = pygame.Surface((self.w-2*self.outline_width, self.h-2*self.outline_width))
@@ -604,6 +605,7 @@ class InputTextBox(UIElement):
         self.active_color = self.theme.light
         self.outline_color: Optional[pygame.Color] = self.theme.dark
         self.fontsize = 32
+        self.antialias = True
         self.max_characters = 0
         self.numbers_only = False
         self.maximum_value = 0
@@ -621,9 +623,9 @@ class InputTextBox(UIElement):
     def update(self, keys):
         if self.secure:
             t = self.suffix + ("*" * len(self.text))
-            self.text_surf = self.font.render(t, True, self.text_color)
+            self.text_surf = self.font.render(t, self.antialias, self.text_color)
         else:
-            self.text_surf = self.font.render(self.suffix+self.text, True, self.text_color)
+            self.text_surf = self.font.render(self.suffix+self.text, self.antialias, self.text_color)
         width = self.w or max(100, self.text_surf.get_width()+10)
         height = self.h or 32
         outline_width = 3
@@ -801,7 +803,7 @@ class Text(UIElement):
         update_check.append(self)
 
     def get_width(self):
-        text_surf = self.font.render(self.get_text(), True, self.color)
+        text_surf = self.font.render(self.get_text(), self.antialias, self.color)
         return text_surf.get_width()
 
     def get_text(self):
