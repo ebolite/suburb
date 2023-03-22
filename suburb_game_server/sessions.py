@@ -502,6 +502,8 @@ class Room():
                 player = Player(player_name)
                 new_strife.add_griefer(player)
             new_strife.increase_turn()
+            return True
+        else: return False
 
     def add_npc(self, npc: "npcs.Npc"):
         if npc.name not in self.npcs:
