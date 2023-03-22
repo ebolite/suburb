@@ -286,33 +286,41 @@ class Skill():
         out["usable"] = self.is_usable_by(griefer)
         return out
 
+AGGRIEVE_FORMULA = "user.base_damage * (1 + 0.5*coin)"
+
 aggrieve = Skill("aggrieve")
 aggrieve.description = "Deals damage and is free. An acceptable technique."
 aggrieve.use_message = "{user} aggrieves!"
-aggrieve.damage_formula = "user.base_damage * (1 + 0.5*coin)"
+aggrieve.damage_formula = AGGRIEVE_FORMULA
 aggrieve.category = "aggressive"
 base_skills.append("aggrieve")
+
+ASSAIL_FORMULA = "user.base_damage * (1.5 + 0.75*coin)"
 
 assail = Skill("assail")
 assail.description = "Deals additional damage compared to aggrieve, but costs a bit of VIM."
 assail.use_message = "{user} assails!"
-assail.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
+assail.damage_formula = ASSAIL_FORMULA
 assail.category = "aggressive"
 assail.add_vial_cost("vim", "user.power//2")
 base_skills.append("assail")
 
+AGGRESS_FORMULA = "user.base_damage * (0.25 + 3*coin)"
+
 aggress = Skill("aggress")
 aggress.description = "An all-or-nothing attack which does either massive damage or a very pitiful amount of it."
 aggress.use_message = "{user} aggresses!"
-aggress.damage_formula = "user.base_damage * (0.25 + 3*coin)"
+aggress.damage_formula = AGGRESS_FORMULA
 aggress.category = "aggressive"
 aggress.add_vial_cost("vim", "user.power//2")
 player_skills.append("aggress")
 
+ASSAULT_FORMULA = "user.base_damage * (2 + 0.75*coin)"
+
 assault = Skill("assault")
 assault.description = "Deals a lot of extra damage, but costs a lot of VIM."
 assault.use_message = "{user} assaults!"
-assault.damage_formula = "user.base_damage * (2 + 0.75*coin)"
+assault.damage_formula = ASSAULT_FORMULA
 assault.category = "aggressive"
 assault.add_vial_cost("vim", "user.power")
 base_skills.append("assault")
@@ -1083,24 +1091,26 @@ class AbstratusSkill(Skill):
 attack = AbstratusSkill("attack")
 attack.description = f"Does as much damage as aggrieve, but gives you VIM instead of costing it."
 attack.use_message = "{user} attacks!"
-attack.damage_formula = "user.base_damage * (1 + 0.5*coin)"
+attack.damage_formula = AGGRIEVE_FORMULA
 attack.add_vial_cost("vim", "-user.power//2")
 
 arraign = AbstratusSkill("arraign")
 arraign.description = f"Does as much damage as assail, but is free."
 arraign.use_message = "{user} arraigns!"
-arraign.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
+arraign.damage_formula = ASSAIL_FORMULA
 
 artillerate = AbstratusSkill("artillerate")
 artillerate.description = f"Does as much damage as assault, but costs as much as assail."
 artillerate.use_message = "{user} artillerates!"
-artillerate.damage_formula = "user.base_damage * (2 + 0.75*coin)"
+artillerate.damage_formula = ASSAULT_FORMULA
 artillerate.add_vial_cost("vim", "user.power//2")
+
+AVENGE_FORMULA = "user.base_damage * (3 + coin)"
 
 avenge = AbstratusSkill("avenge")
 avenge.description = f"Does more damage than assault, but costs more."
 avenge.use_message = "{user} avenges!"
-avenge.damage_formula = "user.base_damage * (3 + coin)"
+avenge.damage_formula = AVENGE_FORMULA
 avenge.add_vial_cost("vim", "user.power*1.5")
 
 awaitskill = AbstratusSkill("await")
@@ -1117,7 +1127,7 @@ awaitskill.add_vial_cost("aspect", "-user.power//2")
 asphyxiate = AbstratusSkill("asphyxiate")
 asphyxiate.description = "Deals damage and decreases the target's BREATH (savvy)."
 asphyxiate.use_message = "{user} asphyxiates!"
-asphyxiate.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
+asphyxiate.damage_formula = ASSAIL_FORMULA
 asphyxiate.add_aspect_change("breath", "-user.power//2")
 asphyxiate.add_vial_cost("vim", "user.power//3")
 
@@ -1144,7 +1154,7 @@ assemble.add_vial_change("vim", "user.power")
 assanguinate = AbstratusSkill("assanguinate")
 assanguinate.description = f"Deals damage similar to assail and applies BLEED with potency 2 for 3 turns, which deals damage over time. Also increases BLEED potency by 0.2."
 assanguinate.use_message = "{user} assanguinates!"
-assanguinate.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
+assanguinate.damage_formula = ASSAIL_FORMULA
 assanguinate.add_vial_cost("vim", "user.power//2")
 assanguinate.add_apply_state("bleed", 3, "2.0")
 assanguinate.add_state_potency_change("bleed", "0.2")
@@ -1160,13 +1170,13 @@ abdicate = AbstratusSkill("abdicate")
 abdicate.description = f"Deals a lot of damage but applies DISARM to you for 3 turns, which prevents you from ARSENALIZING."
 abdicate.use_message = "{user} smashes the bottle!"
 abdicate.cooldown = 1
-abdicate.damage_formula = "user.base_damage * (3 + coin)"
+abdicate.damage_formula = AVENGE_FORMULA
 abdicate.user_skill = "userabdicate"
 
 araze = AbstratusSkill("araze")
 araze.description = f"Deals damage and reduces the target's SPACE."
 araze.use_message = "{user} flattens the enemy!"
-araze.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
+araze.damage_formula = ASSAIL_FORMULA
 araze.add_aspect_change("space", "-user.power//3")
 araze.add_vial_cost("vim", "user.power//3")
 
