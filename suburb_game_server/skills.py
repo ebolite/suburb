@@ -1128,6 +1128,18 @@ awaitskill.add_vial_cost("vim", "-user.power")
 awaitskill.add_vial_cost("aspect", "-user.power//2")
 
 # shared skills
+useranticipate = Skill("useranticipate")
+useranticipate.add_apply_state("guard", 2, "1.0")
+useranticipate.parryable = False
+
+anticipate = AbstratusSkill("anticipate")
+anticipate.description = "Deals damage to the target and gives you GUARD with potency 1.0 for 2 turns, decreasing damage taken."
+anticipate.action_cost = 0
+anticipate.cooldown = 3
+anticipate.add_vial_cost("vim", "user.power//2")
+anticipate.damage_formula = AGGRIEVE_FORMULA
+anticipate.user_skill = "useranticipate"
+
 asphyxiate = AbstratusSkill("asphyxiate")
 asphyxiate.description = "Deals damage and decreases the target's BREATH (savvy)."
 asphyxiate.use_message = "{user} asphyxiates!"
@@ -1226,6 +1238,16 @@ assober.add_vial_cost("aspect", "-user.power//2")
 assober.add_vial_cost("vim", "user.power//3")
 assober.special_effect = assober_effect
 
+# fistkind
+arrest = AbstratusSkill("arrest")
+arrest.description = "Deals damage and applies DISARM and VULNERABLE with potency 1.5 for 2 turns."
+arrest.use_message = "{user} arrests!"
+arrest.add_vial_cost("vim", "user.power//2")
+arrest.damage_formula = ASSAIL_FORMULA
+arrest.add_apply_state("disarm", 2, "1.0")
+arrest.add_apply_state("vulnerable", 2, "1.5")
+arrest.need_damage_to_apply_states = True
+
 # rollingpinkind
 araze = AbstratusSkill("araze")
 araze.description = f"Deals damage and reduces the target's SPACE."
@@ -1307,6 +1329,11 @@ add_abstratus_skill("cordkind", asphyxiate, 1)
 add_abstratus_skill("cupkind", aslurp, 1)
 add_abstratus_skill("cupkind", awaitskill, 50)
 add_abstratus_skill("cupkind", assober, 75)
+
+# fistkind
+add_abstratus_skill("fistkind", arrest, 1)
+add_abstratus_skill("fistkind", attack, 50)
+add_abstratus_skill("fistkind", anticipate, 75)
 
 # hatkind
 add_abstratus_skill("hatkind", adonize, 1)

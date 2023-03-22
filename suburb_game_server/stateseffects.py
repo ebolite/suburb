@@ -85,6 +85,16 @@ vulnerable = VulnerableState("vulnerable")
 vulnerable.beneficial = False
 vulnerable.tooltip = "Takes more damage."
 
+class GuardState(State):
+    def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
+        mod = self.potency(griefer) * 0.25
+        mod = 1 - mod
+        return int(damage*mod)
+    
+guard = GuardState("guard")
+guard.beneficial = True
+guard.tooltip = "Takes less damage."
+
 class AiryState(State):
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:
         reduction = 0.4 * self.potency(griefer)
