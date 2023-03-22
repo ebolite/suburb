@@ -67,9 +67,12 @@ def stat_edge(user_stat: int, target_stat: int) -> float:
     return max(edge, 0.1)
 
 def flip_coin(user_luck: int, target_luck: int) -> bool:
-    edge = stat_edge(user_luck, target_luck)
-    roll = random.random() * edge
-    if roll > 0.5: return True
+    edge = (stat_edge(user_luck, target_luck) - 1)*2
+    if edge >= 0:
+        roll = random.uniform(0-edge, 1)
+    else:
+        roll = random.uniform(0, 1+-edge)
+    if roll < 0.5: return True
     else: return False
 
 class Skill():
