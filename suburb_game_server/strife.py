@@ -484,7 +484,12 @@ class Griefer():
         return self.states[state_name]["applier_stats"]
     
     def add_state_duration(self, state_name: str, duration: int):
-        self.states[state_name]["duration"] += duration
+        if state_name in self.states:
+            self.states[state_name]["duration"] += duration
+
+    def add_state_potency(self, state_name: str, potency_change: float):
+        if state_name in self.states:
+            self.states[state_name]["potency"] += potency_change
 
     def change_vial(self, vial_name: str, amount: int) -> int:
         vial = vials[vial_name]

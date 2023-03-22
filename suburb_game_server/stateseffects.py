@@ -76,6 +76,11 @@ class AiryState(State):
 airy = AiryState("airy")
 airy.tooltip = "Increases AUTO-PARRY chance."
 
+class BleedState(State):
+    def new_turn(self, griefer: "strife.Griefer"):
+        damage = self.applier_stats(griefer)["power"]//3 * self.potency(griefer)
+        griefer.take_damage(damage)
+
 # aspect states
 
 class PursuitState(State):

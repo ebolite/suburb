@@ -91,6 +91,7 @@ class Skill():
         self.cooldown = 0
         self.damage_formula = "0"
         self.apply_states = {}
+        self.state_potency_changes = {}
         self.need_damage_to_apply_states = True
         self.vial_change_formulas = {}
         self.vial_cost_formulas = {}
@@ -112,6 +113,9 @@ class Skill():
             "duration": duration,
             "potency_formula": potency_formula,
         }
+
+    def add_state_potency_change(self, state_name: str, potency_change_formula: str):
+        self.state_potency_changes[state_name] = potency_change_formula
 
     def add_aspect_change(self, aspect_name: str, formula: str):
         self.aspect_change_formulas[aspect_name] = formula
@@ -221,7 +225,11 @@ class Skill():
                 potency = float(eval(potency_formula))
                 duration = self.apply_states[state_name]["duration"]
                 target.apply_state(state_name, user, potency, duration)
-
+            for state_name in self.state_potency_changes:
+                potency_change_formula = self.state_potency_changes[state_name]
+                potency_change_formula = self.format_formula(potency_change_formula, user, target)
+                potency_change = float(eval(potency_change_formula))
+                target.add_state_potency(state_name, potency_change)
         # vial change step
         for vial_name in self.vial_change_formulas:
             vial_formula = self.vial_change_formulas[vial_name]
@@ -1132,6 +1140,14 @@ assemble.parryable = False
 assemble.beneficial = True
 assemble.add_vial_change("hp", "user.power//2")
 assemble.add_vial_change("vim", "user.power")
+
+assanguinate = AbstratusSkill("assanguinate")
+assanguinate.description = f"Deals damage similar to assail and applies BLEED with potency 2 for 3 turns, which deals damage over time. Also increases BLEED potency by 0.2."
+assanguinate.use_message = "{user} assanguinates!"
+assanguinate.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
+assanguinate.add_vial_cost("vim", "user.power//2")
+assanguinate.add_apply_state("bleed", 3, "2.0")
+assanguinate.add_state_potency_change("bleed", "0.2")
 
 # unique skills
 # bottlekind
