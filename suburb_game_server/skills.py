@@ -900,7 +900,7 @@ for aspect_name, aspect in aspects.items():
     aspectrobbery.description = f"Deals damage, steals maximum {aspect.name.upper()} based on the target's power (for this fight) and steals grist from the target. No limit for use."
     aspectrobbery.add_vial_cost("vim", "user.power//2")
     aspectrobbery.add_vial_cost("aspect", "user.power")
-    aspectrobbery.damage_formula = f"user.base_damage * (1.25 + 1.5*coin) * {aspect.name}.balance_mult"
+    aspectrobbery.damage_formula = f"user.base_damage * (1.25 + 1.5*coin) * {get_balance_mult('thief', aspect)}"
     aspectrobbery.cooldown = 2
     aspectrobbery.special_effect = robbery_effect_constructor(aspect)
 
