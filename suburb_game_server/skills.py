@@ -984,6 +984,14 @@ for aspect_name, aspect in aspects.items():
     scatteraspect.action_cost = 0
     scatteraspect.cooldown = 2
 
+    aspectturn = ClassSkill(f"{aspect.name}turn", aspect, "page", 100)
+    aspectturn.description = f"Deals damage based on your {aspect.name.upper()}."
+    aspectturn.add_vial_cost("aspect", "user.power//2")
+    aspectturn.action_cost = 0
+    aspectturn.cooldown = 1
+    aspectturn.parryable = False
+    aspectturn.damage_formula = f"user.base_damage * user.{aspect.name}.ratio * (2 + coin) * {get_balance_mult('page', aspect)}"
+
     # bard
     aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)
     aspectclub.description = f"Deals damage depending on how low your {aspect.name.upper()} is. Is free."
