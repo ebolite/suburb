@@ -128,7 +128,7 @@ def make_item_box(item: Optional["sylladex.Item"], x, y, w, h, theme: "themes.Th
         dowel_image.scale = 0.15
         dowel_image.bind_to(dowel_box)
     if label:
-        item_label = render.Text(0.5, 0.1, util.shorten_item_name(item.name))
+        item_label = render.Text(0.5, 0.1, item.display_name)
         item_label.bind_to(item_box)
         item_label.fontsize = 20
         item_label.color = theme.dark
