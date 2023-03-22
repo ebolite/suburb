@@ -676,6 +676,8 @@ class Griefer():
     @property
     def remaining_actions(self) -> int:
         actions = self.actions
+        for state in self.states_list:
+            actions += state.extra_actions(self)
         for skill_dict in self.submitted_skills:
             skill = skills.skills[skill_dict["skill_name"]]
             actions -= skill.action_cost

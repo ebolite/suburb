@@ -24,6 +24,9 @@ class State():
     def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
         return damage
     
+    def extra_actions(self, griefer: "strife.Griefer") -> int:
+        return 0
+
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:
         return 1.0
     
@@ -119,6 +122,16 @@ class AspectyState(ClassPassive):
         adjust_reply = self.aspect.adjust(griefer, griefer.power//3)
         griefer.strife.log(adjust_reply)
 
+class BodyState(ClassPassive):
+    def extra_actions(self, griefer: "strife.Griefer") -> int:
+        ratio = self.aspect.ratio(griefer)
+        extra_actions = 0
+        if ratio > 0.5: extra_actions += 1
+        if ratio > 0.9: extra_actions += 1
+        if ratio > 1.4: extra_actions += 1
+        if ratio > 1.9: extra_actions += 1
+        return extra_actions
+
 # bard
 
 class TragedyState(ClassPassive):
@@ -154,6 +167,8 @@ class BreakState(ClassPassive):
 for _, aspect in skills.aspects.items():
     aspectystate = AspectyState(f"{aspect.name}y", aspect, "heir", 25)
     aspectystate.tooltip = f"{aspect.name.upper()} increases each turn."
+    bodystate = BodyState(f"{aspect.name} body", aspect, "heir", 100)
+    bodystate.tooltip = f"Gain additional actions each turn based on your {aspect.name}."
     tragedystate = TragedyState(f"{aspect.name} tragedy", aspect, "bard", 25)
     tragedystate.tooltip = f"{aspect.name.upper()} decreases each turn."
     demisestate = DemiseState(f"demise of {aspect.name}", aspect, "bard", 100)

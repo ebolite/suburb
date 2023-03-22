@@ -1043,16 +1043,7 @@ for aspect_name, aspect in aspects.items():
 
     # 25: passive
 
-    aspectbody = ClassSkill(f"{aspect.name} body", aspect, "heir", 100)
-    aspectbody.description = f"Heals the user based on their {aspect.name.upper()} and gives them a boost to their METTLE and VIGOR based on their {aspect.name.upper()}."
-    aspectbody.parryable = False
-    aspectbody.beneficial = True
-    aspectbody.add_vial_cost("aspect", "user.power")
-    aspectbody.action_cost = 0
-    aspectbody.cooldown = 3
-    aspectbody.add_vial_change("hp", f"user.power * 6 * user.{aspect.name}.ratio")
-    aspectbody.add_stat_bonus("mettle", f"user.power//2 * user.{aspect.name}.ratio")
-    aspectbody.add_stat_bonus("vigor", f"user.power//2 * user.{aspect.name}.ratio")
+    # 100: passive
 
     # sylph
 
