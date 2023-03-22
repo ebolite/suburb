@@ -2329,35 +2329,35 @@ def render():
 
         if event.type == pygame.MOUSEWHEEL:
             # 1 is up, -1 is down
-            for sprite in scroll_check:
+            for sprite in scroll_check.copy():
                 sprite.scroll(event.y)
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            for sprite in click_check:
+            for sprite in click_check.copy():
                 #sprites with click events will know if the click is on them or not
                 sprite.onclick(sprite.collidepoint(event.pos))
 
         if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-            for sprite in mouseup_check:
+            for sprite in mouseup_check.copy():
                 sprite.mouseup(sprite.collidepoint(event.pos))
 
         if event.type == pygame.KEYDOWN:
-            for sprite in key_check:
+            for sprite in key_check.copy():
                 sprite.keypress(event)
 
     screen.fill(suburb.current_theme().light)
     keys = pygame.key.get_pressed()
 
-    for sprite in always_on_bottom_check:
+    for sprite in always_on_bottom_check.copy():
         sprite.update()
 
-    for sprite in update_check:
+    for sprite in update_check.copy():
         sprite.update()
 
-    for sprite in keypress_update_check:
+    for sprite in keypress_update_check.copy():
         sprite.update(keys)
 
-    for sprite in always_on_top_check:
+    for sprite in always_on_top_check.copy():
         sprite.update()
 
     pygame.display.flip()

@@ -372,12 +372,6 @@ class Strife():
                 if self.layer_2_buttons: return True
                 else: return False
             button.hotkey_inactive_condition = inactive_condition
-        else:
-            current_time = render.clock.get_time()
-            def inactive_condition():
-                if render.clock.get_time() == current_time: return True
-                else: return False
-            button.hotkey_inactive_condition = inactive_condition
 
     def draw_scene(self):
         bar_br = 30
