@@ -165,8 +165,6 @@ stairs.infallible = True
 stairs.build_cost = 200
 
 stairwell = Tile("-", "stairwell")
-stairwell.stair = True
-stairwell.build_cost = 200
 
 # ladder = Tile("=", "ladder")
 # ladder.stair = True
@@ -187,8 +185,6 @@ elevator_shaft.infallible = True
 elevator_shaft.build_cost = 600
 
 elevator = Tile("e", "elevator")
-elevator.stair = True
-elevator.build_cost = 200
 
 girder = Tile("+", "girder")
 girder.infallible = True
