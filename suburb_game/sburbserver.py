@@ -542,6 +542,13 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
     info_window.color = info_window.theme.light
     info_text.text = "Alchemy"
     update_viewport_dic()
+    reply = client.requestplusdic(intent="computer", content={"command": "alchemiter_location"})
+    alchemiter_location = reply["alchemiter_location"]
+    if alchemiter_location is None:
+        text_box = render.Text(0.5, 0.5, "You must deploy an alchemiter before doing alchemy!")
+        text_box.set_fontsize_by_width(info_window.w)
+        text_box.color = info_window.theme.dark
+        return
     box_w, box_h = 100, 100
     item_1: Optional[sylladex.Item] = current_alchemy_item_1
     item_2: Optional[sylladex.Item]  = current_alchemy_item_2
@@ -584,6 +591,18 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
         resulting_item_dict = client.requestplusdic(intent="get_resulting_alchemy", content={"code_1": item_1.code, "code_2": item_2.code, "operation": operation})
         resulting_item_name = resulting_item_dict["name"]
         resulting_item = sylladex.Item(resulting_item_name, resulting_item_dict)
+        grist_cache = viewport_dic["client_grist_cache"]
+        for grist_type, value in resulting_item.true_cost.items():
+            if grist_type not in grist_cache:
+                can_make = False
+                break
+            if grist_cache[grist_type] < value:
+                can_make = False
+                break
+        else:
+            can_make = True
+        if can_make:
+            ...
         item_3_box = make_item_box(resulting_item, 0.25, 0.85, box_w, box_h, info_window.theme, dowel=True)
         item_3_box.absolute = False
         item_3_box.outline_color = info_window.theme.dark
@@ -600,7 +619,7 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
         tooltip.bind_to(item_3_box)
         tooltip.tooltip_offsety = -25
         cost_label = render.make_grist_cost_display(0, 0, 20, resulting_item.true_cost, 
-                                                    viewport_dic["client_grist_cache"], tooltip, text_color=info_window.theme.dark,
+                                                    grist_cache, tooltip, text_color=info_window.theme.dark,
                                                     flipped=True)
 
 def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Text", item_num: int, page=0, search: Optional[str]=None):

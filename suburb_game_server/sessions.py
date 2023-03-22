@@ -316,6 +316,17 @@ class Map():
 
     def get_room(self, name: str) -> "Room":
         return Room(name, self.session, self.overmap, self)
+    
+    def get_alchemiter_location(self) -> Optional[tuple[int, int]]:
+        # reversed so we look bottom to top
+        for y, line in reversed(list(enumerate(self.map_tiles))):
+            for x, char in enumerate(line):
+                checking_room = self.find_room(x, y)
+                for instance_name in checking_room.instances:
+                    if alchemy.Instance(instance_name).item.name == "alchemiter":
+                        return (x, y)
+        else:
+            return None
 
     def find_room(self, x: int, y: int) -> "Room":
         return Room(f"{x}, {y}", self.session, self.overmap, self)

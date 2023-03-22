@@ -447,6 +447,10 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             for grist_name, amount in instance.item.true_cost.items():
                 player.client_player.add_grist(grist_name, amount)
             return True
+        case "get_alchemiter_location":
+            if player.client_player is None: return "No client."
+            alchemiter_location = player.client_player.land.housemap.get_alchemiter_location()
+            return json.dumps({"alchemiter_location": alchemiter_location})
 
 
 def console_commands(player: sessions.Player, content: str):
