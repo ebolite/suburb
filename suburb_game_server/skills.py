@@ -202,7 +202,7 @@ class Skill():
             edge = stat_edge(target.get_stat("savvy"), user.get_stat("savvy")) - 1
             for vial in target.vials_list: edge += vial.parry_roll_modifier(target) - 1
             for state in target.states_list: edge += state.parry_roll_modifier(target) - 1
-            edge += (stat_edge(int(target.get_stat("luck")/4), int(user.get_stat("luck")/4))) - 0.25
+            edge += (stat_edge(target.get_stat("luck")//4, user.get_stat("luck")//4)) - 0.25
             if edge >= 0:
                 roll = random.uniform(0-edge, 1)
             else:
