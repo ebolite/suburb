@@ -1215,6 +1215,14 @@ admonish.add_vial_cost("vim", "user.power//3")
 admonish.add_apply_state("demoralize", 2, "1.0")
 admonish.add_state_potency_change("demoralize", "0.1")
 
+applot = AbstratusSkill("applot")
+applot.description = f"Deals damage similar to ASSAIL and applies BLEED with potency 1.0 for 3 turns. Also increases BLEED potency by 0.1."
+applot.use_message = "{user} applots the enemy!"
+applot.add_vial_cost("vim", "user.power//2")
+applot.damage_formula = ASSAIL_FORMULA
+applot.need_damage_to_apply_states = True
+applot.add_apply_state("bleed", 3, "1.0")
+
 # unique skills
 # ballkind
 athleticize = Skill("athleticize")
@@ -1267,6 +1275,16 @@ arrest.damage_formula = ASSAIL_FORMULA
 arrest.add_apply_state("disarm", 2, "1.0")
 arrest.add_apply_state("vulnerable", 2, "1.5")
 arrest.need_damage_to_apply_states = True
+
+# knifekind
+assassinate = AbstratusSkill("assassinate")
+assassinate.description = "Deals more damage to the target the higher their LIFE. Also applies BLEED for 3 turns with a potency based on their missing health."
+assassinate.use_message = "{user} assassinates!"
+assassinate.add_vial_cost("vim", "user.power")
+assassinate.damage_formula = "user.base_damage * (4 + 3*coin) * target.life.ratio"
+assassinate.cooldown = 3
+assassinate.add_apply_state("bleed", 3, "target.doom.ratio * 3")
+assassinate.need_damage_to_apply_states = True
 
 # rollingpinkind
 araze = AbstratusSkill("araze")
@@ -1345,6 +1363,7 @@ add_abstratus_skill("bowkind", artillerate, 50)
 add_abstratus_skill("bowkind", aim, 75)
 
 # cleaverkind
+    # amputate
 add_abstratus_skill("cleaverkind", avenge, 50)
 add_abstratus_skill("cleaverkind", assemble, 75)
 
@@ -1375,7 +1394,9 @@ add_abstratus_skill("jumpropekind", awaitskill, 50)
 add_abstratus_skill("jumpropekind", asphyxiate, 75)
 
 # knifekind
+add_abstratus_skill("knifekind", applot, 1)
 add_abstratus_skill("knifekind", artillerate, 50)
+add_abstratus_skill("knifekind", assassinate, 75)
 
 # ladlekind
 add_abstratus_skill("ladlekind", assemble, 1)
