@@ -922,7 +922,7 @@ for aspect_name, aspect in aspects.items():
     aspectsteal.special_effect = steal_effect_constructor(aspect)
 
     aspectrobbery = ClassSkill(f"{aspect.name} robbery", aspect, "thief", 100)
-    aspectrobbery.description = f"Deals damage, steals maximum {aspect.name.upper()} based on the target's power (for this fight) and steals grist from the target. No limit for use."
+    aspectrobbery.description = f"Deals damage, steals maximum {aspect.name.upper()} based on the target's power (for this strife) and steals grist from the target. No limit for use."
     aspectrobbery.add_vial_cost("vim", "user.power//2")
     aspectrobbery.add_vial_cost("aspect", "user.power")
     aspectrobbery.damage_formula = f"user.base_damage * (1.25 + 1.5*coin) * {get_balance_mult('thief', aspect)}"
@@ -1093,18 +1093,18 @@ class AbstratusSkill(Skill):
         self.category = "arsenal"
 
 attack = AbstratusSkill("attack")
-attack.description = f"Does as much damage as aggrieve, but gives you VIM instead of costing it."
+attack.description = f"Does as much damage as AGGRIEVE, but gives you VIM instead of costing it."
 attack.use_message = "{user} attacks!"
 attack.damage_formula = AGGRIEVE_FORMULA
 attack.add_vial_cost("vim", "-user.power//2")
 
 arraign = AbstratusSkill("arraign")
-arraign.description = f"Does as much damage as assail, but is free."
+arraign.description = f"Does as much damage as ASSAIL, but is free."
 arraign.use_message = "{user} arraigns!"
 arraign.damage_formula = ASSAIL_FORMULA
 
 artillerate = AbstratusSkill("artillerate")
-artillerate.description = f"Does as much damage as assault, but costs as much as assail."
+artillerate.description = f"Does as much damage as ASSAULT, but costs as much as ASSAIL."
 artillerate.use_message = "{user} artillerates!"
 artillerate.damage_formula = ASSAULT_FORMULA
 artillerate.add_vial_cost("vim", "user.power//2")
@@ -1112,7 +1112,7 @@ artillerate.add_vial_cost("vim", "user.power//2")
 AVENGE_FORMULA = "user.base_damage * (3 + coin)"
 
 avenge = AbstratusSkill("avenge")
-avenge.description = f"Does more damage than assault, but costs more."
+avenge.description = f"Does more damage than ASSAULT, but costs more."
 avenge.use_message = "{user} avenges!"
 avenge.damage_formula = AVENGE_FORMULA
 avenge.add_vial_cost("vim", "user.power*1.5")
@@ -1126,6 +1126,11 @@ awaitskill.target_self = True
 awaitskill.damage_formula = "0"
 awaitskill.add_vial_cost("vim", "-user.power")
 awaitskill.add_vial_cost("aspect", "-user.power//2")
+
+anarchize = AbstratusSkill("anarchize")
+anarchize.description = "Does all-or-nothing damage like AGGRESS, but is free."
+anarchize.use_message = "{user} anarchizes!"
+anarchize.damage_formula = AGGRESS_FORMULA
 
 # shared skills
 antagonize = Skill("antagonize")
@@ -1223,6 +1228,14 @@ applot.damage_formula = ASSAIL_FORMULA
 applot.need_damage_to_apply_states = True
 applot.add_apply_state("bleed", 3, "1.0")
 
+auspicate = AbstratusSkill("auspicate")
+auspicate.description = "Deals all-or-nothing damage similar to AGGRESS, but costs no actions."
+auspicate.use_message = "{user} auspicates!"
+auspicate.damage_formula = AGGRESS_FORMULA
+auspicate.add_vial_cost("vim", "user.power//2")
+auspicate.action_cost = 0
+auspicate.cooldown = 1
+
 # unique skills
 # ballkind
 athleticize = Skill("athleticize")
@@ -1265,6 +1278,19 @@ assober.cooldown = 2
 assober.add_vial_cost("aspect", "-user.power//2")
 assober.add_vial_cost("vim", "user.power//3")
 assober.special_effect = assober_effect
+assober.parryable = False
+
+# dicekind
+apothegmatize = AbstratusSkill("apothegmatize")
+apothegmatize.description = "Increases your SAVVY and LUCK and restores your VIM."
+apothegmatize.target_self = True
+apothegmatize.beneficial = True
+apothegmatize.parryable = False
+apothegmatize.action_cost = 0
+apothegmatize.cooldown = 1
+apothegmatize.add_stat_bonus("savvy", "user.power//24")
+apothegmatize.add_stat_bonus("luck", "user.power//18")
+apothegmatize.add_vial_cost("vim", "-user.power//2")
 
 # fistkind
 arrest = AbstratusSkill("arrest")
@@ -1374,6 +1400,11 @@ add_abstratus_skill("cordkind", asphyxiate, 1)
 add_abstratus_skill("cupkind", aslurp, 1)
 add_abstratus_skill("cupkind", awaitskill, 50)
 add_abstratus_skill("cupkind", assober, 75)
+
+# dicekind
+add_abstratus_skill("dicekind", auspicate, 1)
+add_abstratus_skill("dicekind", anarchize, 50)
+add_abstratus_skill("dicekind", apothegmatize, 75)
 
 # fancysantakind
 add_abstratus_skill("fancysantakind", antagonize, 1)
