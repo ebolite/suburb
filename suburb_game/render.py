@@ -796,6 +796,7 @@ class Text(UIElement):
         self.fontsize: int = 32
         self.scale: float = 1
         self.alpha = 255
+        self.font_location = "./fonts/courbd.ttf"
         update_check.append(self)
 
     def get_width(self):
@@ -837,7 +838,7 @@ class Text(UIElement):
 
     @property
     def font(self):
-        return pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), int(self.fontsize*self.scale))
+        return pygame.font.Font(pathlib.Path(self.font_location), int(self.fontsize*self.scale))
 
 def get_spirograph(x, y, thick=True) -> Image:
     if thick: path = "sprites/spirograph/thick/suburbspirograph"
