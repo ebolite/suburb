@@ -1128,6 +1128,14 @@ awaitskill.add_vial_cost("vim", "-user.power")
 awaitskill.add_vial_cost("aspect", "-user.power//2")
 
 # shared skills
+antagonize = Skill("antagonize")
+antagonize.description = "Applies DEMORALIZE with potency 1.5 to the target for 4 turns and increases your VIM and ASPECT."
+antagonize.use_message = "{user} antagonizes!"
+antagonize.parryable = False
+antagonize.add_apply_state("demoralize", 4, "1.5")
+antagonize.add_vial_cost("vim", "-user.power//2")
+antagonize.add_vial_cost("aspect", "-user.power//2")
+
 useranticipate = Skill("useranticipate")
 useranticipate.add_apply_state("guard", 2, "1.0")
 useranticipate.parryable = False
@@ -1208,6 +1216,18 @@ admonish.add_apply_state("demoralize", 2, "1.0")
 admonish.add_state_potency_change("demoralize", "0.1")
 
 # unique skills
+# ballkind
+athleticize = Skill("athleticize")
+athleticize.description = "User increases their SPUNK and gains some VIM at the cost of their health vial."
+athleticize.target_self = True
+athleticize.beneficial = True
+athleticize.parryable = False
+athleticize.action_cost = 0
+athleticize.cooldown = 1
+athleticize.add_vial_cost("hp", "user.power//2")
+athleticize.add_vial_cost("vim", "-user.power//2")
+athleticize.add_stat_bonus("spunk", "user.power//18")
+
 # bottlekind
 userabdicate = Skill("userabdicate")
 userabdicate.need_damage_to_apply_states = False
@@ -1305,6 +1325,11 @@ add_abstratus_skill("axekind", avenge, 50)
 add_abstratus_skill("bagkind", asphyxiate, 1)
 add_abstratus_skill("bagkind", awaitskill, 50)
     # abduct
+
+# ballkind
+add_abstratus_skill("ballkind", antagonize, 1)
+add_abstratus_skill("ballkind", arraign, 50)
+add_abstratus_skill("ballkind", athleticize, 75)
 
 # bookkind
     # ask
