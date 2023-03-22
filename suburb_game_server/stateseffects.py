@@ -138,11 +138,12 @@ class DemiseState(ClassPassive):
 
 class FaeState(ClassPassive):
     def new_turn(self, griefer: "strife.Griefer"):
-        healing = griefer.power
+        base_healing = griefer.power * 3
         adjustment = griefer.power//4
         for allied_griefer in griefer.team_members:
-            allied_griefer.change_vial("hp", healing)
             griefer.strife.log(self.aspect.adjust(allied_griefer, adjustment))
+            healing = base_healing * self.aspect.ratio(allied_griefer)
+            allied_griefer.change_vial("hp", int(healing))
 
 class BreakState(ClassPassive):
     def on_apply(self, griefer: "strife.Griefer"):
@@ -157,8 +158,8 @@ for _, aspect in skills.aspects.items():
     tragedystate.tooltip = f"{aspect.name.upper()} decreases each turn."
     demisestate = DemiseState(f"demise of {aspect.name}", aspect, "bard", 100)
     demisestate.tooltip = f"The {aspect.name.upper()} of everyone in the strife decreases each turn."
-    faestate = FaeState(f"{aspect.name} fae", aspect, "sylph", 25)
-    faestate.tooltip = f"Heals all allies and increases their {aspect.name.upper()} each turn."
+    faestate = FaeState(f"{aspect.name} fae", aspect, "sylph", 100)
+    faestate.tooltip = f"Heals all allies based on their {aspect.name.upper()} and increases their {aspect.name.upper()} each turn."
     breakstate = BreakState(f"{aspect.name}break", aspect, "knight", 100)
     breakstate.tooltip = f"Your {aspect.maximum_name} is increased at the start of combat based on your {aspect}."
     gritstate = GritState(f"{aspect.name} grit", aspect, "rogue", 100)
