@@ -253,6 +253,8 @@ class Skill():
     def is_usable_by(self, griefer: "strife.Griefer"):
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
         if griefer.get_skill_cooldown(self.name) > 0: return False
+        for state in griefer.states_list:
+            if self.category in state.lock_categories(griefer): return False
         return True
     
     def is_submittable_by(self, griefer: "strife.Griefer"):
@@ -273,6 +275,7 @@ class Skill():
         out["costs"] = self.get_costs(griefer)
         out["valid_targets"] = self.get_valid_targets(griefer)
         out["special_effect"] = ""
+        out["usable"] = self.is_usable_by(griefer)
         return out
 
 aggrieve = Skill("aggrieve")
@@ -1121,6 +1124,10 @@ aslurp.add_vial_change("hp", "user.power//2")
 aslurp.parryable = False
 aslurp.beneficial = True
 aslurp.target_self = True
+
+# unique skills
+# bottlekind
+abdicate = AbstratusSkill("abdicate")
 
 # bottlekind
 add_abstratus_skill("bottlekind", aslurp, 1)

@@ -24,6 +24,9 @@ class State():
     def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
         return damage
     
+    def lock_categories(self, griefer: "strife.Griefer") -> list[str]:
+        return []
+    
     def extra_actions(self, griefer: "strife.Griefer") -> int:
         return 0
 
@@ -57,6 +60,10 @@ class DemoralizeState(State):
     
 demoralize = DemoralizeState("demoralize")
 demoralize.tooltip = "Reduces damage dealt."
+
+class DisarmedState(State):
+    def lock_categories(self, griefer: "strife.Griefer") -> list[str]:
+        return ["arsenal"]
 
 class AiryState(State):
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:

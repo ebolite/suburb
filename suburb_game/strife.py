@@ -24,6 +24,7 @@ class Skill():
         self.valid_targets: list[str] = skill_dict["valid_targets"]
         self.costs: dict[str, int] = skill_dict["costs"]
         self.description = skill_dict["description"]
+        self.usable = skill_dict["usable"]
 
 class Npc():
     def __init__(self, name, npc_dict):
@@ -68,6 +69,7 @@ class Griefer():
         return True
     
     def can_use_skill(self, skill: Skill) -> bool:
+        if not skill.usable: return False
         if not self.can_pay_costs(skill.costs): return False
         if self.get_skill_cooldown(skill) > 0: return False
         if self.available_actions < skill.action_cost: return False
