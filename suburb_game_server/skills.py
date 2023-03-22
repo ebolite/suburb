@@ -327,7 +327,8 @@ abstain.beneficial = True
 abstain.target_self = True
 abstain.damage_formula = "0"
 abstain.category = "abstinent"
-abstain.add_vial_change("vim", "user.power")
+# costs negative power... hey it works
+abstain.add_vial_cost("vim", "-user.power")
 player_skills.append("abstain")
 
 abuse = Skill("abuse")
