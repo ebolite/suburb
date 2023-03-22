@@ -1124,6 +1124,15 @@ aslurp.parryable = False
 aslurp.beneficial = True
 aslurp.target_self = True
 
+assemble = AbstratusSkill("assemble")
+assemble.description = f"ASSEMBLES some food, restoring the health vial and VIM of the target."
+assemble.use_message = "{user} assembles food!"
+assemble.cooldown = 2
+assemble.parryable = False
+assemble.beneficial = True
+assemble.add_vial_change("hp", "user.power//2")
+assemble.add_vial_change("vim", "user.power")
+
 # unique skills
 # bottlekind
 userabdicate = Skill("userabdicate")
@@ -1138,20 +1147,66 @@ abdicate.cooldown = 1
 abdicate.damage_formula = "user.base_damage * (3 + coin)"
 abdicate.user_skill = "userabdicate"
 
+araze = AbstratusSkill("araze")
+araze.description = f"Deals damage and reduces the target's SPACE."
+araze.use_message = "{user} flattens the enemy!"
+araze.damage_formula = "user.base_damage * (1.5 + 0.75*coin)"
+araze.add_aspect_change("space", "-user.power//3")
+araze.add_vial_cost("vim", "user.power//3")
+
+# aerosolkind
+    # aflame
+
 # bottlekind
 add_abstratus_skill("bottlekind", aslurp, 1)
 add_abstratus_skill("bottlekind", attack, 50)
 add_abstratus_skill("bottlekind", abdicate, 75)
 
+# rollingpinkind
+add_abstratus_skill("rollingpinkind", araze, 1)
+add_abstratus_skill("rollingpinkind", arraign, 50)
+add_abstratus_skill("rollingpinkind", assemble, 75)
+
+# potkind
+add_abstratus_skill("potkind", assemble, 1)
+add_abstratus_skill("pankind", awaitskill, 50)
+
+# pankind
+add_abstratus_skill("pankind", assemble, 1)
+add_abstratus_skill("pankind", arraign, 50)
+
+# ladlekind
+add_abstratus_skill("ladlekind", assemble, 1)
+add_abstratus_skill("ladlekind", attack, 50)
+
+# knifekind
+add_abstratus_skill("cleaverkind", artillerate, 50)
+
+# cleaverkind
+add_abstratus_skill("cleaverkind", avenge, 50)
+add_abstratus_skill("cleaverkind", assemble, 75)
+
 # pillowkind
 add_abstratus_skill("pillowkind", asphyxiate, 1)
+add_abstratus_skill("pillowkind", awaitskill, 50)
 
-#jumpropekind
+# jumpropekind
 add_abstratus_skill("jumpropekind", asphyxiate, 75)
 
-#cordkind
+# cordkind
 add_abstratus_skill("cordkind", asphyxiate, 1)
 
-#bagkind
+# bagkind
 add_abstratus_skill("bagkind", asphyxiate, 1)
-# abduct
+add_abstratus_skill("bagkind", awaitskill, 50)
+    # abduct
+
+# penkind
+    # ask
+    # autograph
+
+# bookkind
+    # ask
+
+# paperkind
+    # ask

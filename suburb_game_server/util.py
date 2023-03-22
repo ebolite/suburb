@@ -83,7 +83,7 @@ for base in bases:
     for kind in bases[base]["kinds"]:
         if kind not in kinds:
             kinds.append(kind)
-print(kinds)
+print(sorted(kinds))
 
 def saveall():
     print("Saving...")
