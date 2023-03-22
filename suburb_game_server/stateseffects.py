@@ -68,6 +68,15 @@ class DisarmState(State):
 disarm = DisarmState("disarm")
 disarm.tooltip = "Cannot use ARSENAL skills."
 
+class VulnerableState(State):
+    def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
+        mod = self.potency(griefer) * 0.25
+        mod = 1 + mod
+        return int(damage*mod)
+    
+vulnerable = VulnerableState("vulnerable")
+vulnerable.tooltip = "Takes more damage."
+
 class AiryState(State):
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:
         reduction = 0.4 * self.potency(griefer)

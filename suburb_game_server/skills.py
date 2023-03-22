@@ -1151,13 +1151,18 @@ assemble.beneficial = True
 assemble.add_vial_change("hp", "user.power//2")
 assemble.add_vial_change("vim", "user.power")
 
-assanguinate = AbstratusSkill("assanguinate")
-assanguinate.description = f"Deals damage similar to assail and applies BLEED with potency 2 for 3 turns, which deals damage over time. Also increases BLEED potency by 0.2."
-assanguinate.use_message = "{user} assanguinates!"
-assanguinate.damage_formula = ASSAIL_FORMULA
-assanguinate.add_vial_cost("vim", "user.power//2")
-assanguinate.add_apply_state("bleed", 3, "2.0")
-assanguinate.add_state_potency_change("bleed", "0.2")
+useraxe = Skill("useraxe")
+useraxe.parryable = False
+useraxe.need_damage_to_apply_states = False
+useraxe.add_apply_state("vulnerable", 2, "1.0")
+
+axe = AbstratusSkill("axe")
+axe.description = f"Attacks recklessly, making the user VULNERABLE for 2 turns with a 1.0 potency."
+axe.use_message = "{user} chops!"
+axe.action_cost = 0
+axe.cooldown = 1
+axe.damage_formula = AGGRIEVE_FORMULA
+axe.user_skill = "useraxe"
 
 # unique skills
 # bottlekind
@@ -1179,6 +1184,14 @@ araze.use_message = "{user} flattens the enemy!"
 araze.damage_formula = ASSAIL_FORMULA
 araze.add_aspect_change("space", "-user.power//3")
 araze.add_vial_cost("vim", "user.power//3")
+
+assanguinate = AbstratusSkill("assanguinate")
+assanguinate.description = f"Deals damage similar to assail and applies BLEED with potency 2 for 3 turns, which deals damage over time. Also increases BLEED potency by 0.2."
+assanguinate.use_message = "{user} assanguinates!"
+assanguinate.damage_formula = ASSAIL_FORMULA
+assanguinate.add_vial_cost("vim", "user.power//2")
+assanguinate.add_apply_state("bleed", 3, "2.0")
+assanguinate.add_state_potency_change("bleed", "0.2")
 
 # aerosolkind
     # aflame
@@ -1211,6 +1224,15 @@ add_abstratus_skill("cleaverkind", artillerate, 50)
 # cleaverkind
 add_abstratus_skill("cleaverkind", avenge, 50)
 add_abstratus_skill("cleaverkind", assemble, 75)
+
+# axekind
+add_abstratus_skill("axekind", axe, 1)
+add_abstratus_skill("axekind", avenge, 50)
+
+# sawkind
+add_abstratus_skill("sawkind", assanguinate, 1)
+add_abstratus_skill("sawkind", avenge, 50)
+add_abstratus_skill("sawkind", axe, 75)
 
 # pillowkind
 add_abstratus_skill("pillowkind", asphyxiate, 1)
