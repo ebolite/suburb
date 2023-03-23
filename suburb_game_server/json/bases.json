@@ -2950,7 +2950,7 @@
         "adjectives": [],
         "inheritpower": 0,
         "code": "E!nuCBFM",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "gloves": {
@@ -2991,7 +2991,7 @@
         "adjectives": [],
         "inheritpower": 0,
         "code": "UOhlw!Kf",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "silver fork": {
@@ -4326,7 +4326,7 @@
         ],
         "inheritpower": 0,
         "code": "sLXGPEua",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "pipe wrench": {
@@ -5662,7 +5662,7 @@
             "boxing"
         ],
         "code": "i5P0k?HA",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "miku figurine": {
@@ -6521,7 +6521,7 @@
             "virtual+reality"
         ],
         "code": "cntrInYW",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "smart phone": {
@@ -6726,7 +6726,7 @@
             "cowboy"
         ],
         "code": "qHiKM!c5",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "cowboy boots": {
@@ -6770,7 +6770,7 @@
             "cowboy"
         ],
         "code": "3kPKKOKk",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "bandana": {
@@ -6810,7 +6810,7 @@
         "inheritpower": 0,
         "adjectives": [],
         "code": "tvjouSZp",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "clown shoes": {
@@ -6853,7 +6853,7 @@
             "clown"
         ],
         "code": "UpOCx5wf",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "clown nose": {
@@ -6896,7 +6896,7 @@
             "clown"
         ],
         "code": "kTksYlU!",
-        "wearable": false,
+        "wearable": true,
         "attached_skills": []
     },
     "joker figurine": {
