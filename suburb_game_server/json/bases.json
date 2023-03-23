@@ -32,7 +32,8 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "attached_skills": []
     },
     "completely+useless object": {
         "base": true,
@@ -65,7 +66,8 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "attached_skills": []
     },
     "captchalogue card": {
         "base": true,
@@ -106,7 +108,8 @@
             "captchalogue"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "attached_skills": []
     },
     "punched card": {
         "base": true,
@@ -155,7 +158,8 @@
         "inheritpower": 50,
         "adjectives": [
             "punched"
-        ]
+        ],
+        "attached_skills": []
     },
     "cruxite dowel": {
         "base": true,
@@ -202,7 +206,8 @@
         "adjectives": [
             "cruxite"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "attached_skills": []
     },
     "entry item": {
         "base": true,
@@ -249,7 +254,8 @@
             "entry"
         ],
         "inheritpower": 0,
-        "forbiddencode": false
+        "forbiddencode": false,
+        "attached_skills": []
     },
     "punch designix": {
         "base": true,
@@ -285,7 +291,8 @@
             "punch"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "attached_skills": []
     },
     "cruxtruder": {
         "base": true,
@@ -316,7 +323,8 @@
         ],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "attached_skills": []
     },
     "sealed cruxtruder": {
         "base": true,
@@ -349,7 +357,8 @@
             "sealed"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "attached_skills": []
     },
     "totem lathe": {
         "base": true,
@@ -379,7 +388,8 @@
             "totem"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "attached_skills": []
     },
     "alchemiter": {
         "base": true,
@@ -407,7 +417,8 @@
         ],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "attached_skills": []
     },
     "gristTorrent disc": {
         "base": true,
@@ -450,7 +461,8 @@
         "adjectives": [
             "gristTorrent"
         ],
-        "inheritpower": 100
+        "inheritpower": 100,
+        "attached_skills": []
     },
     "Sburb disc": {
         "base": true,
@@ -521,7 +533,8 @@
         "adjectives": [
             "Sburb"
         ],
-        "inheritpower": 10000
+        "inheritpower": 10000,
+        "attached_skills": []
     },
     "lap top": {
         "base": true,
@@ -558,7 +571,9 @@
         "adjectives": [
             "lap"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "KUn2ywTK",
+        "attached_skills": []
     },
     "desktop computer": {
         "base": true,
@@ -595,7 +610,9 @@
         "adjectives": [
             "desktop"
         ],
-        "inheritpower": 5
+        "inheritpower": 5,
+        "code": "SkyldajN",
+        "attached_skills": []
     },
     "paper": {
         "base": true,
@@ -630,7 +647,9 @@
         ],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "TOOn0XOp",
+        "attached_skills": []
     },
     "pizza cutter": {
         "base": true,
@@ -670,7 +689,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "o0NJzubR",
+        "attached_skills": []
     },
     "baseball bat": {
         "base": true,
@@ -700,7 +721,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "GvOkKnLy",
+        "attached_skills": []
     },
     "aluminum bat": {
         "base": true,
@@ -732,7 +755,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "1EprzWku",
+        "attached_skills": []
     },
     "rolling pin": {
         "base": true,
@@ -765,7 +790,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "zMuf?7X4",
+        "attached_skills": []
     },
     "plunger": {
         "base": true,
@@ -797,7 +824,9 @@
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "yHSVolaN",
+        "attached_skills": []
     },
     "yoyo": {
         "base": true,
@@ -831,7 +860,9 @@
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 10
+        "inheritpower": 10,
+        "code": "W32Pasmf",
+        "attached_skills": []
     },
     "scissors": {
         "base": true,
@@ -865,7 +896,9 @@
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "joxYm8M1",
+        "attached_skills": []
     },
     "shears": {
         "base": true,
@@ -908,7 +941,9 @@
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "d9IwbYEC",
+        "attached_skills": []
     },
     "safety scissors": {
         "base": true,
@@ -940,7 +975,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "vGkY7esP",
+        "attached_skills": []
     },
     "pepper spray": {
         "base": true,
@@ -990,7 +1027,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "r?OIRUys",
+        "attached_skills": []
     },
     "chainsaw": {
         "base": true,
@@ -1038,7 +1077,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "O64F55nO",
+        "attached_skills": []
     },
     "weed whacker": {
         "base": true,
@@ -1070,7 +1111,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "054zjJuz",
+        "attached_skills": []
     },
     "crowbar": {
         "base": true,
@@ -1100,7 +1143,9 @@
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "ZDucn2T?",
+        "attached_skills": []
     },
     "halligan bar": {
         "base": true,
@@ -1140,7 +1185,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "?Qlw!VLV",
+        "attached_skills": []
     },
     "broom": {
         "base": true,
@@ -1171,7 +1218,9 @@
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "oXliKcd1",
+        "attached_skills": []
     },
     "straw broom": {
         "base": true,
@@ -1212,7 +1261,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "RJSyJSky",
+        "attached_skills": []
     },
     "fire poker": {
         "base": true,
@@ -1244,7 +1295,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "pAler55a",
+        "attached_skills": []
     },
     "spear": {
         "base": true,
@@ -1271,7 +1324,9 @@
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "dd7T9L0D",
+        "attached_skills": []
     },
     "ice pick": {
         "base": true,
@@ -1307,7 +1362,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "mpG!?!H7",
+        "attached_skills": []
     },
     "golf club": {
         "base": true,
@@ -1343,7 +1400,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "xcPzH8un",
+        "attached_skills": []
     },
     "hammer": {
         "base": true,
@@ -1371,7 +1430,9 @@
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "Rdn1c2aX",
+        "attached_skills": []
     },
     "sledge hammer": {
         "base": true,
@@ -1428,7 +1489,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "dFqJnIPj",
+        "attached_skills": []
     },
     "rubber mallet": {
         "base": true,
@@ -1465,7 +1528,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "xY?u8lN7",
+        "attached_skills": []
     },
     "jump rope": {
         "base": true,
@@ -1500,7 +1565,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "cG927kxS",
+        "attached_skills": []
     },
     "piano wire": {
         "base": true,
@@ -1533,7 +1600,9 @@
         ],
         "use": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "ihlc2YdM",
+        "attached_skills": []
     },
     "shovel": {
         "base": true,
@@ -1562,7 +1631,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "G9RfcJtP",
+        "attached_skills": []
     },
     "hatchet": {
         "base": true,
@@ -1599,7 +1670,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "sNSv5uSG",
+        "attached_skills": []
     },
     "axe": {
         "base": true,
@@ -1636,7 +1709,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "NPKI1BBy",
+        "attached_skills": []
     },
     "fire axe": {
         "base": true,
@@ -1680,7 +1755,9 @@
             "fire"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "6GVz6Y0c",
+        "attached_skills": []
     },
     "wooden spoon": {
         "base": true,
@@ -1712,7 +1789,9 @@
             "wooden"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "5?e7IBEk",
+        "attached_skills": []
     },
     "silver spoon": {
         "base": true,
@@ -1744,7 +1823,9 @@
             "silver"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "rWZURMDP",
+        "attached_skills": []
     },
     "Abraham Lincoln bust": {
         "base": true,
@@ -1784,7 +1865,9 @@
             "Lincoln"
         ],
         "forbiddencode": false,
-        "inheritpower": 35
+        "inheritpower": 35,
+        "code": "ZEwFW0tJ",
+        "attached_skills": []
     },
     "Julius Caesar bust": {
         "base": true,
@@ -1825,7 +1908,9 @@
             "Caesar"
         ],
         "forbiddencode": false,
-        "inheritpower": 40
+        "inheritpower": 40,
+        "code": "kLx6j?Q4",
+        "attached_skills": []
     },
     "miniature The+Thinker statue": {
         "base": true,
@@ -1864,7 +1949,9 @@
             "The+Thinker"
         ],
         "forbiddencode": false,
-        "inheritpower": 30
+        "inheritpower": 30,
+        "code": "wwPMhjTT",
+        "attached_skills": []
     },
     "woman-sized Statue+of Liberty": {
         "base": true,
@@ -1917,7 +2004,9 @@
             "Statue+of"
         ],
         "forbiddencode": false,
-        "inheritpower": 240
+        "inheritpower": 240,
+        "code": "MLFoUTXH",
+        "attached_skills": []
     },
     "spatula": {
         "base": true,
@@ -1947,7 +2036,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "OqYQjTBn",
+        "attached_skills": []
     },
     "golden spatula": {
         "base": true,
@@ -1984,7 +2075,9 @@
             "golden"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "M9AsSh82",
+        "attached_skills": []
     },
     "flat-head screwdriver": {
         "base": true,
@@ -2016,7 +2109,9 @@
             "flat-head"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "o86OREtp",
+        "attached_skills": []
     },
     "Phillips screwdriver": {
         "base": true,
@@ -2048,7 +2143,9 @@
             "Phillips"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "?yjn4Nbq",
+        "attached_skills": []
     },
     "magnetic screwdriver": {
         "base": true,
@@ -2081,7 +2178,9 @@
             "magnetic"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "S2rvPZTO",
+        "attached_skills": []
     },
     "sword": {
         "base": true,
@@ -2112,7 +2211,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "WTMyrpet",
+        "attached_skills": []
     },
     "katana": {
         "base": true,
@@ -2145,7 +2246,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 15
+        "inheritpower": 15,
+        "code": "U46!Pwme",
+        "attached_skills": []
     },
     "cheap piece-of-shit katana": {
         "base": true,
@@ -2173,7 +2276,9 @@
             "piece-of-shit"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "lGHkP?LD",
+        "attached_skills": []
     },
     "anime katana": {
         "base": true,
@@ -2227,7 +2332,9 @@
             "anime"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "HMgQe8Gl",
+        "attached_skills": []
     },
     "rapier": {
         "base": true,
@@ -2256,7 +2363,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "fva2By9j",
+        "attached_skills": []
     },
     "zweihander": {
         "base": true,
@@ -2287,7 +2396,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "Ve5m4EnN",
+        "attached_skills": []
     },
     "pistol": {
         "base": true,
@@ -2314,7 +2425,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "5f3mtYir",
+        "attached_skills": []
     },
     ".44 magnum": {
         "base": true,
@@ -2343,7 +2456,9 @@
             ".44"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "rhm2Nlsv",
+        "attached_skills": []
     },
     "lamp": {
         "base": true,
@@ -2379,7 +2494,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 6
+        "inheritpower": 6,
+        "code": "iJBQxowm",
+        "attached_skills": []
     },
     "desk lamp": {
         "base": true,
@@ -2417,7 +2534,9 @@
             "desk"
         ],
         "forbiddencode": false,
-        "inheritpower": 7
+        "inheritpower": 7,
+        "code": "CT5XRb2m",
+        "attached_skills": []
     },
     "stun gun": {
         "base": true,
@@ -2461,7 +2580,9 @@
             "stun"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "XKfUGhER",
+        "attached_skills": []
     },
     "heavy-duty taser": {
         "base": true,
@@ -2507,7 +2628,9 @@
             "heavy-duty"
         ],
         "forbiddencode": false,
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "Wj7Ppzzc",
+        "attached_skills": []
     },
     "basketball": {
         "base": true,
@@ -2539,7 +2662,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 7
+        "inheritpower": 7,
+        "code": "si5x!nHE",
+        "attached_skills": []
     },
     "football": {
         "base": true,
@@ -2572,7 +2697,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 7
+        "inheritpower": 7,
+        "code": "7Z3gQ?9A",
+        "attached_skills": []
     },
     "dodgeball": {
         "base": true,
@@ -2611,7 +2738,9 @@
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 15
+        "inheritpower": 15,
+        "code": "3WNF3OJ?",
+        "attached_skills": []
     },
     "bowling ball": {
         "base": true,
@@ -2642,7 +2771,9 @@
             "bowling"
         ],
         "forbiddencode": false,
-        "inheritpower": 7
+        "inheritpower": 7,
+        "code": "2f45xpf8",
+        "attached_skills": []
     },
     "rake": {
         "base": true,
@@ -2674,7 +2805,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "8wDY8fxP",
+        "attached_skills": []
     },
     "wooden plank": {
         "base": true,
@@ -2706,7 +2839,9 @@
         "adjectives": [
             "wooden"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "8slmZw48",
+        "attached_skills": []
     },
     "brass knuckles": {
         "base": true,
@@ -2738,7 +2873,9 @@
         "adjectives": [
             "brass"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "xRQ?AjeC",
+        "attached_skills": []
     },
     "sap": {
         "base": true,
@@ -2766,7 +2903,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "IrpKg3EY",
+        "attached_skills": []
     },
     "caestus": {
         "base": true,
@@ -2796,7 +2935,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "eGlfH83s",
+        "attached_skills": []
     },
     "mittens": {
         "base": true,
@@ -2836,7 +2977,10 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "E!nuCBFM",
+        "wearable": false,
+        "attached_skills": []
     },
     "gloves": {
         "base": true,
@@ -2872,7 +3016,10 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "UOhlw!Kf",
+        "wearable": false,
+        "attached_skills": []
     },
     "silver fork": {
         "base": true,
@@ -2904,7 +3051,9 @@
         "adjectives": [
             "silver"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "nuFtwpyw",
+        "attached_skills": []
     },
     "trident": {
         "base": true,
@@ -2965,7 +3114,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 50
+        "inheritpower": 50,
+        "code": "3opksOeE",
+        "attached_skills": []
     },
     "tuning fork": {
         "base": true,
@@ -3003,7 +3154,9 @@
         "adjectives": [
             "tuning"
         ],
-        "inheritpower": 60
+        "inheritpower": 60,
+        "code": "CF2JkQu5",
+        "attached_skills": []
     },
     "pitch fork": {
         "base": true,
@@ -3048,7 +3201,9 @@
         "adjectives": [
             "pitch"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "QDmCqh?q",
+        "attached_skills": []
     },
     "walking cane": {
         "base": true,
@@ -3085,7 +3240,9 @@
         "adjectives": [
             "walking"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "!oAhZsx9",
+        "attached_skills": []
     },
     "bull-penis cane": {
         "base": true,
@@ -3132,7 +3289,9 @@
         "adjectives": [
             "bull-penis"
         ],
-        "inheritpower": 69
+        "inheritpower": 69,
+        "code": "bjfktlzY",
+        "attached_skills": []
     },
     "candy cane": {
         "base": true,
@@ -3173,7 +3332,9 @@
         "adjectives": [
             "candy"
         ],
-        "inheritpower": 15
+        "inheritpower": 15,
+        "code": "HMvcbrR9",
+        "attached_skills": []
     },
     "curling iron": {
         "base": true,
@@ -3209,7 +3370,9 @@
         "adjectives": [
             "curling"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "pZt?m1B2",
+        "attached_skills": []
     },
     "chain": {
         "base": true,
@@ -3237,7 +3400,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "Kb4lpfCZ",
+        "attached_skills": []
     },
     "bike chain": {
         "base": true,
@@ -3267,7 +3432,9 @@
         "adjectives": [
             "bike"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "ooOm7NEu",
+        "attached_skills": []
     },
     "key chain": {
         "base": true,
@@ -3302,7 +3469,9 @@
         "adjectives": [
             "key"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "HWaF3Sf8",
+        "attached_skills": []
     },
     "knife": {
         "base": true,
@@ -3330,7 +3499,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "KuDTLljq",
+        "attached_skills": []
     },
     "butcher knife": {
         "base": true,
@@ -3367,7 +3538,9 @@
         "adjectives": [
             "butcher"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "Wp5nJwnL",
+        "attached_skills": []
     },
     "edgy knife": {
         "base": true,
@@ -3398,7 +3571,9 @@
         "adjectives": [
             "edgy"
         ],
-        "inheritpower": 15
+        "inheritpower": 15,
+        "code": "ATZhDdZv",
+        "attached_skills": []
     },
     "table leg": {
         "base": true,
@@ -3428,7 +3603,9 @@
         "adjectives": [
             "table"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "5qU8GXQr",
+        "attached_skills": []
     },
     "pool cue": {
         "base": true,
@@ -3465,7 +3642,9 @@
         "use": [],
         "adjectives": [
             "pool"
-        ]
+        ],
+        "code": "9k4k2JDB",
+        "attached_skills": []
     },
     "shotgun": {
         "base": true,
@@ -3496,7 +3675,9 @@
         "use": [],
         "forbiddencode": false,
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "K1VJnry?",
+        "attached_skills": []
     },
     "double-barreled shotgun": {
         "base": true,
@@ -3538,7 +3719,9 @@
         "adjectives": [
             "double-barreled"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "0T!AihUJ",
+        "attached_skills": []
     },
     "sewing needles": {
         "base": true,
@@ -3568,7 +3751,9 @@
         "adjectives": [
             "sewing"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "srqmkI1A",
+        "attached_skills": []
     },
     "knitting needles": {
         "base": true,
@@ -3598,7 +3783,9 @@
         "adjectives": [
             "knitting"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "jxg1xd8d",
+        "attached_skills": []
     },
     "5-pound dumbbell": {
         "base": true,
@@ -3645,7 +3832,9 @@
         "adjectives": [
             "5-pound"
         ],
-        "inheritpower": 5
+        "inheritpower": 5,
+        "code": "h6y!gWrP",
+        "attached_skills": []
     },
     "15-pound dumbbell": {
         "base": true,
@@ -3693,7 +3882,9 @@
         "adjectives": [
             "15-pound"
         ],
-        "inheritpower": 15
+        "inheritpower": 15,
+        "code": "DprzIwmD",
+        "attached_skills": []
     },
     "100-pound dumbbell": {
         "base": true,
@@ -3742,7 +3933,9 @@
         "adjectives": [
             "100-pound"
         ],
-        "inheritpower": 100
+        "inheritpower": 100,
+        "code": "G0Dv!6wO",
+        "attached_skills": []
     },
     "hockey stick": {
         "base": true,
@@ -3782,7 +3975,9 @@
         "adjectives": [
             "hockey"
         ],
-        "inheritpower": 7
+        "inheritpower": 7,
+        "code": "!2dgQthy",
+        "attached_skills": []
     },
     "vacuum cleaner": {
         "base": true,
@@ -3821,7 +4016,9 @@
         "adjectives": [
             "vacuum"
         ],
-        "inheritpower": 45
+        "inheritpower": 45,
+        "code": "0nwwJvhJ",
+        "attached_skills": []
     },
     "mop": {
         "base": true,
@@ -3856,7 +4053,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "8H15U5ls",
+        "attached_skills": []
     },
     "trophy": {
         "base": true,
@@ -3891,7 +4090,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 25
+        "inheritpower": 25,
+        "code": "qSL7jfMh",
+        "attached_skills": []
     },
     "fancy+santa": {
         "base": true,
@@ -3933,7 +4134,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 25
+        "inheritpower": 25,
+        "code": "6A!vtqPY",
+        "attached_skills": []
     },
     "ladle": {
         "base": true,
@@ -3969,7 +4172,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "OKH9NSaL",
+        "attached_skills": []
     },
     "extension cable": {
         "base": true,
@@ -4002,7 +4207,9 @@
         "adjectives": [
             "extension"
         ],
-        "inheritpower": 30
+        "inheritpower": 30,
+        "code": "E?hdwdbi",
+        "attached_skills": []
     },
     "rope": {
         "base": true,
@@ -4026,7 +4233,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "n!KbTz6!",
+        "attached_skills": []
     },
     "clothing iron": {
         "base": true,
@@ -4067,7 +4276,9 @@
         "adjectives": [
             "clothing"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "VbGxKVsv",
+        "attached_skills": []
     },
     "hack saw": {
         "base": true,
@@ -4098,7 +4309,9 @@
         "adjectives": [
             "hack"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "ULB!S1b0",
+        "attached_skills": []
     },
     "ice skates": {
         "base": true,
@@ -4139,7 +4352,10 @@
         "adjectives": [
             "ice"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "sLXGPEua",
+        "wearable": false,
+        "attached_skills": []
     },
     "pipe wrench": {
         "base": true,
@@ -4171,7 +4387,9 @@
         "adjectives": [
             "pipe"
         ],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "Q4NwXmsJ",
+        "attached_skills": []
     },
     "umbrella": {
         "base": true,
@@ -4211,7 +4429,9 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
-        "inheritpower": 0
+        "inheritpower": 0,
+        "code": "0g76QRTd",
+        "attached_skills": []
     },
     "bed": {
         "base": true,
@@ -4252,7 +4472,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "L9aaQOL3",
+        "attached_skills": []
     },
     "dresser": {
         "base": true,
@@ -4281,7 +4503,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "5G8vKvts",
+        "attached_skills": []
     },
     "pillow": {
         "base": true,
@@ -4334,7 +4558,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "D29acNhB",
+        "attached_skills": []
     },
     "blanket": {
         "base": true,
@@ -4381,7 +4607,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "uMpxCS1B",
+        "attached_skills": []
     },
     "refrigerator": {
         "base": true,
@@ -4418,7 +4646,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "g2kGqJ1B",
+        "attached_skills": []
     },
     "oven": {
         "base": true,
@@ -4461,7 +4691,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "36gRusfz",
+        "attached_skills": []
     },
     "pot": {
         "base": true,
@@ -4496,7 +4728,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "3cVSwPMc",
+        "attached_skills": []
     },
     "frying pan": {
         "base": true,
@@ -4539,7 +4773,9 @@
         "inheritpower": 0,
         "adjectives": [
             "frying"
-        ]
+        ],
+        "code": "5Q4S?p2I",
+        "attached_skills": []
     },
     "sink": {
         "base": true,
@@ -4570,7 +4806,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "DHvQF!NT",
+        "attached_skills": []
     },
     "plate": {
         "base": true,
@@ -4593,7 +4831,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "Rv?7wim5",
+        "attached_skills": []
     },
     "cup": {
         "base": true,
@@ -4616,7 +4856,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "P!9KZDU4",
+        "attached_skills": []
     },
     "mug": {
         "base": true,
@@ -4639,7 +4881,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "LwTABn6i",
+        "attached_skills": []
     },
     "table": {
         "base": true,
@@ -4667,7 +4911,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "JdVSJs16",
+        "attached_skills": []
     },
     "grandfather clock": {
         "base": true,
@@ -4706,7 +4952,9 @@
         "use": [],
         "adjectives": [
             "grandfather"
-        ]
+        ],
+        "code": "W8MeYxB1",
+        "attached_skills": []
     },
     "clock": {
         "base": true,
@@ -4742,7 +4990,9 @@
         ],
         "forbiddencode": false,
         "use": [],
-        "adjectives": []
+        "adjectives": [],
+        "code": "IYqL9FDd",
+        "attached_skills": []
     },
     "toilet": {
         "base": true,
@@ -4784,7 +5034,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "h3TJTKKj",
+        "attached_skills": []
     },
     "bath tub": {
         "base": true,
@@ -4811,7 +5063,9 @@
         "inheritpower": 0,
         "adjectives": [
             "bath"
-        ]
+        ],
+        "code": "rFYUNxJp",
+        "attached_skills": []
     },
     "shower": {
         "base": true,
@@ -4842,7 +5096,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "nlvgGGUH",
+        "attached_skills": []
     },
     "fireplace": {
         "base": true,
@@ -4880,7 +5136,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "wneGpibF",
+        "attached_skills": []
     },
     "bench": {
         "base": true,
@@ -4908,7 +5166,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "ZCmS1f6Q",
+        "attached_skills": []
     },
     "arm chair": {
         "base": true,
@@ -4935,7 +5195,9 @@
         "inheritpower": 0,
         "adjectives": [
             "arm"
-        ]
+        ],
+        "code": "YSfUEJqL",
+        "attached_skills": []
     },
     "couch": {
         "base": true,
@@ -4959,7 +5221,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "WMR0GRbO",
+        "attached_skills": []
     },
     "television": {
         "base": true,
@@ -4990,7 +5254,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "4iF1zoL?",
+        "attached_skills": []
     },
     "washing machine": {
         "base": true,
@@ -5023,7 +5289,9 @@
         "inheritpower": 10,
         "adjectives": [
             "washing"
-        ]
+        ],
+        "code": "QvnMXdep",
+        "attached_skills": []
     },
     "drying machine": {
         "base": true,
@@ -5056,7 +5324,9 @@
         "inheritpower": 10,
         "adjectives": [
             "drying"
-        ]
+        ],
+        "code": "av6I4AdF",
+        "attached_skills": []
     },
     "ballpoint pen": {
         "base": true,
@@ -5089,7 +5359,9 @@
         "inheritpower": 25,
         "adjectives": [
             "ballpoint"
-        ]
+        ],
+        "code": "CZO0anz8",
+        "attached_skills": []
     },
     "#2 pencil": {
         "base": true,
@@ -5132,7 +5404,9 @@
         "inheritpower": 15,
         "adjectives": [
             "#2"
-        ]
+        ],
+        "code": "5fUHdaHe",
+        "attached_skills": []
     },
     "stapler": {
         "base": true,
@@ -5168,7 +5442,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "NfFO8gfd",
+        "attached_skills": []
     },
     "fax machine": {
         "base": true,
@@ -5199,7 +5475,9 @@
         "inheritpower": 0,
         "adjectives": [
             "fax"
-        ]
+        ],
+        "code": "M8SPV?QJ",
+        "attached_skills": []
     },
     "copying machine": {
         "base": true,
@@ -5232,7 +5510,9 @@
         "inheritpower": 250,
         "adjectives": [
             "copying"
-        ]
+        ],
+        "code": "yjrBat7i",
+        "attached_skills": []
     },
     "exercise ball": {
         "base": true,
@@ -5262,7 +5542,9 @@
         "inheritpower": 5,
         "adjectives": [
             "exercise"
-        ]
+        ],
+        "code": "KVFXOgYO",
+        "attached_skills": []
     },
     "water bottle": {
         "base": true,
@@ -5308,7 +5590,9 @@
         "inheritpower": 0,
         "adjectives": [
             "water"
-        ]
+        ],
+        "code": "o8c?MzJ5",
+        "attached_skills": []
     },
     "steroid bottle": {
         "base": true,
@@ -5342,7 +5626,9 @@
         "inheritpower": 45,
         "adjectives": [
             "steroid"
-        ]
+        ],
+        "code": "PmeafFaE",
+        "attached_skills": []
     },
     "boxing gloves": {
         "base": true,
@@ -5393,7 +5679,10 @@
         "inheritpower": 0,
         "adjectives": [
             "boxing"
-        ]
+        ],
+        "code": "i5P0k?HA",
+        "wearable": false,
+        "attached_skills": []
     },
     "miku figurine": {
         "base": true,
@@ -5436,7 +5725,9 @@
         "inheritpower": 35,
         "adjectives": [
             "miku"
-        ]
+        ],
+        "code": "gnZ1Rk6O",
+        "attached_skills": []
     },
     "anime dvd": {
         "base": true,
@@ -5484,7 +5775,9 @@
         "inheritpower": 15,
         "adjectives": [
             "anime"
-        ]
+        ],
+        "code": "YAEnY2gy",
+        "attached_skills": []
     },
     "anime poster": {
         "base": true,
@@ -5532,7 +5825,9 @@
         "inheritpower": 15,
         "adjectives": [
             "anime"
-        ]
+        ],
+        "code": "JmLJra30",
+        "attached_skills": []
     },
     "manga": {
         "base": true,
@@ -5578,7 +5873,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 15,
-        "adjectives": []
+        "adjectives": [],
+        "code": "EcUoMP8I",
+        "attached_skills": []
     },
     "bodypillow": {
         "base": true,
@@ -5624,7 +5921,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 30,
-        "adjectives": []
+        "adjectives": [],
+        "code": "RGAFRgKX",
+        "attached_skills": []
     },
     "shuriken": {
         "base": true,
@@ -5664,7 +5963,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 5,
-        "adjectives": []
+        "adjectives": [],
+        "code": "SIkIcutr",
+        "attached_skills": []
     },
     "thrasher poster": {
         "base": true,
@@ -5712,7 +6013,9 @@
         "inheritpower": 45,
         "adjectives": [
             "thrasher"
-        ]
+        ],
+        "code": "sEStZVNx",
+        "attached_skills": []
     },
     "nirvana album": {
         "base": true,
@@ -5753,7 +6056,9 @@
         "inheritpower": 20,
         "adjectives": [
             "nirvana"
-        ]
+        ],
+        "code": "LgiWReOx",
+        "attached_skills": []
     },
     "electric guitar": {
         "base": true,
@@ -5786,7 +6091,9 @@
         "inheritpower": 20,
         "adjectives": [
             "electric"
-        ]
+        ],
+        "code": "BHH1??Ff",
+        "attached_skills": []
     },
     "acoustic guitar": {
         "base": true,
@@ -5819,7 +6126,9 @@
         "inheritpower": 10,
         "adjectives": [
             "acoustic"
-        ]
+        ],
+        "code": "ONqj8u!8",
+        "attached_skills": []
     },
     "drum set": {
         "base": true,
@@ -5852,7 +6161,9 @@
         "inheritpower": 15,
         "adjectives": [
             "drum"
-        ]
+        ],
+        "code": "NBCw5wYI",
+        "attached_skills": []
     },
     "atlas": {
         "base": true,
@@ -5888,7 +6199,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 220,
-        "adjectives": []
+        "adjectives": [],
+        "code": "GdkpY4FJ",
+        "attached_skills": []
     },
     "history book": {
         "base": true,
@@ -5916,7 +6229,9 @@
         "inheritpower": 30,
         "adjectives": [
             "history"
-        ]
+        ],
+        "code": "979uYokj",
+        "attached_skills": []
     },
     "globe": {
         "base": true,
@@ -5952,7 +6267,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 300,
-        "adjectives": []
+        "adjectives": [],
+        "code": "Z2IAsae2",
+        "attached_skills": []
     },
     "flute": {
         "base": true,
@@ -5982,7 +6299,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 11,
-        "adjectives": []
+        "adjectives": [],
+        "code": "XR0kNfRZ",
+        "attached_skills": []
     },
     "saxophone": {
         "base": true,
@@ -6022,7 +6341,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 11,
-        "adjectives": []
+        "adjectives": [],
+        "code": "dkdkqyVg",
+        "attached_skills": []
     },
     "grand piano": {
         "base": true,
@@ -6065,7 +6386,9 @@
         "inheritpower": 80,
         "adjectives": [
             "grand"
-        ]
+        ],
+        "code": "0fuwgGbP",
+        "attached_skills": []
     },
     "headphones": {
         "base": true,
@@ -6104,7 +6427,10 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "picV6c8!",
+        "wearable": false,
+        "attached_skills": []
     },
     "empty wrapper": {
         "base": true,
@@ -6140,7 +6466,9 @@
         "inheritpower": -10,
         "adjectives": [
             "empty"
-        ]
+        ],
+        "code": "ImGuu3Zb",
+        "attached_skills": []
     },
     "empty soda can": {
         "base": true,
@@ -6177,7 +6505,9 @@
         "adjectives": [
             "empty",
             "soda"
-        ]
+        ],
+        "code": "NAZflaQZ",
+        "attached_skills": []
     },
     "plastic bag": {
         "base": true,
@@ -6213,7 +6543,9 @@
         "inheritpower": -10,
         "adjectives": [
             "plastic"
-        ]
+        ],
+        "code": "VIgd8U?5",
+        "attached_skills": []
     },
     "sord": {
         "base": true,
@@ -6254,7 +6586,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": -6083,
-        "adjectives": []
+        "adjectives": [],
+        "code": "9dzHhLlq",
+        "attached_skills": []
     },
     "virtual+reality headset": {
         "base": true,
@@ -6296,7 +6630,10 @@
         "inheritpower": 45,
         "adjectives": [
             "virtual+reality"
-        ]
+        ],
+        "code": "cntrInYW",
+        "wearable": false,
+        "attached_skills": []
     },
     "smart phone": {
         "base": true,
@@ -6323,7 +6660,9 @@
         "inheritpower": 15,
         "adjectives": [
             "smart"
-        ]
+        ],
+        "code": "tXhGeHjU",
+        "attached_skills": []
     },
     "rc drone": {
         "base": true,
@@ -6365,7 +6704,9 @@
         "use": [],
         "adjectives": [
             "rc"
-        ]
+        ],
+        "code": "Qu4PhcBT",
+        "attached_skills": []
     },
     "gaming computer": {
         "base": true,
@@ -6411,7 +6752,9 @@
         "inheritpower": 10,
         "adjectives": [
             "gaming"
-        ]
+        ],
+        "code": "EY!1CT9h",
+        "attached_skills": []
     },
     "graphics card": {
         "base": true,
@@ -6456,7 +6799,9 @@
         "inheritpower": 65,
         "adjectives": [
             "graphics"
-        ]
+        ],
+        "code": "7lb2SLcS",
+        "attached_skills": []
     },
     "cowboy hat": {
         "base": true,
@@ -6502,7 +6847,10 @@
         "inheritpower": 12,
         "adjectives": [
             "cowboy"
-        ]
+        ],
+        "code": "qHiKM!c5",
+        "wearable": false,
+        "attached_skills": []
     },
     "cowboy boots": {
         "base": true,
@@ -6548,7 +6896,10 @@
         "inheritpower": 12,
         "adjectives": [
             "cowboy"
-        ]
+        ],
+        "code": "3kPKKOKk",
+        "wearable": false,
+        "attached_skills": []
     },
     "bandana": {
         "base": true,
@@ -6588,7 +6939,10 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
-        "adjectives": []
+        "adjectives": [],
+        "code": "tvjouSZp",
+        "wearable": false,
+        "attached_skills": []
     },
     "clown shoes": {
         "base": true,
@@ -6632,7 +6986,10 @@
         "inheritpower": 0,
         "adjectives": [
             "clown"
-        ]
+        ],
+        "code": "UpOCx5wf",
+        "wearable": false,
+        "attached_skills": []
     },
     "clown nose": {
         "base": true,
@@ -6676,7 +7033,10 @@
         "inheritpower": -2,
         "adjectives": [
             "clown"
-        ]
+        ],
+        "code": "kTksYlU!",
+        "wearable": false,
+        "attached_skills": []
     },
     "joker figurine": {
         "base": true,
@@ -6716,7 +7076,8 @@
         "inheritpower": 17,
         "adjectives": [
             "joker"
-        ]
+        ],
+        "attached_skills": []
     },
     "clown poster": {
         "base": true,
@@ -6758,7 +7119,8 @@
         "inheritpower": 15,
         "adjectives": [
             "clown"
-        ]
+        ],
+        "attached_skills": []
     },
     "cosby poster": {
         "base": true,
@@ -6794,7 +7156,8 @@
         "inheritpower": 350,
         "adjectives": [
             "cosby"
-        ]
+        ],
+        "attached_skills": []
     },
     "red faygo": {
         "base": true,
@@ -6834,7 +7197,9 @@
         "inheritpower": 2,
         "adjectives": [
             "red"
-        ]
+        ],
+        "code": "w9bnIUvR",
+        "attached_skills": []
     },
     "grape faygo": {
         "base": true,
@@ -6874,7 +7239,9 @@
         "inheritpower": 2,
         "adjectives": [
             "grape"
-        ]
+        ],
+        "code": "Zl5hYRzZ",
+        "attached_skills": []
     },
     "cola faygo": {
         "base": true,
@@ -6914,7 +7281,9 @@
         "inheritpower": 2,
         "adjectives": [
             "cola"
-        ]
+        ],
+        "code": "aGozpf1J",
+        "attached_skills": []
     },
     "cotton+candy faygo": {
         "base": true,
@@ -6962,7 +7331,9 @@
         "inheritpower": 11,
         "adjectives": [
             "cotton+candy"
-        ]
+        ],
+        "code": "yS5Ax0!r",
+        "attached_skills": []
     },
     "kiwi+strawberry faygo": {
         "base": true,
@@ -7014,7 +7385,9 @@
         "inheritpower": 11,
         "adjectives": [
             "kiwi+strawberry"
-        ]
+        ],
+        "code": "bDedY?m2",
+        "attached_skills": []
     },
     "candy+apple faygo": {
         "base": true,
@@ -7066,6 +7439,8 @@
         "inheritpower": 150,
         "adjectives": [
             "candy+apple"
-        ]
+        ],
+        "code": "XYiov!ED",
+        "attached_skills": []
     }
 }

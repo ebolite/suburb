@@ -485,6 +485,13 @@ defaults = {
     "secretadjectives": [], # a list of adjectives that might be inherited but don't show up on the item
 }
 
+for base, base_dict in util.bases.items():
+    for default in defaults:
+        if default not in base_dict:
+            base_dict[default] = defaults[default]
+            print(f"base {base} missing default {default}")
+util.writejson(util.bases, "bases")
+
 if __name__ == "__main__":
     ...
     # name_desc = {}
