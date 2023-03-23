@@ -58,7 +58,9 @@
             ]
         },
         "secretadjectives": [
-            "stupid"
+            "stupid",
+            "worthless",
+            "useless"
         ],
         "secret_states": {},
         "adjectives": [
@@ -93,7 +95,8 @@
         },
         "secretadjectives": [
             "meta",
-            "verification"
+            "verification",
+            "secure"
         ],
         "secret_states": {
             "weak": [
@@ -204,7 +207,9 @@
         },
         "use": [],
         "adjectives": [
-            "cruxite"
+            "cruxite",
+            "colorful",
+            "cylindrical"
         ],
         "inheritpower": 0,
         "attached_skills": []
@@ -251,7 +256,9 @@
             "enter"
         ],
         "adjectives": [
-            "entry"
+            "entry",
+            "the+first",
+            "meta"
         ],
         "inheritpower": 0,
         "forbiddencode": false,
@@ -279,7 +286,11 @@
                 "punch"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "meta",
+            "designer",
+            "alchemical"
+        ],
         "secret_states": {},
         "use": [
             "insert_card",
@@ -316,7 +327,11 @@
                 "cruxtruder"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "meta",
+            "mechanical",
+            "sburban"
+        ],
         "secret_states": {},
         "use": [
             "cruxtrude"
@@ -348,7 +363,11 @@
                 "cruxtruder"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "meta",
+            "mechanical",
+            "sburban"
+        ],
         "secret_states": {},
         "use": [
             "unseal"
@@ -377,7 +396,12 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "totemic",
+            "meta",
+            "carved",
+            "abstract"
+        ],
         "secret_states": {},
         "use": [
             "insert_dowel",
@@ -408,7 +432,12 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "meta",
+            "alchemical",
+            "abstract",
+            "sburban"
+        ],
         "secret_states": {},
         "use": [
             "insert_carved_dowel",
@@ -517,8 +546,12 @@
         },
         "secretadjectives": [
             "meta",
-            "suburban",
-            "abstract"
+            "sburban",
+            "abstract",
+            "apocalyptic",
+            "universal",
+            "multiversal",
+            "transcendental"
         ],
         "secret_states": {
             "freeze": [
@@ -562,7 +595,11 @@
                 "top"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "portable",
+            "convenient",
+            "high-tech"
+        ],
         "secret_states": {},
         "use": [
             "computer"
@@ -601,7 +638,11 @@
                 "computer"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "high-tech",
+            "robotic",
+            "rgb"
+        ],
         "secret_states": {},
         "use": [
             "computer"
@@ -639,7 +680,11 @@
                 "paper"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "fragile",
+            "paper-mache",
+            "origami"
+        ],
         "secret_states": {},
         "use": [
             "crumple",
@@ -681,7 +726,9 @@
             ]
         },
         "secretadjectives": [
-            "Italian"
+            "Italian",
+            "sharp",
+            "circular"
         ],
         "secret_states": {},
         "adjectives": [
@@ -717,7 +764,10 @@
         "secret_states": {},
         "secretadjectives": [],
         "adjectives": [
-            "baseball"
+            "baseball",
+            "wooden",
+            "sports",
+            "punk"
         ],
         "use": [],
         "forbiddencode": false,
@@ -748,7 +798,10 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "baseball"
+            "baseball",
+            "sports",
+            "punk",
+            "dented"
         ],
         "adjectives": [
             "aluminum"
@@ -783,7 +836,10 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "cooking"
+            "cooking",
+            "wooden",
+            "baking",
+            "kitchen"
         ],
         "adjectives": [
             "rolling"
@@ -819,7 +875,12 @@
             ]
         },
         "secretadjectives": [
-            "plumber's"
+            "plumber's",
+            "plunged",
+            "rubber",
+            "shitty",
+            "clogged",
+            "unclogged"
         ],
         "adjectives": [],
         "use": [],
@@ -855,7 +916,12 @@
             ]
         },
         "secretadjectives": [
-            "yo"
+            "yo",
+            "cool",
+            "radical",
+            "dope-ass",
+            "tricky",
+            "bitchin'"
         ],
         "adjectives": [],
         "use": [],
@@ -873,7 +939,7 @@
             "scissorkind"
         ],
         "wearable": false,
-        "description": "A pair of scissors used for cut paper.",
+        "description": "A pair of scissors used for cutting paper.",
         "cost": {
             "iron": 0.2,
             "jet": 1
@@ -892,7 +958,13 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "sharp",
+            "shear",
+            "metallic",
+            "dangerous",
+            "useful"
+        ],
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
@@ -940,7 +1012,10 @@
             ]
         },
         "secretadjectives": [
-            "sheepish"
+            "sheepish",
+            "dangerous",
+            "shear",
+            "metallic"
         ],
         "adjectives": [],
         "use": [],
@@ -973,7 +1048,12 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "safe",
+            "kid-friendly",
+            "fun-for-all-ages",
+            "sharp-but-safe"
+        ],
         "adjectives": [
             "safety"
         ],
@@ -1024,7 +1104,9 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "self-defense"
+            "self-defense",
+            "peppery",
+            "spicy"
         ],
         "adjectives": [
             "pepper"
@@ -1045,7 +1127,7 @@
             "sawkind"
         ],
         "wearable": false,
-        "description": "A saw used for cut trees. Very terrifying.",
+        "description": "A saw used for cutting trees. Very terrifying.",
         "cost": {
             "rust": 1,
             "blood": 1,
@@ -1076,12 +1158,16 @@
         "secret_states": {},
         "secretadjectives": [
             "lumberjack's",
-            "chain"
+            "chain",
+            "horrifying",
+            "deadly",
+            "monstrous",
+            "terrifying"
         ],
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
-        "inheritpower": 0,
+        "inheritpower": 8,
         "code": "O64F55nO",
         "attached_skills": []
     },
@@ -1111,7 +1197,11 @@
         "secret_states": {},
         "secretadjectives": [],
         "adjectives": [
-            "weed"
+            "weed",
+            "gardening",
+            "lawncare",
+            "trimming",
+            "lawn"
         ],
         "use": [],
         "forbiddencode": false,
@@ -1143,7 +1233,12 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "free",
+            "crow",
+            "utility",
+            "useful"
+        ],
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
@@ -1182,7 +1277,10 @@
             ]
         },
         "secretadjectives": [
-            "fire"
+            "fire",
+            "utility",
+            "useful",
+            "wedged"
         ],
         "adjectives": [
             "halligan"
@@ -1217,7 +1315,12 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "cleaner's"
+            "cleaner's",
+            "clean",
+            "sweeping",
+            "dust-free",
+            "spotless",
+            "dustpan-equipped"
         ],
         "adjectives": [],
         "use": [],
@@ -1257,8 +1360,14 @@
         "secret_states": {},
         "secretadjectives": [
             "witch",
-            "sweeper",
-            "cleaner"
+            "cleaner's",
+            "clean",
+            "sweeping",
+            "dust-free",
+            "spotless",
+            "old-fashioned",
+            "straw-stuffed",
+            "stuffy"
         ],
         "adjectives": [
             "straw"
@@ -1295,7 +1404,11 @@
         },
         "secretadjectives": [],
         "adjectives": [
-            "fire"
+            "fire",
+            "pointy",
+            "rusty",
+            "metallic",
+            "forged"
         ],
         "use": [],
         "forbiddencode": false,
@@ -1323,7 +1436,11 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "spearman's"
+            "spearman's",
+            "pointy",
+            "medeival",
+            "long",
+            "distant"
         ],
         "adjectives": [],
         "use": [],
@@ -1360,7 +1477,13 @@
                 "ice"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "cold",
+            "freezing",
+            "pointy",
+            "frosty",
+            "icy"
+        ],
         "adjectives": [
             "ice"
         ],
@@ -1398,7 +1521,15 @@
                 "golf"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "sports",
+            "boring",
+            "rich",
+            "high-brow",
+            "Tiger+Woods",
+            "iron",
+            "hybrid"
+        ],
         "adjectives": [
             "golf"
         ],
@@ -1430,7 +1561,14 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "brutal",
+            "heavy",
+            "useful",
+            "claw",
+            "blunt",
+            "utility"
+        ],
         "adjectives": [],
         "use": [],
         "forbiddencode": false,
@@ -1487,7 +1625,17 @@
                 "sledge"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "brutal",
+            "terrifying",
+            "unwieldy",
+            "thunderous",
+            "heavy",
+            "blunt",
+            "clumsy",
+            "crushing",
+            "destructive"
+        ],
         "adjectives": [
             "sledge"
         ],
@@ -1526,7 +1674,13 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "funny",
+            "kid-friendly",
+            "safe",
+            "toy",
+            "hilarious"
+        ],
         "adjectives": [
             "rubber"
         ],
@@ -1562,7 +1716,11 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "child's"
+            "child's",
+            "toy",
+            "fun",
+            "acrobatic",
+            "agile"
         ],
         "adjectives": [
             "jump"
@@ -1598,7 +1756,14 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "breathless",
+            "musical",
+            "sharp",
+            "metal",
+            "thin",
+            "wirey"
+        ],
         "adjectives": [
             "piano"
         ],
@@ -1631,7 +1796,12 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "utility",
+            "hefty",
+            "rugged",
+            "reliable"
+        ],
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
@@ -1669,7 +1839,12 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "lumberjack"
+            "lumberjack",
+            "violent",
+            "sharp",
+            "utility",
+            "survival",
+            "scary"
         ],
         "use": [],
         "adjectives": [],
@@ -1708,7 +1883,14 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "glitched"
+            "violent",
+            "sharp",
+            "utility",
+            "survival",
+            "scary",
+            "chipped",
+            "lumberjack",
+            "lumbering"
         ],
         "use": [],
         "adjectives": [],
@@ -1752,7 +1934,12 @@
             ]
         },
         "secretadjectives": [
-            "heroic"
+            "heroic",
+            "firey",
+            "flaming",
+            "utility",
+            "sharp",
+            "hefty"
         ],
         "use": [],
         "adjectives": [
@@ -1786,7 +1973,11 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "cooking"
+            "cooking",
+            "violent",
+            "disciplinary",
+            "abusive",
+            "traumatic"
         ],
         "use": [],
         "adjectives": [
@@ -1820,7 +2011,11 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "posh"
+            "posh",
+            "rich",
+            "soup",
+            "small",
+            "tiny"
         ],
         "use": [],
         "adjectives": [
@@ -1831,7 +2026,7 @@
         "code": "rWZURMDP",
         "attached_skills": []
     },
-    "Abraham Lincoln bust": {
+    "Abraham+Lincoln bust": {
         "base": true,
         "power": 16,
         "weight": 25,
@@ -1861,7 +2056,14 @@
             ]
         },
         "secretadjectives": [
-            "presidential"
+            "presidential",
+            "stone",
+            "liberating",
+            "free",
+            "admirable",
+            "bearded",
+            "charismatic",
+            "presentable"
         ],
         "use": [],
         "adjectives": [
@@ -1873,7 +2075,7 @@
         "code": "ZEwFW0tJ",
         "attached_skills": []
     },
-    "Julius Caesar bust": {
+    "Julius+Caesar bust": {
         "base": true,
         "power": 21,
         "weight": 25,
@@ -1904,7 +2106,13 @@
             ]
         },
         "secretadjectives": [
-            "Roman"
+            "Roman",
+            "tyrannical",
+            "imposing",
+            "dictatorial",
+            "statuesque",
+            "republican",
+            "stone"
         ],
         "use": [],
         "adjectives": [
@@ -1945,7 +2153,15 @@
             ]
         },
         "secretadjectives": [
-            "bronze"
+            "bronze",
+            "thoughtful",
+            "statuesque",
+            "thought-provoking",
+            "provocative",
+            "artistic",
+            "brilliant",
+            "genius",
+            "brooding"
         ],
         "use": [],
         "adjectives": [
@@ -2000,7 +2216,14 @@
         },
         "secretadjectives": [
             "liberty",
-            "copper"
+            "copper",
+            "free",
+            "American",
+            "statuesque",
+            "life-sized",
+            "French",
+            "historical",
+            "iconic"
         ],
         "use": [],
         "adjectives": [
@@ -2035,7 +2258,13 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "frycooking"
+            "frycooking",
+            "cooking",
+            "utility",
+            "kitchen",
+            "minimum-wage",
+            "greasy",
+            "oily"
         ],
         "use": [],
         "adjectives": [],
@@ -2072,7 +2301,17 @@
             ]
         },
         "secretadjectives": [
-            "frycooking"
+            "frycooking",
+            "cooking",
+            "utility",
+            "kitchen",
+            "greater-than-minimum-wage",
+            "greasy",
+            "oily",
+            "luxurious",
+            "opulent",
+            "lavish",
+            "admirable"
         ],
         "use": [],
         "adjectives": [
@@ -2106,7 +2345,12 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "screwy"
+            "screwy",
+            "utility",
+            "thin",
+            "pointy",
+            "handy",
+            "useful"
         ],
         "use": [],
         "adjectives": [
@@ -2140,7 +2384,12 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "screwy"
+            "screwy",
+            "utility",
+            "thin",
+            "pointy",
+            "handy",
+            "useful"
         ],
         "use": [],
         "adjectives": [
@@ -2175,7 +2424,12 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "screwy"
+            "screwy",
+            "utility",
+            "thin",
+            "pointy",
+            "handy",
+            "useful"
         ],
         "use": [],
         "adjectives": [
@@ -2211,7 +2465,15 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "arming",
+            "sharp",
+            "cool",
+            "medeival",
+            "chivalrous",
+            "gallant",
+            "noble"
+        ],
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
@@ -2230,7 +2492,7 @@
         "wearable": false,
         "description": "A Japanese sword. Loved by weebs.",
         "cost": {
-            "iron": 1,
+            "iron": 0.1,
             "rust": 0.5,
             "shale": 0.4,
             "sunstone": 0.1
@@ -2245,7 +2507,15 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "Japanese"
+            "Japanese",
+            "historical",
+            "sharp",
+            "cool",
+            "honorable",
+            "brittle",
+            "tempered",
+            "curved",
+            "folded"
         ],
         "use": [],
         "adjectives": [],
@@ -2265,15 +2535,21 @@
         "wearable": false,
         "description": "A total piece of shit sword that sucks ass.",
         "cost": {
-            "rust": 1,
-            "chalk": 1,
-            "silicon": 1
+            "rust": 0.3,
+            "chalk": 0.3,
+            "silicon": 0.3
         },
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "kinda+sharp",
+            "cheap+garbage",
+            "stupid",
+            "made-in-China",
+            "weaboo"
+        ],
         "use": [],
         "adjectives": [
             "cheap",
@@ -2330,7 +2606,16 @@
                 "anime"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "Japanese",
+            "unbreakable",
+            "indestructible",
+            "badass",
+            "really+fucking+cool",
+            "titanium",
+            "razor-sharp",
+            "tempered"
+        ],
         "use": [],
         "adjectives": [
             "anime"
@@ -2363,7 +2648,16 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "elegant",
+            "classy",
+            "classical",
+            "sharp",
+            "pointy",
+            "chivalrous",
+            "gallant",
+            "noble"
+        ],
         "use": [],
         "adjectives": [],
         "forbiddencode": false,
@@ -2395,7 +2689,16 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "deutsches"
+            "deutsches",
+            "German",
+            "massive",
+            "sharp",
+            "medeival",
+            "legendary",
+            "brutal",
+            "badass",
+            "two-handed",
+            "zwei"
         ],
         "use": [],
         "adjectives": [],
@@ -2424,7 +2727,12 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "armed"
+            "deadly",
+            "dangerous",
+            "compact",
+            "concealable",
+            "single-fire",
+            "ballistic"
         ],
         "use": [],
         "adjectives": [],
@@ -2454,7 +2762,20 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "big-iron",
+            "problem-solving",
+            "Western",
+            "long-barrel",
+            "legendary",
+            "cowboy",
+            "deadly",
+            "dangerous",
+            "show-stopping",
+            "high-caliber",
+            "revolving",
+            "magnum"
+        ],
         "use": [],
         "adjectives": [
             ".44"
@@ -2493,7 +2814,13 @@
             ]
         },
         "secretadjectives": [
-            "light"
+            "light",
+            "glowing",
+            "bright",
+            "illuminant",
+            "luminous",
+            "moody",
+            "electric"
         ],
         "use": [],
         "adjectives": [],
@@ -2531,7 +2858,13 @@
             ]
         },
         "secretadjectives": [
-            "light"
+            "light",
+            "glowing",
+            "bright",
+            "illuminant",
+            "luminous",
+            "moody",
+            "electric"
         ],
         "use": [],
         "adjectives": [
@@ -2577,7 +2910,13 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "self-defense"
+            "self-defense",
+            "electric",
+            "shocking",
+            "non-lethal",
+            "dibilitating",
+            "galvanic",
+            "voltaic"
         ],
         "use": [],
         "adjectives": [
@@ -2625,7 +2964,13 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "self-defense"
+            "self-defense",
+            "electric",
+            "shocking",
+            "non-lethal",
+            "dibilitating",
+            "galvanic",
+            "voltaic"
         ],
         "use": [],
         "adjectives": [
@@ -2661,7 +3006,13 @@
         "secret_states": {},
         "secretadjectives": [
             "basketball",
-            "cool"
+            "cool",
+            "rad",
+            "basket",
+            "ballin'",
+            "jammin'",
+            "autographed",
+            "spherical"
         ],
         "use": [],
         "adjectives": [],
@@ -2696,7 +3047,11 @@
         "secret_states": {},
         "secretadjectives": [
             "football",
-            "foot"
+            "foot",
+            "sports",
+            "American",
+            "European",
+            "mysterious"
         ],
         "use": [],
         "adjectives": [],
@@ -2729,7 +3084,7 @@
         "consume_states": {
             "caffeinate": [
                 0.6,
-                "basketball"
+                "dodgeball"
             ]
         },
         "secret_states": {},
@@ -2737,7 +3092,11 @@
             "dodgeball",
             "dodge",
             "bully",
-            "mean"
+            "mean",
+            "fast",
+            "spherical",
+            "agile",
+            "quick"
         ],
         "use": [],
         "adjectives": [],
@@ -2769,7 +3128,14 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "heavy",
+            "dense",
+            "weighty",
+            "hefty",
+            "solid",
+            "bulky"
+        ],
         "use": [],
         "adjectives": [
             "bowling"
@@ -2804,7 +3170,10 @@
         "secret_states": {},
         "secretadjectives": [
             "gardening",
-            "raking"
+            "utility",
+            "lawn",
+            "comical",
+            "useful"
         ],
         "forbiddencode": false,
         "use": [],
@@ -2836,7 +3205,10 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "pirate"
+            "pirate",
+            "useful",
+            "scrap",
+            "mundane"
         ],
         "forbiddencode": false,
         "use": [],
@@ -2871,7 +3243,15 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "brutal",
+            "heavy",
+            "dense",
+            "intimidating",
+            "painful",
+            "weighty",
+            "hefty"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -2903,7 +3283,13 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "leather",
+            "weighty",
+            "heavy",
+            "dense",
+            "hefty"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
@@ -2935,7 +3321,13 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "leather",
+            "weighty",
+            "heavy",
+            "dense",
+            "hefty"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
@@ -2976,7 +3368,10 @@
         },
         "secretadjectives": [
             "warm",
-            "snowy"
+            "snowy",
+            "winter",
+            "cozy",
+            "comfortable"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3015,7 +3410,12 @@
         },
         "secretadjectives": [
             "warm",
-            "icy"
+            "icy",
+            "warm",
+            "snowy",
+            "winter",
+            "cozy",
+            "comfortable"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3048,7 +3448,12 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "posh"
+            "posh",
+            "rich",
+            "soup",
+            "small",
+            "tiny",
+            "forked"
         ],
         "use": [],
         "forbiddencode": false,
@@ -3113,7 +3518,10 @@
         "secretadjectives": [
             "Atlantic",
             "mythological",
-            "divine"
+            "divine",
+            "three-pronged",
+            "tri",
+            "forked"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3156,7 +3564,12 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [
-            "tuning"
+            "tuning",
+            "musical",
+            "tonal",
+            "metal",
+            "forked",
+            "bifurcated"
         ],
         "inheritpower": 60,
         "code": "CF2JkQu5",
@@ -3198,7 +3611,12 @@
             ]
         },
         "secretadjectives": [
-            "farming"
+            "farming",
+            "forked",
+            "three-pronged",
+            "long",
+            "pointy",
+            "useful"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3237,7 +3655,12 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "elderly"
+            "elderly",
+            "crippled",
+            "mature",
+            "old-fashioned",
+            "wooden",
+            "long"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3286,7 +3709,11 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "sex"
+            "sex",
+            "haha+penis",
+            "dried",
+            "bull",
+            "hard-boiled"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3329,7 +3756,13 @@
             ]
         },
         "secretadjectives": [
-            "sweet"
+            "sweet",
+            "minty",
+            "peppermint",
+            "festive",
+            "red",
+            "white",
+            "striped"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3368,7 +3801,13 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "hot",
+            "metallic",
+            "stylish",
+            "versatile",
+            "curl-enhancing"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -3400,7 +3839,19 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "heavy",
+            "dense",
+            "metallic",
+            "chain-link",
+            "strong",
+            "durable",
+            "interlocking",
+            "industrial",
+            "heavy-duty",
+            "long-lasting",
+            "reinforced"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
@@ -3430,7 +3881,13 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "small",
+            "lightweight",
+            "strong",
+            "interlocking",
+            "metallic"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -3467,7 +3924,15 @@
                 "key"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "small",
+            "stylish",
+            "compact",
+            "handy",
+            "decorative",
+            "accessible",
+            "personalized"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -3499,7 +3964,18 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "sharp",
+            "scary",
+            "useful",
+            "deadly",
+            "pointy",
+            "precise",
+            "balanced",
+            "versatile",
+            "stainless+steel",
+            "reliable"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
@@ -3536,7 +4012,15 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "sharp",
+            "scary",
+            "horrifying",
+            "deadly",
+            "pointy",
+            "stainless+steel",
+            "reliable"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -3569,7 +4053,15 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "scary",
+            "deadly",
+            "sharp",
+            "pointy",
+            "cool",
+            "rad",
+            "dangerous"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -3601,7 +4093,14 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "wooden",
+            "sturdy",
+            "strong",
+            "decorative",
+            "polished",
+            "hardwood"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -3641,7 +4140,12 @@
                 "pool"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "wooden",
+            "felt-tipped",
+            "long",
+            "balanced"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -3675,7 +4179,13 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "deadly",
+            "12+gauge",
+            "pump-action",
+            "shot",
+            "scatter"
+        ],
         "use": [],
         "forbiddencode": false,
         "adjectives": [],
@@ -3717,7 +4227,13 @@
                 "double-barreled"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "12+gauge",
+            "wooden",
+            "break-action",
+            "Western",
+            "reliable"
+        ],
         "use": [],
         "forbiddencode": false,
         "adjectives": [
@@ -3749,7 +4265,15 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "pointy",
+            "thin",
+            "precise",
+            "creative",
+            "hooked",
+            "small",
+            "embroidered"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -3781,7 +4305,13 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "thin",
+            "long",
+            "pointy",
+            "precise",
+            "creative"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -3829,7 +4359,14 @@
             ]
         },
         "secretadjectives": [
-            "strong"
+            "strong",
+            "powerful",
+            "healthy",
+            "small",
+            "metal",
+            "lead",
+            "hefty",
+            "dense"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3879,7 +4416,13 @@
             ]
         },
         "secretadjectives": [
-            "strong"
+            "strong",
+            "powerful",
+            "healthy",
+            "metal",
+            "lead",
+            "hefty",
+            "dense"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3930,7 +4473,17 @@
             ]
         },
         "secretadjectives": [
-            "strong"
+            "strong",
+            "powerful",
+            "healthy",
+            "comically-huge",
+            "massive",
+            "ginormous",
+            "gigantic",
+            "metal",
+            "lead",
+            "hefty",
+            "dense"
         ],
         "forbiddencode": false,
         "use": [],
@@ -3973,7 +4526,11 @@
                 "hockey"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "wooden",
+            "long",
+            "sports"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -4013,7 +4570,11 @@
             ]
         },
         "secretadjectives": [
-            "suction"
+            "suction",
+            "sucky",
+            "clean",
+            "spotless",
+            "dust-filled"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4057,7 +4618,14 @@
             ]
         },
         "secretadjectives": [
-            "cleaning"
+            "cleaning",
+            "wet",
+            "moist",
+            "wooden",
+            "soapy",
+            "clean",
+            "absorbent",
+            "non-slip"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4094,7 +4662,15 @@
             ]
         },
         "secretadjectives": [
-            "victory"
+            "victorious",
+            "gilded",
+            "golden",
+            "triumphant",
+            "shiny",
+            "glittering",
+            "majestic",
+            "prestigious",
+            "valuable"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4138,7 +4714,11 @@
         },
         "secretadjectives": [
             "fancy",
-            "christmas"
+            "christmas",
+            "self-righteous",
+            "bullshit",
+            "little",
+            "tiny"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4176,7 +4756,13 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "cooking"
+            "cooking",
+            "dishwasher-safe",
+            "long-handled",
+            "long",
+            "stainless",
+            "metallic",
+            "polished"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4209,7 +4795,13 @@
             ]
         },
         "secretadjectives": [
-            "electric"
+            "electric",
+            "long",
+            "extra+long",
+            "shocking",
+            "voltaic",
+            "useful",
+            "electrical"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4238,7 +4830,18 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "woven",
+            "long",
+            "survival",
+            "useful",
+            "ropey",
+            "strong",
+            "braided",
+            "twisted",
+            "knotted",
+            "coiled"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [],
@@ -4278,7 +4881,13 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "unwrinkled"
+            "unwrinkled",
+            "hot",
+            "metal",
+            "useful",
+            "burning",
+            "scalding",
+            "heated"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4312,7 +4921,13 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "serrated",
+            "sharp",
+            "floppy",
+            "metallic",
+            "deadly"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -4355,7 +4970,13 @@
                 "ice"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "cold",
+            "icy",
+            "winter",
+            "freezing",
+            "frosty"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -4390,7 +5011,14 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "useful",
+            "tight",
+            "loose",
+            "hefty",
+            "durable",
+            "metallic"
+        ],
         "forbiddencode": false,
         "use": [],
         "adjectives": [
@@ -4433,7 +5061,13 @@
             ]
         },
         "secretadjectives": [
-            "rainy"
+            "rainy",
+            "wet",
+            "nylon",
+            "canopied",
+            "soaked",
+            "fashionable",
+            "moody"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4476,11 +5110,14 @@
         },
         "secretadjectives": [
             "sleepy",
-            "rested"
+            "rested",
+            "fluffy",
+            "night-time",
+            "soft"
         ],
         "forbiddencode": false,
         "use": [],
-        "inheritpower": 0,
+        "inheritpower": 5,
         "adjectives": [],
         "code": "L9aaQOL3",
         "attached_skills": []
@@ -4494,7 +5131,7 @@
             "furniturekind"
         ],
         "wearable": false,
-        "description": "A piece of furniture used for sleeping.",
+        "description": "A piece of furniture used for storing clothes.",
         "cost": {
             "wood": 1,
             "iodine": 0.3
@@ -4508,7 +5145,12 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "handsome",
+            "pretty",
+            "elegant",
+            "fashionable"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -4562,7 +5204,8 @@
             "fluffy",
             "soft",
             "dreamy",
-            "sleepy"
+            "sleepy",
+            "kushy"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4611,7 +5254,8 @@
         "secretadjectives": [
             "fluffy",
             "soft",
-            "sleepy"
+            "sleepy",
+            "warm"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4650,7 +5294,11 @@
             ]
         },
         "secretadjectives": [
-            "freezing"
+            "freezing",
+            "cold",
+            "hungry",
+            "rectangular",
+            "white"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4695,7 +5343,9 @@
         },
         "secretadjectives": [
             "flaming",
-            "cooked"
+            "cooked",
+            "hot",
+            "burning"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4732,7 +5382,11 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "cooked"
+            "cooked",
+            "boiled",
+            "stainless+steel",
+            "steel",
+            "hollow"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4775,7 +5429,12 @@
             ]
         },
         "secretadjectives": [
-            "cooked"
+            "cooked",
+            "stainless+steel",
+            "cast-iron",
+            "non-stick",
+            "fried",
+            "greasy"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4810,7 +5469,11 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "watery"
+            "watery",
+            "wet",
+            "soapy",
+            "clean",
+            "porcelain"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4836,7 +5499,14 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "ceramic",
+            "circular",
+            "hungry",
+            "dining",
+            "fragile",
+            "brittle"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -4861,7 +5531,12 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "glass",
+            "thirsty",
+            "hydrated",
+            "hollow"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -4886,7 +5561,12 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "ceramic",
+            "thirsty",
+            "hydrated",
+            "hollow"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -4916,7 +5596,12 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "wooden",
+            "rectangular",
+            "sturdy",
+            "chipped"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -4955,7 +5640,19 @@
             ]
         },
         "secretadjectives": [
-            "time"
+            "time",
+            "old",
+            "ancient",
+            "primordial",
+            "fanciful",
+            "ornate",
+            "fancy",
+            "imposing",
+            "large",
+            "antidiluvian",
+            "clockwork",
+            "oak",
+            "tall"
         ],
         "forbiddencode": false,
         "use": [],
@@ -4995,7 +5692,13 @@
             ]
         },
         "secretadjectives": [
-            "time"
+            "time",
+            "old",
+            "young",
+            "mechanical",
+            "clockwork",
+            "gear-filled",
+            "ticking"
         ],
         "forbiddencode": false,
         "use": [],
@@ -5038,7 +5741,15 @@
         },
         "secretadjectives": [
             "shit",
-            "porcelain"
+            "shitty",
+            "porcelain",
+            "poopy",
+            "stinky",
+            "smelly",
+            "filthy",
+            "regal",
+            "watery",
+            "wet"
         ],
         "forbiddencode": false,
         "use": [],
@@ -5066,7 +5777,18 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "porcelain",
+            "wet",
+            "clean",
+            "moist",
+            "soapy",
+            "watery",
+            "liquid",
+            "spotless",
+            "scrubbed",
+            "lemon-scented"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -5100,7 +5822,15 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "clean"
+            "clean",
+            "wet",
+            "moist",
+            "soapy",
+            "watery",
+            "liquid",
+            "spotless",
+            "scrubbed",
+            "lemon-scented"
         ],
         "forbiddencode": false,
         "use": [],
@@ -5140,11 +5870,19 @@
             ]
         },
         "secretadjectives": [
-            "flaming"
+            "flaming",
+            "fancy",
+            "magnificent",
+            "classy",
+            "regal",
+            "fiery",
+            "hot",
+            "warm",
+            "infernal"
         ],
         "forbiddencode": false,
         "use": [],
-        "inheritpower": 0,
+        "inheritpower": 5,
         "adjectives": [],
         "code": "wneGpibF",
         "attached_skills": []
@@ -5776,7 +6514,7 @@
             ]
         },
         "secretadjectives": [
-            "japanese",
+            "Japanese",
             "kakkoii",
             "kawaii"
         ],
