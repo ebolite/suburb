@@ -1,3 +1,5 @@
+import random
+
 import strife
 import skills
 
@@ -70,9 +72,22 @@ class CaffeinateState(OneTimeState):
         griefer.change_vial("aspect", value)
         return super().on_apply(griefer)
     
-caffeinate = RefreshState("caffeinate")
+caffeinate = CaffeinateState("caffeinate")
 caffeinate.beneficial = True
 caffeinate.tooltip = "Increases the target's VIM and ASPECT."
+
+class DouseState(OneTimeState):
+    def on_apply(self, griefer: "strife.Griefer"):
+        bad_states = [state for state in griefer.states_list if not state.beneficial]
+        if len(bad_states) == 0: return
+        cured_state = random.choice(bad_states)
+        griefer.remove_state(cured_state.name)
+        griefer.strife.log(f"{griefer.nickname} was cured of {cured_state.name.upper()}!")
+        super().on_apply(griefer)
+
+douse = DouseState("douse")
+douse.beneficial = True
+douse.tooltip = "Removes a negative state of the target."
 
 # basic states
 class AbjureState(State):
@@ -85,6 +100,26 @@ class AbjureState(State):
 abjure = AbjureState("abjure")
 abjure.beneficial = True
 abjure.tooltip = "Reduces damage taken based on mettle."
+
+class WeakState(State):
+    def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
+        mod = 0.25 * self.potency(griefer)
+        mod = 1 - mod
+        return int(damage * mod)
+    
+weak = WeakState("weak")
+weak.beneficial = False
+weak.tooltip = "Reduces damage dealt."
+
+class StrengthState(State):
+    def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
+        mod = 0.25 * self.potency(griefer)
+        mod = 1 + mod
+        return int(damage * mod)
+    
+strength = StrengthState("strength")
+strength.beneficial = True
+strength.tooltip = "Increases damage dealt."
 
 class DemoralizeState(State):
     def new_turn(self, griefer: "strife.Griefer"):
@@ -146,7 +181,7 @@ class VulnerableState(State):
     
 vulnerable = VulnerableState("vulnerable")
 vulnerable.beneficial = False
-vulnerable.tooltip = "Takes more damage."
+vulnerable.tooltip = "Increases damage taken."
 
 class GuardState(State):
     def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
@@ -156,7 +191,7 @@ class GuardState(State):
     
 guard = GuardState("guard")
 guard.beneficial = True
-guard.tooltip = "Takes less damage."
+guard.tooltip = "Decreases damage taken."
 
 class AiryState(State):
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:
