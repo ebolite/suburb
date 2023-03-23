@@ -70,27 +70,24 @@ class BaseStatistics():
         self.adjectives: list = list(set(descriptors)) # everything else are adjectives, remove duplicates
         self.descriptors += list(util.bases[base_name]["secretadjectives"])
         properties = util.bases[base_name]
-        self.secretadjectives = properties["secretadjectives"]
+        self.secretadjectives: list[str] = properties["secretadjectives"]
         for descriptor in self.descriptors:
             if descriptor in self.secretadjectives:
                 self.secretadjectives.remove(descriptor)
         self.forbidden: bool = properties["forbiddencode"]
         self.power: int = properties["power"]
         self.inheritpower: int = properties["inheritpower"]
-        self.dicemin: float = properties["dicemin"]
-        self.dicemax: float = properties["dicemax"]
         self.weight: int = properties["weight"]
         self.size: int = properties["size"]
         self.kinds: dict = properties["kinds"]
-        self.slots: dict = properties["slots"]
-        self.tags: dict = properties["tags"]
+        self.wearable: bool = properties["wearable"]
         self.description: str = properties["description"]
         self.cost: dict = properties["cost"]
         self.use: list[str] = properties["use"]
-        self.onhiteffect: dict = properties["onhiteffect"]
-        self.weareffect: dict = properties["weareffect"]
-        self.consumeeffect: dict = properties["consumeeffect"]
-        self.secreteffect: dict = properties["secreteffect"]
+        self.onhit_states: dict = properties["onhit_states"]
+        self.wear_states: dict = properties["wear_States"]
+        self.consume_states: dict = properties["consume_states"]
+        self.secret_states: dict = properties["secret_states"]
         self.forbiddencode: bool = properties["forbiddencode"]
 
 # todo: captchalogue code inheritance
@@ -205,53 +202,37 @@ class InheritedStatistics():
         else: power_mult = 1/self.entropy
         self.power = int(self.power*power_mult)
         self.inheritpower: int = self.component_1.inheritpower + self.component_2.inheritpower
-        # dicemin
-        self.dicemin: float = (self.component_1.dicemin + self.component_2.dicemin) / 2
-        if self.dicemin > 0 and self.dicemin > DICEMIN_MAXIMUM_SOFTCAP: dicemin_mult = INHERITANCE_MALUS_MULT
-        elif self.dicemin < 0 and self.dicemin < DICEMIN_MINIMUM_SOFTCAP: dicemin_mult = INHERITANCE_MALUS_MULT
-        else: dicemin_mult = INHERITANCE_BONUS_MULT
-        random.seed(self.operation+"dicemin"+self.name)
-        dicemin_mult *= random.random() + 0.5
-        self.dicemin *= dicemin_mult
-        # dicemax
-        self.dicemax: float = (self.component_1.dicemax + self.component_2.dicemax) / 2
-        if self.dicemax > 0 and self.dicemax > DICEMAX_MAXIMUM_SOFTCAP: dicemax_mult = INHERITANCE_MALUS_MULT
-        elif self.dicemax < 0 and self.dicemax < DICEMAX_MINIMUM_SOFTCAP: dicemax_mult = INHERITANCE_MALUS_MULT
-        else: dicemax_mult = INHERITANCE_BONUS_MULT
-        random.seed(self.operation+"dicemax"+self.name)
-        dicemax_mult *= random.random() + 0.5
-        self.dicemax *= dicemax_mult
-        # swap
-        if self.dicemin > self.dicemax: # swap if dicemin bigger than dicemax
-            self.dicemin, self.dicemax = self.dicemax, self.dicemin
         # costs (dict of grist: float)
         self.cost: dict = self.component_1.cost.copy()
         for cost in self.component_2.cost:
             self.cost[cost] = self.component_2.cost[cost]
         # dict inherits
         self.kinds: dict = self.dictionary_inherit(self.component_1.kinds, self.component_2.kinds)
-        self.slots: dict = self.dictionary_inherit(self.component_1.slots, self.component_2.slots)
-        self.tags: dict = self.dictionary_inherit(self.component_1.tags, self.component_2.tags)
-        self.onhiteffect: dict = self.dictionary_inherit(self.component_1.onhiteffect, self.component_2.onhiteffect)
-        self.weareffect: dict = self.dictionary_inherit(self.component_1.weareffect, self.component_2.weareffect)
-        self.consumeeffect: dict = self.dictionary_inherit(self.component_1.consumeeffect, self.component_2.consumeeffect)
-        self.secreteffect: dict = self.dictionary_inherit(self.component_1.secreteffect, self.component_2.secreteffect)
+        self.onhit_states: dict = self.dictionary_inherit(self.component_1.onhit_states, self.component_2.onhit_states)
+        self.wear_states: dict = self.dictionary_inherit(self.component_1.wear_states, self.component_2.wear_states)
+        self.consume_states: dict = self.dictionary_inherit(self.component_1.consume_states, self.component_2.consume_states)
+        self.secret_states: dict = self.dictionary_inherit(self.component_1.secret_states, self.component_2.secret_states)
         # secret effects
-        for effect in self.secreteffect.copy():
-            random.seed(self.name+"secreteffectoption"+effect)
-            option = random.choice(["consumeeffect", "onhiteffect", "weareffect", "secreteffect"]) # chance of staying dormant...
-            if option == "consumeeffect" and len(self.consumeeffect) > 0:
-                self.consumeeffect[effect] = self.secreteffect.pop(effect)
-            if option == "onhiteffect" and len(self.onhiteffect) > 0:
-                self.onhiteffect[effect] = self.secreteffect.pop(effect)
-            if option == "weareffect" and len(self.weareffect) > 0:
-                self.weareffect[effect] = self.secreteffect.pop(effect)
+        for effect in self.secret_states.copy():
+            random.seed(self.name+"secretstatesoption"+effect)
+            option = random.choice(["consume_states", "onhit_states", "wear_states", "secret_states"]) # chance of staying dormant...
+            if option == "consume_states" and len(self.consume_states) > 0:
+                self.consume_states[effect] = self.secret_states.pop(effect)
+            if option == "onhit_states" and len(self.onhit_states) > 0:
+                self.onhit_states[effect] = self.secret_states.pop(effect)
+            if option == "wear_states" and len(self.wear_states) > 0:
+                self.wear_states[effect] = self.secret_states.pop(effect)
         # use effect
-        if self.base == self.component_1.base: self.use = self.component_1.use
-        elif self.base == self.component_2.base: self.use = self.component_2.use
+        if self.base == self.component_1.base: 
+            self.use = self.component_1.use
+            self.wearable = self.component_1.wearable
+        elif self.base == self.component_2.base: 
+            self.use = self.component_2.use
+            self.wearable = self.component_2.wearable
         # if compound base
         else:
             self.use = self.component_1.use + self.component_2.use
+            self.wearable = self.component_1.wearable or self.component_2.wearable
 
     def dictionary_inherit(self, component_1_dict: dict, component_2_dict: dict) -> dict: # returns new dict
         new_dict = {}
@@ -333,20 +314,17 @@ class Item(): # Items are the base of instants.
             self.base = statistics.base
             self.power = statistics.power
             self.inheritpower = statistics.inheritpower
-            self.dicemin = statistics.dicemin
-            self.dicemax = statistics.dicemax
             self.weight = statistics.weight
             self.size = statistics.size
             self.kinds = statistics.kinds
-            self.slots = statistics.slots
-            self.tags = statistics.tags
+            self.wearable = statistics.wearable
             self.description = "None"
             self.cost = statistics.cost
             self.use = statistics.use
-            self.onhiteffect = statistics.onhiteffect
-            self.weareffect = statistics.weareffect
-            self.consumeeffect = statistics.consumeeffect
-            self.secreteffect = statistics.secreteffect
+            self.onhit_states = statistics.onhit_states
+            self.wear_states = statistics.wear_states
+            self.consume_states = statistics.consume_states
+            self.secret_states = statistics.secret_states
             self.secretadjectives = statistics.secretadjectives
             self.forbiddencode = statistics.forbiddencode
 
