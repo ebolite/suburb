@@ -1083,8 +1083,9 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     num_kinds = len(instance.item.kinds)
     def get_kind_button_func(kind_name):
         def kind_button_func():
+            if modus is None: util.log(f"You must captchalogue this first.")
             player_dict = client.requestdic(intent="player_info")
-            if kind_name in player_dict["strife_portfolio"] and modus is not None:
+            if kind_name in player_dict["strife_portfolio"]:
                 reply = client.requestplus(intent="move_to_strife_deck", content={"instance_name": instance.name, "kind_name": kind_name})
                 if reply:
                     Sylladex.current_sylladex().remove_instance(instance.name)
