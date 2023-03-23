@@ -1338,6 +1338,18 @@ adjudge.damage_formula = "user.base_damage * (6 + 3*coin)"
 adjudge.add_vial_cost("vim", "user.power")
 adjudge.action_cost = 2
 
+# umbrellakind
+abear = AbstratusSkill("abear")
+abear.description = "ABJURES for three turns and restores the user's health and VIM."
+abear.use_message = "{user} weathers the storm!"
+abear.add_vial_cost("vim", "-user.power//3")
+abear.add_vial_change("hp", "user.power//3")
+abear.parryable = False
+abear.beneficial = True
+abear.target_self = True
+abear.cooldown = 4
+abear.add_apply_state("abjure", 3, "1.0")
+
 # pistolkind
 aunter = AbstratusSkill("aunter")
 aunter.description = f"Gain an additional action this turn."
@@ -1421,6 +1433,7 @@ add_abstratus_skill("hatkind", awaitskill, 50)
 add_abstratus_skill("hatkind", admonish, 75)
 
 # jumpropekind
+    # abligate
 add_abstratus_skill("jumpropekind", awaitskill, 50)
 add_abstratus_skill("jumpropekind", asphyxiate, 75)
 
@@ -1481,6 +1494,11 @@ add_abstratus_skill("sawkind", axe, 75)
 add_abstratus_skill("shotgunkind", aggerate, 1)
 add_abstratus_skill("shotgunkind", avenge, 50)
 add_abstratus_skill("shotgunkind", adjudge, 75)
+
+# umbrellakind
+add_abstratus_skill("umbrellakind", admonish, 1)
+add_abstratus_skill("umbrellakind", awaitskill, 50)
+add_abstratus_skill("umbrellakind", abear, 75)
 
 # woodwindkind
 add_abstratus_skill("woodwindkind", awaitskill, 50)
