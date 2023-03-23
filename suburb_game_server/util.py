@@ -46,8 +46,16 @@ players = readjson(players, "players")
 npcs = {}
 npcs = readjson(npcs, "npcs")
 
-bases = {}
-bases = readjson(bases, "bases")
+bases: dict[str, dict] = {}
+bases: dict[str, dict] = readjson(bases, "bases")
+
+for base_name, base_dict in bases.items():
+    words = base_name.split(" ")
+    base_name = words.pop()
+    if len(words) == 0: adjectives = []
+    else: adjectives = words
+    base_dict["adjectives"] = adjectives
+writejson(bases, "bases")
 
 items = {}
 items = readjson(items, "items")

@@ -488,41 +488,40 @@ defaults = {
     "forbiddencode": False,
     "power": 1, # how powerful is the item?
     "inheritpower": 0, # how much extra power this item gives when it's alchemized
-    "dicemin": .7, # the minimum dice roll as a fraction of power
-    "dicemax": 1, # the maximum dice roll as a fraction of power
     "weight": 1, # how much the thing weighs, will mostly be used for determining sylladex ejection damage
     "size": 1, # how big the thing is. determines if it's wieldable (size 20 or less)
     "kinds": {}, # the strife specibi that allow this item to be equipped and its weight (how likely it is to be inherited). if it is a list, the second item is the adjective/base that guarantees inheritance
-    "slots": {}, # what slots the item can be equipped in (wearable slots) and how likely they are to be inherited along with adjectives/bases that guarantee inheritance
-    "tags": {"mundane": [0]}, # what true/false statements apply (if in list, they are true) e.g "blunt" (blunt damage), "funny," "monochrome," "consumable," "enemyconsumable" and how likely they are to be inherited
+    "wearable": False, # whether the item can be worn
     #"stats": {}, # what stats are boosted / decreased through equipping the item (wielding or wearing) in an appropriate slot. this is a dict of dicts, where key is stat and value is % of power boost
     #"nickname": "Broken", # the default given nickname of an item. should be set to something on generation
     "description": "None", # the description of the item (only for bases and items with set descriptions)
     "cost": {"build": 1}, # cost of item. key: grist type, value: % of power
     "use": [], # what this item does on use.
-    "onhiteffect": {}, # the effect of the item as applied to the enemy key: effect value: power ratio e.g. {"healing": [.01]}
-    "weareffect": {}, # the effect of the item when worn in a slot or wielded
-    "consumeeffect": {}, # a list of effects that this item will have when consumed. todo: valid effects page
-    "secreteffect": {}, # a list of effects that do nothing but may be turned into onhit, wear or consume effects upon alchemizing
-    "secretadjectives": [] # a list of adjectives that might be inherited but don't show up on the item
+    "onhit_states": {}, # the effect of the item as applied to the enemy key: effect value: power ratio e.g. {"healing": [.01]}
+    "wear_states": {}, # the effect of the item when worn in a slot or wielded
+    "consume_states": {}, # a list of effects that this item will have when consumed. todo: valid effects page
+    "secret_states": {}, # a list of effects that do nothing but may be turned into onhit, wear or consume effects upon alchemizing
+    "attached_skills": [], # a list of skills this item teaches when worn/wielded
+    "secretadjectives": [], # a list of adjectives that might be inherited but don't show up on the item
 }
 
 if __name__ == "__main__":
-    name_desc = {}
-    for base in util.bases:
-        name_desc[base] = {"description": util.bases[base]["description"]}
-    util.writejson(name_desc, "base_item_list")
-    def loop(base1: Item, base2: Item):
-        merge_and = Item(alchemize(base1.name, base2.name,"&&"))
-        merge_or = Item(alchemize(base1.name, base2.name, "||"))
-        print(merge_and.name)
-        print(Components(merge_and.name).get_all_components())
-        print(display_item(merge_and))
-        print(merge_or.name)
-        print(Components(merge_or.name).get_all_components())
-        print(display_item(merge_or))
-        input()
-        loop(random.choice([merge_and, merge_or]), Item(random.choice(list(util.bases.keys()))))
-    initial_base1 = Item(random.choice(list(util.bases.keys())))
-    initial_base2 = Item(random.choice(list(util.bases.keys())))
-    loop(initial_base1, initial_base2)
+    ...
+    # name_desc = {}
+    # for base in util.bases:
+    #     name_desc[base] = {"description": util.bases[base]["description"]}
+    # util.writejson(name_desc, "base_item_list")
+    # def loop(base1: Item, base2: Item):
+    #     merge_and = Item(alchemize(base1.name, base2.name,"&&"))
+    #     merge_or = Item(alchemize(base1.name, base2.name, "||"))
+    #     print(merge_and.name)
+    #     print(Components(merge_and.name).get_all_components())
+    #     print(display_item(merge_and))
+    #     print(merge_or.name)
+    #     print(Components(merge_or.name).get_all_components())
+    #     print(display_item(merge_or))
+    #     input()
+    #     loop(random.choice([merge_and, merge_or]), Item(random.choice(list(util.bases.keys()))))
+    # initial_base1 = Item(random.choice(list(util.bases.keys())))
+    # initial_base2 = Item(random.choice(list(util.bases.keys())))
+    # loop(initial_base1, initial_base2)
