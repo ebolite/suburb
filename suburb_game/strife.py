@@ -526,6 +526,7 @@ class Strife():
     def keypress(self, event):
         if event.key == pygame.K_ESCAPE:
             if self.layer_2_buttons: self.clear_next_layer_buttons()
+            elif self.selected_skill_name is not None: self.selected_skill_name = None
             else: 
                 reply = client.requestdic(intent="unsubmit_skill")
                 self.update_strife_dict(reply)
