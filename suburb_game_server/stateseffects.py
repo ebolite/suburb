@@ -108,6 +108,28 @@ inspire = InspireState("inspire")
 inspire.beneficial = True
 inspire.tooltip = "Increases hope each turn."
 
+class TriggeredState(State):
+    def new_turn(self, griefer: "strife.Griefer"):
+        change = self.applier_stats(griefer)["power"]//4 * self.potency(griefer)
+        change = int(change)
+        logmessage = skills.aspects["rage"].adjust(griefer, change)
+        griefer.strife.log(logmessage)
+
+trigger = TriggeredState("triggered")
+trigger.beneficial = True
+trigger.tooltip = "Increases rage each turn."
+
+class NumbState(State):
+    def new_turn(self, griefer: "strife.Griefer"):
+        change = self.applier_stats(griefer)["power"]//4 * -1 * self.potency(griefer)
+        change = int(change)
+        logmessage = skills.aspects["rage"].adjust(griefer, change)
+        griefer.strife.log(logmessage)
+
+numb = NumbState("numb")
+numb.beneficial = True
+numb.tooltip = "Decreases rage each turn."
+
 class DisarmState(State):
     def lock_categories(self, griefer: "strife.Griefer") -> list[str]:
         return ["arsenal"]
