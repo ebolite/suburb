@@ -113,6 +113,16 @@ bleed = BleedState("bleed")
 bleed.beneficial = False
 bleed.tooltip = "Taking damage at the start of each turn."
 
+class IgniteState(State):
+    def new_turn(self, griefer: "strife.Griefer"):
+        damage = self.applier_stats(griefer)["power"] * self.potency(griefer)
+        griefer.take_damage(damage)
+        griefer.add_state_potency("ignite", -griefer.get_state_potency("ignite")/5)
+
+ignite = BleedState("ignite")
+ignite.beneficial = False
+ignite.tooltip = "Taking damage at the start of each turn. Potency reduces each turn."
+
 class FocusState(State):
     def coinflip_modifier(self, griefer: "strife.Griefer") -> float:
         reduction = 0.25 * self.potency(griefer)

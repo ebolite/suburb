@@ -1237,6 +1237,17 @@ auspicate.action_cost = 0
 auspicate.cooldown = 1
 
 # unique skills
+# aerosolkind
+aflame = Skill("aflame")
+aflame.description = "Deals damage similar to ASSAIL and applies IGNITE for 3 turns with potency 1 to the target and all their friends."
+aflame.use_message = "{user} flames it up!"
+aflame.damage_formula = ASSAIL_FORMULA
+aflame.cooldown = 2
+aflame.target_team = True
+aflame.need_damage_to_apply_states = True
+aflame.add_apply_state("ignite", 3, "1.0")
+aflame.add_vial_cost("vim", "user.power//1.5")
+
 # ballkind
 athleticize = Skill("athleticize")
 athleticize.description = "User increases their SPUNK and gains some VIM at the cost of their health vial."
@@ -1312,6 +1323,25 @@ assassinate.cooldown = 3
 assassinate.add_apply_state("bleed", 3, "target.doom.ratio * 3")
 assassinate.need_damage_to_apply_states = True
 
+# pepperspraykind
+abate = AbstratusSkill("abate")
+abate.description = f"Deals a small amount of damage and applies DEMORALIZE to all enemies with potency 1.0 for 2 turns."
+abate.action_cost = 0
+abate.cooldown = 1
+abate.damage_formula = AGGRIEVE_FORMULA
+abate.add_apply_state("demoralize", 2, "1.0")
+abate.add_vial_cost("vim", "user.power//2")
+abate.need_damage_to_apply_states = True
+
+# pistolkind
+aunter = AbstratusSkill("aunter")
+aunter.description = f"Gain an additional action this turn."
+aunter.add_vial_cost("vim", "user.power//3")
+aunter.action_cost = -1
+aunter.cooldown = 2
+aunter.target_self = True
+aunter.parryable = False
+
 # rollingpinkind
 araze = AbstratusSkill("araze")
 araze.description = f"Deals damage and reduces the target's SPACE."
@@ -1350,15 +1380,6 @@ abear.target_self = True
 abear.cooldown = 4
 abear.add_apply_state("abjure", 3, "1.0")
 
-# pistolkind
-aunter = AbstratusSkill("aunter")
-aunter.description = f"Gain an additional action this turn."
-aunter.add_vial_cost("vim", "user.power//3")
-aunter.action_cost = -1
-aunter.cooldown = 2
-aunter.target_self = True
-aunter.parryable = False
-
 # hatkind
 adonize = AbstratusSkill("adonize")
 adonize.description = f"Raises your SAVVY and TACT."
@@ -1371,8 +1392,9 @@ adonize.add_stat_bonus("savvy", "user.power//12")
 adonize.add_stat_bonus("tact", "user.power//12")
 
 # aerosolkind
+add_abstratus_skill("aerosolkind", aflame, 1)
 add_abstratus_skill("aerosolkind", attack, 50)
-    # aflame
+add_abstratus_skill("aerosolkind", asphyxiate, 75)
 
 # axekind
 add_abstratus_skill("axekind", axe, 1)
@@ -1458,6 +1480,11 @@ add_abstratus_skill("paperkind", awaitskill, 50)
 add_abstratus_skill("penkind", antagonize, 1)
 add_abstratus_skill("penkind", awaitskill, 50)
     # autograph
+
+# pepperspraykind
+add_abstratus_skill("pepperspraykind", abate, 1)
+add_abstratus_skill("pepperspraykind", awaitskill, 50)
+add_abstratus_skill("pepperspraykind", aggerate, 75)
 
 # pillowkind
 add_abstratus_skill("pillowkind", asphyxiate, 1)
