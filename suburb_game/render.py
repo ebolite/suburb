@@ -2188,7 +2188,9 @@ class GrieferElement(UIElement):
         for state_icon in self.state_icons.copy():
             self.state_icons.remove(state_icon)
             state_icon.delete()
-        if len(self.griefer.states) == 0: return
+        if len(self.griefer.states) == 0: 
+            self.cached_states_list = list(self.griefer.states)
+            return
         for state_name in self.griefer.states:
             if len(self.state_icons) > 0:
                 x, y = 24, 0
