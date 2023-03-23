@@ -7,6 +7,7 @@ import util
 import binaryoperations
 import adjectiveorder
 import sessions
+import stateseffects
 
 COMPOUND_NAME_CHANCE = 0.2 # chance for having compound names in && operations
 DICEMIN_MINIMUM_SOFTCAP = -2.8
@@ -485,12 +486,22 @@ defaults = {
     "secretadjectives": [], # a list of adjectives that might be inherited but don't show up on the item
 }
 
+missing_states = set()
+
 for base, base_dict in util.bases.items():
     for default in defaults:
         if default not in base_dict:
             base_dict[default] = defaults[default]
             print(f"base {base} missing default {default}")
+    for key in ["onhit_states", "wear_states", "consume_states", "secret_states"]:
+        for state_name in base_dict[key]:
+            if state_name not in stateseffects.states:
+                missing_states.add(state_name)
 util.writejson(util.bases, "bases")
+
+if len(missing_states) > 0:
+    print("!!! MISSING STATES !!!")
+    print(" ".join(list(missing_states)))
 
 if __name__ == "__main__":
     ...
