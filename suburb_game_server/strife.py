@@ -118,9 +118,21 @@ aspect.tact_vial = True
 
 class HopeVial(Vial):
     def new_turn(self, griefer: "Griefer"):
+        diff_from_starting = self.difference_from_starting(griefer)
         flat_add = self.difference_from_starting(griefer)//36
         for stat_name in griefer.base_stats:
             griefer.add_bonus(stat_name, flat_add)
+        if flat_add > 0:
+            griefer.strife.log(f"{griefer.nickname} gained +{flat_add} to all stats from {griefer.their} hope!")
+        elif flat_add < 0:
+            griefer.strife.log(f"{griefer.nickname} lost {-flat_add} in all stats from {griefer.their} hope!")
+        # decay back to starting value
+        if diff_from_starting != 0:
+            change = diff_from_starting * -0.05
+            change = int(change)
+            if change < 0: change = min(change, -1)
+            else: change = max(change, 1)
+            griefer.change_vial(self.name, change)
 
 hope = HopeVial("hope")
 hope.maximum_formula = "{power}*3"
@@ -137,6 +149,16 @@ class RageVial(Vial):
         if damage <= 0: return damage
         flat_add = self.difference_from_starting(griefer)
         return damage + flat_add
+    
+    def new_turn(self, griefer: "Griefer"):
+        # decay back to starting value
+        diff_from_starting = self.difference_from_starting(griefer)
+        if diff_from_starting != 0:
+            change = diff_from_starting * -0.05
+            change = int(change)
+            if change < 0: change = min(change, -1)
+            else: change = max(change, 1)
+            griefer.change_vial(self.name, change)
 
 rage = RageVial("rage")
 rage.maximum_formula = "{power}*3"
