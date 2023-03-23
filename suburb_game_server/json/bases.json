@@ -16,7 +16,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "sated": [
+            "sate": [
                 1,
                 "generic"
             ]
@@ -675,7 +675,7 @@
                 0.8,
                 "cutter"
             ],
-            "sated": [
+            "sate": [
                 1,
                 "pizza"
             ]
@@ -776,7 +776,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "sated": [
+            "sate": [
                 0.25,
                 "cooking"
             ]
@@ -2024,7 +2024,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "sated": [
+            "sate": [
                 1,
                 "frycooking"
             ]
@@ -2056,7 +2056,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "sated": [
+            "sate": [
                 1,
                 "frycooking"
             ]
@@ -6486,8 +6486,9 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "garbage": [
-                0.1
+            "demoralize": [
+                0.1,
+                "garbage"
             ]
         },
         "consume_states": {},
@@ -6525,8 +6526,9 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "garbage": [
-                0.1
+            "demoralize": [
+                0.1,
+                "garbage"
             ]
         },
         "consume_states": {},
