@@ -79,7 +79,7 @@ class BaseStatistics():
         self.inheritpower: int = properties["inheritpower"]
         self.weight: int = properties["weight"]
         self.size: int = properties["size"]
-        self.kinds: dict = properties["kinds"]
+        self.kinds: list[str] = properties["kinds"]
         self.wearable: bool = properties["wearable"]
         self.description: str = properties["description"]
         self.cost: dict = properties["cost"]
@@ -207,7 +207,6 @@ class InheritedStatistics():
         for cost in self.component_2.cost:
             self.cost[cost] = self.component_2.cost[cost]
         # dict inherits
-        self.kinds: dict = self.dictionary_inherit(self.component_1.kinds, self.component_2.kinds)
         self.onhit_states: dict = self.dictionary_inherit(self.component_1.onhit_states, self.component_2.onhit_states)
         self.wear_states: dict = self.dictionary_inherit(self.component_1.wear_states, self.component_2.wear_states)
         self.consume_states: dict = self.dictionary_inherit(self.component_1.consume_states, self.component_2.consume_states)
@@ -226,13 +225,16 @@ class InheritedStatistics():
         if self.base == self.component_1.base: 
             self.use = self.component_1.use
             self.wearable = self.component_1.wearable
+            self.kinds = self.component_1.kinds
         elif self.base == self.component_2.base: 
             self.use = self.component_2.use
             self.wearable = self.component_2.wearable
+            self.kinds = self.component_2.kinds
         # if compound base
         else:
             self.use = self.component_1.use + self.component_2.use
             self.wearable = self.component_1.wearable or self.component_2.wearable
+            self.kinds = self.component_1.kinds + self.component_2.kinds
 
     def dictionary_inherit(self, component_1_dict: dict, component_2_dict: dict) -> dict: # returns new dict
         new_dict = {}

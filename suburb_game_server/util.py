@@ -55,6 +55,8 @@ for base_name, base_dict in bases.items():
     if len(words) == 0: adjectives = []
     else: adjectives = words
     base_dict["adjectives"] = adjectives
+    if "kinds" in base_dict:
+        base_dict["kinds"] = [kind_name for kind_name in base_dict["kinds"]]
 writejson(bases, "bases")
 
 items = {}

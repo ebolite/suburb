@@ -5,12 +5,9 @@
         "power": 1,
         "weight": 5,
         "size": 5,
-        "kinds": {
-            "dicekind": [
-                1,
-                "generic"
-            ]
-        },
+        "kinds": [
+            "dicekind"
+        ],
         "wearable": false,
         "description": "An item that is completely and totally generic.",
         "cost": {
@@ -43,12 +40,9 @@
         "power": 1,
         "weight": 5,
         "size": 5,
-        "kinds": {
-            "ballkind": [
-                1,
-                "useless"
-            ]
-        },
+        "kinds": [
+            "ballkind"
+        ],
         "wearable": false,
         "description": "An item that is absolutely useless. Yes, this is a challenge.",
         "cost": {
@@ -79,12 +73,9 @@
         "power": 20,
         "weight": 5,
         "size": 5,
-        "kinds": {
-            "cardkind": [
-                1,
-                "card"
-            ]
-        },
+        "kinds": [
+            "cardkind"
+        ],
         "wearable": false,
         "description": "An empty captchalogue card... contained in another captchalogue card.",
         "cost": {
@@ -123,12 +114,9 @@
         "power": 30,
         "weight": 5,
         "size": 5,
-        "kinds": {
-            "cardkind": [
-                1,
-                "card"
-            ]
-        },
+        "kinds": [
+            "cardkind"
+        ],
         "wearable": false,
         "description": "A captchalogue card that has been rendered useless due to being punched by a punch designix. Has the code of another item on it.",
         "cost": {
@@ -176,12 +164,9 @@
         "power": 30,
         "weight": 40,
         "size": 20,
-        "kinds": {
-            "rollingpinkind": [
-                1,
-                "dowel"
-            ]
-        },
+        "kinds": [
+            "rollingpinkind"
+        ],
         "wearable": false,
         "description": "A blue dowel made of some material called Cruxite. Can be carved with a Totem Lathe.",
         "cost": {
@@ -225,7 +210,7 @@
         "power": 10,
         "weight": 9,
         "size": 6,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A cruxite item that allows you to enter the Medium.",
         "cost": {
@@ -272,12 +257,9 @@
         "power": 100,
         "weight": 50,
         "size": 50,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "designix"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A game abstraction used for punching codes onto captchalogue cards.",
         "cost": {
@@ -311,12 +293,9 @@
         "power": 100,
         "weight": 500,
         "size": 200,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "cruxtruder"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A game abstraction used for creating cruxite dowels.",
         "cost": {
@@ -345,12 +324,9 @@
         "power": 100,
         "weight": 500,
         "size": 200,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "cruxtruder"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A game abstraction used for creating cruxite dowels.",
         "cost": {
@@ -381,12 +357,9 @@
         "power": 100,
         "weight": 200,
         "size": 100,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "lathe"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A game abstraction used for carving cruxite dowels with punched cards.",
         "cost": {
@@ -414,12 +387,9 @@
         "power": 100,
         "weight": 500,
         "size": 200,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "alchemiter"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A game abstraction used for alchemizing new items from codes engraved into dowels.",
         "cost": {
@@ -445,12 +415,9 @@
         "power": 10,
         "weight": 2,
         "size": 2,
-        "kinds": {
-            "disckind": [
-                1,
-                "disc"
-            ]
-        },
+        "kinds": [
+            "disckind"
+        ],
         "wearable": false,
         "description": "You're like the Robin Hood of stealing shit from your friends.",
         "cost": {
@@ -491,12 +458,9 @@
         "power": 7,
         "weight": 2,
         "size": 2,
-        "kinds": {
-            "disckind": [
-                1,
-                "disc"
-            ]
-        },
+        "kinds": [
+            "disckind"
+        ],
         "wearable": false,
         "description": "A CD containing a cool new game called SBURB. You should find a computer and install this puppy. You can't wait to play this game with your friends.",
         "cost": {
@@ -564,12 +528,9 @@
         "power": 15,
         "weight": 8,
         "size": 7,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "laptop"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A portable computing device. Quite useful.",
         "cost": {
@@ -604,12 +565,9 @@
         "power": 25,
         "weight": 15,
         "size": 18,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "computer"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A large computer setup. Inconvenient to carry around, but still possible with the help of your Sylladex.",
         "cost": {
@@ -644,12 +602,9 @@
         "power": 1,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "paperkind": [
-                1,
-                "paper"
-            ]
-        },
+        "kinds": [
+            "paperkind"
+        ],
         "wearable": false,
         "description": "A piece of paper.",
         "cost": {
@@ -682,12 +637,9 @@
         "power": 5,
         "weight": 5,
         "size": 3,
-        "kinds": {
-            "pizzacutterkind": [
-                1,
-                "pizza+cutter"
-            ]
-        },
+        "kinds": [
+            "pizzacutterkind"
+        ],
         "wearable": false,
         "description": "A sharp kitchen utensil used for slicing pizzas.",
         "cost": {
@@ -725,12 +677,9 @@
         "power": 20,
         "weight": 10,
         "size": 10,
-        "kinds": {
-            "batkind": [
-                1,
-                "bat"
-            ]
-        },
+        "kinds": [
+            "batkind"
+        ],
         "wearable": false,
         "description": "A wooden bat made for hitting high-velocity balls.",
         "cost": {
@@ -758,12 +707,9 @@
         "power": 20,
         "weight": 7,
         "size": 10,
-        "kinds": {
-            "batkind": [
-                1,
-                "bat"
-            ]
-        },
+        "kinds": [
+            "batkind"
+        ],
         "wearable": false,
         "description": "An aluminum bat made for hitting high-velocity balls.",
         "cost": {
@@ -793,12 +739,9 @@
         "power": 7,
         "weight": 2,
         "size": 2,
-        "kinds": {
-            "rollingpinkind": [
-                1,
-                "pin"
-            ]
-        },
+        "kinds": [
+            "rollingpinkind"
+        ],
         "wearable": false,
         "description": "A rolling pin used for flattening dough.",
         "cost": {
@@ -829,12 +772,9 @@
         "power": 3,
         "weight": 2,
         "size": 6,
-        "kinds": {
-            "plungerkind": [
-                1,
-                "plunger"
-            ]
-        },
+        "kinds": [
+            "plungerkind"
+        ],
         "wearable": false,
         "description": "A plunger used for unclogging toilets.",
         "cost": {
@@ -864,12 +804,9 @@
         "power": 5,
         "weight": 2,
         "size": 2,
-        "kinds": {
-            "yoyokind": [
-                1,
-                "yoyo"
-            ]
-        },
+        "kinds": [
+            "yoyokind"
+        ],
         "wearable": false,
         "description": "A cool yoyo.",
         "cost": {
@@ -901,12 +838,9 @@
         "power": 5,
         "weight": 2,
         "size": 1,
-        "kinds": {
-            "scissorkind": [
-                1,
-                "scissors"
-            ]
-        },
+        "kinds": [
+            "scissorkind"
+        ],
         "wearable": false,
         "description": "A pair of scissors used for cut paper.",
         "cost": {
@@ -938,15 +872,10 @@
         "power": 10,
         "weight": 4,
         "size": 4,
-        "kinds": {
-            "mundane": [
-                0
-            ],
-            "scissorkind": [
-                1,
-                "shears"
-            ]
-        },
+        "kinds": [
+            "mundane",
+            "scissorkind"
+        ],
         "wearable": false,
         "description": "A large pair of shears, used for shearing wool and plants.",
         "cost": {
@@ -986,12 +915,9 @@
         "power": 2,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "scissorkind": [
-                1,
-                "scissors"
-            ]
-        },
+        "kinds": [
+            "scissorkind"
+        ],
         "wearable": false,
         "description": "A pair of scissors specially made to prevent the user from harming themselves.",
         "cost": {
@@ -1021,16 +947,10 @@
         "power": 30,
         "weight": 1,
         "size": 2,
-        "kinds": {
-            "pepperspraykind": [
-                1,
-                "spray"
-            ],
-            "aerosolkind": [
-                1,
-                "spray"
-            ]
-        },
+        "kinds": [
+            "pepperspraykind",
+            "aerosolkind"
+        ],
         "wearable": false,
         "description": "A can of self-defense. Useful for dissuading criminals and predators.",
         "cost": {
@@ -1077,16 +997,10 @@
         "power": 40,
         "weight": 10,
         "size": 10,
-        "kinds": {
-            "chainsawkind": [
-                1,
-                "chainsaw"
-            ],
-            "sawkind": [
-                1,
-                "chainsaw"
-            ]
-        },
+        "kinds": [
+            "chainsawkind",
+            "sawkind"
+        ],
         "wearable": false,
         "description": "A saw used for cut trees. Very terrifying.",
         "cost": {
@@ -1131,12 +1045,9 @@
         "power": 10,
         "weight": 7,
         "size": 7,
-        "kinds": {
-            "chainsawkind": [
-                1,
-                "whacker"
-            ]
-        },
+        "kinds": [
+            "chainsawkind"
+        ],
         "wearable": false,
         "description": "A gardening implement.",
         "cost": {
@@ -1166,12 +1077,9 @@
         "power": 20,
         "weight": 10,
         "size": 10,
-        "kinds": {
-            "crowbarkind": [
-                1,
-                "crowbar"
-            ]
-        },
+        "kinds": [
+            "crowbarkind"
+        ],
         "wearable": false,
         "description": "A crowbar used for opening doors and crates.",
         "cost": {
@@ -1199,12 +1107,9 @@
         "power": 25,
         "weight": 13,
         "size": 10,
-        "kinds": {
-            "crowbarkind": [
-                1,
-                "bar"
-            ]
-        },
+        "kinds": [
+            "crowbarkind"
+        ],
         "wearable": false,
         "description": "A large crowbar used for prying doors off of cars.",
         "cost": {
@@ -1242,12 +1147,9 @@
         "power": 5,
         "weight": 3,
         "size": 7,
-        "kinds": {
-            "broomkind": [
-                1.0,
-                "broom"
-            ]
-        },
+        "kinds": [
+            "broomkind"
+        ],
         "wearable": false,
         "description": "A standard broom used for sweeping operations.",
         "cost": {
@@ -1276,12 +1178,9 @@
         "power": 7,
         "weight": 2,
         "size": 8,
-        "kinds": {
-            "broomkind": [
-                1.0,
-                "broom"
-            ]
-        },
+        "kinds": [
+            "broomkind"
+        ],
         "wearable": false,
         "description": "A broom made of straw. Looks like something a witch would fly on.",
         "cost": {
@@ -1320,12 +1219,9 @@
         "power": 15,
         "weight": 6,
         "size": 6,
-        "kinds": {
-            "pokerkind": [
-                1.0,
-                "poker"
-            ]
-        },
+        "kinds": [
+            "pokerkind"
+        ],
         "wearable": false,
         "description": "A poker for poking fire.",
         "cost": {
@@ -1355,12 +1251,9 @@
         "power": 50,
         "weight": 20,
         "size": 16,
-        "kinds": {
-            "pokerkind": [
-                1.0,
-                "spear"
-            ]
-        },
+        "kinds": [
+            "pokerkind"
+        ],
         "wearable": false,
         "description": "A large spear that's made for fighting.",
         "cost": {
@@ -1385,12 +1278,9 @@
         "power": 10,
         "weight": 3,
         "size": 3,
-        "kinds": {
-            "icepickkind": [
-                1.0,
-                "pick"
-            ]
-        },
+        "kinds": [
+            "icepickkind"
+        ],
         "wearable": false,
         "description": "A scary-looking pick that's used for clinging to ice.",
         "cost": {
@@ -1424,12 +1314,9 @@
         "power": 18,
         "weight": 12,
         "size": 10,
-        "kinds": {
-            "golfclubkind": [
-                1.0,
-                "club"
-            ]
-        },
+        "kinds": [
+            "golfclubkind"
+        ],
         "wearable": false,
         "description": "A club used for hitting golf balls. Formidable as a weapon.",
         "cost": {
@@ -1463,12 +1350,9 @@
         "power": 10,
         "weight": 7,
         "size": 2,
-        "kinds": {
-            "hammerkind": [
-                1.0,
-                "hammer"
-            ]
-        },
+        "kinds": [
+            "hammerkind"
+        ],
         "wearable": false,
         "description": "A standard claw hammer used for beating nails.",
         "cost": {
@@ -1494,12 +1378,9 @@
         "power": 80,
         "weight": 70,
         "size": 15,
-        "kinds": {
-            "hammerkind": [
-                1.0,
-                "hammer"
-            ]
-        },
+        "kinds": [
+            "hammerkind"
+        ],
         "wearable": false,
         "description": "A large hammer used for demolition. Does a lot of damage if it hits.",
         "cost": {
@@ -1554,12 +1435,9 @@
         "power": 2,
         "weight": 2,
         "size": 2,
-        "kinds": {
-            "hammerkind": [
-                1.0,
-                "mallet"
-            ]
-        },
+        "kinds": [
+            "hammerkind"
+        ],
         "wearable": false,
         "description": "This is a toy hammer, not a proper rubber mallet... It's a mallet made entirely of rubber.",
         "cost": {
@@ -1594,16 +1472,10 @@
         "power": 4,
         "weight": 3,
         "size": 10,
-        "kinds": {
-            "jumpropekind": [
-                1.0,
-                "rope"
-            ],
-            "cordkind": [
-                0.6,
-                "rope"
-            ]
-        },
+        "kinds": [
+            "jumpropekind",
+            "cordkind"
+        ],
         "wearable": false,
         "description": "A standard rope used for jumping over.",
         "cost": {
@@ -1635,16 +1507,10 @@
         "power": 10,
         "weight": 2,
         "size": 2,
-        "kinds": {
-            "jumpropekind": [
-                1.0,
-                "wire"
-            ],
-            "cordkind": [
-                1.0,
-                "wire"
-            ]
-        },
+        "kinds": [
+            "jumpropekind",
+            "cordkind"
+        ],
         "wearable": false,
         "description": "Thin wire for use as piano strings. Can be used to effectively strangulate targets.",
         "cost": {
@@ -1674,16 +1540,10 @@
         "power": 12,
         "weight": 10,
         "size": 10,
-        "kinds": {
-            "shovelkind": [
-                1,
-                "shovel"
-            ],
-            "spadekind": [
-                1,
-                "shovel"
-            ]
-        },
+        "kinds": [
+            "shovelkind",
+            "spadekind"
+        ],
         "wearable": false,
         "description": "A hefty shovel used for digging.",
         "cost": {
@@ -1709,16 +1569,10 @@
         "power": 16,
         "weight": 7,
         "size": 3,
-        "kinds": {
-            "hatchetkind": [
-                1,
-                "hatchet"
-            ],
-            "axekind": [
-                1,
-                "hatchet"
-            ]
-        },
+        "kinds": [
+            "hatchetkind",
+            "axekind"
+        ],
         "wearable": false,
         "description": "A small hatchet. Makes a formidable weapon.",
         "cost": {
@@ -1752,12 +1606,9 @@
         "power": 35,
         "weight": 16,
         "size": 11,
-        "kinds": {
-            "axekind": [
-                1,
-                "axe"
-            ]
-        },
+        "kinds": [
+            "axekind"
+        ],
         "wearable": false,
         "description": "A sturdy axe used for chopping trees. It's a powerful weapon.",
         "cost": {
@@ -1792,12 +1643,9 @@
         "power": 40,
         "weight": 18,
         "size": 11,
-        "kinds": {
-            "axekind": [
-                1,
-                "axe"
-            ]
-        },
+        "kinds": [
+            "axekind"
+        ],
         "wearable": false,
         "description": "A fireman's axe. This is a very powerful weapon and tool.",
         "cost": {
@@ -1839,12 +1687,9 @@
         "power": 4,
         "weight": 4,
         "size": 2,
-        "kinds": {
-            "spoonkind": [
-                1,
-                "spoon"
-            ]
-        },
+        "kinds": [
+            "spoonkind"
+        ],
         "wearable": false,
         "description": "A wooden spoon used for cooking.",
         "cost": {
@@ -1874,12 +1719,9 @@
         "power": 2,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "spoonkind": [
-                1,
-                "spoon"
-            ]
-        },
+        "kinds": [
+            "spoonkind"
+        ],
         "wearable": false,
         "description": "A small soup spoon.",
         "cost": {
@@ -1909,16 +1751,10 @@
         "power": 16,
         "weight": 25,
         "size": 10,
-        "kinds": {
-            "bustkind": [
-                1,
-                "bust"
-            ],
-            "statuekind": [
-                1,
-                "bust"
-            ]
-        },
+        "kinds": [
+            "bustkind",
+            "statuekind"
+        ],
         "wearable": false,
         "description": "A bust of Abraham Lincoln.",
         "cost": {
@@ -1955,16 +1791,10 @@
         "power": 21,
         "weight": 25,
         "size": 10,
-        "kinds": {
-            "bustkind": [
-                1,
-                "bust"
-            ],
-            "statuekind": [
-                1,
-                "bust"
-            ]
-        },
+        "kinds": [
+            "bustkind",
+            "statuekind"
+        ],
         "wearable": false,
         "description": "A bust of Julius Caesar.",
         "cost": {
@@ -2002,12 +1832,9 @@
         "power": 10,
         "weight": 18,
         "size": 6,
-        "kinds": {
-            "statuekind": [
-                1,
-                "statue"
-            ]
-        },
+        "kinds": [
+            "statuekind"
+        ],
         "wearable": false,
         "description": "A small replica of Auguste Rodin's The Thinker.",
         "cost": {
@@ -2044,12 +1871,9 @@
         "power": 120,
         "weight": 240,
         "size": 60,
-        "kinds": {
-            "statuekind": [
-                1,
-                "Statue+of"
-            ]
-        },
+        "kinds": [
+            "statuekind"
+        ],
         "wearable": false,
         "description": "A woman-sized replica of the Statue of Liberty.",
         "cost": {
@@ -2100,12 +1924,9 @@
         "power": 6,
         "weight": 4,
         "size": 2,
-        "kinds": {
-            "spatulakind": [
-                1,
-                "spatula"
-            ]
-        },
+        "kinds": [
+            "spatulakind"
+        ],
         "wearable": false,
         "description": "A spatula. Not to be confused with a kitchen turner.",
         "cost": {
@@ -2133,12 +1954,9 @@
         "power": 16,
         "weight": 20,
         "size": 2,
-        "kinds": {
-            "spatulakind": [
-                1,
-                "spatula"
-            ]
-        },
+        "kinds": [
+            "spatulakind"
+        ],
         "wearable": false,
         "description": "A spatula made out of gold.",
         "cost": {
@@ -2173,12 +1991,9 @@
         "power": 9,
         "weight": 6,
         "size": 1,
-        "kinds": {
-            "screwdriverkind": [
-                1,
-                "screwdriver"
-            ]
-        },
+        "kinds": [
+            "screwdriverkind"
+        ],
         "wearable": false,
         "description": "A flat-headed screwdriver. Careful with that thing.",
         "cost": {
@@ -2208,12 +2023,9 @@
         "power": 11,
         "weight": 6,
         "size": 1,
-        "kinds": {
-            "screwdriverkind": [
-                1,
-                "screwdriver"
-            ]
-        },
+        "kinds": [
+            "screwdriverkind"
+        ],
         "wearable": false,
         "description": "A Phillips screwdriver. Has a pointy end.",
         "cost": {
@@ -2243,12 +2055,9 @@
         "power": 14,
         "weight": 7,
         "size": 1,
-        "kinds": {
-            "screwdriverkind": [
-                1,
-                "screwdriver"
-            ]
-        },
+        "kinds": [
+            "screwdriverkind"
+        ],
         "wearable": false,
         "description": "A screwdriver with a magnetic head that helps you align screws.",
         "cost": {
@@ -2279,12 +2088,9 @@
         "power": 40,
         "weight": 7,
         "size": 10,
-        "kinds": {
-            "bladekind": [
-                1,
-                "sword"
-            ]
-        },
+        "kinds": [
+            "bladekind"
+        ],
         "wearable": false,
         "description": "An arming sword.",
         "cost": {
@@ -2313,12 +2119,9 @@
         "power": 40,
         "weight": 7,
         "size": 10,
-        "kinds": {
-            "bladekind": [
-                1,
-                "katana"
-            ]
-        },
+        "kinds": [
+            "bladekind"
+        ],
         "wearable": false,
         "description": "A Japanese sword. Loved by weebs.",
         "cost": {
@@ -2349,12 +2152,9 @@
         "power": 3,
         "weight": 7,
         "size": 10,
-        "kinds": {
-            "bladekind": [
-                1,
-                "katana"
-            ]
-        },
+        "kinds": [
+            "bladekind"
+        ],
         "wearable": false,
         "description": "A total piece of shit sword that sucks ass.",
         "cost": {
@@ -2380,12 +2180,9 @@
         "power": 400,
         "weight": 7,
         "size": 10,
-        "kinds": {
-            "bladekind": [
-                1,
-                "katana"
-            ]
-        },
+        "kinds": [
+            "bladekind"
+        ],
         "wearable": false,
         "description": "A badass anime katana with a diamond-tipped blade that can cut through anything.",
         "cost": {
@@ -2437,12 +2234,9 @@
         "power": 60,
         "weight": 5,
         "size": 9,
-        "kinds": {
-            "bladekind": [
-                1,
-                "rapier"
-            ]
-        },
+        "kinds": [
+            "bladekind"
+        ],
         "wearable": false,
         "description": "A narrow-bladed sword that's designed to be lightweight and sharp.",
         "cost": {
@@ -2469,12 +2263,9 @@
         "power": 65,
         "weight": 15,
         "size": 20,
-        "kinds": {
-            "bladekind": [
-                1,
-                "zweihander"
-            ]
-        },
+        "kinds": [
+            "bladekind"
+        ],
         "wearable": false,
         "description": "A large two-handed sword of German origin.",
         "cost": {
@@ -2503,12 +2294,9 @@
         "power": 100,
         "weight": 3,
         "size": 4,
-        "kinds": {
-            "pistolkind": [
-                1,
-                "pistol"
-            ]
-        },
+        "kinds": [
+            "pistolkind"
+        ],
         "wearable": false,
         "description": "A handgun.",
         "cost": {
@@ -2533,12 +2321,9 @@
         "power": 200,
         "weight": 5,
         "size": 6,
-        "kinds": {
-            "pistolkind": [
-                1,
-                "pistol"
-            ]
-        },
+        "kinds": [
+            "pistolkind"
+        ],
         "wearable": false,
         "description": "A high-caliber revolver.",
         "cost": {
@@ -2565,12 +2350,9 @@
         "power": 11,
         "weight": 15,
         "size": 10,
-        "kinds": {
-            "lampkind": [
-                1,
-                "lamp"
-            ]
-        },
+        "kinds": [
+            "lampkind"
+        ],
         "wearable": false,
         "description": "A standing lamp.",
         "cost": {
@@ -2604,12 +2386,9 @@
         "power": 7,
         "weight": 7,
         "size": 6,
-        "kinds": {
-            "lampkind": [
-                1,
-                "lamp"
-            ]
-        },
+        "kinds": [
+            "lampkind"
+        ],
         "wearable": false,
         "description": "A small lamp for use on a desk.",
         "cost": {
@@ -2645,12 +2424,9 @@
         "power": 50,
         "weight": 3,
         "size": 4,
-        "kinds": {
-            "stungunkind": [
-                1,
-                "gun"
-            ]
-        },
+        "kinds": [
+            "stungunkind"
+        ],
         "wearable": false,
         "description": "A self-defense implement used for non-lethally disarming opponents.",
         "cost": {
@@ -2692,12 +2468,9 @@
         "power": 80,
         "weight": 6,
         "size": 5,
-        "kinds": {
-            "stungunkind": [
-                1,
-                "taser"
-            ]
-        },
+        "kinds": [
+            "stungunkind"
+        ],
         "wearable": false,
         "description": "A large taser used for taking out perps.",
         "cost": {
@@ -2741,12 +2514,9 @@
         "power": 8,
         "weight": 5,
         "size": 7,
-        "kinds": {
-            "ballkind": [
-                1,
-                "basketball"
-            ]
-        },
+        "kinds": [
+            "ballkind"
+        ],
         "wearable": false,
         "description": "A standard ball used for shooting hoops.",
         "cost": {
@@ -2776,12 +2546,9 @@
         "power": 6,
         "weight": 5,
         "size": 7,
-        "kinds": {
-            "ballkind": [
-                1,
-                "football"
-            ]
-        },
+        "kinds": [
+            "ballkind"
+        ],
         "wearable": false,
         "description": "A football. But what kind of football?",
         "cost": {
@@ -2812,12 +2579,9 @@
         "power": 16,
         "weight": 4,
         "size": 6,
-        "kinds": {
-            "ballkind": [
-                1,
-                "dodgeball"
-            ]
-        },
+        "kinds": [
+            "ballkind"
+        ],
         "wearable": false,
         "description": "A menacing ball used for pelting little kids.",
         "cost": {
@@ -2854,12 +2618,9 @@
         "power": 12,
         "weight": 40,
         "size": 6,
-        "kinds": {
-            "ballkind": [
-                1,
-                "ball"
-            ]
-        },
+        "kinds": [
+            "ballkind"
+        ],
         "wearable": false,
         "description": "A heavy ball that's traditionally used to knock down pins.",
         "cost": {
@@ -2888,12 +2649,9 @@
         "power": 8,
         "weight": 5,
         "size": 10,
-        "kinds": {
-            "rakekind": [
-                1,
-                "rake"
-            ]
-        },
+        "kinds": [
+            "rakekind"
+        ],
         "wearable": false,
         "description": "A tool used for turning leaves on the ground into leaves in a pile.",
         "cost": {
@@ -2923,12 +2681,9 @@
         "power": 10,
         "weight": 10,
         "size": 10,
-        "kinds": {
-            "plankkind": [
-                1,
-                "plank"
-            ]
-        },
+        "kinds": [
+            "plankkind"
+        ],
         "wearable": false,
         "description": "A wooden board. You could wield this and become an inverse pirate.",
         "cost": {
@@ -2958,16 +2713,10 @@
         "power": 17,
         "weight": 16,
         "size": 2,
-        "kinds": {
-            "glovekind": [
-                1,
-                "knuckles"
-            ],
-            "fistkind": [
-                1,
-                "knuckles"
-            ]
-        },
+        "kinds": [
+            "glovekind",
+            "fistkind"
+        ],
         "wearable": false,
         "description": "A pair of heavy knuckles that gives a bit more *oomph* to your punches.",
         "cost": {
@@ -2996,12 +2745,9 @@
         "power": 21,
         "weight": 16,
         "size": 2,
-        "kinds": {
-            "glovekind": [
-                1,
-                "sap"
-            ]
-        },
+        "kinds": [
+            "glovekind"
+        ],
         "wearable": false,
         "description": "A weighted leather implement that you can strap around your hand.",
         "cost": {
@@ -3027,16 +2773,10 @@
         "power": 29,
         "weight": 16,
         "size": 2,
-        "kinds": {
-            "glovekind": [
-                1,
-                "caestus"
-            ],
-            "fistkind": [
-                1,
-                "caestus"
-            ]
-        },
+        "kinds": [
+            "glovekind",
+            "fistkind"
+        ],
         "wearable": false,
         "description": "A studded leather glove that can be used to punch down your foes.",
         "cost": {
@@ -3063,12 +2803,9 @@
         "power": 3,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "glovekind": [
-                1,
-                "mittens"
-            ]
-        },
+        "kinds": [
+            "glovekind"
+        ],
         "slots": {
             "accessory": [
                 0.5,
@@ -3106,12 +2843,9 @@
         "power": 4,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "glovekind": [
-                1,
-                "gloves"
-            ]
-        },
+        "kinds": [
+            "glovekind"
+        ],
         "slots": {
             "accessory": [
                 0.5,
@@ -3145,12 +2879,9 @@
         "power": 2,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "forkkind": [
-                1,
-                "fork"
-            ]
-        },
+        "kinds": [
+            "forkkind"
+        ],
         "wearable": false,
         "description": "A piece of silverware used for piercing food and moving it to the user's mouth.",
         "cost": {
@@ -3180,20 +2911,11 @@
         "power": 55,
         "weight": 10,
         "size": 15,
-        "kinds": {
-            "forkkind": [
-                1,
-                "trident"
-            ],
-            "3dentkind": [
-                1,
-                "trident"
-            ],
-            "spearkind": [
-                1,
-                "trident"
-            ]
-        },
+        "kinds": [
+            "forkkind",
+            "3dentkind",
+            "spearkind"
+        ],
         "wearable": false,
         "description": "A three-pronged spear used for fishing or as a polearm. This would be a pretty ironic weapon to wield if you were a fish person or something.",
         "cost": {
@@ -3250,12 +2972,9 @@
         "power": 9,
         "weight": 7,
         "size": 1,
-        "kinds": {
-            "forkkind": [
-                1,
-                "fork"
-            ]
-        },
+        "kinds": [
+            "forkkind"
+        ],
         "wearable": false,
         "description": "A thick metal fork that makes an annoying tone when you strike it with something.",
         "cost": {
@@ -3291,20 +3010,11 @@
         "power": 26,
         "weight": 10,
         "size": 15,
-        "kinds": {
-            "forkkind": [
-                1,
-                "fork"
-            ],
-            "3dentkind": [
-                1,
-                "fork"
-            ],
-            "spearkind": [
-                1,
-                "fork"
-            ]
-        },
+        "kinds": [
+            "forkkind",
+            "3dentkind",
+            "spearkind"
+        ],
         "wearable": false,
         "description": "A three-pronged device used for handling hay. Also makes a decent improvised weapon.",
         "cost": {
@@ -3345,12 +3055,9 @@
         "power": 10,
         "weight": 4,
         "size": 8,
-        "kinds": {
-            "canekind": [
-                1,
-                "cane"
-            ]
-        },
+        "kinds": [
+            "canekind"
+        ],
         "wearable": false,
         "description": "A cane used by people who need helping walking. Or by people who want to seem cool and mature.",
         "cost": {
@@ -3385,12 +3092,9 @@
         "power": 36,
         "weight": 10,
         "size": 8,
-        "kinds": {
-            "canekind": [
-                1,
-                "cane"
-            ]
-        },
+        "kinds": [
+            "canekind"
+        ],
         "wearable": false,
         "description": "A cane fashioned out of a dried bull penis. Don't laugh.",
         "cost": {
@@ -3435,12 +3139,9 @@
         "power": 5,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "canekind": [
-                1,
-                "cane"
-            ]
-        },
+        "kinds": [
+            "canekind"
+        ],
         "wearable": false,
         "description": "A small cane made of candy.",
         "cost": {
@@ -3479,12 +3180,9 @@
         "power": 6,
         "weight": 3,
         "size": 3,
-        "kinds": {
-            "curlingironkind": [
-                1,
-                "iron"
-            ]
-        },
+        "kinds": [
+            "curlingironkind"
+        ],
         "wearable": false,
         "description": "A device used for curling one's hair.",
         "cost": {
@@ -3518,12 +3216,9 @@
         "power": 18,
         "weight": 35,
         "size": 11,
-        "kinds": {
-            "chainkind": [
-                1,
-                "chain"
-            ]
-        },
+        "kinds": [
+            "chainkind"
+        ],
         "wearable": false,
         "description": "A heavy metal chain.",
         "cost": {
@@ -3549,12 +3244,9 @@
         "power": 8,
         "weight": 15,
         "size": 6,
-        "kinds": {
-            "chainkind": [
-                1,
-                "chain"
-            ]
-        },
+        "kinds": [
+            "chainkind"
+        ],
         "wearable": false,
         "description": "A small bike chain.",
         "cost": {
@@ -3582,12 +3274,9 @@
         "power": 2,
         "weight": 2,
         "size": 1,
-        "kinds": {
-            "chainkind": [
-                1,
-                "chain"
-            ]
-        },
+        "kinds": [
+            "chainkind"
+        ],
         "wearable": false,
         "description": "A keychain to help you find your keys.",
         "cost": {
@@ -3620,12 +3309,9 @@
         "power": 10,
         "weight": 5,
         "size": 3,
-        "kinds": {
-            "knifekind": [
-                1,
-                "knife"
-            ]
-        },
+        "kinds": [
+            "knifekind"
+        ],
         "wearable": false,
         "description": "A kitchen knife used for cutting up foods.",
         "cost": {
@@ -3651,16 +3337,10 @@
         "power": 29,
         "weight": 9,
         "size": 4,
-        "kinds": {
-            "knifekind": [
-                1,
-                "knife"
-            ],
-            "cleaverkind": [
-                1,
-                "butcher"
-            ]
-        },
+        "kinds": [
+            "knifekind",
+            "cleaverkind"
+        ],
         "wearable": false,
         "description": "A hefty knife used for cleaving large chunks of flesh.",
         "cost": {
@@ -3694,12 +3374,9 @@
         "power": 15,
         "weight": 5,
         "size": 3,
-        "kinds": {
-            "knifekind": [
-                1,
-                "knife"
-            ]
-        },
+        "kinds": [
+            "knifekind"
+        ],
         "wearable": false,
         "description": "A 'cool' looking knife.",
         "cost": {
@@ -3728,12 +3405,9 @@
         "power": 12,
         "weight": 8,
         "size": 10,
-        "kinds": {
-            "tablelegkind": [
-                1,
-                "leg"
-            ]
-        },
+        "kinds": [
+            "tablelegkind"
+        ],
         "wearable": false,
         "description": "A wooden table leg.",
         "cost": {
@@ -3762,16 +3436,10 @@
         "inheritpower": 100,
         "weight": 8,
         "size": 10,
-        "kinds": {
-            "tablelegkind": [
-                1,
-                "cue"
-            ],
-            "canekind": [
-                1,
-                "cue"
-            ]
-        },
+        "kinds": [
+            "tablelegkind",
+            "canekind"
+        ],
         "wearable": false,
         "description": "A wooden cue used for sinking pool balls.",
         "cost": {
@@ -3804,12 +3472,9 @@
         "power": 200,
         "weight": 10,
         "size": 10,
-        "kinds": {
-            "shotgunkind": [
-                1,
-                "shotgun"
-            ]
-        },
+        "kinds": [
+            "shotgunkind"
+        ],
         "wearable": false,
         "description": "A pump-action shotgun.",
         "cost": {
@@ -3838,12 +3503,9 @@
         "power": 222,
         "weight": 10,
         "size": 10,
-        "kinds": {
-            "shotgunkind": [
-                1,
-                "shotgun"
-            ]
-        },
+        "kinds": [
+            "shotgunkind"
+        ],
         "wearable": false,
         "description": "A wooden double-barreled shotgun.",
         "cost": {
@@ -3883,12 +3545,9 @@
         "power": 10,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "needlekind": [
-                1,
-                "needles"
-            ]
-        },
+        "kinds": [
+            "needlekind"
+        ],
         "wearable": false,
         "description": "Small needles used for sewing things together.",
         "cost": {
@@ -3916,12 +3575,9 @@
         "power": 10,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "needlekind": [
-                1,
-                "needles"
-            ]
-        },
+        "kinds": [
+            "needlekind"
+        ],
         "wearable": false,
         "description": "A pair of needles used for knitting things.",
         "cost": {
@@ -3949,12 +3605,9 @@
         "power": 5,
         "weight": 5,
         "size": 3,
-        "kinds": {
-            "dumbbellkind": [
-                1,
-                "dumbbell"
-            ]
-        },
+        "kinds": [
+            "dumbbellkind"
+        ],
         "wearable": false,
         "description": "A small 5-pound dumbbell used for exercising.",
         "cost": {
@@ -3999,12 +3652,9 @@
         "power": 15,
         "weight": 15,
         "size": 5,
-        "kinds": {
-            "dumbbellkind": [
-                1,
-                "dumbbell"
-            ]
-        },
+        "kinds": [
+            "dumbbellkind"
+        ],
         "wearable": false,
         "description": "A 15-pound dumbbell used for exercising.",
         "cost": {
@@ -4050,12 +3700,9 @@
         "power": 100,
         "weight": 100,
         "size": 30,
-        "kinds": {
-            "dumbbellkind": [
-                1,
-                "dumbbell"
-            ]
-        },
+        "kinds": [
+            "dumbbellkind"
+        ],
         "wearable": false,
         "description": "A comically huge dumbbell.",
         "cost": {
@@ -4102,12 +3749,9 @@
         "power": 21,
         "weight": 8,
         "size": 10,
-        "kinds": {
-            "hockeystickkind": [
-                1,
-                "stick"
-            ]
-        },
+        "kinds": [
+            "hockeystickkind"
+        ],
         "wearable": false,
         "description": "A large wooden stick. It's used to strike pucks around on ice.",
         "cost": {
@@ -4145,16 +3789,10 @@
         "power": 9,
         "weight": 12,
         "size": 8,
-        "kinds": {
-            "vacuumkind": [
-                1,
-                "vacuum"
-            ],
-            "appliancekind": [
-                1,
-                "cleaner"
-            ]
-        },
+        "kinds": [
+            "vacuumkind",
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A suction-producing device that's used for sucking up loose particles.",
         "cost": {
@@ -4190,12 +3828,9 @@
         "power": 10,
         "weight": 6,
         "size": 10,
-        "kinds": {
-            "mopkind": [
-                1,
-                "mop"
-            ]
-        },
+        "kinds": [
+            "mopkind"
+        ],
         "wearable": false,
         "description": "A mop. It's used for cleaning up spills and wiping surfaces clean.",
         "cost": {
@@ -4228,12 +3863,9 @@
         "power": 32,
         "weight": 32,
         "size": 6,
-        "kinds": {
-            "trophykind": [
-                1,
-                "trophy"
-            ]
-        },
+        "kinds": [
+            "trophykind"
+        ],
         "wearable": false,
         "description": "A golden trophy received for winning something. Or getting second place. They really give these things out for anything.",
         "cost": {
@@ -4266,12 +3898,9 @@
         "power": 47,
         "weight": 8,
         "size": 5,
-        "kinds": {
-            "fancysantakind": [
-                1,
-                "fancy+santa"
-            ]
-        },
+        "kinds": [
+            "fancysantakind"
+        ],
         "wearable": false,
         "description": "A very fancy-looking Santa figurine. It looks like a normal Santa, but it's filled with self-righteous bullshit.",
         "cost": {
@@ -4311,16 +3940,10 @@
         "power": 7,
         "weight": 3,
         "size": 2,
-        "kinds": {
-            "ladlekind": [
-                1,
-                "ladle"
-            ],
-            "spoonkind": [
-                1,
-                "ladle"
-            ]
-        },
+        "kinds": [
+            "ladlekind",
+            "spoonkind"
+        ],
         "wearable": false,
         "description": "A stainless metal spoon that's used for serving soup.",
         "cost": {
@@ -4353,12 +3976,9 @@
         "power": 11,
         "weight": 15,
         "size": 15,
-        "kinds": {
-            "cordkind": [
-                1,
-                "cable"
-            ]
-        },
+        "kinds": [
+            "cordkind"
+        ],
         "wearable": false,
         "description": "A long cable used for extending electric signals.",
         "cost": {
@@ -4389,16 +4009,10 @@
         "power": 10,
         "weight": 10,
         "size": 10,
-        "kinds": {
-            "cordkind": [
-                1,
-                "rope"
-            ],
-            "jumpropekind": [
-                0.7,
-                "rope"
-            ]
-        },
+        "kinds": [
+            "cordkind",
+            "jumpropekind"
+        ],
         "wearable": false,
         "description": "A long piece of rope.",
         "cost": {
@@ -4419,12 +4033,9 @@
         "power": 12,
         "weight": 9,
         "size": 5,
-        "kinds": {
-            "ironkind": [
-                1,
-                "iron"
-            ]
-        },
+        "kinds": [
+            "ironkind"
+        ],
         "wearable": false,
         "description": "A tool for ironing the wrinkles out of your clothes.",
         "cost": {
@@ -4463,12 +4074,9 @@
         "power": 13,
         "weight": 6,
         "size": 3,
-        "kinds": {
-            "sawkind": [
-                1,
-                "saw"
-            ]
-        },
+        "kinds": [
+            "sawkind"
+        ],
         "wearable": false,
         "description": "A serrated saw meant for cutting metal.",
         "cost": {
@@ -4497,12 +4105,9 @@
         "power": 10,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "iceskatekind": [
-                1,
-                "skates"
-            ]
-        },
+        "kinds": [
+            "iceskatekind"
+        ],
         "slots": {
             "accessory": [
                 1,
@@ -4541,12 +4146,9 @@
         "power": 23,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "wrenchkind": [
-                1,
-                "wrench"
-            ]
-        },
+        "kinds": [
+            "wrenchkind"
+        ],
         "wearable": false,
         "description": "A hefty wrench meant to tighten and loosen threaded pipes.",
         "cost": {
@@ -4576,12 +4178,9 @@
         "power": 19,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "umbrellakind": [
-                1,
-                "umbrella"
-            ]
-        },
+        "kinds": [
+            "umbrellakind"
+        ],
         "wearable": false,
         "description": "An umbrella used to keep the rain off of your head.",
         "cost": {
@@ -4619,12 +4218,9 @@
         "power": 19,
         "weight": 50,
         "size": 45,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "bed"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A piece of furniture used for sleeping.",
         "cost": {
@@ -4663,12 +4259,9 @@
         "power": 35,
         "weight": 50,
         "size": 35,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "dresser"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A piece of furniture used for sleeping.",
         "cost": {
@@ -4695,12 +4288,9 @@
         "power": 7,
         "weight": 1,
         "size": 5,
-        "kinds": {
-            "pillowkind": [
-                1,
-                "pillow"
-            ]
-        },
+        "kinds": [
+            "pillowkind"
+        ],
         "wearable": false,
         "description": "A soft, fluffy pillow.",
         "cost": {
@@ -4751,12 +4341,9 @@
         "power": 7,
         "weight": 5,
         "size": 16,
-        "kinds": {
-            "tarpkind": [
-                1,
-                "blanket"
-            ]
-        },
+        "kinds": [
+            "tarpkind"
+        ],
         "wearable": false,
         "description": "A blanket for covering oneself with during sleep.",
         "cost": {
@@ -4801,12 +4388,9 @@
         "power": 33,
         "weight": 70,
         "size": 45,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "refrigerator"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A cooling device used to keep food fresh.",
         "cost": {
@@ -4841,12 +4425,9 @@
         "power": 45,
         "weight": 70,
         "size": 40,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "oven"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A chamber of hot fires.",
         "cost": {
@@ -4887,12 +4468,9 @@
         "power": 9,
         "weight": 15,
         "size": 6,
-        "kinds": {
-            "potkind": [
-                1,
-                "pot"
-            ]
-        },
+        "kinds": [
+            "potkind"
+        ],
         "wearable": false,
         "description": "A metal bowl for boiling things.",
         "cost": {
@@ -4925,12 +4503,9 @@
         "power": 11,
         "weight": 15,
         "size": 6,
-        "kinds": {
-            "pankind": [
-                1,
-                "pan"
-            ]
-        },
+        "kinds": [
+            "pankind"
+        ],
         "wearable": false,
         "description": "A pan with a convenient handle.",
         "cost": {
@@ -4971,12 +4546,9 @@
         "power": 19,
         "weight": 40,
         "size": 25,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "sink"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A basin for washing things.",
         "cost": {
@@ -5005,12 +4577,9 @@
         "power": 4,
         "weight": 3,
         "size": 5,
-        "kinds": {
-            "disckind": [
-                1,
-                "plate"
-            ]
-        },
+        "kinds": [
+            "disckind"
+        ],
         "wearable": false,
         "description": "A brittle plate.",
         "cost": {
@@ -5031,12 +4600,9 @@
         "power": 3,
         "weight": 3,
         "size": 4,
-        "kinds": {
-            "cupkind": [
-                1,
-                "cup"
-            ]
-        },
+        "kinds": [
+            "cupkind"
+        ],
         "wearable": false,
         "description": "A cup for holding liquids in.",
         "cost": {
@@ -5057,12 +4623,9 @@
         "power": 4,
         "weight": 5,
         "size": 5,
-        "kinds": {
-            "cupkind": [
-                1,
-                "mug"
-            ]
-        },
+        "kinds": [
+            "cupkind"
+        ],
         "wearable": false,
         "description": "A large cup. Usually holds coffee.",
         "cost": {
@@ -5083,12 +4646,9 @@
         "power": 30,
         "weight": 40,
         "size": 30,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "table"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A piece of furniture that you put other things on.",
         "cost": {
@@ -5115,12 +4675,9 @@
         "inheritpower": 413,
         "weight": 40,
         "size": 30,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "clock"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A large, fanciful clock. It's somewhat imposing.",
         "cost": {
@@ -5157,12 +4714,9 @@
         "inheritpower": 100,
         "weight": 5,
         "size": 3,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "clock"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A clock that hangs on the wall.",
         "cost": {
@@ -5195,12 +4749,9 @@
         "power": 24,
         "weight": 35,
         "size": 30,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "toilet"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A toilet. For... You know.",
         "cost": {
@@ -5240,12 +4791,9 @@
         "power": 32,
         "weight": 60,
         "size": 40,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "tub"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A tub for scrubbin'.",
         "cost": {
@@ -5270,12 +4818,9 @@
         "power": 37,
         "weight": 60,
         "size": 40,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "shower"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A standing shower unit.",
         "cost": {
@@ -5304,12 +4849,9 @@
         "power": 65,
         "weight": 210,
         "size": 70,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "fireplace"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A chamber of hot fires and stones.",
         "cost": {
@@ -5345,12 +4887,9 @@
         "power": 25,
         "weight": 31,
         "size": 23,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "bench"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A thing you sit on. You know, a bench.",
         "cost": {
@@ -5376,12 +4915,9 @@
         "power": 34,
         "weight": 51,
         "size": 41,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "chair"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A large, comfy chair. Makes you feel tiny.",
         "cost": {
@@ -5406,12 +4942,9 @@
         "power": 34,
         "weight": 43,
         "size": 56,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "couch"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A couch. A truly beautiful invention.",
         "cost": {
@@ -5433,12 +4966,9 @@
         "power": 16,
         "weight": 43,
         "size": 16,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "television"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A television set.",
         "cost": {
@@ -5467,12 +4997,9 @@
         "power": 25,
         "weight": 75,
         "size": 50,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "machine"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A machine. It holds a great aqueous power.",
         "cost": {
@@ -5503,12 +5030,9 @@
         "power": 25,
         "weight": 75,
         "size": 50,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "machine"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A machine. It can dry your clothes.",
         "cost": {
@@ -5539,12 +5063,9 @@
         "power": 5,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "penkind": [
-                1,
-                "pen"
-            ]
-        },
+        "kinds": [
+            "penkind"
+        ],
         "wearable": false,
         "description": "A standard pen. Said to be mightier than a sword.",
         "cost": {
@@ -5575,12 +5096,9 @@
         "power": 5,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "penkind": [
-                1,
-                "pencil"
-            ]
-        },
+        "kinds": [
+            "penkind"
+        ],
         "wearable": false,
         "description": "A wooden pencil. Has an eraser as well.",
         "cost": {
@@ -5621,12 +5139,9 @@
         "power": 9,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "staplerkind": [
-                1,
-                "stapler"
-            ]
-        },
+        "kinds": [
+            "staplerkind"
+        ],
         "wearable": false,
         "description": "An office stapler.",
         "cost": {
@@ -5660,12 +5175,9 @@
         "power": 30,
         "weight": 25,
         "size": 20,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "machine"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A machine. Like it or not, it is spitting fax.",
         "cost": {
@@ -5694,12 +5206,9 @@
         "power": 40,
         "weight": 50,
         "size": 35,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "machine"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A machine. It has the ability to copy documents.",
         "cost": {
@@ -5730,12 +5239,9 @@
         "power": 6,
         "weight": 15,
         "size": 15,
-        "kinds": {
-            "ballkind": [
-                1,
-                "ball"
-            ]
-        },
+        "kinds": [
+            "ballkind"
+        ],
         "wearable": false,
         "description": "A large weighted ball used for various exercises.",
         "cost": {
@@ -5763,12 +5269,9 @@
         "power": 4,
         "weight": 4,
         "size": 2,
-        "kinds": {
-            "bottlekind": [
-                1,
-                "bottle"
-            ]
-        },
+        "kinds": [
+            "bottlekind"
+        ],
         "wearable": false,
         "description": "A bottle of water.",
         "cost": {
@@ -5812,12 +5315,9 @@
         "power": 10,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "bottlekind": [
-                1,
-                "bottle"
-            ]
-        },
+        "kinds": [
+            "bottlekind"
+        ],
         "wearable": false,
         "description": "A small bottle containing steroids.",
         "cost": {
@@ -5849,12 +5349,9 @@
         "power": 20,
         "weight": 2,
         "size": 5,
-        "kinds": {
-            "fistkind": [
-                1,
-                "gloves"
-            ]
-        },
+        "kinds": [
+            "fistkind"
+        ],
         "slots": {
             "accessory": [
                 0.3,
@@ -5903,12 +5400,9 @@
         "power": 6,
         "weight": 2,
         "size": 4,
-        "kinds": {
-            "statuekind": [
-                1,
-                "figurine"
-            ]
-        },
+        "kinds": [
+            "statuekind"
+        ],
         "wearable": false,
         "description": "A small figurine of digital singer Hatsune Miku.",
         "cost": {
@@ -5949,12 +5443,9 @@
         "power": 6,
         "weight": 2,
         "size": 2,
-        "kinds": {
-            "disckind": [
-                1,
-                "dvd"
-            ]
-        },
+        "kinds": [
+            "disckind"
+        ],
         "wearable": false,
         "description": "A DVD with various episodes of an anime.",
         "cost": {
@@ -6000,12 +5491,9 @@
         "power": 5,
         "weight": 2,
         "size": 5,
-        "kinds": {
-            "paperkind": [
-                1,
-                "poster"
-            ]
-        },
+        "kinds": [
+            "paperkind"
+        ],
         "wearable": false,
         "description": "A poster for an anime.",
         "cost": {
@@ -6051,12 +5539,9 @@
         "power": 6,
         "weight": 2,
         "size": 3,
-        "kinds": {
-            "bookkind": [
-                1,
-                "manga"
-            ]
-        },
+        "kinds": [
+            "bookkind"
+        ],
         "wearable": false,
         "description": "A book of right-to-left drawings that tells a story.",
         "cost": {
@@ -6100,12 +5585,9 @@
         "power": 8,
         "weight": 1,
         "size": 10,
-        "kinds": {
-            "pillowkind": [
-                1,
-                "bodypillow"
-            ]
-        },
+        "kinds": [
+            "pillowkind"
+        ],
         "wearable": false,
         "description": "...No one can ever know.",
         "cost": {
@@ -6149,12 +5631,9 @@
         "power": 35,
         "weight": 3,
         "size": 2,
-        "kinds": {
-            "throwingstarkind": [
-                1,
-                "shuriken"
-            ]
-        },
+        "kinds": [
+            "throwingstarkind"
+        ],
         "wearable": false,
         "description": "Badass throwing stars.",
         "cost": {
@@ -6192,12 +5671,9 @@
         "power": 5,
         "weight": 2,
         "size": 5,
-        "kinds": {
-            "paperkind": [
-                1,
-                "poster"
-            ]
-        },
+        "kinds": [
+            "paperkind"
+        ],
         "wearable": false,
         "description": "A poster for the band Thrasher.",
         "cost": {
@@ -6243,12 +5719,9 @@
         "power": 5,
         "weight": 2,
         "size": 5,
-        "kinds": {
-            "disckind": [
-                1,
-                "album"
-            ]
-        },
+        "kinds": [
+            "disckind"
+        ],
         "wearable": false,
         "description": "One of Nirvana's albums.",
         "cost": {
@@ -6287,12 +5760,9 @@
         "power": 25,
         "weight": 10,
         "size": 9,
-        "kinds": {
-            "guitarkind": [
-                1,
-                "guitar"
-            ]
-        },
+        "kinds": [
+            "guitarkind"
+        ],
         "wearable": false,
         "description": "An electric guitar.",
         "cost": {
@@ -6323,12 +5793,9 @@
         "power": 15,
         "weight": 10,
         "size": 9,
-        "kinds": {
-            "guitarkind": [
-                1,
-                "guitar"
-            ]
-        },
+        "kinds": [
+            "guitarkind"
+        ],
         "wearable": false,
         "description": "An acoustic guitar.",
         "cost": {
@@ -6359,12 +5826,9 @@
         "power": 35,
         "weight": 30,
         "size": 30,
-        "kinds": {
-            "drumkind": [
-                1,
-                "drum"
-            ]
-        },
+        "kinds": [
+            "drumkind"
+        ],
         "wearable": false,
         "description": "A set of drums for playing music with.",
         "cost": {
@@ -6395,12 +5859,9 @@
         "power": 10,
         "weight": 4,
         "size": 5,
-        "kinds": {
-            "bookkind": [
-                1,
-                "atlas"
-            ]
-        },
+        "kinds": [
+            "bookkind"
+        ],
         "wearable": false,
         "description": "A book of maps.",
         "cost": {
@@ -6434,12 +5895,9 @@
         "power": 10,
         "weight": 4,
         "size": 5,
-        "kinds": {
-            "bookkind": [
-                1,
-                "book"
-            ]
-        },
+        "kinds": [
+            "bookkind"
+        ],
         "wearable": false,
         "description": "A book about history.",
         "cost": {
@@ -6465,12 +5923,9 @@
         "power": 15,
         "weight": 5,
         "size": 7,
-        "kinds": {
-            "ballkind": [
-                1,
-                "globe"
-            ]
-        },
+        "kinds": [
+            "ballkind"
+        ],
         "wearable": false,
         "description": "A sphere with a map overlayed onto it.",
         "cost": {
@@ -6504,12 +5959,9 @@
         "power": 11,
         "weight": 3,
         "size": 3,
-        "kinds": {
-            "woodwindkind": [
-                1,
-                "flute"
-            ]
-        },
+        "kinds": [
+            "woodwindkind"
+        ],
         "wearable": false,
         "description": "An instrument. It's used by blowing into it and restricting the flow of the air.",
         "cost": {
@@ -6537,12 +5989,9 @@
         "power": 13,
         "weight": 16,
         "size": 7,
-        "kinds": {
-            "woodwindkind": [
-                1,
-                "saxophone"
-            ]
-        },
+        "kinds": [
+            "woodwindkind"
+        ],
         "wearable": false,
         "description": "An iconic golden-brass instrument.",
         "cost": {
@@ -6580,12 +6029,9 @@
         "power": 46,
         "weight": 60,
         "size": 40,
-        "kinds": {
-            "furniturekind": [
-                1,
-                "piano"
-            ]
-        },
+        "kinds": [
+            "furniturekind"
+        ],
         "wearable": false,
         "description": "A large piano that looks like it has a tent on top of it.",
         "cost": {
@@ -6626,12 +6072,9 @@
         "power": 6,
         "weight": 3,
         "size": 5,
-        "kinds": {
-            "headphonekind": [
-                1,
-                "headphones"
-            ]
-        },
+        "kinds": [
+            "headphonekind"
+        ],
         "slots": {
             "accessory": [
                 0.6,
@@ -6668,12 +6111,9 @@
         "power": 1,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "paperkind": [
-                1,
-                "wrapper"
-            ]
-        },
+        "kinds": [
+            "paperkind"
+        ],
         "wearable": false,
         "description": "An empty wrapper for some kind of food.",
         "cost": {
@@ -6707,12 +6147,9 @@
         "power": 1,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "cankind": [
-                1,
-                "can"
-            ]
-        },
+        "kinds": [
+            "cankind"
+        ],
         "wearable": false,
         "description": "An empty can of soda.",
         "cost": {
@@ -6747,12 +6184,9 @@
         "power": 1,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "bagkind": [
-                1,
-                "bag"
-            ]
-        },
+        "kinds": [
+            "bagkind"
+        ],
         "wearable": false,
         "description": "An empty plastic bag.",
         "cost": {
@@ -6786,12 +6220,9 @@
         "power": 1,
         "weight": 7,
         "size": 7,
-        "kinds": {
-            "bladekind": [
-                1,
-                "sord"
-            ]
-        },
+        "kinds": [
+            "bladekind"
+        ],
         "wearable": false,
         "description": "A... sord? You're not exactly sure what this thing is.",
         "cost": {
@@ -6830,12 +6261,9 @@
         "power": 12,
         "weight": 7,
         "size": 5,
-        "kinds": {
-            "hatkind": [
-                1,
-                "headset"
-            ]
-        },
+        "kinds": [
+            "hatkind"
+        ],
         "slots": {
             "head": [
                 0.4,
@@ -6875,12 +6303,9 @@
         "power": 8,
         "weight": 2,
         "size": 2,
-        "kinds": {
-            "cubekind": [
-                1,
-                "phone"
-            ]
-        },
+        "kinds": [
+            "cubekind"
+        ],
         "wearable": false,
         "description": "A portable computing device. Don't ask how you can insert discs into this thing.",
         "cost": {
@@ -6905,12 +6330,9 @@
         "power": 10,
         "weight": 5,
         "size": 11,
-        "kinds": {
-            "cubekind": [
-                1,
-                "drone"
-            ]
-        },
+        "kinds": [
+            "cubekind"
+        ],
         "wearable": false,
         "description": "A drone that you can fly remotely.",
         "cost": {
@@ -6950,12 +6372,9 @@
         "power": 30,
         "weight": 15,
         "size": 18,
-        "kinds": {
-            "appliancekind": [
-                1,
-                "computer"
-            ]
-        },
+        "kinds": [
+            "appliancekind"
+        ],
         "wearable": false,
         "description": "A large computer setup. It's tricked out.",
         "cost": {
@@ -6999,12 +6418,9 @@
         "power": 12,
         "weight": 5,
         "size": 5,
-        "kinds": {
-            "cardkind": [
-                1,
-                "card"
-            ]
-        },
+        "kinds": [
+            "cardkind"
+        ],
         "wearable": false,
         "description": "A beefy graphics card.",
         "cost": {
@@ -7047,12 +6463,9 @@
         "power": 8,
         "weight": 3,
         "size": 5,
-        "kinds": {
-            "hatkind": [
-                1,
-                "hat"
-            ]
-        },
+        "kinds": [
+            "hatkind"
+        ],
         "slots": {
             "head": [
                 0.4,
@@ -7096,12 +6509,9 @@
         "power": 8,
         "weight": 3,
         "size": 5,
-        "kinds": {
-            "shoekind": [
-                1,
-                "boots"
-            ]
-        },
+        "kinds": [
+            "shoekind"
+        ],
         "slots": {
             "accessory": [
                 0.6,
@@ -7145,12 +6555,9 @@
         "power": 14,
         "weight": 3,
         "size": 5,
-        "kinds": {
-            "hatkind": [
-                1,
-                "bandana"
-            ]
-        },
+        "kinds": [
+            "hatkind"
+        ],
         "slots": {
             "accessory": [
                 0.6,
@@ -7188,12 +6595,9 @@
         "power": 9,
         "weight": 3,
         "size": 6,
-        "kinds": {
-            "shoekind": [
-                1,
-                "shoes"
-            ]
-        },
+        "kinds": [
+            "shoekind"
+        ],
         "slots": {
             "accessory": [
                 0.6,
@@ -7235,12 +6639,9 @@
         "power": 10,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "ballkind": [
-                1,
-                "nose"
-            ]
-        },
+        "kinds": [
+            "ballkind"
+        ],
         "slots": {
             "accessory": [
                 0.6,
@@ -7283,12 +6684,9 @@
         "power": 15,
         "weight": 1,
         "size": 1,
-        "kinds": {
-            "statuekind": [
-                1,
-                "figurine"
-            ]
-        },
+        "kinds": [
+            "statuekind"
+        ],
         "wearable": false,
         "description": "A small figurine of a clown.",
         "cost": {
@@ -7326,12 +6724,9 @@
         "power": 5,
         "weight": 2,
         "size": 5,
-        "kinds": {
-            "paperkind": [
-                1,
-                "poster"
-            ]
-        },
+        "kinds": [
+            "paperkind"
+        ],
         "wearable": false,
         "description": "A poster of a clown that bears a striking resemblance to Bill Cosby.",
         "cost": {
@@ -7371,12 +6766,9 @@
         "power": 5,
         "weight": 2,
         "size": 5,
-        "kinds": {
-            "paperkind": [
-                1,
-                "poster"
-            ]
-        },
+        "kinds": [
+            "paperkind"
+        ],
         "wearable": false,
         "description": "A poster of Bill Cosby.",
         "cost": {
@@ -7409,12 +6801,9 @@
         "power": 11,
         "weight": 4,
         "size": 3,
-        "kinds": {
-            "bottlekind": [
-                1,
-                "faygo"
-            ]
-        },
+        "kinds": [
+            "bottlekind"
+        ],
         "wearable": false,
         "description": "A bottle of red cherry Faygo cola.",
         "cost": {
@@ -7452,12 +6841,9 @@
         "power": 11,
         "weight": 4,
         "size": 3,
-        "kinds": {
-            "bottlekind": [
-                1,
-                "faygo"
-            ]
-        },
+        "kinds": [
+            "bottlekind"
+        ],
         "wearable": false,
         "description": "A bottle of grape Faygo.",
         "cost": {
@@ -7495,12 +6881,9 @@
         "power": 11,
         "weight": 4,
         "size": 3,
-        "kinds": {
-            "bottlekind": [
-                1,
-                "faygo"
-            ]
-        },
+        "kinds": [
+            "bottlekind"
+        ],
         "wearable": false,
         "description": "A bottle of cola-flavored Faygo.",
         "cost": {
@@ -7538,12 +6921,9 @@
         "power": 21,
         "weight": 4,
         "size": 3,
-        "kinds": {
-            "bottlekind": [
-                1,
-                "faygo"
-            ]
-        },
+        "kinds": [
+            "bottlekind"
+        ],
         "wearable": false,
         "description": "A bottle of cottan candy Faygo.",
         "cost": {
@@ -7589,12 +6969,9 @@
         "power": 21,
         "weight": 4,
         "size": 3,
-        "kinds": {
-            "bottlekind": [
-                1,
-                "faygo"
-            ]
-        },
+        "kinds": [
+            "bottlekind"
+        ],
         "wearable": false,
         "description": "A bottle of kiwi strawberry Faygo.",
         "cost": {
@@ -7644,12 +7021,9 @@
         "power": 105,
         "weight": 4,
         "size": 3,
-        "kinds": {
-            "bottlekind": [
-                1,
-                "faygo"
-            ]
-        },
+        "kinds": [
+            "bottlekind"
+        ],
         "wearable": false,
         "description": "A bottle of the legendary candy apple Faygo.",
         "cost": {
