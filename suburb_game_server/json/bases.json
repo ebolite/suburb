@@ -5636,6 +5636,7 @@
         "weight": 2,
         "size": 5,
         "kinds": [
+            "glovekind",
             "fistkind"
         ],
         "slots": {
