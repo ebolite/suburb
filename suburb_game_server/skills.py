@@ -5,6 +5,7 @@ import strife
 import random
 import config
 import sessions
+import util
 
 aspects: dict["str", "Aspect"] = {}
 skills: dict["str", "Skill"] = {}
@@ -1567,3 +1568,14 @@ add_abstratus_skill("woodwindkind", antagonize, 75)
 # yoyokind
 add_abstratus_skill("yoyokind", antagonize, 1)
 add_abstratus_skill("yoyokind", arraign, 50)
+
+
+unfinished = []
+for kind in util.kinds:
+    if kind not in abstratus_skills:
+        unfinished.append(kind)
+    elif len(abstratus_skills[kind]) < 3:
+        unfinished.append(kind)
+if len(unfinished) > 0:
+    print("!!! Unfinished abstrati !!!")
+    print(" ".join(sorted(unfinished)))
