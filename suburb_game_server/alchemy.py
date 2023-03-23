@@ -497,6 +497,8 @@ for base, base_dict in util.bases.items():
         for state_name in base_dict[key]:
             if state_name not in stateseffects.states:
                 missing_states.add(state_name)
+            if isinstance(base_dict[key][state_name], list):
+                base_dict[key][state_name] = base_dict[key][state_name][0]
 util.writejson(util.bases, "bases")
 
 if len(missing_states) > 0:

@@ -16,10 +16,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                1,
-                "generic"
-            ]
+            "sate": 1
         },
         "secretadjectives": [
             "boring",
@@ -52,10 +49,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "poison": [
-                1,
-                "useless"
-            ]
+            "poison": 1
         },
         "secretadjectives": [
             "stupid",
@@ -88,10 +82,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "heal": [
-                1,
-                "captchalogue"
-            ]
+            "heal": 1
         },
         "secretadjectives": [
             "meta",
@@ -99,10 +90,7 @@
             "secure"
         ],
         "secret_states": {
-            "weak": [
-                0.7,
-                "empty"
-            ]
+            "weak": 0.7
         },
         "use": [
             "add_card"
@@ -129,17 +117,11 @@
             "jet": 0.1
         },
         "onhit_states": {
-            "stun": [
-                0.5,
-                "punched"
-            ]
+            "stun": 0.5
         },
         "wear_states": {},
         "consume_states": {
-            "heal": [
-                1,
-                "captchalogue"
-            ]
+            "heal": 1
         },
         "secretadjectives": [
             "meta",
@@ -148,10 +130,7 @@
             "hole-filled"
         ],
         "secret_states": {
-            "weak": [
-                0.7,
-                "empty"
-            ]
+            "weak": 0.7
         },
         "use": [
             "combine_card",
@@ -180,30 +159,18 @@
             "build": 0.1
         },
         "onhit_states": {
-            "heal": [
-                0.2,
-                "cruxite"
-            ]
+            "heal": 0.2
         },
         "wear_states": {},
         "consume_states": {
-            "heal": [
-                1,
-                "cruxite"
-            ],
-            "strength": [
-                1,
-                "cruxite"
-            ]
+            "heal": 1,
+            "strength": 1
         },
         "secretadjectives": [
             "meta"
         ],
         "secret_states": {
-            "heal": [
-                1,
-                "cruxite"
-            ]
+            "heal": 1
         },
         "use": [],
         "adjectives": [
@@ -225,30 +192,18 @@
             "build": 0
         },
         "onhit_states": {
-            "heal": [
-                0.2,
-                "cruxite"
-            ]
+            "heal": 0.2
         },
         "wear_states": {},
         "consume_states": {
-            "heal": [
-                1,
-                "cruxite"
-            ],
-            "strength": [
-                1,
-                "cruxite"
-            ]
+            "heal": 1,
+            "strength": 1
         },
         "secretadjectives": [
             "meta"
         ],
         "secret_states": {
-            "heal": [
-                1,
-                "cruxite"
-            ]
+            "heal": 1
         },
         "use": [
             "enter"
@@ -277,10 +232,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "bleed": [
-                1,
-                "punch"
-            ]
+            "bleed": 1
         },
         "secretadjectives": [
             "meta",
@@ -318,10 +270,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "heal": [
-                2,
-                "cruxtruder"
-            ]
+            "heal": 2
         },
         "secretadjectives": [
             "meta",
@@ -354,10 +303,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "heal": [
-                2,
-                "cruxtruder"
-            ]
+            "heal": 2
         },
         "secretadjectives": [
             "meta",
@@ -460,16 +406,10 @@
             "build": 10
         },
         "onhit_states": {
-            "leech": [
-                0.5,
-                "gristy"
-            ]
+            "leech": 0.5
         },
         "wear_states": {
-            "leech": [
-                1.5,
-                "gristy"
-            ]
+            "leech": 1.5
         },
         "consume_states": {},
         "secretadjectives": [
@@ -505,40 +445,16 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "stun": [
-                0.1,
-                "Sburb"
-            ],
-            "strength": [
-                0.1,
-                "Sburb"
-            ],
-            "heal": [
-                0.1,
-                "Sburb"
-            ],
-            "inspire": [
-                0.1,
-                "Sburb"
-            ]
+            "stun": 0.1,
+            "strength": 0.1,
+            "heal": 0.1,
+            "inspire": 0.1
         },
         "consume_states": {
-            "stun": [
-                0.1,
-                "Sburb"
-            ],
-            "strength": [
-                0.1,
-                "Sburb"
-            ],
-            "heal": [
-                0.1,
-                "Sburb"
-            ],
-            "inspire": [
-                0.1,
-                "Sburb"
-            ]
+            "stun": 0.1,
+            "strength": 0.1,
+            "heal": 0.1,
+            "inspire": 0.1
         },
         "secretadjectives": [
             "meta",
@@ -550,10 +466,7 @@
             "transcendental"
         ],
         "secret_states": {
-            "freeze": [
-                2,
-                "meta"
-            ]
+            "freeze": 2
         },
         "use": [
             "install_sburb"
@@ -580,16 +493,11 @@
             "gold": 0.1
         },
         "onhit_states": {
-            "stun": [
-                0.1
-            ]
+            "stun": 0.1
         },
         "wear_states": {},
         "consume_states": {
-            "stun": [
-                0.8,
-                "top"
-            ]
+            "stun": 0.8
         },
         "secretadjectives": [
             "portable",
@@ -623,16 +531,11 @@
             "gold": 0.1
         },
         "onhit_states": {
-            "stun": [
-                0.1
-            ]
+            "stun": 0.1
         },
         "wear_states": {},
         "consume_states": {
-            "stun": [
-                0.8,
-                "computer"
-            ]
+            "stun": 0.8
         },
         "secretadjectives": [
             "high-tech",
@@ -665,16 +568,11 @@
             "chalk": 1
         },
         "onhit_states": {
-            "bleed": [
-                1
-            ]
+            "bleed": 1
         },
         "wear_states": {},
         "consume_states": {
-            "bleed": [
-                0.8,
-                "paper"
-            ]
+            "bleed": 0.8
         },
         "secretadjectives": [
             "fragile",
@@ -706,20 +604,12 @@
             "garnet": 1
         },
         "onhit_states": {
-            "bleed": [
-                1
-            ]
+            "bleed": 1
         },
         "wear_states": {},
         "consume_states": {
-            "bleed": [
-                0.8,
-                "cutter"
-            ],
-            "sate": [
-                1,
-                "pizza"
-            ]
+            "bleed": 0.8,
+            "sate": 1
         },
         "secretadjectives": [
             "Italian",
@@ -750,10 +640,7 @@
             "wood": 1
         },
         "onhit_states": {
-            "stun": [
-                0.5,
-                "baseball"
-            ]
+            "stun": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -782,10 +669,7 @@
             "lead": 1
         },
         "onhit_states": {
-            "stun": [
-                0.5,
-                "baseball"
-            ]
+            "stun": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -822,10 +706,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                0.25,
-                "cooking"
-            ]
+            "sate": 0.25
         },
         "secret_states": {},
         "secretadjectives": [
@@ -862,10 +743,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "strength": [
-                0.5,
-                "plumber's"
-            ]
+            "strength": 0.5
         },
         "secretadjectives": [
             "plumber's",
@@ -901,12 +779,8 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "stun": [
-                0.5
-            ],
-            "damage": [
-                0.5
-            ]
+            "stun": 0.5,
+            "damage": 0.5
         },
         "secretadjectives": [
             "yo",
@@ -938,17 +812,11 @@
             "jet": 1
         },
         "onhit_states": {
-            "bleed": [
-                1.3,
-                "scissors"
-            ]
+            "bleed": 1.3
         },
         "wear_states": {},
         "consume_states": {
-            "bleed": [
-                1.3,
-                "scissors"
-            ]
+            "bleed": 1.3
         },
         "secret_states": {},
         "secretadjectives": [
@@ -982,27 +850,15 @@
             "moonstone": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                1.3,
-                "shears"
-            ]
+            "bleed": 1.3
         },
         "wear_states": {},
         "consume_states": {
-            "bleed": [
-                1.3,
-                "shears"
-            ]
+            "bleed": 1.3
         },
         "secret_states": {
-            "vulnerable": [
-                0.4,
-                "sheepish"
-            ],
-            "weak": [
-                0.4,
-                "sheepish"
-            ]
+            "vulnerable": 0.4,
+            "weak": 0.4
         },
         "secretadjectives": [
             "sheepish",
@@ -1035,10 +891,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "heal": [
-                1,
-                "safety"
-            ]
+            "heal": 1
         },
         "secret_states": {},
         "secretadjectives": [
@@ -1075,25 +928,13 @@
             "mist": 0.2
         },
         "onhit_states": {
-            "blinding": [
-                1,
-                "pepper"
-            ],
-            "vulnerable": [
-                0.6,
-                "pepper"
-            ],
-            "stun": [
-                0.6,
-                "pepper"
-            ]
+            "blinding": 1,
+            "vulnerable": 0.6,
+            "stun": 0.6
         },
         "wear_states": {},
         "consume_states": {
-            "poison": [
-                0.6,
-                "pepper"
-            ]
+            "poison": 0.6
         },
         "secret_states": {},
         "secretadjectives": [
@@ -1128,25 +969,13 @@
             "iron": 0.2
         },
         "onhit_states": {
-            "bleed": [
-                1.2,
-                "chainsaw"
-            ],
-            "demoralize": [
-                1,
-                "chain"
-            ]
+            "bleed": 1.2,
+            "demoralize": 1
         },
         "wear_states": {},
         "consume_states": {
-            "bleed": [
-                1.2,
-                "chain"
-            ],
-            "strength": [
-                1.2,
-                "lumberjack's"
-            ]
+            "bleed": 1.2,
+            "strength": 1.2
         },
         "secret_states": {},
         "secretadjectives": [
@@ -1180,10 +1009,7 @@
             "jet": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.7,
-                "whacker"
-            ]
+            "bleed": 0.7
         },
         "wear_states": {},
         "consume_states": {},
@@ -1214,10 +1040,7 @@
             "garnet": 0.5
         },
         "onhit_states": {
-            "stun": [
-                0.5,
-                "crowbar"
-            ]
+            "stun": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -1252,18 +1075,12 @@
             "titanium": 0.05
         },
         "onhit_states": {
-            "stun": [
-                0.6,
-                "halligan"
-            ]
+            "stun": 0.6
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "ignite": [
-                1,
-                "fire"
-            ]
+            "ignite": 1
         },
         "secretadjectives": [
             "fire",
@@ -1295,10 +1112,7 @@
             "chalk": 0.2
         },
         "onhit_states": {
-            "demoralize": [
-                0.4,
-                "broom"
-            ]
+            "demoralize": 0.4
         },
         "wear_states": {},
         "consume_states": {},
@@ -1334,17 +1148,11 @@
             "sandstone": 1
         },
         "onhit_states": {
-            "demoralize": [
-                0.4,
-                "broom"
-            ]
+            "demoralize": 0.4
         },
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                0.1,
-                "straw"
-            ]
+            "sate": 0.1
         },
         "secret_states": {},
         "secretadjectives": [
@@ -1386,10 +1194,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "ignite": [
-                1.0,
-                "fire"
-            ]
+            "ignite": 1.0
         },
         "secretadjectives": [],
         "adjectives": [
@@ -1449,18 +1254,12 @@
             "permafrost": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.6,
-                "pick"
-            ]
+            "bleed": 0.6
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "freeze": [
-                1.0,
-                "ice"
-            ]
+            "freeze": 1.0
         },
         "secretadjectives": [
             "cold",
@@ -1493,18 +1292,12 @@
             "lead": 1
         },
         "onhit_states": {
-            "stun": [
-                0.4,
-                "club"
-            ]
+            "stun": 0.4
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "demoralize": [
-                0.4,
-                "golf"
-            ]
+            "demoralize": 0.4
         },
         "secretadjectives": [
             "sports",
@@ -1538,10 +1331,7 @@
             "shale": 1
         },
         "onhit_states": {
-            "stun": [
-                0.3,
-                "hammer"
-            ]
+            "stun": 0.3
         },
         "wear_states": {},
         "consume_states": {},
@@ -1579,36 +1369,18 @@
             "onyx": 0.05
         },
         "onhit_states": {
-            "stun": [
-                0.8,
-                "hammer"
-            ],
-            "demoralize": [
-                0.3,
-                "sledge"
-            ],
-            "vulnerable": [
-                0.2,
-                "sledge"
-            ]
+            "stun": 0.8,
+            "demoralize": 0.3,
+            "vulnerable": 0.2
         },
         "wear_states": {
-            "strength": [
-                0.3,
-                "sledge"
-            ]
+            "strength": 0.3
         },
         "consume_states": {
-            "strength": [
-                1.0,
-                "sledge"
-            ]
+            "strength": 1.0
         },
         "secret_states": {
-            "demoralize": [
-                1,
-                "sledge"
-            ]
+            "demoralize": 1
         },
         "secretadjectives": [
             "brutal",
@@ -1647,14 +1419,8 @@
             "tar": 0.5
         },
         "onhit_states": {
-            "demoralize": [
-                0.3,
-                "rubber"
-            ],
-            "stun": [
-                0.1,
-                "mallet"
-            ]
+            "demoralize": 0.3,
+            "stun": 0.1
         },
         "wear_states": {},
         "consume_states": {},
@@ -1692,10 +1458,7 @@
             "silicon": 0.4
         },
         "onhit_states": {
-            "demoralize": [
-                0.3,
-                "jump"
-            ]
+            "demoralize": 0.3
         },
         "wear_states": {},
         "consume_states": {},
@@ -1733,10 +1496,7 @@
             "lead": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.7,
-                "wire"
-            ]
+            "bleed": 0.7
         },
         "wear_states": {},
         "consume_states": {},
@@ -1773,10 +1533,7 @@
             "lead": 1
         },
         "onhit_states": {
-            "stun": [
-                0.3,
-                "shovel"
-            ]
+            "stun": 0.3
         },
         "wear_states": {},
         "consume_states": {},
@@ -1810,17 +1567,11 @@
             "rust": 0.5
         },
         "onhit_states": {
-            "bleed": [
-                0.4,
-                "hatchet"
-            ]
+            "bleed": 0.4
         },
         "wear_states": {},
         "consume_states": {
-            "strength": [
-                0.4,
-                "lumberjack"
-            ]
+            "strength": 0.4
         },
         "secret_states": {},
         "secretadjectives": [
@@ -1854,17 +1605,11 @@
             "iron": 0.5
         },
         "onhit_states": {
-            "vulnerable": [
-                0.3,
-                "axe"
-            ]
+            "vulnerable": 0.3
         },
         "wear_states": {},
         "consume_states": {
-            "strength": [
-                0.4,
-                "lumberjack"
-            ]
+            "strength": 0.4
         },
         "secret_states": {},
         "secretadjectives": [
@@ -1901,22 +1646,13 @@
             "sunstone": 0.1
         },
         "onhit_states": {
-            "vulnerable": [
-                0.3,
-                "axe"
-            ]
+            "vulnerable": 0.3
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "ignite": [
-                1,
-                "fire"
-            ],
-            "inspire": [
-                0.5,
-                "heroic"
-            ]
+            "ignite": 1,
+            "inspire": 0.5
         },
         "secretadjectives": [
             "heroic",
@@ -1950,10 +1686,7 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "strength": [
-                0.3,
-                "wooden"
-            ]
+            "strength": 0.3
         },
         "consume_states": {},
         "secret_states": {},
@@ -1989,10 +1722,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "inspire": [
-                0.5,
-                "posh"
-            ]
+            "inspire": 0.5
         },
         "secret_states": {},
         "secretadjectives": [
@@ -2029,16 +1759,10 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "inspire": [
-                0.5,
-                "presidential"
-            ]
+            "inspire": 0.5
         },
         "secret_states": {
-            "inspire": [
-                0.5,
-                "presidential"
-            ]
+            "inspire": 0.5
         },
         "secretadjectives": [
             "presidential",
@@ -2078,16 +1802,10 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "strength": [
-                0.5,
-                "Roman"
-            ]
+            "strength": 0.5
         },
         "secret_states": {
-            "damage": [
-                0.5,
-                "Roman"
-            ]
+            "damage": 0.5
         },
         "secretadjectives": [
             "Roman",
@@ -2124,16 +1842,10 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "damage": [
-                0.5,
-                "bronze"
-            ]
+            "damage": 0.5
         },
         "secret_states": {
-            "strength": [
-                0.5,
-                "bronze"
-            ]
+            "strength": 0.5
         },
         "secretadjectives": [
             "bronze",
@@ -2175,27 +1887,15 @@
             "lux": 0.05
         },
         "onhit_states": {
-            "stun": [
-                0.4,
-                "Statue+of"
-            ]
+            "stun": 0.4
         },
         "wear_states": {},
         "consume_states": {
-            "heal": [
-                0.5,
-                "liberty"
-            ]
+            "heal": 0.5
         },
         "secret_states": {
-            "strength": [
-                0.5,
-                "liberty"
-            ],
-            "inspire": [
-                1,
-                "liberty"
-            ]
+            "strength": 0.5,
+            "inspire": 1
         },
         "secretadjectives": [
             "liberty",
@@ -2234,10 +1934,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                1,
-                "frycooking"
-            ]
+            "sate": 1
         },
         "secret_states": {},
         "secretadjectives": [
@@ -2272,16 +1969,10 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                1,
-                "frycooking"
-            ]
+            "sate": 1
         },
         "secret_states": {
-            "inspire": [
-                0.5,
-                "golden"
-            ]
+            "inspire": 0.5
         },
         "secretadjectives": [
             "frycooking",
@@ -2319,10 +2010,7 @@
             "iron": 1
         },
         "onhit_states": {
-            "blinding": [
-                0.5,
-                "screwdriver"
-            ]
+            "blinding": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -2358,10 +2046,7 @@
             "lead": 1
         },
         "onhit_states": {
-            "blinding": [
-                0.5,
-                "screwdriver"
-            ]
+            "blinding": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -2398,10 +2083,7 @@
             "mercury": 0.2
         },
         "onhit_states": {
-            "blinding": [
-                0.5,
-                "screwdriver"
-            ]
+            "blinding": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -2440,10 +2122,7 @@
             "quartz": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.4,
-                "sword"
-            ]
+            "bleed": 0.4
         },
         "wear_states": {},
         "consume_states": {},
@@ -2481,10 +2160,7 @@
             "sunstone": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.5,
-                "katana"
-            ]
+            "bleed": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -2562,32 +2238,17 @@
             "diamond": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.8,
-                "katana"
-            ],
-            "damage": [
-                0.4,
-                "anime"
-            ]
+            "bleed": 0.8,
+            "damage": 0.4
         },
         "wear_states": {
-            "inspire": [
-                0.5,
-                "anime"
-            ]
+            "inspire": 0.5
         },
         "consume_states": {
-            "inspire": [
-                0.3,
-                "anime"
-            ]
+            "inspire": 0.3
         },
         "secret_states": {
-            "ignite": [
-                0.5,
-                "anime"
-            ]
+            "ignite": 0.5
         },
         "secretadjectives": [
             "Japanese",
@@ -2623,10 +2284,7 @@
             "jet": 0.5
         },
         "onhit_states": {
-            "bleed": [
-                0.4,
-                "rapier"
-            ]
+            "bleed": 0.4
         },
         "wear_states": {},
         "consume_states": {},
@@ -2663,10 +2321,7 @@
             "build": 0.4
         },
         "onhit_states": {
-            "stun": [
-                0.4,
-                "zweihander"
-            ]
+            "stun": 0.4
         },
         "wear_states": {},
         "consume_states": {},
@@ -2783,18 +2438,12 @@
             "lux": 0.1
         },
         "onhit_states": {
-            "stun": [
-                0.2,
-                "lamp"
-            ]
+            "stun": 0.2
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "ignite": [
-                0.8,
-                "lamp"
-            ]
+            "ignite": 0.8
         },
         "secretadjectives": [
             "light",
@@ -2827,18 +2476,12 @@
             "lux": 0.1
         },
         "onhit_states": {
-            "stun": [
-                0.1,
-                "lamp"
-            ]
+            "stun": 0.1
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "ignite": [
-                0.6,
-                "lamp"
-            ]
+            "ignite": 0.6
         },
         "secretadjectives": [
             "light",
@@ -2874,22 +2517,13 @@
             "lux": 0.2
         },
         "onhit_states": {
-            "stun": [
-                1.2,
-                "stun"
-            ]
+            "stun": 1.2
         },
         "wear_states": {
-            "stun": [
-                1.2,
-                "stun"
-            ]
+            "stun": 1.2
         },
         "consume_states": {
-            "stun": [
-                1.2,
-                "stun"
-            ]
+            "stun": 1.2
         },
         "secret_states": {},
         "secretadjectives": [
@@ -2928,22 +2562,13 @@
             "lux": 0.2
         },
         "onhit_states": {
-            "stun": [
-                1.3,
-                "stun"
-            ]
+            "stun": 1.3
         },
         "wear_states": {
-            "stun": [
-                1.3,
-                "stun"
-            ]
+            "stun": 1.3
         },
         "consume_states": {
-            "stun": [
-                1.3,
-                "stun"
-            ]
+            "stun": 1.3
         },
         "secret_states": {},
         "secretadjectives": [
@@ -2981,10 +2606,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "strength": [
-                0.6,
-                "basketball"
-            ]
+            "strength": 0.6
         },
         "secret_states": {},
         "secretadjectives": [
@@ -3022,10 +2644,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "stun": [
-                0.6,
-                "football"
-            ]
+            "stun": 0.6
         },
         "secret_states": {},
         "secretadjectives": [
@@ -3058,17 +2677,11 @@
             "blood": 0.5
         },
         "onhit_states": {
-            "demoralize": [
-                0.6,
-                "dodgeball"
-            ]
+            "demoralize": 0.6
         },
         "wear_states": {},
         "consume_states": {
-            "caffeinate": [
-                0.6,
-                "dodgeball"
-            ]
+            "caffeinate": 0.6
         },
         "secret_states": {},
         "secretadjectives": [
@@ -3103,10 +2716,7 @@
             "lead": 0.6
         },
         "onhit_states": {
-            "stun": [
-                0.6,
-                "bowling"
-            ]
+            "stun": 0.6
         },
         "wear_states": {},
         "consume_states": {},
@@ -3145,10 +2755,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                1,
-                "rake"
-            ]
+            "sate": 1
         },
         "secret_states": {},
         "secretadjectives": [
@@ -3180,10 +2787,7 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                0.4,
-                "pirate"
-            ]
+            "inspire": 0.4
         },
         "consume_states": {},
         "secret_states": {},
@@ -3218,10 +2822,7 @@
             "gold": 0.3
         },
         "onhit_states": {
-            "stun": [
-                0.7,
-                "brass"
-            ]
+            "stun": 0.7
         },
         "wear_states": {},
         "consume_states": {},
@@ -3258,10 +2859,7 @@
             "iodine": 1
         },
         "onhit_states": {
-            "stun": [
-                0.7,
-                "sap"
-            ]
+            "stun": 0.7
         },
         "wear_states": {},
         "consume_states": {},
@@ -3296,10 +2894,7 @@
             "iron": 0.3
         },
         "onhit_states": {
-            "stun": [
-                0.5,
-                "caestus"
-            ]
+            "stun": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -3340,14 +2935,8 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "ignite": [
-                0.7,
-                "warm"
-            ],
-            "freeze": [
-                0.7,
-                "snowy"
-            ]
+            "ignite": 0.7,
+            "freeze": 0.7
         },
         "secretadjectives": [
             "warm",
@@ -3386,10 +2975,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "freeze": [
-                1.1,
-                "icy"
-            ]
+            "freeze": 1.1
         },
         "secretadjectives": [
             "warm",
@@ -3424,10 +3010,7 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "inspire": [
-                0.5,
-                "posh"
-            ]
+            "inspire": 0.5
         },
         "secret_states": {},
         "secretadjectives": [
@@ -3467,36 +3050,18 @@
             "diamond": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.6,
-                "trident"
-            ]
+            "bleed": 0.6
         },
         "wear_states": {
-            "inspire": [
-                0.6,
-                "divine"
-            ]
+            "inspire": 0.6
         },
         "consume_states": {
-            "strength": [
-                0.6,
-                "mythological"
-            ]
+            "strength": 0.6
         },
         "secret_states": {
-            "inspire": [
-                1,
-                "divine"
-            ],
-            "freeze": [
-                1,
-                "Atlantic"
-            ],
-            "strength": [
-                1,
-                "mythological"
-            ]
+            "inspire": 1,
+            "freeze": 1,
+            "strength": 1
         },
         "secretadjectives": [
             "Atlantic",
@@ -3528,18 +3093,12 @@
             "frosting": 0.5
         },
         "onhit_states": {
-            "stun": [
-                0.8,
-                "tuning"
-            ]
+            "stun": 0.8
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "stun": [
-                1.7,
-                "sonic"
-            ]
+            "stun": 1.7
         },
         "secretadjectives": [
             "sonic"
@@ -3570,23 +3129,14 @@
             "tar": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.6,
-                "fork"
-            ]
+            "bleed": 0.6
         },
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                1,
-                "farming"
-            ]
+            "sate": 1
         },
         "secret_states": {
-            "damage": [
-                1,
-                "pitch"
-            ]
+            "damage": 1
         },
         "secretadjectives": [
             "farming",
@@ -3619,17 +3169,11 @@
             "chalk": 1
         },
         "onhit_states": {
-            "stun": [
-                0.3,
-                "walking"
-            ]
+            "stun": 0.3
         },
         "wear_states": {},
         "consume_states": {
-            "caffeinate": [
-                0.3,
-                "walking"
-            ]
+            "caffeinate": 0.3
         },
         "secret_states": {},
         "secretadjectives": [
@@ -3665,25 +3209,13 @@
             "jet": 0.5
         },
         "onhit_states": {
-            "demoralize": [
-                1,
-                "bull-penis"
-            ],
-            "stun": [
-                0.4,
-                "bull-penis"
-            ]
+            "demoralize": 1,
+            "stun": 0.4
         },
         "wear_states": {},
         "consume_states": {
-            "strength": [
-                0.6,
-                "sex"
-            ],
-            "inspire": [
-                0.6,
-                "sex"
-            ]
+            "strength": 0.6,
+            "inspire": 0.6
         },
         "secret_states": {},
         "secretadjectives": [
@@ -3718,20 +3250,11 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "caffeinate": [
-                0.3,
-                "candy"
-            ],
-            "sate": [
-                0.4,
-                "sweet"
-            ]
+            "caffeinate": 0.3,
+            "sate": 0.4
         },
         "secret_states": {
-            "strength": [
-                0.6,
-                "candy"
-            ]
+            "strength": 0.6
         },
         "secretadjectives": [
             "sweet",
@@ -3766,17 +3289,11 @@
             "marble": 0.5
         },
         "onhit_states": {
-            "ignite": [
-                0.3,
-                "iron"
-            ]
+            "ignite": 0.3
         },
         "wear_states": {},
         "consume_states": {
-            "ignite": [
-                1,
-                "iron"
-            ]
+            "ignite": 1
         },
         "secret_states": {},
         "secretadjectives": [
@@ -3809,10 +3326,7 @@
             "lead": 1
         },
         "onhit_states": {
-            "stun": [
-                0.6,
-                "chain"
-            ]
+            "stun": 0.6
         },
         "wear_states": {},
         "consume_states": {},
@@ -3851,10 +3365,7 @@
             "rust": 1
         },
         "onhit_states": {
-            "stun": [
-                0.3,
-                "chain"
-            ]
+            "stun": 0.3
         },
         "wear_states": {},
         "consume_states": {},
@@ -3889,18 +3400,12 @@
             "frosting": 1
         },
         "onhit_states": {
-            "stun": [
-                0.1,
-                "chain"
-            ]
+            "stun": 0.1
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "damage": [
-                0.4,
-                "key"
-            ]
+            "damage": 0.4
         },
         "secretadjectives": [
             "small",
@@ -3934,10 +3439,7 @@
             "jet": 1
         },
         "onhit_states": {
-            "bleed": [
-                0.4,
-                "knife"
-            ]
+            "bleed": 0.4
         },
         "wear_states": {},
         "consume_states": {},
@@ -3978,14 +3480,8 @@
             "rust": 0.3
         },
         "onhit_states": {
-            "bleed": [
-                0.9,
-                "knife"
-            ],
-            "demoralize": [
-                0.3,
-                "butcher"
-            ]
+            "bleed": 0.9,
+            "demoralize": 0.3
         },
         "wear_states": {},
         "consume_states": {},
@@ -4023,10 +3519,7 @@
             "shale": 1
         },
         "onhit_states": {
-            "bleed": [
-                0.5,
-                "knife"
-            ]
+            "bleed": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -4063,10 +3556,7 @@
             "wood": 1
         },
         "onhit_states": {
-            "stun": [
-                0.2,
-                "table"
-            ]
+            "stun": 0.2
         },
         "wear_states": {},
         "consume_states": {},
@@ -4105,18 +3595,12 @@
             "onyx": 0.1
         },
         "onhit_states": {
-            "stun": [
-                0.2,
-                "cue"
-            ]
+            "stun": 0.2
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "strength": [
-                2,
-                "pool"
-            ]
+            "strength": 2
         },
         "secretadjectives": [
             "wooden",
@@ -4149,10 +3633,7 @@
             "tar": 0.3
         },
         "onhit_states": {
-            "stun": [
-                0.6,
-                "shotgun"
-            ]
+            "stun": 0.6
         },
         "wear_states": {},
         "consume_states": {},
@@ -4188,22 +3669,13 @@
             "tar": 0.3
         },
         "onhit_states": {
-            "stun": [
-                0.6,
-                "shotgun"
-            ],
-            "damage": [
-                0.3,
-                "double-barreled"
-            ]
+            "stun": 0.6,
+            "damage": 0.3
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "damage": [
-                0.7,
-                "double-barreled"
-            ]
+            "damage": 0.7
         },
         "secretadjectives": [
             "12+gauge",
@@ -4235,10 +3707,7 @@
             "jet": 1
         },
         "onhit_states": {
-            "heal": [
-                0.5,
-                "sewing"
-            ]
+            "heal": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -4275,10 +3744,7 @@
             "shale": 1
         },
         "onhit_states": {
-            "bleed": [
-                0.6,
-                "knitting"
-            ]
+            "bleed": 0.6
         },
         "wear_states": {},
         "consume_states": {},
@@ -4313,28 +3779,16 @@
             "rust": 1
         },
         "onhit_states": {
-            "stun": [
-                0.5,
-                "5-pound"
-            ]
+            "stun": 0.5
         },
         "wear_states": {
-            "strength": [
-                0.5,
-                "strong"
-            ]
+            "strength": 0.5
         },
         "consume_states": {
-            "strength": [
-                0.5,
-                "dumbbell"
-            ]
+            "strength": 0.5
         },
         "secret_states": {
-            "strength": [
-                0.5,
-                "strong"
-            ]
+            "strength": 0.5
         },
         "secretadjectives": [
             "strong",
@@ -4370,28 +3824,16 @@
             "lead": 1
         },
         "onhit_states": {
-            "stun": [
-                0.7,
-                "15-pound"
-            ]
+            "stun": 0.7
         },
         "wear_states": {
-            "strength": [
-                0.7,
-                "strong"
-            ]
+            "strength": 0.7
         },
         "consume_states": {
-            "strength": [
-                0.7,
-                "dumbbell"
-            ]
+            "strength": 0.7
         },
         "secret_states": {
-            "strength": [
-                0.7,
-                "strong"
-            ]
+            "strength": 0.7
         },
         "secretadjectives": [
             "strong",
@@ -4427,28 +3869,16 @@
             "titanium": 1
         },
         "onhit_states": {
-            "stun": [
-                1.3,
-                "100-pound"
-            ]
+            "stun": 1.3
         },
         "wear_states": {
-            "strength": [
-                1,
-                "strong"
-            ]
+            "strength": 1
         },
         "consume_states": {
-            "strength": [
-                1,
-                "dumbbell"
-            ]
+            "strength": 1
         },
         "secret_states": {
-            "strength": [
-                1,
-                "strong"
-            ]
+            "strength": 1
         },
         "secretadjectives": [
             "strong",
@@ -4487,22 +3917,13 @@
             "nitrogen": 0.1
         },
         "onhit_states": {
-            "stun": [
-                0.3,
-                "stick"
-            ]
+            "stun": 0.3
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "freeze": [
-                1.5,
-                "hockey"
-            ],
-            "inspire": [
-                0.7,
-                "hockey"
-            ]
+            "freeze": 1.5,
+            "inspire": 0.7
         },
         "secretadjectives": [
             "wooden",
@@ -4534,18 +3955,12 @@
             "silicon": 0.2
         },
         "onhit_states": {
-            "numb": [
-                0.2,
-                "vacuum"
-            ]
+            "numb": 0.2
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "numb": [
-                1.3,
-                "vacuum"
-            ]
+            "numb": 1.3
         },
         "secretadjectives": [
             "suction",
@@ -4577,23 +3992,14 @@
             "aquamarine": 1
         },
         "onhit_states": {
-            "douse": [
-                0.5,
-                "mop"
-            ]
+            "douse": 0.5
         },
         "wear_states": {},
         "consume_states": {
-            "refresh": [
-                0.5,
-                "mop"
-            ]
+            "refresh": 0.5
         },
         "secret_states": {
-            "vulnerable": [
-                0.3,
-                "mop"
-            ]
+            "vulnerable": 0.3
         },
         "secretadjectives": [
             "cleaning",
@@ -4628,16 +4034,10 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "inspire": [
-                0.8,
-                "trophy"
-            ]
+            "inspire": 0.8
         },
         "secret_states": {
-            "inspire": [
-                1.6,
-                "victory"
-            ]
+            "inspire": 1.6
         },
         "secretadjectives": [
             "victorious",
@@ -4677,18 +4077,9 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "vulnerable": [
-                1,
-                "fancy+santa"
-            ],
-            "strength": [
-                1,
-                "fancy+santa"
-            ],
-            "bleed": [
-                7,
-                "fancy+santa"
-            ]
+            "vulnerable": 1,
+            "strength": 1,
+            "bleed": 7
         },
         "secretadjectives": [
             "fancy",
@@ -4721,16 +4112,10 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "sate": [
-                1,
-                "ladle"
-            ]
+            "sate": 1
         },
         "consume_states": {
-            "sate": [
-                1,
-                "cooking"
-            ]
+            "sate": 1
         },
         "secret_states": {},
         "secretadjectives": [
@@ -4767,10 +4152,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "stun": [
-                1.4,
-                "electric"
-            ]
+            "stun": 1.4
         },
         "secretadjectives": [
             "electric",
@@ -4841,21 +4223,12 @@
             "iron": 1
         },
         "onhit_states": {
-            "ignite": [
-                0.4,
-                "iron"
-            ]
+            "ignite": 0.4
         },
         "wear_states": {},
         "consume_states": {
-            "ignite": [
-                0.4,
-                "iron"
-            ],
-            "inspire": [
-                1,
-                "clothing"
-            ]
+            "ignite": 0.4,
+            "inspire": 1
         },
         "secret_states": {},
         "secretadjectives": [
@@ -4891,10 +4264,7 @@
             "lead": 0.2
         },
         "onhit_states": {
-            "bleed": [
-                0.4,
-                "saw"
-            ]
+            "bleed": 0.4
         },
         "wear_states": {},
         "consume_states": {},
@@ -4935,18 +4305,12 @@
             "permafrost": 0.2
         },
         "onhit_states": {
-            "bleed": [
-                0.3,
-                "skates"
-            ]
+            "bleed": 0.3
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "freeze": [
-                1,
-                "ice"
-            ]
+            "freeze": 1
         },
         "secretadjectives": [
             "cold",
@@ -4981,10 +4345,7 @@
             "caulk": 0.3
         },
         "onhit_states": {
-            "stun": [
-                0.6,
-                "wrench"
-            ]
+            "stun": 0.6
         },
         "wear_states": {},
         "consume_states": {},
@@ -5021,22 +4382,13 @@
             "cobalt": 0.3
         },
         "onhit_states": {
-            "demoralize": [
-                0.4,
-                "umbrella"
-            ]
+            "demoralize": 0.4
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "demoralize": [
-                1,
-                "rainy"
-            ],
-            "refresh": [
-                1,
-                "rainy"
-            ]
+            "demoralize": 1,
+            "refresh": 1
         },
         "secretadjectives": [
             "rainy",
@@ -5069,22 +4421,13 @@
             "chalk": 0.3
         },
         "onhit_states": {
-            "demoralize": [
-                0.4,
-                "bed"
-            ]
+            "demoralize": 0.4
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "demoralize": [
-                1,
-                "sleepy"
-            ],
-            "refresh": [
-                1,
-                "rested"
-            ]
+            "demoralize": 1,
+            "refresh": 1
         },
         "secretadjectives": [
             "sleepy",
@@ -5115,10 +4458,7 @@
             "iodine": 0.3
         },
         "onhit_states": {
-            "stun": [
-                0.5,
-                "dresser"
-            ]
+            "stun": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -5151,32 +4491,17 @@
             "frosting": 0.2
         },
         "onhit_states": {
-            "heal": [
-                0.1,
-                "soft"
-            ]
+            "heal": 0.1
         },
         "wear_states": {
-            "heal": [
-                0.6,
-                "fluffy"
-            ],
-            "inspire": [
-                0.4,
-                "sleepy"
-            ]
+            "heal": 0.6,
+            "inspire": 0.4
         },
         "consume_states": {
-            "heal": [
-                2,
-                "pillow"
-            ]
+            "heal": 2
         },
         "secret_states": {
-            "heal": [
-                1.5,
-                "dreamy"
-            ]
+            "heal": 1.5
         },
         "secretadjectives": [
             "fluffy",
@@ -5207,27 +4532,15 @@
             "frosting": 0.3
         },
         "onhit_states": {
-            "heal": [
-                0.1,
-                "soft"
-            ]
+            "heal": 0.1
         },
         "wear_states": {
-            "heal": [
-                0.6,
-                "fluffy"
-            ],
-            "inspire": [
-                0.4,
-                "sleepy"
-            ]
+            "heal": 0.6,
+            "inspire": 0.4
         },
         "consume_states": {},
         "secret_states": {
-            "heal": [
-                1.5,
-                "blanket"
-            ]
+            "heal": 1.5
         },
         "secretadjectives": [
             "fluffy",
@@ -5258,18 +4571,12 @@
             "neon": 0.1
         },
         "onhit_states": {
-            "freeze": [
-                0.4,
-                "refrigerator"
-            ]
+            "freeze": 0.4
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "freeze": [
-                1.7,
-                "freezing"
-            ]
+            "freeze": 1.7
         },
         "secretadjectives": [
             "freezing",
@@ -5301,23 +4608,14 @@
             "rust": 0.3
         },
         "onhit_states": {
-            "ignite": [
-                0.4,
-                "oven"
-            ]
+            "ignite": 0.4
         },
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                2,
-                "cooked"
-            ]
+            "sate": 2
         },
         "secret_states": {
-            "ignite": [
-                1.7,
-                "flaming"
-            ]
+            "ignite": 1.7
         },
         "secretadjectives": [
             "flaming",
@@ -5346,17 +4644,11 @@
             "rust": 1
         },
         "onhit_states": {
-            "stun": [
-                0.2,
-                "pot"
-            ]
+            "stun": 0.2
         },
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                2,
-                "cooked"
-            ]
+            "sate": 2
         },
         "secret_states": {},
         "secretadjectives": [
@@ -5388,23 +4680,14 @@
             "silicon": 0.1
         },
         "onhit_states": {
-            "stun": [
-                0.4,
-                "pan"
-            ]
+            "stun": 0.4
         },
         "wear_states": {},
         "consume_states": {
-            "sate": [
-                1,
-                "cooked"
-            ]
+            "sate": 1
         },
         "secret_states": {
-            "ignite": [
-                0.8,
-                "frying"
-            ]
+            "ignite": 0.8
         },
         "secretadjectives": [
             "cooked",
@@ -5438,10 +4721,7 @@
             "chalk": 0.3
         },
         "onhit_states": {
-            "douse": [
-                1,
-                "watery"
-            ]
+            "douse": 1
         },
         "wear_states": {},
         "consume_states": {},
@@ -5566,10 +4846,7 @@
             "wood": 1
         },
         "onhit_states": {
-            "stun": [
-                0.5,
-                "table"
-            ]
+            "stun": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -5604,18 +4881,12 @@
             "quartz": 0.1
         },
         "onhit_states": {
-            "stun": [
-                1.2,
-                "clock"
-            ]
+            "stun": 1.2
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "stun": [
-                1.2,
-                "time"
-            ]
+            "stun": 1.2
         },
         "secretadjectives": [
             "time",
@@ -5657,18 +4928,12 @@
             "garnet": 0.5
         },
         "onhit_states": {
-            "stun": [
-                0.8,
-                "clock"
-            ]
+            "stun": 0.8
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "stun": [
-                0.8,
-                "time"
-            ]
+            "stun": 0.8
         },
         "secretadjectives": [
             "time",
@@ -5701,22 +4966,13 @@
             "caulk": 0.2
         },
         "onhit_states": {
-            "demoralize": [
-                0.5,
-                "toilet"
-            ]
+            "demoralize": 0.5
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "demoralize": [
-                1,
-                "shit"
-            ],
-            "inspire": [
-                0.6,
-                "porcelain"
-            ]
+            "demoralize": 1,
+            "inspire": 0.6
         },
         "secretadjectives": [
             "shit",
@@ -5792,10 +5048,7 @@
             "sandstone": 0.3
         },
         "onhit_states": {
-            "douse": [
-                1,
-                "shower"
-            ]
+            "douse": 1
         },
         "wear_states": {},
         "consume_states": {},
@@ -5835,18 +5088,12 @@
             "rust": 0.3
         },
         "onhit_states": {
-            "ignite": [
-                0.4,
-                "fireplace"
-            ]
+            "ignite": 0.4
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "ignite": [
-                1.7,
-                "flaming"
-            ]
+            "ignite": 1.7
         },
         "secretadjectives": [
             "flaming",
@@ -5882,10 +5129,7 @@
             "wood": 1
         },
         "onhit_states": {
-            "stun": [
-                0.5,
-                "bench"
-            ]
+            "stun": 0.5
         },
         "wear_states": {},
         "consume_states": {},
@@ -5990,10 +5234,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "demoralize": [
-                0.6,
-                "tele"
-            ]
+            "demoralize": 0.6
         },
         "secretadjectives": [
             "tele",
@@ -6023,10 +5264,7 @@
             "iron": 0.1
         },
         "onhit_states": {
-            "douse": [
-                0.7,
-                "washing"
-            ]
+            "douse": 0.7
         },
         "wear_states": {},
         "consume_states": {},
@@ -6062,10 +5300,7 @@
             "iron": 0.1
         },
         "onhit_states": {
-            "ignite": [
-                0.4,
-                "drying"
-            ]
+            "ignite": 0.4
         },
         "wear_states": {},
         "consume_states": {},
@@ -6100,10 +5335,7 @@
             "jet": 1
         },
         "onhit_states": {
-            "bleed": [
-                0.4,
-                "ballpoint"
-            ]
+            "bleed": 0.4
         },
         "wear_states": {},
         "consume_states": {},
@@ -6138,23 +5370,14 @@
             "lead": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.4,
-                "pencil"
-            ]
+            "bleed": 0.4
         },
         "wear_states": {
-            "strength": [
-                0.6,
-                "#2"
-            ]
+            "strength": 0.6
         },
         "consume_states": {},
         "secret_states": {
-            "damage": [
-                1.1,
-                "eraser"
-            ]
+            "damage": 1.1
         },
         "secretadjectives": [
             "erasing",
@@ -6187,18 +5410,12 @@
             "lead": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.6,
-                "stapler"
-            ]
+            "bleed": 0.6
         },
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "vulnerable": [
-                1.1,
-                "office"
-            ]
+            "vulnerable": 1.1
         },
         "secretadjectives": [
             "office",
@@ -6231,10 +5448,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "demoralize": [
-                1,
-                "fax"
-            ]
+            "demoralize": 1
         },
         "secretadjectives": [
             "factual",
@@ -6266,10 +5480,7 @@
             "silicon": 0.1
         },
         "onhit_states": {
-            "damage": [
-                1,
-                "duplication"
-            ]
+            "damage": 1
         },
         "wear_states": {},
         "consume_states": {},
@@ -6305,10 +5516,7 @@
             "tar": 1
         },
         "onhit_states": {
-            "stun": [
-                0.3,
-                "exercise"
-            ]
+            "stun": 0.3
         },
         "wear_states": {},
         "consume_states": {},
@@ -6345,27 +5553,15 @@
             "aquamarine": 1
         },
         "onhit_states": {
-            "douse": [
-                1,
-                "water"
-            ]
+            "douse": 1
         },
         "wear_states": {},
         "consume_states": {
-            "douse": [
-                1,
-                "water"
-            ],
-            "refresh": [
-                1,
-                "water"
-            ]
+            "douse": 1,
+            "refresh": 1
         },
         "secret_states": {
-            "douse": [
-                1,
-                "wet"
-            ]
+            "douse": 1
         },
         "secretadjectives": [
             "wet",
@@ -6400,14 +5596,8 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "strength": [
-                2,
-                "steroid"
-            ],
-            "damage": [
-                0.3,
-                "steroid"
-            ]
+            "strength": 2,
+            "damage": 0.3
         },
         "secret_states": {},
         "secretadjectives": [
@@ -6447,28 +5637,16 @@
             "silicon": 0.5
         },
         "onhit_states": {
-            "stun": [
-                1,
-                "boxing"
-            ]
+            "stun": 1
         },
         "wear_states": {
-            "strength": [
-                0.1,
-                "boxing"
-            ]
+            "strength": 0.1
         },
         "consume_states": {
-            "strength": [
-                0.5,
-                "boxing"
-            ]
+            "strength": 0.5
         },
         "secret_states": {
-            "damage": [
-                0.4,
-                "boxing"
-            ]
+            "damage": 0.4
         },
         "secretadjectives": [
             "fighting",
@@ -6503,22 +5681,13 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                0.6,
-                "miku"
-            ]
+            "inspire": 0.6
         },
         "consume_states": {
-            "inspire": [
-                0.5,
-                "miku"
-            ]
+            "inspire": 0.5
         },
         "secret_states": {
-            "inspire": [
-                1.3,
-                "hatsune"
-            ]
+            "inspire": 1.3
         },
         "secretadjectives": [
             "hatsune",
@@ -6553,26 +5722,14 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                0.6,
-                "anime"
-            ]
+            "inspire": 0.6
         },
         "consume_states": {
-            "inspire": [
-                0.5,
-                "anime"
-            ]
+            "inspire": 0.5
         },
         "secret_states": {
-            "inspire": [
-                1.3,
-                "kakkoii"
-            ],
-            "blinding": [
-                1.3,
-                "kawaii"
-            ]
+            "inspire": 1.3,
+            "blinding": 1.3
         },
         "secretadjectives": [
             "Japanese",
@@ -6604,26 +5761,14 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                0.6,
-                "anime"
-            ]
+            "inspire": 0.6
         },
         "consume_states": {
-            "inspire": [
-                0.5,
-                "anime"
-            ]
+            "inspire": 0.5
         },
         "secret_states": {
-            "inspire": [
-                1.3,
-                "kakkoii"
-            ],
-            "blinding": [
-                1.3,
-                "kawaii"
-            ]
+            "inspire": 1.3,
+            "blinding": 1.3
         },
         "secretadjectives": [
             "Japanese",
@@ -6655,26 +5800,14 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                0.6,
-                "manga"
-            ]
+            "inspire": 0.6
         },
         "consume_states": {
-            "inspire": [
-                0.5,
-                "anime"
-            ]
+            "inspire": 0.5
         },
         "secret_states": {
-            "inspire": [
-                1.3,
-                "kakkoii"
-            ],
-            "blinding": [
-                1.3,
-                "kawaii"
-            ]
+            "inspire": 1.3,
+            "blinding": 1.3
         },
         "secretadjectives": [
             "Japanese",
@@ -6703,28 +5836,16 @@
             "chalk": 1
         },
         "onhit_states": {
-            "demoralize": [
-                0.7,
-                "waifu"
-            ]
+            "demoralize": 0.7
         },
         "wear_states": {
-            "demoralize": [
-                0.4,
-                "bodypillow"
-            ]
+            "demoralize": 0.4
         },
         "consume_states": {
-            "demoralize": [
-                0.4,
-                "bodypillow"
-            ]
+            "demoralize": 0.4
         },
         "secret_states": {
-            "vulnerable": [
-                0.8,
-                "waifu"
-            ]
+            "vulnerable": 0.8
         },
         "secretadjectives": [
             "waifu",
@@ -6755,22 +5876,13 @@
             "titanium": 0.3
         },
         "onhit_states": {
-            "bleed": [
-                0.7,
-                "shuriken"
-            ]
+            "bleed": 0.7
         },
         "wear_states": {
-            "inspire": [
-                0.8,
-                "ninja"
-            ]
+            "inspire": 0.8
         },
         "consume_states": {
-            "strength": [
-                0.9,
-                "ninja"
-            ]
+            "strength": 0.9
         },
         "secret_states": {},
         "secretadjectives": [
@@ -6804,26 +5916,14 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "strength": [
-                0.6,
-                "thrasher"
-            ]
+            "strength": 0.6
         },
         "consume_states": {
-            "strength": [
-                1,
-                "thrasher"
-            ]
+            "strength": 1
         },
         "secret_states": {
-            "vulnerable": [
-                1,
-                "heavy"
-            ],
-            "strength": [
-                1,
-                "heavy+metal"
-            ]
+            "vulnerable": 1,
+            "strength": 1
         },
         "secretadjectives": [
             "heavy+metal",
@@ -6855,21 +5955,12 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                1.2,
-                "nirvana"
-            ]
+            "inspire": 1.2
         },
         "consume_states": {},
         "secret_states": {
-            "weak": [
-                1,
-                "nirvana"
-            ],
-            "bleed": [
-                1,
-                "nevermind"
-            ]
+            "weak": 1,
+            "bleed": 1
         },
         "secretadjectives": [
             "nevermind",
@@ -6903,10 +5994,7 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                1.2,
-                "electric"
-            ]
+            "inspire": 1.2
         },
         "consume_states": {},
         "secret_states": {},
@@ -6943,10 +6031,7 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "refresh": [
-                0.7,
-                "acoustic"
-            ]
+            "refresh": 0.7
         },
         "consume_states": {},
         "secret_states": {},
@@ -6983,10 +6068,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "stun": [
-                0.7,
-                "drum"
-            ]
+            "stun": 0.7
         },
         "secretadjectives": [
             "loud",
@@ -7022,14 +6104,8 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "stun": [
-                1,
-                "global"
-            ],
-            "vulnerable": [
-                1,
-                "planetary"
-            ]
+            "stun": 1,
+            "vulnerable": 1
         },
         "secretadjectives": [
             "global",
@@ -7095,14 +6171,8 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "stun": [
-                1,
-                "global"
-            ],
-            "vulnerable": [
-                1,
-                "planetary"
-            ]
+            "stun": 1,
+            "vulnerable": 1
         },
         "secretadjectives": [
             "global",
@@ -7135,10 +6205,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "inspire": [
-                1,
-                "musical"
-            ]
+            "inspire": 1
         },
         "secretadjectives": [
             "musical",
@@ -7169,18 +6236,9 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "inspire": [
-                1,
-                "musical"
-            ],
-            "strength": [
-                1,
-                "epic"
-            ],
-            "refresh": [
-                1,
-                "jazz"
-            ]
+            "inspire": 1,
+            "strength": 1,
+            "refresh": 1
         },
         "secretadjectives": [
             "musical",
@@ -7217,18 +6275,9 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "inspire": [
-                1,
-                "musical"
-            ],
-            "strength": [
-                1,
-                "grand"
-            ],
-            "refresh": [
-                1,
-                "classical"
-            ]
+            "inspire": 1,
+            "strength": 1,
+            "refresh": 1
         },
         "secretadjectives": [
             "musical",
@@ -7266,16 +6315,11 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                0.1
-            ]
+            "inspire": 0.1
         },
         "consume_states": {},
         "secret_states": {
-            "refresh": [
-                0.6,
-                "musical"
-            ]
+            "refresh": 0.6
         },
         "secretadjectives": [
             "musical",
@@ -7307,16 +6351,11 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                0.1
-            ]
+            "inspire": 0.1
         },
         "consume_states": {},
         "secret_states": {
-            "demoralize": [
-                1.5,
-                "garbage"
-            ]
+            "demoralize": 1.5
         },
         "secretadjectives": [
             "garbage",
@@ -7348,17 +6387,11 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "demoralize": [
-                0.1,
-                "garbage"
-            ]
+            "demoralize": 0.1
         },
         "consume_states": {},
         "secret_states": {
-            "demoralize": [
-                1.5,
-                "garbage"
-            ]
+            "demoralize": 1.5
         },
         "secretadjectives": [
             "garbage",
@@ -7391,17 +6424,11 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "demoralize": [
-                0.1,
-                "garbage"
-            ]
+            "demoralize": 0.1
         },
         "consume_states": {},
         "secret_states": {
-            "demoralize": [
-                1.5,
-                "garbage"
-            ]
+            "demoralize": 1.5
         },
         "secretadjectives": [
             "garbage",
@@ -7433,23 +6460,14 @@
             "build": 0
         },
         "onhit_states": {
-            "strength": [
-                -0.4,
-                "sord"
-            ]
+            "strength": -0.4
         },
         "wear_states": {
-            "demoralize": [
-                -1,
-                "hella"
-            ]
+            "demoralize": -1
         },
         "consume_states": {},
         "secret_states": {
-            "heal": [
-                -0.5,
-                "hella"
-            ]
+            "heal": -0.5
         },
         "secretadjectives": [
             "hella",
@@ -7481,16 +6499,10 @@
             "jet": 1
         },
         "onhit_states": {
-            "stun": [
-                0.2,
-                "virtual"
-            ]
+            "stun": 0.2
         },
         "wear_states": {
-            "refresh": [
-                0.2,
-                "virtual+reality"
-            ]
+            "refresh": 0.2
         },
         "consume_states": {},
         "secret_states": {},
@@ -7501,7 +6513,9 @@
             "next-gen"
         ],
         "forbiddencode": false,
-        "use": [ "computer" ],
+        "use": [
+            "computer"
+        ],
         "inheritpower": 45,
         "adjectives": [
             "virtual+reality"
@@ -7559,20 +6573,11 @@
             "gold": 0.1
         },
         "onhit_states": {
-            "bleed": [
-                0.2,
-                "drone"
-            ]
+            "bleed": 0.2
         },
         "wear_states": {
-            "inspire": [
-                0.5,
-                "rc"
-            ],
-            "strength": [
-                0.5,
-                "remote-controlled"
-            ]
+            "inspire": 0.5,
+            "strength": 0.5
         },
         "consume_states": {},
         "secret_states": {},
@@ -7609,21 +6614,13 @@
             "gold": 0.1
         },
         "onhit_states": {
-            "stun": [
-                0.1
-            ]
+            "stun": 0.1
         },
         "wear_states": {
-            "inspire": [
-                1,
-                "gaming"
-            ]
+            "inspire": 1
         },
         "consume_states": {
-            "caffeinate": [
-                0.8,
-                "gamer"
-            ]
+            "caffeinate": 0.8
         },
         "secretadjectives": [
             "gamer",
@@ -7659,21 +6656,13 @@
             "jet": 0.3
         },
         "onhit_states": {
-            "stun": [
-                0.1
-            ]
+            "stun": 0.1
         },
         "wear_states": {
-            "refresh": [
-                0.3,
-                "graphics"
-            ]
+            "refresh": 0.3
         },
         "consume_states": {
-            "strength": [
-                0.8,
-                "gaming"
-            ]
+            "strength": 0.8
         },
         "secretadjectives": [
             "gaming",
@@ -7714,21 +6703,12 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                0.1,
-                "cowboy"
-            ]
+            "inspire": 0.1
         },
         "consume_states": {},
         "secret_states": {
-            "strength": [
-                0.6,
-                "cowboy"
-            ],
-            "refresh": [
-                0.6,
-                "Western"
-            ]
+            "strength": 0.6,
+            "refresh": 0.6
         },
         "secretadjectives": [
             "Western",
@@ -7769,21 +6749,12 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": [
-                0.1,
-                "cowboy"
-            ]
+            "inspire": 0.1
         },
         "consume_states": {},
         "secret_states": {
-            "strength": [
-                0.6,
-                "cowboy"
-            ],
-            "refresh": [
-                0.6,
-                "Western"
-            ]
+            "strength": 0.6,
+            "refresh": 0.6
         },
         "secretadjectives": [
             "Western",
@@ -7822,17 +6793,11 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "strength": [
-                0.2,
-                "bandana"
-            ]
+            "strength": 0.2
         },
         "consume_states": {},
         "secret_states": {
-            "refresh": [
-                0.8,
-                "cool"
-            ]
+            "refresh": 0.8
         },
         "secretadjectives": [
             "cool",
@@ -7868,21 +6833,12 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "weak": [
-                0.1,
-                "clown"
-            ]
+            "weak": 0.1
         },
         "consume_states": {},
         "secret_states": {
-            "inspire": [
-                0.7,
-                "clown"
-            ],
-            "caffeinate": [
-                0.7,
-                "clown"
-            ]
+            "inspire": 0.7,
+            "caffeinate": 0.7
         },
         "secretadjectives": [
             "funny",
@@ -7920,21 +6876,12 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "strength": [
-                0.1,
-                "clown"
-            ]
+            "strength": 0.1
         },
         "consume_states": {},
         "secret_states": {
-            "inspire": [
-                0.7,
-                "clown"
-            ],
-            "caffeinate": [
-                0.7,
-                "clown"
-            ]
+            "inspire": 0.7,
+            "caffeinate": 0.7
         },
         "secretadjectives": [
             "funny",
@@ -7968,21 +6915,12 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "strength": [
-                0.6,
-                "joker"
-            ]
+            "strength": 0.6
         },
         "consume_states": {},
         "secret_states": {
-            "damage": [
-                0.7,
-                "joker"
-            ],
-            "heal": [
-                0.7,
-                "joker"
-            ]
+            "damage": 0.7,
+            "heal": 0.7
         },
         "secretadjectives": [
             "funny",
@@ -8015,20 +6953,11 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "inspire": [
-                0.5,
-                "clown"
-            ]
+            "inspire": 0.5
         },
         "secret_states": {
-            "inspire": [
-                0.8,
-                "funny"
-            ],
-            "weak": [
-                1.3,
-                "funny"
-            ]
+            "inspire": 0.8,
+            "weak": 1.3
         },
         "secretadjectives": [
             "funny",
@@ -8061,16 +6990,10 @@
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "heal": [
-                2,
-                "cosby"
-            ]
+            "heal": 2
         },
         "secret_states": {
-            "damage": [
-                2,
-                "cosby"
-            ]
+            "damage": 2
         },
         "secretadjectives": [
             "predatory",
@@ -8102,20 +7025,11 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "strength": [
-                0.2,
-                "red"
-            ]
+            "strength": 0.2
         },
         "consume_states": {
-            "refresh": [
-                0.7,
-                "faygo"
-            ],
-            "strength": [
-                0.2,
-                "red"
-            ]
+            "refresh": 0.7,
+            "strength": 0.2
         },
         "secret_states": {},
         "secretadjectives": [
@@ -8150,20 +7064,11 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "caffeinate": [
-                0.2,
-                "cola"
-            ]
+            "caffeinate": 0.2
         },
         "consume_states": {
-            "refresh": [
-                0.7,
-                "faygo"
-            ],
-            "inspire": [
-                0.2,
-                "grape"
-            ]
+            "refresh": 0.7,
+            "inspire": 0.2
         },
         "secret_states": {},
         "secretadjectives": [
@@ -8196,20 +7101,11 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "caffeinate": [
-                0.2,
-                "cola"
-            ]
+            "caffeinate": 0.2
         },
         "consume_states": {
-            "refresh": [
-                0.7,
-                "faygo"
-            ],
-            "caffeinate": [
-                0.2,
-                "cola"
-            ]
+            "refresh": 0.7,
+            "caffeinate": 0.2
         },
         "secret_states": {},
         "secretadjectives": [
@@ -8243,28 +7139,13 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "heal": [
-                0.2,
-                "cotton+candy"
-            ],
-            "caffeinate": [
-                0.2,
-                "cotton+candy"
-            ]
+            "heal": 0.2,
+            "caffeinate": 0.2
         },
         "consume_states": {
-            "refresh": [
-                0.7,
-                "faygo"
-            ],
-            "heal": [
-                0.4,
-                "cotton+candy"
-            ],
-            "caffeinate": [
-                0.2,
-                "cotton+candy"
-            ]
+            "refresh": 0.7,
+            "heal": 0.4,
+            "caffeinate": 0.2
         },
         "secret_states": {},
         "secretadjectives": [
@@ -8296,32 +7177,14 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "refresh": [
-                0.7,
-                "faygo"
-            ],
-            "inspire": [
-                0.5,
-                "kiwi+strawberry"
-            ],
-            "caffeinate": [
-                0.2,
-                "kiwi+strawberry"
-            ]
+            "refresh": 0.7,
+            "inspire": 0.5,
+            "caffeinate": 0.2
         },
         "consume_states": {
-            "refresh": [
-                0.7,
-                "faygo"
-            ],
-            "inspire": [
-                0.5,
-                "kiwi+strawberry"
-            ],
-            "caffeinate": [
-                0.2,
-                "kiwi+strawberry"
-            ]
+            "refresh": 0.7,
+            "inspire": 0.5,
+            "caffeinate": 0.2
         },
         "secret_states": {},
         "secretadjectives": [
@@ -8355,32 +7218,14 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "strength": [
-                0.3,
-                "candy+apple"
-            ],
-            "caffeinate": [
-                0.5,
-                "candy+apple"
-            ]
+            "strength": 0.3,
+            "caffeinate": 0.5
         },
         "consume_states": {
-            "refresh": [
-                1,
-                "faygo"
-            ],
-            "inspire": [
-                1,
-                "candy+apple"
-            ],
-            "strength": [
-                0.3,
-                "candy+apple"
-            ],
-            "caffeinate": [
-                0.5,
-                "candy+apple"
-            ]
+            "refresh": 1,
+            "inspire": 1,
+            "strength": 0.3,
+            "caffeinate": 0.5
         },
         "secret_states": {},
         "secretadjectives": [
