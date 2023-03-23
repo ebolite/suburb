@@ -85,7 +85,7 @@ class BaseStatistics():
         self.cost: dict = properties["cost"]
         self.use: list[str] = properties["use"]
         self.onhit_states: dict = properties["onhit_states"]
-        self.wear_states: dict = properties["wear_States"]
+        self.wear_states: dict = properties["wear_states"]
         self.consume_states: dict = properties["consume_states"]
         self.secret_states: dict = properties["secret_states"]
         self.forbiddencode: bool = properties["forbiddencode"]
