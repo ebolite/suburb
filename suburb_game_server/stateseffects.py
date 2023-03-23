@@ -87,24 +87,26 @@ abjure.beneficial = True
 abjure.tooltip = "Reduces damage taken based on mettle."
 
 class DemoralizeState(State):
-    def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
-        new_damage = damage
-        new_damage *= 1 - (0.25 * self.potency(griefer))
-        new_damage = int(new_damage)
-        return max(new_damage, 0)
+    def new_turn(self, griefer: "strife.Griefer"):
+        change = self.applier_stats(griefer)["power"]//4 * -1 * self.potency(griefer)
+        change = int(change)
+        logmessage = skills.aspects["hope"].adjust(griefer, change)
+        griefer.strife.log(logmessage)
     
 demoralize = DemoralizeState("demoralize")
 demoralize.beneficial = False
-demoralize.tooltip = "Reduces damage dealt."
+demoralize.tooltip = "Reduces hope each turn."
 
 class InspireState(State):
-    def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
-        modifier = 1 + 0.25 * self.potency(griefer)
-        return int(damage * modifier)
+    def new_turn(self, griefer: "strife.Griefer"):
+        change = self.applier_stats(griefer)["power"]//4 * self.potency(griefer)
+        change = int(change)
+        logmessage = skills.aspects["hope"].adjust(griefer, change)
+        griefer.strife.log(logmessage)
     
 inspire = InspireState("inspire")
 inspire.beneficial = True
-inspire.tooltip = "Increases damage dealt."
+inspire.tooltip = "Increases hope each turn."
 
 class DisarmState(State):
     def lock_categories(self, griefer: "strife.Griefer") -> list[str]:
