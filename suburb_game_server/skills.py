@@ -1260,6 +1260,12 @@ athleticize.add_vial_cost("hp", "user.power//2")
 athleticize.add_vial_cost("vim", "-user.power//2")
 athleticize.add_stat_bonus("spunk", "user.power//18")
 
+# bladekind
+againstand = Skill("againstand")
+againstand.description = "Deals more damage the larger the difference is between the user and the target's power."
+againstand.use_message = "{user} stands against!"
+againstand.damage_formula = AGGRIEVE_FORMULA + " * (target.power / user.power) * 1.5"
+
 # bottlekind
 userabdicate = Skill("userabdicate")
 userabdicate.need_damage_to_apply_states = False
@@ -1409,6 +1415,11 @@ add_abstratus_skill("bagkind", awaitskill, 50)
 add_abstratus_skill("ballkind", antagonize, 1)
 add_abstratus_skill("ballkind", arraign, 50)
 add_abstratus_skill("ballkind", athleticize, 75)
+
+# bladekind
+add_abstratus_skill("bladekind", anticipate, 1)
+add_abstratus_skill("bladekind", attack, 50)
+add_abstratus_skill("bladekind", againstand, 75)
 
 # bookkind
     # ask
