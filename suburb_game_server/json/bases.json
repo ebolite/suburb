@@ -12,12 +12,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "blunt": [
-                1,
-                "object"
-            ]
-        },
         "description": "An item that is completely and totally generic.",
         "cost": {
             "build": 2
@@ -56,12 +50,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "blunt": [
-                1,
-                "object"
-            ]
-        },
         "description": "An item that is absolutely useless. Yes, this is a challenge.",
         "cost": {
             "build": 1
@@ -98,15 +86,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "cut": [
-                1,
-                "card"
-            ],
-            "mundane": [
-                0
-            ]
-        },
         "description": "An empty captchalogue card... contained in another captchalogue card.",
         "cost": {
             "build": 0.1
@@ -151,16 +130,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "cut": [
-                1,
-                "card"
-            ],
-            "blunt": [
-                1,
-                "card"
-            ]
-        },
         "description": "A captchalogue card that has been rendered useless due to being punched by a punch designix. Has the code of another item on it.",
         "cost": {
             "jet": 0.1
@@ -214,12 +183,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "blunt": [
-                1,
-                "dowel"
-            ]
-        },
         "description": "A blue dowel made of some material called Cruxite. Can be carved with a Totem Lathe.",
         "cost": {
             "build": 0.1
@@ -264,11 +227,6 @@
         "size": 6,
         "kinds": {},
         "wearable": false,
-        "tags": {
-            "blunt": [
-                1
-            ]
-        },
         "description": "A cruxite item that allows you to enter the Medium.",
         "cost": {
             "build": 0
@@ -321,12 +279,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "blunt": [
-                1,
-                "punch"
-            ]
-        },
         "description": "A game abstraction used for punching codes onto captchalogue cards.",
         "cost": {
             "build": 0.04
@@ -366,12 +318,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "blunt": [
-                1,
-                "cruxtruder"
-            ]
-        },
         "description": "A game abstraction used for creating cruxite dowels.",
         "cost": {
             "build": 0
@@ -406,12 +352,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "blunt": [
-                1,
-                "cruxtruder"
-            ]
-        },
         "description": "A game abstraction used for creating cruxite dowels.",
         "cost": {
             "build": 0
@@ -448,12 +388,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "cut": [
-                1,
-                "lathe"
-            ]
-        },
         "description": "A game abstraction used for carving cruxite dowels with punched cards.",
         "cost": {
             "build": 0
@@ -487,12 +421,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "blunt": [
-                1,
-                "alchemiter"
-            ]
-        },
         "description": "A game abstraction used for alchemizing new items from codes engraved into dowels.",
         "cost": {
             "build": 0
@@ -524,12 +452,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "cut": [
-                1,
-                "disc"
-            ]
-        },
         "description": "You're like the Robin Hood of stealing shit from your friends.",
         "cost": {
             "build": 10
@@ -576,12 +498,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "cut": [
-                1,
-                "disc"
-            ]
-        },
         "description": "A CD containing a cool new game called SBURB. You should find a computer and install this puppy. You can't wait to play this game with your friends.",
         "cost": {
             "build": 0.01
@@ -655,19 +571,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "bash": [
-                1,
-                "top"
-            ],
-            "electric": [
-                1,
-                "top"
-            ]
-        },
         "description": "A portable computing device. Quite useful.",
         "cost": {
             "iodine": 1,
@@ -708,19 +611,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "bash": [
-                1,
-                "computer"
-            ],
-            "electric": [
-                1,
-                "computer"
-            ]
-        },
         "description": "A large computer setup. Inconvenient to carry around, but still possible with the help of your Sylladex.",
         "cost": {
             "caulk": 1,
@@ -761,15 +651,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1,
-                "paper"
-            ]
-        },
         "description": "A piece of paper.",
         "cost": {
             "chalk": 1
@@ -808,15 +689,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1,
-                "cutter"
-            ]
-        },
         "description": "A sharp kitchen utensil used for slicing pizzas.",
         "cost": {
             "garnet": 1
@@ -860,15 +732,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1,
-                "bat"
-            ]
-        },
         "description": "A wooden bat made for hitting high-velocity balls.",
         "cost": {
             "wood": 1
@@ -902,15 +765,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1,
-                "bat"
-            ]
-        },
         "description": "An aluminum bat made for hitting high-velocity balls.",
         "cost": {
             "lead": 1
@@ -946,18 +800,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "cooking": [
-                0.7,
-                "cooking"
-            ]
-        },
         "description": "A rolling pin used for flattening dough.",
         "cost": {
             "wood": 1,
@@ -994,19 +836,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "suction": [
-                1,
-                "plunger"
-            ],
-            "trauma": [
-                1,
-                "plunger"
-            ]
-        },
         "description": "A plunger used for unclogging toilets.",
         "cost": {
             "wood": 1,
@@ -1042,23 +871,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1,
-                "yoyo"
-            ],
-            "trauma": [
-                1,
-                "yoyo"
-            ],
-            "awesome": [
-                1,
-                "yoyo"
-            ]
-        },
         "description": "A cool yoyo.",
         "cost": {
             "chalk": 1,
@@ -1096,19 +908,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1,
-                "scissors"
-            ],
-            "goodthrowing": [
-                1,
-                "scissors"
-            ]
-        },
         "description": "A pair of scissors used for cut paper.",
         "cost": {
             "iron": 0.2,
@@ -1149,12 +948,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "cut": [
-                1,
-                "shears"
-            ]
-        },
         "description": "A large pair of shears, used for shearing wool and plants.",
         "cost": {
             "iron": 0.3,
@@ -1200,23 +993,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1,
-                "safety"
-            ],
-            "shitty": [
-                1,
-                "safety"
-            ],
-            "humorous": [
-                1,
-                "safety"
-            ]
-        },
         "description": "A pair of scissors specially made to prevent the user from harming themselves.",
         "cost": {
             "chalk": 1,
@@ -1256,15 +1032,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "chemical": [
-                1,
-                "pepper"
-            ]
-        },
         "description": "A can of self-defense. Useful for dissuading criminals and predators.",
         "cost": {
             "acid": 1,
@@ -1321,14 +1088,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A saw used for cut trees. Very terrifying.",
         "cost": {
             "rust": 1,
@@ -1379,14 +1138,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A gardening implement.",
         "cost": {
             "build": 1,
@@ -1422,14 +1173,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A crowbar used for opening doors and crates.",
         "cost": {
             "copper": 0.5,
@@ -1463,15 +1206,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1,
-                "bar"
-            ]
-        },
         "description": "A large crowbar used for prying doors off of cars.",
         "cost": {
             "copper": 0.5,
@@ -1515,23 +1249,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1.0,
-                "broom"
-            ],
-            "trauma": [
-                1.0,
-                "broom"
-            ],
-            "humorous": [
-                1.0,
-                "broom"
-            ]
-        },
         "description": "A standard broom used for sweeping operations.",
         "cost": {
             "wood": 1,
@@ -1566,22 +1283,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1.0
-            ],
-            "trauma": [
-                1.0,
-                "broom"
-            ],
-            "humorous": [
-                1.0,
-                "broom"
-            ]
-        },
         "description": "A broom made of straw. Looks like something a witch would fly on.",
         "cost": {
             "wood": 0.3,
@@ -1626,18 +1327,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1.0,
-                "poker"
-            ],
-            "cooking": [
-                0.3
-            ]
-        },
         "description": "A poker for poking fire.",
         "cost": {
             "rust": 1,
@@ -1673,15 +1362,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1.0,
-                "spear"
-            ]
-        },
         "description": "A large spear that's made for fighting.",
         "cost": {
             "titanium": 0.05,
@@ -1712,19 +1392,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1.0,
-                "pick"
-            ],
-            "goodthrowing": [
-                1.0,
-                "pick"
-            ]
-        },
         "description": "A scary-looking pick that's used for clinging to ice.",
         "cost": {
             "aquamarine": 1,
@@ -1764,15 +1431,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1.0,
-                "club"
-            ]
-        },
         "description": "A club used for hitting golf balls. Formidable as a weapon.",
         "cost": {
             "iron": 0.1,
@@ -1812,15 +1470,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1.0,
-                "hammer"
-            ]
-        },
         "description": "A standard claw hammer used for beating nails.",
         "cost": {
             "shale": 1
@@ -1852,23 +1501,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1.0,
-                "hammer"
-            ],
-            "awesome": [
-                0.6,
-                "sledge"
-            ],
-            "horrifying": [
-                0.8,
-                "sledge"
-            ]
-        },
         "description": "A large hammer used for demolition. Does a lot of damage if it hits.",
         "cost": {
             "shale": 1,
@@ -1929,31 +1561,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1.0,
-                "mallet"
-            ],
-            "trauma": [
-                0.6,
-                "rubber"
-            ],
-            "humorous": [
-                0.8,
-                "rubber"
-            ],
-            "stupid": [
-                0.8,
-                "rubber"
-            ],
-            "shitty": [
-                0.6,
-                "rubber"
-            ]
-        },
         "description": "This is a toy hammer, not a proper rubber mallet... It's a mallet made entirely of rubber.",
         "cost": {
             "build": 1,
@@ -1998,23 +1605,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1.0,
-                "rope"
-            ],
-            "trauma": [
-                0.6,
-                "jump"
-            ],
-            "stupid": [
-                0.5,
-                "jump"
-            ]
-        },
         "description": "A standard rope used for jumping over.",
         "cost": {
             "chalk": 1,
@@ -2056,15 +1646,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1.0,
-                "wire"
-            ]
-        },
         "description": "Thin wire for use as piano strings. Can be used to effectively strangulate targets.",
         "cost": {
             "shale": 0.5,
@@ -2104,14 +1685,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A hefty shovel used for digging.",
         "cost": {
             "lead": 1
@@ -2147,14 +1720,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A small hatchet. Makes a formidable weapon.",
         "cost": {
             "iodine": 1,
@@ -2194,14 +1759,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A sturdy axe used for chopping trees. It's a powerful weapon.",
         "cost": {
             "copper": 1,
@@ -2242,11 +1799,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ]
-        },
         "description": "A fireman's axe. This is a very powerful weapon and tool.",
         "cost": {
             "rust": 1,
@@ -2294,22 +1846,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "trauma": [
-                1,
-                "spoon"
-            ],
-            "humorous": [
-                1,
-                "spoon"
-            ]
-        },
         "description": "A wooden spoon used for cooking.",
         "cost": {
             "wood": 1
@@ -2345,21 +1881,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "trauma": [
-                1
-            ],
-            "humorous": [
-                1,
-                "spoon"
-            ]
-        },
         "description": "A small soup spoon.",
         "cost": {
             "mercury": 0.5
@@ -2399,18 +1920,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1,
-                "bust"
-            ]
-        },
         "description": "A bust of Abraham Lincoln.",
         "cost": {
             "chalk": 1,
@@ -2457,18 +1966,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1,
-                "bust"
-            ]
-        },
         "description": "A bust of Julius Caesar.",
         "cost": {
             "chalk": 1,
@@ -2512,18 +2009,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1,
-                "statue"
-            ]
-        },
         "description": "A small replica of Auguste Rodin's The Thinker.",
         "cost": {
             "rust": 1,
@@ -2566,18 +2051,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1,
-                "Statue+of"
-            ]
-        },
         "description": "A woman-sized replica of the Statue of Liberty.",
         "cost": {
             "rust": 1,
@@ -2634,19 +2107,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "humorous": [
-                1,
-                "spatula"
-            ],
-            "trauma": [
-                1,
-                "spatula"
-            ]
-        },
         "description": "A spatula. Not to be confused with a kitchen turner.",
         "cost": {
             "iron": 1
@@ -2680,14 +2140,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A spatula made out of gold.",
         "cost": {
             "gold": 1
@@ -2728,17 +2180,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A flat-headed screwdriver. Careful with that thing.",
         "cost": {
             "iron": 1
@@ -2774,17 +2215,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A Phillips screwdriver. Has a pointy end.",
         "cost": {
             "lead": 1
@@ -2820,17 +2250,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A screwdriver with a magnetic head that helps you align screws.",
         "cost": {
             "titanium": 1,
@@ -2867,17 +2286,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "An arming sword.",
         "cost": {
             "iron": 1,
@@ -2912,17 +2320,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A Japanese sword. Loved by weebs.",
         "cost": {
             "iron": 1,
@@ -2959,14 +2356,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A total piece of shit sword that sucks ass.",
         "cost": {
             "rust": 1,
@@ -2998,14 +2387,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A badass anime katana with a diamond-tipped blade that can cut through anything.",
         "cost": {
             "titanium": 1,
@@ -3063,20 +2444,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ],
-            "pierce": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A narrow-bladed sword that's designed to be lightweight and sharp.",
         "cost": {
             "shale": 1,
@@ -3109,17 +2476,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A large two-handed sword of German origin.",
         "cost": {
             "marble": 1,
@@ -3154,14 +2510,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "A handgun.",
         "cost": {
             "build": 1,
@@ -3192,14 +2540,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "A high-caliber revolver.",
         "cost": {
             "titanium": 1,
@@ -3232,18 +2572,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1,
-                "lamp"
-            ]
-        },
         "description": "A standing lamp.",
         "cost": {
             "jet": 1,
@@ -3283,18 +2611,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1,
-                "lamp"
-            ]
-        },
         "description": "A small lamp for use on a desk.",
         "cost": {
             "chalk": 1,
@@ -3336,14 +2652,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "electric": [
-                1
-            ]
-        },
         "description": "A self-defense implement used for non-lethally disarming opponents.",
         "cost": {
             "silicon": 1,
@@ -3391,17 +2699,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "electric": [
-                1
-            ],
-            "horrifying": [
-                1
-            ]
-        },
         "description": "A large taser used for taking out perps.",
         "cost": {
             "silicon": 1,
@@ -3451,20 +2748,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "trauma": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A standard ball used for shooting hoops.",
         "cost": {
             "iodine": 0.5,
@@ -3500,17 +2783,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A football. But what kind of football?",
         "cost": {
             "chalk": 0.3,
@@ -3547,23 +2819,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "trauma": [
-                1
-            ],
-            "horrifying": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A menacing ball used for pelting little kids.",
         "cost": {
             "garnet": 0.5,
@@ -3606,17 +2861,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A heavy ball that's traditionally used to knock down pins.",
         "cost": {
             "jet": 0.3,
@@ -3651,18 +2895,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1,
-                "rake"
-            ]
-        },
         "description": "A tool used for turning leaves on the ground into leaves in a pile.",
         "cost": {
             "rust": 1,
@@ -3698,14 +2930,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A wooden board. You could wield this and become an inverse pirate.",
         "cost": {
             "wood": 1
@@ -3745,14 +2969,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A pair of heavy knuckles that gives a bit more *oomph* to your punches.",
         "cost": {
             "lead": 0.6,
@@ -3787,14 +3003,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A weighted leather implement that you can strap around your hand.",
         "cost": {
             "iodine": 1
@@ -3830,14 +3038,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A studded leather glove that can be used to punch down your foes.",
         "cost": {
             "iodine": 0.6,
@@ -3872,18 +3072,6 @@
         "slots": {
             "accessory": [
                 0.5,
-                "mittens"
-            ]
-        },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "trauma": [
-                1
-            ],
-            "humorous": [
-                1,
                 "mittens"
             ]
         },
@@ -3930,14 +3118,6 @@
                 "mittens"
             ]
         },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "trauma": [
-                1
-            ]
-        },
         "description": "Some snug-fitting gloves that keep your hands warm.",
         "cost": {
             "aquamarine": 1
@@ -3972,17 +3152,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ],
-            "trauma": [
-                1
-            ]
-        },
         "description": "A piece of silverware used for piercing food and moving it to the user's mouth.",
         "cost": {
             "mercury": 0.5
@@ -4026,20 +3195,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ],
-            "whimsical": [
-                1
-            ]
-        },
         "description": "A three-pronged spear used for fishing or as a polearm. This would be a pretty ironic weapon to wield if you were a fish person or something.",
         "cost": {
             "aquamarine": 1,
@@ -4102,14 +3257,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "sound": [
-                1
-            ]
-        },
         "description": "A thick metal fork that makes an annoying tone when you strike it with something.",
         "cost": {
             "lead": 0.5,
@@ -4159,17 +3306,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A three-pronged device used for handling hay. Also makes a decent improvised weapon.",
         "cost": {
             "wood": 1,
@@ -4216,14 +3352,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A cane used by people who need helping walking. Or by people who want to seem cool and mature.",
         "cost": {
             "chalk": 1
@@ -4264,21 +3392,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "trauma": [
-                1
-            ],
-            "humorous": [
-                1,
-                "bull-penis"
-            ]
-        },
         "description": "A cane fashioned out of a dried bull penis. Don't laugh.",
         "cost": {
             "caulk": 1,
@@ -4329,17 +3442,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "consumable": [
-                1
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "A small cane made of candy.",
         "cost": {
             "rock candy": 1
@@ -4384,14 +3486,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "heat": [
-                1
-            ]
-        },
         "description": "A device used for curling one's hair.",
         "cost": {
             "chalk": 1,
@@ -4431,14 +3525,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A heavy metal chain.",
         "cost": {
             "lead": 1
@@ -4470,14 +3556,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A small bike chain.",
         "cost": {
             "rust": 1
@@ -4511,14 +3589,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A keychain to help you find your keys.",
         "cost": {
             "frosting": 1
@@ -4557,17 +3627,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A kitchen knife used for cutting up foods.",
         "cost": {
             "jet": 1
@@ -4603,20 +3662,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ],
-            "horrifying": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A hefty knife used for cleaving large chunks of flesh.",
         "cost": {
             "jet": 1,
@@ -4656,17 +3701,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A 'cool' looking knife.",
         "cost": {
             "jet": 1,
@@ -4701,14 +3735,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A wooden table leg.",
         "cost": {
             "wood": 1
@@ -4747,17 +3773,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "esoteric": [
-                1
-            ]
-        },
         "description": "A wooden cue used for sinking pool balls.",
         "cost": {
             "build": 1,
@@ -4796,14 +3811,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "A pump-action shotgun.",
         "cost": {
             "build": 1,
@@ -4838,14 +3845,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "A wooden double-barreled shotgun.",
         "cost": {
             "wood": 1,
@@ -4891,14 +3890,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "Small needles used for sewing things together.",
         "cost": {
             "jet": 1
@@ -4932,14 +3923,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "A pair of needles used for knitting things.",
         "cost": {
             "shale": 1
@@ -4973,14 +3956,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A small 5-pound dumbbell used for exercising.",
         "cost": {
             "rust": 1
@@ -5031,14 +4006,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A 15-pound dumbbell used for exercising.",
         "cost": {
             "rust": 1,
@@ -5090,14 +4057,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A comically huge dumbbell.",
         "cost": {
             "rust": 1,
@@ -5150,14 +4109,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A large wooden stick. It's used to strike pucks around on ice.",
         "cost": {
             "aquamarine": 1,
@@ -5205,18 +4156,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "suction": [
-                1
-            ],
-            "humorous": [
-                1,
-                "cleaner"
-            ]
-        },
         "description": "A suction-producing device that's used for sucking up loose particles.",
         "cost": {
             "iodine": 1,
@@ -5258,18 +4197,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1,
-                "mop"
-            ]
-        },
         "description": "A mop. It's used for cleaning up spills and wiping surfaces clean.",
         "cost": {
             "aquamarine": 1
@@ -5308,14 +4235,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A golden trophy received for winning something. Or getting second place. They really give these things out for anything.",
         "cost": {
             "gold": 1
@@ -5354,30 +4273,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "humorous": [
-                1,
-                "fancy+santa"
-            ],
-            "trauma": [
-                1,
-                "fancy+santa"
-            ],
-            "esoteric": [
-                1,
-                "fancy+santa"
-            ],
-            "goodthrowing": [
-                1,
-                "fancy+santa"
-            ],
-            "breakable": [
-                1
-            ]
-        },
         "description": "A very fancy-looking Santa figurine. It looks like a normal Santa, but it's filled with self-righteous bullshit.",
         "cost": {
             "malachite": 0.5,
@@ -5427,21 +4322,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1,
-                "ladle"
-            ],
-            "cooking": [
-                1
-            ]
-        },
         "description": "A stainless metal spoon that's used for serving soup.",
         "cost": {
             "rust": 1
@@ -5480,14 +4360,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "electric": [
-                1
-            ]
-        },
         "description": "A long cable used for extending electric signals.",
         "cost": {
             "copper": 1,
@@ -5528,14 +4400,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A long piece of rope.",
         "cost": {
             "sandstone": 1
@@ -5562,15 +4426,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "heat": [
-                1,
-                "iron"
-            ]
-        },
         "description": "A tool for ironing the wrinkles out of your clothes.",
         "cost": {
             "iron": 1
@@ -5615,18 +4470,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ],
-            "horrifying": [
-                1,
-                "hack"
-            ]
-        },
         "description": "A serrated saw meant for cutting metal.",
         "cost": {
             "rust": 1,
@@ -5664,14 +4507,6 @@
             "accessory": [
                 1,
                 "skates"
-            ]
-        },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
             ]
         },
         "description": "A pair of skates used for gliding gracefully across ice.",
@@ -5713,14 +4548,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A hefty wrench meant to tighten and loosen threaded pipes.",
         "cost": {
             "rust": 1,
@@ -5756,18 +4583,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ],
-            "humorous": [
-                0.6,
-                "umbrella"
-            ]
-        },
         "description": "An umbrella used to keep the rain off of your head.",
         "cost": {
             "shale": 1,
@@ -5811,14 +4626,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A piece of furniture used for sleeping.",
         "cost": {
             "wood": 1,
@@ -5863,14 +4670,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A piece of furniture used for sleeping.",
         "cost": {
             "wood": 1,
@@ -5903,20 +4702,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "trauma": [
-                1
-            ],
-            "humorous": [
-                1
-            ],
-            "plush": [
-                1
-            ]
-        },
         "description": "A soft, fluffy pillow.",
         "cost": {
             "chalk": 1,
@@ -5973,20 +4758,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "trauma": [
-                1
-            ],
-            "humorous": [
-                1
-            ],
-            "plush": [
-                1
-            ]
-        },
         "description": "A blanket for covering oneself with during sleep.",
         "cost": {
             "chalk": 0.9,
@@ -6037,17 +4808,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "cold": [
-                1
-            ]
-        },
         "description": "A cooling device used to keep food fresh.",
         "cost": {
             "permafrost": 1,
@@ -6088,17 +4848,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "heat": [
-                1
-            ]
-        },
         "description": "A chamber of hot fires.",
         "cost": {
             "amber": 1,
@@ -6145,14 +4894,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A metal bowl for boiling things.",
         "cost": {
             "rust": 1
@@ -6191,14 +4932,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A pan with a convenient handle.",
         "cost": {
             "rust": 1,
@@ -6245,14 +4978,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A basin for washing things.",
         "cost": {
             "aquamarine": 1,
@@ -6287,20 +5012,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "breakable": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A brittle plate.",
         "cost": {
             "chalk": 1
@@ -6327,20 +5038,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "breakable": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A cup for holding liquids in.",
         "cost": {
             "chalk": 1
@@ -6367,20 +5064,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "breakable": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "A large cup. Usually holds coffee.",
         "cost": {
             "aquamarine": 1
@@ -6407,14 +5090,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A piece of furniture that you put other things on.",
         "cost": {
             "wood": 1
@@ -6447,14 +5122,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A large, fanciful clock. It's somewhat imposing.",
         "cost": {
             "wood": 1,
@@ -6497,14 +5164,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A clock that hangs on the wall.",
         "cost": {
             "wood": 1,
@@ -6543,20 +5202,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1
-            ],
-            "trauma": [
-                1
-            ]
-        },
         "description": "A toilet. For... You know.",
         "cost": {
             "aquamarine": 1,
@@ -6602,20 +5247,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1
-            ],
-            "trauma": [
-                1
-            ]
-        },
         "description": "A tub for scrubbin'.",
         "cost": {
             "aquamarine": 1,
@@ -6646,14 +5277,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A standing shower unit.",
         "cost": {
             "aquamarine": 1,
@@ -6688,17 +5311,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "heat": [
-                1
-            ]
-        },
         "description": "A chamber of hot fires and stones.",
         "cost": {
             "chalk": 1,
@@ -6740,14 +5352,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A thing you sit on. You know, a bench.",
         "cost": {
             "wood": 1
@@ -6779,17 +5383,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "plush": [
-                1
-            ]
-        },
         "description": "A large, comfy chair. Makes you feel tiny.",
         "cost": {
             "jet": 1,
@@ -6820,17 +5413,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "plush": [
-                1
-            ]
-        },
         "description": "A couch. A truly beautiful invention.",
         "cost": {
             "frosting": 1,
@@ -6858,14 +5440,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A television set.",
         "cost": {
             "copper": 1,
@@ -6900,14 +5474,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A machine. It holds a great aqueous power.",
         "cost": {
             "aquamarine": 1,
@@ -6944,14 +5510,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A machine. It can dry your clothes.",
         "cost": {
             "garnet": 1,
@@ -6988,14 +5546,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "A standard pen. Said to be mightier than a sword.",
         "cost": {
             "jet": 1
@@ -7032,14 +5582,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "A wooden pencil. Has an eraser as well.",
         "cost": {
             "wood": 1,
@@ -7086,14 +5628,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ]
-        },
         "description": "An office stapler.",
         "cost": {
             "shale": 1,
@@ -7133,14 +5667,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A machine. Like it or not, it is spitting fax.",
         "cost": {
             "chalk": 1,
@@ -7175,14 +5701,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A machine. It has the ability to copy documents.",
         "cost": {
             "chalk": 1,
@@ -7219,14 +5737,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A large weighted ball used for various exercises.",
         "cost": {
             "tar": 1
@@ -7260,18 +5770,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "consumable": [
-                0.3,
-                "bottle"
-            ]
-        },
         "description": "A bottle of water.",
         "cost": {
             "aquamarine": 1
@@ -7321,18 +5819,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "consumable": [
-                0.3,
-                "bottle"
-            ]
-        },
         "description": "A small bottle containing steroids.",
         "cost": {
             "chalk": 1
@@ -7373,14 +5859,6 @@
             "accessory": [
                 0.3,
                 "gloves"
-            ]
-        },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
             ]
         },
         "description": "A pair of boxing gloves. These are designed to protect the opponent's head and the user's hand.",
@@ -7432,14 +5910,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A small figurine of digital singer Hatsune Miku.",
         "cost": {
             "aquamarine": 1,
@@ -7486,14 +5956,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A DVD with various episodes of an anime.",
         "cost": {
             "iodine": 1
@@ -7545,14 +6007,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A poster for an anime.",
         "cost": {
             "rock candy": 1
@@ -7604,14 +6058,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A book of right-to-left drawings that tells a story.",
         "cost": {
             "chalk": 1
@@ -7661,14 +6107,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "trauma": [
-                1
-            ]
-        },
         "description": "...No one can ever know.",
         "cost": {
             "chalk": 1
@@ -7718,17 +6156,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ],
-            "goodthrowing": [
-                1
-            ]
-        },
         "description": "Badass throwing stars.",
         "cost": {
             "titanium": 0.3
@@ -7772,14 +6199,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A poster for the band Thrasher.",
         "cost": {
             "jet": 0.5,
@@ -7831,14 +6250,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "One of Nirvana's albums.",
         "cost": {
             "jet": 1
@@ -7883,20 +6294,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "electric": [
-                1
-            ],
-            "sound": [
-                1
-            ],
-            "awesome": [
-                1
-            ]
-        },
         "description": "An electric guitar.",
         "cost": {
             "garnet": 1,
@@ -7933,14 +6330,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "sound": [
-                1
-            ]
-        },
         "description": "An acoustic guitar.",
         "cost": {
             "wood": 1,
@@ -7977,20 +6366,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "sound": [
-                1
-            ],
-            "awesome": [
-                1
-            ]
-        },
         "description": "A set of drums for playing music with.",
         "cost": {
             "rust": 1,
@@ -8027,14 +6402,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A book of maps.",
         "cost": {
             "malachite": 1,
@@ -8074,14 +6441,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A book about history.",
         "cost": {
             "build": 1,
@@ -8113,14 +6472,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A sphere with a map overlayed onto it.",
         "cost": {
             "malachite": 1,
@@ -8160,17 +6511,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "pierce": [
-                1
-            ],
-            "sound": [
-                1
-            ]
-        },
         "description": "An instrument. It's used by blowing into it and restricting the flow of the air.",
         "cost": {
             "iron": 1
@@ -8204,17 +6544,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "sound": [
-                1
-            ]
-        },
         "description": "An iconic golden-brass instrument.",
         "cost": {
             "gold": 1
@@ -8258,17 +6587,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "sound": [
-                1
-            ]
-        },
         "description": "A large piano that looks like it has a tent on top of it.",
         "cost": {
             "jet": 1,
@@ -8320,14 +6638,6 @@
                 "headphones"
             ]
         },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A pair of sound-cancelling headphones.",
         "cost": {
             "jet": 1
@@ -8365,14 +6675,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "An empty wrapper for some kind of food.",
         "cost": {
             "chalk": 1
@@ -8412,14 +6714,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "An empty can of soda.",
         "cost": {
             "rust": 1
@@ -8460,14 +6754,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "trauma": [
-                1
-            ]
-        },
         "description": "An empty plastic bag.",
         "cost": {
             "frosting": 1
@@ -8507,14 +6793,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "trauma": [
-                1
-            ]
-        },
         "description": "A... sord? You're not exactly sure what this thing is.",
         "cost": {
             "build": 0
@@ -8564,14 +6842,6 @@
                 "headset"
             ]
         },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A virtual reality headset.",
         "cost": {
             "jet": 1
@@ -8612,14 +6882,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A portable computing device. Don't ask how you can insert discs into this thing.",
         "cost": {
             "cobalt": 1
@@ -8650,14 +6912,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A drone that you can fly remotely.",
         "cost": {
             "jet": 1,
@@ -8703,19 +6957,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "bash": [
-                1,
-                "computer"
-            ],
-            "electric": [
-                1,
-                "computer"
-            ]
-        },
         "description": "A large computer setup. It's tricked out.",
         "cost": {
             "caulk": 1,
@@ -8765,19 +7006,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1,
-                "card"
-            ],
-            "electric": [
-                1,
-                "card"
-            ]
-        },
         "description": "A beefy graphics card.",
         "cost": {
             "gold": 1,
@@ -8831,14 +7059,6 @@
                 "hat"
             ]
         },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A sweet-looking cowboy hat.",
         "cost": {
             "sandstone": 1
@@ -8886,14 +7106,6 @@
             "accessory": [
                 0.6,
                 "boots"
-            ]
-        },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
             ]
         },
         "description": "A pair of fancy leather cowboy boots.",
@@ -8945,14 +7157,6 @@
                 "bandana"
             ]
         },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ]
-        },
         "description": "A cloth bandana.",
         "cost": {
             "garnet": 1
@@ -8994,17 +7198,6 @@
             "accessory": [
                 0.6,
                 "shoes"
-            ]
-        },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1
             ]
         },
         "description": "A pair of large clown shoes.",
@@ -9054,17 +7247,6 @@
                 "nose"
             ]
         },
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1
-            ]
-        },
         "description": "A red clown nose that squeaks when you squeeze it.",
         "cost": {
             "garnet": 1
@@ -9108,17 +7290,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "humorous": [
-                1
-            ]
-        },
         "description": "A small figurine of a clown.",
         "cost": {
             "shale": 1
@@ -9162,14 +7333,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A poster of a clown that bears a striking resemblance to Bill Cosby.",
         "cost": {
             "frosting": 1
@@ -9215,14 +7378,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "cut": [
-                1
-            ]
-        },
         "description": "A poster of Bill Cosby.",
         "cost": {
             "jet": 1
@@ -9261,18 +7416,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "consumable": [
-                0.3,
-                "faygo"
-            ]
-        },
         "description": "A bottle of red cherry Faygo cola.",
         "cost": {
             "garnet": 1,
@@ -9316,18 +7459,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "consumable": [
-                0.3,
-                "faygo"
-            ]
-        },
         "description": "A bottle of grape Faygo.",
         "cost": {
             "shale": 1,
@@ -9371,18 +7502,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "consumable": [
-                0.3,
-                "faygo"
-            ]
-        },
         "description": "A bottle of cola-flavored Faygo.",
         "cost": {
             "rust": 1,
@@ -9426,18 +7545,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "consumable": [
-                0.3,
-                "faygo"
-            ]
-        },
         "description": "A bottle of cottan candy Faygo.",
         "cost": {
             "rock candy": 1,
@@ -9489,18 +7596,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "consumable": [
-                0.3,
-                "faygo"
-            ]
-        },
         "description": "A bottle of kiwi strawberry Faygo.",
         "cost": {
             "frosting": 1,
@@ -9556,18 +7651,6 @@
             ]
         },
         "wearable": false,
-        "tags": {
-            "mundane": [
-                0
-            ],
-            "blunt": [
-                1
-            ],
-            "consumable": [
-                0.3,
-                "faygo"
-            ]
-        },
         "description": "A bottle of the legendary candy apple Faygo.",
         "cost": {
             "rose quartz": 1,
