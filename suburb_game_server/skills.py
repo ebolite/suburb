@@ -1461,6 +1461,14 @@ add_abstratus_skill("fistkind", arrest, 1)
 add_abstratus_skill("fistkind", attack, 50)
 add_abstratus_skill("fistkind", anticipate, 75)
 
+# forkkind
+    # avale
+add_abstratus_skill("forkkind", arraign, 50)
+
+# hatchetkind
+add_abstratus_skill("hatchetkind", axe, 1)
+add_abstratus_skill("hatchetkind", artillerate, 50)
+
 # hatkind
 add_abstratus_skill("hatkind", adonize, 1)
 add_abstratus_skill("hatkind", awaitskill, 50)
@@ -1507,6 +1515,10 @@ add_abstratus_skill("pistolkind", aim, 1)
 add_abstratus_skill("pistolkind", artillerate, 50)
 add_abstratus_skill("pistolkind", aunter, 75)
 
+# pizzacutterkind
+add_abstratus_skill("pizzacutterkind", applot, 1)
+add_abstratus_skill("pizzacutterkind", arraign, 50)
+
 # plungerkind
 add_abstratus_skill("plungerkind", arraign, 50)
 add_abstratus_skill("plungerkind", antagonize, 75)
@@ -1529,10 +1541,19 @@ add_abstratus_skill("sawkind", assanguinate, 1)
 add_abstratus_skill("sawkind", avenge, 50)
 add_abstratus_skill("sawkind", axe, 75)
 
+# scissorkind
+add_abstratus_skill("scissorkind", applot, 1)
+add_abstratus_skill("scissorkind", attack, 50)
+
 # shotgunkind
 add_abstratus_skill("shotgunkind", aggerate, 1)
 add_abstratus_skill("shotgunkind", avenge, 50)
 add_abstratus_skill("shotgunkind", adjudge, 75)
+
+# spoonkind
+    # avale
+add_abstratus_skill("spoonkind", awaitskill, 50)
+add_abstratus_skill("spoonkind", antagonize, 75)
 
 # umbrellakind
 add_abstratus_skill("umbrellakind", admonish, 1)
