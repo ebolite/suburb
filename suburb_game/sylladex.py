@@ -16,13 +16,14 @@ class Item():
     def __init__(self, item_name: str, item_dict: dict):
         self.name = item_name
         self.item_dict = item_dict
-        self.forbiddencode = self.item_dict["forbiddencode"]
-        self.power = self.item_dict["power"]
-        self.size = self.item_dict["size"]
-        self.code = self.item_dict["code"]
-        self.kinds = self.item_dict["kinds"]
-        self.use = self.item_dict["use"] or []
-        self.cost = self.item_dict["cost"]
+        self.forbiddencode: bool = self.item_dict["forbiddencode"]
+        self.power: int = self.item_dict["power"]
+        self.size: int = self.item_dict["size"]
+        self.code: str = self.item_dict["code"]
+        self.kinds: list = self.item_dict["kinds"]
+        self.wearable: bool = self.item_dict["wearable"]
+        self.use: list[str] = self.item_dict["use"] or []
+        self.cost: dict[str, float] = self.item_dict["cost"]
         self.display_name: str = self.item_dict["display_name"]
 
     @property
