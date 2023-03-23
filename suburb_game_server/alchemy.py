@@ -238,27 +238,12 @@ class InheritedStatistics():
             self.kinds = self.component_1.kinds + self.component_2.kinds
 
     def dictionary_inherit(self, component_1_dict: dict, component_2_dict: dict) -> dict: # returns new dict
-        new_dict = {}
-        if self.base == self.component_1.base: 
-            combined_dict: dict = component_1_dict.copy()
-            combined_dict.update(component_2_dict)
-        else: 
-            combined_dict: dict = component_2_dict.copy()
-            combined_dict.update(component_1_dict)
-        for key in combined_dict: # name: str: [inherit_chance: float, guaranteed_inheritor: str]. if guaranteed inheritor in adjectives or base, we must inherit!
-            if len(combined_dict[key]) > 1: # if there is a guaranteed inheritor
-                guaranteed_inheritor = combined_dict[key][1]
-                if guaranteed_inheritor in self.descriptors: # if we have the guaranteed inheritor
-                    new_dict[key] = combined_dict[key] # inherit the item
-                if guaranteed_inheritor in self.merged_bases: # if the inherited base was merged
-                    new_dict[key] = combined_dict[key] # inherit the item
-                    new_dict[key][1] = self.base # update the guaranteed inheritor
-            if key not in new_dict: # if we didn't inherit it yet
-                chance = combined_dict[key][0]
-                chance -= (0.1 * len(new_dict)) # chance to inherit decreases as we inherit more things
-                random.seed(self.name+key)
-                if random.random() < chance:
-                    new_dict[key] = combined_dict[key]
+        new_dict = component_1_dict.copy()
+        for state_name, potency in component_2_dict:
+            if state_name in new_dict and potency > new_dict[state_name]:
+                new_dict[state_name] = potency
+            elif state_name not in new_dict:
+                new_dict[state_name] = potency
         return new_dict
 
     def inherit_stat_from_base(self, component_1_stat: int, component_2_stat:int) -> int:
