@@ -519,6 +519,12 @@ class Strife():
                 if button.is_mouseover(): break
             else:
                 self.clear_next_layer_buttons()
+        if self.strife_log_window.is_mouseover() and self.strife_log_window.lines_to_display == 5:
+            self.strife_log_window.lines_to_display = 30
+            self.strife_log_window.update_logs()
+        elif not self.strife_log_window.is_mouseover() and self.strife_log_window.lines_to_display > 5:
+            self.strife_log_window.lines_to_display = 5
+            self.strife_log_window.update_logs()
         self.update_submitted_skills()
         self.update_skill_info_window()
         self.update_vials()

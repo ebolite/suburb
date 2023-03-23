@@ -1679,6 +1679,10 @@ class LogWindow(UIElement):
         self.spawn_logger_lines()
         scroll_check.append(self)
 
+    @property
+    def height(self):
+        return self.fontsize*self.lines_to_display + self.padding*self.lines_to_display
+
     def delete(self):
         if util.log_window == self: util.log_window = None
         super().delete()
@@ -1715,6 +1719,9 @@ class LogWindow(UIElement):
             if reply != "None": util.log(reply)
             textbox.text = ""
             if self.last_scene: self.last_scene()
+        surf = pygame.Surface((self.width, self.height))
+        self.rect = surf.get_rect()
+        self.rect.x, self.rect.y = x, self.y
         if not self.draw_console: return
         console_y = self.y + (self.lines_to_display)*self.fontsize + (self.lines_to_display)*self.padding
         self.console = InputTextBox(x, console_y, self.width, self.fontsize+self.padding)
