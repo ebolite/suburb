@@ -207,9 +207,7 @@
         },
         "use": [],
         "adjectives": [
-            "cruxite",
-            "colorful",
-            "cylindrical"
+            "cruxite"
         ],
         "inheritpower": 0,
         "attached_skills": []
@@ -256,9 +254,7 @@
             "enter"
         ],
         "adjectives": [
-            "entry",
-            "the+first",
-            "meta"
+            "entry"
         ],
         "inheritpower": 0,
         "forbiddencode": false,
@@ -764,10 +760,7 @@
         "secret_states": {},
         "secretadjectives": [],
         "adjectives": [
-            "baseball",
-            "wooden",
-            "sports",
-            "punk"
+            "baseball"
         ],
         "use": [],
         "forbiddencode": false,
@@ -1197,11 +1190,7 @@
         "secret_states": {},
         "secretadjectives": [],
         "adjectives": [
-            "weed",
-            "gardening",
-            "lawncare",
-            "trimming",
-            "lawn"
+            "weed"
         ],
         "use": [],
         "forbiddencode": false,
@@ -1404,11 +1393,7 @@
         },
         "secretadjectives": [],
         "adjectives": [
-            "fire",
-            "pointy",
-            "rusty",
-            "metallic",
-            "forged"
+            "fire"
         ],
         "use": [],
         "forbiddencode": false,
@@ -2067,8 +2052,7 @@
         ],
         "use": [],
         "adjectives": [
-            "Abraham",
-            "Lincoln"
+            "Abraham+Lincoln"
         ],
         "forbiddencode": false,
         "inheritpower": 35,
@@ -2116,8 +2100,7 @@
         ],
         "use": [],
         "adjectives": [
-            "Julius",
-            "Caesar"
+            "Julius+Caesar"
         ],
         "forbiddencode": false,
         "inheritpower": 40,
@@ -3564,12 +3547,7 @@
         "forbiddencode": false,
         "use": [],
         "adjectives": [
-            "tuning",
-            "musical",
-            "tonal",
-            "metal",
-            "forked",
-            "bifurcated"
+            "tuning"
         ],
         "inheritpower": 60,
         "code": "CF2JkQu5",
@@ -5645,6 +5623,7 @@
             "ancient",
             "primordial",
             "fanciful",
+            "antique",
             "ornate",
             "fancy",
             "imposing",
@@ -5878,7 +5857,9 @@
             "fiery",
             "hot",
             "warm",
-            "infernal"
+            "infernal",
+            "brickwork",
+            "antique"
         ],
         "forbiddencode": false,
         "use": [],
@@ -5909,7 +5890,12 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "wooden",
+            "rectangular",
+            "sturdy",
+            "comfy"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -5936,7 +5922,14 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "large",
+            "comfy",
+            "soft",
+            "fluffy",
+            "velvet",
+            "kushy"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -5964,7 +5957,14 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "large",
+            "comfy",
+            "soft",
+            "fluffy",
+            "velvet",
+            "kushy"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -5996,7 +5996,10 @@
             ]
         },
         "secretadjectives": [
-            "tele"
+            "tele",
+            "futuristic",
+            "high-tech",
+            "electromagnetic"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6029,7 +6032,11 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "clean"
+            "clean",
+            "soapy",
+            "wet",
+            "watery",
+            "aqueous"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6064,7 +6071,11 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "dry"
+            "dry",
+            "warm",
+            "hot",
+            "withered",
+            "crisp"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6099,7 +6110,9 @@
         "secret_states": {},
         "secretadjectives": [
             "penned",
-            "inky"
+            "inky",
+            "clever",
+            "ink-jet"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6144,7 +6157,11 @@
             ]
         },
         "secretadjectives": [
-            "erasing"
+            "erasing",
+            "wooden",
+            "graphite",
+            "sketched",
+            "lineart"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6184,7 +6201,10 @@
             ]
         },
         "secretadjectives": [
-            "office"
+            "office",
+            "stapled",
+            "fastened",
+            "useful"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6216,7 +6236,12 @@
                 "fax"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "factual",
+            "antiquated",
+            "boring",
+            "office"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -6250,7 +6275,12 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "duplication"
+            "duplication",
+            "duplicating",
+            "self-replicating",
+            "recursive",
+            "replicative",
+            "cloning"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6283,7 +6313,15 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "weighted",
+            "heavy",
+            "hefty",
+            "dense",
+            "spherical",
+            "large",
+            "fitness"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 5,
@@ -6330,7 +6368,12 @@
             ]
         },
         "secretadjectives": [
-            "wet"
+            "wet",
+            "moist",
+            "watery",
+            "slick",
+            "drenched",
+            "soaked"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6367,7 +6410,13 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "strong",
+            "powerful",
+            "roided",
+            "massive",
+            "buff"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 45,
@@ -6421,7 +6470,13 @@
                 "boxing"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "fighting",
+            "leather",
+            "weighted",
+            "heavyweight",
+            "aggressive"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -6466,7 +6521,13 @@
             ]
         },
         "secretadjectives": [
-            "hatsune"
+            "hatsune",
+            "miniature",
+            "kawaii",
+            "singing",
+            "robotic",
+            "android",
+            "synthetic"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6516,7 +6577,8 @@
         "secretadjectives": [
             "Japanese",
             "kakkoii",
-            "kawaii"
+            "kawaii",
+            "weeaboo"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6564,9 +6626,10 @@
             ]
         },
         "secretadjectives": [
-            "japanese",
+            "Japanese",
             "kakkoii",
-            "kawaii"
+            "kawaii",
+            "weeaboo"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6614,9 +6677,10 @@
             ]
         },
         "secretadjectives": [
-            "japanese",
+            "Japanese",
             "kakkoii",
-            "kawaii"
+            "kawaii",
+            "weeaboo"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6664,7 +6728,11 @@
         },
         "secretadjectives": [
             "waifu",
-            "crusty"
+            "crusty",
+            "soft",
+            "concerning",
+            "depressing",
+            "cringe"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6706,7 +6774,12 @@
         },
         "secret_states": {},
         "secretadjectives": [
-            "ninja"
+            "ninja",
+            "Japanese",
+            "throwing",
+            "badass",
+            "really+cool",
+            "sharp"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6754,7 +6827,9 @@
         },
         "secretadjectives": [
             "heavy+metal",
-            "metal"
+            "metal",
+            "brutal",
+            "rock-n-roll"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6797,7 +6872,11 @@
             ]
         },
         "secretadjectives": [
-            "nevermind"
+            "nevermind",
+            "goth",
+            "grunge",
+            "alternative",
+            "rock-n-roll"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6832,7 +6911,12 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "rock-n-roll"
+            "rock-n-roll",
+            "musical",
+            "rad",
+            "dope",
+            "dope-ass",
+            "sick-ass"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6867,7 +6951,10 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "soothing"
+            "soothing",
+            "melodious",
+            "woody",
+            "resonant"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6902,7 +6989,11 @@
             ]
         },
         "secretadjectives": [
-            "loud"
+            "loud",
+            "percussive",
+            "noisy",
+            "deafening",
+            "ear-piercing"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6942,7 +7033,9 @@
         },
         "secretadjectives": [
             "global",
-            "planetary"
+            "planetary",
+            "continental",
+            "informative"
         ],
         "forbiddencode": false,
         "use": [],
@@ -6970,7 +7063,10 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "historical"
+            "historical",
+            "landmark",
+            "ancient",
+            "factual"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7010,7 +7106,10 @@
         },
         "secretadjectives": [
             "global",
-            "planetary"
+            "planetary",
+            "continental",
+            "spherical",
+            "cosmic"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7042,7 +7141,9 @@
             ]
         },
         "secretadjectives": [
-            "musical"
+            "musical",
+            "airy",
+            "windy"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7084,7 +7185,11 @@
         "secretadjectives": [
             "musical",
             "epic",
-            "jazz"
+            "jazz",
+            "saxy",
+            "golden",
+            "brass",
+            "opulent"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7127,7 +7232,10 @@
         },
         "secretadjectives": [
             "musical",
-            "classical"
+            "classical",
+            "large",
+            "symphonic",
+            "harmonious"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7170,7 +7278,11 @@
             ]
         },
         "secretadjectives": [
-            "musical"
+            "musical",
+            "acoustic",
+            "surround-sound",
+            "stereo",
+            "noise-cancelling"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7207,7 +7319,10 @@
             ]
         },
         "secretadjectives": [
-            "garbage"
+            "garbage",
+            "useless",
+            "worthless",
+            "used"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7246,7 +7361,10 @@
             ]
         },
         "secretadjectives": [
-            "garbage"
+            "garbage",
+            "useless",
+            "worthless",
+            "used"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7286,7 +7404,11 @@
             ]
         },
         "secretadjectives": [
-            "garbage"
+            "garbage",
+            "useless",
+            "worthless",
+            "used",
+            "suffocating"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7373,10 +7495,13 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "virtual"
+            "virtual",
+            "high-tech",
+            "futuristic",
+            "next-gen"
         ],
         "forbiddencode": false,
-        "use": [],
+        "use": [ "computer" ],
         "inheritpower": 45,
         "adjectives": [
             "virtual+reality"
@@ -7402,7 +7527,12 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "pocket-sized",
+            "high-tech",
+            "touchscreen",
+            "portable"
+        ],
         "forbiddencode": false,
         "use": [
             "computer"
@@ -7447,7 +7577,11 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "remote-controlled"
+            "remote-controlled",
+            "flying",
+            "mechanical",
+            "robotic",
+            "automatic"
         ],
         "forbiddencode": false,
         "inheritpower": 25,
@@ -7492,7 +7626,10 @@
             ]
         },
         "secretadjectives": [
-            "gamer"
+            "gamer",
+            "rgb",
+            "high-tech",
+            "expensive"
         ],
         "secret_states": {},
         "use": [
@@ -7539,7 +7676,11 @@
             ]
         },
         "secretadjectives": [
-            "gaming"
+            "gaming",
+            "rgb",
+            "high-tech",
+            "processing",
+            "graphical"
         ],
         "secret_states": {},
         "use": [
@@ -7586,11 +7727,17 @@
             ],
             "refresh": [
                 0.6,
-                "western"
+                "Western"
             ]
         },
         "secretadjectives": [
-            "western"
+            "Western",
+            "leather",
+            "5-gallon",
+            "10-gallon",
+            "15-gallon",
+            "20-gallon",
+            "old-fashioned"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7635,11 +7782,15 @@
             ],
             "refresh": [
                 0.6,
-                "western"
+                "Western"
             ]
         },
         "secretadjectives": [
-            "western"
+            "Western",
+            "leather",
+            "spoked",
+            "durable",
+            "old-fashioned"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7684,7 +7835,10 @@
             ]
         },
         "secretadjectives": [
-            "cool"
+            "cool",
+            "concealed",
+            "warm",
+            "anonymous"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7730,7 +7884,12 @@
                 "clown"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "funny",
+            "laughing",
+            "honking",
+            "silly"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 0,
@@ -7777,7 +7936,12 @@
                 "clown"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "funny",
+            "laughing",
+            "honking",
+            "silly"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": -2,
@@ -7820,7 +7984,12 @@
                 "joker"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "funny",
+            "laughing",
+            "honking",
+            "silly"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 17,
@@ -7862,7 +8031,10 @@
             ]
         },
         "secretadjectives": [
-            "funny"
+            "funny",
+            "laughing",
+            "honking",
+            "silly"
         ],
         "forbiddencode": false,
         "use": [],
@@ -7900,7 +8072,12 @@
                 "cosby"
             ]
         },
-        "secretadjectives": [],
+        "secretadjectives": [
+            "predatory",
+            "criminal",
+            "suspicious",
+            "comedic"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 350,
@@ -7941,7 +8118,13 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "sweet",
+            "strawberry",
+            "red-flavored",
+            "carbonated",
+            "fruity"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 2,
@@ -7983,7 +8166,11 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "sweet",
+            "carbonated",
+            "tangy"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 2,
@@ -8025,7 +8212,12 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "sweet",
+            "carbonated",
+            "cinnamon",
+            "vanilla"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 2,
@@ -8044,7 +8236,7 @@
             "bottlekind"
         ],
         "wearable": false,
-        "description": "A bottle of cottan candy Faygo.",
+        "description": "A bottle of cotton candy Faygo.",
         "cost": {
             "rock candy": 1,
             "aquamarine": 0.2
@@ -8075,7 +8267,10 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "carbonated",
+            "sweet"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 11,
@@ -8129,7 +8324,12 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "sweet",
+            "carbonated",
+            "kiwi",
+            "strawberry"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 11,
@@ -8183,7 +8383,13 @@
             ]
         },
         "secret_states": {},
-        "secretadjectives": [],
+        "secretadjectives": [
+            "sweet",
+            "carbonated",
+            "sour",
+            "acidic",
+            "legendary"
+        ],
         "forbiddencode": false,
         "use": [],
         "inheritpower": 150,

@@ -59,6 +59,11 @@ for base_name, base_dict in bases.items():
         base_dict["kinds"] = [kind_name for kind_name in base_dict["kinds"]]
 writejson(bases, "bases")
 
+base_names_adjectives = {}
+for base_name, base_dict in bases.items():
+    base_names_adjectives[base_name] = base_dict["adjectives"] + base_dict["secretadjectives"]
+writejson(base_names_adjectives, "base_names_adjectives")
+
 items = {}
 items = readjson(items, "items")
 
