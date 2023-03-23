@@ -96,7 +96,7 @@
             "verification"
         ],
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 0.7,
                 "empty"
             ]
@@ -145,7 +145,7 @@
             "hole-filled"
         ],
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 0.7,
                 "empty"
             ]
@@ -930,7 +930,7 @@
             ]
         },
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 0.2,
                 "sheepish"
             ]
@@ -1002,7 +1002,7 @@
                 1,
                 "pepper"
             ],
-            "weakness": [
+            "vulnerable": [
                 0.6,
                 "pepper"
             ],
@@ -1460,7 +1460,7 @@
                 0.3,
                 "sledge"
             ],
-            "weakness": [
+            "vulnerable": [
                 0.2,
                 "sledge"
             ]
@@ -1690,7 +1690,7 @@
             "iron": 0.5
         },
         "onhit_states": {
-            "weakness": [
+            "vulnerable": [
                 0.3,
                 "axe"
             ]
@@ -1730,7 +1730,7 @@
             "sunstone": 0.1
         },
         "onhit_states": {
-            "weakness": [
+            "vulnerable": [
                 0.3,
                 "axe"
             ]
@@ -1935,7 +1935,7 @@
             ]
         },
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 0.5,
                 "bronze"
             ]
@@ -2062,7 +2062,7 @@
             ]
         },
         "secret_states": {
-            "inspired": [
+            "inspire": [
                 0.5,
                 "golden"
             ]
@@ -4042,7 +4042,7 @@
             ]
         },
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 0.3,
                 "mop"
             ]
@@ -4114,7 +4114,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 1,
                 "fancy+santa"
             ],
@@ -5431,7 +5431,7 @@
         "wear_states": {},
         "consume_states": {},
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 1.1,
                 "office"
             ]
@@ -5910,7 +5910,7 @@
             ]
         },
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 0.8,
                 "waifu"
             ]
@@ -5996,7 +5996,7 @@
             ]
         },
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 1,
                 "heavy"
             ],
@@ -6040,7 +6040,7 @@
         },
         "consume_states": {},
         "secret_states": {
-            "weakness": [
+            "vulnerable": [
                 1,
                 "nirvana"
             ],
@@ -6188,7 +6188,7 @@
                 1,
                 "global"
             ],
-            "weakness": [
+            "vulnerable": [
                 1,
                 "planetary"
             ]
@@ -6256,7 +6256,7 @@
                 1,
                 "global"
             ],
-            "weakness": [
+            "vulnerable": [
                 1,
                 "planetary"
             ]
@@ -6967,7 +6967,7 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "weakness": [
+            "vulnerable": [
                 0.1,
                 "clown"
             ]
@@ -7109,7 +7109,7 @@
                 0.8,
                 "funny"
             ],
-            "weakness": [
+            "vulnerable": [
                 1.3,
                 "funny"
             ]

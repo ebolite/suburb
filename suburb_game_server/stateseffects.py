@@ -44,6 +44,36 @@ class State():
     def new_turn(self, griefer: "strife.Griefer"):
         pass
 
+class OneTimeState(State):
+    def on_apply(self, griefer: "strife.Griefer"):
+        griefer.remove_state(self.name)
+
+# one-time states
+class RefreshState(OneTimeState):
+    def on_apply(self, griefer: "strife.Griefer"):
+        value = self.applier_stats(griefer)["power"]//6 * self.potency(griefer)
+        value = int(value)
+        griefer.change_vial("vim", value)
+        griefer.change_vial("hp", value)
+        griefer.strife.log(f"{griefer.nickname} was refreshed by {value}!")
+        return super().on_apply(griefer)
+    
+refresh = RefreshState("refresh")
+refresh.beneficial = True
+refresh.tooltip = "Increases the target's VIM and HEALTH."
+
+class CaffeinateState(OneTimeState):
+    def on_apply(self, griefer: "strife.Griefer"):
+        value = self.applier_stats(griefer)["power"]//6 * self.potency(griefer)
+        value = int(value)
+        griefer.change_vial("vim", value)
+        griefer.change_vial("aspect", value)
+        return super().on_apply(griefer)
+    
+caffeinate = RefreshState("caffeinate")
+caffeinate.beneficial = True
+caffeinate.tooltip = "Increases the target's VIM and ASPECT."
+
 # basic states
 class AbjureState(State):
     def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
@@ -59,13 +89,22 @@ abjure.tooltip = "Reduces damage taken based on mettle."
 class DemoralizeState(State):
     def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
         new_damage = damage
-        new_damage *= 1 - (0.33 * self.potency(griefer))
+        new_damage *= 1 - (0.25 * self.potency(griefer))
         new_damage = int(new_damage)
         return max(new_damage, 0)
     
 demoralize = DemoralizeState("demoralize")
 demoralize.beneficial = False
 demoralize.tooltip = "Reduces damage dealt."
+
+class InspireState(State):
+    def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
+        modifier = 1 + 0.25 * self.potency(griefer)
+        return int(damage * modifier)
+    
+inspire = InspireState("inspire")
+inspire.beneficial = True
+inspire.tooltip = "Increases damage dealt."
 
 class DisarmState(State):
     def lock_categories(self, griefer: "strife.Griefer") -> list[str]:
