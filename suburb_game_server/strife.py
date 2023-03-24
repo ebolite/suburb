@@ -297,9 +297,7 @@ class Griefer():
 
     def new_turn(self):
         self.ready = False
-        if self.should_be_dead(): 
-            self.die()
-            return
+        if self.death_break(): return
         for vial in self.vials_list:
             if vial.tact_vial:
                 self.change_vial(vial.name, self.get_stat("tact"))
@@ -315,6 +313,7 @@ class Griefer():
             if self.skill_cooldowns[skill_name] <= 0:
                 self.skill_cooldowns.pop(skill_name)
         if self.player is None: self.ai_use_skills()
+        self.death_break()
 
     def take_damage(self, damage: int, coin: Optional[bool] = None):
         if damage > 0: 
@@ -334,11 +333,10 @@ class Griefer():
             self.strife.log(f"{self.nickname} takes {damage} damage!")
         else:
             self.strife.log(f"{self.nickname} takes {damage} damage! ({'heads' if coin else 'scratch'})")
-        if self.should_be_dead():
-            self.die()
 
-    def should_be_dead(self) -> bool:
+    def death_break(self) -> bool:
         if self.get_vial("hp") <= 0:
+            self.die()
             return True
         else: return False
 
@@ -399,6 +397,7 @@ class Griefer():
                 if griefer_name in self.strife.griefers:
                     targets_list.append(self.strife.get_griefer(griefer_name))
             skill.use(self, targets_list)
+            if self.dead: return
 
     def get_random_submittable_skill(self) -> str:
         def is_usable_skill(skill: "skills.Skill"):
@@ -577,6 +576,10 @@ class Griefer():
             self.player.add_permanent_bonus(game_attr, amount)
         self.add_bonus(game_attr, amount)
     
+    @property
+    def dead(self) -> bool:
+        return self.name in self.strife.griefers
+
     @property
     def wielded_item(self) -> Optional["alchemy.Item"]:
         if self.wielded_item_name is None: return None

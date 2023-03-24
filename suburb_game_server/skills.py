@@ -223,6 +223,7 @@ class Skill():
                     vial.on_parry(target, damage)
                 return
         if damage != 0: target.take_damage(damage, coin=coin)
+        if target.death_break(): return
         if damage != 0 or not self.need_damage_to_apply_states:
             for state_name in self.apply_states:
                 potency_formula = self.apply_states[state_name]["potency_formula"]
@@ -240,6 +241,7 @@ class Skill():
             for state_name, potency in user.wielded_item.onhit_states.items():
                 # duration is 2 for on-hits
                 target.apply_state(state_name, user, potency, 2)
+                if target.death_break(): return
         # vial change step
         for vial_name in self.vial_change_formulas:
             vial_formula = self.vial_change_formulas[vial_name]
@@ -267,6 +269,10 @@ class Skill():
         if self.special_effect is not None:
             effect_log = self.special_effect(user, target)
             if effect_log is not None: user.strife.log(effect_log)
+
+        # end step
+        user.death_break()
+        target.death_break()
 
     def is_usable_by(self, griefer: "strife.Griefer"):
         if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
