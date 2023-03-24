@@ -2136,10 +2136,14 @@ class StateIcon(Image):
             popup_text = Text(0.5, 0.5, popup_text_content)
             popup_text.fontsize = 14
             popup_text.color = self.theme.dark
-            self.popup = SolidColor(x, y, popup_text.get_width()+self.tooltip_padding*2, popup_text.fontsize+self.tooltip_padding*2, self.theme.white)
+            popup_width = popup_text.get_width()+self.tooltip_padding*2
+            popup_height = popup_text.fontsize+self.tooltip_padding*2
+            if x + popup_width > SCREEN_WIDTH: x_offset = -popup_width
+            else: x_offset = 10
+            self.popup = SolidColor(x, y, popup_width, popup_height, self.theme.white)
             self.popup.outline_color = self.theme.dark
             self.popup.follow_mouse = True
-            self.popup.rect_x_offset = 10
+            self.popup.rect_x_offset = x_offset
             popup_text.bring_to_top()
             popup_text.bind_to(self.popup)
 
