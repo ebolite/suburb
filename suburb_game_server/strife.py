@@ -125,9 +125,9 @@ class HopeVial(Vial):
         for stat_name in griefer.base_stats:
             griefer.add_bonus(stat_name, flat_add)
         if flat_add > 0:
-            griefer.strife.log(f"{griefer.nickname} gained +{flat_add} to all stats from {griefer.their} hope!")
+            griefer.strife.log(f"{griefer.nickname} gained +{flat_add} to all stats from {griefer.their} HOPE!")
         elif flat_add < 0:
-            griefer.strife.log(f"{griefer.nickname} lost {-flat_add} in all stats from {griefer.their} hope!")
+            griefer.strife.log(f"{griefer.nickname} lost {-flat_add} in all stats from {griefer.their} HOPE!")
         new_vials = {vial_name:griefer.get_vial_maximum(vial_name) for vial_name in griefer.vials}
         for vial_name in old_vials:
             if old_vials[vial_name] != new_vials[vial_name]:
