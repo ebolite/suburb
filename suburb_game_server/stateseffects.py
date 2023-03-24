@@ -291,7 +291,7 @@ disarm.tooltip = "Cannot use ARSENAL skills."
 
 class AiryState(State):
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:
-        reduction = 0.4 * self.potency(griefer)
+        reduction = 0.25 * self.potency(griefer)
         return 1 - reduction
     
 airy = AiryState("airy")
