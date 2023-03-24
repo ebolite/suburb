@@ -2,6 +2,7 @@ import random
 
 import strife
 import skills
+import config
 
 states: dict[str, "State"] = {}
 class_passives: dict[str, dict[str, dict[str, int]]] = {}
@@ -56,6 +57,7 @@ class DamageState(OneTimeState):
         value = self.applier_stats(griefer)["power"] * self.potency(griefer)
         value = int(value)
         griefer.take_damage(value)
+        return super().on_apply(griefer)
 
 damage = DamageState("damage")
 damage.beneficial = False
@@ -67,6 +69,7 @@ class HealState(OneTimeState):
         value = int(value)
         griefer.change_vial("hp", value)
         griefer.strife.log(f"{griefer.nickname} was healed by {value}!")
+        return super().on_apply(griefer)
 
 heal = HealState("heal")
 heal.beneficial = False
@@ -123,6 +126,36 @@ douse = DouseState("douse")
 douse.beneficial = True
 douse.tooltip = "Removes a negative state of the target."
 
+class LeechState(OneTimeState):
+    def on_apply(self, griefer: "strife.Griefer"):
+        amount_to_leech = self.applier_stats(griefer)["power"] * self.potency(griefer)
+        amount_to_leech = int(amount_to_leech)
+        second_grist = random.choice(list(config.grists.keys()))
+        for griefer in griefer.strife.griefer_list:
+            if griefer.player is not None:
+                griefer.player.add_grist("build", amount_to_leech)
+                griefer.player.add_grist(second_grist, amount_to_leech)
+        griefer.strife.log(f"{amount_to_leech} build and {second_grist} grist was leeched!")
+        return super().on_apply(griefer)
+    
+leech = LeechState("leech")
+leech.beneficial = True
+leech.tooltip = "Gives grist to all griefers in the strife when applied."
+
+class StunState(OneTimeState):
+    def on_apply(self, griefer: "strife.Griefer"):
+        if "stunned" not in griefer.tags:
+            value = -1 * self.applier_stats(griefer)["power"] * self.potency(griefer)
+            value = int(value)
+            griefer.change_vial("vim", value)
+            griefer.strife.log(f"{griefer.nickname} was stunned for {value} VIM!")
+            griefer.tags.append("stunned")
+        return super().on_apply(griefer)
+    
+stun = StunState("stun")
+stun.beneficial = False
+stun.tooltip = "Significantly reduces VIM. Can only be applied once per target per strife."
+
 # basic states
 class AbjureState(State):
     def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
@@ -154,6 +187,41 @@ class StrengthState(State):
 strength = StrengthState("strength")
 strength.beneficial = True
 strength.tooltip = "Increases damage dealt."
+
+class VulnerableState(State):
+    def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
+        mod = self.potency(griefer) * 0.25
+        mod = 1 + mod
+        return int(damage*mod)
+    
+vulnerable = VulnerableState("vulnerable")
+vulnerable.beneficial = False
+vulnerable.tooltip = "Increases damage taken."
+
+class GuardState(State):
+    def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
+        mod = self.potency(griefer) * 0.25
+        mod = 1 - mod
+        return int(damage*mod)
+    
+guard = GuardState("guard")
+guard.beneficial = True
+guard.tooltip = "Decreases damage taken."
+
+class BlindState(State):
+    def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
+        mod = self.potency(griefer) * 0.25
+        mod = 1 + mod
+        return int(damage*mod)
+    
+    def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
+        mod = 0.25 * self.potency(griefer)
+        mod = 1 - mod
+        return int(damage * mod)
+    
+blind = BlindState("blind")
+blind.beneficial = False
+blind.tooltip = "Increases damage taken and decreases damage dealt."
 
 class DemoralizeState(State):
     def new_turn(self, griefer: "strife.Griefer"):
@@ -206,26 +274,6 @@ class DisarmState(State):
 disarm = DisarmState("disarm")
 disarm.beneficial = False
 disarm.tooltip = "Cannot use ARSENAL skills."
-
-class VulnerableState(State):
-    def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
-        mod = self.potency(griefer) * 0.25
-        mod = 1 + mod
-        return int(damage*mod)
-    
-vulnerable = VulnerableState("vulnerable")
-vulnerable.beneficial = False
-vulnerable.tooltip = "Increases damage taken."
-
-class GuardState(State):
-    def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
-        mod = self.potency(griefer) * 0.25
-        mod = 1 - mod
-        return int(damage*mod)
-    
-guard = GuardState("guard")
-guard.beneficial = True
-guard.tooltip = "Decreases damage taken."
 
 class AiryState(State):
     def parry_roll_modifier(self, griefer: "strife.Griefer") -> float:
