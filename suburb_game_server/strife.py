@@ -315,7 +315,7 @@ class Griefer():
         if self.player is None: self.ai_use_skills()
         self.death_break()
 
-    def take_damage(self, damage: int, coin: Optional[bool] = None):
+    def take_damage(self, damage: int, coin: Optional[bool] = None, source: Optional[str]=None):
         if damage > 0: 
             damage = skills.modify_damage(damage, self)
             for vial in self.vials_list:
@@ -330,9 +330,9 @@ class Griefer():
         #         damage = int(threshold + modified_damage)
         self.change_vial("hp", -damage)
         if coin is None:
-            self.strife.log(f"{self.nickname} takes {damage} damage!")
+            self.strife.log(f"{self.nickname} takes {damage} damage!{ f' ({source})' if source is not None else ''}")
         else:
-            self.strife.log(f"{self.nickname} takes {damage} damage! ({'heads' if coin else 'scratch'})")
+            self.strife.log(f"{self.nickname} takes {damage} damage! ({'heads' if coin else 'scratch'}){ f' ({source})' if source is not None else ''}")
 
     def death_break(self) -> bool:
         if self.get_vial("hp") <= 0:
