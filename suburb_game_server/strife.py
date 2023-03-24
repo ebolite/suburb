@@ -469,7 +469,6 @@ class Griefer():
         if player.wielded_instance is not None:
             griefer.wielded_item_name = player.wielded_instance.item.name
             griefer.onhit_states = player.wielded_instance.item.onhit_states.copy()
-            print(griefer.onhit_states)
         griefer.add_vial("aspect")
         griefer.add_vial(player.secondaryvial)
         griefer.initialize_vials()
