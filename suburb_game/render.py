@@ -162,9 +162,21 @@ class UIElement(pygame.sprite.Sprite):
         if self not in move_to_top:
             move_to_top.append(self)
 
+    def make_always_on_top(self):
+        if self in update_check:
+            update_check.remove(self)
+        if self not in always_on_top_check:
+            always_on_top_check.append(self)
+
     def send_to_bottom(self):
         if self not in move_to_bottom:
             move_to_bottom.append(self)
+
+    def make_always_on_bottom(self):
+        if self in update_check:
+            update_check.remove(self)
+        if self not in always_on_bottom_check:
+            always_on_bottom_check.append(self)
 
     def convert_to_theme(self, surf: Union[pygame.Surface, pygame.surface.Surface], theme: Optional["themes.Theme"]=None) -> pygame.Surface:
         if theme is not None: new_theme = theme
@@ -2254,13 +2266,14 @@ class GrieferElement(UIElement):
             new_state_icon = StateIcon(x, y, self.griefer, state_name)
             new_state_icon.absolute = absolute
             new_state_icon.bind_to(binding)
-            new_state_icon.send_to_bottom()
+            new_state_icon.make_always_on_bottom()
             if not self.griefer.is_state_passive(state_name):
                 duration_label = Text(0.5, 1.5, "")
                 duration_label.text_func = self.get_duration_label_func(state_name)
                 duration_label.color = self.theme.dark
                 duration_label.fontsize = 14
                 duration_label.bind_to(new_state_icon)
+                duration_label.make_always_on_bottom()
             self.state_icons.append(new_state_icon)
         first_element = self.state_icons[0]
         first_element.rect_y_offset = 60
@@ -2360,18 +2373,22 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
 
 def render():
     for ui_element in move_to_top.copy():
-        update_check.remove(ui_element)
-        update_check.append(ui_element)
+        if ui_element in update_check:
+            update_check.remove(ui_element)
+            update_check.append(ui_element)
         move_to_top.remove(ui_element)
         for element in ui_element.bound_elements:
-            update_check.remove(element)
-            update_check.append(element)
+            if element in update_check:
+                update_check.remove(element)
+                update_check.append(element)
     for ui_element in move_to_bottom.copy():
         for element in ui_element.bound_elements:
-            update_check.remove(element)
-            update_check.insert(0, element)
-        update_check.remove(ui_element)
-        update_check.insert(0, ui_element)
+            if element in update_check:
+                update_check.remove(element)
+                update_check.insert(0, element)
+        if ui_element in update_check:
+            update_check.remove(ui_element)
+            update_check.insert(0, ui_element)
         move_to_bottom.remove(ui_element)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

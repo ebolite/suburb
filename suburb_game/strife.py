@@ -254,7 +254,7 @@ class Strife():
             sprite = self.make_griefer_sprite(griefer)
             if griefer.team == "blue": blue_sprites.append(sprite)
             else: red_sprites.append(sprite)
-            sprite.send_to_bottom()
+            sprite.make_always_on_bottom()
         for sprite in red_sprites + blue_sprites:
             if scale > 0.66 and sprite.get_height() > 800: scale = 0.66
             elif scale > 0.75 and sprite.get_height() > 500: scale = 0.75
