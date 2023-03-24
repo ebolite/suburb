@@ -291,6 +291,7 @@ class Griefer():
             self.worn_item_name: Optional[str] = None
             self.onhit_states: dict[str, float] = {}
             self.wear_states: dict[str, float] = {}
+            self.immune_states = []
             # vials still need to be initialized
             for vial_name in vials:
                 vial = vials[vial_name]
@@ -485,12 +486,18 @@ class Griefer():
         griefer.ai_type = npc.ai_type
         griefer.onhit_states.update(npc.onhit_states)
         griefer.wear_states.update(npc.wear_states)
+        griefer.immune_states = npc.immune_states.copy()
         if npc.hostile: griefer.team = "red"
         else: griefer.team = "blue"
         griefer.initialize_vials()
         return griefer
 
     def apply_state(self, state_name: str, applier: "Griefer", potency: float, duration: int):
+        if state_name in self.immune_states:
+            if f"immune{state_name}" not in self.tags:
+                self.strife.log(f"{self.nickname} is immune to {state_name.upper()}!")
+                self.tags.append(f"immune{state_name}")
+            return
         if state_name not in self.states: self.states[state_name] = {
                 "applier_stats": applier.stats_dict,
                 "potency": potency,

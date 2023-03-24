@@ -33,6 +33,7 @@ class Underling():
         self.additional_skills = []
         self.onhit_states = {}
         self.wear_states = {}
+        self.immune_states = []
         self.ai_type: str = "random"
 
     def make_npc(self, grist_name: str, grist_category: str, room: "sessions.Room") -> "Npc":
@@ -108,6 +109,7 @@ lich.base_power = 20
 lich.stat_ratios["savvy"] = 2
 lich.stat_ratios["luck"] = 2
 lich.stat_ratios["spunk"] = 2
+lich.immune_states = ["bleed", "poison", "blind"]
 lich.cluster_size = 1
 lich.difficulty = 3
 lich.additional_skills = ["abhor"]
@@ -194,6 +196,7 @@ class Npc():
             self.additional_skills: list[str] = []
             self.onhit_states = {}
             self.wear_states = {}
+            self.immune_states = []
             self.invulnerable = False
 
     def __setattr__(self, attr, value):
