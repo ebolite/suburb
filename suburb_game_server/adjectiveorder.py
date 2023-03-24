@@ -53,22 +53,16 @@ untyped_adjectives = list(set(untyped_adjectives))
 random.shuffle(untyped_adjectives)
 
 if __name__ == "__main__":
-    for base in util.bases:
-        for adj in util.bases[base]["adjectives"]+util.bases[base]["secretadjectives"]:
-            if adj not in adjective_types:
-                untyped_adjectives.append(adj)
-                adjective_bases[adj] = base
-    random.shuffle(untyped_adjectives)
     for adj in untyped_adjectives.copy():
         print(f"""
         {adj.replace("+", " ")} (as {adjective_bases[adj]})
         0. determiner (your, my, these)
         1. opinion (delicious, funny, lovely)
         2. size, weight (big, small, tiny, heavy, light)
-        3. shape (square, round, triangular)
+        3. shape (square, forked, round, long, thin, triangular)
         4. age (young, new, ancient)
         5. color (you know what a color is dipshit)
-        6. origin or material (American, velvet, African)
+        6. origin,material (American, velvet, African)
         7. purpose (cooking utensils, cleaning supplies)
         8. qualifier (/pickup/ truck, /vampire/ bat, /hound/ dog)
         enter nothing to skip if you're unsure
@@ -78,7 +72,8 @@ if __name__ == "__main__":
         try:
             num = int(num)
             adjective_types[adj] = order[num]
-            untyped_adjectives.remove(adj)
+            while adj in untyped_adjectives:
+                untyped_adjectives.remove(adj)
             util.writejson(adjective_types, "adjective_types")
         except ValueError:
             continue
