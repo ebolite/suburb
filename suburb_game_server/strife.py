@@ -121,12 +121,17 @@ class HopeVial(Vial):
     def new_turn(self, griefer: "Griefer"):
         diff_from_starting = self.difference_from_starting(griefer)
         flat_add = self.difference_from_starting(griefer)//36
+        old_vials = {vial_name:griefer.get_vial_maximum(vial_name) for vial_name in griefer.vials}
         for stat_name in griefer.base_stats:
             griefer.add_bonus(stat_name, flat_add)
         if flat_add > 0:
             griefer.strife.log(f"{griefer.nickname} gained +{flat_add} to all stats from {griefer.their} hope!")
         elif flat_add < 0:
             griefer.strife.log(f"{griefer.nickname} lost {-flat_add} in all stats from {griefer.their} hope!")
+        new_vials = {vial_name:griefer.get_vial_maximum(vial_name) for vial_name in griefer.vials}
+        for vial_name in old_vials:
+            if old_vials[vial_name] != new_vials[vial_name]:
+                griefer.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
         # decay back to starting value
         if diff_from_starting != 0:
             change = diff_from_starting * -0.05
@@ -464,6 +469,7 @@ class Griefer():
         if player.wielded_instance is not None:
             griefer.wielded_item_name = player.wielded_instance.item.name
             griefer.onhit_states = player.wielded_instance.item.onhit_states.copy()
+            print(griefer.onhit_states)
         griefer.add_vial("aspect")
         griefer.add_vial(player.secondaryvial)
         griefer.initialize_vials()
