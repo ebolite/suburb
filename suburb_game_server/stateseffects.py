@@ -51,22 +51,56 @@ class OneTimeState(State):
         griefer.remove_state(self.name)
 
 # one-time states
-class RefreshState(OneTimeState):
+class DamageState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
-        value = self.applier_stats(griefer)["power"]//6 * self.potency(griefer)
+        value = self.applier_stats(griefer)["power"] * self.potency(griefer)
+        value = int(value)
+        griefer.take_damage(value)
+
+damage = DamageState("damage")
+damage.beneficial = False
+damage.tooltip = "Deals damage to the target."
+
+class HealState(OneTimeState):
+    def on_apply(self, griefer: "strife.Griefer"):
+        value = self.applier_stats(griefer)["power"] * 0.5 * self.potency(griefer)
+        value = int(value)
+        griefer.change_vial("hp", value)
+        griefer.strife.log(f"{griefer.nickname} was healed by {value}!")
+
+heal = HealState("heal")
+heal.beneficial = False
+heal.tooltip = "Recovers the target's HP."
+
+class SateState(OneTimeState):
+    def on_apply(self, griefer: "strife.Griefer"):
+        value = self.applier_stats(griefer)["power"]//4 * self.potency(griefer)
         value = int(value)
         griefer.change_vial("vim", value)
+        griefer.change_vial("hp", value)
+        griefer.strife.log(f"{griefer.nickname} was sated by {value}!")
+        return super().on_apply(griefer)
+    
+sate = SateState("sate")
+sate.beneficial = True
+sate.tooltip = "Increases the target's VIM and HEALTH."
+
+class RefreshState(OneTimeState):
+    def on_apply(self, griefer: "strife.Griefer"):
+        value = self.applier_stats(griefer)["power"]//4 * self.potency(griefer)
+        value = int(value)
+        griefer.change_vial("aspect", value)
         griefer.change_vial("hp", value)
         griefer.strife.log(f"{griefer.nickname} was refreshed by {value}!")
         return super().on_apply(griefer)
     
 refresh = RefreshState("refresh")
 refresh.beneficial = True
-refresh.tooltip = "Increases the target's VIM and HEALTH."
+refresh.tooltip = "Increases the target's HEALTH and ASPECT."
 
 class CaffeinateState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
-        value = self.applier_stats(griefer)["power"]//6 * self.potency(griefer)
+        value = self.applier_stats(griefer)["power"]//4 * self.potency(griefer)
         value = int(value)
         griefer.change_vial("vim", value)
         griefer.change_vial("aspect", value)
@@ -204,7 +238,7 @@ airy.tooltip = "Increases AUTO-PARRY chance."
 
 class BleedState(State):
     def new_turn(self, griefer: "strife.Griefer"):
-        damage = self.applier_stats(griefer)["power"]//3 * self.potency(griefer)
+        damage = self.applier_stats(griefer)["power"]//2 * self.potency(griefer)
         griefer.take_damage(damage)
 
 bleed = BleedState("bleed")
@@ -220,6 +254,16 @@ class IgniteState(State):
 ignite = BleedState("ignite")
 ignite.beneficial = False
 ignite.tooltip = "Taking damage at the start of each turn. Potency reduces each turn."
+
+class PoisonState(State):
+    def new_turn(self, griefer: "strife.Griefer"):
+        damage = self.applier_stats(griefer)["power"]//6 * self.potency(griefer)
+        griefer.take_damage(damage)
+        griefer.add_state_potency("poison", griefer.get_state_potency("poison")/5)
+
+poison = BleedState("poison")
+poison.beneficial = False
+poison.tooltip = "Taking damage at the start of each turn. Potency increases each turn."
 
 class FocusState(State):
     def coinflip_modifier(self, griefer: "strife.Griefer") -> float:
