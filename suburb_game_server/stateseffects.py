@@ -261,7 +261,7 @@ class PoisonState(State):
         griefer.take_damage(damage)
         griefer.add_state_potency("poison", griefer.get_state_potency("poison")/5)
 
-poison = BleedState("poison")
+poison = PoisonState("poison")
 poison.beneficial = False
 poison.tooltip = "Taking damage at the start of each turn. Potency increases each turn."
 
