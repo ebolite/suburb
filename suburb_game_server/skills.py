@@ -218,7 +218,7 @@ class Skill():
             else:
                 roll = random.uniform(0, 1+-edge)
             if roll < config.base_parry_chance:
-                target.strife.log(f"{target.name} AUTO-PARRIES!")
+                target.strife.log(f"{target.nickname} AUTO-PARRIES!")
                 for vial in target.vials_list:
                     vial.on_parry(target, damage)
                 return
