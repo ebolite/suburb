@@ -289,6 +289,8 @@ class Griefer():
             self.tags = []
             self.wielded_item_name: Optional[str] = None
             self.worn_item_name: Optional[str] = None
+            self.onhit_states: dict[str, float] = {}
+            self.worn_states: dict[str, float] = {}
             # vials still need to be initialized
             for vial_name in vials:
                 vial = vials[vial_name]
@@ -458,6 +460,7 @@ class Griefer():
         griefer.pronouns = player.pronouns.copy()
         if player.wielded_instance is not None:
             griefer.wielded_item_name = player.wielded_instance.item.name
+            griefer.onhit_states = player.wielded_instance.item.onhit_states.copy()
         griefer.add_vial("aspect")
         griefer.add_vial(player.secondaryvial)
         griefer.initialize_vials()
