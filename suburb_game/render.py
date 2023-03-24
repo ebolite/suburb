@@ -51,7 +51,7 @@ ui_elements = []
 
 tile_wh = 32
 
-checks = [click_check, key_check, mouseup_check, update_check, always_on_top_check, keypress_update_check, scroll_check]
+checks = [click_check, key_check, mouseup_check, update_check, always_on_top_check, always_on_bottom_check, keypress_update_check, scroll_check]
 
 icon_surf = pygame.image.load("sprites\\icon.png").convert()
 pygame.display.set_icon(icon_surf)
