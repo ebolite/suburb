@@ -310,6 +310,8 @@ class Griefer():
             self.add_state_duration(state.name, -1)
             if self.get_state_duration(state.name) <= 0:
                 self.remove_state(state.name)
+        for state_name in self.wear_states:
+            self.apply_state(state_name, self, self.wear_states[state_name], 1)
         for skill_name in self.skill_cooldowns.copy():
             self.skill_cooldowns[skill_name] -= 1
             if self.skill_cooldowns[skill_name] <= 0:
