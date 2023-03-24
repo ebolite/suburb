@@ -318,6 +318,7 @@ class Strife():
             if self.player_griefer.available_actions < skill.action_cost: return
             if skill_name != self.selected_skill_name: self.selected_targets = []
             self.selected_skill_name = skill_name
+            self.hovered_skill_name = skill_name
             if self.selected_skill is not None and len(self.selected_skill.valid_targets) == 1:
                 self.selected_targets.append(self.selected_skill.valid_targets[0])
                 self.submit_skill()
