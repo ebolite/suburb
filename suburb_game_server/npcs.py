@@ -31,6 +31,8 @@ class Underling():
         self.difficulty = 1
         self.variance = 0
         self.additional_skills = []
+        self.onhit_states = {}
+        self.wear_states = {}
         self.ai_type: str = "random"
 
     def make_npc(self, grist_name: str, grist_category: str, room: "sessions.Room") -> "Npc":
@@ -49,6 +51,8 @@ class Underling():
         npc.ai_type = self.ai_type
         npc.additional_skills = self.additional_skills
         npc.hostile = True
+        npc.onhit_states = self.onhit_states
+        npc.wear_states = self.wear_states
         room.add_npc(npc)
         return npc
 
@@ -179,6 +183,8 @@ class Npc():
             }
             self.actions = 1
             self.additional_skills: list[str] = []
+            self.onhit_states = {}
+            self.wear_states = {}
             self.invulnerable = False
 
     def __setattr__(self, attr, value):

@@ -290,7 +290,7 @@ class Griefer():
             self.wielded_item_name: Optional[str] = None
             self.worn_item_name: Optional[str] = None
             self.onhit_states: dict[str, float] = {}
-            self.worn_states: dict[str, float] = {}
+            self.wear_states: dict[str, float] = {}
             # vials still need to be initialized
             for vial_name in vials:
                 vial = vials[vial_name]
@@ -481,6 +481,8 @@ class Griefer():
         griefer.actions = npc.actions
         griefer.npc_name = npc.name
         griefer.ai_type = npc.ai_type
+        griefer.onhit_states.update(npc.onhit_states)
+        griefer.wear_states.update(npc.wear_states)
         if npc.hostile: griefer.team = "red"
         else: griefer.team = "blue"
         griefer.initialize_vials()
