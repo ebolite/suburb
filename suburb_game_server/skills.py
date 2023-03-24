@@ -1139,7 +1139,7 @@ anarchize.use_message = "{user} anarchizes!"
 anarchize.damage_formula = AGGRESS_FORMULA
 
 # shared skills
-antagonize = Skill("antagonize")
+antagonize = AbstratusSkill("antagonize")
 antagonize.description = "Applies DEMORALIZE with potency 1.5 to the target for 4 turns and increases your VIM and ASPECT."
 antagonize.use_message = "{user} antagonizes!"
 antagonize.parryable = False
@@ -1244,7 +1244,7 @@ auspicate.cooldown = 1
 
 # unique skills
 # aerosolkind
-aflame = Skill("aflame")
+aflame = AbstratusSkill("aflame")
 aflame.description = "Deals damage similar to ASSAIL and applies IGNITE for 3 turns with potency 1 to the target and all their friends."
 aflame.use_message = "{user} flames it up!"
 aflame.damage_formula = ASSAIL_FORMULA
@@ -1255,7 +1255,7 @@ aflame.add_apply_state("ignite", 3, "1.0")
 aflame.add_vial_cost("vim", "user.power//1.5")
 
 # ballkind
-athleticize = Skill("athleticize")
+athleticize = AbstratusSkill("athleticize")
 athleticize.description = "User increases their SPUNK and gains some VIM at the cost of their health vial."
 athleticize.target_self = True
 athleticize.beneficial = True
@@ -1267,14 +1267,14 @@ athleticize.add_vial_cost("vim", "-user.power//2")
 athleticize.add_stat_bonus("spunk", "user.power//18")
 
 # bladekind
-againstand = Skill("againstand")
+againstand = AbstratusSkill("againstand")
 againstand.description = "Deals more damage the larger the difference is between the user and the target's power."
 againstand.use_message = "{user} stands against!"
 againstand.add_vial_cost("vim", "user.power//2")
 againstand.damage_formula = AGGRIEVE_FORMULA + " * (target.power / user.power) * 1.5"
 
 # bottlekind
-userabdicate = Skill("userabdicate")
+userabdicate = AbstratusSkill("userabdicate")
 userabdicate.need_damage_to_apply_states = False
 userabdicate.add_apply_state("disarm", 3, "1.0")
 userabdicate.parryable = False
