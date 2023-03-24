@@ -68,7 +68,7 @@ class HealState(OneTimeState):
         value = self.applier_stats(griefer)["power"] * 0.5 * self.potency(griefer)
         value = int(value)
         griefer.change_vial("hp", value)
-        griefer.strife.log(f"{griefer.nickname} was healed by {value}!")
+        griefer.strife.log(f"{griefer.nickname} was HEALED by {value}!")
         return super().on_apply(griefer)
 
 heal = HealState("heal")
@@ -81,7 +81,7 @@ class SateState(OneTimeState):
         value = int(value)
         griefer.change_vial("vim", value)
         griefer.change_vial("hp", value)
-        griefer.strife.log(f"{griefer.nickname} was sated by {value}!")
+        griefer.strife.log(f"{griefer.nickname} was SATED by {value}!")
         return super().on_apply(griefer)
     
 sate = SateState("sate")
@@ -94,7 +94,7 @@ class RefreshState(OneTimeState):
         value = int(value)
         griefer.change_vial("aspect", value)
         griefer.change_vial("hp", value)
-        griefer.strife.log(f"{griefer.nickname} was refreshed by {value}!")
+        griefer.strife.log(f"{griefer.nickname} was REFRESHED by {value}!")
         return super().on_apply(griefer)
     
 refresh = RefreshState("refresh")
@@ -107,6 +107,7 @@ class CaffeinateState(OneTimeState):
         value = int(value)
         griefer.change_vial("vim", value)
         griefer.change_vial("aspect", value)
+        griefer.strife.log(f"{griefer.nickname} was CAFFEINATED by {value}!")
         return super().on_apply(griefer)
     
 caffeinate = CaffeinateState("caffeinate")
@@ -119,7 +120,7 @@ class DouseState(OneTimeState):
         if len(bad_states) == 0: return
         cured_state = random.choice(bad_states)
         griefer.remove_state(cured_state.name)
-        griefer.strife.log(f"{griefer.nickname} was cured of {cured_state.name.upper()}!")
+        griefer.strife.log(f"{griefer.nickname} was DOUSED of {cured_state.name.upper()}!")
         super().on_apply(griefer)
 
 douse = DouseState("douse")
@@ -135,7 +136,7 @@ class LeechState(OneTimeState):
             if griefer.player is not None:
                 griefer.player.add_grist("build", amount_to_leech)
                 griefer.player.add_grist(second_grist, amount_to_leech)
-        griefer.strife.log(f"{amount_to_leech} build and {second_grist} grist was leeched!")
+        griefer.strife.log(f"{amount_to_leech} build and {second_grist} grist was LEECHED!")
         return super().on_apply(griefer)
     
 leech = LeechState("leech")
@@ -145,16 +146,30 @@ leech.tooltip = "Gives grist to all griefers in the strife when applied."
 class StunState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
         if "stunned" not in griefer.tags:
-            value = -1 * self.applier_stats(griefer)["power"] * self.potency(griefer)
+            value = -2 * self.applier_stats(griefer)["power"] * self.potency(griefer)
             value = int(value)
             griefer.change_vial("vim", value)
-            griefer.strife.log(f"{griefer.nickname} was stunned for {value} VIM!")
+            griefer.strife.log(f"{griefer.nickname} was STUNNED for {value} VIM!")
             griefer.tags.append("stunned")
         return super().on_apply(griefer)
     
 stun = StunState("stun")
 stun.beneficial = False
 stun.tooltip = "Significantly reduces VIM. Can only be applied once per target per strife."
+
+class FreezeState(OneTimeState):
+    def on_apply(self, griefer: "strife.Griefer"):
+        if "frozen" not in griefer.tags:
+            value = -4 * self.applier_stats(griefer)["power"] * self.potency(griefer)
+            value = int(value)
+            griefer.strife.log(f"{griefer.nickname} FREEZES!")
+            griefer.take_damage(value)
+            griefer.tags.append("frozen")
+        return super().on_apply(griefer)
+
+freeze = FreezeState("freeze")
+freeze.beneficial = False
+freeze.tooltip = "Deals significant damage. Can only be applied once per target per strife."
 
 # basic states
 class AbjureState(State):
