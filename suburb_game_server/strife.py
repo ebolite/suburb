@@ -9,6 +9,7 @@ import npcs
 import skills
 import config
 import stateseffects
+import alchemy
 
 vials: dict[str, "Vial"] = {}
 
@@ -286,6 +287,8 @@ class Griefer():
             self.vials: dict[str, dict] = {}
             self.states: dict[str, dict] = {}
             self.tags = []
+            self.wielded_item_name: Optional[str] = None
+            self.worn_item_name: Optional[str] = None
             # vials still need to be initialized
             for vial_name in vials:
                 vial = vials[vial_name]
@@ -572,6 +575,16 @@ class Griefer():
             self.player.add_permanent_bonus(game_attr, amount)
         self.add_bonus(game_attr, amount)
     
+    @property
+    def wielded_item(self) -> Optional["alchemy.Item"]:
+        if self.wielded_item_name is None: return None
+        else: return alchemy.Item(self.wielded_item_name)
+
+    @property
+    def worn_item(self) -> Optional["alchemy.Item"]:
+        if self.worn_item_name is None: return None
+        else: return alchemy.Item(self.worn_item_name)
+
     @property
     def team_members(self) -> list["Griefer"]:
         return [griefer for griefer in self.strife.griefer_list if griefer.team == self.team]

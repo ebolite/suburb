@@ -235,6 +235,11 @@ class Skill():
                 potency_change_formula = self.format_formula(potency_change_formula, user, target)
                 potency_change = float(eval(potency_change_formula))
                 target.add_state_potency(state_name, potency_change)
+        # apply on-hits from weapon
+        if damage > 0 and user.wielded_item is not None:
+            for state_name, potency in user.wielded_item.onhit_states.items():
+                # duration is 2 for on-hits
+                target.apply_state(state_name, user, potency, 2)
         # vial change step
         for vial_name in self.vial_change_formulas:
             vial_formula = self.vial_change_formulas[vial_name]
