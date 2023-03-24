@@ -409,6 +409,8 @@ abhor.add_vial_change("aspect", "-user.power//2")
 awreak = Skill("awreak")
 awreak.description = "Does a lot of damage."
 awreak.use_message = "{user} awreaks!"
+awreak.need_damage_to_apply_states = True
+awreak.add_apply_state("stun", 1, "1.5")
 awreak.add_vial_cost("vim", "user.power")
 awreak.damage_formula = "user.base_damage * (3 + 1.5*coin)"
 

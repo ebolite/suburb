@@ -85,6 +85,9 @@ ogre.stat_ratios["vigor"] = 3
 ogre.stat_ratios["mettle"] = 2
 ogre.stat_ratios["spunk"] = 2
 ogre.stat_ratios["savvy"] = 0
+ogre.wear_states = {
+    "triggered": 1.0
+}
 ogre.cluster_size = 2
 ogre.difficulty = 1
 ogre.ai_type = "ogre"
@@ -122,6 +125,9 @@ basilisk.base_power = 26
 basilisk.stat_ratios["savvy"] = 3
 basilisk.stat_ratios["spunk"] = 2
 basilisk.stat_ratios["vigor"] = 2
+basilisk.onhit_states = {
+    "poison": 0.5
+}
 basilisk.cluster_size = 2
 basilisk.actions = 2
 basilisk.difficulty = 4
@@ -148,6 +154,9 @@ acheron.base_power = 111
 acheron.stat_ratios["tact"] = 4
 acheron.stat_ratios["spunk"] = 2
 acheron.stat_ratios["mettle"] = 2
+acheron.onhit_states = {
+    "demoralize": 1.2
+}
 acheron.cluster_size = 1
 acheron.difficulty = 7
 acheron.actions = 2
