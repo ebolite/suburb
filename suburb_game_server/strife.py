@@ -457,6 +457,8 @@ class Griefer():
         griefer.stat_bonuses = player.permanent_stat_bonuses.copy()
         griefer.known_skills = player.get_known_skills()
         griefer.pronouns = player.pronouns.copy()
+        if player.wielded_instance is not None:
+            griefer.wielded_item_name = player.wielded_instance.item.name
         griefer.add_vial("aspect")
         griefer.add_vial(player.secondaryvial)
         griefer.initialize_vials()
