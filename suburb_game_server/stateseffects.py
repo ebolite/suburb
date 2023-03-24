@@ -313,7 +313,7 @@ class IgniteState(State):
         griefer.take_damage(damage, source="IGNITE")
         griefer.add_state_potency("ignite", -griefer.get_state_potency("ignite")/5)
 
-ignite = BleedState("ignite")
+ignite = IgniteState("ignite")
 ignite.beneficial = False
 ignite.tooltip = "Taking damage at the start of each turn. Potency reduces each turn."
 
