@@ -4,13 +4,14 @@ import random
 # adjective order:
 order = {
     0: "determiner", # your, my, these
-    1: "size", # big, small
-    2: "opinion", # delicious, funny, lovely
-    3: "age", # old, newest
-    4: "shape", # round, square, geometric
+    1: "opinion", # delicious, funny, lovely
+    2: "size", # big, small
+    3: "shape", # round, square, geometric
+    4: "age", # old, newest
     5: "color", # blue, green, silver
     6: "origin or material", # american, velvet, african, denim
-    7: "qualifier", # *vampire* bat, *pickup* truck, *hound* dog
+    7: "purpose", # cooking, cleaning
+    8: "qualifier", # *vampire* bat, *pickup* truck, *hound* dog
 }
 reversed_order_dic = {value : key for (key, value) in order.items()}
 
@@ -63,11 +64,12 @@ if __name__ == "__main__":
         0. determiner (your, my, these)
         1. opinion (delicious, funny, lovely)
         2. size (big, small, tiny)
-        3. age (old, young, new, classical)
-        4. shape (square, round, triangular)
+        3. shape (square, round, triangular)
+        4. age (young, new, ancient)
         5. color (you know what a color is dipshit)
         6. origin or material (American, velvet, African)
-        7. qualifier (/pickup/ truck, /vampire/ bat, /hound/ dog)
+        7. purpose (cooking utensils, cleaning supplies)
+        8. qualifier (/pickup/ truck, /vampire/ bat, /hound/ dog)
         enter nothing to skip if you're unsure
         ({len(adjective_types)} done, {len(untyped_adjectives)} remaining)
         """)
