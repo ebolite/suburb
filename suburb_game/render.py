@@ -699,13 +699,16 @@ class InputTextBox(UIElement):
         return pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), int(self.fontsize))
 
 class Image(UIElement):
-    def __init__(self, x, y, path, theme=suburb.current_theme(), convert=True):
+    def __init__(self, x, y, path, theme:Optional["themes.Theme"]=None, convert=True):
         super(Image, self).__init__()
         self.x = x
         self.y = y
         self.path = path
         self.path_func: Optional[Callable] = None
-        self.theme = theme
+        if theme is not None:
+            self.theme = theme
+        else:
+            self.theme = suburb.current_theme()
         self.convert = convert
         self.absolute = False
         self.animated = False
@@ -2097,15 +2100,27 @@ class Symbol(Image):
 
 class StateIcon(Image):
     tooltip_padding = 5
-    def __init__(self, x, y, griefer: "Griefer", state_name: str):
+    def __init__(self, x, y, griefer: "Griefer", state_name: str, theme: Optional["themes.Theme"]=None):
         path = f"sprites/strife/states/{state_name}.png"
         if not os.path.isfile(path):
             path = "sprites/strife/states/unknown_state.png"
-        super().__init__(x, y, path)
+        super().__init__(x, y, path, theme=theme)
         self.griefer = griefer
         self.state_name = state_name
         self.popup: Optional[SolidColor] = None
     
+    @property
+    def tooltip(self) -> str:
+        return self.griefer.get_state_tooltip(self.state_name)
+
+    @property
+    def potency(self) -> float:
+        return self.griefer.get_state_potency(self.state_name)
+    
+    @property
+    def passive(self) -> bool:
+        return self.griefer.is_state_passive(self.state_name)
+
     def update(self):
         super().update()
         if not self.is_mouseover() and self.popup is not None: 
@@ -2113,11 +2128,11 @@ class StateIcon(Image):
             self.popup = None
         if self.is_mouseover() and self.popup is None:
             x, y = pygame.mouse.get_pos()
-            tooltip = self.griefer.get_state_tooltip(self.state_name)
-            if self.griefer.is_state_passive:
+            tooltip = self.tooltip
+            if self.passive:
                 popup_text_content = f"{self.state_name.upper()} (P): {tooltip}"
             else:
-                popup_text_content = f"{self.state_name.upper()} ({self.griefer.get_state_potency(self.state_name):.1f}): {tooltip}"
+                popup_text_content = f"{self.state_name.upper()} ({self.potency:.1f}): {tooltip}"
             popup_text = Text(0.5, 0.5, popup_text_content)
             popup_text.fontsize = 14
             popup_text.color = self.theme.dark
@@ -2127,6 +2142,28 @@ class StateIcon(Image):
             self.popup.rect_x_offset = 10
             popup_text.bring_to_top()
             popup_text.bind_to(self.popup)
+
+class NoGrieferStateIcon(StateIcon):
+    def __init__(self, x, y, state_name: str, state_dict: dict, theme: Optional["themes.Theme"]=None):
+        path = f"sprites/strife/states/{state_name}.png"
+        if not os.path.isfile(path):
+            path = "sprites/strife/states/unknown_state.png"
+        super(StateIcon, self).__init__(x, y, path, theme=theme)
+        self.state_dict = state_dict
+        self.state_name = state_name
+        self.popup: Optional[SolidColor] = None
+    
+    @property
+    def tooltip(self) -> str:
+        return self.state_dict["tooltip"]
+    
+    @property
+    def potency(self) -> float:
+        return self.state_dict["potency"]
+    
+    @property
+    def passive(self) -> bool:
+        return self.state_dict["passive"]
 
 class GrieferElement(UIElement):
     griefer: Griefer

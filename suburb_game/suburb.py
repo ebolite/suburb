@@ -1014,13 +1014,13 @@ def overmap():
     
 
 @scene
-def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False, strife=False):
-    render.LogWindow(display_item)
+def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False, strife=False): 
     if strife:
         card_path = "sprites/itemdisplay/strife_captchalogue_card.png"
         card_flipped_path = "sprites/itemdisplay/strife_captchalogue_card_flipped.png"
         text_color = themes.strife.light
         text_outline_color = None
+        theme = themes.strife
         def flip():
             if not instance.item.forbiddencode:
                 display_item(instance, last_scene, modus=modus, flipped=not flipped, strife=strife)
@@ -1029,6 +1029,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         card_flipped_path = "sprites\\itemdisplay\\captchalogue_card_flipped.png"
         text_color = current_theme().dark
         text_outline_color = None
+        theme = current_theme()
         def flip():
             pass
     else:
@@ -1036,9 +1037,14 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         card_flipped_path = modus.back_path
         text_color = modus.theme.light
         text_outline_color = modus.theme.black
+        theme = modus.theme
         def flip():
             if not instance.item.forbiddencode:
                 display_item(instance, last_scene, modus=modus, flipped=not flipped, strife=strife)
+    background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.light)
+    log_window = render.LogWindow(display_item)
+    log_window.text_color = theme.light
+    log_window.update_logs()
     if not flipped:
         captcha_image = render.Button(0.5, 0.4, card_path, card_path, flip)
         image = render.make_item_image(0.5, 0.5, instance)
@@ -1073,13 +1079,70 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         captcha_code.bind_to(captcha_image)
         captcha_code.absolute = True
     power = instance.item.power
-    power_bar = render.Image(0.5, 1.28, "sprites\\itemdisplay\\power_bar.png")
+    power_bar = render.Image(0.5, 1.28, "sprites\\itemdisplay\\power_bar.png", theme=theme)
     power_bar.bind_to(captcha_image)
     power_label = render.Text(0.512, 0.51, str(power))
     power_label.bind_to(power_bar)
-    power_label.color = current_theme().dark
+    power_label.color = theme.dark
     power_label.fontsize = 54
     power_label.set_fontsize_by_width(330)
+
+    # states
+
+    STATE_PADDING = 3
+    onhit_label = render.Text(0.2, 0.15, "On-hit States")
+    onhit_label.color = theme.dark
+    onhit_icons = []
+    for state_name, state_dict in instance.item.onhit_states.items():
+        if len(onhit_icons) == 0:
+            x, y = 0.5, 1.2
+            offsetx = (16+STATE_PADDING) * (len(instance.item.onhit_states) - 1)
+            offsetx = offsetx//2 * -1
+        else:
+            x, y = 1, 0.5
+            offsetx = STATE_PADDING + 8
+        icon = render.NoGrieferStateIcon(x, y, state_name, state_dict, theme=theme)
+        icon.rect_x_offset = offsetx
+        if len(onhit_icons) == 0: icon.bind_to(onhit_label)
+        else: icon.bind_to(onhit_icons[-1])
+        onhit_icons.append(icon)
+
+    wear_label = render.Text(0.2, 0.25, "Wear States")
+    wear_label.color = theme.dark
+    wear_icons = []
+    for state_name, state_dict in instance.item.wear_states.items():
+        if len(wear_icons) == 0:
+            x, y = 0.5, 1.2
+            offsetx = (16+STATE_PADDING) * (len(instance.item.wear_states) - 1)
+            offsetx = offsetx//2 * -1
+        else:
+            x, y = 1, 0.5
+            offsetx = STATE_PADDING + 8
+        icon = render.NoGrieferStateIcon(x, y, state_name, state_dict, theme=theme)
+        icon.rect_x_offset = offsetx
+        if len(wear_icons) == 0: icon.bind_to(wear_label)
+        else: icon.bind_to(wear_icons[-1])
+        wear_icons.append(icon)
+
+    consume_label = render.Text(0.2, 0.35, "Consume States")
+    consume_label.color = theme.dark
+    consume_icons = []
+    for state_name, state_dict in instance.item.consume_states.items():
+        if len(consume_icons) == 0:
+            x, y = 0.5, 1.2
+            offsetx = (16+STATE_PADDING) * (len(instance.item.consume_states) - 1)
+            offsetx = offsetx//2 * -1
+        else:
+            x, y = 1, 0.5
+            offsetx = STATE_PADDING + 8
+        icon = render.NoGrieferStateIcon(x, y, state_name, state_dict, theme=theme)
+        icon.rect_x_offset = offsetx
+        if len(consume_icons) == 0: icon.bind_to(consume_label)
+        else: icon.bind_to(consume_icons[-1])
+        consume_icons.append(icon)
+
+    # kinds
+
     num_kinds = len(instance.item.kinds)
     def get_kind_button_func(kind_name):
         def kind_button_func():
@@ -1120,7 +1183,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         def eject_button_func():
             client.requestplus(intent="eject_from_strife_deck", content={"instance_name": instance.name})
             last_scene()
-        eject_button = render.TextButton(0.5, 1.2, 300, 33, "eject from strife deck", eject_button_func)
+        eject_button = render.TextButton(0.5, 1.2, 300, 33, "eject from strife deck", eject_button_func, theme=theme)
         eject_button.bind_to(power_bar)
     elif modus is not None:
         syl = Sylladex.current_sylladex()
@@ -1128,9 +1191,9 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             syl.uncaptchalogue(instance.name)
             last_scene()
         if modus.can_uncaptchalogue:
-            uncaptchalogue_button = render.TextButton(0.5, 1.2, 200, 33, "uncaptchalogue", uncaptcha_button_func)
+            uncaptchalogue_button = render.TextButton(0.5, 1.2, 200, 33, "uncaptchalogue", uncaptcha_button_func, theme=theme)
             uncaptchalogue_button.bind_to(power_bar)
-    backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
+    backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene, theme=theme)
 
 @scene
 def assign_strife_specibus(kind_name: str, assigning_instance_name:str, last_scene: Callable = map_scene):

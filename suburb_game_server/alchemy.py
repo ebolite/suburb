@@ -343,11 +343,44 @@ class Item(): # Items are the base of instants.
 
     def __getattr__(self, attr):
         return util.items[self.__dict__["name"]][attr]
-    
+
     def get_dict(self):
         out = deepcopy(util.items[self.__dict__["name"]])
         out["name"] = self.__dict__["name"]
         out["display_name"] = self.displayname
+        onhit_states = {}
+        wear_states = {}
+        consume_states = {}
+        for state_name, potency in self.onhit_states.items():
+            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); return
+            state = stateseffects.states[state_name]
+            onhit_states[state_name] = {
+                "potency": potency,
+                "duration": 2,
+                "tooltip": state.tooltip,
+                "passive": state.passive,
+            }
+        for state_name, potency in self.wear_states.items():
+            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); return
+            state = stateseffects.states[state_name]
+            wear_states[state_name] = {
+                "potency": potency,
+                "duration": 1,
+                "tooltip": state.tooltip,
+                "passive": state.passive,
+            }
+        for state_name, potency in self.consume_states.items():
+            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); return
+            state = stateseffects.states[state_name]
+            consume_states[state_name] = {
+                "potency": potency,
+                "duration": 3,
+                "tooltip": state.tooltip,
+                "passive": state.passive,
+            }
+        out["onhit_states"] = onhit_states
+        out["wear_states"] = wear_states
+        out["consume_states"] = consume_states
         return out
 
 class Instance():
