@@ -1015,6 +1015,8 @@ def overmap():
 
 @scene
 def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] = None, flipped=False, strife=False): 
+    player_data = client.requestdic(intent="player_info")
+
     if strife:
         card_path = "sprites/itemdisplay/strife_captchalogue_card.png"
         card_flipped_path = "sprites/itemdisplay/strife_captchalogue_card_flipped.png"
@@ -1141,6 +1143,24 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         else: icon.bind_to(consume_icons[-1])
         consume_icons.append(icon)
 
+    # wearable
+    if instance.item.wearable and instance.name != player_data["worn_instance_name"]:
+        def wear_button_func():
+            reply = client.requestplus(intent="wear", content={"instance_name": instance.name})
+            if reply:
+                if modus is not None:
+                    Sylladex.current_sylladex().remove_instance(instance.name)
+                strife_portfolio_scene()
+        wear_button = render.TextButton(0.26, 0.9, 196, 48, ">DON", wear_button_func, theme=theme)
+        wear_button.text_color = theme.dark
+    elif instance.item.wearable and instance.name == player_data["worn_instance_name"]:
+        def wear_button_func():
+            reply = client.request(intent="unwear")
+            if reply:
+                last_scene()
+        wear_button = render.TextButton(0.26, 0.9, 196, 48, "(DONNED) >DOFF", wear_button_func, theme=theme)
+        wear_button.text_color = theme.dark
+
     # kinds
 
     num_kinds = len(instance.item.kinds)
@@ -1225,6 +1245,9 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
     strife_portfolio = player_dict["strife_portfolio"]
     wielding = player_dict["wielding"]
     wielded_instance: Optional[Instance] = None
+    donned = player_dict["worn_instance_name"]
+    if donned is not None: donned_instance = Instance(donned, player_dict["worn_instance_dict"])
+    else: donned_instance = None
     for kind in strife_portfolio:
         for instance_name in strife_portfolio[kind]:
             print(instance_name)
@@ -1347,6 +1370,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                 confirm_button.outline_color = theme.black
                 confirm_button.fill_color = theme.light
                 confirm_button.bind_to(box)
+
         # wielded display
         wielded_display = render.Image(1.3, 0.2, "sprites/itemdisplay/strife_equip_display.png")
         wielded_display.bind_to(abstratus_display)
@@ -1362,11 +1386,43 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                     card_image.bind_to(wielded_display)
                     card_image.scale = 0.5
             item_label = render.Text(0.6, 1.1, f"{wielded_instance.display_name(True)}")
+            def view_wielded_item():
+                display_item(wielded_instance, last_scene=strife_portfolio_scene, strife=True)
+            view_item_button = render.TextButton(0.5, 0.5, 102, 102, "", view_wielded_item)
+            view_item_button.draw_sprite = False
+            view_item_button.bind_to(wielded_display)
         else:
             item_label = render.Text(0.6, 1.1, f"nothing")
         item_label.fontsize = 20
         item_label.color = theme.light
         item_label.bind_to(wielded_display)
+
+        # donned display
+        donned_display = render.Image(1.7, 0.2, "sprites/itemdisplay/strife_equip_display.png")
+        donned_display.bind_to(abstratus_display)
+        equipped_label = render.Text(0.5, 0, "donned")
+        equipped_label.fontsize = 20
+        equipped_label.color = theme.black
+        equipped_label.bind_to(donned_display)
+        if donned_instance is not None:
+            image_path = f"sprites/items/{donned_instance.item.name}.png"
+            if os.path.isfile(image_path):
+                card_image = render.make_item_image(0.49, 0.5, donned_instance)
+                if card_image is not None:
+                    card_image.bind_to(donned_display)
+                    card_image.scale = 0.5
+            item_label = render.Text(0.6, 1.1, f"{donned_instance.display_name(True)}")
+            def view_donned_item():
+                display_item(donned_instance, last_scene=strife_portfolio_scene, strife=True)
+            view_item_button = render.TextButton(0.5, 0.5, 102, 102, "", view_donned_item)
+            view_item_button.draw_sprite = False
+            view_item_button.bind_to(donned_display)
+        else:
+            item_label = render.Text(0.6, 1.1, f"nothing")
+        item_label.fontsize = 20
+        item_label.color = theme.light
+        item_label.bind_to(donned_display)
+
         # bottom bar
         instances_length = len(strife_portfolio[selected_kind])
         def get_button_func(instance: Instance) -> Callable:

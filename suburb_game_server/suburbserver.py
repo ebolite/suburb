@@ -209,6 +209,11 @@ def handle_request(dict):
         case "wield":
             instance_name = content["instance_name"]
             return player.wield(instance_name)
+        case "wear":
+            instance_name = content["instance_name"]
+            return player.wear(instance_name)
+        case "unwear":
+            return player.unwear()
         case "set_stat_ratios":
             ratios = content["ratios"]
             for stat in player.stat_ratios:

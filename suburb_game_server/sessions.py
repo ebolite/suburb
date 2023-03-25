@@ -721,6 +721,7 @@ class Player():
             self.grist_gutter: list[list] = []
             self.leeching: list[str] = []
             self.wielding: Optional[str] = None
+            self.worn_instance_name: Optional[str] = None
             self.symbol_dict = {}
             self.stat_ratios = {
                 "spunk": 1,
@@ -770,6 +771,10 @@ class Player():
         out["power"] = self.power
         out["entered"] = self.entered
         out["atheneum"] = {instance.name:instance.item.get_dict() for instance in [alchemy.Instance(instance_name) for instance_name in self.atheneum]}
+        if self.worn_instance_name is not None:
+            out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()
+        else:
+            out["worn_instance_dict"] = None
         return out
     
     def add_unclaimed_grist(self, spoils_dict: dict):
@@ -841,6 +846,33 @@ class Player():
         instance = alchemy.Instance(self.wielding)
         self.wielding = None
         return True
+    
+    def wear(self, instance_name: str) -> bool:
+        instance = alchemy.Instance(instance_name)
+        if instance.item.size > config.max_worn_size: return False
+        if instance_name in self.room.instances:
+            self.room.remove_instance(instance_name)
+            self.worn_instance_name = instance_name
+            return True
+        elif instance_name in self.sylladex:
+            self.sylladex.remove(instance_name)
+            self.worn_instance_name = instance_name
+            return True
+        else:
+            for kind_name, deck in self.strife_portfolio.items():
+                if instance_name in deck:
+                    self.eject_from_strife_deck(instance_name)
+                    self.worn_instance_name = instance_name
+                    return True
+            else:
+                return False
+            
+    def unwear(self):
+        if self.worn_instance_name is None: return False
+        else:
+            self.room.add_instance(self.worn_instance_name)
+            self.worn_instance_name = None
+            return True
 
     @property
     def wielded_instance(self) -> Optional[alchemy.Instance]:

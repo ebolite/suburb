@@ -1,6 +1,7 @@
 import util
 
 max_wielded_size = 20
+max_worn_size = 40
 
 overmap_width = 96
 terrain_decay = 0.01
