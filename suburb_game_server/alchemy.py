@@ -235,7 +235,7 @@ class InheritedStatistics():
 
     def dictionary_inherit(self, component_1_dict: dict, component_2_dict: dict) -> dict: # returns new dict
         new_dict = component_1_dict.copy()
-        for state_name, potency in component_2_dict:
+        for state_name, potency in component_2_dict.items():
             if state_name in new_dict and potency > new_dict[state_name]:
                 new_dict[state_name] = potency
             elif state_name not in new_dict:

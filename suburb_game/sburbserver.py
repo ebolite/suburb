@@ -550,6 +550,7 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
         text_box = render.Text(0.5, 0.5, "You must deploy an alchemiter before doing alchemy!")
         text_box.set_fontsize_by_width(info_window.w)
         text_box.color = info_window.theme.dark
+        text_box.bind_to(info_window, True)
         return
     box_w, box_h = 100, 100
     if target_item is None:
