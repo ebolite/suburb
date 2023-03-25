@@ -194,7 +194,6 @@ class InheritedStatistics():
             self.power: int = total_power + average_power
         elif self.operation == "||":
             self.power: int = total_power + power_difference
-        
         if self.entropy >= 0: power_mult = 1 + self.entropy
         else: power_mult = 1/-(self.entropy+1)
         self.power = int(self.power*power_mult)
