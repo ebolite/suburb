@@ -987,12 +987,14 @@ class Player():
         return True
 
     def get_seed_rate(self, grist_name: str, amount: int) -> int:
+        rate = 0
+        tier = config.grists[grist_name]["tier"]
+        tier = max(tier, 1)
         if "exotic" not in config.grists[grist_name]:
-            tier = config.grists[grist_name]["tier"]
-            tier = max(tier, 1)
-            rate = self.echeladder_rung//tier
-        else: rate = 0
-        rate += int(amount//100)
+            rate += self.echeladder_rung//2//tier
+        if grist_name in config.gristcategories[self.gristcategory]:
+            rate += self.echeladder_rung//2//tier
+        rate += int(amount//25)
         return rate
 
     @property
