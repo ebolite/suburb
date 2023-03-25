@@ -308,7 +308,7 @@ class Griefer():
         if self.death_break(): return
         for vial in self.vials_list:
             if vial.tact_vial:
-                self.change_vial(vial.name, self.get_stat("tact"))
+                self.change_vial(vial.name, self.get_stat("tact") + self.power//6)
             vial.new_turn(self) 
         for state in self.states_list.copy():
             state.new_turn(self)
