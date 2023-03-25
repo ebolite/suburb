@@ -1200,11 +1200,12 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         if not flipped:
             render.spawn_punches(captcha_image, instance.punched_code, 122, 138, w=80, h=120)
     if strife:
-        def eject_button_func():
-            client.requestplus(intent="eject_from_strife_deck", content={"instance_name": instance.name})
-            last_scene()
-        eject_button = render.TextButton(0.5, 1.2, 300, 33, "eject from strife deck", eject_button_func, theme=theme)
-        eject_button.bind_to(power_bar)
+        if not instance.item.wearable or instance.name != player_data["worn_instance_name"]:
+            def eject_button_func():
+                client.requestplus(intent="eject_from_strife_deck", content={"instance_name": instance.name})
+                last_scene()
+            eject_button = render.TextButton(0.5, 1.2, 300, 33, "eject from strife deck", eject_button_func, theme=theme)
+            eject_button.bind_to(power_bar)
     elif modus is not None:
         syl = Sylladex.current_sylladex()
         def uncaptcha_button_func():
