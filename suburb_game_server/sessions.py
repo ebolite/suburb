@@ -880,10 +880,17 @@ class Player():
         else: return alchemy.Instance(self.wielding)
 
     @property
+    def worn_instance(self) -> Optional[alchemy.Instance]:
+        if self.worn_instance_name is None: return None
+        else: return alchemy.Instance(self.worn_instance_name)
+
+    @property
     def power(self) -> int:
         base_power = self.echeladder_rung
         if self.wielded_instance is not None:
             base_power += self.wielded_instance.item.power
+        if self.worn_instance is not None:
+            base_power += self.worn_instance.item.power//2
         return base_power
 
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:
