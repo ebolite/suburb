@@ -881,7 +881,11 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
         else:
             icon_x = x
             icon_y = y
+        if grist_name == "rainbow":
+            icon_path = "sprites/grists/rainbow"
         icon = Image(icon_x, icon_y, icon_path)
+        if grist_name == "rainbow":
+            icon.animated = True
         icon.convert = True
         icon.scale = scale
         icon.absolute = True
