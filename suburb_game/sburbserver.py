@@ -724,8 +724,12 @@ def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Tex
             results_sprites.append(right_button)
         return results_sprites
 
-    search_bar = render.InputTextBox(0.5, 0.85, 256, 32)
+    search_bar = render.InputTextBox(0.5, 0.8, 256, 32)
     search_init_time = render.clock.get_time()
+    def back():
+        display_alchemy(info_window, info_text)
+    backbutton = render.TextButton(0.5, 0.9, 128, 32, "BACK", back, theme=info_window.theme)
+    backbutton.bind_to(info_window, True)
     global results_sprites
     results_sprites = make_results(search)
     def key_press_func():
