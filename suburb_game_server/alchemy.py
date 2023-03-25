@@ -348,7 +348,7 @@ class Item(): # Items are the base of instants.
         wear_states = {}
         consume_states = {}
         for state_name, potency in self.onhit_states.items():
-            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); return
+            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); continue
             state = stateseffects.states[state_name]
             onhit_states[state_name] = {
                 "potency": potency,
@@ -357,7 +357,7 @@ class Item(): # Items are the base of instants.
                 "passive": state.passive,
             }
         for state_name, potency in self.wear_states.items():
-            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); return
+            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); continue
             state = stateseffects.states[state_name]
             wear_states[state_name] = {
                 "potency": potency,
@@ -366,7 +366,7 @@ class Item(): # Items are the base of instants.
                 "passive": state.passive,
             }
         for state_name, potency in self.consume_states.items():
-            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); return
+            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); continue
             state = stateseffects.states[state_name]
             consume_states[state_name] = {
                 "potency": potency,
