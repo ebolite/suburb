@@ -699,9 +699,9 @@ def choosevial():
     gambitimage = render.Button(0.66, 0.66, "sprites\\vials\\gambit\\gambitexample.png", "sprites\\vials\\gambit\\gambitexamplepressed.png", vialbutton("gambit"))
     gambitdescription = render.Text(0.66, 0.73, "Starts 50%.")
     gambitdescription.fontsize = 16
-    gambitdescription2 = render.Text(0.66, 0.76, "Increases when using FUNNY weapons.")
+    gambitdescription2 = render.Text(0.66, 0.76, "Get a prompt for a GAMBIT skill each turn.")
     gambitdescription2.fontsize = 16
-    gambitdescription3 = render.Text(0.66, 0.79, "Increases damage dealt with FUNNY weapons.")
+    gambitdescription3 = render.Text(0.66, 0.79, "Heals you each turn you comply.")
     gambitdescription3.fontsize = 16
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", chooseinterests)
 
