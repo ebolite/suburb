@@ -1265,12 +1265,10 @@ def modify_block(map, checktile, replacetile):
     newmap = map.copy()
     while True:
         removed = 0
-        print("-----")
         for line in newmap:
             ln = ""
             for char in line:
                 ln += char
-            print(ln)
         for y, line in enumerate(newmap):
             for x, char in enumerate(line):
                 valid = check_block(x, y, newmap, checktile)
