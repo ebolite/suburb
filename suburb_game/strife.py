@@ -274,12 +274,14 @@ class Strife():
                 sprite.x = starting_x
                 sprite_x = starting_x * self.canvas.w - sprite.get_width()//2
                 sprite_y = sprite.y * self.canvas.h - sprite.get_height()//2
-                sprites_xy.append((sprite_x, sprite_y))
+                
                 if isinstance(sprite, render.Enemy):
                     sprite.rect_y_offset = sprite.get_height()//3 * -1
+                else: sprite_x -= 100
+                sprites_xy.append((sprite_x, sprite_y))
                 continue
             previous_sprite = sprites_list[i-1]
-            old_width = previous_sprite.get_width() if isinstance(previous_sprite, render.Enemy) else 400
+            old_width = previous_sprite.get_width() if isinstance(previous_sprite, render.Enemy) else 200
             dx = int(old_width)
             old_x, old_y = sprites_xy[i-1]
             new_x = old_x + dx if direction == "right" else old_x - dx
