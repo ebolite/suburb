@@ -3,6 +3,7 @@ import hashlib
 import random
 import os
 import time
+import numpy as np
 from typing import Optional, Union
 from copy import deepcopy
 
@@ -777,6 +778,16 @@ class Player():
                 self.unclaimed_grist[grist_name] += amount
             else:
                 self.unclaimed_grist[grist_name] = amount
+
+    def add_rungs(self, power_defeated: int):
+        combined_rungs = self.echeladder_rung + self.unclaimed_rungs
+        min_for_advancement = np.power(combined_rungs, 1.3)
+        if combined_rungs < 50 and power_defeated < min_for_advancement: return 0
+        rung_reached = np.power(power_defeated, 1/1.3)
+        additional_rungs = (rung_reached-combined_rungs)//10
+        additional_rungs = max(additional_rungs, 0)
+        additional_rungs += 1
+        self.unclaimed_rungs += additional_rungs
     
     def claim_spoils(self):
         self.echeladder_rung += self.unclaimed_rungs
