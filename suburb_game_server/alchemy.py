@@ -141,7 +141,7 @@ class InheritedStatistics():
         inheritable_adjectives = list(set(inheritable_adjectives)) # remove duplicates
         random.shuffle(inheritable_adjectives)
         for adj in inheritable_adjectives:
-            inherit_chance = 1 - (len(adjectives) / ((len(self.component_1.descriptors) + len(self.component_2.descripts)) / 2)) # chance decreases as more adjectives are choses
+            inherit_chance = 1 - (len(adjectives) / ((len(self.component_1.descriptors) + len(self.component_2.descriptors)) / 2)) # chance decreases as more adjectives are choses
             inherit_chance -= (0.15 * len(adjectives)) # additional flat chance decrease based on how many adjectives it has already
             if adj in required_inheritors:
                 required_inheritors.remove(adj)
@@ -172,7 +172,7 @@ class InheritedStatistics():
             or_object = InheritedStatistics(self.component_1, self.component_2, "||")
             adjectives_set = set(adjectives)
             or_adjectives_set = set(or_object.adjectives)
-            if (base == or_object.base and 
+            if (base == or_object.base or 
                 (adjectives_set.issubset(or_adjectives_set) or or_adjectives_set.issubset(adjectives_set))): # convert to set so names aren't just the same thing in different order
                 base, adjectives, merged_bases, secretadjectives = self.get_descriptors(guaranteed_compound_name=True)
         return base, adjectives, merged_bases, secretadjectives
