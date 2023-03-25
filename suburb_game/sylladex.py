@@ -219,6 +219,7 @@ class Modus():
         self.bar_path = ""
         self.thumb_path = ""
         self.theme: themes.Theme = themes.array
+        self.label_color: pygame.Color = pygame.Color(36, 214, 255)
         self.can_uncaptchalogue = True
         moduses[name] = self
 
@@ -263,7 +264,15 @@ class Modus():
         start = time.time()
         sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True
-        
+        sylladex_label = render.Text(6, 560, "sylladex :: captchalogue deck")
+        sylladex_label.absolute = True
+        sylladex_label.color = self.label_color
+        sylladex_label.fontsize = 16
+        modus_label = render.Text(6, 560, f"fetch modus :: {self.modus_name}")
+        modus_label.absolute = True
+        modus_label.color = self.label_color
+        modus_label.fontsize = 16
+        modus_label.x = render.SCREEN_WIDTH - modus_label.get_width() - 6
         num_cards_remaining = sylladex.empty_cards - len(sylladex.data_list)
         def drop_empty_card_button():
             client.request("drop_empty_card")
@@ -525,3 +534,4 @@ array_modus.back_path = "sprites/moduses/array_card_flipped.png"
 array_modus.bar_path = "sprites/moduses/array_bar.png"
 array_modus.thumb_path = "sprites/moduses/array_card_thumb.png"
 array_modus.theme = themes.array
+array_modus.label_color = themes.array.white
