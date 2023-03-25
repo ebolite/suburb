@@ -141,7 +141,7 @@ class InheritedStatistics():
         inheritable_adjectives = list(set(inheritable_adjectives)) # remove duplicates
         random.shuffle(inheritable_adjectives)
         for adj in inheritable_adjectives:
-            inherit_chance = 1 - (len(adjectives) / len(inheritable_adjectives)) # chance decreases as more adjectives are choses
+            inherit_chance = 1 - (len(adjectives) / ((len(self.component_1.descriptors) + len(self.component_2.descripts)) / 2)) # chance decreases as more adjectives are choses
             inherit_chance -= (0.15 * len(adjectives)) # additional flat chance decrease based on how many adjectives it has already
             if adj in required_inheritors:
                 required_inheritors.remove(adj)
