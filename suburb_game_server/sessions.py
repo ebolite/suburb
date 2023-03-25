@@ -927,17 +927,21 @@ class Player():
         return total
 
     def add_gutter_and_leech(self):
+        spoils_dict = {}
         if self.leeching == []: leeching = ["build"]
         else: leeching = self.leeching
         for grist_type in leeching:
-            self.add_grist(grist_type, self.echeladder_rung//len(leeching))
+            value = self.echeladder_rung//len(leeching)
+            spoils_dict[grist_type] = value
         possible_players = [player_name for player_name in self.session.current_players if Player(player_name).grist_gutter and player_name is not self.name]
         if not possible_players: return
         random.shuffle(possible_players)
         for player_name in possible_players:
             player = Player(player_name)
             grist_name, amount = player.grist_gutter.pop()
-            self.add_grist(grist_name, amount)
+            if grist_name in spoils_dict: spoils_dict[grist_name] += amount
+            else: spoils_dict[grist_name] = amount
+        self.add_unclaimed_grist(spoils_dict)
 
     def sylladex_instances(self) -> dict:
         out_dict = {}
