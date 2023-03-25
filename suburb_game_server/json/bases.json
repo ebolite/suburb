@@ -4966,10 +4966,13 @@
             "caulk": 0.2
         },
         "onhit_states": {
-            "demoralize": 0.5
+            "demoralize": 0.5,
+            "poison": 0.5
         },
         "wear_states": {},
-        "consume_states": {},
+        "consume_states": {
+            "poison": 1.0
+        },
         "secret_states": {
             "demoralize": 1,
             "inspire": 0.6
