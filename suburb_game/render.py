@@ -2345,6 +2345,8 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
                        box_color: Optional[pygame.Color]=None, 
                        filled_color: Optional[pygame.Color]=None,
                        label_color: Optional[pygame.Color]=None,
+                       outline_color: Optional[pygame.Color]=None,
+                       label: Optional[str]=None,
                        use_grist_color=False) -> SolidColor:
     box_color = box_color or theme.dark
     if use_grist_color: filled_color = config.gristcolors[grist_name]
@@ -2369,13 +2371,17 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
         grist_image.bind_to(grist_box)
     bar_background = SolidColor(0.585, 0.4, w//1.3, h//3.5, box_color)
     bar_background.border_radius = 2
-    bar_background.outline_color = theme.black
+    if outline_color is None:
+        bar_background.outline_color = theme.black
+    else:
+        bar_background.outline_color = outline_color
     bar_background.absolute = False
     bar_background.bind_to(grist_box)
     filled_bar_width = int((w//1.3 - 4) * min(grist_amount, cache_limit)/cache_limit)
     bar_filled = SolidColor(2, 2, filled_bar_width, h//3.5 - 4, filled_color)
     bar_filled.bind_to(bar_background)
-    bar_label = Text(0.5, 2.2, str(grist_amount))
+    if label is None: label = str(grist_amount)
+    bar_label = Text(0.5, 2.2, label)
     bar_label.color = label_color
     bar_label.fontsize = 12
     bar_label.bind_to(bar_background)

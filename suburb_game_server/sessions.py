@@ -55,11 +55,19 @@ class Session():
             self.current_players = []
             # excursus is a list of items that have been alchemized by players within a session
             self.excursus = ["captchalogue card", "perfectly generic object"]
-            self.overmaps = {}          
+            self.overmaps = {}
 
     def add_to_excursus(self, item_name):
         if item_name not in self.excursus:
             self.excursus.append(item_name)
+
+    def get_best_seeds(self):
+        best_seeds = {}
+        for player in self.players_list:
+            for grist_name, rate in player.seeds.items():
+                if grist_name not in best_seeds: best_seeds[grist_name] = rate
+                elif best_seeds[grist_name] < rate: best_seeds[grist_name] = rate
+        return best_seeds
 
     def __setattr__(self, attr, value):
         util.sessions[self.__dict__["session_name"]][attr] = value
@@ -80,6 +88,10 @@ class Session():
                 if grist_name not in available_types:
                     available_types.append(grist_name)
         return available_types
+    
+    @property
+    def players_list(self) -> list["Player"]:
+        return [Player(name) for name in self.current_players]
 
     @property
     def name(self) -> str:
@@ -771,10 +783,14 @@ class Player():
         out["power"] = self.power
         out["entered"] = self.entered
         out["atheneum"] = {instance.name:instance.item.get_dict() for instance in [alchemy.Instance(instance_name) for instance_name in self.atheneum]}
+        out["seeds"] = self.seeds
         if self.worn_instance_name is not None:
             out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()
         else:
             out["worn_instance_dict"] = None
+        best_seeds = self.session.get_best_seeds()
+        leeching = self.leeching
+        out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
         return out
     
     def add_unclaimed_grist(self, spoils_dict: dict):
@@ -970,6 +986,23 @@ class Player():
             self.grist_cache[grist_name] -= value
         return True
 
+    def get_seed_rate(self, grist_name: str, amount: int) -> int:
+        if "exotic" not in config.grists[grist_name]:
+            tier = config.grists[grist_name]["tier"]
+            tier = max(tier, 1)
+            rate = self.echeladder_rung//tier
+        else: rate = 0
+        rate += int(amount//100)
+        return rate
+
+    @property
+    def seeds(self) -> dict[str, int]:
+        seeds = {grist_name:0 for grist_name in config.grists}
+        for grist_name, value in self.grist_cache.items():
+            rate = self.get_seed_rate(grist_name, value)
+            seeds[grist_name] = rate
+        return seeds
+
     @property
     def total_gutter_grist(self) -> int:
         total = 0
@@ -981,8 +1014,9 @@ class Player():
         spoils_dict = {}
         if self.leeching == []: leeching = ["build"]
         else: leeching = self.leeching
+        best_seeds = self.session.get_best_seeds()
         for grist_type in leeching:
-            value = self.echeladder_rung//len(leeching)
+            value = best_seeds[grist_type]//len(leeching)
             spoils_dict[grist_type] = value
         possible_players = [player_name for player_name in self.session.current_players if Player(player_name).grist_gutter and player_name is not self.name]
         if not possible_players: return

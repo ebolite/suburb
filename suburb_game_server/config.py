@@ -136,7 +136,7 @@ grists = {
     "onyx": {"tier": 9},
     "permafrost": {"tier": 8},
     "quartz": {"tier": 7},
-    "rainbow": {"tier": 10},
+    "rainbow": {"tier": 10, "exotic": True},
     "redstone": {"tier": 7},
     "rock candy": {"tier": 2},
     "rose quartz": {"tier": 5, "exotic": True},

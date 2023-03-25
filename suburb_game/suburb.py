@@ -880,16 +880,19 @@ def computer(instance: Instance):
 def gristtorrent(window: "render.Window"):
     theme = themes.gristtorrent
     viewport = window.viewport
+    viewport.kill_temporary_elements()
     padding = 7
     player_dict = client.requestdic("player_info")
     grist_cache = player_dict["grist_cache"]
     grist_cache_limit = player_dict["grist_cache_limit"]
     grist_gutter = player_dict["grist_gutter"]
     total_gutter_grist = player_dict["total_gutter_grist"]
-    leeching = player_dict["leeching"]
+    leeching: dict[str, int] = player_dict["leeching"]
+    seeds: dict[str, int] = player_dict["seeds"]
+    session_seeds = client.requestdic("session_seeds")
     banner_head = render.Image(0, 0, "sprites/computer/gristTorrent/banner.png")
     banner_head.absolute = True
-    banner_head.bind_to(viewport)
+    banner_head.bind_to(viewport, True)
     icon = render.Image(0.29, 0.5, "sprites/computer/apps/gristTorrent.png", convert=False)
     icon.bind_to(banner_head)
     banner_text = render.Text(0.56, 0.5, "gristTorrent")
@@ -915,7 +918,6 @@ def gristtorrent(window: "render.Window"):
     grist_box_h = grist_display_h//num_rows - padding - grist_box_outline_width
     def get_box_button_func(grist_name):
         def box_button_func():
-            if "exotic" in config.grists[grist_name]: return
             client.requestplus(intent="computer", content={"command": "leech", "grist_type": grist_name})
             window.reload()
         return box_button_func
@@ -923,20 +925,33 @@ def gristtorrent(window: "render.Window"):
         grist_box_x = padding + (grist_box_w+padding)*column_index 
         for row_index, grist_name in enumerate(column):
             grist_box_y = 150 + padding + (grist_box_h+padding)*row_index
-            box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, grist_name, grist_cache[grist_name], grist_cache_limit, theme)
+            if grist_name in leeching: leeching_rate = leeching[grist_name]
+            else: leeching_rate = 0
+            best_seeds = session_seeds[grist_name]
+            label = f"{grist_cache[grist_name]} | {leeching_rate} Down | {best_seeds} Seeds"
+            
+            if best_seeds == 0: 
+                box_color = theme.black
+                label_color = theme.white
+                outline_color = theme.dark
+            else: 
+                box_color = theme.dark
+                label_color = theme.light
+                outline_color = theme.black
+            box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, grist_name, grist_cache[grist_name], grist_cache_limit, 
+                                            theme, label=label, box_color=box_color, label_color=label_color, outline_color=outline_color)
             box.border_radius = 2
             if grist_name in leeching: box.outline_color = pygame.Color(255, 0, 0)
-            elif "exotic" in config.grists[grist_name]: box.outline_color = pygame.Color(255, 255, 0)
-            box.bind_to(viewport)
+            box.bind_to(viewport, True)
             box_button = render.TextButton(grist_box_x, grist_box_y, grist_box_w, grist_box_h, "", get_box_button_func(grist_name))
             box_button.absolute = True
             box_button.draw_sprite = False
-            box_button.bind_to(viewport)
+            box_button.bind_to(viewport, True)
     gutter_box_width = viewport.w//2
     gutter_box_height = 40
     gutter_box = render.SolidColor(viewport.w-gutter_box_width-padding, viewport.h-gutter_box_height-padding, gutter_box_width, gutter_box_height, theme.white)
     gutter_box.outline_color = theme.black
-    gutter_box.bind_to(viewport)
+    gutter_box.bind_to(viewport, True)
     box_label = render.Text(0.5, 0.25, "grist gutter")
     box_label.color = theme.light
     box_label.fontsize = 18

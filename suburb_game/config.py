@@ -126,7 +126,7 @@ grists = {
     "onyx": {"tier": 9, "image": "sprites\\grists\\onyx.png"},
     "permafrost": {"tier": 8, "image": "sprites\\grists\\permafrost.png"},
     "quartz": {"tier": 7, "image": "sprites\\grists\\quartz.png"},
-    "rainbow": {"tier": 10, "image": "sprites\\grists\\rainbow.png"},
+    "rainbow": {"tier": 10, "exotic": True, "image": "sprites\\grists\\rainbow.png"},
     "redstone": {"tier": 7, "image": "sprites\\grists\\redstone.png"},
     "rock candy": {"tier": 2, "image": "sprites\\grists\\rock candy.png"},
     "rose quartz": {"tier": 5, "exotic": True, "image": "sprites\\grists\\rose quartz.png"},
