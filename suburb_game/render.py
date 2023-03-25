@@ -2110,6 +2110,11 @@ class Symbol(Image):
     
     def collidepoint(self, pos):
         x, y, w, h = self.player_image_crop
+        x *= self.scale
+        y *= self.scale
+        w *= self.scale
+        h *= self.scale
+        x, y, w, h = int(x), int(y), int(w), int(h)
         x += self.rect.x
         y += self.rect.y
         hitbox_rect = pygame.Rect(x, y, w, h)
