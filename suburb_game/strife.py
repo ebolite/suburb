@@ -282,7 +282,7 @@ class Strife():
                 continue
             previous_sprite = sprites_list[i-1]
             old_width = previous_sprite.get_width() if isinstance(previous_sprite, render.Enemy) else 200
-            dx = int(old_width)
+            dx = int(old_width+25)
             old_x, old_y = sprites_xy[i-1]
             new_x = old_x + dx if direction == "right" else old_x - dx
             new_y = render.SCREEN_HEIGHT//2 + 100
