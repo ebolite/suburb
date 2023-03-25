@@ -1161,6 +1161,14 @@ antagonize.add_apply_state("demoralize", 4, "1.5")
 antagonize.add_vial_cost("vim", "-user.power//2")
 antagonize.add_vial_cost("aspect", "-user.power//2")
 
+advance = AbstratusSkill("advance")
+advance.description = "Deals damage and gives you another action this turn."
+advance.use_message = "{user} advances!"
+advance.add_vial_cost("vim", "user.power")
+advance.damage_formula = AGGRIEVE_FORMULA
+advance.action_cost = -1
+advance.cooldown = 3
+
 useranticipate = Skill("useranticipate")
 useranticipate.add_apply_state("guard", 2, "1.0")
 useranticipate.parryable = False
@@ -1267,6 +1275,15 @@ aflame.target_team = True
 aflame.need_damage_to_apply_states = True
 aflame.add_apply_state("ignite", 3, "1.0")
 aflame.add_vial_cost("vim", "user.power//1.5")
+
+# batkind
+affrap = AbstratusSkill("affrap")
+affrap.description = "Deals damage similar to ASSAULT and applies STUN with potency 2.0 which drains VIM."
+affrap.use_message = "{user} affraps!"
+affrap.damage_formula = ASSAULT_FORMULA
+affrap.add_apply_state("stun", 1, "2.0")
+affrap.need_damage_to_apply_states = True
+affrap.add_vial_cost("vim", "user.power")
 
 # ballkind
 athleticize = AbstratusSkill("athleticize")
@@ -1436,6 +1453,11 @@ add_abstratus_skill("bagkind", awaitskill, 50)
 add_abstratus_skill("ballkind", antagonize, 1)
 add_abstratus_skill("ballkind", arraign, 50)
 add_abstratus_skill("ballkind", athleticize, 75)
+
+# batkind
+add_abstratus_skill("batkind", affrap, 1)
+add_abstratus_skill("batkind", attack, 50)
+add_abstratus_skill("batkind", advance, 75)
 
 # bladekind
 add_abstratus_skill("bladekind", anticipate, 1)
