@@ -716,7 +716,7 @@ class Player():
             self.current_strife_deck: Optional[str] = None
             self.empty_cards = 5
             self.unassigned_specibi = 1
-            self.echeladder_rung = 1
+            self.echeladder_rung: int = 1
             self.grist_cache = {grist_name:0 for grist_name in config.grists}
             self.grist_gutter: list[list] = []
             self.leeching: list[str] = []
@@ -793,6 +793,7 @@ class Player():
         additional_rungs = max(additional_rungs, 0)
         additional_rungs += 1
         self.unclaimed_rungs += additional_rungs
+        self.unclaimed_rungs = int(self.unclaimed_rungs)
     
     def claim_spoils(self):
         self.echeladder_rung += self.unclaimed_rungs

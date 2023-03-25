@@ -1302,6 +1302,11 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             "mettle": "decreases damage taken",
         }
         stats = ["spunk", "vigor", "tact", "luck", "savvy", "mettle"]
+        def confirm():
+            ratios = {}
+            for stat in stats:
+                ratios[stat] = int(stat_boxes[stat].text)
+            client.requestplus(intent="set_stat_ratios", content={"ratios": ratios})
         for i, stat in enumerate(stats):
             box_width = 64
             fontsize = 20
@@ -1360,17 +1365,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                 label.fontsize = 20
                 label.color = theme.light
                 label.bind_to(box)
-            if i == 5:
-                def confirm():
-                    ratios = {}
-                    for stat in stats:
-                        ratios[stat] = int(stat_boxes[stat].text)
-                    client.requestplus(intent="set_stat_ratios", content={"ratios": ratios})
-                confirm_button = render.TextButton(0, box_width + padding, box_width, box_width//2, ">save", confirm, theme=theme)
-                confirm_button.absolute = True
-                confirm_button.outline_color = theme.black
-                confirm_button.fill_color = theme.light
-                confirm_button.bind_to(box)
 
         # wielded display
         wielded_display = render.Image(1.3, 0.2, "sprites/itemdisplay/strife_equip_display.png")
@@ -1388,6 +1382,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                     card_image.scale = 0.5
             item_label = render.Text(0.6, 1.1, f"{wielded_instance.display_name(True)}")
             def view_wielded_item():
+                confirm()
                 display_item(wielded_instance, last_scene=strife_portfolio_scene, strife=True)
             view_item_button = render.TextButton(0.5, 0.5, 102, 102, "", view_wielded_item)
             view_item_button.draw_sprite = False
@@ -1414,6 +1409,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                     card_image.scale = 0.5
             item_label = render.Text(0.6, 1.1, f"{donned_instance.display_name(True)}")
             def view_donned_item():
+                confirm()
                 display_item(donned_instance, last_scene=strife_portfolio_scene, strife=True)
             view_item_button = render.TextButton(0.5, 0.5, 102, 102, "", view_donned_item)
             view_item_button.draw_sprite = False
@@ -1428,12 +1424,14 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         instances_length = len(strife_portfolio[selected_kind])
         def get_button_func(instance: Instance) -> Callable:
             def wrapper():
+                confirm()
                 display_item(instance, strife_portfolio_scene, modus=None, strife=True)
             return wrapper
         def get_wield_button_func(instance_name: Instance) -> Callable:
             def wrapper():
                 reply = client.requestplus(intent="wield", content={"instance_name": instance_name})
                 print(reply)
+                confirm()
                 strife_portfolio_scene(selected_kind)
             return wrapper
         for i, instance_name in enumerate(strife_portfolio[selected_kind]):
@@ -1468,7 +1466,10 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         info_text.color, info_text_2.color = theme.light, theme.light
         info_text.fontsize, info_text_2.fontsize = 20, 20
         abstratus_icon = render.Image(0.5, 0.5, "sprites/itemdisplay/strife_card.png")
-    back_button = render.Button(0.08, 0.95, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", map_scene, theme=theme)
+    def back():
+        confirm()
+        map_scene()
+    back_button = render.Button(0.08, 0.95, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", back, theme=theme)
 
 @scene
 def spoils(grist_dict: dict, echeladder_rungs: int):
