@@ -675,7 +675,8 @@ def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Tex
             return button_func
         results_sprites = []
         excursus: dict[str, dict] = viewport_dic["excursus"]
-        excursus_items = [sylladex.Item(item_name, excursus[item_name]) for item_name in excursus]
+        all_excursus_items = [sylladex.Item(item_name, excursus[item_name]) for item_name in excursus]
+        excursus_items = [item for item in all_excursus_items if not item.forbiddencode]
         if search_text is not None:
             excursus_items = [item for item in excursus_items if filter_func(item, search_text)]
         padding=4

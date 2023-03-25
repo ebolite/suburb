@@ -71,7 +71,6 @@ class BaseStatistics():
         self.adjectives: list = list(set(descriptors)) # everything else are adjectives, remove duplicates
         properties = deepcopy(util.bases[base_name])
         self.secretadjectives: list[str] = properties["secretadjectives"]
-        self.forbidden: bool = properties["forbiddencode"]
         self.power: int = properties["power"]
         self.inheritpower: int = properties["inheritpower"]
         self.weight: int = properties["weight"]
