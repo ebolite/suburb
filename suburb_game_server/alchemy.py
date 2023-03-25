@@ -172,7 +172,7 @@ class InheritedStatistics():
             or_object = InheritedStatistics(self.component_1, self.component_2, "||")
             adjectives_set = set(adjectives)
             or_adjectives_set = set(or_object.adjectives)
-            if (base == or_object.base or 
+            if (base == or_object.base and 
                 (adjectives_set.issubset(or_adjectives_set) or or_adjectives_set.issubset(adjectives_set))): # convert to set so names aren't just the same thing in different order
                 base, adjectives, merged_bases, secretadjectives = self.get_descriptors(guaranteed_compound_name=True)
         return base, adjectives, merged_bases, secretadjectives
