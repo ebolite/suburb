@@ -826,13 +826,10 @@ class Player():
         return True
 
     def unwield(self):
-        if self.wielding is None: return
+        if self.wielding is None: return False
         instance = alchemy.Instance(self.wielding)
         self.wielding = None
-        for kind in instance.item.kinds:
-            if kind in self.strife_portfolio:
-                self.strife_portfolio[kind].append(instance.name)
-                return 
+        return True
 
     @property
     def wielded_instance(self) -> Optional[alchemy.Instance]:
