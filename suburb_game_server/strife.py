@@ -360,6 +360,7 @@ class Griefer():
             spoils_dict = self.npc.make_spoils(len(self.strife.player_griefers))
             for player_griefer in self.strife.player_griefers:
                 if player_griefer.player is None: raise AttributeError
+                player_griefer.player.add_unclaimed_grist(spoils_dict)
                 player_griefer.player.add_rungs(self.power)
                 player_griefer.player.add_gutter_and_leech()
         elif self.player is not None:
