@@ -597,7 +597,7 @@ class Griefer():
     
     @property
     def dead(self) -> bool:
-        return self.name in self.strife.griefers
+        return not self.name in self.strife.griefers
 
     @property
     def wielded_item(self) -> Optional["alchemy.Item"]:
