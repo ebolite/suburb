@@ -999,8 +999,9 @@ class Player():
         if not target_map.map_tiles:
             target_map.gen_map()
             target_map.populate_with_scaled_underlings()
-        if direction == "north" or direction == "east": entry_direction = "left"
-        else: entry_direction = "right"
+        entry_direction = "left"
+        # if direction == "north" or direction == "east": entry_direction = "left"
+        # else: entry_direction = "right"
         self.goto_room(target_map.get_starting_room(entry_direction))
         return True
 
