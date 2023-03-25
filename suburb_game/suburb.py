@@ -929,8 +929,7 @@ def gristtorrent(window: "render.Window"):
             else: leeching_rate = 0
             best_seeds = session_seeds[grist_name]
             label = f"{grist_cache[grist_name]} | {leeching_rate} Down | {best_seeds} Seeds"
-            
-            if best_seeds == 0: 
+            if best_seeds == 0 or (grist_name in leeching and leeching[grist_name] == 0): 
                 box_color = theme.black
                 label_color = theme.white
                 outline_color = theme.dark
