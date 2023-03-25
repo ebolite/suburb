@@ -1069,7 +1069,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
             pressed_path = f"sprites/item_actions/{action_name}_pressed.png"
             if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
             if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
-            action_button = render.Button(x, y, path, pressed_path, instance.get_action_button_func(action_name, last_scene))
+            action_button = render.Button(x, y, path, pressed_path, instance.get_action_button_func(action_name, last_scene), theme=theme)
             action_button.scale = 2.0
             action_button.bind_to(captcha_image)
     else:
