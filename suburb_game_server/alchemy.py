@@ -102,13 +102,13 @@ class InheritedStatistics():
 
     # how many unique items there are, multiple counts means negative entropy means bad
     @property
-    def entropy(self) -> int:
+    def entropy(self) -> float:
         e = 0
         for component in set(self.all_components):
             if self.all_components.count(component) > 1:
-                e -= 1
+                e -= 0.5
             else:
-                e += 1
+                e += 0.1
         return e
 
     def get_descriptors(self, guaranteed_compound_name = False, depth = 0) -> tuple[str, list, list, list]:
@@ -194,9 +194,9 @@ class InheritedStatistics():
             self.power: int = total_power + average_power
         elif self.operation == "||":
             self.power: int = total_power + power_difference
-        if self.entropy > 0: power_mult = self.entropy
-        elif self.entropy == 0: power_mult = 1
-        else: power_mult = 1/self.entropy
+        
+        if self.entropy >= 0: power_mult = 1 + self.entropy
+        else: power_mult = 1/-(self.entropy+1)
         self.power = int(self.power*power_mult)
         self.inheritpower: int = self.component_1.inheritpower + self.component_2.inheritpower
         # costs (dict of grist: float)
