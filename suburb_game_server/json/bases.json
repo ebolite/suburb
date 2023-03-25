@@ -102,6 +102,47 @@
         "inheritpower": 0,
         "attached_skills": []
     },
+    "pre-punched card": {
+        "base": true,
+        "code": "11112221",
+        "power": 30,
+        "weight": 5,
+        "size": 5,
+        "kinds": [
+            "cardkind"
+        ],
+        "wearable": false,
+        "description": "A captchalogue card that has been rendered useless due to being punched by a punch designix. Has the code of another item on it.",
+        "cost": {
+            "build": 0
+        },
+        "onhit_states": {
+            "stun": 0.5
+        },
+        "wear_states": {},
+        "consume_states": {
+            "heal": 1
+        },
+        "secretadjectives": [
+            "meta",
+            "destroyed",
+            "security",
+            "hole-filled"
+        ],
+        "secret_states": {
+            "weak": 0.7
+        },
+        "use": [
+            "combine_card",
+            "uncombine_card"
+        ],
+        "forbiddencode": true,
+        "inheritpower": 50,
+        "adjectives": [
+            "punched"
+        ],
+        "attached_skills": []
+    },
     "punched card": {
         "base": true,
         "code": "11112222",
