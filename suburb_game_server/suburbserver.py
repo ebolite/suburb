@@ -389,6 +389,7 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             grist_type = content["grist_type"]
             if grist_type not in config.grists: return "fuck you"
             if grist_type in player.leeching: player.leeching.remove(grist_type)
+            elif "exotic" in config.grists[grist_type]: return "fuck you"
             else: player.leeching.append(grist_type)
         case "connect":
             client_player_username = content["client_player_username"]

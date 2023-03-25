@@ -915,6 +915,7 @@ def gristtorrent(window: "render.Window"):
     grist_box_h = grist_display_h//num_rows - padding - grist_box_outline_width
     def get_box_button_func(grist_name):
         def box_button_func():
+            if "exotic" in config.grists[grist_name]: return
             client.requestplus(intent="computer", content={"command": "leech", "grist_type": grist_name})
             window.reload()
         return box_button_func
@@ -925,6 +926,7 @@ def gristtorrent(window: "render.Window"):
             box = render.make_grist_display(grist_box_x, grist_box_y, grist_box_w, grist_box_h, padding, grist_name, grist_cache[grist_name], grist_cache_limit, theme)
             box.border_radius = 2
             if grist_name in leeching: box.outline_color = pygame.Color(255, 0, 0)
+            elif "exotic" in config.grists[grist_name]: box.outline_color = pygame.Color(255, 255, 0)
             box.bind_to(viewport)
             box_button = render.TextButton(grist_box_x, grist_box_y, grist_box_w, grist_box_h, "", get_box_button_func(grist_name))
             box_button.absolute = True
