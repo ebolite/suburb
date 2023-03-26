@@ -93,7 +93,7 @@ db_players = db_suburb["players"]
 memory_players = {}
 
 db_npcs = db_suburb["npcs"]
-memory_npcs = {}
+memory_npcs = {item_dict["_id"]:item_dict for item_dict in db_npcs.find({})}
 
 db_items = db_suburb["items"]
 memory_items = {item_dict["_id"]:item_dict for item_dict in db_items.find({})}
@@ -116,28 +116,39 @@ def saveall():
     print("Saving...")
     def callback(session):
         sessions = session.client["suburb"]["sessions"]
+        session_data = {item_dict["_id"]:item_dict for item_dict in sessions.find({})}
         players = session.client["suburb"]["players"]
+        players_data = {item_dict["_id"]:item_dict for item_dict in players.find({})}
         npcs = session.client["suburb"]["npcs"]
+        npcs_data = {item_dict["_id"]:item_dict for item_dict in npcs.find({})}
         items = session.client["suburb"]["items"]
+        items_data = {item_dict["_id"]:item_dict for item_dict in items.find({})}
         instances = session.client["suburb"]["instances"]
+        instances_data = {item_dict["_id"]:item_dict for item_dict in instances.find({})}
         global memory_sessions
         for session_name, session_dict in memory_sessions.copy().items():
             sessions.update_one({"_id": session_name}, {"$set": session_dict}, upsert=True, session=session)
         memory_sessions = {}
+
         global memory_players
         for player_name, player_dict in memory_players.copy().items():
             players.update_one({"_id": player_name}, {"$set": player_dict}, upsert=True, session=session)
         memory_players = {}
+
         global memory_npcs
         for npc_name, npc_dict in memory_npcs.copy().items():
-            npcs.update_one({"_id": npc_name}, {"$set": npc_dict}, upsert=True, session=session)
-        memory_npcs = {}
+            if npc_name not in npcs_data or npc_dict != npcs_data[npc_name]:
+                npcs.update_one({"_id": npc_name}, {"$set": npc_dict}, upsert=True, session=session)
+
         global memory_items
         for item_name, item_dict in memory_items.copy().items():
-            items.update_one({"_id": item_name}, {"$set": item_dict}, upsert=True, session=session)
+            if item_name not in items_data or item_dict != items_data[item_name]:
+                items.update_one({"_id": item_name}, {"$set": item_dict}, upsert=True, session=session)
+
         global memory_instances
         for instance_name, instance_dict in memory_instances.copy().items():
-            instances.update_one({"_id": instance_name}, {"$set": instance_dict}, upsert=True, session=session)
+            if instance_name not in instances_data or instance_dict != instances_data[instance_name]:
+                instances.update_one({"_id": instance_name}, {"$set": instance_dict}, upsert=True, session=session)
     with db_client.start_session() as session:
         session.with_transaction(callback)
     writejson(codes, "codes")

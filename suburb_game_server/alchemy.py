@@ -282,11 +282,7 @@ class Item(): # Items are the base of instants.
             name = util.codes[code]
         self.__dict__["_id"] = name
         if name not in util.memory_items:
-            item_details = util.db_items.find_one({"_id": name})
-            if item_details is not None:
-                util.memory_items[name] = item_details
-            else:
-                self.create_item(name)
+            self.create_item(name)
 
     def create_item(self, name):
         util.memory_items[name] = {}
@@ -402,11 +398,7 @@ class Instance():
             self.create_instance(name)
             self.item_name = identifier.name
         if name not in util.memory_instances:
-            instance_details = util.db_instances.find_one({"_id": name})
-            if instance_details is not None:
-                util.memory_instances[name] = instance_details
-            else:
-                self.create_instance(name)
+            self.create_instance(name)
 
     def create_instance(self, name):
         util.memory_instances[name] = {}

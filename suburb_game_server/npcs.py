@@ -180,11 +180,7 @@ class Npc():
     def __init__(self, name: str):
         self.__dict__["_id"] = name
         if name not in util.memory_npcs: # load the session into memory
-            npc_details = util.db_npcs.find_one({"_id": name})
-            if npc_details is not None:
-                util.memory_npcs[name] = npc_details
-            else:
-                self.create_npc(name)
+            self.create_npc(name)
 
     def create_npc(self, name):
         util.memory_npcs[name] = {}
