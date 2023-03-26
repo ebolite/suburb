@@ -164,51 +164,63 @@ acheron.difficulty = 7
 acheron.actions = 2
 acheron.ai_type = "ogre"
 
+def does_npc_exist(name):
+    if name in util.memory_npcs: return True
+    elif util.db_npcs.find_one({"_id": name}) is not None: return True
+    else: return False
+
 class Npc():
     @staticmethod
     def make_valid_name(name):
         new_name = name
-        while new_name in util.npcs:
+        while does_npc_exist(new_name):
             new_name += random.choice(ascii_letters)
         return new_name
 
     def __init__(self, name: str):
-        self.__dict__["name"] = name
-        self.name: str
-        if name not in util.npcs:
-            util.npcs[name] = {}
-            self.power: int = 0
-            self.nickname: str = name
-            self.type: str = ""
-            self.grist_category: Optional[str] = None
-            self.grist_type: Optional[str] = None
-            self.hostile = True
-            self.ai_type: str = "random"
-            self.stat_ratios: dict[str, int] = {
-                "spunk": 1,
-                "vigor": 1,
-                "tact": 1,
-                "luck": 1,
-                "savvy": 1,
-                "mettle": 1,
-            }
-            self.actions = 1
-            self.additional_skills: list[str] = []
-            self.onhit_states = {}
-            self.wear_states = {}
-            self.immune_states = []
-            self.invulnerable = False
+        self.__dict__["_id"] = name
+        if name not in util.memory_npcs: # load the session into memory
+            npc_details = util.db_npcs.find_one({"_id": name})
+            if npc_details is not None:
+                util.memory_npcs[name] = npc_details
+            else:
+                self.create_npc(name)
+
+    def create_npc(self, name):
+        self._id = name
+        util.memory_npcs[name] = {}
+        self.power: int = 0
+        self.nickname: str = name
+        self.type: str = ""
+        self.grist_category: Optional[str] = None
+        self.grist_type: Optional[str] = None
+        self.hostile = True
+        self.ai_type: str = "random"
+        self.stat_ratios: dict[str, int] = {
+            "spunk": 1,
+            "vigor": 1,
+            "tact": 1,
+            "luck": 1,
+            "savvy": 1,
+            "mettle": 1,
+        }
+        self.actions = 1
+        self.additional_skills: list[str] = []
+        self.onhit_states = {}
+        self.wear_states = {}
+        self.immune_states = []
+        self.invulnerable = False
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        util.npcs[self.__dict__["name"]][attr] = value
+        util.memory_npcs[self.__dict__["_id"]][attr] = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = util.npcs[self.__dict__["name"]][attr]
+        self.__dict__[attr] = util.memory_npcs[self.__dict__["_id"]][attr]
         return self.__dict__[attr]
     
     def get_dict(self) -> dict:
-        out = deepcopy(util.npcs[self.__dict__["name"]])
+        out = deepcopy(util.memory_npcs[self.__dict__["_id"]])
         return out
     
     def make_spoils(self, num_players: int) -> dict:
@@ -231,6 +243,10 @@ class Npc():
             new_amount = math.ceil(new_amount/num_players)
             spoils_dict[grist_name] = new_amount
         return spoils_dict
+
+    @property
+    def name(self):
+        return self.__dict__["_id"]
 
 class KernalAI(GrieferAI):
     name = "kernel"

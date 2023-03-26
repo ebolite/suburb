@@ -99,9 +99,6 @@ memory_items = {}
 db_instances = db_suburb["instances"]
 memory_instances = {}
 
-npcs = {}
-npcs = readjson(npcs, "npcs")
-
 items = {}
 items = readjson(items, "items")
 
@@ -128,7 +125,10 @@ def saveall():
     for player_name, player_dict in memory_players.items():
         db_players.update_one({"_id": player_name}, {"$set": player_dict}, upsert=True)
     memory_players = {}
-    writejson(npcs, "npcs")
+    global memory_npcs
+    for npc_name, npc_dict in memory_npcs.items():
+        db_npcs.update_one({"_id": npc_name}, {"$set": npc_dict}, upsert=True)
+    memory_npcs = {}
     writejson(items, "items")
     writejson(instances, "instances")
     writejson(codes, "codes")
