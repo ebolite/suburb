@@ -226,6 +226,7 @@ class Npc():
             if amount == 0: break
             spoils_dict[next_grist] = amount
         for grist_name, amount in spoils_dict.copy().items():
+            if num_players == 0: continue
             new_amount = amount * (0.5 + random.random())
             new_amount = math.ceil(new_amount/num_players)
             spoils_dict[grist_name] = new_amount
