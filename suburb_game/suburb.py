@@ -1398,8 +1398,7 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                     card_image.scale = 0.5
             item_label = render.Text(0.6, 1.1, f"{wielded_instance.display_name(True)}")
             def view_wielded_item():
-                if selected_kind is not None:
-                    confirm()
+                confirm()
                 display_item(wielded_instance, last_scene=strife_portfolio_scene, strife=True)
             view_item_button = render.TextButton(0.5, 0.5, 102, 102, "", view_wielded_item)
             view_item_button.draw_sprite = False
@@ -1484,7 +1483,8 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         info_text.fontsize, info_text_2.fontsize = 20, 20
         abstratus_icon = render.Image(0.5, 0.5, "sprites/itemdisplay/strife_card.png")
     def back():
-        confirm()
+        if selected_kind is not None:
+            confirm()
         map_scene()
     back_button = render.Button(0.08, 0.95, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", back, theme=theme)
 
