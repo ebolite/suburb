@@ -8,7 +8,7 @@ import time
 import numpy as np
 import random
 from copy import deepcopy
-from typing import Optional, Union, Callable
+from typing import Optional, Union, Callable, Any
 
 import util
 import config
@@ -815,7 +815,14 @@ class Text(UIElement):
         self.alpha = 255
         self.antialias = True
         self.font_location = "./fonts/courbd.ttf"
+        self.last_dict = {}
+        self.remake_surfs = False
         update_check.append(self)
+
+    def __setattr__(self, __name: str, __value: Any) -> None:
+        if __name in ["color", "outline_color", "outline_depth", "highlight_color", "fontsize", "scale", "alpha", "antialias", "font_location"]:
+            self.remake_surfs = True
+        return super().__setattr__(__name, __value)
 
     def get_width(self):
         text_surf = self.font.render(self.get_text(), self.antialias, self.color)
@@ -824,25 +831,42 @@ class Text(UIElement):
     def get_text(self):
         if self.text_func is not None:
             return str(self.text_func())
-        else: return self.text
+        return self.text
 
     def set_fontsize_by_width(self, width):
         text_surf = self.font.render(self.get_text(), self.antialias, self.color)
         while text_surf.get_width() > width:
             self.fontsize -= 1
             text_surf = self.font.render(self.get_text(), self.antialias, self.color)
+        self.make_text_surfs()
 
-    def update(self):
+    def make_text_surfs(self):
         self.text_surf = self.font.render(self.get_text(), self.antialias, self.color)
-        self.rect = self.text_surf.get_rect()
-        self.rect.x, self.rect.y = self.get_rect_xy(self.text_surf)
+        if self.alpha != 255: self.text_surf.set_alpha(self.alpha)
         if self.highlight_color is not None:
             self.highlight_surf = pygame.Surface((self.rect.w, self.rect.h))
             self.highlight_surf.fill(self.highlight_color)
-            self.blit_surf.blit(self.highlight_surf, (self.rect.x, self.rect.y))
-        if self.outline_color != None:
+        else: self.highlight_surf = None
+        if self.outline_color is not None:
             self.outline_surf = self.font.render(self.get_text(), self.antialias, self.outline_color)
             if self.alpha != 255: self.outline_surf.set_alpha(self.alpha)
+        else:
+            self.outline_surf = None
+
+    def update(self):
+        if self.get_text() != self.text:
+            self.text = self.get_text()
+            self.remake_surfs = True
+        if self.remake_surfs: 
+            self.make_text_surfs()
+            self.remake_surfs = False
+        try: self.text_surf
+        except AttributeError: self.make_text_surfs()
+        self.rect = self.text_surf.get_rect()
+        self.rect.x, self.rect.y = self.get_rect_xy(self.text_surf)
+        if self.highlight_surf is not None:
+            self.blit_surf.blit(self.highlight_surf, (self.rect.x, self.rect.y))
+        if self.outline_surf is not None:
             # self.blit_surf.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y + self.outline_depth)) # +y +x
             # self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y + self.outline_depth)) # +y -x
             # self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y - self.outline_depth)) # -y -x
@@ -851,7 +875,6 @@ class Text(UIElement):
             self.blit_surf.blit(self.outline_surf, (self.rect.x, self.rect.y - self.outline_depth))
             self.blit_surf.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y))
             self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y))
-        if self.alpha != 255: self.text_surf.set_alpha(self.alpha)
         self.blit_surf.blit(self.text_surf, (self.rect.x, self.rect.y))
 
     @property
@@ -1826,6 +1849,7 @@ class FpsCounter(Text):
 
     def update(self):
         self.text = f"FPS: {round(clock.get_fps(), 2)}"
+        self.remake_surfs = True
         super().update()
 
 class TaskBar(UIElement):
