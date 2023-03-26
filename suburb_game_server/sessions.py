@@ -994,7 +994,7 @@ class Player():
         tier = max(tier, 1)
         if "exotic" not in config.grists[grist_name]:
             rate += self.echeladder_rung//2//tier
-        if grist_name in config.gristcategories[self.gristcategory]:
+        if grist_name in config.gristcategories[self.gristcategory] or grist_name == "build":
             rate += self.echeladder_rung//2//tier
         rate += int(amount//25)
         return rate
@@ -1026,6 +1026,7 @@ class Player():
         if not possible_players: return
         random.shuffle(possible_players)
         for player_name in possible_players:
+            if player_name == self.name: continue
             player = Player(player_name)
             grist_name, amount = player.grist_gutter.pop()
             if grist_name in spoils_dict: spoils_dict[grist_name] += amount
