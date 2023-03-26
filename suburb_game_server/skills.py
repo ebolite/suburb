@@ -371,6 +371,7 @@ player_skills.append("abstain")
 abuse = Skill("abuse")
 abuse.description = "The user ABUSES the enemy, causing them to become DEMORALIZED and lowering their HOPE each turn."
 abuse.damage_formula = "user.base_damage * (0.5 + 1.5*coin)"
+abuse.need_damage_to_apply_states = True
 abuse.add_apply_state("demoralize", 3, "1.0")
 abuse.add_vial_cost("vim", "user.power")
 abuse.category = "aggressive"
