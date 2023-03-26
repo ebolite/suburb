@@ -1466,6 +1466,11 @@ add_abstratus_skill("fistkind", anticipate, 75)
     # avale
 add_abstratus_skill("forkkind", arraign, 50)
 
+# glovekind
+add_abstratus_skill("glovekind", arrest, 1)
+add_abstratus_skill("glovekind", arraign, 50)
+add_abstratus_skill("glovekind", anticipate, 75)
+
 # hatchetkind
 add_abstratus_skill("hatchetkind", axe, 1)
 add_abstratus_skill("hatchetkind", artillerate, 50)

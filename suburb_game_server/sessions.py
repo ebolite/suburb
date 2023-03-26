@@ -788,9 +788,10 @@ class Player():
             out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()
         else:
             out["worn_instance_dict"] = None
-        best_seeds = self.session.get_best_seeds()
-        leeching = self.leeching
-        out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
+        if self.entered:
+            best_seeds = self.session.get_best_seeds()
+            leeching = self.leeching
+            out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
         return out
     
     def add_unclaimed_grist(self, spoils_dict: dict):
