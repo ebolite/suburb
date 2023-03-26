@@ -64,9 +64,11 @@ def stat_edge(user_stat: int, target_stat: int) -> float:
     if user_stat == 0 and target_stat == 0: return 1.0
     if user_stat < 0: user_stat = 0
     if target_stat < 0: target_stat = 0
-    edge = (user_stat - target_stat) / (user_stat + target_stat)
-    edge += 1
-    return max(edge, 0.1)
+    try:
+        edge = (user_stat - target_stat) / (user_stat + target_stat)
+        edge += 1
+        return max(edge, 0.1)
+    except ZeroDivisionError: return 1.0
 
 def flip_coin(user: "strife.Griefer", target: "strife.Griefer") -> bool:
     user_luck = user.get_stat("luck")
