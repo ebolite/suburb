@@ -850,23 +850,20 @@ class Strife():
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        (util.sessions[self.__dict__["session_name"]]
-         ["overmaps"][self.__dict__["overmap_name"]]
+        (self.session.overmaps[self.__dict__["overmap_name"]]
          ["maps"][self.__dict__["map_name"]]
          ["rooms"][self.__dict__["room_name"]]
          ["strife_dict"][attr]) = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = (util.sessions[self.__dict__["session_name"]]
-                               ["overmaps"][self.__dict__["overmap_name"]]
+        self.__dict__[attr] = (self.session.overmaps[self.__dict__["overmap_name"]]
                                ["maps"][self.__dict__["map_name"]]
                                ["rooms"][self.__dict__["room_name"]]
                                ["strife_dict"][attr])
         return self.__dict__[attr]
     
     def get_dict(self) -> dict:
-        out = deepcopy(util.sessions[self.__dict__["session_name"]]
-                        ["overmaps"][self.__dict__["overmap_name"]]
+        out = deepcopy(self.session.overmaps[self.__dict__["overmap_name"]]
                         ["maps"][self.__dict__["map_name"]]
                         ["rooms"][self.__dict__["room_name"]]
                         ["strife_dict"])

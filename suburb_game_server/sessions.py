@@ -718,7 +718,7 @@ class Room():
 
 def does_player_exist(id):
     if id not in util.memory_players:
-        if util.db_sessions.find_one({"_id": id}) is None:
+        if util.db_players.find_one({"_id": id}) is None:
             return False
     return True
 
@@ -726,8 +726,9 @@ class Player():
     def __init__(self, id):
         self.__dict__["_id"] = id
         if id not in util.memory_players: # load the session into memory
-            player_details = util.db_sessions.find_one({"_id": id})
+            player_details = util.db_players.find_one({"_id": id})
             if player_details is not None:
+                print(player_details)
                 util.memory_players[id] = player_details
             else:
                 self.create_player(id)
