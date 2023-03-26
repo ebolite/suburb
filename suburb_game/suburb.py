@@ -1398,7 +1398,8 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
                     card_image.scale = 0.5
             item_label = render.Text(0.6, 1.1, f"{wielded_instance.display_name(True)}")
             def view_wielded_item():
-                confirm()
+                if selected_kind is not None:
+                    confirm()
                 display_item(wielded_instance, last_scene=strife_portfolio_scene, strife=True)
             view_item_button = render.TextButton(0.5, 0.5, 102, 102, "", view_wielded_item)
             view_item_button.draw_sprite = False
