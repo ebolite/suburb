@@ -250,7 +250,7 @@ class GambitVial(Vial):
             else:
                 griefer.strife.log(f"{self.combob}x GAMBIT COMBOB{self.combob*'!'}")
 
-gambit = Vial("gambit")
+gambit = GambitVial("gambit")
 gambit.maximum_formula = "{power} + {tac}*6"
 gambit.starting_formula = "{maximum}//2"
 gambit.optional_vial = True
