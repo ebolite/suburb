@@ -728,7 +728,6 @@ class Player():
         if id not in util.memory_players: # load the session into memory
             player_details = util.db_players.find_one({"_id": id})
             if player_details is not None:
-                print(player_details)
                 util.memory_players[id] = player_details
             else:
                 self.create_player(id)
