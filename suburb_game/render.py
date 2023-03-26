@@ -820,7 +820,7 @@ class Text(UIElement):
         update_check.append(self)
 
     def __setattr__(self, __name: str, __value: Any) -> None:
-        if __name in ["color", "outline_color", "outline_depth", "highlight_color", "fontsize", "scale", "alpha", "antialias", "font_location"]:
+        if __name in ["text", "color", "outline_color", "outline_depth", "highlight_color", "fontsize", "scale", "alpha", "antialias", "font_location"]:
             self.remake_surfs = True
         return super().__setattr__(__name, __value)
 
