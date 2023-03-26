@@ -716,69 +716,82 @@ class Room():
                                [attr])
         return self.__dict__[attr]
 
+def does_player_exist(id):
+    if id not in util.memory_players:
+        if util.db_sessions.find_one({"_id": id}) is None:
+            return False
+    return True
 
 class Player():
-    def __init__(self, username):
-        self.__dict__["username"] = username
-        if username not in util.players:
-            util.players[username] = {}
-            self.session_name = None
-            self.overmap_name = None
-            self.map_name = None
-            self.room_name = None
-            self.sylladex: list[str] = []
-            self.moduses: list[str] = []
-            self.strife_portfolio: dict[str, list] = {}
-            self.current_strife_deck: Optional[str] = None
-            self.empty_cards = 5
-            self.unassigned_specibi = 1
-            self.echeladder_rung: int = 1
-            self.grist_cache = {grist_name:0 for grist_name in config.grists}
-            self.grist_gutter: list[list] = []
-            self.leeching: list[str] = []
-            self.wielding: Optional[str] = None
-            self.worn_instance_name: Optional[str] = None
-            self.symbol_dict = {}
-            self.stat_ratios = {
-                "spunk": 1,
-                "vigor": 1,
-                "tact": 1,
-                "luck": 1,
-                "savvy": 1,
-                "mettle": 1,
-            }
-            self.permanent_stat_bonuses = {}
-            # phernalia registry is a default list of deployable objects minus the deployed phernalia
-            self.deployed_phernalia = []
-            # atheneum is the list of stored instances
-            self.atheneum = []
-            # key: grist value: amount
-            self.unclaimed_grist = {}
-            self.unclaimed_rungs = 0
-            self.client_player_name: Optional[str] = None
-            self.server_player_name: Optional[str] = None
-            self.setup = False
-            self.nickname = ""
-            self.noun = ""
-            self.pronouns = []
-            self.interests = []
-            self.aspect = ""
-            self.gameclass = ""
-            self.gristcategory = ""
-            self.secondaryvial = ""
-            self.land_name = ""
-            self.land_session = ""
+    def __init__(self, id):
+        self.__dict__["_id"] = id
+        if id not in util.memory_players: # load the session into memory
+            player_details = util.db_sessions.find_one({"_id": id})
+            if player_details is not None:
+                util.memory_players[id] = player_details
+            else:
+                self.create_player(id)
+
+    def create_player(self, id):
+        util.memory_players[id] = {}
+        self._id = id
+        self.session_name = None
+        self.overmap_name = None
+        self.map_name = None
+        self.room_name = None
+        self.sylladex: list[str] = []
+        self.moduses: list[str] = []
+        self.strife_portfolio: dict[str, list] = {}
+        self.current_strife_deck: Optional[str] = None
+        self.empty_cards = 5
+        self.unassigned_specibi = 1
+        self.echeladder_rung: int = 1
+        self.grist_cache = {grist_name:0 for grist_name in config.grists}
+        self.grist_gutter: list[list] = []
+        self.leeching: list[str] = []
+        self.wielding: Optional[str] = None
+        self.worn_instance_name: Optional[str] = None
+        self.symbol_dict = {}
+        self.stat_ratios = {
+            "spunk": 1,
+            "vigor": 1,
+            "tact": 1,
+            "luck": 1,
+            "savvy": 1,
+            "mettle": 1,
+        }
+        self.permanent_stat_bonuses = {}
+        # phernalia registry is a default list of deployable objects minus the deployed phernalia
+        self.deployed_phernalia = []
+        # atheneum is the list of stored instances
+        self.atheneum = []
+        # key: grist value: amount
+        self.unclaimed_grist = {}
+        self.unclaimed_rungs = 0
+        self.client_player_name: Optional[str] = None
+        self.server_player_name: Optional[str] = None
+        self.setup = False
+        self.nickname = ""
+        self.noun = ""
+        self.pronouns = []
+        self.interests = []
+        self.aspect = ""
+        self.gameclass = ""
+        self.gristcategory = ""
+        self.secondaryvial = ""
+        self.land_name = ""
+        self.land_session = ""
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        util.players[self.__dict__["username"]][attr] = value
+        util.memory_players[self.__dict__["_id"]][attr] = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = util.players[self.__dict__["username"]][attr]
+        self.__dict__[attr] = util.memory_players[self.__dict__["_id"]][attr]
         return self.__dict__[attr]
     
     def get_dict(self):
-        out = deepcopy(util.players[self.__dict__["username"]])
+        out = deepcopy(util.memory_players[self.__dict__["_id"]])
         out["grist_cache_limit"] = self.grist_cache_limit
         out["total_gutter_grist"] = self.total_gutter_grist
         out["available_phernalia"] = self.available_phernalia
@@ -1307,11 +1320,11 @@ class Player():
 
     @property
     def name(self) -> str:
-        return self.__dict__["username"]
+        return self.__dict__["_id"]
     
     @property
     def username(self):
-        return self.__dict__["username"]
+        return self.__dict__["_id"]
 
     @property
     def calledby(self):

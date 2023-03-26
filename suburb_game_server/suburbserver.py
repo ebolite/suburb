@@ -102,13 +102,13 @@ def handle_request(dict):
         out["current_grist_types"] = session.current_grist_types
         return json.dumps(out)
     if intent == "create_character":
-        if character in util.players:
+        if sessions.does_player_exist(character):
             return f"Character id `{character}` has already been made."
         else:
             player = sessions.Player(character)
             player.character_pass_hash = character_pass_hash
             return f"Successfully created `{character}`. You may now log in."
-    if character not in util.players:
+    if not sessions.does_player_exist(character):
         return f"Character {character} does not exist."
     player = sessions.Player(character)
     if not player.verify(character_pass_hash):
@@ -399,7 +399,7 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             else: player.leeching.append(grist_type)
         case "connect":
             client_player_username = content["client_player_username"]
-            if client_player_username not in util.players: return "Player does not exist."
+            if sessions.does_player_exist(client_player_username): return "Player does not exist."
             client_player = sessions.Player(client_player_username)
             if client_player.server_player_name is not None: return "Client already has server."
             if player.client_player_name is not None: return "You already have a client."
@@ -565,7 +565,7 @@ def console_commands(player: sessions.Player, content: str):
             player.goto_room(player.land.housemap.random_valid_room(config.starting_tiles))
         case "tp":
             target_name = " ".join(args)
-            if target_name in util.players:
+            if sessions.does_player_exist(target_name):
                 target = sessions.Player(target_name)
                 player.goto_room(target.room)
         case "unchain":
@@ -577,7 +577,7 @@ def console_commands(player: sessions.Player, content: str):
                 player.client_player_name = None
         case "summon":
             target_name = " ".join(args)
-            if target_name in util.players:
+            if sessions.does_player_exist(target_name):
                 target = sessions.Player(target_name)
                 target.goto_room(player.room)
 

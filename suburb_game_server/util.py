@@ -87,12 +87,17 @@ db_suburb = db_client["suburb"]
 db_sessions = db_suburb["sessions"]
 memory_sessions = {}
 
-session_details = db_sessions.find_one({"_id": "fuck"})
-# sessions = {} 
-# sessions = readjson(sessions, "sessions")
+db_players = db_suburb["players"]
+memory_players = {}
 
-players = {}
-players = readjson(players, "players")
+db_npcs = db_suburb["npcs"]
+memory_npcs = {}
+
+db_items = db_suburb["items"]
+memory_items = {}
+
+db_instances = db_suburb["instances"]
+memory_instances = {}
 
 npcs = {}
 npcs = readjson(npcs, "npcs")
@@ -119,7 +124,10 @@ def saveall():
     for session_name, session_dict in memory_sessions.items():
         db_sessions.update_one({"_id": session_name}, {"$set": session_dict}, upsert=True)
     memory_sessions = {}
-    writejson(players, "players")
+    global memory_players
+    for player_name, player_dict in memory_players.items():
+        db_players.update_one({"_id": player_name}, {"$set": player_dict}, upsert=True)
+    memory_players = {}
     writejson(npcs, "npcs")
     writejson(items, "items")
     writejson(instances, "instances")
