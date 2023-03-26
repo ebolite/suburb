@@ -866,6 +866,7 @@ class Player():
     
     def wear(self, instance_name: str) -> bool:
         instance = alchemy.Instance(instance_name)
+        if self.worn_instance_name is not None: self.unwield()
         if instance.item.size > config.max_worn_size: return False
         if instance_name in self.room.instances:
             self.room.remove_instance(instance_name)
