@@ -1275,7 +1275,8 @@ class Player():
 
     @property
     def grist_cache_limit(self):
-        mult = 1 + self.echeladder_rung//100
+        mult = 1 + self.echeladder_rung//50
+        if self.echeladder_rung > 10: mult += 1
         return 10*self.echeladder_rung*mult
     
     @property
