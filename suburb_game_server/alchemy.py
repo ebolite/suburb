@@ -259,8 +259,6 @@ class InheritedStatistics():
 def get_code_from_name(name: str) -> str: # from name
     if name in util.bases:
         code = util.bases[name]["code"]
-    elif name in util.items:
-        code = util.items[name]["code"]
     else:
         components = Components(name)
         if components.component_1 is None or components.component_2 is None: return "!!!!!!!!"
@@ -271,52 +269,62 @@ def get_code_from_name(name: str) -> str: # from name
             code = binaryoperations.codeor(get_code_from_name(components.component_1), get_code_from_name(components.component_2))
     return code
 
+def does_item_exist(name):
+    print(f"checking if item exists {name}")
+    if name in util.memory_items: return True
+    else: return False
+
 class Item(): # Items are the base of instants.
     # item re-instantiation should caused alchemized items to get their properties based on their substituents
     def __init__(self, name):
         code = get_code_from_name(name)
         if code in util.codes: # if this code already exists, give the item the code corresponds to instead
             name = util.codes[code]
-        else:
-            util.codes[code] = name     # otherwise we assign this object to the new code
-        self.__dict__["name"] = name
-        if self.name not in util.items:
-            util.items[name] = {}
-            self.code = code
-            if self.name in util.bases:
-                statistics = BaseStatistics(name)
+        self.__dict__["_id"] = name
+        if name not in util.memory_items:
+            item_details = util.db_items.find_one({"_id": name})
+            if item_details is not None:
+                util.memory_items[name] = item_details
             else:
-                components = Components(self.name)
-                component_1 = Item(components.component_1)
-                component_2 = Item(components.component_2)
-                operation = components.operation
-                statistics = InheritedStatistics(component_1, component_2, operation)
-            self.descriptors = statistics.descriptors
-            self.adjectives = statistics.adjectives
-            self.base = statistics.base
-            self.power = statistics.power
-            self.inheritpower = statistics.inheritpower
-            self.weight = statistics.weight
-            self.size = statistics.size
-            self.kinds = statistics.kinds
-            self.wearable = statistics.wearable
-            self.description = "None"
-            self.cost = statistics.cost
-            self.use = statistics.use
-            self.onhit_states = statistics.onhit_states
-            self.wear_states = statistics.wear_states
-            self.consume_states = statistics.consume_states
-            self.secret_states = statistics.secret_states
-            self.secretadjectives = statistics.secretadjectives
-            self.forbiddencode = statistics.forbiddencode
+                self.create_item(name)
+
+    def create_item(self, name):
+        util.memory_items[name] = {}
+        if self.name in util.bases:
+            statistics = BaseStatistics(name)
+        else:
+            components = Components(self.name)
+            component_1 = Item(components.component_1)
+            component_2 = Item(components.component_2)
+            operation = components.operation
+            statistics = InheritedStatistics(component_1, component_2, operation)
+        self.descriptors = statistics.descriptors
+        self.adjectives = statistics.adjectives
+        self.base = statistics.base
+        self.power = statistics.power
+        self.inheritpower = statistics.inheritpower
+        self.weight = statistics.weight
+        self.size = statistics.size
+        self.kinds = statistics.kinds
+        self.wearable = statistics.wearable
+        self.description = "None"
+        self.cost = statistics.cost
+        self.use = statistics.use
+        self.onhit_states = statistics.onhit_states
+        self.wear_states = statistics.wear_states
+        self.consume_states = statistics.consume_states
+        self.secret_states = statistics.secret_states
+        self.secretadjectives = statistics.secretadjectives
+        self.forbiddencode = statistics.forbiddencode
+        self.code = get_code_from_name(name)
 
     @property
     def name(self):
-        return self.__dict__["name"]
+        return self.__dict__["_id"]
     
     @name.setter
     def name(self, value):
-        self.__dict__["name"] = value
+        self.__dict__["_id"] = value
 
     @property
     def displayname(self):
@@ -332,15 +340,15 @@ class Item(): # Items are the base of instants.
         return out
     
     def __setattr__(self, attr, value):
-        util.items[self.__dict__["name"]][attr] = value
+        util.memory_items[self.__dict__["_id"]][attr] = value
         self.__dict__[attr] = value
 
     def __getattr__(self, attr):
-        return util.items[self.__dict__["name"]][attr]
+        return util.memory_items[self.__dict__["_id"]][attr]
 
     def get_dict(self):
-        out = deepcopy(util.items[self.__dict__["name"]])
-        out["name"] = self.__dict__["name"]
+        out = deepcopy(util.memory_items[self.__dict__["_id"]])
+        out["name"] = self.__dict__["_id"]
         out["display_name"] = self.displayname
         onhit_states = {}
         wear_states = {}
@@ -377,58 +385,60 @@ class Item(): # Items are the base of instants.
         out["consume_states"] = consume_states
         return out
 
+def does_instance_exist(name):
+    if name in util.memory_instances: return True
+    else: return False
+
 class Instance():
     def __init__(self, identifier: Union[Item, str]):
         if isinstance(identifier, str):
-            self.__dict__["name"] = identifier
+            self.__dict__["_id"] = identifier
+            name = identifier
         else: # get a random name instead
             name = identifier.name + random.choice(ascii_letters)
-            while name in util.instances:
+            while does_instance_exist(name):
                 name += random.choice(ascii_letters)
-            self.__dict__["name"] = name
-            util.instances[self.name] = {}
+            self.__dict__["_id"] = name
+            self.create_instance(name)
             self.item_name = identifier.name
-        if self.name not in util.instances:
-            util.instances[self.name] = {}
-        try:
-            self.punched_code
-            self.punched_item_name
-            self.inserted
-            self.contained
-            self.combined
-            self.carved
-            self.carved_item_name
-            self.computer_data
-            self.color
-        except KeyError:
-            self.punched_code: str = ""
-            self.punched_item_name: str = ""
-            self.inserted: str = ""
-            self.contained: str = ""
-            self.combined: list[str] = []
-            self.carved: str = "00000000"
-            self.carved_item_name: str = "perfectly+generic object"
-            self.computer_data: dict = {"installed_programs": []}
-            self.color: tuple[int, int, int] = (157, 224, 255)
+        if name not in util.memory_instances:
+            instance_details = util.db_instances.find_one({"_id": name})
+            if instance_details is not None:
+                util.memory_instances[name] = instance_details
+            else:
+                self.create_instance(name)
+
+    def create_instance(self, name):
+        util.memory_instances[name] = {}
+        self._id = name
+        self.punched_code: str = ""
+        self.punched_item_name: str = ""
+        self.inserted: str = ""
+        self.contained: str = ""
+        self.combined: list[str] = []
+        self.carved: str = "00000000"
+        self.carved_item_name: str = "perfectly+generic object"
+        self.computer_data: dict = {"installed_programs": []}
+        self.color: tuple[int, int, int] = (157, 224, 255)
 
     @property
     def name(self):
-        return self.__dict__["name"]
+        return self.__dict__["_id"]
     
     @name.setter
     def name(self, value):
-        self.__dict__["name"] = value
+        self.__dict__["_id"] = value
 
     def __setattr__(self, attr, value):
-        util.instances[self.__dict__["name"]][attr] = value
+        util.memory_instances[self.__dict__["_id"]][attr] = value
         self.__dict__[attr] = value
 
     def __getattr__(self, attr):
-        return util.instances[self.__dict__["name"]][attr]
+        return util.memory_instances[self.__dict__["_id"]][attr]
     
     def get_dict(self):
-        output = deepcopy(util.instances[self.__dict__["name"]])
-        output["instance_name"] = self.__dict__["name"]
+        output = deepcopy(util.memory_instances[self.__dict__["_id"]])
+        output["instance_name"] = self.__dict__["_id"]
         if output["contained"] != "":
             output["contained"] = Instance(output["contained"]).get_dict()
         if output["inserted"] != "":

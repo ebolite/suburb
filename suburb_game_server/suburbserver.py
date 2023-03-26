@@ -173,7 +173,7 @@ def handle_request(dict):
                     player.room.strife.add_griefer(player)
         case "carved_item_info":
             dowel_name = content["dowel_name"]
-            if dowel_name not in util.instances: return {}
+            if not alchemy.does_instance_exist(dowel_name): return {}
             dowel_instance = alchemy.Instance(dowel_name)
             carved_code = dowel_instance.carved
             if carved_code in util.codes:
@@ -193,7 +193,7 @@ def handle_request(dict):
             if "additional_data" in content:
                 additional_data = content["additional_data"]
             else: additional_data = None
-            if instance_name not in util.instances: return False
+            if not alchemy.does_instance_exist(instance_name): return False
             instance = alchemy.Instance(instance_name)
             if target_name is not None: target_instance = alchemy.Instance(target_name)
             else: target_instance = None
@@ -247,7 +247,7 @@ def handle_request(dict):
             instances_dict = {}
             valid_names = valid_use_targets(player, alchemy.Instance(instance_name), action_name)
             for name in valid_names:
-                if name not in util.instances: return {}
+                if not alchemy.does_instance_exist(instance_name): return {}
                 instances_dict[name] = alchemy.Instance(name).get_dict()
             return json.dumps(instances_dict)
         case "move":

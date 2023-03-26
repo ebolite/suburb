@@ -1,8 +1,10 @@
 import os
 import json
 import random
+import time
 from pandas import DataFrame
 from copy import deepcopy
+import pymongo
 from pymongo import MongoClient
 
 import binaryoperations
@@ -94,16 +96,10 @@ db_npcs = db_suburb["npcs"]
 memory_npcs = {}
 
 db_items = db_suburb["items"]
-memory_items = {}
+memory_items = {item_dict["_id"]:item_dict for item_dict in db_items.find({})}
 
 db_instances = db_suburb["instances"]
-memory_instances = {}
-
-items = {}
-items = readjson(items, "items")
-
-instances = {}
-instances = readjson(instances, "instances")
+memory_instances = {instance_dict["_id"]:instance_dict for instance_dict in db_instances.find({})}
 
 codes = {} # key: item code value: item name
 codes = readjson(codes, "codes")
@@ -116,23 +112,36 @@ for base in bases:
 print(sorted(kinds))
 
 def saveall():
+    t = time.time()
     print("Saving...")
-    global memory_sessions
-    for session_name, session_dict in memory_sessions.items():
-        db_sessions.update_one({"_id": session_name}, {"$set": session_dict}, upsert=True)
-    memory_sessions = {}
-    global memory_players
-    for player_name, player_dict in memory_players.items():
-        db_players.update_one({"_id": player_name}, {"$set": player_dict}, upsert=True)
-    memory_players = {}
-    global memory_npcs
-    for npc_name, npc_dict in memory_npcs.items():
-        db_npcs.update_one({"_id": npc_name}, {"$set": npc_dict}, upsert=True)
-    memory_npcs = {}
-    writejson(items, "items")
-    writejson(instances, "instances")
+    def callback(session):
+        sessions = session.client["suburb"]["sessions"]
+        players = session.client["suburb"]["players"]
+        npcs = session.client["suburb"]["npcs"]
+        items = session.client["suburb"]["items"]
+        instances = session.client["suburb"]["instances"]
+        global memory_sessions
+        for session_name, session_dict in memory_sessions.copy().items():
+            sessions.update_one({"_id": session_name}, {"$set": session_dict}, upsert=True, session=session)
+        memory_sessions = {}
+        global memory_players
+        for player_name, player_dict in memory_players.copy().items():
+            players.update_one({"_id": player_name}, {"$set": player_dict}, upsert=True, session=session)
+        memory_players = {}
+        global memory_npcs
+        for npc_name, npc_dict in memory_npcs.copy().items():
+            npcs.update_one({"_id": npc_name}, {"$set": npc_dict}, upsert=True, session=session)
+        memory_npcs = {}
+        global memory_items
+        for item_name, item_dict in memory_items.copy().items():
+            items.update_one({"_id": item_name}, {"$set": item_dict}, upsert=True, session=session)
+        global memory_instances
+        for instance_name, instance_dict in memory_instances.copy().items():
+            instances.update_one({"_id": instance_name}, {"$set": instance_dict}, upsert=True, session=session)
+    with db_client.start_session() as session:
+        session.with_transaction(callback)
     writejson(codes, "codes")
-    print("Save complete.")
+    print(f"Save complete. Took {time.time()-t:.2f} seconds.")
 
 for base in bases:
     if "code" in bases[base]:
