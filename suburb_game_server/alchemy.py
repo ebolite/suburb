@@ -511,6 +511,8 @@ for base, base_dict in util.bases.items():
                 missing_states.add(state_name)
             if isinstance(base_dict[key][state_name], list):
                 base_dict[key][state_name] = base_dict[key][state_name][0]
+    code = base_dict["code"]
+    util.codes[code] = base
 util.writejson(util.bases, "bases")
 
 if len(missing_states) > 0:
