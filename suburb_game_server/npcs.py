@@ -187,8 +187,8 @@ class Npc():
                 self.create_npc(name)
 
     def create_npc(self, name):
-        self._id = name
         util.memory_npcs[name] = {}
+        self._id = name
         self.power: int = 0
         self.nickname: str = name
         self.type: str = ""
