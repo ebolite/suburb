@@ -83,7 +83,7 @@ def flip_coin(user: "strife.Griefer", target: "strife.Griefer") -> bool:
 
 class Skill():
     def __init__(self, name):
-        self.name = name
+        self.name: str = name
         skills[name] = self
         self.category = "none"
         self.description = ""
@@ -91,6 +91,7 @@ class Skill():
         self.target_team = False
         self.beneficial = False
         self.parryable = True
+        self.display_message = True
         self.action_cost = 1
         self.num_targets = 1
         self.cooldown = 0
@@ -102,7 +103,6 @@ class Skill():
         self.vial_cost_formulas = {}
         self.aspect_change_formulas = {}
         self.stat_bonus_formulas = {}
-        self.use_message = ""
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
         self.special_effect: Optional[Callable[[strife.Griefer, strife.Griefer], Optional[str]]] = None
@@ -169,9 +169,8 @@ class Skill():
         costs = self.get_costs(user)
         user.pay_costs(costs)
         user.add_cooldown(self.name, self.cooldown)
-        if self.use_message: 
-            message = self.use_message
-            message = message.replace("{user}", user.nickname)
+        if self.display_message:
+            message = f"{user.nickname}: {self.name.capitalize()}."
             user.strife.log(message)
         for target in targets_list:
             self.affect(user, target)
@@ -312,7 +311,6 @@ AGGRIEVE_FORMULA = "user.base_damage * (1 + 0.5*coin)"
 
 aggrieve = Skill("aggrieve")
 aggrieve.description = "Deals damage and is free. An acceptable technique."
-aggrieve.use_message = "{user} aggrieves!"
 aggrieve.damage_formula = AGGRIEVE_FORMULA
 aggrieve.category = "aggressive"
 base_skills.append("aggrieve")
@@ -321,7 +319,6 @@ ASSAIL_FORMULA = "user.base_damage * (1.5 + 0.75*coin)"
 
 assail = Skill("assail")
 assail.description = "Deals additional damage compared to aggrieve, but costs a bit of VIM."
-assail.use_message = "{user} assails!"
 assail.damage_formula = ASSAIL_FORMULA
 assail.category = "aggressive"
 assail.add_vial_cost("vim", "user.power//2")
@@ -331,7 +328,6 @@ AGGRESS_FORMULA = "user.base_damage * (0.25 + 3*coin)"
 
 aggress = Skill("aggress")
 aggress.description = "An all-or-nothing attack which does either massive damage or a very pitiful amount of it."
-aggress.use_message = "{user} aggresses!"
 aggress.damage_formula = AGGRESS_FORMULA
 aggress.category = "aggressive"
 aggress.add_vial_cost("vim", "user.power//2")
@@ -341,7 +337,6 @@ ASSAULT_FORMULA = "user.base_damage * (2 + 0.75*coin)"
 
 assault = Skill("assault")
 assault.description = "Deals a lot of extra damage, but costs a lot of VIM."
-assault.use_message = "{user} assaults!"
 assault.damage_formula = ASSAULT_FORMULA
 assault.category = "aggressive"
 assault.add_vial_cost("vim", "user.power")
@@ -349,7 +344,6 @@ base_skills.append("assault")
 
 abjure = Skill("abjure")
 abjure.description = "The user ABJURES, reducing oncoming damage for 2 turns."
-abjure.use_message = "{user} abjures!"
 abjure.parryable = False
 abjure.beneficial = True
 abjure.target_self = True
@@ -363,7 +357,6 @@ base_skills.append("abjure")
 
 abstain = Skill("abstain")
 abstain.description = "The user ABSTAINS, regenerating some VIM but accomplishing nothing else."
-abstain.use_message = "{user} abstains!"
 abstain.parryable = False
 abstain.beneficial = True
 abstain.target_self = True
@@ -375,7 +368,6 @@ player_skills.append("abstain")
 
 abuse = Skill("abuse")
 abuse.description = "The user ABUSES the enemy, causing them to become DEMORALIZED and lowering their HOPE each turn."
-abuse.use_message = "{user} abuses!"
 abuse.damage_formula = "user.base_damage * (0.5 + 1.5*coin)"
 abuse.add_apply_state("demoralize", 3, "1.0")
 abuse.add_vial_cost("vim", "user.power")
@@ -390,7 +382,6 @@ def abscond_func(user: "strife.Griefer", target: "strife.Griefer"):
 
 abscond = Skill("abscond")
 abscond.description = "Sweet abscond bro!"
-abscond.use_message = "{user} absconds!"
 abscond.parryable = False
 abscond.target_self = True
 abscond.special_effect = abscond_func
@@ -401,7 +392,6 @@ player_skills.append("abscond")
 
 abhor = Skill("abhor")
 abhor.description = "Drains the VIM and ASPECT of the target."
-abhor.use_message = "{user} uses abhorrent magick!"
 abhor.parryable = False
 abhor.action_cost = 0
 abhor.cooldown = 2
@@ -411,7 +401,6 @@ abhor.add_vial_change("aspect", "-user.power//2")
 
 awreak = Skill("awreak")
 awreak.description = "Does a lot of damage."
-awreak.use_message = "{user} awreaks!"
 awreak.need_damage_to_apply_states = True
 awreak.add_apply_state("stun", 1, "1.5")
 awreak.add_vial_cost("vim", "user.power")
@@ -623,7 +612,6 @@ class AspectSkill(Skill):
         super().__init__(skill_name)
         aspect_skills[aspect.name][skill_name] = rung_required
         self.category = "aspected"
-        self.use_message = f">{{user}}: {skill_name.capitalize()}."
 
 # time
 
@@ -839,7 +827,6 @@ class ClassSkill(Skill):
         class_skills[class_name][aspect.name][name] = required_rung
         super().__init__(name)
         self.category = "accolades"
-        self.use_message = f">{{user}}: {name.capitalize()}."
 
 def steal_effect_constructor(aspect: Aspect) -> Callable:
         def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
@@ -1114,18 +1101,15 @@ class AbstratusSkill(Skill):
 
 attack = AbstratusSkill("attack")
 attack.description = f"Does as much damage as AGGRIEVE, but gives you VIM instead of costing it."
-attack.use_message = "{user} attacks!"
 attack.damage_formula = AGGRIEVE_FORMULA
 attack.add_vial_cost("vim", "-user.power//2")
 
 arraign = AbstratusSkill("arraign")
 arraign.description = f"Does as much damage as ASSAIL, but is free."
-arraign.use_message = "{user} arraigns!"
 arraign.damage_formula = ASSAIL_FORMULA
 
 artillerate = AbstratusSkill("artillerate")
 artillerate.description = f"Does as much damage as ASSAULT, but costs as much as ASSAIL."
-artillerate.use_message = "{user} artillerates!"
 artillerate.damage_formula = ASSAULT_FORMULA
 artillerate.add_vial_cost("vim", "user.power//2")
 
@@ -1133,13 +1117,11 @@ AVENGE_FORMULA = "user.base_damage * (3 + coin)"
 
 avenge = AbstratusSkill("avenge")
 avenge.description = f"Does more damage than ASSAULT, but costs more."
-avenge.use_message = "{user} avenges!"
 avenge.damage_formula = AVENGE_FORMULA
 avenge.add_vial_cost("vim", "user.power*1.5")
 
 awaitskill = AbstratusSkill("await")
 awaitskill.description = "The user AWAITS, regenerating some VIM and ASPECT."
-awaitskill.use_message = "{user} awaits!"
 awaitskill.parryable = False
 awaitskill.beneficial = True
 awaitskill.target_self = True
@@ -1149,13 +1131,11 @@ awaitskill.add_vial_cost("aspect", "-user.power//2")
 
 anarchize = AbstratusSkill("anarchize")
 anarchize.description = "Does all-or-nothing damage like AGGRESS, but is free."
-anarchize.use_message = "{user} anarchizes!"
 anarchize.damage_formula = AGGRESS_FORMULA
 
 # shared skills
 antagonize = AbstratusSkill("antagonize")
 antagonize.description = "Applies DEMORALIZE with potency 1.5 to the target for 4 turns and increases your VIM and ASPECT."
-antagonize.use_message = "{user} antagonizes!"
 antagonize.parryable = False
 antagonize.add_apply_state("demoralize", 4, "1.5")
 antagonize.add_vial_cost("vim", "-user.power//2")
@@ -1163,7 +1143,6 @@ antagonize.add_vial_cost("aspect", "-user.power//2")
 
 advance = AbstratusSkill("advance")
 advance.description = "Deals damage and gives you another action this turn."
-advance.use_message = "{user} advances!"
 advance.add_vial_cost("vim", "user.power")
 advance.damage_formula = AGGRIEVE_FORMULA
 advance.action_cost = -1
@@ -1183,14 +1162,12 @@ anticipate.user_skill = "useranticipate"
 
 asphyxiate = AbstratusSkill("asphyxiate")
 asphyxiate.description = "Deals damage and decreases the target's BREATH (savvy)."
-asphyxiate.use_message = "{user} asphyxiates!"
 asphyxiate.damage_formula = ASSAIL_FORMULA
 asphyxiate.add_aspect_change("breath", "-user.power//2")
 asphyxiate.add_vial_cost("vim", "user.power//3")
 
 aslurp = AbstratusSkill("aslurp")
 aslurp.description = f"Heals you and increases your ASPECT."
-aslurp.use_message = "{user} aslurps!"
 aslurp.action_cost = 0
 aslurp.cooldown = 3
 aslurp.add_vial_cost("aspect", "-user.power//2")
@@ -1201,7 +1178,6 @@ aslurp.target_self = True
 
 assemble = AbstratusSkill("assemble")
 assemble.description = f"ASSEMBLES some food, restoring the health vial and VIM of the target."
-assemble.use_message = "{user} assembles food!"
 assemble.cooldown = 2
 assemble.parryable = False
 assemble.beneficial = True
@@ -1215,7 +1191,6 @@ useraxe.add_apply_state("vulnerable", 2, "1.0")
 
 axe = AbstratusSkill("axe")
 axe.description = f"Attacks recklessly, making you VULNERABLE for 2 turns with a 1.0 potency."
-axe.use_message = "{user} chops!"
 axe.action_cost = 0
 axe.cooldown = 1
 axe.damage_formula = AGGRIEVE_FORMULA
@@ -1223,7 +1198,6 @@ axe.user_skill = "useraxe"
 
 aim = AbstratusSkill("aim")
 aim.description = f"Applies FOCUS to yourself this turn with potency 1.5, increasing the chance to flip HEADS."
-aim.use_message = "{user} aims!"
 aim.action_cost = 0
 aim.cooldown = 1
 aim.add_vial_cost("vim", "user.power//3")
@@ -1232,7 +1206,6 @@ aim.target_self = True
 
 aggerate = AbstratusSkill("aggerate")
 aggerate.description = f"Deals damage to the target and all their friends."
-aggerate.use_message = "{user} aggerates damage!"
 aggerate.action_cost = 0
 aggerate.cooldown = 1
 aggerate.add_vial_cost("vim", "user.power//2")
@@ -1240,7 +1213,6 @@ aggerate.target_team = True
 
 admonish = AbstratusSkill("admonish")
 admonish.description = f"Applies DEMORALIZE to the target for two turns and increases the potency by 0.1."
-admonish.use_message = "{user} is very disappointed!"
 admonish.parryable = False
 admonish.action_cost = 0
 admonish.cooldown = 1
@@ -1250,7 +1222,6 @@ admonish.add_state_potency_change("demoralize", "0.1")
 
 applot = AbstratusSkill("applot")
 applot.description = f"Deals damage similar to ASSAIL and applies BLEED with potency 1.0 for 3 turns. Also increases BLEED potency by 0.1."
-applot.use_message = "{user} applots the enemy!"
 applot.add_vial_cost("vim", "user.power//2")
 applot.damage_formula = ASSAIL_FORMULA
 applot.need_damage_to_apply_states = True
@@ -1258,7 +1229,6 @@ applot.add_apply_state("bleed", 3, "1.0")
 
 auspicate = AbstratusSkill("auspicate")
 auspicate.description = "Deals all-or-nothing damage similar to AGGRESS, but costs no actions."
-auspicate.use_message = "{user} auspicates!"
 auspicate.damage_formula = AGGRESS_FORMULA
 auspicate.add_vial_cost("vim", "user.power//2")
 auspicate.action_cost = 0
@@ -1268,7 +1238,6 @@ auspicate.cooldown = 1
 # aerosolkind
 aflame = AbstratusSkill("aflame")
 aflame.description = "Deals damage similar to ASSAIL and applies IGNITE for 3 turns with potency 1 to the target and all their friends."
-aflame.use_message = "{user} flames it up!"
 aflame.damage_formula = ASSAIL_FORMULA
 aflame.cooldown = 2
 aflame.target_team = True
@@ -1279,7 +1248,6 @@ aflame.add_vial_cost("vim", "user.power//1.5")
 # batkind
 affrap = AbstratusSkill("affrap")
 affrap.description = "Deals damage similar to ASSAULT and applies STUN with potency 2.0 which drains VIM."
-affrap.use_message = "{user} affraps!"
 affrap.damage_formula = ASSAULT_FORMULA
 affrap.add_apply_state("stun", 1, "2.0")
 affrap.need_damage_to_apply_states = True
@@ -1300,7 +1268,6 @@ athleticize.add_stat_bonus("spunk", "user.power//18")
 # bladekind
 againstand = AbstratusSkill("againstand")
 againstand.description = "Deals more damage the larger the difference is between the user and the target's power."
-againstand.use_message = "{user} stands against!"
 againstand.add_vial_cost("vim", "user.power//2")
 againstand.damage_formula = AGGRIEVE_FORMULA + " * (target.power / user.power) * 1.5"
 
@@ -1312,7 +1279,6 @@ userabdicate.parryable = False
 
 abdicate = AbstratusSkill("abdicate")
 abdicate.description = f"Deals a lot of damage but applies DISARM to you for 3 turns, which prevents you from ARSENALIZING."
-abdicate.use_message = "{user} smashes the bottle!"
 abdicate.cooldown = 1
 abdicate.damage_formula = AVENGE_FORMULA
 abdicate.user_skill = "userabdicate"
@@ -1327,7 +1293,6 @@ def assober_effect(user: "strife.Griefer", target: "strife.Griefer"):
 
 assober = AbstratusSkill("assober")
 assober.description = f"Increases your ASPECT and cures a negative state."
-assober.use_message = "{user} sobers up!"
 assober.action_cost = 0
 assober.cooldown = 2
 assober.add_vial_cost("aspect", "-user.power//2")
@@ -1350,7 +1315,6 @@ apothegmatize.add_vial_cost("vim", "-user.power//2")
 # fistkind
 arrest = AbstratusSkill("arrest")
 arrest.description = "Deals damage and applies DISARM and VULNERABLE with potency 1.5 for 2 turns."
-arrest.use_message = "{user} arrests!"
 arrest.add_vial_cost("vim", "user.power//2")
 arrest.damage_formula = ASSAIL_FORMULA
 arrest.add_apply_state("disarm", 2, "1.0")
@@ -1360,7 +1324,6 @@ arrest.need_damage_to_apply_states = True
 # knifekind
 assassinate = AbstratusSkill("assassinate")
 assassinate.description = "Deals more damage to the target the higher their LIFE. Also applies BLEED for 3 turns with a potency based on their missing health."
-assassinate.use_message = "{user} assassinates!"
 assassinate.add_vial_cost("vim", "user.power")
 assassinate.damage_formula = "user.base_damage * (4 + 3*coin) * target.life.ratio"
 assassinate.cooldown = 3
@@ -1389,7 +1352,6 @@ aunter.parryable = False
 # rollingpinkind
 araze = AbstratusSkill("araze")
 araze.description = f"Deals damage and reduces the target's SPACE."
-araze.use_message = "{user} flattens the enemy!"
 araze.damage_formula = ASSAIL_FORMULA
 araze.add_aspect_change("space", "-user.power//3")
 araze.add_vial_cost("vim", "user.power//3")
@@ -1397,7 +1359,6 @@ araze.add_vial_cost("vim", "user.power//3")
 # sawkind
 assanguinate = AbstratusSkill("assanguinate")
 assanguinate.description = f"Deals damage similar to assail and applies BLEED with potency 2 for 3 turns, which deals damage over time. Also increases BLEED potency by 0.2."
-assanguinate.use_message = "{user} assanguinates!"
 assanguinate.damage_formula = ASSAIL_FORMULA
 assanguinate.add_vial_cost("vim", "user.power//2")
 assanguinate.add_apply_state("bleed", 3, "2.0")
@@ -1407,7 +1368,6 @@ assanguinate.need_damage_to_apply_states = True
 # shotgunkind
 adjudge = AbstratusSkill("adjudge")
 adjudge.description = f"Uses two actions, but deals massive damage."
-adjudge.use_message = "{user} is the judge."
 adjudge.damage_formula = "user.base_damage * (6 + 3*coin)"
 adjudge.add_vial_cost("vim", "user.power")
 adjudge.action_cost = 2
@@ -1415,7 +1375,6 @@ adjudge.action_cost = 2
 # umbrellakind
 abear = AbstratusSkill("abear")
 abear.description = "ABJURES for three turns and restores the user's health and VIM."
-abear.use_message = "{user} weathers the storm!"
 abear.add_vial_cost("vim", "-user.power//3")
 abear.add_vial_change("hp", "user.power//3")
 abear.parryable = False
