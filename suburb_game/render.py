@@ -844,7 +844,8 @@ class Text(UIElement):
         self.text_surf = self.font.render(self.get_text(), self.antialias, self.color)
         if self.alpha != 255: self.text_surf.set_alpha(self.alpha)
         if self.highlight_color is not None:
-            self.highlight_surf = pygame.Surface((self.rect.w, self.rect.h))
+            text_rect = self.text_surf.get_rect()
+            self.highlight_surf = pygame.Surface((text_rect.w, text_rect.h))
             self.highlight_surf.fill(self.highlight_color)
         else: self.highlight_surf = None
         if self.outline_color is not None:
