@@ -32,7 +32,8 @@ def threaded_client(connection):
             session_pass_hash = dict["session_pass_hash"]
             if intent == "create_session":
                 if len(session_name) > 32: reply = "fuck you"
-                elif session_name in util.sessions:
+                session_result = util.db_sessions.find_one({"_id": session_name})
+                if session_result is not None:
                     reply = f"The session `{session_name}` is already registered."
                 else:
                     session = sessions.Session(session_name)
@@ -42,7 +43,11 @@ def threaded_client(connection):
             elif intent == "crash_me":
                 raise AssertionError
             else:
-                if session_name in util.sessions:
+                if session_name not in util.memory_sessions:
+                    session_result = util.db_sessions.find_one({"_id": session_name})
+                    if session_result is None: reply = f"Invalid session name `{session_name}`."
+                    else: session = sessions.Session(session_name)
+                if session_name in util.memory_sessions:
                     session = sessions.Session(session_name)
                     if session_pass_hash == session.pass_hash:
                         reply = handle_request(dict)
