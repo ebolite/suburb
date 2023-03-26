@@ -788,10 +788,9 @@ class Player():
             out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()
         else:
             out["worn_instance_dict"] = None
-        if self.entered:
-            best_seeds = self.session.get_best_seeds()
-            leeching = self.leeching
-            out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
+        best_seeds = self.session.get_best_seeds()
+        leeching = self.leeching
+        out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
         return out
     
     def add_unclaimed_grist(self, spoils_dict: dict):
@@ -997,7 +996,7 @@ class Player():
         tier = max(tier, 1)
         if "exotic" not in config.grists[grist_name]:
             rate += self.echeladder_rung//2//tier
-        if grist_name in config.gristcategories[self.gristcategory] or grist_name == "build":
+        if (self.gristcategory in config.gristcategories and grist_name in config.gristcategories[self.gristcategory]) or grist_name == "build":
             rate += self.echeladder_rung//2//tier
         rate += int(amount//25)
         return rate

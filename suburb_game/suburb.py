@@ -1274,6 +1274,8 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             selected_kind = list(strife_portfolio.keys())[0]
         else:
             selected_kind = None
+    def back():
+        map_scene()
     if selected_kind is not None:
         # main box
         symbol = render.Symbol(0.825, 0.6, player_dict["symbol_dict"])
@@ -1323,6 +1325,9 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
             for stat in stats:
                 ratios[stat] = int(stat_boxes[stat].text)
             client.requestplus(intent="set_stat_ratios", content={"ratios": ratios})
+        def back():
+            confirm()
+            map_scene()
         for i, stat in enumerate(stats):
             box_width = 64
             fontsize = 20
@@ -1482,10 +1487,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         info_text.color, info_text_2.color = theme.light, theme.light
         info_text.fontsize, info_text_2.fontsize = 20, 20
         abstratus_icon = render.Image(0.5, 0.5, "sprites/itemdisplay/strife_card.png")
-    def back():
-        if selected_kind is not None:
-            confirm()
-        map_scene()
     back_button = render.Button(0.08, 0.95, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", back, theme=theme)
 
 @scene
