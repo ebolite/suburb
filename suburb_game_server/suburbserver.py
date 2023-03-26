@@ -690,6 +690,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
                 code_to_punch = target_instance.item.code
             else:
                 code_to_punch = additional_data
+                print(f"punching {code_to_punch}")
             if len(code_to_punch) != 8: print("invalid code"); return False
             for char in code_to_punch:
                 if char not in binaryoperations.bintable: print("invalid code"); return False
@@ -701,6 +702,9 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
                 if target_instance is not None: 
                     inserted_instance.punched_item_name = target_instance.item.displayname
                     print(f"punching {inserted_instance.name} with {target_instance.name}")
+                else:
+                    new_instance = alchemy.Instance(util.codes[code_to_punch])
+                    inserted_instance.punched_item_name = new_instance.item.displayname
                 return True
             # if both items are real and not just bullshit
             if inserted_instance.punched_code in util.codes and code_to_punch in util.codes:
