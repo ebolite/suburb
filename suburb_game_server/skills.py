@@ -172,7 +172,7 @@ class Skill():
         user.pay_costs(costs)
         user.add_cooldown(self.name, self.cooldown)
         if self.display_message:
-            message = f"{user.nickname}: {self.name.capitalize()}."
+            message = f"->{user.nickname}: {self.name.capitalize()}."
             user.strife.log(message)
         for target in targets_list:
             self.affect(user, target)
