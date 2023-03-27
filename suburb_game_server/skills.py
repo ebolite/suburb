@@ -96,7 +96,7 @@ class Skill():
         self.display_message = True
         self.action_cost = 1
         self.num_targets = 1
-        self.cooldown = 0
+        self.cooldown = 1
         self.damage_formula = "0"
         self.apply_states = {}
         self.state_potency_changes = {}
