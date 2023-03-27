@@ -816,7 +816,7 @@ balance_changes = {
     "rogue": {"doom": 4, "void": 4},
     "page": {"doom": 5, "void": 5},
     "heir": {"doom": 2, "void": 2},
-    "bard": {"doom": 0.75},
+    "bard": {"time": 1.5, "life": 1.25},
 }
 
 def get_balance_mult(class_name, aspect: Aspect):
