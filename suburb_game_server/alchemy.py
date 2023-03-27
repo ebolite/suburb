@@ -314,6 +314,8 @@ class Item(): # Items are the base of instants.
         self.secretadjectives = statistics.secretadjectives
         self.forbiddencode = statistics.forbiddencode
         self.code = get_code_from_name(name)
+        if self.code not in util.codes:
+            util.codes[self.code] = name
 
     @property
     def name(self):

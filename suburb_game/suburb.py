@@ -709,7 +709,7 @@ def choosevial():
 
 @scene
 def choosemodus(page=0):
-    def modusbutton(modus):
+    def modusbutton(modus: "sylladex.Modus"):
         def out():
             character_info["modus"] = modus
             choosegrists()

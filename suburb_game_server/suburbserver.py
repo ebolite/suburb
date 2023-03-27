@@ -173,7 +173,7 @@ def handle_request(dict):
                     player.room.strife.add_griefer(player)
         case "carved_item_info":
             dowel_name = content["dowel_name"]
-            if not alchemy.does_instance_exist(dowel_name): return {}
+            if not alchemy.does_instance_exist(dowel_name): print("dowel does not exist"); return {}
             dowel_instance = alchemy.Instance(dowel_name)
             carved_code = dowel_instance.carved
             if carved_code in util.codes:
