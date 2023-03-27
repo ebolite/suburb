@@ -515,7 +515,9 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
             box_y = padding + row_index*(box_h + padding*2)
             for column_index, instance in enumerate(row):
                 box_x = padding + column_index*(box_w + padding*2)
-                item_box = make_item_box(instance.item, box_x, box_y, box_w, box_h, info_window.theme, get_button_func(instance.name), selected=True, label=True, dowel=True)
+                if current_selected_atheneum == instance.name: selected = True
+                else: selected = False
+                item_box = make_item_box(instance.item, box_x, box_y, box_w, box_h, info_window.theme, get_button_func(instance.name), selected=selected, label=True)
                 item_box.bind_to(info_window, True)
                 results_sprites.append(item_box)
                 recycle_button = render.Button(box_w-16-padding, box_h-16-padding, "sprites/buttons/trash.png", None, get_recycle_button_func(instance.name))
