@@ -1503,6 +1503,11 @@ def spoils(grist_dict: dict, echeladder_rungs: int):
         echeladder_line_2 = render.Text(0.5, 0.6, f"Your grist cache limit is now {cache_limit}!")
         echeladder_line_2.color = current_theme().dark
     back_button = render.Button(0.08, 0.95, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", map_scene)
+    back_button.click_keys = [pygame.K_SPACE]
+    back_button_label = render.Text(0.5, -0.15, "(space)")
+    back_button_label.bind_to(back_button)
+    back_button_label.fontsize = 12
+    back_button_label.color = current_theme().dark
 
 def continue_button_func():
     client.load_client_data()

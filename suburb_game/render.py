@@ -534,9 +534,11 @@ class Button(UIElement):
         self.invert_on_click = False
         self.overlay_on_click = False
         self.overlay_intensity = 30
+        self.click_keys = []
         click_check.append(self)
         update_check.append(self)
         mouseup_check.append(self)
+        key_check.append(self)
 
     def update(self):
         if self.draw_condition is not None and not self.draw_condition(): return
@@ -600,6 +602,9 @@ class Button(UIElement):
                     self.altclick()
             else:
                 self.onpress()
+
+    def keypress(self, event):
+        if event.key in self.click_keys: self.onpress()
 
 class InputTextBox(UIElement):
     def __init__(self, x, y, w=None, h=None, theme=themes.default):
