@@ -584,12 +584,12 @@ blood.ratio_mult = 1.3
 life = Aspect("life")
 life.is_vial = True
 life.vials = ["hp"]
-life.adjustment_divisor = 0.5
+life.adjustment_divisor = 1/3
 
 doom = NegativeAspect("doom")
 doom.is_vial = True
 doom.vials = ["hp"]
-doom.adjustment_divisor = 0.5
+doom.adjustment_divisor = 1/3
 doom.ratio_mult = 2
 doom.balance_mult = 1.3
 
