@@ -517,6 +517,8 @@ class Griefer():
         self.states[state_name]["duration"] += duration
         state = stateseffects.states[state_name]
         state.on_apply(self)
+        coin = skills.flip_coin(applier, self)
+        if coin or state.beneficial: self.add_state_potency(state_name, potency/10)
 
     def remove_state(self, state_name):
         if state_name in self.states:

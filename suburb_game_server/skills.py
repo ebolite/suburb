@@ -248,7 +248,6 @@ class Skill():
                     if coin: duration = 2
                     else: duration = 1
                 target.apply_state(state_name, user, potency, duration)
-                if coin: target.add_state_potency(state_name, potency/10)
                 if target.death_break(): return
         # vial change step
         for vial_name in self.vial_change_formulas:
