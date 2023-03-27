@@ -2,7 +2,7 @@ import random
 from typing import Optional, Union
 from string import ascii_letters
 from copy import deepcopy
-import bisect
+import difflib
 import time
 
 import util
@@ -492,10 +492,8 @@ def display_item(item: Item):
     return out
 
 def paradoxify(paradox_code: str) -> tuple[Item, Item]:
-    codes = sorted(list(util.codes))
-    bisect_index = bisect.bisect(codes, paradox_code)
-    left_code = codes[bisect_index-1]
-    right_code = codes[bisect_index]
+    codes = list(util.codes)
+    left_code, right_code = difflib.get_close_matches(paradox_code, codes, n=2, cutoff=0)
     item_1_name = util.codes[left_code]
     item_2_name = util.codes[right_code]
     return Item(item_1_name), Item(item_2_name)
@@ -563,11 +561,9 @@ if len(missing_states) > 0:
 
 if __name__ == "__main__":
     t = time.time()
-    paradox_code = "FFFFFFFF"
-    codes = sorted(list(util.codes))
-    bisect_index = bisect.bisect(codes, paradox_code)
-    left_code = codes[bisect_index-1]
-    right_code = codes[bisect_index]
+    paradox_code = "bDaaT!eF"
+    codes = list(util.codes)
+    left_code, right_code = difflib.get_close_matches(paradox_code, codes, n=2, cutoff=0)
     print(f"left code {left_code} ({util.codes[left_code]}) right code {right_code} ({util.codes[right_code]}) took {time.time()-t:.2f} secs")
     # name_desc = {}
     # for base in util.bases:
