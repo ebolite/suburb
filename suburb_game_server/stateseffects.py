@@ -160,7 +160,7 @@ stun.tooltip = "Significantly reduces VIM. Can only be applied once per target p
 class FreezeState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
         if "frozen" not in griefer.tags:
-            value = -4 * self.applier_stats(griefer)["power"] * self.potency(griefer)
+            value = 4 * self.applier_stats(griefer)["power"] * self.potency(griefer)
             value = int(value)
             griefer.take_damage(value, source="FREEZE")
             griefer.tags.append("frozen")
