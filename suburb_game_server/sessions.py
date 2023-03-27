@@ -1036,7 +1036,7 @@ class Player():
             value = best_seeds[grist_type]//len(leeching)
             spoils_dict[grist_type] = value
         possible_players = [player_name for player_name in self.session.current_players if Player(player_name).grist_gutter and player_name is not self.name]
-        if not possible_players: return
+        if not possible_players: return self.add_unclaimed_grist(spoils_dict)
         random.shuffle(possible_players)
         for player_name in possible_players:
             if player_name == self.name: continue
