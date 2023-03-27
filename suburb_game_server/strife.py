@@ -91,12 +91,18 @@ class Vial():
 
     def use_skill(self, griefer: "Griefer", skill: "skills.Skill"):
         pass
-    
+
+class HpVial(Vial):
+    def new_turn(self, griefer: "Griefer"):
+        regen_mult = 0.025 + 0.15 * (griefer.get_stat("tact")/griefer.get_stat("power"))
+        regen = griefer.get_vial_maximum("hp") * regen_mult
+        regen = int(regen)
+        griefer.change_vial("hp", regen)
+
 hp = Vial("hp")
 hp.maximum_formula = "{power}*3 + {vig}*18"
 hp.starting_formula = "{maximum}"
 hp.gel_vial = True
-hp.tact_vial = True
 
 vim = Vial("vim")
 vim.maximum_formula = "{power} + {tac}*6"
