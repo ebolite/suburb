@@ -1229,6 +1229,7 @@ applot.add_vial_cost("vim", "user.power//2")
 applot.damage_formula = ASSAIL_FORMULA
 applot.need_damage_to_apply_states = True
 applot.add_apply_state("bleed", 3, "1.0")
+applot.add_state_potency_change("bleed", "0.1")
 
 auspicate = AbstratusSkill("auspicate")
 auspicate.description = "Deals all-or-nothing damage similar to AGGRESS, but costs no actions."
