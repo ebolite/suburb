@@ -1196,7 +1196,7 @@ class Player():
         else:
             destination_map = destination_player.land.housemap
             room = destination_map.random_valid_room([str(gate_num)])
-            if not room.map.find_room(room.x, room.y+1).above_solid_ground(): return False
+            if not room.above_solid_ground(): return False
         self.goto_room(room)
         return True
 
