@@ -10,7 +10,7 @@ import render
 import suburb
 import themes
 
-moduses = {}
+moduses: dict[str, "Modus"] = {}
 
 class Item():
     def __init__(self, item_name: str, item_dict: dict):
@@ -221,6 +221,8 @@ class Modus():
         self.theme: themes.Theme = themes.array
         self.label_color: pygame.Color = pygame.Color(36, 214, 255)
         self.can_uncaptchalogue = True
+        self.description = ""
+        self.difficulty = ""
         moduses[name] = self
 
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
@@ -504,6 +506,8 @@ stack_modus.bar_path = "sprites/moduses/stack_bar.png"
 stack_modus.thumb_path = "sprites/moduses/stack_card_thumb.png"
 stack_modus.theme = themes.stack
 stack_modus.can_uncaptchalogue = False
+stack_modus.description = "First in, last out. Annoying but simple."
+stack_modus.difficulty = "medium"
 
 class Queue(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):
@@ -526,6 +530,8 @@ queue_modus.bar_path = "sprites/moduses/queue_bar.png"
 queue_modus.thumb_path = "sprites/moduses/queue_card_thumb.png"
 queue_modus.theme = themes.queue
 queue_modus.can_uncaptchalogue = False
+queue_modus.description = "First in, first out. Stack's ugly twin."
+queue_modus.difficulty = "medium"
 
 class Array(Modus):
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
@@ -539,3 +545,5 @@ array_modus.bar_path = "sprites/moduses/array_bar.png"
 array_modus.thumb_path = "sprites/moduses/array_card_thumb.png"
 array_modus.theme = themes.array
 array_modus.label_color = themes.array.white
+array_modus.description = "You think it's cool that things don't always have to be a federal fucking issue."
+array_modus.difficulty = "easy"

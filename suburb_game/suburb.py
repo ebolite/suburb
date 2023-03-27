@@ -21,6 +21,7 @@ import client
 import config
 import themes
 import strife
+import sylladex
 from sylladex import Instance, Sylladex, Modus
 
 def current_theme():
@@ -707,34 +708,37 @@ def choosevial():
     backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", chooseinterests)
 
 @scene
-def choosemodus():
+def choosemodus(page=0):
     def modusbutton(modus):
         def out():
             character_info["modus"] = modus
             choosegrists()
         return out
+    modus_to_display = list(sylladex.moduses)[page]
+    modus = sylladex.moduses[modus_to_display]
     logtext = render.Text(.5, 0.05, "Select your starting FETCH MODUS.")
-    stack_image = render.Button(0.11, 0.45, "sprites/moduses/stack_card.png", "sprites/moduses/stack_card_hover.png", modusbutton("stack"))
-    stack_label = render.Text(0.55, 1.05, "stack")
-    stack_label.bind_to(stack_image)
-    stack_description = render.Text(0.55, 1.13, "first in, last out")
-    stack_description.fontsize = 20
-    stack_description.bind_to(stack_image)
-    queue_image = render.Button(0.36, 0.45, "sprites/moduses/queue_card.png", "sprites/moduses/queue_card_hover.png", modusbutton("queue"))
-    queue_label = render.Text(0.55, 1.05, "queue")
-    queue_label.bind_to(queue_image)
-    queue_description = render.Text(0.55, 1.13, "first in, first out")
-    queue_description.fontsize = 20
-    queue_description.bind_to(queue_image)
-    array_image = render.Button(0.61, 0.45, "sprites/moduses/array_card.png", "sprites/moduses/array_card_hover.png", modusbutton("array"))
-    array_label = render.Text(0.55, 1.05, "array")
-    array_label.bind_to(array_image)
-    array_description = render.Text(0.55, 1.13, "no bullshit, no fun")
-    array_description.fontsize = 20
-    array_description.bind_to(array_image)
-    scratch_image = render.Button(0.86, 0.45, "sprites/moduses/array_card.png", "sprites/moduses/array_card.png", placeholder)
+    modus_image = render.Button(0.5, 0.45, modus.front_path, None, modusbutton(modus_to_display))
+    modus_label = render.Text(0.55, 1.05, modus.modus_name)
+    modus_label.bind_to(modus_image)
+    modus_description = render.Text(0.55, 1.13, modus.description)
+    modus_description.fontsize = 20
+    modus_description.bind_to(modus_image)
+    modus_difficulty = render.Text(0.55, 1.23, f"Difficulty: {modus.difficulty}")
+    modus_difficulty.fontsize = 20
+    modus_difficulty.bind_to(modus_image)
+    def rightpage():
+        new_page = page+1
+        try: list(sylladex.moduses)[new_page]
+        except IndexError: new_page = 0
+        choosemodus(new_page)
+    def leftpage():
+        new_page = page-1
+        if new_page < 0:
+            new_page = len(sylladex.moduses) - 1
+        choosemodus(new_page)
+    leftbutton = render.TextButton(0.3, 0.5, 96, 32, "<-", leftpage)
+    rightbutton = render.TextButton(0.7, 0.5, 96, 32, "->", rightpage)
     backbutton = render.Button(0.1, 0.07, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", choosevial)
-
     ...
 
 @scene
@@ -1599,6 +1603,7 @@ if __name__ == "__main__":
     render.render()
     if client.connect(): # connect to server
         title() # normal game start
+        choosemodus()
     else:
         connection_screen()
     main()
