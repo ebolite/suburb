@@ -241,13 +241,14 @@ class Skill():
         if damage > 0:
             for state_name, potency in user.onhit_states.items():
                 # duration is 1-2 for on-hits
+                coin = flip_coin(user, target)
                 if state_name not in target.states:
                     duration = 2
                 else:
-                    coin = flip_coin(user, target)
                     if coin: duration = 2
                     else: duration = 1
                 target.apply_state(state_name, user, potency, duration)
+                if coin: target.add_state_potency(state_name, potency/10)
                 if target.death_break(): return
         # vial change step
         for vial_name in self.vial_change_formulas:
