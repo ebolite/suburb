@@ -34,6 +34,10 @@ stack = Theme("stack")
 stack.light = Color(255, 6, 124)
 stack.dark = Color(154, 36, 70)
 
+scratch_and_sniff = Theme("scratch_and_sniff")
+scratch_and_sniff.dark = Color(72, 0, 228)
+scratch_and_sniff.light = Color(174, 0, 225)
+
 blood = Theme("blood")
 blood.white = Color(184, 15, 20)
 blood.light = Color(62, 22, 1)

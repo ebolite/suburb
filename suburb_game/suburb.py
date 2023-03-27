@@ -1075,7 +1075,11 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
                 if contained_image is not None:
                     contained_image.bind_to(image)
                     contained_image.scale = 0.5
-        label = render.Text(0.55, 0.91, util.filter_item_name(instance.item.display_name))
+        if modus is None:
+            label_text = util.filter_item_name(instance.display_name())
+        else:
+            label_text = modus.get_instance_name(instance, short=False)
+        label = render.Text(0.55, 0.91, label_text)
         label.bind_to(captcha_image)
         label.color = text_color
         label.outline_color = text_outline_color
@@ -1105,7 +1109,6 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     power_label.color = theme.dark
     power_label.fontsize = 54
     power_label.set_fontsize_by_width(330)
-
     # states
 
     STATE_PADDING = 3
@@ -1603,7 +1606,6 @@ if __name__ == "__main__":
     render.render()
     if client.connect(): # connect to server
         title() # normal game start
-        choosemodus()
     else:
         connection_screen()
     main()

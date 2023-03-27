@@ -1,5 +1,6 @@
 import os
 import time
+import random
 from typing import Union, Optional, Callable
 import pygame
 
@@ -28,6 +29,8 @@ class Item():
         self.use: list[str] = self.item_dict["use"] or []
         self.cost: dict[str, float] = self.item_dict["cost"]
         self.display_name: str = self.item_dict["display_name"]
+        self.adjectives: list[str] = self.item_dict["adjectives"]
+        self.secretadjectives: list[str] = self.item_dict["secretadjectives"]
 
     @property
     def true_cost(self):
@@ -249,6 +252,9 @@ class Modus():
             sylladex.data_list.append(instance_name)
         return invalid_instance_names
     
+    def get_instance_name(self, instance: Instance, short=False):
+        return instance.display_name(short=short)
+    
     def get_eject_velocity(self) -> int:
         return self.eject_velocity
     
@@ -316,7 +322,7 @@ class Modus():
                 if instance.item.name == "punched card":
                     print(f"spawning punches {instance.punched_code}")
                     render.spawn_punches(card_image, instance.punched_code, 18, 31, w=40, h=60)
-            label_text = instance.display_name(short=True)
+            label_text = self.get_instance_name(instance, True)
             card_label = render.Text(0.49, 0.9, label_text)
             card_label.set_fontsize_by_width(90)
             card_label.bind_to(card_thumb)
@@ -547,3 +553,22 @@ array_modus.theme = themes.array
 array_modus.label_color = themes.array.white
 array_modus.description = "You think it's cool that things don't always have to be a federal fucking issue."
 array_modus.difficulty = "easy"
+
+class ScratchAndSniff(Modus):
+    def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
+        if sylladex.empty_cards < len(sylladex.data_list) + 1: return False
+        return True
+    
+    def get_instance_name(self, instance: Instance, short):
+        possible_words = instance.item.adjectives + instance.item.secretadjectives
+        if short: return random.choice(possible_words)
+        chosen = random.choices(possible_words, k=2)
+        name = f" ".join(chosen)
+        return name
+    
+scratch_and_sniff_modus = ScratchAndSniff("scratch and sniff")
+scratch_and_sniff_modus.front_path = "sprites/moduses/scratch_and_sniff_card.png"
+scratch_and_sniff_modus.back_path = "sprites/moduses/scratch_and_sniff_card_flipped.png"
+scratch_and_sniff_modus.bar_path = "sprites/moduses/scratch_and_sniff_bar.png"
+scratch_and_sniff_modus.theme = themes.scratch_and_sniff
+scratch_and_sniff_modus.label_color = pygame.Color(11, 193, 125)
