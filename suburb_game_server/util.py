@@ -141,7 +141,7 @@ def saveall():
             if npc_name not in npcs_data: npcs_to_insert.append(npc_dict)
             elif npc_dict != npcs_data[npc_name]:
                 npcs.update_one({"_id": npc_name}, {"$set": npc_dict}, upsert=True, session=session)
-        npcs.insert_many(npcs_to_insert, session=session)
+        if npcs_to_insert: npcs.insert_many(npcs_to_insert, session=session)
 
         global memory_items
         items_to_insert = []
@@ -149,7 +149,7 @@ def saveall():
             if item_name not in items_data: items_to_insert.append(item_dict)
             elif item_dict != items_data[item_name]:
                 items.update_one({"_id": item_name}, {"$set": item_dict}, upsert=True, session=session)
-        items.insert_many(items_to_insert, session=session)
+        if items_to_insert: items.insert_many(items_to_insert, session=session)
 
         global memory_instances
         instances_to_insert = []
@@ -157,7 +157,7 @@ def saveall():
             if instance_name not in instances_data: instances_to_insert.append(instance_dict)
             elif instance_dict != instances_data[instance_name]:
                 instances.update_one({"_id": instance_name}, {"$set": instance_dict}, upsert=True, session=session)
-        instances.insert_many(instances_to_insert, session=session)
+        if instances_to_insert: instances.insert_many(instances_to_insert, session=session)
     with db_client.start_session() as session:
         session.with_transaction(callback)
     writejson(codes, "codes")
