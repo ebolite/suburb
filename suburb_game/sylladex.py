@@ -505,6 +505,21 @@ class Stack(Modus):
         empty_cards = ["" for i in range(remaining_cards)]
         return instances+empty_cards
 
+class Array(Modus):
+    def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
+        if sylladex.empty_cards < len(sylladex.data_list) + 1: return False
+        return True
+
+array_modus = Array("array")
+array_modus.front_path = "sprites/moduses/array_card.png"
+array_modus.back_path = "sprites/moduses/array_card_flipped.png"
+array_modus.bar_path = "sprites/moduses/array_bar.png"
+array_modus.thumb_path = "sprites/moduses/array_card_thumb.png"
+array_modus.theme = themes.array
+array_modus.label_color = themes.array.white
+array_modus.description = "You think it's cool that things don't always have to be a federal fucking issue."
+array_modus.difficulty = "normal video game"
+
 stack_modus = Stack("stack")
 stack_modus.front_path = "sprites/moduses/stack_card.png"
 stack_modus.back_path = "sprites/moduses/stack_card_flipped.png"
@@ -538,21 +553,6 @@ queue_modus.theme = themes.queue
 queue_modus.can_uncaptchalogue = False
 queue_modus.description = "First in, first out. Stack's ugly twin."
 queue_modus.difficulty = "annoying"
-
-class Array(Modus):
-    def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
-        if sylladex.empty_cards < len(sylladex.data_list) + 1: return False
-        return True
-
-array_modus = Array("array")
-array_modus.front_path = "sprites/moduses/array_card.png"
-array_modus.back_path = "sprites/moduses/array_card_flipped.png"
-array_modus.bar_path = "sprites/moduses/array_bar.png"
-array_modus.thumb_path = "sprites/moduses/array_card_thumb.png"
-array_modus.theme = themes.array
-array_modus.label_color = themes.array.white
-array_modus.description = "You think it's cool that things don't always have to be a federal fucking issue."
-array_modus.difficulty = "normal video game"
 
 class ScratchAndSniff(Modus):
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
