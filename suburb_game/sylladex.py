@@ -381,7 +381,11 @@ class Sylladex():
             if instance_name not in self.data_list:
                 print(f"Missing item {instance_name}! Converting from deck.")
                 self.modus.convert_from_deck(self.deck, self)
-                self.validate()
+                return self.validate()
+            try: Instance(instance_name, self.deck[instance_name])
+            except KeyError:
+                self.modus.convert_from_deck(self.deck, self)
+                return self.validate()
 
     def get_instance(self, instance_name) -> Instance:
         if instance_name not in self.deck:
