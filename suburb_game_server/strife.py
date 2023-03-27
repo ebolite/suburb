@@ -403,6 +403,7 @@ class Griefer():
             for griefer_name in skill_dict["targets"]:
                 if griefer_name in self.strife.griefers:
                     targets_list.append(self.strife.get_griefer(griefer_name))
+            if self.dead: return
             skill.use(self, targets_list)
             if self.dead: return
 
