@@ -399,7 +399,7 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             else: player.leeching.append(grist_type)
         case "connect":
             client_player_username = content["client_player_username"]
-            if sessions.does_player_exist(client_player_username): return "Player does not exist."
+            if not sessions.does_player_exist(client_player_username): return "Player does not exist."
             client_player = sessions.Player(client_player_username)
             if client_player.server_player_name is not None: return "Client already has server."
             if player.client_player_name is not None: return "You already have a client."

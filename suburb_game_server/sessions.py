@@ -799,7 +799,7 @@ class Player():
             out["strife_portfolio"][kind_name] = {instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in self.strife_portfolio[kind_name]}
         out["power"] = self.power
         out["entered"] = self.entered
-        out["atheneum"] = {instance.name:instance.item.get_dict() for instance in [alchemy.Instance(instance_name) for instance_name in self.atheneum]}
+        out["atheneum"] = {instance.name:instance.get_dict() for instance in [alchemy.Instance(instance_name) for instance_name in self.atheneum]}
         out["seeds"] = self.seeds
         if self.worn_instance_name is not None:
             out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()

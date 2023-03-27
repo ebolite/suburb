@@ -465,78 +465,111 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
         right_button.absolute = True
         right_button.bind_to(info_window, temporary=True)
 
-def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text", page=0):
+def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text", page=0, search:Optional[str]=None):
     info_window.kill_temporary_elements()
     info_window.color = info_window.theme.light
     info_text.text = "Atheneum"
     update_viewport_dic()
-    atheneum_dict: dict[str, dict] = viewport_dic["atheneum"]
-    padding=4
-    num_columns = 3
-    usable_area_w = info_window.w
-    usable_area_h = info_window.h - 25
-    box_w = usable_area_w//num_columns - padding*2
-    box_h = box_w
-    num_rows = usable_area_h // (box_h + padding*2)
-    rows = []
-    for instance_name in atheneum_dict:
-        for row in rows:
-            if len(row) != num_columns:
-                row.append(instance_name)
-                break
+    def filter_func(instance: "sylladex.Instance", search_text):
+        assert search_text is not None
+        if search_text in instance.name or search_text in instance.display_name() or search_text in instance.item.display_name:
+            return True
         else:
-            rows.append([instance_name])
-    display_rows = rows[page*num_rows:page*num_rows + num_rows]
-    def get_box_button_func(instance_name: str) -> Callable:
-        def button_func():
-            global current_selected_atheneum
-            global current_selected_phernalia
-            current_selected_atheneum = instance_name
-            current_selected_phernalia = None
-            display_atheneum(info_window, info_text, page)
-        return button_func
-    def get_recycle_button_func(instance_name: str) -> Callable:
-        def recycle_button_func():
-            client.requestplus(intent="computer", content={"command": "recycle", "instance_name": instance_name})
-            display_atheneum(info_window, info_text, page)
-        return recycle_button_func
-    for row_index, row in enumerate(display_rows):
-        box_y = padding + row_index*(box_h + padding*2)
-        for column_index, instance_name in enumerate(row):
-            item = sylladex.Item(atheneum_dict[instance_name]["name"], atheneum_dict[instance_name])
-            box_x = padding + column_index*(box_w + padding*2)
-            if current_selected_atheneum == instance_name: selected = True
-            else: selected = False
-            item_box = make_item_box(item, box_x, box_y, box_w, box_h, info_window.theme, get_box_button_func(instance_name), selected=selected, label=True)
-            item_box.bind_to(info_window, True)
-            recycle_button = render.Button(box_w-16-padding, box_h-16-padding, "sprites/buttons/trash.png", None, get_recycle_button_func(instance_name))
-            recycle_button.bind_to(item_box)
-            recycle_button.absolute = True
-            tooltip = render.ToolTip(0, 0, 16, 16)
-            tooltip.tooltip_offsetx = -20
-            tooltip.bind_to(recycle_button)
-            value_display = render.make_grist_cost_display(padding, padding, 20, item.true_cost, binding=tooltip, flipped=True)
-            value_display.bind_to(tooltip)
-            value_display.bring_to_top()
-    def get_leftbutton_func(page_num):
-        def leftbutton_func():
-            display_atheneum(info_window, info_text, page_num-1)
-        return leftbutton_func
-    def get_rightbutton_func(page_num):
-        def rightbutton_func():
-            display_atheneum(info_window, info_text, page_num+1)
-        return rightbutton_func
-    page_button_w = info_window.w//2-padding*2
-    page_button_h = 20
-    page_button_y = info_window.h-page_button_h-padding
-    if page != 0:
-        left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<-", get_leftbutton_func(page))
-        left_button.absolute = True
-        left_button.bind_to(info_window, temporary=True)
-    if rows[(page+1)*num_rows:(page+1)*num_rows + num_rows] != []:
-        right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "->", get_rightbutton_func(page))
-        right_button.absolute = True
-        right_button.bind_to(info_window, temporary=True)
+            return False
+    def make_results(search_text: Optional[str]):
+        def get_button_func(instance_name: str):
+            def button_func():
+                global current_selected_atheneum
+                global current_selected_phernalia
+                current_selected_atheneum = instance_name
+                current_selected_phernalia = None
+                display_atheneum(info_window, info_text, page, search)
+            return button_func
+        def get_recycle_button_func(instance_name: str) -> Callable:
+            def recycle_button_func():
+                client.requestplus(intent="computer", content={"command": "recycle", "instance_name": instance_name})
+                display_atheneum(info_window, info_text, page, search)
+            return recycle_button_func
+        results_sprites = []
+        atheneum_dict: dict[str, dict] = viewport_dic["atheneum"]
+        atheneum_instances = [sylladex.Instance(instance_name, atheneum_dict[instance_name]) for instance_name in atheneum_dict]
+        if search_text is not None:
+            atheneum_instances = [instance for instance in atheneum_instances if filter_func(instance, search_text)]
+        padding = 4
+        num_columns = 3
+        usable_area_w = info_window.w
+        usable_area_h = info_window.h - 25
+        box_w = usable_area_w//num_columns - padding*2
+        box_h = box_w
+        num_rows = usable_area_h // (box_h + padding*2)
+        rows = []
+        for item in atheneum_instances:
+            for row in rows:
+                if len(row) != num_columns:
+                    row.append(item)
+                    break
+            else:
+                rows.append([item])
+        display_rows = rows[page*num_rows:page*num_rows + num_rows]
+        for row_index, row in enumerate(display_rows):
+            box_y = padding + row_index*(box_h + padding*2)
+            for column_index, instance in enumerate(row):
+                box_x = padding + column_index*(box_w + padding*2)
+                item_box = make_item_box(instance.item, box_x, box_y, box_w, box_h, info_window.theme, get_button_func(instance.name), selected=True, label=True, dowel=True)
+                item_box.bind_to(info_window, True)
+                results_sprites.append(item_box)
+                recycle_button = render.Button(box_w-16-padding, box_h-16-padding, "sprites/buttons/trash.png", None, get_recycle_button_func(instance.name))
+                recycle_button.bind_to(item_box)
+                recycle_button.absolute = True
+                tooltip = render.ToolTip(0, 0, 16, 16)
+                tooltip.tooltip_offsetx = -20
+                tooltip.bind_to(recycle_button)
+                value_display = render.make_grist_cost_display(padding, padding, 20, instance.item.true_cost, binding=tooltip, flipped=True)
+                value_display.bind_to(tooltip)
+                value_display.bring_to_top()
+                results_sprites.append(recycle_button)
+        def get_leftbutton_func(page_num):
+            def leftbutton_func():
+                choose_alchemy_item(info_window, info_text, page_num-1, search=search)
+            return leftbutton_func
+        def get_rightbutton_func(page_num):
+            def rightbutton_func():
+                choose_alchemy_item(info_window, info_text, page_num+1, search=search)
+            return rightbutton_func
+        page_button_w = info_window.w//2-padding*2
+        page_button_h = 20
+        page_button_y = info_window.h-page_button_h-padding
+        if page != 0:
+            left_button = render.TextButton(padding, page_button_y, page_button_w, page_button_h, "<-", get_leftbutton_func(page))
+            left_button.absolute = True
+            left_button.bind_to(info_window, temporary=True)
+            results_sprites.append(left_button)
+        if rows[(page+1)*num_rows:(page+1)*num_rows + num_rows] != []:
+            right_button = render.TextButton(padding*2+page_button_w, page_button_y, page_button_w, page_button_h, "->", get_rightbutton_func(page))
+            right_button.absolute = True
+            right_button.bind_to(info_window, temporary=True)
+            results_sprites.append(right_button)
+        return results_sprites
+
+    search_bar = render.InputTextBox(0.5, 0.8, 256, 32)
+    search_init_time = render.clock.get_time()
+    global results_sprites
+    results_sprites = make_results(search)
+    def key_press_func():
+        if render.clock.get_time() == search_init_time: return
+        global results_sprites
+        for sprite in results_sprites: 
+            sprite.delete()
+        results_sprites = []
+        results_sprites = make_results(search_bar.text)
+    if search is not None: 
+        print(f"search is {search}")
+        search_bar.text = search
+        search_bar.active = True
+    search_bar.bind_to(info_window, True)
+    search_bar.key_press_func = key_press_func
+    if last_tile_map is not None:
+        last_tile_map.input_text_box = search_bar
 
 def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", operation: Optional[str]="&&"):
     target_item = current_alchemy_item_3
