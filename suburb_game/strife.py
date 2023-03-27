@@ -416,6 +416,7 @@ class Strife():
         revert_button = render.TextButton(0.85, 0.2, 196, 32, ">REVERT", revert_button_func)
         revert_button.draw_condition = button_condition
         revert_button_label = render.Text(0.5, 1.2, "(escape)")
+        revert_button_label.text_func = lambda *args: "(escape)" if button_condition() else ""
         revert_button_label.bind_to(revert_button)
         revert_button_label.fontsize = 12
         revert_button_label.color = self.theme.dark
@@ -425,6 +426,7 @@ class Strife():
         submit_button.fontsize = 32
         submit_button.click_keys = [pygame.K_SPACE]
         submit_button_label = render.Text(0.5, 1.15, "(space)")
+        submit_button_label.text_func = lambda *args: "(space)" if button_condition() else ""
         submit_button_label.bind_to(submit_button)
         submit_button_label.fontsize = 12
         submit_button_label.color = self.theme.dark
