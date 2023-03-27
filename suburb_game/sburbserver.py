@@ -413,7 +413,6 @@ def display_revise(info_window: "render.SolidColor", info_text: "render.Text", p
         def func():
             global current_selected_tile
             current_selected_tile = tile_char
-            print(tile_char)
             display_revise(info_window, info_text, page)
         return func
     for tile_char in server_tiles:
@@ -565,7 +564,6 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
         results_sprites = []
         results_sprites = make_results(search_bar.text)
     if search is not None: 
-        print(f"search is {search}")
         search_bar.text = search
         search_bar.active = True
     search_bar.bind_to(info_window, True)
@@ -656,7 +654,6 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
         if can_make:
             def button_func():
                 reply = client.requestplus(intent="computer", content={"command": "server_alchemy", "code": resulting_item.code})
-                print(reply)
                 global current_x
                 global current_y
                 current_x, current_y = alchemiter_location
@@ -776,7 +773,6 @@ def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Tex
         results_sprites = []
         results_sprites = make_results(search_bar.text)
     if search is not None: 
-        print(f"search is {search}")
         search_bar.text = search
         search_bar.active = True
     search_bar.bind_to(info_window, True)
@@ -826,9 +822,6 @@ def connect(window: "render.Window"):
     no_server: list = dic["no_server"]
     player_names: dict = dic["player_names"]
     server_client: dict = dic["server_client"]
-    print("chains", chains)
-    print("no_server", no_server)
-    print("server_client", server_client)
     icon = render.Image(0.15, 0.25, "sprites/largeicon.png")
     icon.convert = False
     icon.bind_to(window.viewport)

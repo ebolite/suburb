@@ -743,8 +743,6 @@ def choosegrists():
     # todo: add indicators for which grist types the session already has
     session_info = client.requestdic("session_info")
     available_types = session_info["current_grist_types"]
-    print(session_info)
-    print(available_types)
     logtext = render.Text(.5, .05, "Select the type of land you would like.")
     infotext = render.Text(.5, .09, "A darkened background indicates grist already available in the session.")
     infotext.fontsize = 20
@@ -786,7 +784,6 @@ def choosegrists():
 def newgame():
     client.requestplus("setup_character",  character_info)
     new_sylladex = Sylladex.new_sylladex(client.dic["character"], character_info["modus"])
-    print(new_sylladex)
     new_sylladex.validate()
     map_scene()
 
@@ -867,7 +864,6 @@ def debug_speedrun_2():
 
 @scene
 def computer(instance: Instance):
-    print(instance.computer_data)
     task_bar = render.TaskBar()
     apps = []
     for app_name in instance.computer_data["installed_programs"]:
@@ -1268,7 +1264,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
     else: donned_instance = None
     for kind in strife_portfolio:
         for instance_name in strife_portfolio[kind]:
-            print(instance_name)
             if instance_name == wielding: wielded_instance = Instance(instance_name, strife_portfolio[kind][instance_name])
     if selected_kind is None: 
         if strife_portfolio:
@@ -1280,7 +1275,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
     if selected_kind is not None:
         # main box
         symbol = render.Symbol(0.825, 0.6, player_dict["symbol_dict"])
-        print(selected_kind)
         strife_deck_bar = render.Image(0, 0, "sprites/itemdisplay/strife_deck_bar.png")
         strife_deck_bar.absolute = True
         label = render.Text(0.5, 0.065, selected_kind)
@@ -1452,7 +1446,6 @@ def strife_portfolio_scene(selected_kind:Optional[str]=None):
         def get_wield_button_func(instance_name: Instance) -> Callable:
             def wrapper():
                 reply = client.requestplus(intent="wield", content={"instance_name": instance_name})
-                print(reply)
                 confirm()
                 strife_portfolio_scene(selected_kind)
             return wrapper

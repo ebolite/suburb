@@ -770,7 +770,6 @@ class Image(UIElement):
                     self.surf = self.surf.convert()
                     self.surf = self.convert_to_theme(self.surf)
                     for initial_color, converted_color in self.convert_colors:
-                        print(initial_color, converted_color)
                         self.surf = palette_swap(self.surf, initial_color, converted_color)
                     self.surf.set_colorkey(pygame.Color(0, 0, 0))
         if self.alpha != 255: self.surf.set_alpha(self.alpha)
@@ -1795,7 +1794,6 @@ class LogWindow(UIElement):
         else: return self.log_list
 
 def make_item_image(x, y, instance: "Instance") -> Union[Dowel, Image, None]:
-    print(instance.item_name)
     image_path = f"sprites\\items\\{instance.item.name}.png"
     if instance.item.name == "cruxite dowel":
         return Dowel(x, y, instance.carved, instance.color)
@@ -2008,7 +2006,6 @@ class Vial(SolidColor):
             segmented_surf.fill(Color(0, 0, 0))
             midpoint_x = fill_height//2 - round(fill_width/segments/2)
             for i in range(segments):
-                print(i)
                 xdiff = (i+1) * round(fill_width/segments)
                 self.fill_surf.blit(segmented_surf, (midpoint_x+xdiff, 0))
                 self.fill_surf.blit(segmented_surf, (midpoint_x-xdiff, 0))
