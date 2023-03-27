@@ -323,7 +323,7 @@ class ToolTip(UIElement):
             self.rect.x, self.rect.y = 9999999, 9999999
 
 class SolidColor(UIElement):
-    def __init__(self, x, y, w, h, color: pygame.Color, binding:Optional[UIElement]=None):
+    def __init__(self, x, y, w, h, color: Union[pygame.Color, list[pygame.Color]], binding:Optional[UIElement]=None):
         super(SolidColor, self).__init__()
         self.x = x
         self.y = y
@@ -2382,7 +2382,7 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
                        grist_name: str, grist_amount: int, 
                        cache_limit: int, theme: themes.Theme, 
                        box_color: Optional[pygame.Color]=None, 
-                       filled_color: Optional[pygame.Color]=None,
+                       filled_color: Union[pygame.Color, list[pygame.Color], None]=None,
                        label_color: Optional[pygame.Color]=None,
                        outline_color: Optional[pygame.Color]=None,
                        label: Optional[str]=None,
@@ -2415,8 +2415,13 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
         tt_label.absolute = True
         tt_label.fontsize = tt_wh
         tt_label.bind_to(tooltip_tt)
-        tt_label.color = filled_color
-        r, g, b, _ = tt_label.color
+        if isinstance(filled_color, list):
+            label_color = random.choice(filled_color)
+            tt_label.color = label_color
+        else:
+            label_color = filled_color
+            tt_label.color = label_color
+        r, g, b, _ = label_color
         tt_label.outline_color = get_dark_color(r, g, b)
         tt_label.make_always_on_top()
     bar_background = SolidColor(0.585, 0.4, w//1.3, h//3.5, box_color)
