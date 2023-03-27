@@ -574,8 +574,9 @@ def make_classbutton(game_class):
 
 @scene
 def chooseclass():
+    theme = themes.themes[character_info['aspect']]
     knighttitle = render.Text(.14, .19, f"Knight")
-    knightsymbol = render.Button(.14, .3, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("knight"), hover="sprites\\classes\\placeholderhover.png")
+    knightsymbol = render.Button(.14, .3, "sprites\\classes\\knight.png", "sprites\\classes\\knight.png", make_classbutton("knight"), theme=theme)
     knighttext = render.Text(.14, .4, f"Fights with {character_info['aspect'].upper()}")
     knighttext.fontsize = 15
     pagetitle = render.Text(.14, .59, f"Page")
@@ -623,7 +624,7 @@ def chooseclass():
     witchtext = render.Text(.71, .4, f"Manipulates {character_info['aspect'].upper()}")
     witchtext.fontsize = 15
     heirtitle = render.Text(.71, .59, f"Heir")
-    heirsymbol = render.Button(.71, .7, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("heir"), hover="sprites\\classes\\placeholderhover.png")
+    heirsymbol = render.Button(.71, .7, "sprites\\classes\\heir.png", "sprites\\classes\\heir.png", make_classbutton("heir"), theme=theme)
     heirtext = render.Text(.71, .8, f"Becomes {character_info['aspect'].upper()}")
     heirtext.fontsize = 15
     heirtext2 = render.Text(.71, .82, f"Inherits {character_info['aspect'].upper()}")
