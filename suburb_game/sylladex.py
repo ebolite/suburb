@@ -513,7 +513,7 @@ stack_modus.thumb_path = "sprites/moduses/stack_card_thumb.png"
 stack_modus.theme = themes.stack
 stack_modus.can_uncaptchalogue = False
 stack_modus.description = "First in, last out. Annoying but simple."
-stack_modus.difficulty = "medium"
+stack_modus.difficulty = "annoying"
 
 class Queue(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):
@@ -537,7 +537,7 @@ queue_modus.thumb_path = "sprites/moduses/queue_card_thumb.png"
 queue_modus.theme = themes.queue
 queue_modus.can_uncaptchalogue = False
 queue_modus.description = "First in, first out. Stack's ugly twin."
-queue_modus.difficulty = "medium"
+queue_modus.difficulty = "annoying"
 
 class Array(Modus):
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
@@ -552,7 +552,7 @@ array_modus.thumb_path = "sprites/moduses/array_card_thumb.png"
 array_modus.theme = themes.array
 array_modus.label_color = themes.array.white
 array_modus.description = "You think it's cool that things don't always have to be a federal fucking issue."
-array_modus.difficulty = "easy"
+array_modus.difficulty = "normal video game"
 
 class ScratchAndSniff(Modus):
     def is_captchalogueable(self, instance: Instance, sylladex: "Sylladex") -> bool:
@@ -572,3 +572,5 @@ scratch_and_sniff_modus.back_path = "sprites/moduses/scratch_and_sniff_card_flip
 scratch_and_sniff_modus.bar_path = "sprites/moduses/scratch_and_sniff_bar.png"
 scratch_and_sniff_modus.theme = themes.scratch_and_sniff
 scratch_and_sniff_modus.label_color = pygame.Color(11, 193, 125)
+scratch_and_sniff_modus.description = "For when you really hate knowing what things are."
+scratch_and_sniff_modus.difficulty = "confusing"
