@@ -155,7 +155,8 @@
         "wearable": false,
         "description": "A captchalogue card that has been rendered useless due to being punched by a punch designix. Has the code of another item on it.",
         "cost": {
-            "jet": 0.1
+            "jet": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.5
@@ -531,7 +532,8 @@
         "description": "A portable computing device. Quite useful.",
         "cost": {
             "iodine": 1,
-            "gold": 0.1
+            "gold": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.1
@@ -569,7 +571,8 @@
         "description": "A large computer setup. Inconvenient to carry around, but still possible with the help of your Sylladex.",
         "cost": {
             "caulk": 1,
-            "gold": 0.1
+            "gold": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.1
@@ -606,7 +609,8 @@
         "wearable": false,
         "description": "A piece of paper.",
         "cost": {
-            "chalk": 1
+            "chalk": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 1
@@ -642,7 +646,8 @@
         "wearable": false,
         "description": "A sharp kitchen utensil used for slicing pizzas.",
         "cost": {
-            "garnet": 1
+            "garnet": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 1
@@ -678,7 +683,8 @@
         "wearable": false,
         "description": "A wooden bat made for hitting high-velocity balls.",
         "cost": {
-            "wood": 1
+            "wood": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.5
@@ -707,7 +713,8 @@
         "wearable": false,
         "description": "An aluminum bat made for hitting high-velocity balls.",
         "cost": {
-            "lead": 1
+            "lead": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.5
@@ -742,7 +749,8 @@
         "description": "A rolling pin used for flattening dough.",
         "cost": {
             "wood": 1,
-            "chalk": 0.25
+            "chalk": 0.25,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -778,7 +786,8 @@
         "cost": {
             "wood": 1,
             "iodine": 0.2,
-            "slime": 0.1
+            "slime": 0.1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -814,7 +823,8 @@
         "cost": {
             "chalk": 1,
             "iodine": 0.4,
-            "silicon": 0.02
+            "silicon": 0.02,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -850,7 +860,8 @@
         "description": "A pair of scissors used for cutting paper.",
         "cost": {
             "iron": 0.2,
-            "jet": 1
+            "jet": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 1.3
@@ -888,7 +899,8 @@
         "cost": {
             "iron": 0.3,
             "jet": 1,
-            "moonstone": 0.1
+            "moonstone": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 1.3
@@ -927,7 +939,8 @@
         "cost": {
             "chalk": 1,
             "frosting": 0.5,
-            "rock candy": 0.5
+            "rock candy": 0.5,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -966,7 +979,8 @@
             "amber": 0.25,
             "iodine": 0.2,
             "nitrogen": 0.2,
-            "mist": 0.2
+            "mist": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "blind": 1,
@@ -1007,7 +1021,8 @@
             "rust": 1,
             "blood": 1,
             "iodine": 0.4,
-            "iron": 0.2
+            "iron": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 1.2,
@@ -1078,7 +1093,8 @@
         "cost": {
             "copper": 0.5,
             "rust": 0.5,
-            "garnet": 0.5
+            "garnet": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.5
@@ -1113,7 +1129,8 @@
             "copper": 0.5,
             "rust": 0.5,
             "garnet": 0.1,
-            "titanium": 0.05
+            "titanium": 0.05,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.6
@@ -1150,7 +1167,8 @@
         "description": "A standard broom used for sweeping operations.",
         "cost": {
             "wood": 1,
-            "chalk": 0.2
+            "chalk": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "demoralize": 0.4
@@ -1186,7 +1204,8 @@
         "cost": {
             "wood": 0.3,
             "chalk": 0.2,
-            "sandstone": 1
+            "sandstone": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "demoralize": 0.4
@@ -1229,7 +1248,8 @@
         "cost": {
             "rust": 1,
             "copper": 0.25,
-            "garnet": 0.1
+            "garnet": 0.1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -1260,7 +1280,8 @@
         "cost": {
             "titanium": 0.05,
             "iron": 0.3,
-            "shale": 1
+            "shale": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -1292,7 +1313,8 @@
         "description": "A scary-looking pick that's used for clinging to ice.",
         "cost": {
             "aquamarine": 1,
-            "permafrost": 0.1
+            "permafrost": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.6
@@ -1330,7 +1352,8 @@
         "description": "A club used for hitting golf balls. Formidable as a weapon.",
         "cost": {
             "iron": 0.1,
-            "lead": 1
+            "lead": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.4
@@ -1369,7 +1392,8 @@
         "wearable": false,
         "description": "A standard claw hammer used for beating nails.",
         "cost": {
-            "shale": 1
+            "shale": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.3
@@ -1407,7 +1431,8 @@
             "jet": 0.4,
             "lead": 0.5,
             "obsidian": 0.2,
-            "onyx": 0.05
+            "onyx": 0.05,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.8,
@@ -1496,7 +1521,8 @@
         "cost": {
             "chalk": 1,
             "sandstone": 0.4,
-            "silicon": 0.4
+            "silicon": 0.4,
+            "build": 0.5
         },
         "onhit_states": {
             "demoralize": 0.3
@@ -1534,7 +1560,8 @@
         "cost": {
             "shale": 0.5,
             "jet": 1,
-            "lead": 0.1
+            "lead": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.7
@@ -1571,7 +1598,8 @@
         "wearable": false,
         "description": "A hefty shovel used for digging.",
         "cost": {
-            "lead": 1
+            "lead": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.3
@@ -1605,7 +1633,8 @@
         "description": "A small hatchet. Makes a formidable weapon.",
         "cost": {
             "iodine": 1,
-            "rust": 0.5
+            "rust": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.4
@@ -1643,7 +1672,8 @@
         "cost": {
             "copper": 1,
             "wood": 0.5,
-            "iron": 0.5
+            "iron": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "vulnerable": 0.3
@@ -1684,7 +1714,8 @@
             "rust": 1,
             "garnet": 0.5,
             "ruby": 0.1,
-            "sunstone": 0.1
+            "sunstone": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "vulnerable": 0.3
@@ -1723,7 +1754,8 @@
         "wearable": false,
         "description": "A wooden spoon used for cooking.",
         "cost": {
-            "wood": 1
+            "wood": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -1758,7 +1790,8 @@
         "wearable": false,
         "description": "A small soup spoon.",
         "cost": {
-            "mercury": 0.5
+            "mercury": 0.5,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -1795,7 +1828,8 @@
         "description": "A bust of Abraham Lincoln.",
         "cost": {
             "chalk": 1,
-            "caulk": 0.5
+            "caulk": 0.5,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -1838,7 +1872,8 @@
         "cost": {
             "chalk": 1,
             "caulk": 0.5,
-            "moonstone": 0.2
+            "moonstone": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -1878,7 +1913,8 @@
         "description": "A small replica of Auguste Rodin's The Thinker.",
         "cost": {
             "rust": 1,
-            "lead": 0.5
+            "lead": 0.5,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -1925,7 +1961,8 @@
             "malachite": 0.3,
             "caulk": 0.3,
             "sunstone": 0.1,
-            "lux": 0.05
+            "lux": 0.05,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.4
@@ -1970,7 +2007,8 @@
         "wearable": false,
         "description": "A spatula. Not to be confused with a kitchen turner.",
         "cost": {
-            "iron": 1
+            "iron": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -2005,7 +2043,8 @@
         "wearable": false,
         "description": "A spatula made out of gold.",
         "cost": {
-            "gold": 1
+            "gold": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -2048,7 +2087,8 @@
         "wearable": false,
         "description": "A flat-headed screwdriver. Careful with that thing.",
         "cost": {
-            "iron": 1
+            "iron": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "blind": 0.5
@@ -2084,7 +2124,8 @@
         "wearable": false,
         "description": "A Phillips screwdriver. Has a pointy end.",
         "cost": {
-            "lead": 1
+            "lead": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "blind": 0.5
@@ -2121,7 +2162,8 @@
         "description": "A screwdriver with a magnetic head that helps you align screws.",
         "cost": {
             "titanium": 1,
-            "mercury": 0.2
+            "mercury": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "blind": 0.5
@@ -2198,7 +2240,8 @@
             "iron": 0.1,
             "rust": 0.5,
             "shale": 0.4,
-            "sunstone": 0.1
+            "sunstone": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.5
@@ -2237,7 +2280,8 @@
         "cost": {
             "rust": 0.3,
             "chalk": 0.3,
-            "silicon": 0.3
+            "silicon": 0.3,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -2276,7 +2320,8 @@
             "blood": 0.5,
             "iron": 0.4,
             "obsidian": 0.35,
-            "diamond": 0.1
+            "diamond": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.8,
@@ -2322,7 +2367,8 @@
         "description": "A narrow-bladed sword that's designed to be lightweight and sharp.",
         "cost": {
             "shale": 1,
-            "jet": 0.5
+            "jet": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.4
@@ -2435,7 +2481,8 @@
             "onyx": 0.3,
             "tar": 0.4,
             "caulk": 0.4,
-            "obsidian": 0.2
+            "obsidian": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -2476,7 +2523,8 @@
         "description": "A standing lamp.",
         "cost": {
             "jet": 1,
-            "lux": 0.1
+            "lux": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.2
@@ -2514,7 +2562,8 @@
         "description": "A small lamp for use on a desk.",
         "cost": {
             "chalk": 1,
-            "lux": 0.1
+            "lux": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.1
@@ -2555,7 +2604,8 @@
         "cost": {
             "silicon": 1,
             "topaz": 0.5,
-            "lux": 0.2
+            "lux": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 1.2
@@ -2600,7 +2650,8 @@
             "topaz": 0.5,
             "ruby": 0.5,
             "gold": 0.3,
-            "lux": 0.2
+            "lux": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 1.3
@@ -2642,7 +2693,8 @@
         "description": "A standard ball used for shooting hoops.",
         "cost": {
             "iodine": 0.5,
-            "copper": 0.5
+            "copper": 0.5,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -2680,7 +2732,8 @@
         "cost": {
             "chalk": 0.3,
             "jet": 0.3,
-            "rust": 0.3
+            "rust": 0.3,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -2715,7 +2768,8 @@
         "description": "A menacing ball used for pelting little kids.",
         "cost": {
             "garnet": 0.5,
-            "blood": 0.5
+            "blood": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "demoralize": 0.6
@@ -2754,7 +2808,8 @@
         "description": "A heavy ball that's traditionally used to knock down pins.",
         "cost": {
             "jet": 0.3,
-            "lead": 0.6
+            "lead": 0.6,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.6
@@ -2791,7 +2846,8 @@
         "description": "A tool used for turning leaves on the ground into leaves in a pile.",
         "cost": {
             "rust": 1,
-            "slime": 0.2
+            "slime": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -2824,7 +2880,8 @@
         "wearable": false,
         "description": "A wooden board. You could wield this and become an inverse pirate.",
         "cost": {
-            "wood": 1
+            "wood": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -2860,7 +2917,8 @@
         "description": "A pair of heavy knuckles that gives a bit more *oomph* to your punches.",
         "cost": {
             "lead": 0.6,
-            "gold": 0.3
+            "gold": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.7
@@ -2897,7 +2955,8 @@
         "wearable": false,
         "description": "A weighted leather implement that you can strap around your hand.",
         "cost": {
-            "iodine": 1
+            "iodine": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.7
@@ -2932,7 +2991,8 @@
         "description": "A studded leather glove that can be used to punch down your foes.",
         "cost": {
             "iodine": 0.6,
-            "iron": 0.3
+            "iron": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.5
@@ -2970,7 +3030,8 @@
         },
         "description": "A pair of movement-hindering mittens. They're quite warm, though.",
         "cost": {
-            "chalk": 1
+            "chalk": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -3010,7 +3071,8 @@
         },
         "description": "Some snug-fitting gloves that keep your hands warm.",
         "cost": {
-            "aquamarine": 1
+            "aquamarine": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -3046,7 +3108,8 @@
         "wearable": false,
         "description": "A piece of silverware used for piercing food and moving it to the user's mouth.",
         "cost": {
-            "mercury": 0.5
+            "mercury": 0.5,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -3088,7 +3151,8 @@
             "gold": 0.5,
             "quartz": 0.2,
             "star sapphire": 0.1,
-            "diamond": 0.1
+            "diamond": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.6
@@ -3131,7 +3195,8 @@
         "description": "A thick metal fork that makes an annoying tone when you strike it with something.",
         "cost": {
             "lead": 0.5,
-            "frosting": 0.5
+            "frosting": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.8
@@ -3167,7 +3232,8 @@
         "description": "A three-pronged device used for handling hay. Also makes a decent improvised weapon.",
         "cost": {
             "wood": 1,
-            "tar": 0.1
+            "tar": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.6
@@ -3207,7 +3273,8 @@
         "wearable": false,
         "description": "A cane used by people who need helping walking. Or by people who want to seem cool and mature.",
         "cost": {
-            "chalk": 1
+            "chalk": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.3
@@ -3247,7 +3314,8 @@
         "cost": {
             "caulk": 1,
             "blood": 0.5,
-            "jet": 0.5
+            "jet": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "demoralize": 1,
@@ -3286,7 +3354,8 @@
         "wearable": false,
         "description": "A small cane made of candy.",
         "cost": {
-            "rock candy": 1
+            "rock candy": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -3327,7 +3396,8 @@
         "description": "A device used for curling one's hair.",
         "cost": {
             "chalk": 1,
-            "marble": 0.5
+            "marble": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "ignite": 0.3
@@ -3364,7 +3434,8 @@
         "wearable": false,
         "description": "A heavy metal chain.",
         "cost": {
-            "lead": 1
+            "lead": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.6
@@ -3403,7 +3474,8 @@
         "wearable": false,
         "description": "A small bike chain.",
         "cost": {
-            "rust": 1
+            "rust": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.3
@@ -3438,7 +3510,8 @@
         "wearable": false,
         "description": "A keychain to help you find your keys.",
         "cost": {
-            "frosting": 1
+            "frosting": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.1
@@ -3477,7 +3550,8 @@
         "wearable": false,
         "description": "A kitchen knife used for cutting up foods.",
         "cost": {
-            "jet": 1
+            "jet": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.4
@@ -3518,7 +3592,8 @@
         "cost": {
             "jet": 1,
             "blood": 1,
-            "rust": 0.3
+            "rust": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.9,
@@ -3557,7 +3632,8 @@
         "description": "A 'cool' looking knife.",
         "cost": {
             "jet": 1,
-            "shale": 1
+            "shale": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.5
@@ -3594,7 +3670,8 @@
         "wearable": false,
         "description": "A wooden table leg.",
         "cost": {
-            "wood": 1
+            "wood": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.2
@@ -3707,7 +3784,8 @@
             "wood": 1,
             "titanium": 1,
             "gold": 0.5,
-            "tar": 0.3
+            "tar": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.6,
@@ -3745,7 +3823,8 @@
         "wearable": false,
         "description": "Small needles used for sewing things together.",
         "cost": {
-            "jet": 1
+            "jet": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "heal": 0.5
@@ -3782,7 +3861,8 @@
         "wearable": false,
         "description": "A pair of needles used for knitting things.",
         "cost": {
-            "shale": 1
+            "shale": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.6
@@ -3817,7 +3897,8 @@
         "wearable": false,
         "description": "A small 5-pound dumbbell used for exercising.",
         "cost": {
-            "rust": 1
+            "rust": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.5
@@ -3862,7 +3943,8 @@
         "description": "A 15-pound dumbbell used for exercising.",
         "cost": {
             "rust": 1,
-            "lead": 1
+            "lead": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.7
@@ -3907,7 +3989,8 @@
         "cost": {
             "rust": 1,
             "lead": 1,
-            "titanium": 1
+            "titanium": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 1.3
@@ -3955,7 +4038,8 @@
         "description": "A large wooden stick. It's used to strike pucks around on ice.",
         "cost": {
             "aquamarine": 1,
-            "nitrogen": 0.1
+            "nitrogen": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.3
@@ -3993,7 +4077,8 @@
         "description": "A suction-producing device that's used for sucking up loose particles.",
         "cost": {
             "iodine": 1,
-            "silicon": 0.2
+            "silicon": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "numb": 0.2
@@ -4030,7 +4115,8 @@
         "wearable": false,
         "description": "A mop. It's used for cleaning up spills and wiping surfaces clean.",
         "cost": {
-            "aquamarine": 1
+            "aquamarine": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "douse": 0.5
@@ -4070,7 +4156,8 @@
         "wearable": false,
         "description": "A golden trophy received for winning something. Or getting second place. They really give these things out for anything.",
         "cost": {
-            "gold": 1
+            "gold": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -4112,7 +4199,8 @@
             "malachite": 0.5,
             "garnet": 0.5,
             "uranium": 0.1,
-            "ruby": 0.1
+            "ruby": 0.1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -4149,7 +4237,8 @@
         "wearable": false,
         "description": "A stainless metal spoon that's used for serving soup.",
         "cost": {
-            "rust": 1
+            "rust": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -4187,7 +4276,8 @@
         "description": "A long cable used for extending electric signals.",
         "cost": {
             "copper": 1,
-            "tar": 0.1
+            "tar": 0.1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -4225,7 +4315,8 @@
         "wearable": false,
         "description": "A long piece of rope.",
         "cost": {
-            "sandstone": 1
+            "sandstone": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -4261,7 +4352,8 @@
         "wearable": false,
         "description": "A tool for ironing the wrinkles out of your clothes.",
         "cost": {
-            "iron": 1
+            "iron": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "ignite": 0.4
@@ -4302,7 +4394,8 @@
         "description": "A serrated saw meant for cutting metal.",
         "cost": {
             "rust": 1,
-            "lead": 0.2
+            "lead": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.4
@@ -4343,7 +4436,8 @@
         "description": "A pair of skates used for gliding gracefully across ice.",
         "cost": {
             "aquamarine": 1,
-            "permafrost": 0.2
+            "permafrost": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.3
@@ -4383,7 +4477,8 @@
         "cost": {
             "rust": 1,
             "copper": 0.3,
-            "caulk": 0.3
+            "caulk": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.6
@@ -4420,7 +4515,8 @@
         "description": "An umbrella used to keep the rain off of your head.",
         "cost": {
             "shale": 1,
-            "cobalt": 0.3
+            "cobalt": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "demoralize": 0.4
@@ -4459,7 +4555,8 @@
         "description": "A piece of furniture used for sleeping.",
         "cost": {
             "wood": 1,
-            "chalk": 0.3
+            "chalk": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "demoralize": 0.4
@@ -4496,7 +4593,8 @@
         "description": "A piece of furniture used for storing clothes.",
         "cost": {
             "wood": 1,
-            "iodine": 0.3
+            "iodine": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.5
@@ -4529,7 +4627,8 @@
         "description": "A soft, fluffy pillow.",
         "cost": {
             "chalk": 1,
-            "frosting": 0.2
+            "frosting": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "heal": 0.1
@@ -4570,7 +4669,8 @@
         "description": "A blanket for covering oneself with during sleep.",
         "cost": {
             "chalk": 0.9,
-            "frosting": 0.3
+            "frosting": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "heal": 0.1
@@ -4609,7 +4709,8 @@
         "cost": {
             "permafrost": 1,
             "iron": 0.3,
-            "neon": 0.1
+            "neon": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "freeze": 0.4
@@ -4646,7 +4747,8 @@
         "cost": {
             "amber": 1,
             "jet": 0.3,
-            "rust": 0.3
+            "rust": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "ignite": 0.4
@@ -4682,7 +4784,8 @@
         "wearable": false,
         "description": "A metal bowl for boiling things.",
         "cost": {
-            "rust": 1
+            "rust": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.2
@@ -4718,7 +4821,8 @@
         "description": "A pan with a convenient handle.",
         "cost": {
             "rust": 1,
-            "silicon": 0.1
+            "silicon": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.4
@@ -4759,7 +4863,8 @@
         "description": "A basin for washing things.",
         "cost": {
             "aquamarine": 1,
-            "chalk": 0.3
+            "chalk": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "douse": 1
@@ -4792,7 +4897,8 @@
         "wearable": false,
         "description": "A brittle plate.",
         "cost": {
-            "chalk": 1
+            "chalk": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -4824,7 +4930,8 @@
         "wearable": false,
         "description": "A cup for holding liquids in.",
         "cost": {
-            "chalk": 1
+            "chalk": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -4854,7 +4961,8 @@
         "wearable": false,
         "description": "A large cup. Usually holds coffee.",
         "cost": {
-            "aquamarine": 1
+            "aquamarine": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -4884,7 +4992,8 @@
         "wearable": false,
         "description": "A piece of furniture that you put other things on.",
         "cost": {
-            "wood": 1
+            "wood": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.5
@@ -4919,7 +5028,8 @@
         "cost": {
             "wood": 1,
             "ruby": 0.5,
-            "quartz": 0.1
+            "quartz": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 1.2
@@ -4966,7 +5076,8 @@
         "description": "A clock that hangs on the wall.",
         "cost": {
             "wood": 1,
-            "garnet": 0.5
+            "garnet": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.8
@@ -5004,7 +5115,8 @@
         "cost": {
             "aquamarine": 1,
             "marble": 0.3,
-            "caulk": 0.2
+            "caulk": 0.2,
+            "build": 0.5
         },
         "onhit_states": {
             "demoralize": 0.5,
@@ -5050,7 +5162,8 @@
         "cost": {
             "aquamarine": 1,
             "marble": 0.3,
-            "caulk": 0.2
+            "caulk": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -5089,7 +5202,8 @@
         "description": "A standing shower unit.",
         "cost": {
             "aquamarine": 1,
-            "sandstone": 0.3
+            "sandstone": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "douse": 1
@@ -5129,7 +5243,8 @@
             "chalk": 1,
             "caulk": 0.3,
             "ruby": 0.3,
-            "rust": 0.3
+            "rust": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "ignite": 0.4
@@ -5170,7 +5285,8 @@
         "wearable": false,
         "description": "A thing you sit on. You know, a bench.",
         "cost": {
-            "wood": 1
+            "wood": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.5
@@ -5272,7 +5388,8 @@
         "description": "A television set.",
         "cost": {
             "copper": 1,
-            "lux": 0.1
+            "lux": 0.1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -5305,7 +5422,8 @@
         "description": "A machine. It holds a great aqueous power.",
         "cost": {
             "aquamarine": 1,
-            "iron": 0.1
+            "iron": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "douse": 0.7
@@ -5341,7 +5459,8 @@
         "description": "A machine. It can dry your clothes.",
         "cost": {
             "garnet": 1,
-            "iron": 0.1
+            "iron": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "ignite": 0.4
@@ -5376,7 +5495,8 @@
         "wearable": false,
         "description": "A standard pen. Said to be mightier than a sword.",
         "cost": {
-            "jet": 1
+            "jet": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.4
@@ -5411,7 +5531,8 @@
         "description": "A wooden pencil. Has an eraser as well.",
         "cost": {
             "wood": 1,
-            "lead": 0.1
+            "lead": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.4
@@ -5451,7 +5572,8 @@
         "description": "An office stapler.",
         "cost": {
             "shale": 1,
-            "lead": 0.1
+            "lead": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.6
@@ -5486,7 +5608,8 @@
         "description": "A machine. Like it or not, it is spitting fax.",
         "cost": {
             "chalk": 1,
-            "silicon": 0.1
+            "silicon": 0.1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -5521,7 +5644,8 @@
         "description": "A machine. It has the ability to copy documents.",
         "cost": {
             "chalk": 1,
-            "silicon": 0.1
+            "silicon": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "damage": 1
@@ -5557,7 +5681,8 @@
         "wearable": false,
         "description": "A large weighted ball used for various exercises.",
         "cost": {
-            "tar": 1
+            "tar": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.3
@@ -5594,7 +5719,8 @@
         "wearable": false,
         "description": "A bottle of water.",
         "cost": {
-            "aquamarine": 1
+            "aquamarine": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "douse": 1
@@ -5635,7 +5761,8 @@
         "wearable": false,
         "description": "A small bottle containing steroids.",
         "cost": {
-            "chalk": 1
+            "chalk": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -5678,7 +5805,8 @@
         "description": "A pair of boxing gloves. These are designed to protect the opponent's head and the user's hand.",
         "cost": {
             "garnet": 1,
-            "silicon": 0.5
+            "silicon": 0.5,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 1
@@ -5721,7 +5849,8 @@
         "description": "A small figurine of digital singer Hatsune Miku.",
         "cost": {
             "aquamarine": 1,
-            "cobalt": 0.4
+            "cobalt": 0.4,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -5762,7 +5891,8 @@
         "wearable": false,
         "description": "A DVD with various episodes of an anime.",
         "cost": {
-            "iodine": 1
+            "iodine": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -5801,7 +5931,8 @@
         "wearable": false,
         "description": "A poster for an anime.",
         "cost": {
-            "rock candy": 1
+            "rock candy": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -5840,7 +5971,8 @@
         "wearable": false,
         "description": "A book of right-to-left drawings that tells a story.",
         "cost": {
-            "chalk": 1
+            "chalk": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -5877,7 +6009,8 @@
         "wearable": false,
         "description": "...No one can ever know.",
         "cost": {
-            "chalk": 1
+            "chalk": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "demoralize": 0.7
@@ -5917,7 +6050,8 @@
         "wearable": false,
         "description": "Badass throwing stars.",
         "cost": {
-            "titanium": 0.3
+            "titanium": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.7
@@ -5956,7 +6090,8 @@
         "description": "A poster for the band Thrasher.",
         "cost": {
             "jet": 0.5,
-            "iron": 0.5
+            "iron": 0.5,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -5995,7 +6130,8 @@
         "wearable": false,
         "description": "One of Nirvana's albums.",
         "cost": {
-            "jet": 1
+            "jet": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6034,7 +6170,8 @@
         "description": "An electric guitar.",
         "cost": {
             "garnet": 1,
-            "ruby": 0.1
+            "ruby": 0.1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6071,7 +6208,8 @@
         "description": "An acoustic guitar.",
         "cost": {
             "wood": 1,
-            "chalk": 0.1
+            "chalk": 0.1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6106,7 +6244,8 @@
         "description": "A set of drums for playing music with.",
         "cost": {
             "rust": 1,
-            "wood": 0.1
+            "wood": 0.1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -6142,7 +6281,8 @@
         "description": "A book of maps.",
         "cost": {
             "malachite": 1,
-            "aquamarine": 1
+            "aquamarine": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -6209,7 +6349,8 @@
         "description": "A sphere with a map overlayed onto it.",
         "cost": {
             "malachite": 1,
-            "aquamarine": 1
+            "aquamarine": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -6243,7 +6384,8 @@
         "wearable": false,
         "description": "An instrument. It's used by blowing into it and restricting the flow of the air.",
         "cost": {
-            "iron": 1
+            "iron": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -6274,7 +6416,8 @@
         "wearable": false,
         "description": "An iconic golden-brass instrument.",
         "cost": {
-            "gold": 1
+            "gold": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -6313,7 +6456,8 @@
         "cost": {
             "jet": 1,
             "chalk": 1,
-            "wood": 1
+            "wood": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -6355,7 +6499,8 @@
         },
         "description": "A pair of sound-cancelling headphones.",
         "cost": {
-            "jet": 1
+            "jet": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6391,7 +6536,8 @@
         "wearable": false,
         "description": "An empty wrapper for some kind of food.",
         "cost": {
-            "chalk": 1
+            "chalk": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6427,7 +6573,8 @@
         "wearable": false,
         "description": "An empty can of soda.",
         "cost": {
-            "rust": 1
+            "rust": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6464,7 +6611,8 @@
         "wearable": false,
         "description": "An empty plastic bag.",
         "cost": {
-            "frosting": 1
+            "frosting": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6540,7 +6688,8 @@
         },
         "description": "A virtual reality headset.",
         "cost": {
-            "jet": 1
+            "jet": 1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.2
@@ -6579,7 +6728,8 @@
         "wearable": false,
         "description": "A portable computing device. Don't ask how you can insert discs into this thing.",
         "cost": {
-            "cobalt": 1
+            "cobalt": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -6614,7 +6764,8 @@
         "description": "A drone that you can fly remotely.",
         "cost": {
             "jet": 1,
-            "gold": 0.1
+            "gold": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "bleed": 0.2
@@ -6655,7 +6806,8 @@
             "caulk": 1,
             "cobalt": 1,
             "ruby": 1,
-            "gold": 0.1
+            "gold": 0.1,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.1
@@ -6697,7 +6849,8 @@
         "cost": {
             "gold": 1,
             "ruby": 0.3,
-            "jet": 0.3
+            "jet": 0.3,
+            "build": 0.5
         },
         "onhit_states": {
             "stun": 0.1
@@ -6743,7 +6896,8 @@
         },
         "description": "A sweet-looking cowboy hat.",
         "cost": {
-            "sandstone": 1
+            "sandstone": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6789,7 +6943,8 @@
         },
         "description": "A pair of fancy leather cowboy boots.",
         "cost": {
-            "sandstone": 1
+            "sandstone": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6833,7 +6988,8 @@
         },
         "description": "A cloth bandana.",
         "cost": {
-            "garnet": 1
+            "garnet": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6873,7 +7029,8 @@
         },
         "description": "A pair of large clown shoes.",
         "cost": {
-            "frosting": 1
+            "frosting": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6916,7 +7073,8 @@
         },
         "description": "A red clown nose that squeaks when you squeeze it.",
         "cost": {
-            "garnet": 1
+            "garnet": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6955,7 +7113,8 @@
         "wearable": false,
         "description": "A small figurine of a clown.",
         "cost": {
-            "shale": 1
+            "shale": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -6992,7 +7151,8 @@
         "wearable": false,
         "description": "A poster of a clown that bears a striking resemblance to Bill Cosby.",
         "cost": {
-            "frosting": 1
+            "frosting": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -7029,7 +7189,8 @@
         "wearable": false,
         "description": "A poster of Bill Cosby.",
         "cost": {
-            "jet": 1
+            "jet": 1,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -7065,7 +7226,8 @@
         "description": "A bottle of red cherry Faygo cola.",
         "cost": {
             "garnet": 1,
-            "aquamarine": 0.2
+            "aquamarine": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -7104,7 +7266,8 @@
         "description": "A bottle of grape Faygo.",
         "cost": {
             "shale": 1,
-            "aquamarine": 0.2
+            "aquamarine": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -7141,7 +7304,8 @@
         "description": "A bottle of cola-flavored Faygo.",
         "cost": {
             "rust": 1,
-            "aquamarine": 0.2
+            "aquamarine": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -7179,7 +7343,8 @@
         "description": "A bottle of cotton candy Faygo.",
         "cost": {
             "rock candy": 1,
-            "aquamarine": 0.2
+            "aquamarine": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -7217,7 +7382,8 @@
         "description": "A bottle of kiwi strawberry Faygo.",
         "cost": {
             "frosting": 1,
-            "aquamarine": 0.2
+            "aquamarine": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
@@ -7258,7 +7424,8 @@
         "description": "A bottle of the legendary candy apple Faygo.",
         "cost": {
             "rose quartz": 1,
-            "aquamarine": 0.2
+            "aquamarine": 0.2,
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {
