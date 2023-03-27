@@ -2,6 +2,8 @@ import random
 from typing import Optional, Union
 from string import ascii_letters
 from copy import deepcopy
+import bisect
+import time
 
 import util
 import binaryoperations
@@ -283,10 +285,30 @@ class Item(): # Items are the base of instants.
         self.__dict__["_id"] = name
         if name not in util.memory_items:
             self.create_item(name)
+            statistics = self.get_name_statistics(name)
+            self.make_statistics(statistics)
+            self.code = get_code_from_name(self.name)
+            if self.code not in util.codes:
+                util.codes[self.code] = self.name
 
-    def create_item(self, name):
-        util.memory_items[name] = {}
-        self._id = name
+    @classmethod
+    def from_code(cls, code: str):
+        if code in util.codes:
+            return Item(util.codes[code])
+        else: # paradox item
+            component_1, component_2 = paradoxify(code)
+            name = f"({component_1.name}??{component_2.name})"
+            util.memory_items[name] = {}
+            util.memory_items[name]["_id"] = name
+            util.codes[code] = name
+            item = Item(name)
+            operation = random.choice(["&&", "||"])
+            statistics = InheritedStatistics(component_1, component_2, operation)
+            item.make_statistics(statistics)
+            item.code = code
+            return item
+
+    def get_name_statistics(self, name) -> Union[BaseStatistics, InheritedStatistics]:
         if self.name in util.bases:
             statistics = BaseStatistics(name)
         else:
@@ -295,6 +317,9 @@ class Item(): # Items are the base of instants.
             component_2 = Item(components.component_2)
             operation = components.operation
             statistics = InheritedStatistics(component_1, component_2, operation)
+        return statistics
+
+    def make_statistics(self, statistics: Union[BaseStatistics, InheritedStatistics]):
         self.descriptors = statistics.descriptors
         self.adjectives = statistics.adjectives
         self.base = statistics.base
@@ -313,9 +338,10 @@ class Item(): # Items are the base of instants.
         self.secret_states = statistics.secret_states
         self.secretadjectives = statistics.secretadjectives
         self.forbiddencode = statistics.forbiddencode
-        self.code = get_code_from_name(name)
-        if self.code not in util.codes:
-            util.codes[self.code] = name
+
+    def create_item(self, name):
+        util.memory_items[name] = {}
+        self._id = name
 
     @property
     def name(self):
@@ -465,6 +491,15 @@ def display_item(item: Item):
     """
     return out
 
+def paradoxify(paradox_code: str) -> tuple[Item, Item]:
+    codes = sorted(list(util.codes))
+    bisect_index = bisect.bisect(codes, paradox_code)
+    left_code = codes[bisect_index-1]
+    right_code = codes[bisect_index]
+    item_1_name = util.codes[left_code]
+    item_2_name = util.codes[right_code]
+    return Item(item_1_name), Item(item_2_name)
+
 def alchemize(item_name1: str, item_name2: str, operation: str):
     return f"({item_name1}{operation}{item_name2})"
 
@@ -527,7 +562,13 @@ if len(missing_states) > 0:
     print(" ".join(list(missing_states)))
 
 if __name__ == "__main__":
-    ...
+    t = time.time()
+    paradox_code = "FFFFFFFF"
+    codes = sorted(list(util.codes))
+    bisect_index = bisect.bisect(codes, paradox_code)
+    left_code = codes[bisect_index-1]
+    right_code = codes[bisect_index]
+    print(f"left code {left_code} ({util.codes[left_code]}) right code {right_code} ({util.codes[right_code]}) took {time.time()-t:.2f} secs")
     # name_desc = {}
     # for base in util.bases:
     #     name_desc[base] = {"description": util.bases[base]["description"]}

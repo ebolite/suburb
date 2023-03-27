@@ -622,7 +622,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             else:
                 # otherwise the code is just bullshit
                 new_code = binaryoperations.codeor(target_instance.punched_code, instance.punched_code)
-                alchemized_item = None
+                alchemized_item = alchemy.Item.from_code(new_code)
             # make a new item containing the data of the old instance, the new instance becomes a container
             # for the old instance and the target
             if not player.consume_instance(target_instance.name): return False
@@ -632,8 +632,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             old_instance.punched_code = instance.punched_code
             old_instance.punched_item_name = instance.punched_item_name
             instance.punched_code = new_code
-            if alchemized_item is not None:
-                instance.punched_item_name = alchemized_item.displayname
+            instance.punched_item_name = alchemized_item.displayname
             instance.combined = [old_instance.name, target_instance.name]
             return True
         case "uncombine_card":
@@ -700,16 +699,21 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
             for char in code_to_punch:
                 if char not in binaryoperations.bintable: print("invalid code"); return False
             if code_to_punch == "00000000": return True # no holes would be made
+            if code_to_punch not in util.codes:
+                paradox_item = alchemy.Item.from_code(code_to_punch)
+                player.session.add_to_excursus(paradox_item.name)
             inserted_instance = alchemy.Instance(instance.inserted)
             if inserted_instance.item_name != "punched card": inserted_instance.item_name = "punched card"
             if inserted_instance.punched_code == "":
                 inserted_instance.punched_code = code_to_punch
                 if target_instance is not None: 
                     inserted_instance.punched_item_name = target_instance.item.displayname
+                    player.session.add_to_excursus(target_instance.item.name)
                     print(f"punching {inserted_instance.name} with {target_instance.name}")
                 else:
-                    new_instance = alchemy.Instance(util.codes[code_to_punch])
-                    inserted_instance.punched_item_name = new_instance.item.displayname
+                    new_item = alchemy.Item(util.codes[code_to_punch])
+                    player.session.add_to_excursus(new_item.name)
+                    inserted_instance.punched_item_name = new_item.displayname
                 return True
             # if both items are real and not just bullshit
             if inserted_instance.punched_code in util.codes and code_to_punch in util.codes:
@@ -719,13 +723,12 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
                 alchemized_item = alchemy.Item(alchemized_item_name)
                 inserted_instance.punched_code = alchemized_item.code
                 inserted_instance.punched_item_name = alchemized_item.displayname
+                player.session.add_to_excursus(alchemized_item.name)
                 print(f"punching {currently_punched_item.name} with {additional_item.name} makes {alchemized_item.displayname}")
                 return True
-            # otherwise the code is just bullshit
-            inserted_instance.punched_code = binaryoperations.codeor(inserted_instance.punched_code, code_to_punch)
-            inserted_instance.punched_item_name = ""
-            print("bullshit code")
-            return True
+            else:
+                print("This should not happen")
+                raise AssertionError
         case "insert_dowel":
             if instance.inserted != "": print("something is already inserted"); return False
             if target_instance is None: print("no target"); return False
