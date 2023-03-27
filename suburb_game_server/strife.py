@@ -462,6 +462,8 @@ class Griefer():
         base_stats = {stat_name:player.get_base_stat(stat_name) for stat_name in player.stat_ratios}
         griefer.base_stats = base_stats.copy()
         griefer.stat_bonuses = player.permanent_stat_bonuses.copy()
+        if player.echeladder_rung >= 100:
+            griefer.actions = 2
         griefer.known_skills = player.get_known_skills()
         griefer.pronouns = player.pronouns.copy()
         if player.wielded_instance is not None:
