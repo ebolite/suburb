@@ -158,6 +158,8 @@ def saveall():
             elif instance_dict != instances_data[instance_name]:
                 instances.update_one({"_id": instance_name}, {"$set": instance_dict}, upsert=True, session=session)
         if instances_to_insert: instances.insert_many(instances_to_insert, session=session)
+        inserted = npcs_to_insert+items_to_insert+instances_to_insert
+        if inserted: print(f"Inserted {len(inserted)}")
     with db_client.start_session() as session:
         session.with_transaction(callback)
     writejson(codes, "codes")
