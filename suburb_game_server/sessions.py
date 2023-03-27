@@ -48,11 +48,7 @@ class Session():
     def __init__(self, name):
         self.__dict__["session_name"] = name
         if name not in util.memory_sessions: # load the session into memory
-            session_details = util.db_sessions.find_one({"_id": name})
-            if session_details is not None:
-                util.memory_sessions[name] = session_details
-            else:
-                self.create_session(name)
+            self.create_session(name)
 
     def create_session(self, name):
         util.memory_sessions[name] = {}
@@ -728,11 +724,7 @@ class Player():
     def __init__(self, name):
         self.__dict__["_id"] = name
         if name not in util.memory_players: # load the session into memory
-            player_details = util.db_players.find_one({"_id": name})
-            if player_details is not None:
-                util.memory_players[name] = player_details
-            else:
-                self.create_player(name)
+            self.create_player(name)
 
     def create_player(self, name):
         util.memory_players[name] = {}

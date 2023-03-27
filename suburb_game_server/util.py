@@ -87,10 +87,10 @@ db_client = MongoClient(db_connection_string)
 db_suburb = db_client["suburb"]
 
 db_sessions = db_suburb["sessions"]
-memory_sessions = {}
+memory_sessions = {item_dict["_id"]:item_dict for item_dict in db_sessions.find({})}
 
 db_players = db_suburb["players"]
-memory_players = {}
+memory_players = {item_dict["_id"]:item_dict for item_dict in db_players.find({})}
 
 db_npcs = db_suburb["npcs"]
 memory_npcs = {item_dict["_id"]:item_dict for item_dict in db_npcs.find({})}
@@ -116,7 +116,7 @@ def saveall():
     print("Saving...")
     def callback(session):
         sessions = session.client["suburb"]["sessions"]
-        session_data = {item_dict["_id"]:item_dict for item_dict in sessions.find({})}
+        sessions_data = {item_dict["_id"]:item_dict for item_dict in sessions.find({})}
         players = session.client["suburb"]["players"]
         players_data = {item_dict["_id"]:item_dict for item_dict in players.find({})}
         npcs = session.client["suburb"]["npcs"]
@@ -125,17 +125,21 @@ def saveall():
         items_data = {item_dict["_id"]:item_dict for item_dict in items.find({})}
         instances = session.client["suburb"]["instances"]
         instances_data = {item_dict["_id"]:item_dict for item_dict in instances.find({})}
-        global memory_sessions
+
+        sessions_to_insert = []
         for session_name, session_dict in memory_sessions.copy().items():
-            sessions.update_one({"_id": session_name}, {"$set": session_dict}, upsert=True, session=session)
-        memory_sessions = {}
+            if session_name not in sessions_data: sessions_to_insert.append(session_dict)
+            elif session_dict != sessions_data[session_name]:
+                sessions.update_one({"_id": session_name}, {"$set": session_dict}, upsert=True, session=session)
+        if sessions_to_insert: sessions.insert_many(sessions_to_insert, session=session)
 
-        global memory_players
+        players_to_insert = []
         for player_name, player_dict in memory_players.copy().items():
-            players.update_one({"_id": player_name}, {"$set": player_dict}, upsert=True, session=session)
-        memory_players = {}
+            if player_name not in players_data: players_to_insert.append(player_dict)
+            elif player_dict != players_data[player_name]:
+                players.update_one({"_id": player_name}, {"$set": player_dict}, upsert=True, session=session)
+        if players_to_insert: players.insert_many(players_to_insert, session=session)
 
-        global memory_npcs
         npcs_to_insert = []
         for npc_name, npc_dict in memory_npcs.copy().items():
             if npc_name not in npcs_data: npcs_to_insert.append(npc_dict)
@@ -143,7 +147,6 @@ def saveall():
                 npcs.update_one({"_id": npc_name}, {"$set": npc_dict}, upsert=True, session=session)
         if npcs_to_insert: npcs.insert_many(npcs_to_insert, session=session)
 
-        global memory_items
         items_to_insert = []
         for item_name, item_dict in memory_items.copy().items():
             if item_name not in items_data: items_to_insert.append(item_dict)
@@ -151,7 +154,6 @@ def saveall():
                 items.update_one({"_id": item_name}, {"$set": item_dict}, upsert=True, session=session)
         if items_to_insert: items.insert_many(items_to_insert, session=session)
 
-        global memory_instances
         instances_to_insert = []
         for instance_name, instance_dict in memory_instances.copy().items():
             if instance_name not in instances_data: instances_to_insert.append(instance_dict)
