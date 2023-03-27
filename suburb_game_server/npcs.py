@@ -166,7 +166,6 @@ acheron.ai_type = "ogre"
 
 def does_npc_exist(name):
     if name in util.memory_npcs: return True
-    elif util.db_npcs.find_one({"_id": name}) is not None: return True
     else: return False
 
 class Npc():
