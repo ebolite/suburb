@@ -59,7 +59,7 @@ def connect():
     except:
         try:
             try:
-                ClientSocket.settimeout(5)
+                ClientSocket.settimeout(10)
                 ClientSocket.connect((HOSTNAME, PORT))
                 return True
             except TimeoutError: return False
