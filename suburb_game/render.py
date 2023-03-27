@@ -896,10 +896,10 @@ def get_spirograph(x, y, thick=True) -> Image:
 
 def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict]=None, binding: Optional[UIElement]=None, 
                             text_color: pygame.Color=suburb.current_theme().dark, temporary=True, absolute=True, scale_mult=1.0,
-                            flipped=False) -> UIElement:
+                            flipped=False, tooltip=True) -> UIElement:
     elements: list[Union[Image, Text]] = []
     padding = 5
-    scale = (h / 45) * scale_mult
+    scale = (h / 48) * scale_mult
     fontsize = int(h * scale_mult)
     for grist_name, grist_cost in true_cost.items():
         icon_path = config.grists[grist_name]["image"]
@@ -924,7 +924,19 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
         else:
             icon.bind_to(elements[-1])
             elements.append(icon)
-        label_x = padding + int(45*scale)
+        if tooltip:
+            tt_wh = int(48*scale)
+            tooltip_tt = ToolTip(0, 0, tt_wh, tt_wh)
+            tooltip_tt.bind_to(icon)
+            tt_label = Text(0, -tt_wh, grist_name)
+            tt_label.absolute = True
+            tt_label.fontsize = tt_wh
+            tt_label.bind_to(tooltip_tt)
+            tt_label.color = text_color
+            r, g, b, _ = text_color
+            tt_label.outline_color = get_dark_color(r, g, b)
+            tt_label.make_always_on_top()
+        label_x = padding + int(48*scale)
         label = Text(label_x, 0, str(grist_cost))
         if grist_cache is None or grist_cost <= grist_cache[grist_name]:
             label.color = text_color
@@ -2396,6 +2408,17 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
             grist_image = Image(x, y, grist_image_path)
         grist_image.scale = grist_image_scale
         grist_image.bind_to(grist_box)
+        tt_wh = int(48*grist_image_scale)
+        tooltip_tt = ToolTip(0, 0, tt_wh, tt_wh)
+        tooltip_tt.bind_to(grist_image)
+        tt_label = Text(0, -tt_wh, grist_name)
+        tt_label.absolute = True
+        tt_label.fontsize = tt_wh
+        tt_label.bind_to(tooltip_tt)
+        tt_label.color = filled_color
+        r, g, b, _ = tt_label.color
+        tt_label.outline_color = get_dark_color(r, g, b)
+        tt_label.make_always_on_top()
     bar_background = SolidColor(0.585, 0.4, w//1.3, h//3.5, box_color)
     bar_background.border_radius = 2
     if outline_color is None:

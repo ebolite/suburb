@@ -525,7 +525,7 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
                 tooltip = render.ToolTip(0, 0, 16, 16)
                 tooltip.tooltip_offsetx = -20
                 tooltip.bind_to(recycle_button)
-                value_display = render.make_grist_cost_display(padding, padding, 20, instance.item.true_cost, binding=tooltip, flipped=True)
+                value_display = render.make_grist_cost_display(padding, padding, 20, instance.item.true_cost, binding=tooltip, flipped=True, tooltip=False)
                 value_display.bind_to(tooltip)
                 value_display.bring_to_top()
                 results_sprites.append(recycle_button)
@@ -676,7 +676,7 @@ def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", 
         tooltip.tooltip_offsety = -25
         cost_label = render.make_grist_cost_display(0, 0, 20, resulting_item.true_cost, 
                                                     grist_cache, tooltip, text_color=info_window.theme.dark,
-                                                    flipped=True)
+                                                    flipped=True, tooltip=False)
 
 def choose_alchemy_item(info_window: "render.SolidColor", info_text: "render.Text", item_num: int, page=0, search: Optional[str]=None):
     info_window.kill_temporary_elements()
