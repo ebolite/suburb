@@ -716,25 +716,25 @@ class Room():
                                [attr])
         return self.__dict__[attr]
 
-def does_player_exist(id):
-    if id not in util.memory_players:
-        if util.db_players.find_one({"_id": id}) is None:
+def does_player_exist(name):
+    if name not in util.memory_players:
+        if util.db_players.find_one({"_id": name}) is None:
             return False
     return True
 
 class Player():
-    def __init__(self, id):
-        self.__dict__["_id"] = id
-        if id not in util.memory_players: # load the session into memory
-            player_details = util.db_players.find_one({"_id": id})
+    def __init__(self, name):
+        self.__dict__["_id"] = name
+        if name not in util.memory_players: # load the session into memory
+            player_details = util.db_players.find_one({"_id": name})
             if player_details is not None:
-                util.memory_players[id] = player_details
+                util.memory_players[name] = player_details
             else:
-                self.create_player(id)
+                self.create_player(name)
 
-    def create_player(self, id):
-        util.memory_players[id] = {}
-        self._id = id
+    def create_player(self, name):
+        util.memory_players[name] = {}
+        self._id = name
         self.session_name = None
         self.overmap_name = None
         self.map_name = None

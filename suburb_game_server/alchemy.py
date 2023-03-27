@@ -286,6 +286,7 @@ class Item(): # Items are the base of instants.
 
     def create_item(self, name):
         util.memory_items[name] = {}
+        self._id = name
         if self.name in util.bases:
             statistics = BaseStatistics(name)
         else:
