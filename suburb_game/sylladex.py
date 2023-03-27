@@ -268,8 +268,7 @@ class Modus():
         empty_cards = ["" for i in range(remaining_cards)]
         return empty_cards+instances
 
-    def draw_ui_bar(self, sylladex: "Sylladex", last_scene: Callable) -> "render.Image":
-        start = time.time()
+    def make_bar_backgound(self) -> "render.Image":
         sylladex_bar = render.Image(0, 0, self.bar_path)
         sylladex_bar.absolute = True
         sylladex_label = render.Text(6, 560, "sylladex :: captchalogue deck")
@@ -281,16 +280,57 @@ class Modus():
         modus_label.color = self.label_color
         modus_label.fontsize = 16
         modus_label.x = render.SCREEN_WIDTH - modus_label.get_width() - 6
-        num_cards_remaining = sylladex.empty_cards - len(sylladex.data_list)
+        return sylladex_bar
+    
+    def make_remaining_cards_indicator(self, x, y, sylladex: "Sylladex", last_scene: Callable, remaining_cards: int) -> "render.Button":
         def drop_empty_card_button():
             client.request("drop_empty_card")
             sylladex.update_deck()
             last_scene()
-        remaining_cards_display = render.Button(10, render.SCREEN_HEIGHT-85, "sprites/moduses/card_num_remaining.png", "sprites/moduses/card_num_remaining.png", drop_empty_card_button)
+        remaining_cards_display = render.Button(x, y, "sprites/moduses/card_num_remaining.png", "sprites/moduses/card_num_remaining.png", drop_empty_card_button)
         remaining_cards_display.absolute = True
-        remaining_cards_label = render.Text(0.5, 0.6, str(num_cards_remaining))
+        remaining_cards_label = render.Text(0.5, 0.6, str(remaining_cards))
         remaining_cards_label.bind_to(remaining_cards_display)
-        if num_cards_remaining == 0: remaining_cards_label.color = pygame.Color(255, 0, 0)
+        if remaining_cards == 0: remaining_cards_label.color = pygame.Color(255, 0, 0)
+        return remaining_cards_display
+
+    def make_card_thumb(self, x, y, instance: Optional[Instance], sylladex: "Sylladex", last_scene: Callable) -> Union["render.Image", "render.Button"]:
+        if instance is not None: 
+            button_function = self.get_button_func(instance, last_scene) if self.is_accessible(instance, sylladex) else lambda *args: None
+            card_thumb = render.Button(x, y, "sprites/moduses/card_thumb.png", "sprites/moduses/card_thumb.png", button_function)
+            card_thumb.absolute = True
+        else:
+            card_thumb = render.Image(x, y, "sprites/moduses/card_thumb.png")
+            card_thumb.absolute = True
+            card_thumb.alpha = 155
+            return card_thumb
+        card_image = render.make_item_image(0.49, 0.5, instance)
+        if card_image is not None:
+            card_image.bind_to(card_thumb)
+            card_image.scale = 0.5
+            contained_instance = instance.contained_instance()
+            if contained_instance is not None:
+                contained_image = render.make_item_image(0.45, 0.5, contained_instance)
+                if contained_image is not None:
+                    contained_image.bind_to(card_image)
+                    contained_image.scale = 0.25
+            if instance.item.name == "punched card":
+                print(f"spawning punches {instance.punched_code}")
+                render.spawn_punches(card_image, instance.punched_code, 18, 31, w=40, h=60)
+        label_text = self.get_instance_name(instance, True)
+        card_label = render.Text(0.49, 0.9, label_text)
+        card_label.set_fontsize_by_width(90)
+        card_label.bind_to(card_thumb)
+        if not self.is_accessible(instance, sylladex): 
+            card_thumb.alpha = 155
+            card_label.alpha = 155
+            if card_image is not None: card_image.alpha = 155
+        return card_thumb
+
+    def draw_ui_bar(self, sylladex: "Sylladex", last_scene: Callable) -> "render.Image":
+        sylladex_bar = self.make_bar_backgound()
+        num_cards_remaining = sylladex.empty_cards - len(sylladex.data_list)
+        remaining_cards_display = self.make_remaining_cards_indicator(10, render.SCREEN_HEIGHT-85, sylladex, last_scene, num_cards_remaining)
         ui_bar_card_instances = self.get_ui_bar_card_instances(sylladex, num_cards_remaining)
         instances_length = len(ui_bar_card_instances)
         for i, instance_name in enumerate(ui_bar_card_instances):
@@ -299,40 +339,11 @@ class Modus():
             y = int(render.SCREEN_HEIGHT*0.80)
             if instance_name != "": 
                 instance = sylladex.get_instance(instance_name)
-                button_function = self.get_button_func(instance, last_scene) if self.is_accessible(instance, sylladex) else lambda *args: None
-                card_thumb = render.Button(x, y, "sprites/moduses/card_thumb.png", "sprites/moduses/card_thumb.png", button_function)
-                card_thumb.absolute = True
-                card_thumb.bind_to(sylladex_bar)
             else:
-                card_thumb = render.Image(x, y, "sprites/moduses/card_thumb.png")
-                card_thumb.absolute = True
-                card_thumb.alpha = 155
-                card_thumb.bind_to(sylladex_bar)
-                continue
-            card_image = render.make_item_image(0.49, 0.5, instance)
-            if card_image is not None:
-                card_image.bind_to(card_thumb)
-                card_image.scale = 0.5
-                contained_instance = instance.contained_instance()
-                if contained_instance is not None:
-                    contained_image = render.make_item_image(0.45, 0.5, contained_instance)
-                    if contained_image is not None:
-                        contained_image.bind_to(card_image)
-                        contained_image.scale = 0.25
-                if instance.item.name == "punched card":
-                    print(f"spawning punches {instance.punched_code}")
-                    render.spawn_punches(card_image, instance.punched_code, 18, 31, w=40, h=60)
-            label_text = self.get_instance_name(instance, True)
-            card_label = render.Text(0.49, 0.9, label_text)
-            card_label.set_fontsize_by_width(90)
-            card_label.bind_to(card_thumb)
-            if not self.is_accessible(instance, sylladex): 
-                card_thumb.alpha = 155
-                card_label.alpha = 155
-                if card_image is not None: card_image.alpha = 155
-        print(f"draw ui bar - {time.time() - start}")
+                instance = None
+            card_thumb = self.make_card_thumb(x, y, instance, sylladex, last_scene)
+            card_thumb.bind_to(sylladex_bar)
         return sylladex_bar
-
     
 class Sylladex():
     def __init__(self, player_name: str, connection_host_port: str = f"{client.HOSTNAME}"):
