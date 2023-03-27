@@ -648,6 +648,8 @@ class Room():
         new_cost = new_tile.build_cost
         if old_cost > new_cost:
             build_cost = 0
+            refund = (old_cost-new_cost)//2
+            client.add_grist("build", refund)
         else:
             build_cost = new_cost - old_cost
         cost = {"build": build_cost}
