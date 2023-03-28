@@ -46,14 +46,16 @@ class Vial():
         self.tact_vial = False
 
     def add_value(self, griefer: "Griefer", amount: int) -> int:
-        current = griefer.vials[self.name]["current"]
-        griefer.vials[self.name]["current"] += amount
-        maximum = griefer.get_vial_maximum(self.name)
-        if griefer.vials[self.name]["current"] > maximum:
-            griefer.vials[self.name]["current"] = maximum
-        if griefer.vials[self.name]["current"] < 0:
-            griefer.vials[self.name]["current"] = 0
-        return griefer.vials[self.name]["current"] - current
+        if self.name in griefer.vials:
+            current = griefer.vials[self.name]["current"]
+            griefer.vials[self.name]["current"] += amount
+            maximum = griefer.get_vial_maximum(self.name)
+            if griefer.vials[self.name]["current"] > maximum:
+                griefer.vials[self.name]["current"] = maximum
+            if griefer.vials[self.name]["current"] < 0:
+                griefer.vials[self.name]["current"] = 0
+            return griefer.vials[self.name]["current"] - current
+        else: return 0
 
     def get_current(self, griefer: "Griefer") -> int:
         return griefer.get_vial(self.name)
