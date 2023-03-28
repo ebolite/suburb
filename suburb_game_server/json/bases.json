@@ -201,7 +201,7 @@
             "rollingpinkind"
         ],
         "wearable": false,
-        "description": "A blue dowel made of some material called Cruxite. Can be carved with a Totem Lathe.",
+        "description": "A dowel made of some material called Cruxite. Can be carved with a Totem Lathe.",
         "cost": {
             "build": 0.1
         },
