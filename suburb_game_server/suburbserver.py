@@ -64,28 +64,6 @@ def threaded_client(connection):
         conns.remove(connection)
         connection.close()
 
-def map_data(player: "sessions.Player"):
-    map_tiles, map_specials, room_instances, room_npcs, room_players, strife = player.get_view()
-    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "players": room_players,
-                       "strife": strife,
-                       "room_name": player.room.tile.name, "theme": player.overmap.theme})
-
-def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
-    if client is None: print("no client"); return "No client dumpass"
-    map_tiles, map_specials = client.land.housemap.get_view(x, y, 8)
-    room = client.land.housemap.find_room(x, y)
-    room_instances = room.get_instances()
-    room_npcs = room.get_npcs()
-    room_players = room.get_players()
-    client_grist_cache = client.grist_cache
-    client_available_phernalia = client.available_phernalia
-    excursus_contents = {item.name:item.get_dict() for item in [alchemy.Item(item_name) for item_name in client.session.excursus]}
-    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "room_name": room.tile.name, 
-                       "players": room_players,
-                       "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
-                       "client_cache_limit": client.grist_cache_limit, "atheneum": client.get_dict()["atheneum"], "excursus": excursus_contents,
-                       "theme": client.land.theme, "player_color": client.symbol_dict["color"]})
-
 def handle_request(dict):
     intent = dict["intent"]
     if intent == "connect":
@@ -348,32 +326,28 @@ def handle_request(dict):
             valid_targets = {instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in player.room.instances}
             valid_targets.update({instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in player.sylladex})
             return json.dumps(valid_targets)
-            
-def get_first_member_of_chain(player_name: str, checked=[]):
-    player = sessions.Player(player_name)
-    if player.server_player_name is None: return player_name
-    # we're in a closed server chain
-    elif player_name in checked: return player_name
-    else:
-        checked.append(player_name)
-        return get_first_member_of_chain(player.server_player_name, checked)
 
-# constructs chain from first member, or any member in a loop
-def construct_chain(player_name: str) -> list:
-    chain = [player_name]
-    current_player = sessions.Player(player_name)
-    while True:
-        client_player_name = current_player.client_player_name
-        # end of chain
-        if client_player_name is None: return chain
-        # we are in a closed chain
-        elif client_player_name in chain:
-            chain.append(client_player_name)
-            return chain
-        # add client to loop and loop again
-        else: 
-            chain.append(client_player_name)
-            current_player = sessions.Player(client_player_name)
+def map_data(player: "sessions.Player"):
+    map_tiles, map_specials, room_instances, room_npcs, room_players, strife = player.get_view()
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "players": room_players,
+                       "strife": strife,
+                       "room_name": player.room.tile.name, "theme": player.overmap.theme})
+
+def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
+    if client is None: print("no client"); return "No client dumpass"
+    map_tiles, map_specials = client.land.housemap.get_view(x, y, 8)
+    room = client.land.housemap.find_room(x, y)
+    room_instances = room.get_instances()
+    room_npcs = room.get_npcs()
+    room_players = room.get_players()
+    client_grist_cache = client.grist_cache
+    client_available_phernalia = client.available_phernalia
+    excursus_contents = {item.name:item.get_dict() for item in [alchemy.Item(item_name) for item_name in client.session.excursus]}
+    return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "room_name": room.tile.name, 
+                       "players": room_players,
+                       "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
+                       "client_cache_limit": client.grist_cache_limit, "atheneum": client.get_dict()["atheneum"], "excursus": excursus_contents,
+                       "theme": client.land.theme, "player_color": client.symbol_dict["color"]})
 
 def computer_shit(player: sessions.Player, content: dict, session:sessions.Session):
     for instance_name in player.sylladex + player.room.instances:
@@ -835,6 +809,32 @@ def valid_use_targets(player: sessions.Player, instance: alchemy.Instance, actio
             return []
     valid_target_names = filter(filter_func, player.sylladex+player.room.instances)
     return list(valid_target_names)
+
+def get_first_member_of_chain(player_name: str, checked=[]):
+    player = sessions.Player(player_name)
+    if player.server_player_name is None: return player_name
+    # we're in a closed server chain
+    elif player_name in checked: return player_name
+    else:
+        checked.append(player_name)
+        return get_first_member_of_chain(player.server_player_name, checked)
+
+# constructs chain from first member, or any member in a loop
+def construct_chain(player_name: str) -> list:
+    chain = [player_name]
+    current_player = sessions.Player(player_name)
+    while True:
+        client_player_name = current_player.client_player_name
+        # end of chain
+        if client_player_name is None: return chain
+        # we are in a closed chain
+        elif client_player_name in chain:
+            chain.append(client_player_name)
+            return chain
+        # add client to loop and loop again
+        else: 
+            chain.append(client_player_name)
+            current_player = sessions.Player(client_player_name)
 
 def autosave():
     last_save = time.time()
