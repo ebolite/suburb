@@ -1142,6 +1142,15 @@ anarchize = AbstratusSkill("anarchize")
 anarchize.description = "Does all-or-nothing damage like AGGRESS, but is free."
 anarchize.damage_formula = AGGRESS_FORMULA
 
+accuse = AbstratusSkill("accuse")
+accuse.description = "Drains the target's HOPE and increases their RAGE."
+accuse.parryable = False
+accuse.beneficial = False
+accuse.add_vial_cost("vim", "user.power//3")
+accuse.add_vial_change("hope", "-user.power//2")
+accuse.add_vial_change("rage", "user.power//2")
+accuse.action_cost = 0
+
 # shared skills
 antagonize = AbstratusSkill("antagonize")
 antagonize.description = "Applies DEMORALIZE with potency 1.5 to the target for 4 turns and increases your VIM and ASPECT."
@@ -1356,6 +1365,27 @@ assassinate.cooldown = 3
 assassinate.add_apply_state("bleed", 3, "target.doom.ratio * 3")
 assassinate.need_damage_to_apply_states = True
 
+# penkind
+def autograph_effect(user: "strife.Griefer", target: "strife.Griefer"):
+    if "autographed" in target.tags:
+        user.strife.log(f"{target.nickname} was already autographed!")
+        return
+    hp_change = user.power
+    resource_change = user.power
+    if target.team == user.team:
+        target.change_vial("hp", hp_change)
+        target.change_vial("aspect", resource_change)
+    else:
+        target.change_vial("hp", -hp_change*2)
+        target.change_vial("vim", -resource_change)
+
+autograph = AbstratusSkill("autograph")
+autograph.description = "Can be used once per target. If used on an ally, restores HP and ASPECT. If used on an enemy, directly drains HP and VIM."
+autograph.action_cost = 0
+autograph.parryable = False
+autograph.add_vial_cost("vim", "user.power//2")
+autograph.special_effect = autograph_effect
+
 # pepperspraykind
 abate = AbstratusSkill("abate")
 abate.description = f"Deals a small amount of damage and applies DEMORALIZE to all enemies with potency 1.0 for 2 turns."
@@ -1562,8 +1592,8 @@ add_abstratus_skill("paperkind", awaitskill, 50)
 
 # penkind
 add_abstratus_skill("penkind", antagonize, 1)
-add_abstratus_skill("penkind", awaitskill, 50)
-    # autograph
+add_abstratus_skill("penkind", accuse, 50)
+add_abstratus_skill("penkind", autograph, 75)
 
 # pepperspraykind
 add_abstratus_skill("pepperspraykind", abate, 1)
