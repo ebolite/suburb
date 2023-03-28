@@ -448,8 +448,8 @@ class NpcPrototype(NpcInteraction):
             target.interactions.append("follow")
             target.color = player.color
             player.prototyped_before_entry = True
-            if prototyped_item.base in ["dvd", "poster", "album", "book", "disc", "bust", "figurine"]:
-                sprite_name = random.choice(prototyped_item.adjectives).replace("+","").lower()
+            if prototyped_item.prototype_name is not None:
+                sprite_name = prototyped_item.name.replace("+", "").lower()
             else:
                 sprite_name = prototyped_item.base.replace("+","").lower()
             target.nickname = f"{sprite_name}sprite"

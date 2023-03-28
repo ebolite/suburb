@@ -87,6 +87,7 @@ class BaseStatistics():
         self.consume_states: dict = properties["consume_states"]
         self.secret_states: dict = properties["secret_states"]
         self.forbiddencode: bool = properties["forbiddencode"]
+        self.prototype_name: Optional[str] = properties["prototype_name"]
 
 # todo: captchalogue code inheritance
 class InheritedStatistics():
@@ -98,6 +99,7 @@ class InheritedStatistics():
         self.base, self.adjectives, self.merged_bases, self.secretadjectives = self.get_descriptors()
         self.descriptors = self.adjectives + [self.base]
         self.forbiddencode = False
+        self.prototype_name = None
         self.all_components = Components(self.name).get_all_components()
         self.gen_statistics()
 
@@ -338,6 +340,7 @@ class Item(): # Items are the base of instants.
         self.secret_states = statistics.secret_states
         self.secretadjectives = statistics.secretadjectives
         self.forbiddencode = statistics.forbiddencode
+        self.prototype_name = statistics.prototype_name
 
     def create_item(self, name):
         util.memory_items[name] = {}
@@ -534,6 +537,7 @@ defaults = {
     "secret_states": {}, # a list of effects that do nothing but may be turned into onhit, wear or consume effects upon alchemizing
     "attached_skills": [], # a list of skills this item teaches when worn/wielded
     "secretadjectives": [], # a list of adjectives that might be inherited but don't show up on the item
+    "prototype_name": None, # either None or a word that will be used when prototyped for the first time(cowboy boots is "cowboy" for example)
 }
 
 missing_states = set()
@@ -551,6 +555,8 @@ for base, base_dict in util.bases.items():
                 base_dict[key][state_name] = base_dict[key][state_name][0]
     if "build" not in base_dict["cost"]:
         base_dict["cost"]["build"] = 0.5
+    if "prototype_name" not in base_dict:
+        base_dict["prototype_name"] = None
     code = base_dict["code"]
     util.codes[code] = base
 util.writejson(util.bases, "bases")
