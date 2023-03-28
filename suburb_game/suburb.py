@@ -587,7 +587,7 @@ def chooseclass():
     pagesymbol = render.Button(.14, .7, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("page"), hover="sprites\\classes\\placeholderhover.png")
     pagetext = render.Text(.14, .8, f"Provides {character_info['aspect'].upper()}")
     pagetext.fontsize = 15
-    pagetext2 = render.Text(.14, .82, f"Becomes strong later")
+    pagetext2 = render.Text(.14, .82, f"Scales")
     pagetext2.fontsize = 15
     princetitle = render.Text(.29, .19, f"Prince")
     princesymbol = render.Button(.29, .3, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("prince"), hover="sprites\\classes\\placeholderhover.png")
