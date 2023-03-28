@@ -186,7 +186,7 @@ class Instance():
     def choose_target(self, action_name: str, last_scene: Callable):
         suburb.new_scene()
         render.LogWindow(self.choose_target)
-        valid_instances = client.requestplusdic(intent="prototype_targets", content={"instance_name": self.name, "action_name": action_name})
+        valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.name, "action_name": action_name})
         print(valid_instances)
         syl = Sylladex.current_sylladex()
         syl.update_deck()

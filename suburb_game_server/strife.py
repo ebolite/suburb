@@ -275,6 +275,7 @@ class Griefer():
             self.symbol_dict = {}
             self.grist_type: Optional[str] = None
             self.grist_category: Optional[str] = None
+            self.color: Optional[list] = None
             self.actions = 1
             self.ready: bool = False
             self.base_power: int = 0
@@ -439,6 +440,7 @@ class Griefer():
 
     def ai_use_skills(self):
         while self.remaining_actions:
+            print(self.ai_type)
             assert self.ai_type in npcs.griefer_ai
             ai = npcs.griefer_ai[self.ai_type]
             chosen_skill_name = ai.ai_choose_skill(self)
@@ -491,6 +493,7 @@ class Griefer():
         griefer.type = npc.type
         griefer.grist_type = npc.grist_type
         griefer.grist_category = npc.grist_category
+        griefer.color = npc.color
         griefer.nickname = npc.nickname.upper()
         griefer.base_power = npc.power
         griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)

@@ -199,6 +199,7 @@ class Npc():
         self.type: str = ""
         self.grist_category: Optional[str] = None
         self.grist_type: Optional[str] = None
+        self.color: Optional[list] = None
         self.hostile = True
         self.ai_type: str = "random"
         self.stat_ratios: dict[str, int] = {
@@ -327,16 +328,18 @@ class Npc():
     def room(self) -> "sessions.Room":
         return sessions.Room(self.room_name, self.session, self.overmap, self.map)
 
-class KernalAI(GrieferAI):
+class KernelAI(GrieferAI):
     name = "kernel"
     def ai_choose_skill(self, user: "strife.Griefer") -> str:
         return "abstain"
+KernelAI()
 
 class SpriteAI(GrieferAI):
     name = "sprite"
     def ai_choose_skill(self, user: "strife.Griefer") -> str:
         if skills.skills["amend"].is_submittable_by(user): return "amend"
         return super().ai_choose_skill(user)
+SpriteAI()
 
 class KernelSprite(Npc):
     @classmethod
@@ -440,6 +443,7 @@ class NpcPrototype(NpcInteraction):
             target.ai_type = "sprite"
             target.additional_skills.append("amend")
             target.interactions.append("follow")
+            target.color = player.color
             player.prototyped_before_entry = True
             if prototyped_item.base in ["dvd", "poster", "album", "book", "disc", "bust", "figurine"]:
                 sprite_name = random.choice(prototyped_item.adjectives).replace("+","").lower()

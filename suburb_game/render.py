@@ -2364,10 +2364,14 @@ class Enemy(GrieferElement, Image):
         self.griefer = griefer
         self.path = f"sprites/strife/{griefer.type}.png"
         super().__init__(x, y, self.path)
-        grist_type = griefer.grist_type or "build"
-        new_color = config.gristcolors[grist_type]
-        if isinstance(new_color, list):
-            new_color = random.choice(new_color)
+        if griefer.color is not None:
+            r, g, b = griefer.color
+            new_color = get_dark_color(r, g, b)
+        else:
+            grist_type = griefer.grist_type or "build"
+            new_color = config.gristcolors[grist_type]
+            if isinstance(new_color, list):
+                new_color = random.choice(new_color)
         self.convert_colors.append((themes.default.dark, new_color)) 
         self.make_labels()
         click_check.append(self)

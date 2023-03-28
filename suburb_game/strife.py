@@ -185,6 +185,10 @@ class Griefer():
     @property
     def power(self) -> int:
         return self.stats["power"]
+    
+    @property
+    def color(self) -> Optional[tuple[int, int, int]]:
+        return self.griefer_dict["color"]
 
 class Strife():
     hotkeys = {
