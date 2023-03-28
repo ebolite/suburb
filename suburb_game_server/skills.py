@@ -145,7 +145,6 @@ class Skill():
     def format_formula(self, formula: str, user: "strife.Griefer", target: "strife.Griefer") -> str:
         formula = user.format_formula(formula, "user")
         formula = target.format_formula(formula, "target")
-        print(f"{self.name} formula {formula}")
         return formula
     
     def evaluate_theoretical_damage(self, user: "strife.Griefer") -> int:
