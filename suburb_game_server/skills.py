@@ -1552,6 +1552,9 @@ add_abstratus_skill("glovekind", arrest, 1)
 add_abstratus_skill("glovekind", arraign, 50)
 add_abstratus_skill("glovekind", anticipate, 75)
 
+# grimoirekind
+# accurse
+
 # guitarkind
 add_abstratus_skill("guitarkind", allure, 1)
 add_abstratus_skill("guitarkind", arraign, 50)
