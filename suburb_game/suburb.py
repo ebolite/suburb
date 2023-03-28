@@ -1112,6 +1112,15 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     power_label.color = theme.dark
     power_label.fontsize = 54
     power_label.set_fontsize_by_width(330)
+    # description
+    if instance.item.description is not None:
+        description_text = instance.item.description
+        description = render.Text(0.2, 0.7, description_text)
+        description.color = text_color
+        description.outline_color = text_outline_color
+        description.fontsize = 20
+        description.set_fontsize_by_width(450)
+
     # states
 
     STATE_PADDING = 3

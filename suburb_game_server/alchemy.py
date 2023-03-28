@@ -100,6 +100,7 @@ class InheritedStatistics():
         self.descriptors = self.adjectives + [self.base]
         self.forbiddencode = False
         self.prototype_name = None
+        self.description = None
         self.all_components = Components(self.name).get_all_components()
         self.gen_statistics()
 
@@ -331,7 +332,7 @@ class Item(): # Items are the base of instants.
         self.size = statistics.size
         self.kinds = statistics.kinds
         self.wearable = statistics.wearable
-        self.description = "None"
+        self.description = statistics.description
         self.cost = statistics.cost
         self.use = statistics.use
         self.onhit_states = statistics.onhit_states

@@ -31,6 +31,7 @@ class Item():
         self.display_name: str = self.item_dict["display_name"]
         self.adjectives: list[str] = self.item_dict["adjectives"]
         self.secretadjectives: list[str] = self.item_dict["secretadjectives"]
+        self.description: Optional[str] = self.item_dict["description"]
 
     @property
     def true_cost(self):
