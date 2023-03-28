@@ -531,11 +531,11 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
                 results_sprites.append(recycle_button)
         def get_leftbutton_func(page_num):
             def leftbutton_func():
-                choose_alchemy_item(info_window, info_text, page_num-1, search=search)
+                display_atheneum(info_window, info_text, page_num-1, search=search)
             return leftbutton_func
         def get_rightbutton_func(page_num):
             def rightbutton_func():
-                choose_alchemy_item(info_window, info_text, page_num+1, search=search)
+                display_atheneum(info_window, info_text, page_num+1, search=search)
             return rightbutton_func
         page_button_w = info_window.w//2-padding*2
         page_button_h = 20
