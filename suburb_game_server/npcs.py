@@ -253,10 +253,13 @@ class Npc():
             spoils_dict[grist_name] = new_amount
         return spoils_dict
     
-    def prototype_with_item(self, item_name: str, inherit_all_skills=False, nickname=False):
+    def prototype_with_item(self, item_name: str, inherit_all_skills=False, nickname=False, additive_power=False):
         item = alchemy.Item(item_name)
-        power_mult = 1 + (item.power + item.inheritpower)/100
-        self.power = int(self.power * power_mult)
+        if additive_power:
+            self.power += item.power + item.inheritpower
+        else:
+            power_mult = 1 + (item.power + item.inheritpower)/100
+            self.power = int(self.power * power_mult)
         # inherit onhits and wears
         inherited_onhits = item.onhit_states.copy()
         inherited_wears = item.wear_states.copy()
@@ -433,7 +436,7 @@ class NpcPrototype(NpcInteraction):
         else: return False
         instance = alchemy.Instance(instance_name)
         prototyped_item = instance.item
-        target.prototype_with_item(prototyped_item.name, inherit_all_skills=True)
+        target.prototype_with_item(prototyped_item.name, inherit_all_skills=True, additive_power=True)
         target.prototypes.append(prototyped_item.name)
         if not player.entered:
             player.session.prototypes.append(prototyped_item.name)
