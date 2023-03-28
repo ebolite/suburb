@@ -716,15 +716,15 @@ def choosevial():
 
 @scene
 def choosemodus(page=0):
-    def modusbutton(modus: "sylladex.Modus"):
+    def modusbutton(modus_name: str):
         def out():
-            character_info["modus"] = modus.modus_name
+            character_info["modus"] = modus_name
             choosegrists()
         return out
     modus_to_display = list(sylladex.moduses)[page]
     modus = sylladex.moduses[modus_to_display]
     logtext = render.Text(.5, 0.05, "Select your starting FETCH MODUS.")
-    modus_image = render.Button(0.5, 0.45, modus.front_path, None, modusbutton(modus))
+    modus_image = render.Button(0.5, 0.45, modus.front_path, None, modusbutton(modus.modus_name))
     modus_label = render.Text(0.55, 1.05, modus.modus_name)
     modus_label.bind_to(modus_image)
     modus_description = render.Text(0.55, 1.13, modus.description)
