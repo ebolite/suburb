@@ -49,13 +49,13 @@ class Underling():
         npc.grist_category = grist_category
         npc.power = power
         npc.nickname = nickname
-        npc.stat_ratios = self.stat_ratios
+        npc.stat_ratios = self.stat_ratios.copy()
         npc.actions = self.actions
         npc.ai_type = self.ai_type
-        npc.additional_skills = self.additional_skills
+        npc.additional_skills = self.additional_skills.copy()
         npc.hostile = True
-        npc.onhit_states = self.onhit_states
-        npc.wear_states = self.wear_states
+        npc.onhit_states = self.onhit_states.copy()
+        npc.wear_states = self.wear_states.copy()
         if room.session.prototypes:
             prototyped_item_name = random.choice(room.session.prototypes)
             if prototyped_item_name is not None:
