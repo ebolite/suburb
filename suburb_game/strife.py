@@ -272,9 +272,10 @@ class Strife():
                 sprite.x = starting_x
                 sprite_x = starting_x * self.canvas.w - sprite.get_width()//2
                 sprite_y = sprite.y * self.canvas.h - sprite.get_height()//2
-                
                 if isinstance(sprite, render.Enemy):
                     sprite.rect_y_offset = sprite.get_height()//3 * -1
+                    if direction == "left":
+                        sprite_x -= 200
                 else: sprite_x -= 100
                 sprites_xy.append((sprite_x, sprite_y))
                 continue
