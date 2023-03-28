@@ -167,10 +167,12 @@ def handle_request(dict):
             else: return json.dumps(player.strife.get_dict())
         # todo: this is not optional
         case "start_strife":
-
             if not player.room.start_strife():
                 if player.room.strife is not None:
                     player.room.strife.add_griefer(player)
+                    for npc_name in player.npc_followers:
+                        npc = npcs.Npc(npc_name)
+                        player.room.strife.add_griefer(npc)
         case "carved_item_info":
             dowel_name = content["dowel_name"]
             if not alchemy.does_instance_exist(dowel_name): print("dowel does not exist"); return {}
