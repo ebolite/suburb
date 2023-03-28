@@ -60,7 +60,7 @@ class Underling():
             prototyped_item_name = random.choice(room.session.prototypes)
             if prototyped_item_name is not None:
                 npc.prototype_with_item(prototyped_item_name, nickname=True)
-        room.add_npc(npc)
+        npc.goto_room(room)
         return npc
 
 class GrieferAI():
@@ -190,6 +190,10 @@ class Npc():
     def create_npc(self, name):
         util.memory_npcs[name] = {}
         self._id = name
+        self.session_name = None
+        self.overmap_name = None
+        self.map_name = None
+        self.room_name = None
         self.power: int = 0
         self.nickname: str = name
         self.type: str = ""
@@ -213,6 +217,7 @@ class Npc():
         self.interactions = ["talk"]
         self.invulnerable = False
         self.prototypes = []
+        self.following: Optional[str] = None
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -283,6 +288,44 @@ class Npc():
     @property
     def name(self):
         return self.__dict__["_id"]
+    
+    def follow(self, player: "sessions.Player"):
+        self.unfollow()
+        player.npc_followers.append(self.name)
+        self.following = player.name
+
+    def unfollow(self):
+        if self.following is not None:
+            following_player = sessions.Player(self.following)
+            following_player.npc_followers.remove(self.name)
+            self.following = None
+
+    def goto_room(self, room: "sessions.Room"):
+        if self.session_name is not None and self.session != room.session:
+            if self.name in self.session.current_players:
+                self.session.current_players.remove(self.name)
+        if self.room_name is not None: self.room.remove_npc(self)
+        self.session_name = room.session.name
+        self.overmap_name = room.overmap.name
+        self.map_name = room.map.name
+        self.room_name = room.name
+        room.add_npc(self)
+
+    @property
+    def session(self) -> "sessions.Session":
+        return sessions.Session(self.session_name)
+    
+    @property
+    def overmap(self) -> "sessions.Overmap":
+        return sessions.Overmap(self.overmap_name, self.session)
+    
+    @property
+    def map(self) -> "sessions.Map":
+        return sessions.Map(self.map_name, self.session, self.overmap)
+    
+    @property
+    def room(self) -> "sessions.Room":
+        return sessions.Room(self.room_name, self.session, self.overmap, self.map)
 
 class KernalAI(GrieferAI):
     name = "kernel"
@@ -297,7 +340,7 @@ class SpriteAI(GrieferAI):
 
 class KernelSprite(Npc):
     @classmethod
-    def spawn_new(cls):
+    def spawn_new(cls, player: "sessions.Player"):
         name = Npc.make_valid_name("kernel")
         sprite = cls(name)
         sprite.type = "kernelsprite"
@@ -308,6 +351,7 @@ class KernelSprite(Npc):
         sprite.additional_skills.append("abstain")
         sprite.interactions.append("prototype")
         sprite.ai_type = "kernel"
+        sprite.follow(player)
         return sprite
 
 class NpcInteraction():
@@ -366,6 +410,16 @@ class NpcTalk(NpcInteraction):
             return f"The {target.nickname} does not seem like one for friendly conversation."
 NpcTalk("talk")
 
+class NpcFollow(NpcInteraction):
+    def use(self, player: "sessions.Player", target: "Npc", additional_data: dict[str, str]):
+        if target.following == player.name:
+            target.unfollow()
+            return f"{target.nickname.capitalize()} is no longer following you!"
+        else:
+            target.follow(player)
+            return f"{target.nickname.capitalize()} is now following you!"
+NpcFollow("follow")
+
 class NpcPrototype(NpcInteraction):
     def use(self, player: "sessions.Player", target: "KernelSprite", additional_data: dict[str, str]):
         instance_name = additional_data["instance_name"]
@@ -385,6 +439,7 @@ class NpcPrototype(NpcInteraction):
             target.type = "sprite"
             target.ai_type = "sprite"
             target.additional_skills.append("amend")
+            target.interactions.append("follow")
             player.prototyped_before_entry = True
             if prototyped_item.base in ["dvd", "poster", "album", "book", "disc", "bust", "figurine"]:
                 sprite_name = random.choice(prototyped_item.adjectives).replace("+","").lower()

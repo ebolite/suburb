@@ -755,6 +755,7 @@ class Player():
             "savvy": 1,
             "mettle": 1,
         }
+        self.npc_followers = []
         self.permanent_stat_bonuses = {}
         # phernalia registry is a default list of deployable objects minus the deployed phernalia
         self.deployed_phernalia = []
@@ -1277,6 +1278,9 @@ class Player():
         self.room_name = room.name
         if self.name not in self.session.current_players: self.session.current_players.append(self.name)
         room.add_player(self)
+        for npc_name in self.npc_followers:
+            npc = npcs.Npc(npc_name)
+            npc.goto_room(room)
 
     @property
     def strife(self) -> Optional["Strife"]:

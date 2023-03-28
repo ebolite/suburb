@@ -72,6 +72,7 @@ log_window = None
 def log(message: str):
     if client.dic["character"] not in player_logs: player_logs[client.dic["character"]] = []
     logs = player_logs[client.dic["character"]]
+    if not message: return
     lines = split_into_max_length_lines(message, 45)
     for line in lines:
         logs.append(line)
@@ -82,8 +83,8 @@ def current_log() -> list[str]:
     if client.dic["character"] not in player_logs: player_logs[client.dic["character"]] = []
     return player_logs[client.dic["character"]]
 
-def split_into_max_length_lines(text, max_length: int) -> list[str]:
-    lines = []
+def split_into_max_length_lines(text: str, max_length: int) -> list[str]:
+    lines = [[]]
     index = 0
     for word in text.split(" "):
         if len(" ".join(lines[index])) + len(word) > max_length: 

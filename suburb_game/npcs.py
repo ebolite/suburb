@@ -32,13 +32,11 @@ class NpcInteraction():
         return client.requestplus(intent="interact_npc", content={"interaction_name": self.name, "npc_name": npc.name, "additional_data": additional_data})
 
     def use(self, npc: Npc, last_scene: Callable):
-        pass
-
-class NpcTalk(NpcInteraction):
-    def use(self, npc: Npc, last_scene: Callable):
         reply = self.request_npc_interaction(npc)
         util.log(reply)
-NpcTalk("talk")
+
+NpcInteraction("talk")
+NpcInteraction("follow")
 
 class NpcPrototype(NpcInteraction):
     def use(self, npc: Npc, last_scene: Callable):

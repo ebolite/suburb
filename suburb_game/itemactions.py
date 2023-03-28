@@ -129,7 +129,7 @@ custom_punch_card.use_func = use_custom_punch
 
 
 unseal = ItemAction("unseal")
-unseal.use_prompt = "You unseal the {iname}!... A KERNEL appears!"
+unseal.use_prompt = "You unseal the {iname}!... A KERNELSPRITE appears!"
 
 cruxtrude = ItemAction("cruxtrude")
 cruxtrude.use_prompt = "A CRUXITE DOWEL flies out of the {iname}!"
