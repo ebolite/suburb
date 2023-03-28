@@ -1323,7 +1323,7 @@ apothegmatize.add_stat_bonus("savvy", "user.power//24")
 apothegmatize.add_stat_bonus("luck", "user.power//18")
 apothegmatize.add_vial_cost("vim", "-user.power//2")
 
-# fistkind
+# fistkind / glovekind
 arrest = AbstratusSkill("arrest")
 arrest.description = "Deals damage and applies DISARM and VULNERABLE with potency 1.5 for 2 turns."
 arrest.add_vial_cost("vim", "user.power//2")
@@ -1331,6 +1331,14 @@ arrest.damage_formula = ASSAIL_FORMULA
 arrest.add_apply_state("disarm", 2, "1.0")
 arrest.add_apply_state("vulnerable", 2, "1.5")
 arrest.need_damage_to_apply_states = True
+
+# guitarkind
+allure = AbstratusSkill("allure")
+allure.description = "INSPIRES for 3 turns with potency 1.5 and REFRESHES the target and their friends with potency 2.0."
+allure.add_vial_cost("vim", "user.power//2")
+allure.add_apply_state("refresh", 1, "2.0")
+allure.add_apply_state("inspire", 3, "1.5")
+allure.target_team = True
 
 # knifekind
 assassinate = AbstratusSkill("assassinate")
@@ -1489,6 +1497,11 @@ add_abstratus_skill("forkkind", arraign, 50)
 add_abstratus_skill("glovekind", arrest, 1)
 add_abstratus_skill("glovekind", arraign, 50)
 add_abstratus_skill("glovekind", anticipate, 75)
+
+# guitarkind
+add_abstratus_skill("guitarkind", allure, 1)
+add_abstratus_skill("guitarkind", arraign, 50)
+add_abstratus_skill("guitarkind", admonish, 75)
 
 # hatchetkind
 add_abstratus_skill("hatchetkind", axe, 1)
