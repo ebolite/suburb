@@ -667,7 +667,10 @@ class Room():
                 special_dict[instance_name] = (instance.item.name, None)
         for npc_name in self.npcs:
             npc = npcs.Npc(npc_name)
-            special_dict[npc_name] = (npc.type, npc.grist_type)
+            if npc.color is not None:
+                special_dict[npc_name] = (npc.type, npc.color)
+            else:
+                special_dict[npc_name] = (npc.type, npc.grist_type)
         # todo: other specials
         return special_dict
 
