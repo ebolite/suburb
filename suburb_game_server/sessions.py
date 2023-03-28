@@ -400,13 +400,13 @@ class Map():
         valid_underlings: list["npcs.Underling"] = []
         for underling in npcs.underlings.values():
             if underling.difficulty <= difficulty: valid_underlings.append(underling)
-        num_clusters = 6 + difficulty
+        num_clusters = 8 + difficulty*2
         if len(valid_underlings) == 0: return
         for i in range(num_clusters):
             underling = random.choice(valid_underlings)
             cluster_size = underling.cluster_size
             diff_difference = difficulty - underling.difficulty
-            cluster_size += int(underling.cluster_size/2 * diff_difference)
+            cluster_size += underling.cluster_size
             min_tier = min(1 + diff_difference, 9)
             max_tier = min(3 + difficulty + underling.variance, 9)
             self.populate_with_underlings(underling.monster_type, cluster_size, cluster_size, min_tier, max_tier)
