@@ -442,7 +442,6 @@ class Griefer():
 
     def ai_use_skills(self):
         while self.remaining_actions:
-            print(self.ai_type)
             assert self.ai_type in npcs.griefer_ai
             ai = npcs.griefer_ai[self.ai_type]
             chosen_skill_name = ai.ai_choose_skill(self)
