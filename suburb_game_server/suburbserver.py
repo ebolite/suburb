@@ -198,6 +198,13 @@ def handle_request(dict):
             if target_name is not None: target_instance = alchemy.Instance(target_name)
             else: target_instance = None
             return use_item(player, instance, action_name, target_instance, additional_data)
+        case "interact_npc":
+            npc_name = content["npc_name"]
+            interaction_name = content["interaction_name"]
+            print(f"npc interaction with {npc_name}: {interaction_name}")
+            if npc_name not in player.room.npcs: return False
+            if interaction_name not in npcs.npc_interactions: return False
+            return npcs.npc_interactions[interaction_name].use(player, npcs.Npc(npc_name))
         case "computer":
             return computer_shit(player, content, session)
         case "assign_specibus":

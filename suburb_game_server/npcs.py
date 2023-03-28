@@ -12,6 +12,7 @@ import skills
 
 underlings: dict[str, "Underling"] = {}
 griefer_ai: dict[str, "GrieferAI"] = {}
+npc_interactions: dict[str, "NpcInteraction"] = {}
 
 class Underling():
     def __init__(self, monster_type: str):
@@ -204,6 +205,7 @@ class Npc():
         self.onhit_states = {}
         self.wear_states = {}
         self.immune_states = []
+        self.interactions = ["talk"]
         self.invulnerable = False
 
     def __setattr__(self, attr, value):
@@ -260,6 +262,19 @@ class KernelSprite(Npc):
         sprite.invulnerable = True
         sprite.additional_skills.append("abstain")
         return sprite
+
+class NpcInteraction():
+    def __init__(self, name):
+        self.name = name
+        npc_interactions[self.name] = self
+
+    def use(self, player: "sessions.Player", target: "Npc"):
+        pass
+
+class NpcTalk(NpcInteraction):
+    def use(self, player: "sessions.Player", target: "Npc"):
+        return f"{target.nickname}: hi"
+NpcTalk("talk")
 
 if __name__ == "__main__":
     print(griefer_ai)

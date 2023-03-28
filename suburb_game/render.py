@@ -17,7 +17,8 @@ import suburb
 import themes
 import binaryoperations
 import sburbserver
-from strife import Npc, Griefer, Strife
+from strife import Griefer, Strife
+from npcs import Npc
 from sylladex import Instance, Item, Sylladex
 
 pygame.init()
@@ -1437,7 +1438,20 @@ class RoomItemDisplay(UIElement):
             elif item_name in self.tile_map.npcs:
                 npc = Npc(item_name, self.tile_map.npcs[item_name])
                 display_name = npc.nickname
-                new_button = TextButton(self.x, y, self.w, self.h, display_name, get_button_func(npc.name), truncate_text=True)
+                interaction_buttons = 0
+                if not self.server_view:
+                    for i, interaction_name in enumerate(reversed(npc.interactions)):
+                        interaction_buttons += 1
+                        path = f"sprites/item_actions/{interaction_name}.png"
+                        pressed_path = f"sprites/item_actions/{interaction_name}_pressed.png"
+                        if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
+                        if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
+                        interaction_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, npc.get_npc_interaction_button(interaction_name, suburb.map_scene))
+                        interaction_button.absolute = True
+                        self.buttons.append(interaction_button)
+                main_button_width = self.w
+                main_button_width -= 30*interaction_buttons
+                new_button = TextButton(self.x, y, main_button_width, self.h, display_name, get_button_func(npc.name), truncate_text=True)
                 new_button.absolute = True
                 self.buttons.append(new_button)
             elif item_name in self.tile_map.players:

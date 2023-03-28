@@ -14,7 +14,6 @@ def request_use_item(instance_name: str, action_name: str, target_name:Optional[
                                                           "target_name": target_name, "additional_data": additional_data})
 
 class ItemAction():
-
     def __init__(self, name):
         self.targeted = False
         self.special = False
