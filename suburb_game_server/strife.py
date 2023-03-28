@@ -354,6 +354,7 @@ class Griefer():
             self.strife.log(f"{self.nickname} takes {damage} damage! ({'heads' if coin else 'scratch'}){ f' ({source})' if source is not None else ''}")
 
     def death_break(self) -> bool:
+        if self.dead: return True
         if self.get_vial("hp") <= 0:
             self.die()
             return True
