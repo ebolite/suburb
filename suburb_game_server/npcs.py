@@ -437,7 +437,6 @@ class NpcPrototype(NpcInteraction):
         instance = alchemy.Instance(instance_name)
         prototyped_item = instance.item
         target.prototype_with_item(prototyped_item.name, inherit_all_skills=True, additive_power=True)
-        target.prototypes.append(prototyped_item.name)
         if not player.entered:
             player.session.prototypes.append(prototyped_item.name)
         old_name = target.nickname
@@ -453,6 +452,7 @@ class NpcPrototype(NpcInteraction):
             else:
                 sprite_name = prototyped_item.base.replace("+","").lower()
             target.nickname = f"{sprite_name}sprite"
+            target.prototypes.append(prototyped_item.name)
             return f"{old_name.upper()} became {target.nickname.upper()}!"
         else: # sprite was already prototyped
             if prototyped_item.name in target.prototypes:
@@ -461,6 +461,7 @@ class NpcPrototype(NpcInteraction):
                 sprite_adjective = random.choice(prototyped_item.adjectives+prototyped_item.secretadjectives).replace("+", "").lower()
                 target.nickname = f"{sprite_adjective}{target.nickname}"
             target.interactions.remove("prototype")
+            target.prototypes.append(prototyped_item.name)
             return f"{old_name.upper()} became {target.nickname.upper()}!"
 NpcPrototype("prototype")
 
