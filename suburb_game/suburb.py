@@ -718,7 +718,7 @@ def choosevial():
 def choosemodus(page=0):
     def modusbutton(modus: "sylladex.Modus"):
         def out():
-            character_info["modus"] = modus
+            character_info["modus"] = modus.modus_name
             choosegrists()
         return out
     modus_to_display = list(sylladex.moduses)[page]
