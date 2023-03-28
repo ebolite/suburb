@@ -1013,7 +1013,7 @@ class Player():
         tier = max(tier, 1)
         if "exotic" not in config.grists[grist_name]:
             rate += self.echeladder_rung//2//tier
-        if (self.gristcategory in config.gristcategories and grist_name in config.gristcategories[self.gristcategory]) or grist_name == "build":
+        if self.gristcategory in config.gristcategories and grist_name in config.gristcategories[self.gristcategory]:
             rate += self.echeladder_rung//2//tier
         rate += int(amount//25)
         return rate
