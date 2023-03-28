@@ -499,18 +499,8 @@
             "build": 0.01
         },
         "onhit_states": {},
-        "wear_states": {
-            "stun": 0.1,
-            "strength": 0.1,
-            "heal": 0.1,
-            "inspire": 0.1
-        },
-        "consume_states": {
-            "stun": 0.1,
-            "strength": 0.1,
-            "heal": 0.1,
-            "inspire": 0.1
-        },
+        "wear_states": {},
+        "consume_states": {},
         "secretadjectives": [
             "meta",
             "sburban",
@@ -521,7 +511,11 @@
             "transcendental"
         ],
         "secret_states": {
-            "freeze": 2
+            "freeze": 2,
+            "stun": 1,
+            "strength": 1,
+            "heal": 1,
+            "inspire": 1
         },
         "use": [
             "install_sburb"
