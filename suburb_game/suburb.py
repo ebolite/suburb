@@ -583,6 +583,8 @@ def chooseclass():
     knightsymbol = render.Button(.14, .3, "sprites\\classes\\knight.png", "sprites\\classes\\knight.png", make_classbutton("knight"), theme=theme)
     knighttext = render.Text(.14, .4, f"Fights with {character_info['aspect'].upper()}")
     knighttext.fontsize = 15
+    knighttext2 = render.Text(.14, .42, f"Exploits {character_info['aspect'].upper()}")
+    knighttext2.fontsize = 15
     pagetitle = render.Text(.14, .59, f"Page")
     pagesymbol = render.Button(.14, .7, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("page"), hover="sprites\\classes\\placeholderhover.png")
     pagetext = render.Text(.14, .8, f"Provides {character_info['aspect'].upper()}")
