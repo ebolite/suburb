@@ -392,14 +392,14 @@ class NpcTalk(NpcInteraction):
                 "if you made a mistake prototyping it"
                 ]
             possible_responses = [
-                " and it dodges the question.",
-                " and it casually avoids answering you.",
-                " and it responds with some asshole riddle.",
-                " and it tells you you're not ready to know that yet.",
-                " and it almost tells you but quickly realizes it shouldn't.",
-                " and it tells you but its explanation is impossible to follow.",
+                ", and it dodges the question.",
+                ", and it casually avoids answering you.",
+                ", and it responds with some asshole riddle.",
+                ", and it tells you that you're not ready to know that yet.",
+                ", and it almost tells you, but quickly realizes that it shouldn't.",
+                ", and it tells you, but its explanation is impossible to follow.",
                 ", but it apparently wasn't listening.",
-                " and it responds with an infuriatingly vague answer."
+                ", and it responds with an infuriatingly vague answer."
             ]
             possible_lines = [
                 f"{target.nickname.capitalize()} says some nonsense about an Ultimate Riddle or some shit.",
