@@ -10,6 +10,7 @@ import render
 import config
 import suburb
 import themes
+import util
 
 class Skill():
     def __init__(self, name: str, skill_dict: dict):
@@ -463,14 +464,7 @@ class Strife():
             element.delete()
             self.tooltips.remove(element)
         tooltip: str = self.hovered_skill.description
-        lines: list[list[str]] = [[]]
-        index = 0
-        for word in tooltip.split(" "):
-            if len(" ".join(lines[index])) + len(word) > LINE_CHARACTERS: 
-                index += 1
-                lines.append([])
-            lines[index].append(word)
-        joined_lines: list[str] = [" ".join(line) for line in lines]
+        joined_lines = util.split_into_max_length_lines(tooltip, 55)
         fontsize = min(self.hovered_skill_info_box.h//len(joined_lines) - LINE_PADDING, 20)
         for i, line in enumerate(joined_lines):
             line_text = render.Text(PADDING, PADDING*5 + (fontsize+LINE_PADDING)*i, line)

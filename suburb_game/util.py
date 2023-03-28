@@ -72,13 +72,26 @@ log_window = None
 def log(message: str):
     if client.dic["character"] not in player_logs: player_logs[client.dic["character"]] = []
     logs = player_logs[client.dic["character"]]
-    logs.append(message)
+    lines = split_into_max_length_lines(message, 45)
+    for line in lines:
+        logs.append(line)
     if log_window is not None: log_window.update_logs()
     writejson(player_logs, "player_logs")
 
 def current_log() -> list[str]:
     if client.dic["character"] not in player_logs: player_logs[client.dic["character"]] = []
     return player_logs[client.dic["character"]]
+
+def split_into_max_length_lines(text, max_length: int) -> list[str]:
+    lines = []
+    index = 0
+    for word in text.split(" "):
+        if len(" ".join(lines[index])) + len(word) > max_length: 
+            index += 1
+            lines.append([])
+        lines[index].append(word)
+    joined_lines: list[str] = [" ".join(line) for line in lines]
+    return joined_lines
 
 sylladexes = {}
 sylladexes = readjson(sylladexes, "sylladexes")
