@@ -186,7 +186,12 @@ class Skill():
                     break
             else:
                 skill = skills[self.user_skill]
-                skill.affect(user, user)
+                if not skill.target_team:
+                    skill.affect(user, user)
+                else:
+                    for griefer in user.strife.griefer_list:
+                        if griefer.team == user.team:
+                            skill.affect(user, griefer)
         for vial in user.vials_list:
             vial.use_skill(user, self)
 
@@ -1338,6 +1343,8 @@ allure.description = "INSPIRES for 3 turns with potency 1.5 and REFRESHES the ta
 allure.add_vial_cost("vim", "user.power//2")
 allure.add_apply_state("refresh", 1, "2.0")
 allure.add_apply_state("inspire", 3, "1.5")
+allure.beneficial = True
+allure.parryable = False
 allure.target_team = True
 
 # knifekind
@@ -1420,6 +1427,20 @@ adonize.add_vial_cost("vim", "user.power//3")
 adonize.target_self = True
 adonize.add_stat_bonus("savvy", "user.power//12")
 adonize.add_stat_bonus("tact", "user.power//12")
+
+# yoyokind
+userayo = Skill("userayo")
+userayo.add_apply_state("inspire", 2, "1.0")
+userayo.target_team = True
+userayo.parryable = False
+
+ayo = AbstratusSkill("ayo")
+ayo.description = "Deals damage to the target similar to AGGRESS, gives an additional action this turn, and INSPIRES the user and all their allies with potency 1.0 for 2 turns."
+ayo.action_cost = -1
+ayo.cooldown = 3
+ayo.add_vial_cost("vim", "user.power")
+ayo.damage_formula = AGGRESS_FORMULA
+ayo.user_skill = "userayo"
 
 # aerosolkind
 add_abstratus_skill("aerosolkind", aflame, 1)
@@ -1615,6 +1636,7 @@ add_abstratus_skill("woodwindkind", antagonize, 75)
 # yoyokind
 add_abstratus_skill("yoyokind", antagonize, 1)
 add_abstratus_skill("yoyokind", arraign, 50)
+add_abstratus_skill("yoyokind", ayo, 75)
 
 
 unfinished = []
