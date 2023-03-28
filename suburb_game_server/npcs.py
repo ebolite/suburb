@@ -449,7 +449,7 @@ class NpcPrototype(NpcInteraction):
             target.color = player.color
             player.prototyped_before_entry = True
             if prototyped_item.prototype_name is not None:
-                sprite_name = prototyped_item.name.replace("+", "").lower()
+                sprite_name = prototyped_item.prototype_name.replace("+", "").lower()
             else:
                 sprite_name = prototyped_item.base.replace("+","").lower()
             target.nickname = f"{sprite_name}sprite"
