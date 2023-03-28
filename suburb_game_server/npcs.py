@@ -273,7 +273,14 @@ class NpcInteraction():
 
 class NpcTalk(NpcInteraction):
     def use(self, player: "sessions.Player", target: "Npc"):
-        return f"{target.nickname}: hi"
+        if target.type == "kernel":
+            symbols = list("•❤♫☎°♨✈✣☏■■■☀➑➑➑✂✉✉☼☆★☁☁♕♕♕♕♠♠✪░░▒▒▓▓██■¿.!≡")
+            out = []
+            for i in range(random.randint(10, 30)):
+                out.append(random.choice(symbols))
+            return f'KERNEL: {"".join(out)}'
+        else:
+            return f"The {target.nickname} does not seem like one for friendly conversation."
 NpcTalk("talk")
 
 if __name__ == "__main__":
