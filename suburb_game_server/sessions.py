@@ -406,10 +406,10 @@ class Map():
             underling = random.choice(valid_underlings)
             cluster_size = underling.cluster_size
             diff_difference = difficulty - underling.difficulty
-            cluster_size += underling.cluster_size
+            num_to_spawn = underling.cluster_size + underling.cluster_size*(diff_difference//2)
             min_tier = min(1 + diff_difference, 9)
             max_tier = min(3 + difficulty + underling.variance, 9)
-            self.populate_with_underlings(underling.monster_type, cluster_size, cluster_size, min_tier, max_tier)
+            self.populate_with_underlings(underling.monster_type, cluster_size, num_to_spawn, min_tier, max_tier)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
