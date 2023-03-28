@@ -1115,11 +1115,13 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
     # description
     if instance.item.description is not None:
         description_text = instance.item.description
-        description = render.Text(0.2, 0.7, description_text)
-        description.color = text_color
-        description.outline_color = text_outline_color
-        description.fontsize = 20
-        description.set_fontsize_by_width(450)
+        description_lines = util.split_into_max_length_lines(description_text, 35)
+        for i, line in enumerate(description_lines):
+            y = 0.6 - (0.02*len(description_lines)) + 0.04*i
+            description = render.Text(0.2, y, line)
+            description.color = text_color
+            description.outline_color = text_outline_color
+            description.fontsize = 20
 
     # states
 
