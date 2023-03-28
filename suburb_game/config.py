@@ -76,7 +76,7 @@ icons = {
     "center": "sprites/icons/center.png",
     "deploy": "sprites/icons/deploy.png",
     "select": "sprites/icons/select.png",
-    "kernel": "sprites/icons/kernel.png",
+    "kernelsprite": "sprites/icons/kernelsprite.png",
     "sprite": "sprites/icons/sprite.png",
     "imp": "sprites/icons/imp.png",
     "ogre": "sprites/icons/ogre.png",

@@ -358,6 +358,7 @@ class KernelSprite(Npc):
         sprite.interactions.append("prototype")
         sprite.ai_type = "kernel"
         sprite.follow(player)
+        sprite.goto_room(player.room)
         return sprite
 
 class NpcInteraction():

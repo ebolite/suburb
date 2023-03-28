@@ -511,12 +511,12 @@ class Room():
     def start_strife(self):
         if self.strife is None:
             new_strife = Strife(self)
-            for npc_name in self.npcs:
-                npc = npcs.Npc(npc_name)
-                new_strife.add_griefer(npc)
             for player_name in self.players:
                 player = Player(player_name)
                 new_strife.add_griefer(player)
+            for npc_name in self.npcs:
+                npc = npcs.Npc(npc_name)
+                new_strife.add_griefer(npc)
             new_strife.increase_turn()
             return True
         else: return False
