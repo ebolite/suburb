@@ -618,13 +618,13 @@ def chooseclass():
     magetext2 = render.Text(.57, .42, f"Pursues {character_info['aspect'].upper()}")
     magetext2.fontsize = 15
     seertitle = render.Text(.57, .59, f"Seer")
-    seersymbol = render.Button(.57, .7, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("seer"), hover="sprites\\classes\\placeholderhover.png")
+    seersymbol = render.Button(.57, .7, "sprites\\classes\\seer.png", None, make_classbutton("seer"), theme=theme)
     seertext = render.Text(.57, .8, f"Sees {character_info['aspect'].upper()}")
     seertext.fontsize = 15
     seertext2 = render.Text(.57, .82, f"Avoids {character_info['aspect'].upper()}")
     seertext2.fontsize = 15
     witchtitle = render.Text(.71, .19, f"Witch")
-    witchsymbol = render.Button(.71, .3, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("witch"), hover="sprites\\classes\\placeholderhover.png")
+    witchsymbol = render.Button(.71, .3, "sprites\\classes\\witch.png", None, make_classbutton("witch"), theme=theme)
     witchtext = render.Text(.71, .4, f"Manipulates {character_info['aspect'].upper()}")
     witchtext.fontsize = 15
     heirtitle = render.Text(.71, .59, f"Heir")
