@@ -1239,6 +1239,12 @@ auspicate.add_vial_cost("vim", "user.power//2")
 auspicate.action_cost = 0
 auspicate.cooldown = 1
 
+ablate = AbstratusSkill("ablate")
+ablate.description = "Deals damage similar to ASSAIL and applies IGNITE with potency 2.0 for 4 turns."
+ablate.damage_formula = ASSAIL_FORMULA
+ablate.add_vial_cost("vim", "user.power//2")
+ablate.add_apply_state("ignite", 4, "2.0")
+
 # unique skills
 # aerosolkind
 aflame = AbstratusSkill("aflame")
@@ -1248,7 +1254,7 @@ aflame.cooldown = 2
 aflame.target_team = True
 aflame.need_damage_to_apply_states = True
 aflame.add_apply_state("ignite", 3, "1.0")
-aflame.add_vial_cost("vim", "user.power//1.5")
+aflame.add_vial_cost("vim", "user.power")
 
 # batkind
 affrap = AbstratusSkill("affrap")
@@ -1362,7 +1368,7 @@ accroach.action_cost = 0
 accroach.damage_formula = AGGRIEVE_FORMULA
 accroach.add_apply_state("vulnerable", 1, "1.0")
 
-# rollingpinkind
+# rollingpinkind / ironkind
 araze = AbstratusSkill("araze")
 araze.description = f"Deals damage and reduces the target's SPACE."
 araze.damage_formula = ASSAIL_FORMULA
@@ -1492,6 +1498,11 @@ add_abstratus_skill("hatchetkind", artillerate, 50)
 add_abstratus_skill("hatkind", adonize, 1)
 add_abstratus_skill("hatkind", awaitskill, 50)
 add_abstratus_skill("hatkind", admonish, 75)
+
+# ironkind
+add_abstratus_skill("ironkind", ablate, 1)
+add_abstratus_skill("ironkind", awaitskill, 50)
+add_abstratus_skill("ironkind", araze, 75)
 
 # jumpropekind
     # abligate
