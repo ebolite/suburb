@@ -838,10 +838,10 @@ class Strife():
 
     def increase_turn(self):
         self.turn_num += 1
-        message = f"TURN {self.turn_num}!"
-        self.log("{:-^30}".format(message))
         for griefer in self.griefer_list:
             griefer.new_turn()
+        message = f"TURN {self.turn_num}!"
+        self.log("{:-^30}".format(message))
         self.verify_strife()
     
     def verify_strife(self):
