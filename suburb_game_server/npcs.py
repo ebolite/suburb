@@ -250,7 +250,7 @@ class Npc():
         # inherit onhits and wears
         inherited_onhits = item.onhit_states.copy()
         inherited_wears = item.wear_states.copy()
-        for state_name, potency in item.secret_states:
+        for state_name, potency in item.secret_states.items():
             if random.random() < 0.25: # only a chance to inherit secret states
                 choice = random.choice(["onhit", "wear"])
                 if choice == "onhit":
@@ -259,10 +259,10 @@ class Npc():
                 else:
                     if state_name not in inherited_wears: inherited_wears[state_name] = potency
                     elif inherited_wears[state_name] < potency: inherited_wears[state_name] = potency
-        for state_name, potency in inherited_onhits:
+        for state_name, potency in inherited_onhits.items():
             if state_name not in self.onhit_states: self.onhit_states[state_name] = potency
             elif self.onhit_states[state_name] < potency: self.onhit_states[state_name] = potency
-        for state_name, potency in inherited_wears:
+        for state_name, potency in inherited_wears.items():
             if state_name not in self.wear_states: self.wear_states[state_name] = potency
             elif self.wear_states[state_name] < potency: self.wear_states[state_name] = potency
         # inherit specibus skills
@@ -388,8 +388,11 @@ class NpcPrototype(NpcInteraction):
             target.nickname = f"{sprite_name}sprite"
             return f"{old_name.upper()} became {target.nickname.upper()}!"
         else: # sprite was already prototyped
-            sprite_adjective = random.choice(prototyped_item.adjectives).replace("+", "").lower()
-            target.nickname = f"{sprite_adjective}{target.nickname}"
+            if prototyped_item.name in target.prototypes:
+                target.nickname = f"2x{target.nickname}"
+            else:
+                sprite_adjective = random.choice(prototyped_item.adjectives+prototyped_item.secretadjectives).replace("+", "").lower()
+                target.nickname = f"{sprite_adjective}{target.nickname}"
             target.interactions.remove("prototype")
             return f"{old_name.upper()} became {target.nickname.upper()}!"
 NpcPrototype("prototype")

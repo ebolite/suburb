@@ -184,9 +184,9 @@ class Instance():
         else: suburb.display_item(self, last_scene, modus=modus)
 
     def choose_target(self, action_name: str, last_scene: Callable):
-        suburb.scene(lambda *args: None)()
+        suburb.new_scene()
         render.LogWindow(self.choose_target)
-        valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.name, "action_name": action_name})
+        valid_instances = client.requestplusdic(intent="prototype_targets", content={"instance_name": self.name, "action_name": action_name})
         print(valid_instances)
         syl = Sylladex.current_sylladex()
         syl.update_deck()
@@ -356,12 +356,12 @@ class Sylladex():
         try:
             self.data_dict
             self.data_list
-            self.deck: dict
+            self.deck: dict[str, dict]
             self.empty_cards: int
         except KeyError:
             self.data_dict = {}
             self.data_list = []
-            self.deck: dict = {}
+            self.deck: dict[str, dict] = {}
             self.empty_cards: int = 0
             self.update_deck()
 

@@ -205,6 +205,7 @@ def handle_request(dict):
             print(f"npc interaction with {npc_name}: {interaction_name}")
             if npc_name not in player.room.npcs: return False
             if interaction_name not in npcs.npc_interactions: return False
+            if interaction_name not in npcs.Npc(npc_name).interactions: return False
             return npcs.npc_interactions[interaction_name].use(player, npcs.Npc(npc_name), additional_data)
         case "computer":
             return computer_shit(player, content, session)
@@ -341,6 +342,10 @@ def handle_request(dict):
                 return json.dumps({})
         case "session_seeds":
             return json.dumps(player.session.get_best_seeds())
+        case "prototype_targets":
+            valid_targets = {instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in player.room.instances}
+            valid_targets.update({instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in player.sylladex})
+            return json.dumps(valid_targets)
             
 def get_first_member_of_chain(player_name: str, checked=[]):
     player = sessions.Player(player_name)

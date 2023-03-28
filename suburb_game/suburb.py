@@ -27,15 +27,18 @@ from sylladex import Instance, Sylladex, Modus
 def current_theme():
     return themes.default
 
+def new_scene():
+    render.clear_elements()
+    fps_counter = render.FpsCounter(1150, 0)
+    fps_counter.fontsize = 20
+    fps_counter.absolute = True
+    render.update_check.remove(fps_counter)
+    render.always_on_top_check.append(fps_counter)
+
 def scene(func):
     def out(*args, **kwargs):
         t = time.time()
-        render.clear_elements()
-        fps_counter = render.FpsCounter(1150, 0)
-        fps_counter.fontsize = 20
-        fps_counter.absolute = True
-        render.update_check.remove(fps_counter)
-        render.always_on_top_check.append(fps_counter)
+        new_scene()
         func(*args, **kwargs)
         print(f"{func} - {time.time() - t}")
     return out
