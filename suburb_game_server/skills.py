@@ -396,6 +396,16 @@ abscond.special_effect = abscond_func
 abscond.beneficial = True
 player_skills.append("abscond")
 
+# sprite
+# todo: add 1 turn warmup
+amend = Skill("amend")
+amend.description = "Heals the target."
+amend.beneficial = True
+amend.parryable = False
+amend.action_cost = 0
+amend.cooldown = 2
+amend.add_vial_change("hp", "max(target.power, user.power//2)")
+
 # enemy skills
 
 abhor = Skill("abhor")

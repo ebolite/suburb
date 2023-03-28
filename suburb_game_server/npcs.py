@@ -285,6 +285,12 @@ class KernalAI(GrieferAI):
     def ai_choose_skill(self, user: "strife.Griefer") -> str:
         return "abstain"
 
+class SpriteAI(GrieferAI):
+    name = "sprite"
+    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+        if skills.skills["amend"].is_submittable_by(user): return "amend"
+        return super().ai_choose_skill(user)
+
 class KernelSprite(Npc):
     @classmethod
     def spawn_new(cls):
@@ -297,6 +303,7 @@ class KernelSprite(Npc):
         sprite.invulnerable = True
         sprite.additional_skills.append("abstain")
         sprite.interactions.append("prototype")
+        sprite.ai_type = "kernel"
         return sprite
 
 class NpcInteraction():
@@ -372,6 +379,8 @@ class NpcPrototype(NpcInteraction):
         old_name = target.nickname
         if target.type == "kernelsprite":
             target.type = "sprite"
+            target.ai_type = "sprite"
+            target.additional_skills.append("amend")
             if prototyped_item.base in ["dvd", "poster", "album", "book", "disc", "bust", "figurine"]:
                 sprite_name = random.choice(prototyped_item.adjectives).replace("+","").lower()
             else:
