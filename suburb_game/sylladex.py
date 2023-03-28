@@ -187,7 +187,6 @@ class Instance():
         suburb.new_scene()
         render.LogWindow(self.choose_target)
         valid_instances = client.requestplusdic(intent="valid_use_targets", content={"instance_name": self.name, "action_name": action_name})
-        print(valid_instances)
         syl = Sylladex.current_sylladex()
         syl.update_deck()
         action: ItemAction = item_actions[action_name]
@@ -315,7 +314,6 @@ class Modus():
                     contained_image.bind_to(card_image)
                     contained_image.scale = 0.25
             if instance.item.name == "punched card":
-                print(f"spawning punches {instance.punched_code}")
                 render.spawn_punches(card_image, instance.punched_code, 18, 31, w=40, h=60)
         label_text = self.get_instance_name(instance, True)
         card_label = render.Text(0.49, 0.9, label_text)
