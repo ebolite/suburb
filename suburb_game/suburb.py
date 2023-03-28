@@ -599,6 +599,8 @@ def chooseclass():
     bardsymbol = render.Button(.29, .7, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("bard"), hover="sprites\\classes\\placeholderhover.png")
     bardtext = render.Text(.29, .8, f"{character_info['aspect'].upper()}less")
     bardtext.fontsize = 15
+    bardtext2 = render.Text(.29, .82, f"Heralds {character_info['aspect'].upper()}-stinction")
+    bardtext2.fontsize = 15
     thieftitle = render.Text(.43, .19, f"Thief")
     thiefsymbol = render.Button(.43, .3, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", make_classbutton("thief"), hover="sprites\\classes\\placeholderhover.png")
     thieftext = render.Text(.43, .4, f"Steals {character_info['aspect'].upper()}")
