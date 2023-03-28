@@ -663,6 +663,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
                 player.land.theme = player.aspect
                 player.map.populate_with_underlings("imp", 4, random.randint(40, 60), 1, 7)
                 player.map.populate_with_underlings("ogre", 1, random.randint(1, 4), 1, 2)
+                if not player.prototyped_before_entry: player.session.prototypes.append(None)
                 return True
             else: return False
         case "alchemize":

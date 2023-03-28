@@ -59,7 +59,7 @@ class Session():
         self.entered_players: list[str] = []
         self.excursus = ["captchalogue card", "perfectly generic object"]
         self.overmaps = {}
-        self.prototypes = []
+        self.prototypes: list[Optional[str]] = []
 
     def add_to_excursus(self, item_name):
         if item_name not in self.excursus:
@@ -776,6 +776,7 @@ class Player():
         self.secondaryvial = ""
         self.land_name = ""
         self.land_session = ""
+        self.prototyped_before_entry = False
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value

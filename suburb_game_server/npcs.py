@@ -56,6 +56,10 @@ class Underling():
         npc.hostile = True
         npc.onhit_states = self.onhit_states
         npc.wear_states = self.wear_states
+        if room.session.prototypes:
+            prototyped_item_name = random.choice(room.session.prototypes)
+            if prototyped_item_name is not None:
+                npc.prototype_with_item(prototyped_item_name, nickname=True)
         room.add_npc(npc)
         return npc
 
@@ -381,6 +385,7 @@ class NpcPrototype(NpcInteraction):
             target.type = "sprite"
             target.ai_type = "sprite"
             target.additional_skills.append("amend")
+            player.prototyped_before_entry = True
             if prototyped_item.base in ["dvd", "poster", "album", "book", "disc", "bust", "figurine"]:
                 sprite_name = random.choice(prototyped_item.adjectives).replace("+","").lower()
             else:
