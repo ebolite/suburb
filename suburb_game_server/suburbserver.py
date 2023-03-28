@@ -201,10 +201,11 @@ def handle_request(dict):
         case "interact_npc":
             npc_name = content["npc_name"]
             interaction_name = content["interaction_name"]
+            additional_data = content["additional_data"]
             print(f"npc interaction with {npc_name}: {interaction_name}")
             if npc_name not in player.room.npcs: return False
             if interaction_name not in npcs.npc_interactions: return False
-            return npcs.npc_interactions[interaction_name].use(player, npcs.Npc(npc_name))
+            return npcs.npc_interactions[interaction_name].use(player, npcs.Npc(npc_name), additional_data)
         case "computer":
             return computer_shit(player, content, session)
         case "assign_specibus":

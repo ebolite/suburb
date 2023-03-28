@@ -59,6 +59,7 @@ class Session():
         self.entered_players: list[str] = []
         self.excursus = ["captchalogue card", "perfectly generic object"]
         self.overmaps = {}
+        self.prototypes = []
 
     def add_to_excursus(self, item_name):
         if item_name not in self.excursus:
@@ -1308,6 +1309,10 @@ class Player():
     @property
     def entered(self):
         return self.name in self.land.session.entered_players
+
+    @property
+    def title(self) -> str:
+        return f"{self.gameclass.capitalize()} of {self.aspect.capitalize()}"
 
     @property
     def coords(self):

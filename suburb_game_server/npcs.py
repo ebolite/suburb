@@ -9,6 +9,7 @@ import config
 import sessions
 import strife
 import skills
+import alchemy
 
 underlings: dict[str, "Underling"] = {}
 griefer_ai: dict[str, "GrieferAI"] = {}
@@ -207,6 +208,7 @@ class Npc():
         self.immune_states = []
         self.interactions = ["talk"]
         self.invulnerable = False
+        self.prototypes = []
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -240,6 +242,39 @@ class Npc():
             new_amount = math.ceil(new_amount/num_players)
             spoils_dict[grist_name] = new_amount
         return spoils_dict
+    
+    def prototype_with_item(self, item_name: str, inherit_all_skills=False, nickname=False):
+        item = alchemy.Item(item_name)
+        power_mult = 1 + (item.power + item.inheritpower)/100
+        self.power = int(self.power * power_mult)
+        # inherit onhits and wears
+        inherited_onhits = item.onhit_states.copy()
+        inherited_wears = item.wear_states.copy()
+        for state_name, potency in item.secret_states:
+            if random.random() < 0.25: # only a chance to inherit secret states
+                choice = random.choice(["onhit", "wear"])
+                if choice == "onhit":
+                    if state_name not in inherited_onhits: inherited_onhits[state_name] = potency
+                    elif inherited_onhits[state_name] < potency: inherited_onhits[state_name] = potency
+                else:
+                    if state_name not in inherited_wears: inherited_wears[state_name] = potency
+                    elif inherited_wears[state_name] < potency: inherited_wears[state_name] = potency
+        for state_name, potency in inherited_onhits:
+            if state_name not in self.onhit_states: self.onhit_states[state_name] = potency
+            elif self.onhit_states[state_name] < potency: self.onhit_states[state_name] = potency
+        for state_name, potency in inherited_wears:
+            if state_name not in self.wear_states: self.wear_states[state_name] = potency
+            elif self.wear_states[state_name] < potency: self.wear_states[state_name] = potency
+        # inherit specibus skills
+        for kind_name in item.kinds:
+            if kind_name in skills.abstratus_skills:
+                for skill_name, required_rung in skills.abstratus_skills[kind_name].items():
+                    if inherit_all_skills or self.power >= required_rung*10:
+                        if skill_name not in self.additional_skills: self.additional_skills.append(skill_name)
+        # nickname
+        if nickname:
+            new_adjective = random.choice(item.adjectives+item.secretadjectives)
+            self.nickname = f"{new_adjective} {self.nickname}"
 
     @property
     def name(self):
@@ -255,12 +290,13 @@ class KernelSprite(Npc):
     def spawn_new(cls):
         name = Npc.make_valid_name("kernel")
         sprite = cls(name)
-        sprite.type = "kernel"
+        sprite.type = "kernelsprite"
         sprite.hostile = False
         sprite.power = 1
-        sprite.nickname = "kernel"
+        sprite.nickname = "kernelsprite"
         sprite.invulnerable = True
         sprite.additional_skills.append("abstain")
+        sprite.interactions.append("prototype")
         return sprite
 
 class NpcInteraction():
@@ -268,20 +304,86 @@ class NpcInteraction():
         self.name = name
         npc_interactions[self.name] = self
 
-    def use(self, player: "sessions.Player", target: "Npc"):
+    def use(self, player: "sessions.Player", target: "Npc", additional_data: dict[str, str]):
         pass
 
 class NpcTalk(NpcInteraction):
-    def use(self, player: "sessions.Player", target: "Npc"):
-        if target.type == "kernel":
+    def use(self, player: "sessions.Player", target: "Npc", additional_data: dict[str, str]):
+        if target.type == "kernelsprite":
             symbols = list("•❤♫☎°♨✈✣☏■■■☀➑➑➑✂✉✉☼☆★☁☁♕♕♕♕♠♠✪░░▒▒▓▓██■¿.!≡")
             out = []
             for i in range(random.randint(10, 30)):
                 out.append(random.choice(symbols))
-            return f'KERNEL: {"".join(out)}'
+            return f'KERNELSPRITE: {"".join(out)}'
+        elif target.type == "sprite":
+            possible_questions = [
+                "about what the point of the game is",
+                "what happens if you don't win",
+                "why alchemy is like this",
+                "who made this game",
+                f"what being the {player.title} means",
+                "if it can just bring you to the Seventh Gate",
+                "if your actions even really matter",
+                "when the Reckoning is going to happen",
+                "what's up with the gold and purple planets",
+                "what the fuck a dream self is",
+                "where your guardian is",
+                "if you made a mistake prototyping it"
+                ]
+            possible_responses = [
+                " and it dodges the question.",
+                " and it casually avoids answering you.",
+                " and it responds with some asshole riddle.",
+                " and it tells you you're not ready to know that yet.",
+                " and it almost tells you but quickly realizes it shouldn't.",
+                " and it tells you but its explanation is impossible to follow.",
+                ", but it apparently wasn't listening.",
+                " and it responds with an infuriatingly vague answer."
+            ]
+            possible_lines = [
+                f"{target.nickname.capitalize()} says some nonsense about an Ultimate Riddle or some shit.",
+                f"{target.nickname.capitalize()} is talking about some \"{player.title}.\" Sounds like a loser.",
+                f"{target.nickname.capitalize()} is being coy with some riddlesome bullshit again.",
+                f"{target.nickname.capitalize()} gives you a riddle you're not bothering to solve.",
+                f"{target.nickname.capitalize()} says something about The Choice but you're not really listening."
+            ]
+            for question in possible_questions:
+                for response in possible_responses:
+                    possible_lines.append(f"You ask {target.nickname.capitalize()} {question}{response}")
+            return random.choice(possible_lines)
         else:
             return f"The {target.nickname} does not seem like one for friendly conversation."
 NpcTalk("talk")
+
+class NpcPrototype(NpcInteraction):
+    def use(self, player: "sessions.Player", target: "KernelSprite", additional_data: dict[str, str]):
+        instance_name = additional_data["instance_name"]
+        if instance_name in player.sylladex:
+            player.sylladex.remove(instance_name)
+        elif instance_name in player.room.instances:
+            player.room.remove_instance(instance_name)
+        else: return False
+        instance = alchemy.Instance(instance_name)
+        prototyped_item = instance.item
+        target.prototype_with_item(prototyped_item.name, inherit_all_skills=True)
+        target.prototypes.append(prototyped_item.name)
+        if not player.entered:
+            player.session.prototypes.append(prototyped_item.name)
+        old_name = target.nickname
+        if target.type == "kernelsprite":
+            target.type = "sprite"
+            if prototyped_item.base in ["dvd", "poster", "album", "book", "disc", "bust", "figurine"]:
+                sprite_name = random.choice(prototyped_item.adjectives).replace("+","").lower()
+            else:
+                sprite_name = prototyped_item.base.replace("+","").lower()
+            target.nickname = f"{sprite_name}sprite"
+            return f"{old_name.upper()} became {target.nickname.upper()}!"
+        else: # sprite was already prototyped
+            sprite_adjective = random.choice(prototyped_item.adjectives).replace("+", "").lower()
+            target.nickname = f"{sprite_adjective}{target.nickname}"
+            target.interactions.remove("prototype")
+            return f"{old_name.upper()} became {target.nickname.upper()}!"
+NpcPrototype("prototype")
 
 if __name__ == "__main__":
     print(griefer_ai)
