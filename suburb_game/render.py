@@ -2295,6 +2295,7 @@ class GrieferElement(UIElement):
         self.name_label.fontsize = 20
         self.name_label.rect_y_offset = 30
         self.name_label.bind_to(self)
+        self.name_label.set_fontsize_by_width(150)
         self.power_label = Text(x, y, f"POWER: {self.griefer.power}")
         self.power_label.color = self.theme.dark
         self.power_label.fontsize = 10
