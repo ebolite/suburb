@@ -1504,6 +1504,9 @@ add_abstratus_skill("bladekind", againstand, 75)
 # bookkind
     # ask
 
+# boomerangkind
+# again
+
 # bottlekind
 add_abstratus_skill("bottlekind", aslurp, 1)
 add_abstratus_skill("bottlekind", attack, 50)
@@ -1562,6 +1565,11 @@ add_abstratus_skill("hatchetkind", artillerate, 50)
 add_abstratus_skill("hatkind", adonize, 1)
 add_abstratus_skill("hatkind", awaitskill, 50)
 add_abstratus_skill("hatkind", admonish, 75)
+
+# headphonekind
+# amplify
+add_abstratus_skill("headphonekind", awaitskill, 50)
+# attune
 
 # ironkind
 add_abstratus_skill("ironkind", ablate, 1)
@@ -1643,6 +1651,9 @@ add_abstratus_skill("sawkind", axe, 75)
 # scissorkind
 add_abstratus_skill("scissorkind", applot, 1)
 add_abstratus_skill("scissorkind", attack, 50)
+
+# scythekind
+# acquire
 
 # shotgunkind
 add_abstratus_skill("shotgunkind", aggerate, 1)
