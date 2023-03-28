@@ -1354,6 +1354,14 @@ aunter.cooldown = 2
 aunter.target_self = True
 aunter.parryable = False
 
+# pokerkind
+accroach = AbstratusSkill("accroach")
+accroach.description = "Deals a small amount of damage and applies VULNERABLE with a potency of 1.0 to the target this turn."
+accroach.add_vial_cost("vim", "user.power//2")
+accroach.action_cost = 0
+accroach.damage_formula = AGGRIEVE_FORMULA
+accroach.add_apply_state("vulnerable", 1, "1.0")
+
 # rollingpinkind
 araze = AbstratusSkill("araze")
 araze.description = f"Deals damage and reduces the target's SPACE."
@@ -1533,6 +1541,11 @@ add_abstratus_skill("pizzacutterkind", arraign, 50)
 # plungerkind
 add_abstratus_skill("plungerkind", arraign, 50)
 add_abstratus_skill("plungerkind", antagonize, 75)
+
+# pokerkind
+add_abstratus_skill("pokerkind", accroach, 1)
+add_abstratus_skill("pokerkind", artillerate, 50)
+add_abstratus_skill("pokerkind", advance, 75)
 
 # potkind
 add_abstratus_skill("potkind", assemble, 1)
