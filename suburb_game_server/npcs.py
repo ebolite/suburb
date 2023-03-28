@@ -146,7 +146,7 @@ giclops.stat_ratios["mettle"] = 4
 giclops.stat_ratios["vigor"] = 2
 giclops.stat_ratios["spunk"] = 2
 giclops.cluster_size = 1
-giclops.difficulty = 6
+giclops.difficulty = 5
 giclops.additional_skills = ["awreak", "abstain"]
 
 class GiclopsAI(GrieferAI):
@@ -166,7 +166,7 @@ acheron.onhit_states = {
     "demoralize": 1.2
 }
 acheron.cluster_size = 1
-acheron.difficulty = 7
+acheron.difficulty = 6
 acheron.actions = 2
 acheron.ai_type = "ogre"
 
