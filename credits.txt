@@ -1,5 +1,7 @@
 ebolite - Head developer
 
+Sky - Class images
+
 Andrew Hussie - Making Homestuck
 
 DaFluffyPotato - Palette swapping pygame tutorial
