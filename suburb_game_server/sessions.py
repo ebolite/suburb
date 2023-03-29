@@ -1091,9 +1091,10 @@ class SubPlayer(Player):
         if kind_name not in util.kinds: return False
         if self.unassigned_specibi <= 0: return False
         if kind_name in self.strife_portfolio: return False
-        self.strife_portfolio[kind_name] = []
-        self.unassigned_specibi -= 1
-        if self.current_strife_deck is None: self.current_strife_deck = kind_name
+        for sub_player in self.player.sub_players_list:
+            sub_player.strife_portfolio[kind_name] = []
+            sub_player.unassigned_specibi -= 1
+            if sub_player.current_strife_deck is None: sub_player.current_strife_deck = kind_name
         return True
     
     def move_to_strife_deck(self, instance_name, kind_name) -> bool:
