@@ -236,9 +236,7 @@ class GambitVial(Vial):
         return super().initialize_vial(griefer)
 
     def choose_random_skill(self, griefer: "Griefer") -> str:
-        pickable_skills = [skill_name for skill_name in griefer.known_skills if skill_name not in self.already_picked_skills]
-        if len(self.already_picked_skills) > len(griefer.known_skills)//4:
-            self.already_picked_skills = []
+        pickable_skills = [skill_name for skill_name in griefer.known_skills]
         return random.choice(pickable_skills)
 
     def new_turn(self, griefer: "Griefer"):
