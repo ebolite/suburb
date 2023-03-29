@@ -495,7 +495,7 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             if client_player.server_player_name is not None: return "Client already has server."
             if player.client_player_name is not None: return "You already have a client."
             player.client_player_name = client_player_username
-            client_player.server_player_name = player.username
+            client_player.server_player_name = player.name
             session.connected.append(client_player_username)
             client_player.grist_cache["build"] += min(2 * (10 ** len(session.connected)), 2000)
             return "Successfully connected."
