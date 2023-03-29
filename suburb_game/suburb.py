@@ -1549,10 +1549,7 @@ def title():
     versiontext.absolute = True
     versiontext.color = current_theme().dark
     versiontext.outline_color = current_theme().black
-    if client.dic["session_name"] != "":
-        conntextcontent = f"Session `{client.dic['session_name']}`"
-    else:
-        conntextcontent = f"No session."
+    conntextcontent = f"Logged in: `{client.dic['username']}`"
     conntext = render.Text(0, 30, conntextcontent)
     conntext.absolute = True
     character_creator_button = render.TextButton(0.13, .5, 256, 32, "debug character creator", make_symbol)
