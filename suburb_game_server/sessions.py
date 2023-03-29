@@ -17,6 +17,7 @@ import npcs
 import strife
 import skills
 import stateseffects
+import suburbserver
 from strife import Strife
 
 
@@ -64,6 +65,9 @@ class Session():
 
     def setup_defaults(self, name, password):
         self._id = name
+        # username: {"normal_self": blah, "dream_self": blah1}
+        self.user_players: dict[str, dict[str, str]] = {}
+        self.user_current_players: dict[str, Optional[str]] = {}
         self.current_players: list[str] = []
         self.starting_players: list[str] = []
         self.connected: list[str] = []
@@ -106,6 +110,12 @@ class Session():
         new_hash = digest.hex()
         if new_hash == self.hashed_password: return True
         else: return False
+
+    def get_current_player(self, user: "suburbserver.User") -> Optional["Player"]:
+        player_type = self.user_current_players[user.name]
+        if player_type is None: return None
+        player_name = self.user_players[user.name][player_type]
+        return Player(player_name)
 
     @property
     def current_grist_types(self) -> list:

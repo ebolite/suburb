@@ -20,6 +20,8 @@ import npcs
 
 conns = []
 
+# todo: verify user sessions on startup
+
 class User():
     def __new__(cls, name) -> Optional["User"]:
         if name not in util.memory_users:
@@ -40,7 +42,7 @@ class User():
 
     def setup_defaults(self, name, password):
         self._id = name
-        self.players: list[str] = []
+        self.sessions: list[str] = []
         self.tokens: dict[str, Optional[str]] = {}
         self.set_password(password)
 
@@ -137,18 +139,36 @@ def handle_request(dict):
     if User(username) is None: return f"Account does not exist."
     if not user.verify_password(password): return f"Incorrect account password."
     if intent == "login": return True
+    if intent == "all_session_characters":
+        out_dict = {}
+        for session_name in user.sessions:
+            session = sessions.Session(session_name)
+            if session is None: continue
+            session_player = session.get_current_player(user)
+            if session_player is None: out_dict[session_name] = None
+            else: out_dict[session_name] = session_player.get_dict()
+        return json.dumps(out_dict)
     # session verification
     session_name = dict["session_name"]
-    session_password = dict["session_password"]
-    if intent == "create_session":
-        if len(session_name) > 32: return "fuck you"
-        session = sessions.Session.create_session(session_name, session_password)
-        if session is None: return f"The session `{session_name}` is already registered."
-        print(f"session created {session_name}")
-        return f"The session `{session_name}` has been successfully registered."
+    if session_name not in user.sessions:
+        session_password = dict["session_password"]
+        if intent == "create_session":
+            if len(session_name) > 32: return "fuck you"
+            session = sessions.Session.create_session(session_name, session_password)
+            if session is None: return f"The session `{session_name}` is already registered."
+            print(f"session created {session_name}")
+            return f"The session `{session_name}` has been successfully registered."
+        elif intent == "join_session":
+            session = sessions.Session(session_name)
+            if session is None: return f"Session `{session_name}` does not exist."
+            if not session.verify_password(session_password): return f"Incorrect session password."
+            user.sessions.append(session_name)
+            session.user_players[user.name] = {}
+            session.user_current_players[user.name] = None
+            return f"Successfully joined `{session_name}`!"
+        else: return "No session."
     session = sessions.Session(session_name)
-    if session is None: return f"Session `{session_name}` does not exist."
-    if not session.verify_password(session_password): return f"Incorrect session password."
+    if session is None: return f"Session `{session_name}` no longer exists."
     if intent == "session_info":
         out = {}
         out["current_grist_types"] = session.current_grist_types
@@ -179,13 +199,13 @@ def handle_request(dict):
             room.generate_loot(tiles.get_tile(interest).get_loot_list())
         new_player.goto_room(room)
         session.starting_players.append(new_player.name)
+        session.user_players[user.name]["real"] = new_player.name
+        session.user_current_players[user.name] = "real"
         new_player.setup = True
         return f"Your land is the {land.title}! ({land.acronym})"
     # verify character
-    character_name = dict["character_name"]
-    try: player = sessions.Player(character_name)
-    except KeyError: return "Character does not exist!"
-    if player.owner_username != username: return "You do not own that character! Bitch!"
+    player = session.get_current_player(user)
+    if player is None: return False
     # process commands todo: clean this up
     match intent:
         case "interests":
