@@ -325,7 +325,8 @@ ignite.tooltip = "Taking damage at the start of each turn. Potency reduces each 
 
 class PoisonState(State):
     def new_turn(self, griefer: "strife.Griefer"):
-        damage = self.applier_stats(griefer)["power"]//2 * self.potency(griefer)
+        damage = self.applier_stats(griefer)["power"]/2 * self.potency(griefer)
+        damage = int(damage)
         griefer.take_damage(damage, source="POISON")
         griefer.add_state_potency("poison", griefer.get_state_potency("poison")/5)
 
