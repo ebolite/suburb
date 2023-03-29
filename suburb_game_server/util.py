@@ -84,22 +84,26 @@ writejson(base_names_adjectives, "base_names_adjectives")
 
 db_client = MongoClient(db_connection_string)
 
-db_suburb = db_client["suburb"]
+suburb_db = db_client["suburb"]
 
-db_sessions = db_suburb["sessions"]
+db_sessions = suburb_db["sessions"]
 memory_sessions = {item_dict["_id"]:item_dict for item_dict in db_sessions.find({})}
 
-db_players = db_suburb["players"]
+db_players = suburb_db["players"]
 memory_players = {item_dict["_id"]:item_dict for item_dict in db_players.find({})}
 
-db_npcs = db_suburb["npcs"]
+db_npcs = suburb_db["npcs"]
 memory_npcs = {item_dict["_id"]:item_dict for item_dict in db_npcs.find({})}
 
-db_items = db_suburb["items"]
+db_items = suburb_db["items"]
 memory_items = {item_dict["_id"]:item_dict for item_dict in db_items.find({})}
 
-db_instances = db_suburb["instances"]
+db_instances = suburb_db["instances"]
 memory_instances = {instance_dict["_id"]:instance_dict for instance_dict in db_instances.find({})}
+
+users_db = db_client["users"]
+db_users = users_db["users"]
+memory_users = {instance_dict["_id"]:instance_dict for instance_dict in db_users.find({})}
 
 codes = {} # key: item code value: item name
 codes = readjson(codes, "codes")

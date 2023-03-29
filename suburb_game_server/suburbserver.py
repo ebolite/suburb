@@ -16,6 +16,52 @@ import tiles
 import binaryoperations
 import npcs
 
+conns = []
+
+class User():
+    def __new__(cls, name) -> Optional["User"]:
+        if name not in util.memory_users:
+            print("user does not exist")
+            return None
+        else: return super().__new__(cls)
+
+    def __init__(self, name):
+        self.__dict__["_id"] = name
+        self.hashed_password: Optional[str] = None
+
+    @classmethod
+    def create_user(cls, name) -> Optional["User"]:
+        if name in util.memory_users: return None
+        util.memory_users[name] = {}
+        user = cls(name)
+        return user
+
+    def __setattr__(self, attr, value):
+        self.__dict__[attr] = value
+        util.memory_users[self.__dict__["_id"]][attr] = value
+
+    def __getattr__(self, attr):
+        self.__dict__[attr] = util.memory_users[self.__dict__["_id"]][attr]
+        return self.__dict__[attr]
+    
+    def set_password(self, password: str):
+        self.salt = os.urandom(32).hex()
+        plaintext = password.encode()
+        digest = hashlib.pbkdf2_hmac("sha256", plaintext, bytes.fromhex(self.salt), 10000)
+        hex_hash = digest.hex()
+        self.hashed_password = hex_hash
+    
+    def verify_password(self, password: str):
+        if self.hashed_password == None: return False
+        digest = hashlib.pbkdf2_hmac("sha256", password.encode(), bytes.fromhex(self.salt), 10000)
+        new_hash = digest.hex()
+        if new_hash == self.hashed_password: return True
+        else: return False
+
+    @property
+    def name(self) -> str:
+        return self.__dict__["_id"]
+
 def threaded_client(connection):
     try:
         conns.append(connection)
@@ -847,9 +893,8 @@ def autosave():
 def console():
     while True:
         console_input = input()
-            
-    
-if __name__ == "__main__":
+          
+def main():  
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
     context.load_cert_chain(util.path_to_cert, util.path_to_key)
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
@@ -862,7 +907,6 @@ if __name__ == "__main__":
         print("Waiting for connections...")
         ServerSocket.listen(5)
 
-        conns = []
         threads = 0
 
         while True:
@@ -876,3 +920,6 @@ if __name__ == "__main__":
                 print(e)
             except ssl.SSLError as e:
                 print(e)
+    
+if __name__ == "__main__":
+    main()
