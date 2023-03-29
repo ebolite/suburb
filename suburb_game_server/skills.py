@@ -191,6 +191,7 @@ class Skill():
                     for griefer in user.strife.griefer_list:
                         if griefer.team == user.team:
                             skill.affect(user, griefer)
+        if user.dead: return
         for vial in user.vials_list:
             vial.use_skill(user, self)
 

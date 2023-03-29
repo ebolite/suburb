@@ -98,7 +98,7 @@ class Vial():
         pass
 
     def use_skill(self, griefer: "Griefer", skill: "skills.Skill"):
-        if griefer.dead: return
+        pass
 
 class HpVial(Vial):
     def new_turn(self, griefer: "Griefer"):
