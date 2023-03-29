@@ -437,7 +437,7 @@ class Griefer():
             skill.use(self, targets_list)
             if self.dead: return
 
-    def get_random_submittable_skill(self) -> str:
+    def get_random_submittable_skill(self) -> Optional[str]:
         def is_usable_skill(skill: "skills.Skill"):
             valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
             if skill.beneficial:
@@ -446,11 +446,14 @@ class Griefer():
                 valid_targets = [griefer for griefer in valid_targets if griefer.team == self.team]
             if len(valid_targets) > 0: return True
         usable_skills = [skill.name for skill in self.known_skills_list if skill.is_submittable_by(self) and is_usable_skill(skill)]
-        return random.choice(usable_skills)
+        if usable_skills:
+            return random.choice(usable_skills)
+        else: return None
 
     def submit_random_skill(self):
         if self.dead: return
         random_skill_name = self.get_random_submittable_skill()
+        if random_skill_name is None: return None
         skill = skills.skills[random_skill_name]
         valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
         if skill.beneficial:
@@ -467,6 +470,7 @@ class Griefer():
             assert self.ai_type in npcs.griefer_ai
             ai = npcs.griefer_ai[self.ai_type]
             chosen_skill_name = ai.ai_choose_skill(self)
+            if chosen_skill_name is None: return
             skill = skills.skills[chosen_skill_name]
             valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
             if skill.beneficial:

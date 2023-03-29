@@ -326,6 +326,7 @@ aggrieve = Skill("aggrieve")
 aggrieve.description = "Deals damage and is free. An acceptable technique."
 aggrieve.damage_formula = AGGRIEVE_FORMULA
 aggrieve.category = "aggressive"
+aggrieve.cooldown = 0
 base_skills.append("aggrieve")
 
 ASSAIL_FORMULA = "user.base_damage * (1.5 + 0.75*coin)"
@@ -1127,10 +1128,12 @@ class AbstratusSkill(Skill):
 attack = AbstratusSkill("attack")
 attack.description = f"Does as much damage as AGGRIEVE, but gives you VIM instead of costing it."
 attack.damage_formula = AGGRIEVE_FORMULA
+attack.cooldown = 0
 attack.add_vial_cost("vim", "-user.power//2")
 
 arraign = AbstratusSkill("arraign")
 arraign.description = f"Does as much damage as ASSAIL, but is free."
+arraign.cooldown = 0
 arraign.damage_formula = ASSAIL_FORMULA
 
 artillerate = AbstratusSkill("artillerate")

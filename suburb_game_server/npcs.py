@@ -68,7 +68,7 @@ class GrieferAI():
     def __init__(self):
         griefer_ai[self.name] = self
 
-    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+    def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
         return user.get_random_submittable_skill()
 GrieferAI()
 
@@ -81,7 +81,7 @@ imp.ai_type = "imp"
 
 class ImpAI(GrieferAI):
     name = "imp"
-    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+    def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
         if skills.skills["abuse"].is_submittable_by(user): return "abuse"
         return super().ai_choose_skill(user)
 ImpAI()
@@ -101,7 +101,7 @@ ogre.ai_type = "ogre"
 
 class OgreAI(GrieferAI):
     name = "ogre"
-    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+    def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
         damaging_skills = [skill for skill in user.known_skills_list if skill.damage_formula != "0"]
         sorted_skills = sorted(damaging_skills, key=lambda skill: skill.evaluate_theoretical_damage(user), reverse=True)
         for skill in sorted_skills:
@@ -123,7 +123,7 @@ lich.ai_type = "lich"
 
 class LichAI(GrieferAI):
     name = "lich"
-    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+    def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
         if skills.skills["abhor"].is_submittable_by(user): return "abhor"
         return super().ai_choose_skill(user)
 LichAI()
@@ -134,7 +134,7 @@ basilisk.stat_ratios["savvy"] = 3
 basilisk.stat_ratios["spunk"] = 2
 basilisk.stat_ratios["vigor"] = 2
 basilisk.onhit_states = {
-    "poison": 0.5
+    "poison": 1
 }
 basilisk.cluster_size = 2
 basilisk.actions = 2
@@ -151,7 +151,7 @@ giclops.additional_skills = ["awreak", "abstain"]
 
 class GiclopsAI(GrieferAI):
     name = "giclops"
-    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+    def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
         if skills.skills["awreak"].is_submittable_by(user): return "awreak"
         if random.random() < 0.5:
             return super().ai_choose_skill(user)
@@ -333,13 +333,13 @@ class Npc():
 
 class KernelAI(GrieferAI):
     name = "kernel"
-    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+    def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
         return "abstain"
 KernelAI()
 
 class SpriteAI(GrieferAI):
     name = "sprite"
-    def ai_choose_skill(self, user: "strife.Griefer") -> str:
+    def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
         if skills.skills["amend"].is_submittable_by(user): return "amend"
         return super().ai_choose_skill(user)
 SpriteAI()
