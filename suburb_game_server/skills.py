@@ -1559,7 +1559,7 @@ add_abstratus_skill("fancysantakind", arraign, 50)
 
 # fistkind
 add_abstratus_skill("fistkind", arrest, 1)
-add_abstratus_skill("fistkind", attack, 50)
+add_abstratus_skill("fistkind", arraign, 50)
 add_abstratus_skill("fistkind", anticipate, 75)
 
 # forkkind
@@ -1568,7 +1568,7 @@ add_abstratus_skill("forkkind", arraign, 50)
 
 # glovekind
 add_abstratus_skill("glovekind", arrest, 1)
-add_abstratus_skill("glovekind", arraign, 50)
+add_abstratus_skill("glovekind", attack, 50)
 add_abstratus_skill("glovekind", anticipate, 75)
 
 # grimoirekind
