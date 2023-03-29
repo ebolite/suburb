@@ -450,6 +450,7 @@ class Griefer():
         return random.choice(usable_skills)
 
     def submit_random_skill(self):
+        if self.dead: return
         random_skill_name = self.get_random_submittable_skill()
         skill = skills.skills[random_skill_name]
         valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
