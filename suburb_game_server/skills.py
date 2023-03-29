@@ -1023,8 +1023,9 @@ for aspect_name, aspect in aspects.items():
     # maid
     aspectpiece = ClassSkill(f"{aspect.name}piece", aspect, "maid", 25)
     aspectpiece.description = f"Very sharply increases the {aspect.name.upper()} of the target."
-    aspectpiece.add_vial_cost("aspect", "user.power//2")
-    aspectpiece.add_aspect_change(aspect.name, f"user.power*3*{get_balance_mult('maid', aspect)}")
+    aspectpiece.cooldown = 2
+    aspectpiece.add_vial_cost("aspect", "user.power")
+    aspectpiece.add_aspect_change(aspect.name, f"user.power*2*{get_balance_mult('maid', aspect)}")
     aspectpiece.parryable = False
 
     aspectsweep = ClassSkill(f"{aspect.name}sweep", aspect, "maid", 100)
