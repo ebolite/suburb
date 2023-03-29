@@ -468,15 +468,13 @@ class Aspect():
         if not raw:
             stat_ratio *= self.balance_mult
             stat_ratio *= self.ratio_mult
-        print(f"{self.name} ratio {stat_ratio}")
+            print(f"{self.name} ratio {stat_ratio}")
         return stat_ratio
 
     # skills that depend on how little ASPECT the target has use inverse_ratio
-    # should "generally" cap out at 0.5 because usually having less of an aspect is easier than having more of it
     def inverse_ratio(self, target: "strife.Griefer") -> float:
         stat_ratio = self.ratio(target, raw=True)
         stat_ratio = 1 - stat_ratio
-        stat_ratio = stat_ratio / 2
         stat_ratio *= self.balance_mult
         stat_ratio *= self.ratio_mult
         return stat_ratio
@@ -1055,7 +1053,7 @@ for aspect_name, aspect in aspects.items():
     # bard
     aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)
     aspectclub.description = f"Deals damage depending on how low your {aspect.name.upper()} is. Is free."
-    aspectclub.damage_formula = f"user.base_damage * user.{aspect.name}.inverse_ratio * (4 + coin)*{get_balance_mult('bard', aspect)}"
+    aspectclub.damage_formula = f"user.base_damage * user.{aspect.name}.inverse_ratio * (2 + 0.5*coin)*{get_balance_mult('bard', aspect)}"
 
     # rogue
     aspectloot = ClassSkill(f"{aspect.name}-loot", aspect, "rogue", 25)
