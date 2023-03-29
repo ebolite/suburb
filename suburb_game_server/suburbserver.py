@@ -132,6 +132,7 @@ def handle_request(dict):
     password = dict["password"]
     content = dict["content"]
     if intent == "create_account":
+        if len(username) == 0 or len(password) == 0: return "Can you please just be fucking normal"
         user = User.create_user(username, password)
         if user is None: return f"`{username}` is already taken."
         return f"Successfully created your account. You may now log in."

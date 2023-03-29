@@ -190,6 +190,12 @@ def login():
         return None
     return reply
 
+def logout():
+    client.dic["username"] = ""
+    client.dic["password"] = ""
+    client.dic["token"] = ""
+    login_scene()
+
 @scene
 def login_scene():
     if client.dic["token"] != "":
@@ -1620,9 +1626,12 @@ def title():
     versiontext.absolute = True
     versiontext.color = current_theme().dark
     versiontext.outline_color = current_theme().black
-    conntextcontent = f"Logged in: `{client.dic['username']}`"
+    conntextcontent = f"Logged in as: {client.dic['username']}"
     conntext = render.Text(0, 30, conntextcontent)
     conntext.absolute = True
+    conntext.color = current_theme().dark
+    logout_button = render.TextButton(0.5, 1.5, 96, 32, "log out", logout)
+    logout_button.bind_to(conntext)
     debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
     debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
     # crash_button = render.TextButton(0.8, 0.5, 128, 32, "crash me", crash_button_func)
