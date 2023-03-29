@@ -134,7 +134,7 @@ class Session():
 
     @property
     def name(self) -> str:
-        return self.__dict__["session_name"]
+        return self.__dict__["_id"]
 
 class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player.session}"
     def __init__(self, name, session: Session, player: Optional["Player"] = None):
