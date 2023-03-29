@@ -65,8 +65,9 @@ def placeholder():
 def play(page=0):
     theme = current_theme()
     current_sessions = client.requestdic(intent="all_session_characters")
+    session_names = list(current_sessions.keys())
     if len(current_sessions) > 0:
-        sessions_to_display = list(current_sessions.keys())[page*4:page*4 + 4]
+        sessions_to_display = session_names[page*4:page*4 + 4]
     else: sessions_to_display = []
     while len(sessions_to_display) < 4:
         sessions_to_display.append(None)
@@ -88,7 +89,7 @@ def play(page=0):
         session_box.border_radius = 4
         if session_name is not None:
             player_dict = current_sessions[session_name]
-            symbol = render.Symbol(0.5, 0.5, config.get_random_symbol())
+            symbol = render.Symbol(0.5, 0.5, player_dict["symbol_dict"])
             symbol.bind_to(session_box)
             character_name_display_box = render.SolidColor(0.5, 0.07, 230, 30, theme.white)
             character_name_display_box.absolute = False
@@ -132,6 +133,14 @@ def play(page=0):
         box_button.draw_sprite = False
         box_button.absolute = True
         box_button.bind_to(session_box)
+    if session_names[page+1*4:page+1*4 + 4]:
+        def right_button():
+            play(page+1)
+        rightpage = render.TextButton(0.95, 0.4, 96, 32, "->", right_button)
+    if page > 0:
+        def left_button():
+            play(page-1)
+        leftpage = render.TextButton(0.05, 0.4, 96, 32, "<-", left_button)
     backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
 
 @scene
