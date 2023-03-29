@@ -468,7 +468,6 @@ class Aspect():
         if not raw:
             stat_ratio *= self.balance_mult
             stat_ratio *= self.ratio_mult
-            print(f"{self.name} ratio {stat_ratio}")
         return stat_ratio
 
     # skills that depend on how little ASPECT the target has use inverse_ratio
