@@ -210,6 +210,7 @@ def login_scene():
     if client.dic["token"] != "":
         reply = client.request("verify_token")
         if reply == "True":
+            new_scene()
             title()
     log = render.Text(0.5, 0.20, "Please log in or create an account.")
     name = render.Text(0.5, 0.30, f"Username (Case-sensitive)")
