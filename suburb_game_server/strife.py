@@ -163,12 +163,12 @@ class RageVial(Vial):
     def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
         if damage <= 0: return damage
         flat_add = self.difference_from_starting(griefer)
-        return damage + flat_add
+        return max(damage + flat_add, 0)
 
     def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
         if damage <= 0: return damage
         flat_add = self.difference_from_starting(griefer)
-        return damage + flat_add
+        return max(damage + flat_add, 0)
     
     def new_turn(self, griefer: "Griefer"):
         # decay back to starting value
