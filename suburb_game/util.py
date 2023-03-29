@@ -70,8 +70,8 @@ player_logs = readjson(player_logs, "player_logs")
 log_window = None
 
 def log(message: str):
-    if client.dic["character"] not in player_logs: player_logs[client.dic["character"]] = []
-    logs = player_logs[client.dic["character"]]
+    if client.dic["session_name"] not in player_logs: player_logs[client.dic["session_name"]] = []
+    logs = player_logs[client.dic["session_name"]]
     if not message: return
     lines = split_into_max_length_lines(message, 45)
     for line in lines:
@@ -80,8 +80,8 @@ def log(message: str):
     writejson(player_logs, "player_logs")
 
 def current_log() -> list[str]:
-    if client.dic["character"] not in player_logs: player_logs[client.dic["character"]] = []
-    return player_logs[client.dic["character"]]
+    if client.dic["session_name"] not in player_logs: player_logs[client.dic["session_name"]] = []
+    return player_logs[client.dic["session_name"]]
 
 def split_into_max_length_lines(text: str, max_length: int) -> list[str]:
     lines = [[]]

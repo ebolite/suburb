@@ -48,7 +48,6 @@ map_tiles["gateframe"] = all_maps_in_folder("gateframe")
 class Session():
     def __new__(cls, name) -> Optional["Session"]:
         if name not in util.memory_sessions:
-            print("session does not exist")
             return None
         else: return super().__new__(cls)
 

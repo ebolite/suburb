@@ -176,6 +176,7 @@ def handle_request(dict):
         out["current_grist_types"] = session.current_grist_types
         return json.dumps(out)
     if intent == "create_character":
+        if session.get_current_player(user.name) is not None: return "Character was already created."
         desired_name = content["name"]
         new_player = sessions.Player.create_player(desired_name, username)
         new_player.nickname = content["name"]
