@@ -89,32 +89,33 @@ def play(page=0):
         if session_name is not None and current_sessions[session_name] is not None:
             player_dict = current_sessions[session_name]
             assert player_dict is not None
+            box_theme = themes.themes[player_dict["aspect"]]
             symbol = render.Symbol(0.5, 0.5, player_dict["symbol_dict"])
             symbol.bind_to(session_box)
-            character_name_display_box = render.SolidColor(0.5, 0.07, 230, 30, theme.white)
+            character_name_display_box = render.SolidColor(0.5, 0.07, 230, 30, box_theme.white)
             character_name_display_box.absolute = False
-            character_name_display_box.outline_color = theme.black
+            character_name_display_box.outline_color = box_theme.black
             character_name_display_box.border_radius = 8
             character_name_display_box.bind_to(session_box)
             character_name_label = render.Text(0.5, 0.5, player_dict["nickname"])
-            character_name_label.color = theme.black
+            character_name_label.color = box_theme.black
             character_name_label.bind_to(character_name_display_box)
             character_name_label.fontsize = 24
             character_name_label.set_fontsize_by_width(220)
             session_name_display = render.Text(0.5, 0.85, session_name)
             session_name_display.fontsize = 20
             session_name_display.set_fontsize_by_width(250)
-            session_name_display.color = theme.dark
+            session_name_display.color = box_theme.dark
             session_name_display.bind_to(session_box)
             character_title_label = render.Text(0.5, 0.9, player_dict["title"])
             character_title_label.fontsize = 20
             character_title_label.set_fontsize_by_width(250)
-            character_title_label.color = theme.dark
+            character_title_label.color = box_theme.dark
             character_title_label.bind_to(session_box)
             character_rung_label = render.Text(0.5, 0.95, f"Rung: {player_dict['echeladder_rung']}")
             character_rung_label.fontsize = 20
             character_rung_label.set_fontsize_by_width(250)
-            character_rung_label.color = theme.dark
+            character_rung_label.color = box_theme.dark
             character_rung_label.bind_to(session_box)
         else:
             character_name_display_box = render.SolidColor(0.5, 0.07, 230, 30, theme.white)
