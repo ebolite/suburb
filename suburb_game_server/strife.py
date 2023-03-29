@@ -98,7 +98,7 @@ class Vial():
         pass
 
     def use_skill(self, griefer: "Griefer", skill: "skills.Skill"):
-        pass
+        if griefer.dead: return
 
 class HpVial(Vial):
     def new_turn(self, griefer: "Griefer"):
@@ -260,6 +260,7 @@ class GambitVial(Vial):
             griefer.tags.remove("used_gambit_skill")
 
     def use_skill(self, griefer: "Griefer", skill: "skills.Skill"):
+        super().use_skill(griefer, skill)
         if self.used_gambit_skill(griefer): return
         if skill.name == griefer.misc_data["gambit_skill_name"]:
             griefer.tags.append("used_gambit_skill")
