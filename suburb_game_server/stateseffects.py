@@ -306,7 +306,7 @@ airy.tooltip = "Increases AUTO-PARRY chance."
 
 class BleedState(State):
     def new_turn(self, griefer: "strife.Griefer"):
-        damage = self.applier_stats(griefer)["power"]//2 * self.potency(griefer)
+        damage = self.applier_stats(griefer)["power"] * self.potency(griefer)
         griefer.take_damage(damage, source="BLEED")
 
 bleed = BleedState("bleed")
@@ -315,7 +315,7 @@ bleed.tooltip = "Taking damage at the start of each turn."
 
 class IgniteState(State):
     def new_turn(self, griefer: "strife.Griefer"):
-        damage = self.applier_stats(griefer)["power"] * self.potency(griefer)
+        damage = self.applier_stats(griefer)["power"] * 2 * self.potency(griefer)
         griefer.take_damage(damage, source="IGNITE")
         griefer.add_state_potency("ignite", -griefer.get_state_potency("ignite")/5)
 
@@ -325,7 +325,7 @@ ignite.tooltip = "Taking damage at the start of each turn. Potency reduces each 
 
 class PoisonState(State):
     def new_turn(self, griefer: "strife.Griefer"):
-        damage = self.applier_stats(griefer)["power"]//6 * self.potency(griefer)
+        damage = self.applier_stats(griefer)["power"]//2 * self.potency(griefer)
         griefer.take_damage(damage, source="POISON")
         griefer.add_state_potency("poison", griefer.get_state_potency("poison")/5)
 
