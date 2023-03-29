@@ -666,6 +666,15 @@ def console_commands(player: sessions.Player, content: str):
             if sessions.does_player_exist(target_name):
                 target = sessions.Player(target_name)
                 target.goto_room(player.room)
+        case "killstrife":
+            target_name = " ".join(args)
+            if sessions.does_player_exist(target_name):
+                target = sessions.Player(target_name)
+                current_strife = target.strife
+                if current_strife is not None:
+                    griefer = current_strife.get_griefer(target.name)
+                    current_strife.remove_griefer(griefer)
+                    current_strife.verify_strife()
 
 # return True on success, return False on failure
 def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:
