@@ -782,10 +782,15 @@ class Griefer():
         return self.base_power
     
     @property
-    def remaining_actions(self) -> int:
+    def total_actions(self) -> int:
         actions = self.actions
         for state in self.states_list:
             actions += state.extra_actions(self)
+        return actions
+
+    @property
+    def remaining_actions(self) -> int:
+        actions = self.total_actions
         for skill_dict in self.submitted_skills:
             skill = skills.skills[skill_dict["skill_name"]]
             actions -= skill.action_cost
@@ -821,6 +826,7 @@ class Griefer():
         out["vials_dict"] = self.vials_dict
         out["states_dict"] = self.states_dict
         out["known_skills"] = {skill_name:skills.skills[skill_name].get_dict(self) for skill_name in self.known_skills}
+        out["actions"] = self.total_actions
         return out
 
 # each room can only have one Strife in it
