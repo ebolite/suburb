@@ -1542,9 +1542,8 @@ def title():
     play_button = render.Button(.5, .59, "sprites\\buttons\\play.png", "sprites\\buttons\\playpressed.png", play)
     play_button.alt_alpha = 100
     new_session_button = render.Button(.5, .70, "sprites\\buttons\\newsession.png", "sprites\\buttons\\newsessionpressed.png", newsessionprompt)
-    options_button = render.Button(.5, .81, "sprites\\buttons\\options.png", "sprites\\buttons\\optionspressed.png", newsessionprompt)
-    continue_button = render.Button(.5, .92, "sprites\\buttons\\continue.png", "sprites\\buttons\\continuepressed.png", continue_button_func)
-    continue_button.draw_condition = continue_button_draw_condition
+    # todo: options
+    # options_button = render.Button(.5, .81, "sprites\\buttons\\options.png", "sprites\\buttons\\optionspressed.png", newsessionprompt)
     versiontext = render.Text(0, 0, f"SUBURB Version {util.VERSION}")
     versiontext.absolute = True
     versiontext.color = current_theme().dark
