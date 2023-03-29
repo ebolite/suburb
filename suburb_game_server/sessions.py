@@ -133,8 +133,8 @@ class Session():
         return available_types
     
     @property
-    def players_list(self) -> list["Player"]:
-        return [Player(name) for name in self.current_players]
+    def players_list(self) -> list["SubPlayer"]:
+        return [SubPlayer.from_name(name) for name in self.current_players]
 
     @property
     def name(self) -> str:
@@ -498,10 +498,9 @@ class Map():
     @property
     def specials(self) -> dict[str, tuple]:
         special_dict = {}
-        for player_name in self.session.current_players:
-            player = Player(player_name)
-            if player.overmap.name == self.overmap.name and player.map.name == self.name:
-                special_dict[player.name] = ("player", player.symbol_dict["color"])
+        for subplayer in self.session.subplayers_list:
+            if subplayer.overmap.name == self.overmap.name and subplayer.map.name == self.name:
+                special_dict[subplayer.name] = ("player", subplayer.symbol_dict["color"])
         # todo: other specials
         return special_dict
 
@@ -551,8 +550,8 @@ class Room():
         if self.strife is None:
             new_strife = Strife(self)
             for player_name in self.players:
-                player = Player(player_name)
-                new_strife.add_griefer(player)
+                subplayer = SubPlayer.from_name(player_name)
+                new_strife.add_griefer(subplayer)
             for npc_name in self.npcs:
                 npc = npcs.Npc(npc_name)
                 new_strife.add_griefer(npc)
@@ -568,13 +567,13 @@ class Room():
         if npc.name in self.npcs:
             self.npcs.remove(npc.name)
 
-    def add_player(self, player: "Player"):
-        if player.username not in self.players:
-            self.players.append(player.username)
+    def add_player(self, player: "SubPlayer"):
+        if player.name not in self.players:
+            self.players.append(player.name)
 
-    def remove_player(self, player: "Player"):
-        if player.username in self.players:
-            self.players.remove(player.username)
+    def remove_player(self, player: "SubPlayer"):
+        if player.name in self.players:
+            self.players.remove(player.name)
 
     def generate_loot(self, spawns: Optional[list[str]] = None):
         if not self.tile.generate_loot: return
@@ -608,7 +607,7 @@ class Room():
         return out_dict
     
     def get_players(self) -> list:
-        return [Player(player_name).nickname for player_name in self.players if player_name != self.name]
+        return [SubPlayer.from_name(player_name).nickname for player_name in self.players]
 
     def deploy_phernalia(self, client: "Player", item_name: str) -> bool:
         if item_name not in client.available_phernalia: print("not in phernalia"); return False
@@ -697,8 +696,8 @@ class Room():
     @property
     def specials(self) -> dict[str, tuple]:
         special_dict = {}
-        for player_username in self.players:
-            player = Player(player_username)
+        for player_name in self.players:
+            player = SubPlayer.from_name(player_name)
             special_dict[player.calledby] = ("player", player.symbol_dict["color"])
         for instance_name in self.instances:
             instance = alchemy.Instance(instance_name)
@@ -926,15 +925,25 @@ class Player():
             total += amount
         return total
 
+    def get_best_seeds(self):
+        best_seeds = {}
+        for session in self.sessions:
+            for grist_type, value in session.get_best_seeds().items():
+                if grist_type not in best_seeds: best_seeds[grist_type] = value
+                elif value > best_seeds[grist_type]: best_seeds[grist_type] = value
+        return best_seeds
+
     def add_gutter_and_leech(self):
         spoils_dict = {}
         if self.leeching == []: leeching = ["build"]
         else: leeching = self.leeching
-        best_seeds = self.session.get_best_seeds()
+        best_seeds = self.get_best_seeds()
         for grist_type in leeching:
             value = best_seeds[grist_type]//len(leeching)
             spoils_dict[grist_type] = value
-        possible_players = [player_name for player_name in self.session.current_players if Player(player_name).grist_gutter and player_name is not self.name]
+        possible_players = []
+        for session in self.sessions:
+            possible_players += [player for player in session.players_list if player.grist_gutter and player.name is not self.name]
         if not possible_players: return self.add_unclaimed_grist(spoils_dict)
         random.shuffle(possible_players)
         for player_name in possible_players:
@@ -951,6 +960,10 @@ class Player():
         if stat in self.permanent_stat_bonuses:
             amount += self.permanent_stat_bonuses[stat]
         return amount
+
+    @property
+    def sub_players_list(self) -> list["SubPlayer"]:
+        return [SubPlayer(self, sub_player_type) for sub_player_type in self.sub_players]
 
     @property
     def grist_cache_limit(self):
@@ -983,10 +996,6 @@ class Player():
     @property
     def name(self) -> str:
         return self.__dict__["_id"]
-    
-    @property
-    def username(self):
-        return self.__dict__["_id"]
 
     @property
     def calledby(self):
@@ -1010,9 +1019,17 @@ class Player():
         if self.client_player_name is None: return None
         else: return Player(self.client_player_name)
 
+    @property
+    def sessions(self) -> list[Session]:
+        sessions_list = []
+        for sub_player in self.sub_players_list:
+            if sub_player.session not in sessions_list:
+                sessions_list.append(sub_player.session)
+        return sessions_list
+
 class SubPlayer(Player):
     def __init__(self, player: Player, player_type: str):
-        self.__dict__["_id"] = player.name
+        self.__dict__["player_name"] = player.name
         self.__dict__["player_type"] = player_type
         if player_type not in player.sub_players:
             raise KeyError
@@ -1023,6 +1040,12 @@ class SubPlayer(Player):
         subplayer = SubPlayer(player, player_type)
         subplayer.setup_defaults(player_type)
         return subplayer
+    
+    @classmethod
+    def from_name(cls, name:str):
+        player_name, player_type = name.split("%")
+        player = Player(player_name)
+        return SubPlayer(player, player_type)
     
     def setup_defaults(self, player_type):
         self.session_name = None
@@ -1040,10 +1063,10 @@ class SubPlayer(Player):
 
     @property
     def player(self) -> Player:
-        return Player(self.__dict__["_id"])
+        return Player(self.__dict__["player_name"])
 
     def get_dict(self):
-        out: dict = deepcopy(util.memory_players[self.__dict__["_id"]])
+        out: dict = deepcopy(util.memory_players[self.__dict__["player_name"]])
         out.update(deepcopy(self.player.sub_players[self.__dict__["player_type"]]))
         out["grist_cache_limit"] = self.grist_cache_limit
         out["total_gutter_grist"] = self.total_gutter_grist
@@ -1059,7 +1082,7 @@ class SubPlayer(Player):
             out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()
         else:
             out["worn_instance_dict"] = None
-        best_seeds = self.session.get_best_seeds()
+        best_seeds = self.player.get_best_seeds()
         leeching = self.leeching
         out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
         return out
@@ -1428,6 +1451,10 @@ class SubPlayer(Player):
                 for passive_name, required_rung in stateseffects.class_passives[self.gameclass][self.aspect].items():
                     if self.echeladder_rung >= required_rung: current_passives.append(passive_name)
         return current_passives
+    
+    @property
+    def name(self):
+        return f"{self.player.name}%{self.player_type}"
 
     def __getattr__(self, attr):
         try:
