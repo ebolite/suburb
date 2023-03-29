@@ -455,6 +455,6 @@ for _, aspect in skills.aspects.items():
     faestate = FaeState(f"{aspect.name} fae", aspect, "sylph", 100)
     faestate.tooltip = f"Heals all allies based on their {aspect.name.upper()} and increases their {aspect.name.upper()} each turn."
     breakstate = BreakState(f"{aspect.name}break", aspect, "knight", 100)
-    breakstate.tooltip = f"Your {aspect.maximum_name} is increased at the start of combat based on your {aspect}."
+    breakstate.tooltip = f"Your {aspect.maximum_name} is increased at the start of combat based on your {aspect.name}."
     gritstate = GritState(f"{aspect.name} grit", aspect, "rogue", 100)
     gritstate.tooltip = f"Damage received is reduced by {aspect.name}."
