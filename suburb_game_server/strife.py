@@ -766,11 +766,11 @@ class Griefer():
         return self.strife.room
     
     @property
-    def player(self) -> Optional["sessions.Player"]:
+    def player(self) -> Optional["sessions.SubPlayer"]:
         try:
             if self.player_name is None: return None
         except KeyError: return None
-        return sessions.Player(self.player_name)
+        return sessions.SubPlayer.from_name(self.player_name)
     
     @property
     def npc(self) -> Optional["npcs.Npc"]:

@@ -111,7 +111,7 @@ class Session():
         if new_hash == self.hashed_password: return True
         else: return False
 
-    def get_current_subplayer(self, user_name: str) -> Optional["Player"]:
+    def get_current_subplayer(self, user_name: str) -> Optional["SubPlayer"]:
         player_name = self.user_players[user_name]
         if player_name is None: return None
         player = Player(player_name)
@@ -498,7 +498,7 @@ class Map():
     @property
     def specials(self) -> dict[str, tuple]:
         special_dict = {}
-        for subplayer in self.session.subplayers_list:
+        for subplayer in self.session.players_list:
             if subplayer.overmap.name == self.overmap.name and subplayer.map.name == self.name:
                 special_dict[subplayer.name] = ("player", subplayer.symbol_dict["color"])
         # todo: other specials
@@ -782,6 +782,7 @@ class Player():
         # shared between all selves
         self.sub_players = {}
         self.owner_username = owner_username
+        self.starting_session_name = ""
         self.moduses: list[str] = []
         self.setup = False
         self.nickname = ""
@@ -973,7 +974,7 @@ class Player():
     
     @property
     def available_phernalia(self):
-        connected = self.session.connected
+        connected = self.starting_session.connected
         available_phernalia = ["sealed cruxtruder", "totem lathe", "alchemiter", "pre-punched card"]
         if len(connected) >= 2:
             available_phernalia.append("gristTorrent disc")
@@ -1012,12 +1013,17 @@ class Player():
     @property
     def server_player(self) -> Optional["Player"]:
         if self.server_player_name is None: return None
-        else: return Player(self.server_player_name)
+        else: 
+            return Player(self.server_player_name)
     
     @property
     def client_player(self) -> Optional["Player"]:
         if self.client_player_name is None: return None
         else: return Player(self.client_player_name)
+
+    @property
+    def starting_session(self) -> Session:
+        return Session(self.starting_session_name)
 
     @property
     def sessions(self) -> list[Session]:
@@ -1085,6 +1091,7 @@ class SubPlayer(Player):
         best_seeds = self.player.get_best_seeds()
         leeching = self.leeching
         out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
+        out["name"] = self.name
         return out
 
     def assign_specibus(self, kind_name) -> bool:
@@ -1350,21 +1357,21 @@ class SubPlayer(Player):
             at_house = False
         if gate_num == 0: # return gate
             destination_player = self.overmap.player
-            if destination_player is None: return False
+            if destination_player is None: print("no destination player"); return False
             destination_map = destination_player.land.housemap
             room = destination_map.random_valid_room([str(1)]) # go back to first gate
             self.goto_room(room)
             return True
         destination_player = self.overmap.gate_location(gate_num, at_house)
-        if destination_player is None: return False
-        if not destination_player.entered: return False
+        if destination_player is None: print("no destination player"); return False
+        if not destination_player.entered: print("destination player not entered"); return False
         if at_house:
             destination_map = destination_player.land.get_map(destination_player.land.gate_maps[str(gate_num)])
             room = destination_map.random_valid_room([str(gate_num)])
         else:
             destination_map = destination_player.land.housemap
             room = destination_map.random_valid_room([str(gate_num)])
-            if not room.above_solid_ground(): return False
+            if not room.above_solid_ground(): print("not above solid ground"); return False
         self.goto_room(room)
         return True
 
@@ -1453,6 +1460,10 @@ class SubPlayer(Player):
                     if self.echeladder_rung >= required_rung: current_passives.append(passive_name)
         return current_passives
     
+    @property
+    def entered(self):
+        return self.player.name in self.land.session.entered_players
+
     @property
     def name(self):
         return f"{self.player.name}%{self.player_type}"

@@ -199,6 +199,7 @@ def handle_request(dict):
         new_player.gristcategory = content["gristcategory"]
         new_player.secondaryvial = content["secondaryvial"]
         new_player.symbol_dict = content["symbol_dict"]
+        new_player.starting_session_name = session.name
         new_player.add_modus(content["modus"])
         land = sessions.Overmap(f"{new_player.name}{session.name}", session, new_player)
         new_player.land_name = land.name
@@ -444,14 +445,15 @@ def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
     room_players = room.get_players()
     client_grist_cache = client.grist_cache
     client_available_phernalia = client.available_phernalia
-    excursus_contents = {item.name:item.get_dict() for item in [alchemy.Item(item_name) for item_name in client.session.excursus]}
+    excursus_contents = {item.name:item.get_dict() for item in [alchemy.Item(item_name) for item_name in client.starting_session.excursus]}
+    atheneum = {instance.name:instance.get_dict() for instance in [alchemy.Instance(instance_name) for instance_name in client.atheneum]}
     return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "room_name": room.tile.name, 
                        "players": room_players,
                        "client_grist_cache": client_grist_cache, "client_available_phernalia": client_available_phernalia,
-                       "client_cache_limit": client.grist_cache_limit, "atheneum": client.get_dict()["atheneum"], "excursus": excursus_contents,
+                       "client_cache_limit": client.grist_cache_limit, "atheneum": atheneum, "excursus": excursus_contents,
                        "theme": client.land.theme, "player_color": client.symbol_dict["color"]})
 
-def computer_shit(player: sessions.Player, content: dict, session:sessions.Session):
+def computer_shit(player: sessions.SubPlayer, content: dict, session:sessions.Session):
     for instance_name in player.sylladex + player.room.instances:
         instance = alchemy.Instance(instance_name)
         if "computer" in instance.item.use:
@@ -465,12 +467,8 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             client = player.client_player
             if client is None: return "No client dumpass"
             housemap = client.land.housemap
-            if client.map.name == housemap.name:
-                x = client.room.x
-                y = client.room.y
-            else:
-                x = len(housemap.map_tiles[0]) // 2
-                y = len(housemap.map_tiles) - 6
+            x = len(housemap.map_tiles[0]) // 2
+            y = len(housemap.map_tiles) - 6
             return json.dumps({"x": x, "y": y})
         case "viewport":
             viewport_x = content["viewport_x"]
@@ -495,9 +493,9 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             if client_player.server_player_name is not None: return "Client already has server."
             if player.client_player_name is not None: return "You already have a client."
             player.client_player_name = client_player_username
-            client_player.server_player_name = player.name
-            session.connected.append(client_player_username)
-            client_player.grist_cache["build"] += min(2 * (10 ** len(session.connected)), 2000)
+            client_player.server_player_name = player.player.name
+            client_player.starting_session.connected.append(client_player_username)
+            client_player.grist_cache["build"] += min(2 * (10 ** len(client_player.starting_session.connected)), 2000)
             return "Successfully connected."
         case "deploy_phernalia":
             if player.client_player is None: return "No client."
@@ -569,7 +567,7 @@ def computer_shit(player: sessions.Player, content: dict, session:sessions.Sessi
             room = player.client_player.land.housemap.find_room(roomx, roomy)
             return alchemy.alchemize_instance(code, player.client_player, room)
 
-def console_commands(player: sessions.Player, content: str):
+def console_commands(player: sessions.SubPlayer, content: str):
     args = content.split(" ")
     command = args.pop(0)
     match command:
@@ -624,14 +622,6 @@ def console_commands(player: sessions.Player, content: str):
         case "add_rungs":
             rungs = int(args[0])
             player.echeladder_rung += rungs
-        case "end_strife":
-            if args:
-                player_name = args[0]
-            else:
-                player_name = player.name
-            ending_player = sessions.Player(player_name)
-            if ending_player.strife is not None:
-                ending_player.room.strife_dict = {}
         case "enter_gate":
             gate_num = int(args[0])
             player.enter_gate(gate_num)
@@ -682,7 +672,7 @@ def console_commands(player: sessions.Player, content: str):
                     current_strife.verify_strife()
 
 # return True on success, return False on failure
-def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:
+def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:
     if instance.name not in player.sylladex and instance.name not in player.room.instances: return False
     if target_instance is not None and target_instance.name not in player.room.instances and target_instance.name not in player.sylladex: print("not in room"); return False
     if action_name not in instance.item.use: return False
@@ -746,7 +736,7 @@ def use_item(player: sessions.Player, instance: alchemy.Instance, action_name, t
         case "enter":
             if not player.entered:
                 if not player.consume_instance(instance.name): return False
-                player.land.session.entered_players.append(player.name)
+                player.land.session.entered_players.append(player.player.name)
                 player.land.theme = player.aspect
                 player.map.populate_with_underlings("imp", 4, random.randint(40, 60), 1, 7)
                 player.map.populate_with_underlings("ogre", 1, random.randint(1, 4), 1, 2)
