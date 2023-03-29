@@ -586,11 +586,13 @@ hope = Aspect("hope")
 hope.is_vial = True
 hope.vials = ["hope"]
 hope.adjustment_divisor = 1.5
+hope.ratio_mult = 1.5
 
 rage = Aspect("rage")
 rage.is_vial = True
 rage.vials = ["rage"]
 rage.adjustment_divisor = 1.5
+rage.ratio_mult = 2
 
 breath = Aspect("breath")
 breath.stat_name = "savvy"
