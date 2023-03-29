@@ -73,6 +73,9 @@ class Vial():
     def difference_from_starting(self, griefer: "Griefer") -> int:
         return self.get_current(griefer) - self.get_starting(griefer)
     
+    def initialize_vial(self, griefer: "Griefer"):
+        pass
+    
     def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
         return damage
 
@@ -224,10 +227,13 @@ horseshitometer.tact_vial
 class GambitVial(Vial):
     def __init__(self, name):
         super().__init__(name)
-        self.gambit_skill_name: Optional[str] = None
-        self.already_picked_skills: list[str] = []
-        self.used_gambit_skill = False
-        self.combob = 0
+
+    def initialize_vial(self, griefer: "Griefer"):
+        if "gambit_skill_name" not in griefer.misc_data: griefer.misc_data["gambit_skill_name"] = None
+        if "picked_gambit_skills" not in griefer.misc_data:
+            griefer.misc_data["picked_gambit_skills"] = []
+        if "gambit_combob" not in griefer.misc_data: griefer.misc_data["gambit_combob"] = 0
+        return super().initialize_vial(griefer)
 
     def choose_random_skill(self, griefer: "Griefer") -> str:
         pickable_skills = [skill_name for skill_name in griefer.known_skills if skill_name not in self.already_picked_skills]
@@ -236,31 +242,41 @@ class GambitVial(Vial):
         return random.choice(pickable_skills)
 
     def new_turn(self, griefer: "Griefer"):
-        if self.gambit_skill_name is not None:
+        if griefer.misc_data["gambit_skill_name"] is not None:
             value = griefer.power//12 + griefer.get_stat("tact")//2
-            if self.used_gambit_skill:
+            if self.used_gambit_skill(griefer):
                 self.add_value(griefer, value)
                 value = self.difference_from_starting(griefer)
                 griefer.change_vial("hp", value)
                 griefer.strife.log(f"{griefer.nickname} recovered {value} hp from {griefer.their} GAMBIT!")
             else:
                 self.add_value(griefer, -value)
-                if self.combob > 1:
-                    griefer.strife.log(f"GAMBIT COMBOB BROKEN D: {self.combob*'!'}")
-                self.combob = 0
-        self.gambit_skill_name = self.choose_random_skill(griefer)
-        griefer.strife.log(f"{griefer.nickname}'s GAMBIT skill is {self.gambit_skill_name.upper()}!")
-        self.used_gambit_skill = False
+                combob = griefer.misc_data["gambit_combob"]
+                if combob > 1:
+                    griefer.strife.log(f"GAMBIT COMBOB BROKEN D: {combob*'!'}")
+                griefer.misc_data["gambit_combob"] = 0
+        gambit_skill_name = self.choose_random_skill(griefer)
+        griefer.misc_data["gambit_skill_name"] = gambit_skill_name
+        griefer.strife.log(f"{griefer.nickname}'s GAMBIT skill is {gambit_skill_name.upper()}!")
+        if "used_gambit_skill" in griefer.tags:
+            griefer.tags.remove("used_gambit_skill")
 
     def use_skill(self, griefer: "Griefer", skill: "skills.Skill"):
-        if self.used_gambit_skill: return
-        if skill.name == self.gambit_skill_name:
-            self.used_gambit_skill = True
-            self.combob += 1
-            if self.combob == 1:
+        if self.used_gambit_skill(griefer): return
+        if skill.name == griefer.misc_data["gambit_skill_name"]:
+            griefer.tags.append("used_gambit_skill")
+            griefer.misc_data["gambit_combob"] += 1
+            combob = griefer.misc_data["gambit_combob"]
+            if combob == 1:
                 griefer.strife.log("The crowd goes wild!")
             else:
-                griefer.strife.log(f"{self.combob}x GAMBIT COMBOB{self.combob*'!'}")
+                griefer.strife.log(f"{combob}x GAMBIT COMBOB{combob*'!'}")
+    
+    def used_gambit_skill(self, griefer: "Griefer"):
+        if "used_gambit_skill" in griefer.tags:
+            return True
+        else:
+            return False
 
 gambit = GambitVial("gambit")
 gambit.maximum_formula = "{power} + {tac}*6"
@@ -305,6 +321,7 @@ class Griefer():
             self.vials: dict[str, dict] = {}
             self.states: dict[str, dict] = {}
             self.tags = []
+            self.misc_data = {}
             self.wielded_item_name: Optional[str] = None
             self.worn_item_name: Optional[str] = None
             self.onhit_states: dict[str, float] = {}
@@ -562,6 +579,7 @@ class Griefer():
 
     def add_vial(self, vial_name: str):
         self.vials[vial_name] = {}
+        vials[vial_name].initialize_vial(self)
 
     def get_vial(self, vial_name: str) -> int:
         if vial_name not in self.vials: return 0
