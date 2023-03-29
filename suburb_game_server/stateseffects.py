@@ -423,7 +423,7 @@ class DemiseState(ClassPassive):
         adjustment = -griefer.power//3
         adjust_reply = self.aspect.calculate_adjustment(adjustment)
         for other_griefer in griefer.strife.griefer_list:
-            aspect.adjust(other_griefer, adjustment)
+            self.aspect.adjust(other_griefer, adjustment)
         griefer.strife.log(f"Everyone's {aspect.name.upper()} decreased by {-adjust_reply}!")
 
 # sylph
