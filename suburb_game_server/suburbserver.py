@@ -154,7 +154,7 @@ def handle_request(dict):
         for session_name in user.sessions:
             session = sessions.Session(session_name)
             if session is None: continue
-            session_player = session.get_current_player(user.name)
+            session_player = session.get_current_subplayer(user.name)
             if session_player is None: out_dict[session_name] = None
             else: out_dict[session_name] = session_player.get_dict()
         return json.dumps(out_dict)
@@ -176,8 +176,7 @@ def handle_request(dict):
             if session is None: return f"Session `{session_name}` does not exist."
             if not session.verify_password(session_password): return f"Incorrect session password."
             user.sessions.append(session_name)
-            session.user_players[user.name] = {}
-            session.user_current_players[user.name] = None
+            session.user_players[user.name] = None
             return f"Successfully joined `{session_name}`!"
         else: return "No session."
     session = sessions.Session(session_name)
@@ -187,8 +186,9 @@ def handle_request(dict):
         out["current_grist_types"] = session.current_grist_types
         return json.dumps(out)
     if intent == "create_character":
-        if session.get_current_player(user.name) is not None: return "Character was already created."
+        if session.get_current_subplayer(user.name) is not None: return "Character was already created."
         desired_name = content["name"]
+        # create player
         new_player = sessions.Player.create_player(desired_name, username)
         new_player.nickname = content["name"]
         new_player.noun = content["noun"]
@@ -211,14 +211,19 @@ def handle_request(dict):
         room.add_instance(alchemy.Instance(alchemy.Item("Sburb disc")).name)
         for interest in new_player.interests:
             room.generate_loot(tiles.get_tile(interest).get_loot_list())
-        new_player.goto_room(room)
+        # create subplayers (real and dream)
+        real_self = sessions.SubPlayer.create_subplayer(new_player, "real")
+        real_self.goto_room(room)
+        dream_self = sessions.SubPlayer.create_subplayer(new_player, "dream")
+        dream_self.goto_room(room)
+        # session
         session.starting_players.append(new_player.name)
-        session.user_players[user.name]["real"] = new_player.name
-        session.user_current_players[user.name] = "real"
+        session.user_players[user.name] = new_player.name
+        session.current_subplayers[new_player.name] = "real"
         new_player.setup = True
         return f"Your land is the {land.title}! ({land.acronym})"
     # verify character
-    player = session.get_current_player(user.name)
+    player = session.get_current_subplayer(user.name)
     if player is None: return False
     # process commands todo: clean this up
     match intent:

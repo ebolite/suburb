@@ -65,8 +65,9 @@ class Session():
     def setup_defaults(self, name, password):
         self._id = name
         # username: {"normal_self": blah, "dream_self": blah1}
-        self.user_players: dict[str, dict[str, str]] = {}
-        self.user_current_players: dict[str, Optional[str]] = {}
+        self.user_players: dict[str, Optional[str]] = {}
+        # player_name: subplayer_type
+        self.current_subplayers: dict[str, str] = {}
         self.current_players: list[str] = []
         self.starting_players: list[str] = []
         self.connected: list[str] = []
@@ -110,11 +111,15 @@ class Session():
         if new_hash == self.hashed_password: return True
         else: return False
 
-    def get_current_player(self, user_name: str) -> Optional["Player"]:
-        player_type = self.user_current_players[user_name]
+    def get_current_subplayer(self, user_name: str) -> Optional["Player"]:
+        player_name = self.user_players[user_name]
+        if player_name is None: return None
+        player = Player(player_name)
+        if player_name not in self.current_subplayers: return None
+        player_type = self.current_subplayers[player_name]
         if player_type is None: return None
-        player_name = self.user_players[user_name][player_type]
-        return Player(player_name)
+        player_name = self.user_players[user_name]
+        return SubPlayer(player, player_type)
 
     @property
     def current_grist_types(self) -> list:
@@ -775,43 +780,10 @@ class Player():
 
     def setup_defaults(self, name, owner_username):
         self._id = name
-        self.session_name = None
-        self.overmap_name = None
-        self.map_name = None
-        self.room_name = None
+        # shared between all selves
+        self.sub_players = {}
         self.owner_username = owner_username
-        self.sylladex: list[str] = []
         self.moduses: list[str] = []
-        self.strife_portfolio: dict[str, list] = {}
-        self.current_strife_deck: Optional[str] = None
-        self.empty_cards = 5
-        self.unassigned_specibi = 1
-        self.echeladder_rung: int = 1
-        self.grist_cache = {grist_name:0 for grist_name in config.grists}
-        self.grist_gutter: list[list] = []
-        self.leeching: list[str] = []
-        self.wielding: Optional[str] = None
-        self.worn_instance_name: Optional[str] = None
-        self.symbol_dict = {}
-        self.stat_ratios = {
-            "spunk": 1,
-            "vigor": 1,
-            "tact": 1,
-            "luck": 1,
-            "savvy": 1,
-            "mettle": 1,
-        }
-        self.npc_followers = []
-        self.permanent_stat_bonuses = {}
-        # phernalia registry is a default list of deployable objects minus the deployed phernalia
-        self.deployed_phernalia = []
-        # atheneum is the list of stored instances
-        self.atheneum = []
-        # key: grist value: amount
-        self.unclaimed_grist = {}
-        self.unclaimed_rungs = 0
-        self.client_player_name: Optional[str] = None
-        self.server_player_name: Optional[str] = None
         self.setup = False
         self.nickname = ""
         self.noun = ""
@@ -824,6 +796,30 @@ class Player():
         self.land_name = ""
         self.land_session = ""
         self.prototyped_before_entry = False
+        # phernalia registry is a default list of deployable objects minus the deployed phernalia
+        self.deployed_phernalia = []
+        # atheneum is the list of stored instances
+        self.atheneum = []
+        self.npc_followers = []
+        self.permanent_stat_bonuses = {}
+        self.symbol_dict = {}
+        self.stat_ratios = {
+            "spunk": 1,
+            "vigor": 1,
+            "tact": 1,
+            "luck": 1,
+            "savvy": 1,
+            "mettle": 1,
+        }
+        self.echeladder_rung: int = 1
+        self.grist_cache = {grist_name:0 for grist_name in config.grists}
+        self.grist_gutter: list[list] = []
+        self.leeching: list[str] = []
+        # key: grist value: amount
+        self.unclaimed_grist = {}
+        self.unclaimed_rungs = 0
+        self.client_player_name: Optional[str] = None
+        self.server_player_name: Optional[str] = None
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -833,27 +829,11 @@ class Player():
         self.__dict__[attr] = util.memory_players[self.__dict__["_id"]][attr]
         return self.__dict__[attr]
     
-    def get_dict(self):
-        out = deepcopy(util.memory_players[self.__dict__["_id"]])
-        out["grist_cache_limit"] = self.grist_cache_limit
-        out["total_gutter_grist"] = self.total_gutter_grist
-        out["available_phernalia"] = self.available_phernalia
-        for kind_name in self.strife_portfolio:
-            out["strife_portfolio"][kind_name] = {instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in self.strife_portfolio[kind_name]}
-        out["power"] = self.power
-        out["entered"] = self.entered
-        out["atheneum"] = {instance.name:instance.get_dict() for instance in [alchemy.Instance(instance_name) for instance_name in self.atheneum]}
-        out["seeds"] = self.seeds
-        out["title"] = self.title
-        if self.worn_instance_name is not None:
-            out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()
-        else:
-            out["worn_instance_dict"] = None
-        best_seeds = self.session.get_best_seeds()
-        leeching = self.leeching
-        out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
-        return out
-    
+    def add_modus(self, modus_name: str) -> bool:
+        if modus_name in self.moduses: return False
+        if modus_name not in self.moduses: self.moduses.append(modus_name)
+        return True
+
     def add_unclaimed_grist(self, spoils_dict: dict):
         for grist_name, amount in spoils_dict.items():
             if grist_name in self.unclaimed_grist:
@@ -885,6 +865,204 @@ class Player():
             self.permanent_stat_bonuses[game_attr] += amount
         else:
             raise AttributeError
+        
+    # deploys an item to this user's map at the specified coordinates
+    def deploy_phernalia(self, item_name, target_x, target_y) -> bool:
+        room = self.land.housemap.find_room(target_x, target_y)
+        return room.deploy_phernalia(self, item_name)
+    
+    def deploy_atheneum(self, instance_name, target_x, target_y) -> bool:
+        room = self.land.housemap.find_room(target_x, target_y)
+        return room.deploy_atheneum(self, instance_name)
+    
+    def revise(self, tile_char, target_x, target_y) -> bool:
+        room = self.land.housemap.find_room(target_x, target_y)
+        return room.revise(self, tile_char)
+    
+    def add_grist(self, grist_name: str, amount: int):
+        current_grist = self.grist_cache[grist_name]
+        if current_grist + amount <= self.grist_cache_limit:
+            self.grist_cache[grist_name] = current_grist + amount
+            return
+        else:
+            if self.grist_cache[grist_name] < self.grist_cache_limit: 
+                self.grist_cache[grist_name] = self.grist_cache_limit
+            overflow = amount - (self.grist_cache[grist_name] - current_grist)
+            if len(self.grist_gutter) != 0 and self.grist_gutter[-1][0] == grist_name:
+                self.grist_gutter[-1] = [grist_name, self.grist_gutter[-1][1] + overflow]
+            else:
+                self.grist_gutter.append([grist_name, overflow])
+
+    def pay_costs(self, true_cost: dict) -> bool:
+        for grist_name, value in true_cost.items():
+            if self.grist_cache[grist_name] < value: return False
+        for grist_name, value in true_cost.items():
+            self.grist_cache[grist_name] -= value
+        return True
+
+    def get_seed_rate(self, grist_name: str, amount: int) -> int:
+        rate = 0
+        tier = config.grists[grist_name]["tier"]
+        tier = max(tier, 1)
+        if "exotic" not in config.grists[grist_name]:
+            rate += self.echeladder_rung//2//tier
+        if self.gristcategory in config.gristcategories and grist_name in config.gristcategories[self.gristcategory]:
+            rate += self.echeladder_rung//2//tier
+        rate += int(amount//25)
+        return rate
+
+    @property
+    def seeds(self) -> dict[str, int]:
+        seeds = {grist_name:0 for grist_name in config.grists}
+        for grist_name, value in self.grist_cache.items():
+            rate = self.get_seed_rate(grist_name, value)
+            seeds[grist_name] = rate
+        return seeds
+
+    @property
+    def total_gutter_grist(self) -> int:
+        total = 0
+        for grist_name, amount in self.grist_gutter:
+            total += amount
+        return total
+
+    def add_gutter_and_leech(self):
+        spoils_dict = {}
+        if self.leeching == []: leeching = ["build"]
+        else: leeching = self.leeching
+        best_seeds = self.session.get_best_seeds()
+        for grist_type in leeching:
+            value = best_seeds[grist_type]//len(leeching)
+            spoils_dict[grist_type] = value
+        possible_players = [player_name for player_name in self.session.current_players if Player(player_name).grist_gutter and player_name is not self.name]
+        if not possible_players: return self.add_unclaimed_grist(spoils_dict)
+        random.shuffle(possible_players)
+        for player_name in possible_players:
+            if player_name == self.name: continue
+            player = Player(player_name)
+            grist_name, amount = player.grist_gutter.pop()
+            if grist_name in spoils_dict: spoils_dict[grist_name] += amount
+            else: spoils_dict[grist_name] = amount
+        self.add_unclaimed_grist(spoils_dict)
+
+    def get_base_stat(self, stat):
+        stats = strife.stats_from_ratios(self.stat_ratios, self.power)
+        amount = stats[stat]
+        if stat in self.permanent_stat_bonuses:
+            amount += self.permanent_stat_bonuses[stat]
+        return amount
+
+    @property
+    def grist_cache_limit(self):
+        mult = 1 + self.echeladder_rung//50
+        if self.echeladder_rung > 10: mult += 1
+        return 10*self.echeladder_rung*mult
+    
+    @property
+    def available_phernalia(self):
+        connected = self.session.connected
+        available_phernalia = ["sealed cruxtruder", "totem lathe", "alchemiter", "pre-punched card"]
+        if len(connected) >= 2:
+            available_phernalia.append("gristTorrent disc")
+            available_phernalia.append("punch designix")
+        for item in self.deployed_phernalia:
+            available_phernalia.remove(item)
+        phernalia_dict = {}
+        for item_name in available_phernalia:
+            phernalia_dict[item_name] = alchemy.Item(item_name).get_dict()
+        return phernalia_dict
+
+    @property
+    def entered(self):
+        return self.name in self.land.session.entered_players
+
+    @property
+    def title(self) -> str:
+        return f"{self.gameclass.capitalize()} of {self.aspect.capitalize()}"
+
+    @property
+    def name(self) -> str:
+        return self.__dict__["_id"]
+    
+    @property
+    def username(self):
+        return self.__dict__["_id"]
+
+    @property
+    def calledby(self):
+        return self.nickname
+    
+    @property
+    def color(self):
+        return self.symbol_dict["color"]
+
+    @property
+    def land(self) -> Overmap:
+        return Overmap(self.land_name, Session(self.land_session))
+    
+    @property
+    def server_player(self) -> Optional["Player"]:
+        if self.server_player_name is None: return None
+        else: return Player(self.server_player_name)
+    
+    @property
+    def client_player(self) -> Optional["Player"]:
+        if self.client_player_name is None: return None
+        else: return Player(self.client_player_name)
+
+class SubPlayer(Player):
+    def __init__(self, player: Player, player_type: str):
+        self.__dict__["_id"] = player.name
+        self.__dict__["player_type"] = player_type
+        if player_type not in player.sub_players:
+            raise KeyError
+        
+    @classmethod
+    def create_subplayer(cls, player: Player, player_type: str):
+        player.sub_players[player_type] = {}
+        subplayer = SubPlayer(player, player_type)
+        subplayer.setup_defaults(player_type)
+        return subplayer
+    
+    def setup_defaults(self, player_type):
+        self.session_name = None
+        self.overmap_name = None
+        self.map_name = None
+        self.room_name = None
+        self.sylladex: list[str] = []
+        self.strife_portfolio: dict[str, list] = {}
+        self.current_strife_deck: Optional[str] = None
+        self.empty_cards = 5
+        self.unassigned_specibi = 1
+        self.wielding: Optional[str] = None
+        self.worn_instance_name: Optional[str] = None
+        self.player_type = player_type
+
+    @property
+    def player(self) -> Player:
+        return Player(self.__dict__["_id"])
+
+    def get_dict(self):
+        out: dict = deepcopy(util.memory_players[self.__dict__["_id"]])
+        out.update(deepcopy(self.player.sub_players[self.__dict__["player_type"]]))
+        out["grist_cache_limit"] = self.grist_cache_limit
+        out["total_gutter_grist"] = self.total_gutter_grist
+        out["available_phernalia"] = self.available_phernalia
+        for kind_name in self.strife_portfolio:
+            out["strife_portfolio"][kind_name] = {instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in self.strife_portfolio[kind_name]}
+        out["power"] = self.power
+        out["entered"] = self.entered
+        out["atheneum"] = {instance.name:instance.get_dict() for instance in [alchemy.Instance(instance_name) for instance_name in self.atheneum]}
+        out["seeds"] = self.seeds
+        out["title"] = self.title
+        if self.worn_instance_name is not None:
+            out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()
+        else:
+            out["worn_instance_dict"] = None
+        best_seeds = self.session.get_best_seeds()
+        leeching = self.leeching
+        out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
+        return out
 
     def assign_specibus(self, kind_name) -> bool:
         if kind_name not in util.kinds: return False
@@ -1017,96 +1195,12 @@ class Player():
         else:
             return False
         
-    # deploys an item to this user's map at the specified coordinates
-    def deploy_phernalia(self, item_name, target_x, target_y) -> bool:
-        room = self.land.housemap.find_room(target_x, target_y)
-        return room.deploy_phernalia(self, item_name)
-    
-    def deploy_atheneum(self, instance_name, target_x, target_y) -> bool:
-        room = self.land.housemap.find_room(target_x, target_y)
-        return room.deploy_atheneum(self, instance_name)
-    
-    def revise(self, tile_char, target_x, target_y) -> bool:
-        room = self.land.housemap.find_room(target_x, target_y)
-        return room.revise(self, tile_char)
-    
-    def add_grist(self, grist_name: str, amount: int):
-        current_grist = self.grist_cache[grist_name]
-        if current_grist + amount <= self.grist_cache_limit:
-            self.grist_cache[grist_name] = current_grist + amount
-            return
-        else:
-            if self.grist_cache[grist_name] < self.grist_cache_limit: 
-                self.grist_cache[grist_name] = self.grist_cache_limit
-            overflow = amount - (self.grist_cache[grist_name] - current_grist)
-            if len(self.grist_gutter) != 0 and self.grist_gutter[-1][0] == grist_name:
-                self.grist_gutter[-1] = [grist_name, self.grist_gutter[-1][1] + overflow]
-            else:
-                self.grist_gutter.append([grist_name, overflow])
-
-    def pay_costs(self, true_cost: dict) -> bool:
-        for grist_name, value in true_cost.items():
-            if self.grist_cache[grist_name] < value: return False
-        for grist_name, value in true_cost.items():
-            self.grist_cache[grist_name] -= value
-        return True
-
-    def get_seed_rate(self, grist_name: str, amount: int) -> int:
-        rate = 0
-        tier = config.grists[grist_name]["tier"]
-        tier = max(tier, 1)
-        if "exotic" not in config.grists[grist_name]:
-            rate += self.echeladder_rung//2//tier
-        if self.gristcategory in config.gristcategories and grist_name in config.gristcategories[self.gristcategory]:
-            rate += self.echeladder_rung//2//tier
-        rate += int(amount//25)
-        return rate
-
-    @property
-    def seeds(self) -> dict[str, int]:
-        seeds = {grist_name:0 for grist_name in config.grists}
-        for grist_name, value in self.grist_cache.items():
-            rate = self.get_seed_rate(grist_name, value)
-            seeds[grist_name] = rate
-        return seeds
-
-    @property
-    def total_gutter_grist(self) -> int:
-        total = 0
-        for grist_name, amount in self.grist_gutter:
-            total += amount
-        return total
-
-    def add_gutter_and_leech(self):
-        spoils_dict = {}
-        if self.leeching == []: leeching = ["build"]
-        else: leeching = self.leeching
-        best_seeds = self.session.get_best_seeds()
-        for grist_type in leeching:
-            value = best_seeds[grist_type]//len(leeching)
-            spoils_dict[grist_type] = value
-        possible_players = [player_name for player_name in self.session.current_players if Player(player_name).grist_gutter and player_name is not self.name]
-        if not possible_players: return self.add_unclaimed_grist(spoils_dict)
-        random.shuffle(possible_players)
-        for player_name in possible_players:
-            if player_name == self.name: continue
-            player = Player(player_name)
-            grist_name, amount = player.grist_gutter.pop()
-            if grist_name in spoils_dict: spoils_dict[grist_name] += amount
-            else: spoils_dict[grist_name] = amount
-        self.add_unclaimed_grist(spoils_dict)
-
     def sylladex_instances(self) -> dict:
         out_dict = {}
         for instance_name in self.sylladex:
             instance = alchemy.Instance(instance_name)
             out_dict[instance_name] = instance.get_dict()
         return out_dict
-
-    def add_modus(self, modus_name: str) -> bool:
-        if modus_name in self.moduses: return False
-        if modus_name not in self.moduses: self.moduses.append(modus_name)
-        return True
     
     def get_illegal_overmap_moves(self) -> list[str]:
         player_x = self.map.x
@@ -1250,38 +1344,6 @@ class Player():
         self.goto_room(room)
         return True
 
-    def get_base_stat(self, stat):
-        stats = strife.stats_from_ratios(self.stat_ratios, self.power)
-        amount = stats[stat]
-        if stat in self.permanent_stat_bonuses:
-            amount += self.permanent_stat_bonuses[stat]
-        return amount
-    
-    def get_known_skills(self):
-        known_skills = skills.base_skills + skills.player_skills
-        if self.aspect in skills.aspect_skills:
-            for skill_name, required_rung in skills.aspect_skills[self.aspect].items():
-                if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
-        if self.gameclass in skills.class_skills:
-            if self.aspect in skills.class_skills[self.gameclass]:
-                for skill_name, required_rung in skills.class_skills[self.gameclass][self.aspect].items():
-                    if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
-        abstratus = self.current_strife_deck
-        if abstratus in skills.abstratus_skills:
-            for skill_name, required_rung in skills.abstratus_skills[abstratus].items():
-                if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
-        else:
-            print(f"{abstratus} needs skills doofus!!!")
-        return known_skills
-    
-    def get_current_passives(self):
-        current_passives = []
-        if self.gameclass in stateseffects.class_passives:
-            if self.aspect in stateseffects.class_passives[self.gameclass]:
-                for passive_name, required_rung in stateseffects.class_passives[self.gameclass][self.aspect].items():
-                    if self.echeladder_rung >= required_rung: current_passives.append(passive_name)
-        return current_passives
-
     @property
     def session(self) -> Session:
         return Session(self.session_name)
@@ -1330,6 +1392,10 @@ class Player():
             npc.goto_room(room)
 
     @property
+    def coords(self):
+        return self.room.x, self.room.y
+
+    @property
     def strife(self) -> Optional["Strife"]:
         if self.room.strife is None: return None
         for griefer in self.room.strife.griefer_list:
@@ -1337,74 +1403,44 @@ class Player():
             if griefer.player.name == self.name: return self.room.strife
         else:
             return None
-
-    @property
-    def grist_cache_limit(self):
-        mult = 1 + self.echeladder_rung//50
-        if self.echeladder_rung > 10: mult += 1
-        return 10*self.echeladder_rung*mult
-    
-    @property
-    def available_phernalia(self):
-        connected = self.session.connected
-        available_phernalia = ["sealed cruxtruder", "totem lathe", "alchemiter", "pre-punched card"]
-        if len(connected) >= 2:
-            available_phernalia.append("gristTorrent disc")
-            available_phernalia.append("punch designix")
-        for item in self.deployed_phernalia:
-            available_phernalia.remove(item)
-        phernalia_dict = {}
-        for item_name in available_phernalia:
-            phernalia_dict[item_name] = alchemy.Item(item_name).get_dict()
-        return phernalia_dict
-
-    @property
-    def entered(self):
-        return self.name in self.land.session.entered_players
-
-    @property
-    def title(self) -> str:
-        return f"{self.gameclass.capitalize()} of {self.aspect.capitalize()}"
-
-    @property
-    def coords(self):
-        return self.room.x, self.room.y
-
-    @property
-    def name(self) -> str:
-        return self.__dict__["_id"]
-    
-    @property
-    def username(self):
-        return self.__dict__["_id"]
-
-    @property
-    def calledby(self):
-        return self.nickname
-    
-    @property
-    def color(self):
-        return self.symbol_dict["color"]
-
-    @property
-    def land(self) -> Overmap:
-        return Overmap(self.land_name, Session(self.land_session))
-    
-    @property
-    def server_player(self) -> Optional["Player"]:
-        if self.server_player_name is None: return None
-        else: return Player(self.server_player_name)
-    
-    @property
-    def client_player(self) -> Optional["Player"]:
-        if self.client_player_name is None: return None
-        else: return Player(self.client_player_name)
-
-    def verify(self, hash): # returns True if hash is valid
-        if hash == self.character_pass_hash:
-            return True
+        
+    def get_known_skills(self):
+        known_skills = skills.base_skills + skills.player_skills
+        if self.aspect in skills.aspect_skills:
+            for skill_name, required_rung in skills.aspect_skills[self.aspect].items():
+                if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
+        if self.gameclass in skills.class_skills:
+            if self.aspect in skills.class_skills[self.gameclass]:
+                for skill_name, required_rung in skills.class_skills[self.gameclass][self.aspect].items():
+                    if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
+        abstratus = self.current_strife_deck
+        if abstratus in skills.abstratus_skills:
+            for skill_name, required_rung in skills.abstratus_skills[abstratus].items():
+                if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
         else:
-            return False
+            print(f"{abstratus} needs skills doofus!!!")
+        return known_skills
+    
+    def get_current_passives(self):
+        current_passives = []
+        if self.gameclass in stateseffects.class_passives:
+            if self.aspect in stateseffects.class_passives[self.gameclass]:
+                for passive_name, required_rung in stateseffects.class_passives[self.gameclass][self.aspect].items():
+                    if self.echeladder_rung >= required_rung: current_passives.append(passive_name)
+        return current_passives
+
+    def __getattr__(self, attr):
+        try:
+            return self.player.__getattr__(attr)
+        except KeyError:
+            return self.player.sub_players[self.__dict__["player_type"]][attr]
+        
+    def __setattr__(self, attr, value):
+        try:
+            self.player.__getattr__(attr)
+            self.player.__setattr__(attr, value)
+        except KeyError:
+            self.player.sub_players[self.__dict__["player_type"]][attr] = value
 
 def gen_terrain(x, y, map, replacetile, terrain_rate, depth=0):
     if map[y][x] == "*":
