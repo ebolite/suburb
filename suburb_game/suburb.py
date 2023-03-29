@@ -117,10 +117,10 @@ def register():
 def login():
     reply = client.request("login")
     if "Success" not in reply:
-        client.dic["character"] = ""
-        client.dic["character_pass_hash"] = ""
+        client.dic["username"] = ""
+        client.dic["password"] = ""
     else:
-        client.save_client_data()
+        print("logged in!")
         player_info = client.requestdic("player_info")
         if player_info["setup"]:
             Sylladex.current_sylladex().validate()
@@ -132,7 +132,7 @@ def login():
 @scene
 def login_scene():
     log = render.Text(0.5, 0.20, "")
-    name = render.Text(0.5, 0.30, f"Character Name (Case-sensitive)")
+    name = render.Text(0.5, 0.30, f"Username (Case-sensitive)")
     name.color = current_theme().dark
     name.outline_color = current_theme().black
     namebox = render.InputTextBox(.5, .35)
@@ -142,11 +142,11 @@ def login_scene():
     pwbox = render.InputTextBox(.5, .50)
     pwbox.secure = True
     def verify():
-        if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
+        if len(namebox.text) == 0: log.text = "Username must not be empty."; return
         if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
         log.text = "Connecting..."
-        client.dic["character"] = namebox.text
-        client.dic["character_pass_hash"] = client.hash(pwbox.text)
+        client.dic["username"] = namebox.text
+        client.dic["password"] = pwbox.text
         log.text = login()
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)

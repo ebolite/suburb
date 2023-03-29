@@ -21,9 +21,10 @@ ClientSocket = context.wrap_socket(unwrapped_sock, server_hostname=HOSTNAME)
 dic = {
 "intent": "",
 "session_name": "",
-"session_pass_hash": "",
-"character": "",
-"character_pass_hash": "",
+"session_password": "",
+"username": "",
+"password": "",
+"character_name": "",
 "content": ""
 }
 

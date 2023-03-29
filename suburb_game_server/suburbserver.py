@@ -33,11 +33,17 @@ class User():
         self.tokens: dict[str, Optional[str]]
 
     @classmethod
-    def create_user(cls, name) -> Optional["User"]:
+    def create_user(cls, name, password) -> Optional["User"]:
         if name in util.memory_users: return None
         util.memory_users[name] = {}
         user = cls(name)
+        user.setup_defaults(name, password)
         return user
+
+    def setup_defaults(self, name, password):
+        self._id = name
+        self.players: list[str] = []
+        self.set_password(password)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -101,35 +107,7 @@ def threaded_client(connection):
                 break
             decoded = data.decode("utf-8")
             dict = json.loads(decoded)
-            intent = dict["intent"]
-            session_name = dict["session_name"]
-            session_pass_hash = dict["session_pass_hash"]
-            if intent == "create_session":
-                if len(session_name) > 32: reply = "fuck you"
-                session_result = util.db_sessions.find_one({"_id": session_name})
-                if session_result is not None:
-                    reply = f"The session `{session_name}` is already registered."
-                else:
-                    session = sessions.Session(session_name)
-                    session.pass_hash = dict["session_pass_hash"]
-                    print(f"session created {session_name}")
-                    reply = f"The session `{session_name}` has been successfully registered."
-            elif intent == "crash_me":
-                raise AssertionError
-            else:
-                if session_name not in util.memory_sessions:
-                    session_result = util.db_sessions.find_one({"_id": session_name})
-                    if session_result is None: reply = f"Invalid session name `{session_name}`."
-                    else: session = sessions.Session(session_name)
-                if session_name in util.memory_sessions:
-                    session = sessions.Session(session_name)
-                    if session_pass_hash == session.pass_hash:
-                        reply = handle_request(dict)
-                    else:
-                        reply = f"Incorrect session password."
-                else:
-                    reply = f"Invalid session name `{session_name}`."
-            # \n is end of reply character so client knows when to stop receiving data
+            reply = handle_request(dict)
             connection.sendall(str.encode(str(reply)+"\n"))
         conns.remove(connection)
         connection.close()
@@ -144,61 +122,71 @@ def handle_request(dict):
         return "Successfully connected."
     if intent == "server_tiles":
         return json.dumps({"server_tiles": tiles.server_tiles, "labels": {tile.tile_char:tile.name for tile in tiles.tiles.values()}})
-    session_name = dict["session_name"]
-    session = sessions.Session(session_name)
-    character = dict["character"]
-    character_pass_hash = dict["character_pass_hash"]
+    username = dict["username"]
+    password = dict["password"]
     content = dict["content"]
+    if intent == "create_account":
+        user = User.create_user(username, password)
+        if user is None: return f"`{username}` is already taken."
+        return f"Successfully created your account. You may now log in."
+    user = User(username)
+    if User(username) is None: return f"Account does not exist."
+    if not user.verify_password(password): return f"Incorrect character password."
+    # session verification
+    session_name = dict["session_name"]
+    session_password = dict["session_password"]
+    if intent == "create_session":
+        if len(session_name) > 32: return "fuck you"
+        session = sessions.Session.create_session(session_name, session_password)
+        if session is None: return f"The session `{session_name}` is already registered."
+        print(f"session created {session_name}")
+        return f"The session `{session_name}` has been successfully registered."
+    session = sessions.Session(session_name)
+    if session is None: return f"Session `{session_name}` does not exist."
+    if not session.verify_password(session_password): return f"Incorrect session password."
     if intent == "session_info":
         out = {}
         out["current_grist_types"] = session.current_grist_types
         return json.dumps(out)
     if intent == "create_character":
-        if sessions.does_player_exist(character):
-            return f"Character id `{character}` has already been made."
-        else:
-            player = sessions.Player(character)
-            player.character_pass_hash = character_pass_hash
-            return f"Successfully created `{character}`. You may now log in."
-    if not sessions.does_player_exist(character):
-        return f"Character {character} does not exist."
-    player = sessions.Player(character)
-    if not player.verify(character_pass_hash):
-        return f"Incorrect character password."
+        desired_name = content["name"]
+        new_player = sessions.Player.create_player(desired_name, username)
+        new_player.nickname = content["name"]
+        new_player.noun = content["noun"]
+        new_player.pronouns = content["pronouns"]
+        new_player.interests = content["interests"]
+        new_player.aspect = content["aspect"]
+        new_player.gameclass = content["class"]
+        new_player.gristcategory = content["gristcategory"]
+        new_player.secondaryvial = content["secondaryvial"]
+        new_player.symbol_dict = content["symbol_dict"]
+        new_player.add_modus(content["modus"])
+        land = sessions.Overmap(f"{new_player.name}{session.name}", session, new_player)
+        new_player.land_name = land.name
+        new_player.land_session = session.name
+        housemap = land.get_map(land.housemap_name)
+        print(f"housemap {housemap.name} {housemap}")
+        print(f"housemap session {housemap.session.name} {housemap.session}")
+        print(f"overmap {housemap.overmap.name} {housemap.overmap}")
+        room = housemap.random_valid_room(config.starting_tiles)
+        room.add_instance(alchemy.Instance(alchemy.Item("Sburb disc")).name)
+        for interest in new_player.interests:
+            room.generate_loot(tiles.get_tile(interest).get_loot_list())
+        new_player.goto_room(room)
+        session.starting_players.append(new_player.name)
+        new_player.setup = True
+        return f"Your land is the {land.title}! ({land.acronym})"
+    # verify character
+    character_name = dict["character_name"]
+    try: player = sessions.Player(character_name)
+    except KeyError: return "Character does not exist!"
+    if player.owner_username != username: return "You do not own that character! Bitch!"
+    # process commands todo: clean this up
     match intent:
         case "login":
             return f"Successfully logged in!"
         case "interests":
             return json.dumps(config.interests)
-        case "setup_character":
-            if player.setup:
-                return "That character has already been setup!"
-            else:
-                player.nickname = content["name"]
-                player.noun = content["noun"]
-                player.pronouns = content["pronouns"]
-                player.interests = content["interests"]
-                player.aspect = content["aspect"]
-                player.gameclass = content["class"]
-                player.gristcategory = content["gristcategory"]
-                player.secondaryvial = content["secondaryvial"]
-                player.symbol_dict = content["symbol_dict"]
-                player.add_modus(content["modus"])
-                land = sessions.Overmap(f"{player.name}{session.name}", session, player)
-                player.land_name = land.name
-                player.land_session = session.name
-                housemap = land.get_map(land.housemap_name)
-                print(f"housemap {housemap.name} {housemap}")
-                print(f"housemap session {housemap.session.name} {housemap.session}")
-                print(f"overmap {housemap.overmap.name} {housemap.overmap}")
-                room = housemap.random_valid_room(config.starting_tiles)
-                room.add_instance(alchemy.Instance(alchemy.Item("Sburb disc")).name)
-                for interest in player.interests:
-                    room.generate_loot(tiles.get_tile(interest).get_loot_list())
-                player.goto_room(room)
-                session.starting_players.append(character)
-                player.setup = True
-                return f"Your land is the {land.title}! ({land.acronym})"
         case "current_map":
             return map_data(player)
         case "current_overmap":

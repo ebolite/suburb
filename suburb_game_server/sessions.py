@@ -4,6 +4,7 @@ import random
 import os
 import time
 import numpy as np
+from string import ascii_letters
 from typing import Optional, Union
 from copy import deepcopy
 
@@ -45,13 +46,23 @@ map_tiles["land"] = all_maps_in_folder("land")
 map_tiles["gateframe"] = all_maps_in_folder("gateframe")
 
 class Session():
-    def __init__(self, name):
-        self.__dict__["session_name"] = name
-        if name not in util.memory_sessions: # load the session into memory
-            self.create_session(name)
+    def __new__(cls, name) -> Optional["Session"]:
+        if name not in util.memory_sessions:
+            print("session does not exist")
+            return None
+        else: return super().__new__(cls)
 
-    def create_session(self, name):
+    def __init__(self, name):
+        self.__dict__["_id"] = name
+
+    @classmethod
+    def create_session(cls, name, password) -> Optional["Session"]:
+        if name in util.memory_sessions: return None
         util.memory_sessions[name] = {}
+        session = cls(name)
+        session.setup_defaults(name, password)
+
+    def setup_defaults(self, name, password):
         self._id = name
         self.current_players: list[str] = []
         self.starting_players: list[str] = []
@@ -60,6 +71,7 @@ class Session():
         self.excursus = ["captchalogue card", "perfectly generic object"]
         self.overmaps = {}
         self.prototypes: list[Optional[str]] = []
+        self.set_password(password)
 
     def add_to_excursus(self, item_name):
         if item_name not in self.excursus:
@@ -81,6 +93,19 @@ class Session():
         self.__dict__[attr] = (util.memory_sessions[self.__dict__["session_name"]]
                                [attr])
         return self.__dict__[attr]
+    
+    def set_password(self, password: str):
+        self.salt = os.urandom(32).hex()
+        plaintext = password.encode()
+        digest = hashlib.pbkdf2_hmac("sha256", plaintext, bytes.fromhex(self.salt), 10000)
+        hex_hash = digest.hex()
+        self.hashed_password = hex_hash
+    
+    def verify_password(self, password: str):
+        digest = hashlib.pbkdf2_hmac("sha256", password.encode(), bytes.fromhex(self.salt), 10000)
+        new_hash = digest.hex()
+        if new_hash == self.hashed_password: return True
+        else: return False
 
     @property
     def current_grist_types(self) -> list:
@@ -727,16 +752,25 @@ def does_player_exist(name):
 class Player():
     def __init__(self, name):
         self.__dict__["_id"] = name
-        if name not in util.memory_players: # load the session into memory
-            self.create_player(name)
+        if name not in util.memory_players:
+            raise KeyError
 
-    def create_player(self, name):
+    @classmethod
+    def create_player(cls, name, owner_username) -> "Player":
+        while name in util.memory_players:
+            name += random.choice(ascii_letters)
         util.memory_players[name] = {}
+        player = cls(name)
+        player.setup_defaults(name, owner_username)
+        return player
+
+    def setup_defaults(self, name, owner_username):
         self._id = name
         self.session_name = None
         self.overmap_name = None
         self.map_name = None
         self.room_name = None
+        self.owner_username = owner_username
         self.sylladex: list[str] = []
         self.moduses: list[str] = []
         self.strife_portfolio: dict[str, list] = {}
