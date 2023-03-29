@@ -91,6 +91,9 @@ class Vial():
     def on_parry(self, griefer: "Griefer", damage_parried: int):
         pass
 
+    def on_hit(self, griefer: "Griefer", damage_dealt: int):
+        pass
+
     def use_skill(self, griefer: "Griefer", skill: "skills.Skill"):
         pass
 
@@ -209,13 +212,14 @@ class HorseshitometerVial(Vial):
         mod = (power**2) / (power + diff)
         return mod
 
-    def on_parry(self, griefer: "Griefer", damage_parried: int):
-        self.add_value(griefer, damage_parried//2)
+    def on_hit(self, griefer: "Griefer", damage_dealt: int):
+        self.add_value(griefer, -damage_dealt//4)
 
 horseshitometer = HorseshitometerVial("horseshitometer")
 horseshitometer.maximum_formula = "{power} + {tac}*6"
 horseshitometer.starting_formula = "{maximum}//2"
 horseshitometer.optional_vial = True
+horseshitometer.tact_vial
 
 class GambitVial(Vial):
     def __init__(self, name):

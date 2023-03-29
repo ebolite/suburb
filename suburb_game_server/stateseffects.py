@@ -47,6 +47,12 @@ class State():
     def new_turn(self, griefer: "strife.Griefer"):
         pass
 
+    def on_parry(self, griefer: "strife.Griefer", damage_parried: int):
+        pass
+
+    def on_hit(self, griefer: "strife.Griefer", damage_dealt: int):
+        pass
+
 class OneTimeState(State):
     def on_apply(self, griefer: "strife.Griefer"):
         griefer.remove_state(self.name)

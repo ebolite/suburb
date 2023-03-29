@@ -226,6 +226,8 @@ class Skill():
                 target.strife.log(f"{target.nickname} AUTO-PARRIES!")
                 for vial in target.vials_list:
                     vial.on_parry(target, damage)
+                for state in target.states_list:
+                    state.on_parry(target, damage)
                 return
         if damage != 0: target.take_damage(damage, coin=coin)
         if target.death_break(): return
@@ -241,6 +243,10 @@ class Skill():
                 potency_change_formula = self.format_formula(potency_change_formula, user, target)
                 potency_change = float(eval(potency_change_formula))
                 target.add_state_potency(state_name, potency_change)
+            for vial in user.vials_list:
+                vial.on_hit(user, damage)
+            for state in user.states_list:
+                state.on_hit
         # apply on-hits from weapon
         if damage > 0:
             for state_name, potency in user.onhit_states.items():
