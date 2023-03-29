@@ -69,7 +69,6 @@ class User():
         digest = hashlib.pbkdf2_hmac("sha256", password.encode(), bytes.fromhex(self.salt), 10000)
         new_hash = digest.hex()
         if new_hash == self.hashed_password: 
-            print(f"{new_hash} vs {self.hashed_password}")
             return True
         else: return False
 
@@ -148,6 +147,8 @@ def handle_request(dict):
             if session_player is None: out_dict[session_name] = None
             else: out_dict[session_name] = session_player.get_dict()
         return json.dumps(out_dict)
+    if intent == "interests":
+        return json.dumps(config.interests)
     # session verification
     session_name = dict["session_name"]
     if session_name in user.sessions and intent == "join_session": return "You are already in that session!"
@@ -209,8 +210,6 @@ def handle_request(dict):
     if player is None: return False
     # process commands todo: clean this up
     match intent:
-        case "interests":
-            return json.dumps(config.interests)
         case "current_map":
             return map_data(player)
         case "current_overmap":

@@ -61,6 +61,7 @@ class Session():
         util.memory_sessions[name] = {}
         session = cls(name)
         session.setup_defaults(name, password)
+        return session
 
     def setup_defaults(self, name, password):
         self._id = name
@@ -89,11 +90,11 @@ class Session():
         return best_seeds
 
     def __setattr__(self, attr, value):
-        util.memory_sessions[self.__dict__["session_name"]][attr] = value
+        util.memory_sessions[self.__dict__["_id"]][attr] = value
         self.__dict__[attr] = value
         
     def __getattr__(self, attr):
-        self.__dict__[attr] = (util.memory_sessions[self.__dict__["session_name"]]
+        self.__dict__[attr] = (util.memory_sessions[self.__dict__["_id"]]
                                [attr])
         return self.__dict__[attr]
     

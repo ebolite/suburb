@@ -60,8 +60,8 @@ def placeholder():
 @scene
 def play(page=0):
     theme = current_theme()
-    current_sessions = client.requestdic(intent="all_session_characters")
-    session_names = list(current_sessions.keys())
+    current_sessions: dict[str, Optional[dict]] = client.requestdic(intent="all_session_characters")
+    session_names: list[Optional[str]] = list(current_sessions.keys())
     if len(current_sessions) > 0:
         sessions_to_display = session_names[page*4:page*4 + 4]
     else: sessions_to_display = []
@@ -74,7 +74,10 @@ def play(page=0):
         else:
             def button_func():
                 client.dic["session_name"] = session_name
-                newgame()
+                if current_sessions[session_name] is None:
+                    namecharacter()
+                else:
+                    newgame()
         return button_func
     for i, session_name in enumerate(sessions_to_display):
         x = 0.2 * (i+1)
@@ -83,8 +86,9 @@ def play(page=0):
         session_box.absolute = False
         session_box.outline_color = theme.dark
         session_box.border_radius = 4
-        if session_name is not None:
+        if session_name is not None and current_sessions[session_name] is not None:
             player_dict = current_sessions[session_name]
+            assert player_dict is not None
             symbol = render.Symbol(0.5, 0.5, player_dict["symbol_dict"])
             symbol.bind_to(session_box)
             character_name_display_box = render.SolidColor(0.5, 0.07, 230, 30, theme.white)
@@ -122,7 +126,9 @@ def play(page=0):
             character_name_label.color = theme.black
             character_name_label.bind_to(character_name_display_box)
             character_name_label.fontsize = 24
-            no_session_text = render.Text(0.5, 0.5, "NO SESSION")
+            if session_name is None: text = "NO SESSION"
+            else: text = "NO CHARACTER"
+            no_session_text = render.Text(0.5, 0.5, text)
             no_session_text.bind_to(session_box)
             no_session_text.color = theme.dark
         box_button = render.TextButton(0, 0, 250, 400, "", get_button_func(session_name))
