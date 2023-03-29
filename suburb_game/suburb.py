@@ -105,17 +105,13 @@ def register():
         if "Success" not in log.text:
             client.dic["username"] = ""
             client.dic["password"] = ""
-        else:
-            # todo: remember me and token auth
-            # client.save_client_data()
-            title()
         print(f"log text {log.text}")
-    loginbutton = render.Button(.5, .67, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", verify)
+    registerbutton = render.Button(.5, .67, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", login_scene)
 
 def login():
     reply = client.request("login")
-    if "Success" not in reply:
+    if reply != "True":
         client.dic["username"] = ""
         client.dic["password"] = ""
     else:
@@ -141,9 +137,8 @@ def login_scene():
         client.dic["username"] = namebox.text
         client.dic["password"] = pwbox.text
         log.text = login()
-    confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
-    back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
-    registerbutton = render.Button(.5, .88, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
+    loginbutton = render.Button(.5, .62, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", verify)
+    registerbutton = render.Button(.5, .75, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
 
 @scene
 def character_selection():

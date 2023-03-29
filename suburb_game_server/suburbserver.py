@@ -29,8 +29,6 @@ class User():
 
     def __init__(self, name):
         self.__dict__["_id"] = name
-        self.hashed_password: Optional[str] = None
-        self.tokens: dict[str, Optional[str]]
 
     @classmethod
     def create_user(cls, name, password) -> Optional["User"]:
@@ -43,6 +41,7 @@ class User():
     def setup_defaults(self, name, password):
         self._id = name
         self.players: list[str] = []
+        self.tokens: dict[str, Optional[str]] = {}
         self.set_password(password)
 
     def __setattr__(self, attr, value):
@@ -61,10 +60,15 @@ class User():
         self.hashed_password = hex_hash
     
     def verify_password(self, password: str):
-        if self.hashed_password == None: return False
+        if self.hashed_password == None: 
+            print("no password")
+            print(util.memory_users)
+            return False
         digest = hashlib.pbkdf2_hmac("sha256", password.encode(), bytes.fromhex(self.salt), 10000)
         new_hash = digest.hex()
-        if new_hash == self.hashed_password: return True
+        if new_hash == self.hashed_password: 
+            print(f"{new_hash} vs {self.hashed_password}")
+            return True
         else: return False
 
     def make_token(self, password: str, expires=True):
@@ -131,7 +135,8 @@ def handle_request(dict):
         return f"Successfully created your account. You may now log in."
     user = User(username)
     if User(username) is None: return f"Account does not exist."
-    if not user.verify_password(password): return f"Incorrect character password."
+    if not user.verify_password(password): return f"Incorrect account password."
+    if intent == "login": return True
     # session verification
     session_name = dict["session_name"]
     session_password = dict["session_password"]
@@ -183,8 +188,6 @@ def handle_request(dict):
     if player.owner_username != username: return "You do not own that character! Bitch!"
     # process commands todo: clean this up
     match intent:
-        case "login":
-            return f"Successfully logged in!"
         case "interests":
             return json.dumps(config.interests)
         case "current_map":
