@@ -24,6 +24,7 @@ dic = {
 "session_password": "",
 "username": "",
 "password": "",
+"token": "",
 "content": ""
 }
 

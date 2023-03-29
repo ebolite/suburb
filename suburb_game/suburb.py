@@ -179,17 +179,23 @@ def register():
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", login_scene)
 
 def login():
-    reply = client.request("login")
-    if reply != "True":
-        client.dic["username"] = ""
-        client.dic["password"] = ""
-    else:
-        print("logged in!")
+    login_reply = client.request("login")
+    if login_reply == "False": return login_reply
+    reply = client.request("get_token")
+    client.dic["password"] = ""
+    if reply != "False":
+        client.dic["token"] = reply
+        print(reply)
         title()
+        return None
     return reply
 
 @scene
 def login_scene():
+    if client.dic["token"] != "":
+        reply = client.request("verify_token")
+        if reply == "True":
+            title()
     log = render.Text(0.5, 0.20, "Please log in or create an account.")
     name = render.Text(0.5, 0.30, f"Username (Case-sensitive)")
     name.color = current_theme().dark

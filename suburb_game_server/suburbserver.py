@@ -23,7 +23,6 @@ conns = []
 class User():
     def __new__(cls, name) -> Optional["User"]:
         if name not in util.memory_users:
-            print("user does not exist")
             return None
         else: return super().__new__(cls)
 
@@ -41,7 +40,6 @@ class User():
     def setup_defaults(self, name, password):
         self._id = name
         self.sessions: list[str] = []
-        self.tokens: dict[str, Optional[str]] = {}
         self.set_password(password)
 
     def __setattr__(self, attr, value):
@@ -61,8 +59,6 @@ class User():
     
     def verify_password(self, password: str):
         if self.hashed_password == None: 
-            print("no password")
-            print(util.memory_users)
             return False
         digest = hashlib.pbkdf2_hmac("sha256", password.encode(), bytes.fromhex(self.salt), 10000)
         new_hash = digest.hex()
@@ -73,26 +69,27 @@ class User():
     def make_token(self, password: str, expires=True):
         if not self.verify_password(password): return None
         else:
-            token = uuid.uuid4().hex
+            token = str(uuid.uuid4())
             if expires:
                 expiration_time = datetime.datetime.now() + datetime.timedelta(hours=1)
-                self.tokens[token] = expiration_time.strftime("%m/%d/%Y, %H:%M:%S")
+                self.token = token, expiration_time.strftime("%m/%d/%Y, %H:%M:%S")
             else:
                 expiration_time = None
-                self.tokens[token] = expiration_time
+                self.token = token, expiration_time
+            return token
             
     def verify_token(self, token: str, refresh_token=True):
-        if token not in self.tokens: return False
-        expiry = self.tokens[token]
+        current_token, expiry = self.token
+        if token != current_token: 
+            return False
         if expiry is None: return True
         else:
-            if datetime.datetime.strptime(expiry, "%m/%d/%Y, %H:%M:%S") > datetime.datetime.now(): 
-                self.tokens.pop(token)
+            if datetime.datetime.strptime(expiry, "%m/%d/%Y, %H:%M:%S") < datetime.datetime.now(): 
                 return False
             else: 
                 if refresh_token:
                     new_expiration_time = datetime.datetime.now() + datetime.timedelta(hours=1)
-                    self.tokens[token] = new_expiration_time.strftime("%m/%d/%Y, %H:%M:%S")
+                    self.token = token, new_expiration_time.strftime("%m/%d/%Y, %H:%M:%S")
                 return True
 
     @property
@@ -140,8 +137,17 @@ def handle_request(dict):
         return f"Successfully created your account. You may now log in."
     user = User(username)
     if User(username) is None: return f"Account does not exist."
-    if not user.verify_password(password): return f"Incorrect account password."
-    if intent == "login": return True
+    if intent == "login":
+        return user.verify_password(password)
+    token = dict["token"]
+    if intent == "verify_token":
+        verified = user.verify_token(token)
+        return verified
+    if intent == "get_token":
+        token = user.make_token(password)
+        if token is None: return False
+        else: return token
+    if not user.verify_token(token): return "Invalid authorization token."
     if intent == "all_session_characters":
         out_dict = {}
         for session_name in user.sessions:
