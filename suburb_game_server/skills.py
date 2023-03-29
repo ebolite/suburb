@@ -1113,7 +1113,7 @@ for aspect_name, aspect in aspects.items():
     stitchaspect.add_vial_cost("aspect", "user.power//2")
     stitchaspect.action_cost = 0
     stitchaspect.cooldown = 1
-    stitchaspect.add_vial_change("hp", f"target.{aspect.name}.ratio*user.power*2*{get_balance_mult('sylph', aspect)}")
+    stitchaspect.add_vial_change("hp", f"target.{aspect.name}.ratio*user.power*{get_balance_mult('sylph', aspect)}")
     stitchaspect.add_aspect_change(aspect.name, f"user.power//2*{get_balance_mult('sylph', aspect)}")
 
     # 100: passive
