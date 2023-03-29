@@ -210,8 +210,8 @@ def login_scene():
     if client.dic["token"] != "":
         reply = client.request("verify_token")
         if reply == "True":
-            new_scene()
             title()
+            return
     log = render.Text(0.5, 0.20, "Please log in or create an account.")
     name = render.Text(0.5, 0.30, f"Username (Case-sensitive)")
     name.color = current_theme().dark
@@ -227,7 +227,9 @@ def login_scene():
         if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
         client.dic["username"] = namebox.text
         client.dic["password"] = pwbox.text
-        log.text = login()
+        reply = login()
+        if reply is not None:
+            log.text = reply
     loginbutton = render.Button(.5, .62, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", verify)
     registerbutton = render.Button(.5, .75, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
 
