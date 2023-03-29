@@ -477,24 +477,24 @@ class Sylladex():
         return self.modus.draw_ui_bar(self, last_scene)
     
     @staticmethod
-    def new_sylladex(player_name, modus_name) -> "Sylladex":
+    def new_sylladex(session_name, modus_name) -> "Sylladex":
         connection_host_port = f"{client.HOSTNAME}"
         if connection_host_port not in util.sylladexes: util.sylladexes[connection_host_port] = {}
-        if player_name in util.sylladexes[connection_host_port]:
-            return Sylladex(player_name, connection_host_port)
+        if session_name in util.sylladexes[connection_host_port]:
+            return Sylladex(session_name, connection_host_port)
         else:
-            new_sylladex = Sylladex(player_name, connection_host_port)
+            new_sylladex = Sylladex(session_name, connection_host_port)
             new_sylladex.switch_modus(modus_name)
             return new_sylladex
 
     @staticmethod
-    def get_sylladex(player_name) -> "Sylladex":
+    def get_sylladex(session_name) -> "Sylladex":
         connection_host_port = f"{client.HOSTNAME}"
-        return Sylladex(player_name, connection_host_port)
+        return Sylladex(session_name, connection_host_port)
 
     @staticmethod
     def current_sylladex() -> "Sylladex":
-        return Sylladex.get_sylladex(client.dic["character"])
+        return Sylladex.get_sylladex(client.dic["session_name"])
 
 class Stack(Modus):
     def is_accessible(self, instance: Instance, sylladex: Sylladex):

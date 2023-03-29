@@ -1,8 +1,4 @@
 import pygame
-import sys
-import pathlib
-import hashlib
-import socket
 import ssl
 import traceback
 import math
@@ -78,7 +74,7 @@ def play(page=0):
         else:
             def button_func():
                 client.dic["session_name"] = session_name
-                pass # todo
+                newgame()
         return button_func
     for i, session_name in enumerate(sessions_to_display):
         x = 0.2 * (i+1)
@@ -252,11 +248,11 @@ def newsession():
         if len(namebox.text) > 32: log.text = f"Session name must be less than 32 characters. Yours: {len(namebox.text)}"; return
         if len(pwbox.text) > 32: log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"; return
         client.dic["session_name"] = namebox.text
-        client.dic["session_pass_hash"] = pwbox.text
+        client.dic["session_password"] = pwbox.text
         log.text = client.request("create_session")
         if "success" not in log.text:
             client.dic["session_name"] = ""
-            client.dic["session_pass_hash"] = ""
+        client.dic["session_password"] = ""
         print(f"log text {log.text}")
     confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
@@ -1615,11 +1611,8 @@ def title():
     conntextcontent = f"Logged in: `{client.dic['username']}`"
     conntext = render.Text(0, 30, conntextcontent)
     conntext.absolute = True
-    character_creator_button = render.TextButton(0.13, .5, 256, 32, "debug character creator", make_symbol)
     debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
     debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
-    def crash_button_func():
-        client.request(intent="crash_me")
     # crash_button = render.TextButton(0.8, 0.5, 128, 32, "crash me", crash_button_func)
 
 def map_from_file(file):
