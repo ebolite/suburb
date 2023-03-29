@@ -860,18 +860,16 @@ def choosegrists():
     backbutton = render.Button(0.08, 0.05, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", choosemodus)
 
 def newgame():
-    client.requestplus("setup_character",  character_info)
-    new_sylladex = Sylladex.new_sylladex(client.dic["character"], character_info["modus"])
+    client.requestplus("create_character",  character_info)
+    new_sylladex = Sylladex.new_sylladex(client.dic["session_name"], character_info["modus"])
     new_sylladex.validate()
     map_scene()
 
 def debug_speedrun():
     client.dic["session_name"] = "fuck"
-    client.dic["session_pass_hash"] = "ass"
+    client.dic["session_password"] = "ass"
     client.request("create_session")
-    client.dic["character"] = "alienatingParticles"
-    client.dic["character_pass_hash"] = "ass"
-    client.request("create_character")
+    client.request("join_session")
     character_info["name"] = "Inness"
     character_info["noun"] = "rabbit girl"
     character_info["pronouns"] = ["she", "her", "her", "hers"]
@@ -904,11 +902,9 @@ def debug_speedrun():
 
 def debug_speedrun_2():
     client.dic["session_name"] = "fuck"
-    client.dic["session_pass_hash"] = "ass"
+    client.dic["session_password"] = "ass"
     client.request("create_session")
-    client.dic["character"] = "basementDemon"
-    client.dic["character_pass_hash"] = "ass"
-    client.request("create_character")
+    client.request("join_session")
     character_info["name"] = "Azaral"
     character_info["noun"] = "basement demon"
     character_info["pronouns"] = ["he", "him", "his", "his"]
