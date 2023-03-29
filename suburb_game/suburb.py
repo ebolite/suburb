@@ -94,25 +94,24 @@ def register():
     confirmbox = render.InputTextBox(.5, .55)
     confirmbox.secure = True
     def verify():
-        print("verify")
         if pwbox.text != confirmbox.text: log.text = "Passwords do not match."; return
         if len(namebox.text) == 0: log.text = "Username must not be empty."; return
         if len(pwbox.text) == 0: log.text = "Password field must not be empty."; return
         if len(namebox.text) >= 32: log.text = f"Username must be less than 32 characters. Yours: {len(namebox.text)}"; return
         if len(pwbox.text) >= 32: log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"; return
-        print("final step")
-        client.dic["character"] = namebox.text
-        client.dic["character_pass_hash"] = client.hash(pwbox.text)
-        log.text = client.request("create_character")
+        client.dic["username"] = namebox.text
+        client.dic["password"] = pwbox.text
+        log.text = client.request("create_account")
         if "Success" not in log.text:
-            client.dic["character"] = ""
-            client.dic["character_pass_hash"] = ""
+            client.dic["username"] = ""
+            client.dic["password"] = ""
         else:
-            client.save_client_data()
-            namecharacter()
+            # todo: remember me and token auth
+            # client.save_client_data()
+            title()
         print(f"log text {log.text}")
-    confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
-    back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
+    loginbutton = render.Button(.5, .67, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", verify)
+    back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", login_scene)
 
 def login():
     reply = client.request("login")
@@ -121,17 +120,12 @@ def login():
         client.dic["password"] = ""
     else:
         print("logged in!")
-        player_info = client.requestdic("player_info")
-        if player_info["setup"]:
-            Sylladex.current_sylladex().validate()
-            map_scene()
-        else:
-            namecharacter() # todo: change to play game function
+        title()
     return reply
 
 @scene
 def login_scene():
-    log = render.Text(0.5, 0.20, "")
+    log = render.Text(0.5, 0.20, "Please log in or create an account.")
     name = render.Text(0.5, 0.30, f"Username (Case-sensitive)")
     name.color = current_theme().dark
     name.outline_color = current_theme().black
@@ -144,12 +138,22 @@ def login_scene():
     def verify():
         if len(namebox.text) == 0: log.text = "Username must not be empty."; return
         if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
-        log.text = "Connecting..."
         client.dic["username"] = namebox.text
         client.dic["password"] = pwbox.text
         log.text = login()
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
+    registerbutton = render.Button(.5, .88, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
+
+@scene
+def character_selection():
+    ...
+    # player_info = client.requestdic("player_info")
+    # if player_info["setup"]:
+    #     Sylladex.current_sylladex().validate()
+    #     map_scene()
+    # else:
+    #     namecharacter() # todo: change to play game function
 
 @scene
 def newsessionprompt():
@@ -186,7 +190,7 @@ def newsession():
         if len(namebox.text) > 32: log.text = f"Session name must be less than 32 characters. Yours: {len(namebox.text)}"; return
         if len(pwbox.text) > 32: log.text = f"Your password must be less than 32 characters. Yours: {len(pwbox.text)}"; return
         client.dic["session_name"] = namebox.text
-        client.dic["session_pass_hash"] = client.hash(pwbox.text)
+        client.dic["session_pass_hash"] = pwbox.text
         log.text = client.request("create_session")
         if "success" not in log.text:
             client.dic["session_name"] = ""
@@ -215,7 +219,7 @@ def connect():
         if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
         log.text = "Connecting..."
         client.dic["session_name"] = namebox.text
-        client.dic["session_pass_hash"] = client.hash(pwbox.text)
+        client.dic["session_pass_hash"] = pwbox.text
         log.text = client.request("connect")
         if "Success" not in log.text:
             client.dic["session_name"] = ""
@@ -800,10 +804,10 @@ def newgame():
 
 def debug_speedrun():
     client.dic["session_name"] = "fuck"
-    client.dic["session_pass_hash"] = client.hash("ass")
+    client.dic["session_pass_hash"] = "ass"
     client.request("create_session")
     client.dic["character"] = "alienatingParticles"
-    client.dic["character_pass_hash"] = client.hash("ass")
+    client.dic["character_pass_hash"] = "ass"
     client.request("create_character")
     character_info["name"] = "Inness"
     character_info["noun"] = "rabbit girl"
@@ -837,10 +841,10 @@ def debug_speedrun():
 
 def debug_speedrun_2():
     client.dic["session_name"] = "fuck"
-    client.dic["session_pass_hash"] = client.hash("ass")
+    client.dic["session_pass_hash"] = "ass"
     client.request("create_session")
     client.dic["character"] = "basementDemon"
-    client.dic["character_pass_hash"] = client.hash("ass")
+    client.dic["character_pass_hash"] = "ass"
     client.request("create_character")
     character_info["name"] = "Azaral"
     character_info["noun"] = "basement demon"
@@ -1528,7 +1532,8 @@ def spoils(grist_dict: dict, echeladder_rungs: int):
     back_button_label.color = current_theme().dark
 
 def continue_button_func():
-    client.load_client_data()
+    # todo: token auth
+    # client.load_client_data()
     login()
 
 def continue_button_draw_condition():
@@ -1583,7 +1588,7 @@ def connection_screen():
     @scene
     def try_again():
         if client.connect():
-            title()
+            login_scene()
         else:
             print("couldn't connect")
             connection_screen()
@@ -1628,7 +1633,7 @@ if __name__ == "__main__":
     connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
-        title() # normal game start
+        login_scene() # normal game start
     else:
         connection_screen()
     main()

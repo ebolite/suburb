@@ -28,18 +28,19 @@ dic = {
 "content": ""
 }
 
-def save_client_data():
-    util.last_client_data["session_name"] = dic["session_name"]
-    util.last_client_data["session_pass_hash"] = dic["session_pass_hash"]
-    util.last_client_data["character"] = dic["character"]
-    util.last_client_data["character_pass_hash"] = dic["character_pass_hash"]
-    util.writejson(util.last_client_data, "last_client_data")
+# todo: character token auth
+# def save_client_data():
+#     util.last_client_data["session_name"] = dic["session_name"]
+#     util.last_client_data["session_pass_hash"] = dic["session_pass_hash"]
+#     util.last_client_data["character"] = dic["character"]
+#     util.last_client_data["character_pass_hash"] = dic["character_pass_hash"]
+#     util.writejson(util.last_client_data, "last_client_data")
 
-def load_client_data():
-    dic["session_name"] = util.last_client_data["session_name"]
-    dic["session_pass_hash"] = util.last_client_data["session_pass_hash"]
-    dic["character"] = util.last_client_data["character"]
-    dic["character_pass_hash"] = util.last_client_data["character_pass_hash"]
+# def load_client_data():
+#     dic["session_name"] = util.last_client_data["session_name"]
+#     dic["session_pass_hash"] = util.last_client_data["session_pass_hash"]
+#     dic["character"] = util.last_client_data["character"]
+#     dic["character_pass_hash"] = util.last_client_data["character_pass_hash"]
 
 def receive_data() -> str:
     data_fragments = []
@@ -67,10 +68,6 @@ def connect():
         except socket.error as e:
             traceback.print_exception(e)
         return False
-
-def hash(str): # returns encoded and hashed data
-    encoded = str.encode()
-    return hashlib.sha256(encoded).hexdigest()
 
 def request(intent) -> str:
     dic["intent"] = intent
