@@ -4,8 +4,10 @@ from _thread import start_new_thread
 import json
 import hashlib
 import time
+import datetime
 import random
 import ssl
+import uuid
 from typing import Optional
 
 import sessions
@@ -28,6 +30,7 @@ class User():
     def __init__(self, name):
         self.__dict__["_id"] = name
         self.hashed_password: Optional[str] = None
+        self.tokens: dict[str, Optional[str]]
 
     @classmethod
     def create_user(cls, name) -> Optional["User"]:
@@ -57,6 +60,31 @@ class User():
         new_hash = digest.hex()
         if new_hash == self.hashed_password: return True
         else: return False
+
+    def make_token(self, password: str, expires=True):
+        if not self.verify_password(password): return None
+        else:
+            token = uuid.uuid4().hex
+            if expires:
+                expiration_time = datetime.datetime.now() + datetime.timedelta(hours=1)
+                self.tokens[token] = expiration_time.strftime("%m/%d/%Y, %H:%M:%S")
+            else:
+                expiration_time = None
+                self.tokens[token] = expiration_time
+            
+    def verify_token(self, token: str, refresh_token=True):
+        if token not in self.tokens: return False
+        expiry = self.tokens[token]
+        if expiry is None: return True
+        else:
+            if datetime.datetime.strptime(expiry, "%m/%d/%Y, %H:%M:%S") > datetime.datetime.now(): 
+                self.tokens.pop(token)
+                return False
+            else: 
+                if refresh_token:
+                    new_expiration_time = datetime.datetime.now() + datetime.timedelta(hours=1)
+                    self.tokens[token] = new_expiration_time.strftime("%m/%d/%Y, %H:%M:%S")
+                return True
 
     @property
     def name(self) -> str:
