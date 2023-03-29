@@ -60,6 +60,10 @@ def placeholder():
 @scene
 def play(page=0):
     theme = current_theme()
+    label = render.Text(0.5, 0.02, "CHOOSE YOUR CHARACTER!")
+    label.color = pygame.Color(255, 0, 0)
+    label.outline_color = pygame.Color(255, 255, 0)
+    label.fontsize = 16
     current_sessions: dict[str, Optional[dict]] = client.requestdic(intent="all_session_characters")
     session_names: list[Optional[str]] = list(current_sessions.keys())
     if len(current_sessions) > 0:
@@ -82,14 +86,18 @@ def play(page=0):
     for i, session_name in enumerate(sessions_to_display):
         x = 0.2 * (i+1)
         y = 0.4
-        session_box = render.SolidColor(x, y, 250, 400, theme.light)
-        session_box.absolute = False
-        session_box.outline_color = theme.dark
-        session_box.border_radius = 4
         if session_name is not None and current_sessions[session_name] is not None:
             player_dict = current_sessions[session_name]
             assert player_dict is not None
             box_theme = themes.themes[player_dict["aspect"]]
+        else:
+            player_dict = None
+            box_theme = theme
+        session_box = render.SolidColor(x, y, 250, 400, box_theme.light)
+        session_box.absolute = False
+        session_box.outline_color = box_theme.dark
+        session_box.border_radius = 4
+        if player_dict is not None and session_name is not None:
             symbol = render.Symbol(0.5, 0.5, player_dict["symbol_dict"])
             symbol.bind_to(session_box)
             character_name_display_box = render.SolidColor(0.5, 0.07, 230, 30, box_theme.white)
