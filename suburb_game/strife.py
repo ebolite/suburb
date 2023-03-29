@@ -207,6 +207,8 @@ class Strife():
 
     def __init__(self, strife_dict: Optional[dict]=None):
         print("init")
+        player_info = client.requestdic("player_info")
+        self.player_name = player_info["_id"]
         if strife_dict is None: strife_dict = client.requestdic(intent="strife_info")
         self.strife_dict = strife_dict
         self.griefer_sprites: dict[str, Union[render.Enemy, render.PlayerGriefer]] = {}
@@ -617,7 +619,7 @@ class Strife():
 
     @property
     def player_griefer(self) -> Griefer:
-        return self.get_griefer(client.dic["character"])
+        return self.get_griefer(self.player_name)
     
     @property
     def griefers(self) -> dict:
