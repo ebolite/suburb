@@ -614,7 +614,7 @@ doom.is_vial = True
 doom.vials = ["hp"]
 doom.adjustment_divisor = 1/3
 doom.ratio_mult = 2
-doom.balance_mult = 1.2
+doom.balance_mult = 1.3
 
 light = Aspect("light")
 light.stat_name = "luck"
