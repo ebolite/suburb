@@ -1108,12 +1108,12 @@ for aspect_name, aspect in aspects.items():
     # sylph
 
     stitchaspect = ClassSkill(f"stitch {aspect.name}", aspect, "sylph", 25)
-    stitchaspect.description = f"Heals the target and increases their {aspect.name.upper()}."
+    stitchaspect.description = f"Heals the target based on their {aspect.name.upper()} and increases their {aspect.name.upper()}."
     stitchaspect.parryable = False
     stitchaspect.add_vial_cost("aspect", "user.power//2")
     stitchaspect.action_cost = 0
     stitchaspect.cooldown = 1
-    stitchaspect.add_vial_change("hp", f"user.power//2*{get_balance_mult('sylph', aspect)}")
+    stitchaspect.add_vial_change("hp", f"target.{aspect.name}.ratio*user.power*2*{get_balance_mult('sylph', aspect)}")
     stitchaspect.add_aspect_change(aspect.name, f"user.power//2*{get_balance_mult('sylph', aspect)}")
 
     # 100: passive
