@@ -150,6 +150,7 @@ def handle_request(dict):
         return json.dumps(out_dict)
     # session verification
     session_name = dict["session_name"]
+    if session_name in user.sessions and intent == "join_session": return "You are already in that session!"
     if session_name not in user.sessions:
         session_password = dict["session_password"]
         if intent == "create_session":
