@@ -17,7 +17,6 @@ import npcs
 import strife
 import skills
 import stateseffects
-import suburbserver
 from strife import Strife
 
 
@@ -111,10 +110,10 @@ class Session():
         if new_hash == self.hashed_password: return True
         else: return False
 
-    def get_current_player(self, user: "suburbserver.User") -> Optional["Player"]:
-        player_type = self.user_current_players[user.name]
+    def get_current_player(self, user_name: str) -> Optional["Player"]:
+        player_type = self.user_current_players[user_name]
         if player_type is None: return None
-        player_name = self.user_players[user.name][player_type]
+        player_name = self.user_players[user_name][player_type]
         return Player(player_name)
 
     @property
@@ -845,6 +844,7 @@ class Player():
         out["entered"] = self.entered
         out["atheneum"] = {instance.name:instance.get_dict() for instance in [alchemy.Instance(instance_name) for instance_name in self.atheneum]}
         out["seeds"] = self.seeds
+        out["title"] = self.title
         if self.worn_instance_name is not None:
             out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()
         else:

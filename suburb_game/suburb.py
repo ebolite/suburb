@@ -62,19 +62,77 @@ def placeholder():
     pass
 
 @scene
-def play():
-    if client.dic["session_name"] != "":
-        text = render.Text(0.5, 0.3, f"Login to an existing character or register a new character?")
-        loginbutton = render.Button(.5, .4, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", login_scene)
-        registerbutton = render.Button(.5, .52, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
-        back = render.Button(.5, .64, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
-        def disconnect_func():
-            client.dic["session_name"] = ""
-            client.dic["session_pass_hash"] = ""
-            connect()
-        disconnect_button = render.TextButton(0.5, .76, 128, 32, "Disconnect", disconnect_func)
-    else:
-        connect()
+def play(page=0):
+    theme = current_theme()
+    current_sessions = client.requestdic(intent="all_session_characters")
+    if len(current_sessions) > 0:
+        sessions_to_display = list(current_sessions.keys())[page*4:page*4 + 4]
+    else: sessions_to_display = []
+    while len(sessions_to_display) < 4:
+        sessions_to_display.append(None)
+    def get_button_func(session_name):
+        if session_name is None:
+            def button_func():
+                connect()
+        else:
+            def button_func():
+                client.dic["session_name"] = session_name
+                pass # todo
+        return button_func
+    for i, session_name in enumerate(sessions_to_display):
+        x = 0.2 * (i+1)
+        y = 0.4
+        session_box = render.SolidColor(x, y, 250, 400, theme.light)
+        session_box.absolute = False
+        session_box.outline_color = theme.dark
+        session_box.border_radius = 4
+        if session_name is not None:
+            player_dict = current_sessions[session_name]
+            symbol = render.Symbol(0.5, 0.5, config.get_random_symbol())
+            symbol.bind_to(session_box)
+            character_name_display_box = render.SolidColor(0.5, 0.07, 230, 30, theme.white)
+            character_name_display_box.absolute = False
+            character_name_display_box.outline_color = theme.black
+            character_name_display_box.border_radius = 8
+            character_name_display_box.bind_to(session_box)
+            character_name_label = render.Text(0.5, 0.5, player_dict["nickname"])
+            character_name_label.color = theme.black
+            character_name_label.bind_to(character_name_display_box)
+            character_name_label.fontsize = 24
+            character_name_label.set_fontsize_by_width(220)
+            session_name_display = render.Text(0.5, 0.85, session_name)
+            session_name_display.fontsize = 20
+            session_name_display.set_fontsize_by_width(250)
+            session_name_display.color = theme.dark
+            session_name_display.bind_to(session_box)
+            character_title_label = render.Text(0.5, 0.9, player_dict["title"])
+            character_title_label.fontsize = 20
+            character_title_label.set_fontsize_by_width(250)
+            character_title_label.color = theme.dark
+            character_title_label.bind_to(session_box)
+            character_rung_label = render.Text(0.5, 0.95, f"Rung: {player_dict['echeladder_rung']}")
+            character_rung_label.fontsize = 20
+            character_rung_label.set_fontsize_by_width(250)
+            character_rung_label.color = theme.dark
+            character_rung_label.bind_to(session_box)
+        else:
+            character_name_display_box = render.SolidColor(0.5, 0.07, 230, 30, theme.white)
+            character_name_display_box.absolute = False
+            character_name_display_box.outline_color = theme.black
+            character_name_display_box.border_radius = 8
+            character_name_display_box.bind_to(session_box)
+            character_name_label = render.Text(0.5, 0.5, "ENTER NAME")
+            character_name_label.color = theme.black
+            character_name_label.bind_to(character_name_display_box)
+            character_name_label.fontsize = 24
+            no_session_text = render.Text(0.5, 0.5, "NO SESSION")
+            no_session_text.bind_to(session_box)
+            no_session_text.color = theme.dark
+        box_button = render.TextButton(0, 0, 250, 400, "", get_button_func(session_name))
+        box_button.draw_sprite = False
+        box_button.absolute = True
+        box_button.bind_to(session_box)
+    backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
 
 @scene
 def register():
@@ -214,16 +272,17 @@ def connect():
         if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
         log.text = "Connecting..."
         client.dic["session_name"] = namebox.text
-        client.dic["session_pass_hash"] = pwbox.text
-        log.text = client.request("connect")
+        client.dic["session_password"] = pwbox.text
+        log.text = client.request("join_session")
         if "Success" not in log.text:
             client.dic["session_name"] = ""
-            client.dic["session_pass_hash"] = ""
+            client.dic["session_password"] = ""
         else:
-            play()
+            client.dic["session_password"] = ""
+            namecharacter()
         print(f"log text {log.text}")
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
-    back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
+    back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
 
 character_info = {
 "name": None,

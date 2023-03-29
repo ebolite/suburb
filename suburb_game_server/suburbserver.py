@@ -144,7 +144,7 @@ def handle_request(dict):
         for session_name in user.sessions:
             session = sessions.Session(session_name)
             if session is None: continue
-            session_player = session.get_current_player(user)
+            session_player = session.get_current_player(user.name)
             if session_player is None: out_dict[session_name] = None
             else: out_dict[session_name] = session_player.get_dict()
         return json.dumps(out_dict)
@@ -204,7 +204,7 @@ def handle_request(dict):
         new_player.setup = True
         return f"Your land is the {land.title}! ({land.acronym})"
     # verify character
-    player = session.get_current_player(user)
+    player = session.get_current_player(user.name)
     if player is None: return False
     # process commands todo: clean this up
     match intent:
