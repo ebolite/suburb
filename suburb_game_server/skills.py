@@ -794,7 +794,7 @@ curse.action_cost = 0
 curse.cooldown = 1
 curse.parryable = False
 curse.add_vial_cost("aspect", "user.power")
-curse.add_aspect_change("doom", "user.power")
+curse.add_aspect_change("doom", "user.power//2")
 
 execute = AspectSkill("execute", doom, 50)
 execute.description = "Deals more damage the higher the target's DOOM."
