@@ -375,6 +375,7 @@ abstain.parryable = False
 abstain.beneficial = True
 abstain.target_self = True
 abstain.damage_formula = "0"
+abstain.cooldown = 0
 abstain.category = "abstinent"
 # costs negative power... hey it works
 abstain.add_vial_cost("vim", "-user.power")
