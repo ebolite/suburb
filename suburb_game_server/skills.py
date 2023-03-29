@@ -1032,6 +1032,7 @@ for aspect_name, aspect in aspects.items():
     aspectsweep.add_vial_cost("aspect", "user.power//2")
     aspectsweep.add_aspect_change(aspect.name, f"user.power*{get_balance_mult('maid', aspect)}")
     aspectsweep.parryable = False
+    aspectsweep.action_cost = 0
 
     # page
     scatteraspect = ClassSkill(f"scatter {aspect.name}", aspect, "page", 25)
