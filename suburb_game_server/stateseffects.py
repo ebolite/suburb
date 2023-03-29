@@ -430,7 +430,7 @@ class DemiseState(ClassPassive):
 
 class FaeState(ClassPassive):
     def new_turn(self, griefer: "strife.Griefer"):
-        base_healing = griefer.power * 3
+        base_healing = griefer.power * 2
         adjustment = griefer.power//4
         for allied_griefer in griefer.team_members:
             griefer.strife.log(self.aspect.adjust(allied_griefer, adjustment))
