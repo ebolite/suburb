@@ -266,8 +266,8 @@ class Skill():
             vial_formula = self.format_formula(vial_formula, user, target)
             if vial_name in target.vials:
                 change = target.change_vial(vial_name, int(eval(vial_formula)))
-                if change > 0: user.strife.log(f"{user.nickname}'s {vial_name.upper()} increased by {change}!")
-                elif change < 0: user.strife.log(f"{user.nickname}'s {vial_name.upper()} decreased by {-change}!")
+                if change > 0: user.strife.log(f"{target.nickname}'s {vial_name.upper()} increased by {change}!")
+                elif change < 0: user.strife.log(f"{target.nickname}'s {vial_name.upper()} decreased by {-change}!")
         
         # stat change step
         for stat_name in self.stat_bonus_formulas:
