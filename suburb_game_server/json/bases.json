@@ -4779,7 +4779,7 @@
         "kinds": [
             "tarpkind"
         ],
-        "wearable": false,
+        "wearable": true,
         "description": "A blanket for covering oneself with during sleep.",
         "cost": {
             "chalk": 0.9,
