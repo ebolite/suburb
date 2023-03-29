@@ -20,8 +20,6 @@ import npcs
 
 conns = []
 
-# todo: verify user sessions on startup
-
 class User():
     def __new__(cls, name) -> Optional["User"]:
         if name not in util.memory_users:
@@ -100,6 +98,12 @@ class User():
     @property
     def name(self) -> str:
         return self.__dict__["_id"]
+
+for user_name in util.memory_users:
+    user = User(user_name)
+    for session_name in user.sessions.copy():
+        if sessions.Session(session_name) is None:
+            user.sessions.remove(session_name)
 
 def threaded_client(connection):
     try:

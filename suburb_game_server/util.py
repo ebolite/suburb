@@ -119,6 +119,8 @@ def saveall():
     t = time.time()
     print("Saving...")
     def callback(session):
+        users = session.client["users"]["users"]
+        users_data = {item_dict["_id"]:item_dict for item_dict in users.find({})}
         sessions = session.client["suburb"]["sessions"]
         sessions_data = {item_dict["_id"]:item_dict for item_dict in sessions.find({})}
         players = session.client["suburb"]["players"]
@@ -129,6 +131,13 @@ def saveall():
         items_data = {item_dict["_id"]:item_dict for item_dict in items.find({})}
         instances = session.client["suburb"]["instances"]
         instances_data = {item_dict["_id"]:item_dict for item_dict in instances.find({})}
+
+        users_to_insert = []
+        for user_name, user_dict in memory_users.copy().items():
+            if user_name not in users_data: users_to_insert.append(user_dict)
+            elif user_dict != users_data[user_name]:
+                users.update_one({"_id": user_name}, {"$set": user_dict}, upsert=True, session=session)
+        if users_to_insert: users.insert_many(users_to_insert, session=session)
 
         sessions_to_insert = []
         for session_name, session_dict in memory_sessions.copy().items():
