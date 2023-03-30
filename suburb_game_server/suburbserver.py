@@ -201,7 +201,7 @@ def handle_request(dict):
         new_player.symbol_dict = content["symbol_dict"]
         new_player.starting_session_name = session.name
         new_player.add_modus(content["modus"])
-        land = sessions.Overmap(f"{new_player.name}{session.name}", session, new_player)
+        land = sessions.Overmap(f"{new_player.id}{session.name}", session, new_player)
         new_player.land_name = land.name
         new_player.land_session = session.name
         housemap = land.get_map(land.housemap_name)
@@ -217,10 +217,10 @@ def handle_request(dict):
         real_self.goto_room(room)
         dream_self = sessions.SubPlayer.create_subplayer(new_player, "dream")
         dream_self.goto_room(room)
+        new_player.current_subplayer_type = "real"
         # session
-        session.starting_players.append(new_player.name)
-        session.user_players[user.name] = new_player.name
-        session.current_subplayers[new_player.name] = "real"
+        session.starting_players.append(new_player.id)
+        session.user_players[user.name] = new_player.id
         new_player.setup = True
         return f"Your land is the {land.title}! ({land.acronym})"
     # verify character
@@ -430,7 +430,7 @@ def handle_request(dict):
             valid_targets.update({instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in player.sylladex})
             return json.dumps(valid_targets)
 
-def map_data(player: "sessions.Player"):
+def map_data(player: "sessions.SubPlayer"):
     map_tiles, map_specials, room_instances, room_npcs, room_players, strife = player.get_view()
     return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "players": room_players,
                        "strife": strife,
@@ -493,7 +493,7 @@ def computer_shit(player: sessions.SubPlayer, content: dict, session:sessions.Se
             if client_player.server_player_name is not None: return "Client already has server."
             if player.client_player_name is not None: return "You already have a client."
             player.client_player_name = client_player_username
-            client_player.server_player_name = player.player.name
+            client_player.server_player_name = player.player.id
             client_player.starting_session.connected.append(client_player_username)
             client_player.grist_cache["build"] += min(2 * (10 ** len(client_player.starting_session.connected)), 2000)
             return "Successfully connected."
@@ -542,7 +542,7 @@ def computer_shit(player: sessions.SubPlayer, content: dict, session:sessions.Se
             target_room.remove_instance(instance_name)
             player.client_player.atheneum.append(instance_name)
             instance = alchemy.Instance(instance_name)
-            player.client_player.session.add_to_excursus(instance.item.name)
+            player.client_player.starting_session.add_to_excursus(instance.item.name)
             return True
         case "recycle":
             if player.client_player is None: return "No client."
@@ -661,15 +661,6 @@ def console_commands(player: sessions.SubPlayer, content: str):
             if sessions.does_player_exist(target_name):
                 target = sessions.Player(target_name)
                 target.goto_room(player.room)
-        case "killstrife":
-            target_name = " ".join(args)
-            if sessions.does_player_exist(target_name):
-                target = sessions.Player(target_name)
-                current_strife = target.strife
-                if current_strife is not None:
-                    griefer = current_strife.get_griefer(target.name)
-                    current_strife.remove_griefer(griefer)
-                    current_strife.verify_strife()
 
 # return True on success, return False on failure
 def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:
@@ -736,7 +727,7 @@ def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name
         case "enter":
             if not player.entered:
                 if not player.consume_instance(instance.name): return False
-                player.land.session.entered_players.append(player.player.name)
+                player.land.session.entered_players.append(player.player.id)
                 player.land.theme = player.aspect
                 player.map.populate_with_underlings("imp", 4, random.randint(40, 60), 1, 7)
                 player.map.populate_with_underlings("ogre", 1, random.randint(1, 4), 1, 2)

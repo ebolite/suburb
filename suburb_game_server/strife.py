@@ -486,7 +486,7 @@ class Griefer():
             self.submit_skill(chosen_skill_name, targets)
 
     @classmethod
-    def from_player(cls, strife: "Strife", player: "sessions.Player") -> Optional["Griefer"]:
+    def from_player(cls, strife: "Strife", player: "sessions.SubPlayer") -> Optional["Griefer"]:
         if player.name in strife.dead_players: return None
         griefer = cls(player.name, strife)
         griefer.player_name = player.name
@@ -847,8 +847,8 @@ class Strife():
             self.strife_log = ["STRIFE BEGIN!"]
             self.dead_players = []
 
-    def add_griefer(self, identifier: Union["sessions.Player", "npcs.Npc"]):
-        if isinstance(identifier, sessions.Player):
+    def add_griefer(self, identifier: Union["sessions.SubPlayer", "npcs.Npc"]):
+        if isinstance(identifier, sessions.SubPlayer):
             Griefer.from_player(self, identifier)
         elif isinstance(identifier, npcs.Npc):
             Griefer.from_npc(self, identifier)

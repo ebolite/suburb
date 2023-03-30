@@ -293,7 +293,7 @@ class Npc():
     def name(self):
         return self.__dict__["_id"]
     
-    def follow(self, player: "sessions.Player"):
+    def follow(self, player: "sessions.SubPlayer"):
         self.unfollow()
         player.npc_followers.append(self.name)
         self.following = player.name
@@ -346,7 +346,7 @@ SpriteAI()
 
 class KernelSprite(Npc):
     @classmethod
-    def spawn_new(cls, player: "sessions.Player"):
+    def spawn_new(cls, player: "sessions.SubPlayer"):
         name = Npc.make_valid_name("kernel")
         sprite = cls(name)
         sprite.type = "kernelsprite"
@@ -366,11 +366,11 @@ class NpcInteraction():
         self.name = name
         npc_interactions[self.name] = self
 
-    def use(self, player: "sessions.Player", target: "Npc", additional_data: dict[str, str]):
+    def use(self, player: "sessions.SubPlayer", target: "Npc", additional_data: dict[str, str]):
         pass
 
 class NpcTalk(NpcInteraction):
-    def use(self, player: "sessions.Player", target: "Npc", additional_data: dict[str, str]):
+    def use(self, player: "sessions.SubPlayer", target: "Npc", additional_data: dict[str, str]):
         if target.type == "kernelsprite":
             symbols = list("•❤♫☎°♨✈✣☏■■■☀➑➑➑✂✉✉☼☆★☁☁♕♕♕♕♠♠✪░░▒▒▓▓██■¿.!≡")
             out = []
@@ -418,7 +418,7 @@ class NpcTalk(NpcInteraction):
 NpcTalk("talk")
 
 class NpcFollow(NpcInteraction):
-    def use(self, player: "sessions.Player", target: "Npc", additional_data: dict[str, str]):
+    def use(self, player: "sessions.SubPlayer", target: "Npc", additional_data: dict[str, str]):
         if target.following == player.name:
             target.unfollow()
             return f"{target.nickname.capitalize()} is no longer following you!"
@@ -428,7 +428,7 @@ class NpcFollow(NpcInteraction):
 NpcFollow("follow")
 
 class NpcPrototype(NpcInteraction):
-    def use(self, player: "sessions.Player", target: "KernelSprite", additional_data: dict[str, str]):
+    def use(self, player: "sessions.SubPlayer", target: "KernelSprite", additional_data: dict[str, str]):
         instance_name = additional_data["instance_name"]
         if instance_name in player.sylladex:
             player.sylladex.remove(instance_name)

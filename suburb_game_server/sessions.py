@@ -67,7 +67,6 @@ class Session():
         # username: {"normal_self": blah, "dream_self": blah1}
         self.user_players: dict[str, Optional[str]] = {}
         # player_name: subplayer_type
-        self.current_subplayers: dict[str, str] = {}
         self.current_players: list[str] = []
         self.starting_players: list[str] = []
         self.connected: list[str] = []
@@ -115,11 +114,7 @@ class Session():
         player_name = self.user_players[user_name]
         if player_name is None: return None
         player = Player(player_name)
-        if player_name not in self.current_subplayers: return None
-        player_type = self.current_subplayers[player_name]
-        if player_type is None: return None
-        player_name = self.user_players[user_name]
-        return SubPlayer(player, player_type)
+        return player.current_subplayer
 
     @property
     def current_grist_types(self) -> list:
@@ -147,12 +142,12 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         if name not in session.overmaps:
             print("overmap not in session")
             session.overmaps[name] = {}
-            self.maps = {}
-            self.specials = []
+            self.maps: dict = {}
+            self.specials: list = []
         if player != None:
-            self.player_name = player.name
-            self.gristcategory = player.gristcategory
-            self.theme = "default"
+            self.player_name: str = player.id
+            self.gristcategory: str = player.gristcategory
+            self.theme: str = "default"
             self.gate_maps: dict[str, str] = {}
             self.gen_overmap()
             self.gen_land_name()
@@ -199,10 +194,10 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
     def gen_land_name(self):
         assert self.player is not None
         print(f"{self.gristcategory} {self.player.aspect}")
-        print(f"Player {self.player} {self.player.name} {self.player_name}")
+        print(f"Player {self.player} {self.player.id} {self.player_name}")
         print(f"grist {self.gristcategory} aspect {self.player.aspect}")
         bases = config.landbases[self.gristcategory] + config.aspectbases[self.player.aspect]
-        random.seed(self.player.name)
+        random.seed(self.player.id)
         random.shuffle(bases)
         self.base1 = bases[0]
         if self.player.aspect != "space":
@@ -781,6 +776,7 @@ class Player():
         self._id = name
         # shared between all selves
         self.sub_players = {}
+        self.current_subplayer_type: str = ""
         self.owner_username = owner_username
         self.starting_session_name = ""
         self.moduses: list[str] = []
@@ -988,14 +984,14 @@ class Player():
 
     @property
     def entered(self):
-        return self.name in self.land.session.entered_players
+        return self.id in self.land.session.entered_players
 
     @property
     def title(self) -> str:
         return f"{self.gameclass.capitalize()} of {self.aspect.capitalize()}"
 
     @property
-    def name(self) -> str:
+    def id(self) -> str:
         return self.__dict__["_id"]
 
     @property
@@ -1022,6 +1018,10 @@ class Player():
         else: return Player(self.client_player_name)
 
     @property
+    def current_subplayer(self) -> "SubPlayer":
+        return SubPlayer(self, self.current_subplayer_type)
+
+    @property
     def starting_session(self) -> Session:
         return Session(self.starting_session_name)
 
@@ -1035,7 +1035,7 @@ class Player():
 
 class SubPlayer(Player):
     def __init__(self, player: Player, player_type: str):
-        self.__dict__["player_name"] = player.name
+        self.__dict__["player_name"] = player.id
         self.__dict__["player_type"] = player_type
         if player_type not in player.sub_players:
             raise KeyError
@@ -1462,11 +1462,11 @@ class SubPlayer(Player):
     
     @property
     def entered(self):
-        return self.player.name in self.land.session.entered_players
+        return self.player.id in self.land.session.entered_players
 
     @property
     def name(self):
-        return f"{self.player.name}%{self.player_type}"
+        return f"{self.player.id}%{self.player_type}"
 
     def __getattr__(self, attr):
         try:
