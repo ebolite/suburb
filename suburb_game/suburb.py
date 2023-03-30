@@ -887,7 +887,10 @@ def choosegrists():
 
 def newgame():
     client.requestplus("create_character",  character_info)
-    new_sylladex = Sylladex.new_sylladex(client.dic["session_name"], character_info["modus"])
+    player_info = client.requestdic("player_info")
+    player_name = player_info["name"]
+    Sylladex.update_character(player_name)
+    new_sylladex = Sylladex.new_sylladex(player_name, character_info["modus"])
     new_sylladex.validate()
     map_scene()
 
@@ -1085,6 +1088,8 @@ def map_scene():
         strife_scene(strife_data)
         return
     player_data = client.requestdic(intent="player_info")
+    player_name = player_data["name"]
+    Sylladex.update_character(player_name)
     Sylladex.current_sylladex().validate()
     ui_bar = Sylladex.current_sylladex().draw_ui_bar(map_scene)
     tilemap = render.TileMap(0.5, 0.5)
@@ -1714,8 +1719,8 @@ if __name__ == "__main__":
     connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
-        #login_scene() # normal game start
-        test_overmap()
+        login_scene() # normal game start
+        #test_overmap()
     else:
         connection_screen()
     main()
