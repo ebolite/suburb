@@ -1704,9 +1704,9 @@ def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=N
     print(f"terrain gen took {time.time()-t} seconds")
     return map_tiles
 
-def gen_moon_map(horizontal_roads=30, vertical_roads=30):
+def gen_city_map(map_size=96, horizontal_roads=30, vertical_roads=30):
     t = time.time()
-    map_tiles = deepcopy(default_map_tiles)
+    map_tiles = [["~" for i in range(map_size)] for i in range(map_size)]
     road_xs = []
     road_ys = []
     # make roads
@@ -1749,6 +1749,11 @@ def gen_moon_map(horizontal_roads=30, vertical_roads=30):
         for x, char in enumerate(line):
             if char == "-": map_tiles[y][x] = "0"
     map_tiles = smooth_height_pits(map_tiles)
+    print(f"terrain gen took {time.time()-t} seconds")
+    return map_tiles
+
+def gen_prospitderse():
+    map_tiles = gen_city_map()
     # make towers
     towerx, towery = random.randint(0, len(map_tiles[0])-1), random.randint(0, len(map_tiles)-1)
     tower_structure = [
@@ -1763,11 +1768,68 @@ def gen_moon_map(horizontal_roads=30, vertical_roads=30):
         "013931139310",
         "013331133310",
         "011111111110",
-        "000000000000"
+        "000000000000",
     ]
     map_tiles = place_structure(map_tiles, towerx, towery, tower_structure)
-    print_map(map_tiles, False)
-    print(f"terrain gen took {time.time()-t} seconds")
+    chain_structure = [
+        "00000000000",
+        "00000000000",
+        "00333333300",
+        "00344444300",
+        "00345554300",
+        "00345954300",
+        "00345554300",
+        "00344444300",
+        "00333333300",
+        "00000000000",
+        "00000000000",
+    ]
+    chainx, chainy = towerx, (len(map_tiles[0])-1)//2 + towery
+    map_tiles = place_structure(map_tiles, chainx, chainy, chain_structure)
+    return map_tiles
+
+def gen_moon():
+    TOWERS = 12
+    map_tiles = gen_city_map(map_size = 64)
+    chainx, chainy = random.randint(0, len(map_tiles[0])-1), random.randint(0, len(map_tiles)-1)
+    chain_structure = [
+        "00000000000",
+        "00000000000",
+        "00333333300",
+        "00344444300",
+        "00345554300",
+        "00345954300",
+        "00345554300",
+        "00344444300",
+        "00333333300",
+        "00000000000",
+        "00000000000",
+    ]
+    map_tiles = place_structure(map_tiles, chainx, chainy, chain_structure)
+    tower_structure = [
+        "000",
+        "080",
+        "000",
+    ]
+    tower_points: list[tuple[int, int]] = []
+    for i in range(TOWERS):
+        towerx, towery = chainx, chainy
+        while True:
+            towerx = random.randint(0, len(map_tiles[0])-1)
+            if abs(chainx-towerx) < 5: continue
+            for x, y in tower_points:
+                if abs(x-towerx) < 2: continue
+            break
+        while True:
+            towery = random.randint(0, len(map_tiles)-1)
+            if abs(chainy-towery) < 5: continue
+            for x, y in tower_points:
+                if abs(y-towery) < 2: continue
+            break
+        tower_points.append((towerx, towery))
+    for x, y in tower_points:
+        print("placing tower")
+        map_tiles = place_structure(map_tiles, x, y, tower_structure)
     return map_tiles
 
 def place_structure(map_tiles, target_x, target_y, structure: Union[list[list[str]], list[str]]):
@@ -1776,7 +1838,6 @@ def place_structure(map_tiles, target_x, target_y, structure: Union[list[list[st
         for structure_x, char in enumerate(line):
             x = target_x + structure_x
             x, y = loop_coords(map_tiles, x, y)
-            print(f"placing char at {x}, {y}")
             map_tiles[y][x] = char
     return map_tiles
 
@@ -1833,7 +1894,8 @@ def print_map(map_tiles: list[list[str]], replace_water=True):
     print(map_print)
 
 if __name__ == "__main__":
-    gen_moon_map()
+    map_tiles = gen_moon()
+    print_map(map_tiles, False)
     # type = input("land type: ")
     # category: dict = config.categoryproperties[type]
     # islands = category.get("islands")
