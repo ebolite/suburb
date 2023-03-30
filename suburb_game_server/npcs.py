@@ -147,6 +147,7 @@ giclops.stat_ratios["vigor"] = 2
 giclops.stat_ratios["spunk"] = 2
 giclops.cluster_size = 1
 giclops.difficulty = 5
+giclops.ai_type = "giclops"
 giclops.additional_skills = ["awreak", "abstain"]
 
 class GiclopsAI(GrieferAI):
