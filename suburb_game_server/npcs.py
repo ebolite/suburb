@@ -300,7 +300,7 @@ class Npc():
 
     def unfollow(self):
         if self.following is not None:
-            following_player = sessions.Player(self.following)
+            following_player = sessions.SubPlayer.from_name(self.following)
             following_player.npc_followers.remove(self.name)
             self.following = None
 

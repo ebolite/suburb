@@ -1209,7 +1209,8 @@ aslurp.description = f"Heals you and increases your ASPECT."
 aslurp.action_cost = 0
 aslurp.cooldown = 3
 aslurp.add_vial_cost("aspect", "-user.power//2")
-aslurp.add_vial_change("hp", "user.power//2")
+aslurp.add_vial_change("hp", "user.power")
+aslurp.add_vial_change("aspect", "user.power")
 aslurp.parryable = False
 aslurp.beneficial = True
 aslurp.target_self = True

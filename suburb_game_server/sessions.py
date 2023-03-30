@@ -938,14 +938,14 @@ class Player():
         for grist_type in leeching:
             value = best_seeds[grist_type]//len(leeching)
             spoils_dict[grist_type] = value
-        possible_players = []
+        possible_players: list[SubPlayer] = []
         for session in self.sessions:
-            possible_players += [player for player in session.players_list if player.grist_gutter and player.name is not self.name]
+            possible_players += [player for player in session.players_list if player.grist_gutter and player.player.id is not self.id]
         if not possible_players: return self.add_unclaimed_grist(spoils_dict)
         random.shuffle(possible_players)
-        for player_name in possible_players:
-            if player_name == self.name: continue
-            player = Player(player_name)
+        for sub_player in possible_players:
+            if sub_player.id == self.id: continue
+            player = sub_player.player
             grist_name, amount = player.grist_gutter.pop()
             if grist_name in spoils_dict: spoils_dict[grist_name] += amount
             else: spoils_dict[grist_name] = amount
@@ -1037,6 +1037,7 @@ class SubPlayer(Player):
     def __init__(self, player: Player, player_type: str):
         self.__dict__["player_name"] = player.id
         self.__dict__["player_type"] = player_type
+        self.__dict__["_id"] = player.id
         if player_type not in player.sub_players:
             raise KeyError
         
