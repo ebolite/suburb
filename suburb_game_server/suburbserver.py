@@ -647,7 +647,7 @@ def console_commands(player: sessions.SubPlayer, content: str):
         case "tp":
             target_name = " ".join(args)
             if sessions.does_player_exist(target_name):
-                target = sessions.Player(target_name)
+                target = sessions.Player(target_name).current_subplayer
                 player.goto_room(target.room)
         case "unchain":
             if player.server_player is not None:
@@ -659,7 +659,7 @@ def console_commands(player: sessions.SubPlayer, content: str):
         case "summon":
             target_name = " ".join(args)
             if sessions.does_player_exist(target_name):
-                target = sessions.Player(target_name)
+                target = sessions.Player(target_name).current_subplayer
                 target.goto_room(player.room)
 
 # return True on success, return False on failure
