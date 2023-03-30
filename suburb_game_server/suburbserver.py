@@ -852,6 +852,9 @@ def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name
             player.room.add_instance(inserted_instance.name)
             instance.inserted = ""
             return True
+        case "sleep":
+            player.sleep()
+            return True
         case _:
             return False
 

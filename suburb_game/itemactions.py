@@ -194,3 +194,6 @@ def use_alchemize(instance: "sylladex.Instance") -> bool:
     return False
 
 alchemize.use_func = use_alchemize
+
+sleep = ItemAction("sleep")
+sleep.use_prompt = "You lie down and fall asleep on the {iname}..."
