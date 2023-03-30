@@ -1477,7 +1477,7 @@ def get_cardinal_direction(input_dx, input_dy, rotation):
 class Overmap(UIElement):
     def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, 
                  map_types: Optional[dict[str, str]]=None, illegal_moves: list[str]=[], 
-                 theme=themes.default, offsetx=0, offsety=0):
+                 theme=themes.default, offsetx=0, offsety=0, block_path="sprites/overmap/block.png", water_path="sprites/overmap/water.png"):
         super().__init__()
         self.x = x
         self.y = y
@@ -1502,13 +1502,13 @@ class Overmap(UIElement):
         self.offsetx = offsetx
         self.offsety = offsety or -self.extra_height
         self.last_mouse_pos: Optional[tuple[int, int]] = None
-        self.block_image = pygame.image.load("sprites/overmap/block.png").convert()
+        self.block_image = pygame.image.load(block_path).convert()
         self.block_image = self.convert_to_theme(self.block_image)
         self.block_image.set_colorkey(pygame.Color(0, 0, 0))
         self.selected_block_image = pygame.image.load("sprites/overmap/current_block.png").convert()
         self.selected_block_image = self.convert_to_theme(self.selected_block_image)
         self.selected_block_image.set_colorkey(pygame.Color(0, 0, 0))
-        self.water_image = pygame.image.load("sprites/overmap/water.png").convert()
+        self.water_image = pygame.image.load(water_path).convert()
         self.water_image = self.convert_to_theme(self.water_image)
         self.water_image.set_colorkey(pygame.Color(0, 0, 0))
         self.select_image = pygame.image.load("sprites/overmap/selectable.png").convert()

@@ -1173,12 +1173,12 @@ class SubPlayer(Player):
             return True
 
     @property
-    def wielded_instance(self) -> Optional[alchemy.Instance]:
+    def wielded_instance(self) -> Optional["alchemy.Instance"]:
         if self.wielding is None: return None
         else: return alchemy.Instance(self.wielding)
 
     @property
-    def worn_instance(self) -> Optional[alchemy.Instance]:
+    def worn_instance(self) -> Optional["alchemy.Instance"]:
         if self.worn_instance_name is None: return None
         else: return alchemy.Instance(self.worn_instance_name)
 
@@ -1488,6 +1488,13 @@ class SubPlayer(Player):
         except KeyError:
             self.player.sub_players[self.__dict__["player_type"]][attr] = value
 
+def loop_coords(map_tiles, x, y) -> tuple[int, int]:
+    if x >= len(map_tiles[0]): x = x - len(map_tiles)
+    if x < 0: x = len(map_tiles[0]) + x
+    if y >= len(map_tiles): y = y - len(map_tiles)
+    if y < 0: y = len(map_tiles) + y
+    return x, y
+
 def gen_terrain(x, y, map, replacetile, terrain_rate, depth=0):
     if map[y][x] == "*":
         for coordinate in [(-1, 0), (1, 0), (0, 1), (0, -1)]: # up down left right
@@ -1542,12 +1549,7 @@ def make_water_height_0(map_tiles: list[list[str]]) -> list[list[str]]:
     out = [list(map(lambda tile: tile.replace("~", "0"), line)) for line in map_tiles]
     return out
 
-def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], steepness: float, smoothness: float) -> Optional[int]:
-    current_tile:str = map_tiles[target_y][target_x]
-    try:
-        return int(current_tile)
-    except ValueError: pass
-    if current_tile == "0": return 0
+def get_surrounding_heights(target_x: int, target_y:int, map_tiles: list[list[str]]):
     surrounding_values: list[int] = []
     for x, y in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
         new_x = target_x+x
@@ -1555,9 +1557,19 @@ def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], st
         if new_x >= len(map_tiles[0]): new_x -= (len(map_tiles[0]) - 1)
         if new_y >= len(map_tiles): new_y -= (len(map_tiles) - 1)
         new_tile = map_tiles[new_y][new_x]
-        if new_tile == "#": continue
-        tile_value = int(new_tile)
+        try:
+            tile_value = int(new_tile)
+        except ValueError: continue
         surrounding_values.append(tile_value)
+    return surrounding_values
+
+def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], steepness: float, smoothness: float) -> Optional[int]:
+    current_tile:str = map_tiles[target_y][target_x]
+    try:
+        return int(current_tile)
+    except ValueError: pass
+    if current_tile == "0": return 0
+    surrounding_values: list[int] = get_surrounding_heights(target_x, target_y, map_tiles)
     if len(surrounding_values) == 0: return None
     if 0 in surrounding_values: return 1 + round(random.uniform(0, steepness))
     # get mode of surrounding values
@@ -1603,8 +1615,7 @@ def smooth_height_pits(map_tiles: list[list[str]], aggressiveness: int=1) -> lis
             for x_diff, y_diff in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
                 new_x = x+x_diff
                 new_y = y+y_diff
-                if new_x >= len(map_tiles[0]): new_x -= (len(map_tiles[0]) - 1)
-                if new_y >= len(map_tiles): new_y -= (len(map_tiles) - 1)
+                new_x, new_y = loop_coords(map_tiles, new_x, new_y)
                 surrounding_tiles.append(map_tiles[new_y][new_x])
             surrounding_tiles = [int(tile) for tile in surrounding_tiles]
             different_tiles = []
@@ -1693,6 +1704,82 @@ def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=N
     print(f"terrain gen took {time.time()-t} seconds")
     return map_tiles
 
+def gen_moon_map(horizontal_roads=30, vertical_roads=30):
+    t = time.time()
+    map_tiles = deepcopy(default_map_tiles)
+    road_xs = []
+    road_ys = []
+    # make roads
+    for i in range(horizontal_roads):
+        valid_ys = [y for y in range(len(map_tiles)) if y not in road_ys]
+        starting_y = random.choice(valid_ys)
+        road_ys.append(starting_y)
+        y = starting_y
+        angle = 0
+        for x in range(len(map_tiles[0])):
+            map_tiles[y][x] = "-"
+            y += angle
+            x, y = loop_coords(map_tiles, x, y)
+            map_tiles[y][x] = "-"
+            angle = random.choice([-1, 0, 0, 0, 0, 1])
+    for i in range(vertical_roads):
+        valid_xs = [x for x in range(len(map_tiles[0])) if x not in road_xs]
+        starting_x = random.choice(valid_xs)
+        road_xs.append(starting_x)
+        x = starting_x
+        angle = 0
+        for y in range(len(map_tiles[0])):
+            map_tiles[y][x] = "-"
+            x += angle
+            x, y = loop_coords(map_tiles, x, y)
+            map_tiles[y][x] = "-"
+            angle = random.choice([-1, 0, 0, 0, 0, 1])
+    # blocky
+    map_tiles = modify_block(map_tiles, "-", "#")
+    map_tiles = modify_block(map_tiles, "#", "-")
+    # for each block of buildings their heights should be uniform
+    for y, line in enumerate(map_tiles):
+        for x, char in enumerate(line):
+            if char == "-": continue
+            surrounding_heights = get_surrounding_heights(x, y, map_tiles)
+            if not surrounding_heights: map_tiles[y][x] = str(random.randint(2, 4))
+            else:
+                map_tiles[y][x] = str(surrounding_heights[0])
+    for y, line in enumerate(map_tiles):
+        for x, char in enumerate(line):
+            if char == "-": map_tiles[y][x] = "0"
+    map_tiles = smooth_height_pits(map_tiles)
+    # make towers
+    towerx, towery = random.randint(0, len(map_tiles[0])-1), random.randint(0, len(map_tiles)-1)
+    tower_structure = [
+        "000000000000",
+        "011111111110",
+        "013331133310",
+        "013931139310",
+        "013331133310",
+        "011111111110",
+        "011111111110",
+        "013331133310",
+        "013931139310",
+        "013331133310",
+        "011111111110",
+        "000000000000"
+    ]
+    map_tiles = place_structure(map_tiles, towerx, towery, tower_structure)
+    print_map(map_tiles, False)
+    print(f"terrain gen took {time.time()-t} seconds")
+    return map_tiles
+
+def place_structure(map_tiles, target_x, target_y, structure: Union[list[list[str]], list[str]]):
+    for structure_y, line in enumerate(structure):
+        y = target_y + structure_y
+        for structure_x, char in enumerate(line):
+            x = target_x + structure_x
+            x, y = loop_coords(map_tiles, x, y)
+            print(f"placing char at {x}, {y}")
+            map_tiles[y][x] = char
+    return map_tiles
+
 def set_height(map_tiles: list[list[str]], target_x, target_y, height: int, hill_radius=1, min_height=1) -> list[list[str]]:
         for i in reversed(range(hill_radius)):
             for x in range(-i, i+1):
@@ -1739,36 +1826,39 @@ def get_random_land_coords(map_tiles) -> tuple[int, int]:
         x = random.randint(0, len(map_tiles[0])-1)
     return x, y
 
-def print_map(map_tiles: list[list[str]]):
+def print_map(map_tiles: list[list[str]], replace_water=True):
     str_list = ["".join(chars) for chars in map_tiles]
-    print("\n".join(str_list).replace("0", "~"))
+    map_print = "\n".join(str_list)
+    if replace_water: map_print = map_print.replace("0", "~")
+    print(map_print)
 
 if __name__ == "__main__":
-    type = input("land type: ")
-    category: dict = config.categoryproperties[type]
-    islands = category.get("islands")
-    landrate = category.get("landrate")
-    lakes = category.get("lakes")
-    lakerate = category.get("lakerate")
-    special = category.get("special", None)
-    extralands = category.get("extralands", None)
-    extrarate = category.get("extrarate", None)
-    extraspecial = category.get("extraspecial", None)
-    steepness = category.get("steepness", 1.0)
-    smoothness = category.get("smoothness", 0.5)
-    test_map = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
-    housemap_x, housemap_y = get_random_land_coords(test_map)
-    last_gate_x, last_gate_y = 0, 0
-    for gate_num in range(1, 8): # gates 1-7
-        if gate_num % 2 == 1: # even numbered gates should be close to odd numbered gates before them
-            gate_x, gate_y = get_tile_at_distance(test_map, housemap_x, housemap_y, gate_num*9)
-            last_gate_x, last_gate_y = gate_x, gate_y
-        else:
-            gate_x, gate_y = get_tile_at_distance(test_map, last_gate_x, last_gate_y, gate_num*4)
-        if gate_num == 1 or gate_num == 2:
-            test_map = set_height(test_map, gate_x, gate_y, 2, 4, 2)
-        test_map = set_height(test_map, gate_x, gate_y, gate_num, 3)
-    test_map = make_height_map(test_map, steepness, smoothness)
-    test_map = set_height(test_map, housemap_x, housemap_y, 1, 3)
-    test_map = set_height(test_map, housemap_x, housemap_y, 9)
-    print_map(test_map)
+    gen_moon_map()
+    # type = input("land type: ")
+    # category: dict = config.categoryproperties[type]
+    # islands = category.get("islands")
+    # landrate = category.get("landrate")
+    # lakes = category.get("lakes")
+    # lakerate = category.get("lakerate")
+    # special = category.get("special", None)
+    # extralands = category.get("extralands", None)
+    # extrarate = category.get("extrarate", None)
+    # extraspecial = category.get("extraspecial", None)
+    # steepness = category.get("steepness", 1.0)
+    # smoothness = category.get("smoothness", 0.5)
+    # test_map = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
+    # housemap_x, housemap_y = get_random_land_coords(test_map)
+    # last_gate_x, last_gate_y = 0, 0
+    # for gate_num in range(1, 8): # gates 1-7
+    #     if gate_num % 2 == 1: # even numbered gates should be close to odd numbered gates before them
+    #         gate_x, gate_y = get_tile_at_distance(test_map, housemap_x, housemap_y, gate_num*9)
+    #         last_gate_x, last_gate_y = gate_x, gate_y
+    #     else:
+    #         gate_x, gate_y = get_tile_at_distance(test_map, last_gate_x, last_gate_y, gate_num*4)
+    #     if gate_num == 1 or gate_num == 2:
+    #         test_map = set_height(test_map, gate_x, gate_y, 2, 4, 2)
+    #     test_map = set_height(test_map, gate_x, gate_y, gate_num, 3)
+    # test_map = make_height_map(test_map, steepness, smoothness)
+    # test_map = set_height(test_map, housemap_x, housemap_y, 1, 3)
+    # test_map = set_height(test_map, housemap_x, housemap_y, 9)
+    # print_map(test_map)
