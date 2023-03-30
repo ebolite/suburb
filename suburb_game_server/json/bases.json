@@ -7073,7 +7073,7 @@
         },
         "onhit_states": {},
         "wear_states": {
-            "inspire": 0.1
+            "inspire": 0.5
         },
         "consume_states": {},
         "secret_states": {
