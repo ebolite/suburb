@@ -48,6 +48,7 @@ class_skills: dict[str, dict[str, dict[str, int]]] = {}
 #     },
 # }
 abstratus_skills = {}
+illegal_ai_skills = []
 
 SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
 
@@ -380,6 +381,7 @@ abstain.category = "abstinent"
 # costs negative power... hey it works
 abstain.add_vial_cost("vim", "-user.power")
 player_skills.append("abstain")
+illegal_ai_skills.append("abstain")
 
 abuse = Skill("abuse")
 abuse.description = "The user ABUSES the enemy, causing them to become DEMORALIZED and lowering their HOPE each turn."
@@ -1157,6 +1159,7 @@ awaitskill.target_self = True
 awaitskill.damage_formula = "0"
 awaitskill.add_vial_cost("vim", "-user.power")
 awaitskill.add_vial_cost("aspect", "-user.power//2")
+illegal_ai_skills.append("await")
 
 anarchize = AbstratusSkill("anarchize")
 anarchize.description = "Does all-or-nothing damage like AGGRESS, but is free."

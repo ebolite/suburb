@@ -441,6 +441,7 @@ class Griefer():
 
     def get_random_submittable_skill(self) -> Optional[str]:
         def is_usable_skill(skill: "skills.Skill"):
+            if skill.name in skills.illegal_ai_skills: return False
             valid_targets = [self.strife.get_griefer(griefer_name) for griefer_name in skill.get_valid_targets(self)]
             if skill.beneficial:
                 valid_targets = [griefer for griefer in valid_targets if griefer.team == self.team]
