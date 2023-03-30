@@ -156,6 +156,7 @@ class GiclopsAI(GrieferAI):
         if random.random() < 0.5:
             return super().ai_choose_skill(user)
         else: return "abstain"
+GiclopsAI()
 
 acheron = Underling("acheron")
 acheron.base_power = 111
