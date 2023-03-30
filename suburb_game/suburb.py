@@ -1719,8 +1719,8 @@ if __name__ == "__main__":
     connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
-        #login_scene() # normal game start
-        test_overmap()
+        login_scene() # normal game start
+        # test_overmap()
     else:
         connection_screen()
     main()

@@ -201,7 +201,7 @@ def handle_request(dict):
         new_player.symbol_dict = content["symbol_dict"]
         new_player.starting_session_name = session.name
         new_player.add_modus(content["modus"])
-        land = sessions.Overmap(f"{new_player.id}{session.name}", session, new_player)
+        land = sessions.Land.create(f"{new_player.id}{session.name}", session, new_player)
         new_player.land_name = land.name
         new_player.land_session = session.name
         housemap = land.get_map(land.housemap_name)

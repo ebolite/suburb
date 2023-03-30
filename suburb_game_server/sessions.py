@@ -20,7 +20,7 @@ import stateseffects
 from strife import Strife
 
 
-map_tiles = {}
+file_map_tiles = {}
 
 def map_from_file(file, folder=None):
     if folder == None:
@@ -41,9 +41,9 @@ def all_maps_in_folder(folder): # returns a list of all of the maps in a folder
         maps.append(map_from_file(filename, folder))
     return maps
 
-map_tiles["house"] = all_maps_in_folder("house")
-map_tiles["land"] = all_maps_in_folder("land")
-map_tiles["gateframe"] = all_maps_in_folder("gateframe")
+file_map_tiles["house"] = all_maps_in_folder("house")
+file_map_tiles["land"] = all_maps_in_folder("land")
+file_map_tiles["gateframe"] = all_maps_in_folder("gateframe")
 
 class Session():
     def __new__(cls, name) -> Optional["Session"]:
@@ -136,80 +136,21 @@ class Session():
         return self.__dict__["_id"]
 
 class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player.session}"
-    def __init__(self, name, session: Session, player: Optional["Player"] = None):
+    def __init__(self, name: str, session: Session):
         self.__dict__["session_name"] = session.name
         self.__dict__["name"] = name
         if name not in session.overmaps:
             print("overmap not in session")
-            session.overmaps[name] = {}
-            self.maps: dict = {}
-            self.specials: list = []
-        if player != None:
-            self.player_name: str = player.id
-            self.gristcategory: str = player.gristcategory
-            self.theme: str = "default"
-            self.gate_maps: dict[str, str] = {}
-            self.gen_overmap()
-            self.gen_land_name()
-            print(f"{self.title.upper()}")
-            print_map(self.map_tiles)
-
-    def gen_overmap(self):
-        islands = config.categoryproperties[self.gristcategory]["islands"]
-        landrate = config.categoryproperties[self.gristcategory]["landrate"]
-        lakes = config.categoryproperties[self.gristcategory]["lakes"]
-        lakerate = config.categoryproperties[self.gristcategory]["lakerate"]
-        special = config.categoryproperties[self.gristcategory].get("special", None)
-        extralands = config.categoryproperties[self.gristcategory].get("extralands", None)
-        extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
-        extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
-        steepness = config.categoryproperties[self.gristcategory].get("steepness", 1.0)
-        smoothness = config.categoryproperties[self.gristcategory].get("smoothness", 0.5)
-        self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
-        housemap_x, housemap_y = get_random_land_coords(self.map_tiles)
-        housemap = self.find_map(housemap_x, housemap_y)
-        housemap.gen_map("house")
-        housemap.special_type = "house"
-        self.housemap_name = housemap.name
-        self.specials.append(housemap.name)
-        last_gate_x, last_gate_y = 0, 0
-        for gate_num in range(1, 8): # gates 1-7
-            if gate_num % 2 == 1: # even numbered gates should be close to odd numbered gates before them
-                gate_x, gate_y = get_tile_at_distance(self.map_tiles, housemap_x, housemap_y, gate_num*9, self.specials)
-                last_gate_x, last_gate_y = gate_x, gate_y
-            else:
-                gate_x, gate_y = get_tile_at_distance(self.map_tiles, last_gate_x, last_gate_y, gate_num*4, self.specials)
-            gate_map = self.find_map(gate_x, gate_y)
-            gate_map.gen_map(f"gate{gate_num}")
-            gate_map.special_type = "gate"
-            self.gate_maps[str(gate_num)] = gate_map.name
-            if gate_num == 1 or gate_num == 2:
-                # first and second gates are in a bowl
-                self.map_tiles = set_height(self.map_tiles, gate_x, gate_y, 2, 4, 2)
-            self.map_tiles = set_height(self.map_tiles, gate_x, gate_y, gate_num, 3)
-        self.map_tiles = make_height_map(self.map_tiles, steepness, smoothness)
-        self.map_tiles = set_height(self.map_tiles, housemap_x, housemap_y, 1, 3)
-        self.map_tiles = set_height(self.map_tiles, housemap_x, housemap_y, 9)
-
-    def gen_land_name(self):
-        assert self.player is not None
-        print(f"{self.gristcategory} {self.player.aspect}")
-        print(f"Player {self.player} {self.player.id} {self.player_name}")
-        print(f"grist {self.gristcategory} aspect {self.player.aspect}")
-        bases = config.landbases[self.gristcategory] + config.aspectbases[self.player.aspect]
-        random.seed(self.player.id)
-        random.shuffle(bases)
-        self.base1 = bases[0]
-        if self.player.aspect != "space":
-            self.base2 = bases[1]
-        else:
-            self.base2 = "frogs"
-        self.title = f"Land of {self.base1.capitalize()} and {self.base2.capitalize()}"
-        words = self.title.split(" ")
-        acronym = ""
-        for word in words:
-            acronym += f"{word[0].upper()}"
-        self.acronym = acronym
+            raise AssertionError
+        
+    def setup_defaults(self, name):
+        self.maps: dict = {}
+        self.theme: str = "default"
+        self.title: str = name
+        self.player_name: Optional[str] = None
+        self.map_tiles: list[list[str]] = []
+        self.overmap_type: Optional[str] = None
+        self.specials: list[str] = []
 
     def get_view(self, target_x: int, target_y: int, view_tiles: int) -> tuple[list, dict, dict]:
         if not self.is_tile_in_bounds(target_x, target_y): return ([], {}, {})
@@ -250,6 +191,106 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         if x >= len(self.map_tiles[0]): x -= len(self.map_tiles[0])
         return Map(f"{x}, {y}", self.session, self)
 
+    def __setattr__(self, attr, value):
+        self.__dict__[attr] = value
+        session = Session(self.__dict__["session_name"])
+        session.overmaps[self.__dict__["name"]][attr] = value
+
+    def __getattr__(self, attr):
+        session = Session(self.__dict__["session_name"])
+        self.__dict__[attr] = session.overmaps[self.__dict__["name"]][attr]
+        return self.__dict__[attr]
+
+    @property
+    def session(self) -> Session:
+        return Session(self.__dict__["session_name"])
+
+    @property
+    def player(self) -> Optional["Player"]:
+        try:
+            return Player(self.player_name)
+        except KeyError: return None
+
+    @property
+    def name(self) -> str:
+        return self.__dict__["name"]
+
+class Land(Overmap):
+    @classmethod
+    def create(cls, name: str, session: Session, player: "Player"):
+        session.overmaps[name] = {}
+        land = cls(name, session)
+        land.setup_defaults(name, player)
+        return land
+
+    def setup_defaults(self, name: str, player: "Player"):
+        super().setup_defaults(name)
+        self.player_name: str = player.id
+        self.gristcategory: str = player.gristcategory
+        self.overmap_type: str = "land"
+        self.theme: str = "default"
+        self.gate_maps: dict[str, str] = {}
+        self.gen_land_map()
+        self.gen_land_name()
+
+    def gen_land_map(self):
+        islands = config.categoryproperties[self.gristcategory]["islands"]
+        landrate = config.categoryproperties[self.gristcategory]["landrate"]
+        lakes = config.categoryproperties[self.gristcategory]["lakes"]
+        lakerate = config.categoryproperties[self.gristcategory]["lakerate"]
+        special = config.categoryproperties[self.gristcategory].get("special", None)
+        extralands = config.categoryproperties[self.gristcategory].get("extralands", None)
+        extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
+        extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
+        steepness = config.categoryproperties[self.gristcategory].get("steepness", 1.0)
+        smoothness = config.categoryproperties[self.gristcategory].get("smoothness", 0.5)
+        self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
+        housemap_x, housemap_y = get_random_land_coords(self.map_tiles)
+        housemap = self.find_map(housemap_x, housemap_y)
+        housemap.gen_map("house")
+        housemap.special_type = "house"
+        self.housemap_name = housemap.name
+        self.specials.append(housemap.name)
+        last_gate_x, last_gate_y = 0, 0
+        for gate_num in range(1, 8): # gates 1-7
+            if gate_num % 2 == 1: # even numbered gates should be close to odd numbered gates before them
+                gate_x, gate_y = get_tile_at_distance(self.map_tiles, housemap_x, housemap_y, gate_num*9, self.specials)
+                last_gate_x, last_gate_y = gate_x, gate_y
+            else:
+                gate_x, gate_y = get_tile_at_distance(self.map_tiles, last_gate_x, last_gate_y, gate_num*4, self.specials)
+            gate_map = self.find_map(gate_x, gate_y)
+            gate_map.gen_map(f"gate{gate_num}")
+            gate_map.special_type = "gate"
+            self.specials.append(gate_map.name)
+            self.gate_maps[str(gate_num)] = gate_map.name
+            if gate_num == 1 or gate_num == 2:
+                # first and second gates are in a bowl
+                self.map_tiles = set_height(self.map_tiles, gate_x, gate_y, 2, 4, 2)
+            self.map_tiles = set_height(self.map_tiles, gate_x, gate_y, gate_num, 3)
+        self.map_tiles = make_height_map(self.map_tiles, steepness, smoothness)
+        self.map_tiles = set_height(self.map_tiles, housemap_x, housemap_y, 1, 3)
+        self.map_tiles = set_height(self.map_tiles, housemap_x, housemap_y, 9)
+
+    def gen_land_name(self):
+        assert self.player is not None
+        print(f"{self.gristcategory} {self.player.aspect}")
+        print(f"Player {self.player} {self.player.id} {self.player_name}")
+        print(f"grist {self.gristcategory} aspect {self.player.aspect}")
+        bases = config.landbases[self.gristcategory] + config.aspectbases[self.player.aspect]
+        random.seed(self.player.id)
+        random.shuffle(bases)
+        self.base1 = bases[0]
+        if self.player.aspect != "space":
+            self.base2 = bases[1]
+        else:
+            self.base2 = "frogs"
+        self.title = f"Land of {self.base1.capitalize()} and {self.base2.capitalize()}"
+        words = self.title.split(" ")
+        acronym = ""
+        for word in words:
+            acronym += f"{word[0].upper()}"
+        self.acronym = acronym
+
     def clientdepth(self, depth):
         output_player = self.player
         if output_player is None: return None
@@ -287,30 +328,6 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         if at_house: return gates[gate_num][0]
         else: return gates[gate_num][1]
 
-    def __setattr__(self, attr, value):
-        self.__dict__[attr] = value
-        session = Session(self.__dict__["session_name"])
-        session.overmaps[self.__dict__["name"]][attr] = value
-
-    def __getattr__(self, attr):
-        session = Session(self.__dict__["session_name"])
-        self.__dict__[attr] = session.overmaps[self.__dict__["name"]][attr]
-        return self.__dict__[attr]
-
-    @property
-    def session(self) -> Session:
-        return Session(self.__dict__["session_name"])
-
-    @property
-    def player(self) -> Optional["Player"]:
-        try:
-            return Player(self.player_name)
-        except KeyError: return None
-
-    @property
-    def name(self) -> str:
-        return self.__dict__["name"]
-    
     @property
     def housemap(self) -> "Map":
         return Map(self.housemap_name, self.session, self)
@@ -340,7 +357,7 @@ class Map():
         match type:
             case "house":
                 map = map_from_file("gates.txt")
-                map += deepcopy(random.choice(map_tiles["house"]))
+                map += deepcopy(random.choice(file_map_tiles["house"]))
             case "gate1":
                 map = map_from_file(f"frame1.txt", "gateframe")
             case "gate2":
@@ -356,7 +373,7 @@ class Map():
             case "gate7":
                 map = map_from_file(f"frame7.txt", "gateframe")
             case _:
-                map = deepcopy(random.choice(map_tiles["land"]))
+                map = deepcopy(random.choice(file_map_tiles["land"]))
                 self.overmaptile = "#"
         self.map_tiles = map
 
@@ -404,7 +421,6 @@ class Map():
             if room.tile.ramp: continue
             return room
         else: raise AssertionError
-
 
     def populate_with_underlings(self, underling_type: str, cluster_size: int, number: int, min_tier:int, max_tier: int):
         valid_rooms: list[Room] = []
@@ -1008,8 +1024,8 @@ class Player():
         return self.symbol_dict["color"]
 
     @property
-    def land(self) -> Overmap:
-        return Overmap(self.land_name, Session(self.land_session))
+    def land(self) -> Land:
+        return Land(self.land_name, Session(self.land_session))
     
     @property
     def server_player(self) -> Optional["Player"]:
@@ -1358,18 +1374,21 @@ class SubPlayer(Player):
         return True
 
     def enter_gate(self, gate_num: int) -> bool:
-        if self.overmap.housemap.name == self.map.name:
+        land = self.overmap
+        if land.overmap_type == "land":
+            land = Land(self.overmap.name, self.session)
+        if land.housemap.name == self.map.name:
             at_house = True
         else:
             at_house = False
         if gate_num == 0: # return gate
-            destination_player = self.overmap.player
+            destination_player = land.player
             if destination_player is None: print("no destination player"); return False
             destination_map = destination_player.land.housemap
             room = destination_map.random_valid_room([str(1)]) # go back to first gate
             self.goto_room(room)
             return True
-        destination_player = self.overmap.gate_location(gate_num, at_house)
+        destination_player = land.gate_location(gate_num, at_house)
         if destination_player is None: print("no destination player"); return False
         if not destination_player.entered: print("destination player not entered"); return False
         if at_house:
@@ -1388,10 +1407,12 @@ class SubPlayer(Player):
     
     @property
     def overmap(self) -> Overmap:
+        assert self.overmap_name is not None
         return Overmap(self.overmap_name, self.session)
     
     @property
     def map(self) -> Map:
+        assert self.map_name is not None
         return Map(self.map_name, self.session, self.overmap)
     
     def get_view(self, view_tiles=6) -> tuple[list, dict, dict, dict, list, dict]:
@@ -1412,6 +1433,7 @@ class SubPlayer(Player):
 
     @property
     def room(self) -> Room:
+        assert self.room_name is not None
         return Room(self.room_name, self.session, self.overmap, self.map)
     
     def goto_room(self, room: Room):
