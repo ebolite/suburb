@@ -4686,7 +4686,9 @@
             "soft"
         ],
         "forbiddencode": false,
-        "use": [],
+        "use": [
+            "sleep"
+        ],
         "inheritpower": 5,
         "adjectives": [],
         "code": "L9aaQOL3",
@@ -4764,7 +4766,9 @@
             "kushy"
         ],
         "forbiddencode": false,
-        "use": [],
+        "use": [
+            "sleep"
+        ],
         "inheritpower": 0,
         "adjectives": [],
         "code": "D29acNhB",
@@ -4804,7 +4808,9 @@
             "warm"
         ],
         "forbiddencode": false,
-        "use": [],
+        "use": [
+            "sleep"
+        ],
         "inheritpower": 0,
         "adjectives": [],
         "code": "uMpxCS1B",
