@@ -1667,7 +1667,7 @@ def test_overmap():
     test_overmap_tiles = [list(line) for line in test_overmap_tiles if line]
     theme = themes.derse
     render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
-    render.Overmap(0.5, 0.5, test_overmap_tiles, theme=theme, block_path="sprites/overmap/moon_block.png", water_path="sprites/overmap/moon_water.png")
+    render.Overmap(0.5, 0.5, test_overmap_tiles, theme=theme, block_path="sprites/overmap/alts/moon_block.png", water_path="sprites/overmap/moon_water.png")
 
 @scene
 def connection_screen():
