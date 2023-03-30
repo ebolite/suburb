@@ -661,6 +661,8 @@ def console_commands(player: sessions.SubPlayer, content: str):
             if sessions.does_player_exist(target_name):
                 target = sessions.Player(target_name).current_subplayer
                 target.goto_room(player.room)
+        case "sleep":
+            player.sleep()
 
 # return True on success, return False on failure
 def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name, target_instance: Optional[alchemy.Instance] = None, additional_data: Optional[str]=None) -> bool:

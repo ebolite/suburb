@@ -796,7 +796,6 @@ class Player():
         self.deployed_phernalia = []
         # atheneum is the list of stored instances
         self.atheneum = []
-        self.npc_followers = []
         self.permanent_stat_bonuses = {}
         self.symbol_dict = {}
         self.stat_ratios = {
@@ -829,6 +828,12 @@ class Player():
         if modus_name in self.moduses: return False
         if modus_name not in self.moduses: self.moduses.append(modus_name)
         return True
+
+    def sleep(self):
+        if self.current_subplayer_type == "real":
+            self.current_subplayer_type = "dream"
+        elif self.current_subplayer_type == "dream":
+            self.current_subplayer_type = "real"
 
     def add_unclaimed_grist(self, spoils_dict: dict):
         for grist_name, amount in spoils_dict.items():
@@ -1060,6 +1065,7 @@ class SubPlayer(Player):
         self.map_name = None
         self.room_name = None
         self.sylladex: list[str] = []
+        self.npc_followers = []
         self.strife_portfolio: dict[str, list] = {}
         self.current_strife_deck: Optional[str] = None
         self.empty_cards = 5

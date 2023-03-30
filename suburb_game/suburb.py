@@ -1660,7 +1660,7 @@ def map_from_file(file):
 def test_overmap():
     test_overmap_tiles = map_from_file("test_map.txt")
     test_overmap_tiles = [list(line) for line in test_overmap_tiles if line]
-    theme = random.choice(list(themes.themes.values()))
+    theme = themes.derse
     render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
     render.Overmap(0.5, 0.5, test_overmap_tiles, theme=theme)
 
@@ -1714,7 +1714,8 @@ if __name__ == "__main__":
     connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
-        login_scene() # normal game start
+        #login_scene() # normal game start
+        test_overmap()
     else:
         connection_screen()
     main()
