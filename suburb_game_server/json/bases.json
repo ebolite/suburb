@@ -636,8 +636,6 @@
         ],
         "secret_states": {},
         "use": [
-            "crumple",
-            "rumple"
         ],
         "adjectives": [],
         "forbiddencode": false,
