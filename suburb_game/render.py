@@ -1502,6 +1502,8 @@ class Overmap(UIElement):
         self.offsetx = offsetx
         self.offsety = offsety or -self.extra_height
         self.last_mouse_pos: Optional[tuple[int, int]] = None
+        self.block_path = block_path
+        self.water_path = water_path
         self.block_image = pygame.image.load(block_path).convert()
         self.block_image = self.convert_to_theme(self.block_image)
         self.block_image.set_colorkey(pygame.Color(0, 0, 0))
@@ -1559,7 +1561,7 @@ class Overmap(UIElement):
             button.delete()
             self.buttons.remove(button)
         self.delete()
-        new_overmap = Overmap(self.x, self.y, map_tiles, specials, map_types, illegal_moves, self.theme, self.offsetx, self.offsety)
+        new_overmap = Overmap(self.x, self.y, map_tiles, specials, map_types, illegal_moves, self.theme, self.offsetx, self.offsety, block_path=self.block_path, water_path=self.water_path)
         for i in range(self.rotation//90):
             new_overmap.rotate(90)
 
