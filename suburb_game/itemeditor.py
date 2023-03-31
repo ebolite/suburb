@@ -71,8 +71,10 @@ class ItemEditor():
         power_tooltip = render.ToolTip(0, 0, 128, 32)
         power_tooltip.bind_to(power_box)
         power_tooltip.make_always_on_top()
-        power_tooltip_label = self.make_label(0, 20, "Examples: Paper: 1; Knife: 10; Baseball Bat: 20; Sword: 40; Pistol: 100", power_tooltip)
-        power_tooltip_label.absolute = True
+        power_tooltip_label_line1 = self.make_label(0, 20, "Examples: Spoon: 2; Knife: 10; Baseball Bat: 20; Sword: 40; Pistol: 100", power_tooltip)
+        power_tooltip_label_line1.absolute = True
+        power_tooltip_label_line2 = self.make_label(0, 40, "Paper: 1; Lamp: 11; Toilet: 24; Bathtub: 32; Fireplace: 65", power_tooltip)
+        power_tooltip_label_line2.absolute = True
         #
         inheritpower_box = render.InputTextBox(0.45, 0.23, w=128, h=32)
         inheritpower_box.numbers_only = True

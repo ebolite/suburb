@@ -5194,7 +5194,7 @@
     "clock": {
         "base": true,
         "power": 6,
-        "inheritpower": 100,
+        "inheritpower": 300,
         "weight": 5,
         "size": 3,
         "kinds": [
