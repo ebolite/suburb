@@ -1,8 +1,4 @@
-import pygame
-import sys
-import pathlib
-import util
-import hashlib
+import time
 import socket
 import json
 import ssl
@@ -81,6 +77,7 @@ def requestdic(intent) -> dict:
     Input = json.dumps(dic)
     ClientSocket.send(str.encode(Input))
     reply = receive_data()
+    loaded = json.loads(reply)
     return json.loads(reply)
 
 #request, but with additional content sent to the server

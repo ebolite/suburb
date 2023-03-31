@@ -169,6 +169,11 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         out_specials = {}
         map_types = {}
         map_tiles = self.map_tiles
+        players = {}
+        for subplayer in self.session.players_list:
+            if subplayer.overmap.name == self.name:
+                if subplayer.map.name not in players: players[subplayer.map.name] = {}
+                players[subplayer.map.name][subplayer.name] = ("player", subplayer.symbol_dict["color"])
         for map_tile_y, real_y in enumerate(range(target_y-view_tiles, target_y+view_tiles+1)):
             new_line = []
             for map_tile_x, real_x in enumerate(range(target_x-view_tiles, target_x+view_tiles+1)):
@@ -180,7 +185,10 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
                 new_line.append(map_tiles[map_y][map_x])
                 map = self.find_map(map_x, map_y)
                 specials = map.specials
-                if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
+                if map.name in players:
+                    specials.update(players[map.name])
+                if len(specials) > 0: 
+                    out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
                 if map.special_type: map_types[f"{map_tile_x}, {map_tile_y}"] = map.special_type
             out_map_tiles.append(new_line)
         return out_map_tiles, out_specials, map_types
@@ -600,9 +608,6 @@ class Map():
     @property
     def specials(self) -> dict[str, tuple]:
         special_dict = {}
-        for subplayer in self.session.players_list:
-            if subplayer.overmap.name == self.overmap.name and subplayer.map.name == self.name:
-                special_dict[subplayer.name] = ("player", subplayer.symbol_dict["color"])
         # todo: other specials
         return special_dict
 

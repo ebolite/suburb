@@ -347,7 +347,7 @@ def handle_request(dict):
             return
         case "overmap_move":
             player.attempt_overmap_move(content)
-            return
+            return overmap_data(player)
         case "console_command":
             # try:
                 console_commands(player, content)
@@ -431,6 +431,15 @@ def map_data(player: "sessions.SubPlayer"):
     return json.dumps({"map": map_tiles, "specials": map_specials, "instances": room_instances, "npcs": room_npcs, "players": room_players,
                        "strife": strife,
                        "room_name": player.room.tile.name, "theme": player.overmap.theme})
+
+def overmap_data(player: "sessions.SubPlayer"):
+    map_tiles, map_specials, map_types, theme = player.get_overmap_view()
+    illegal_moves = player.get_illegal_overmap_moves()
+    overmap_title = player.overmap.title
+    overmap_type = player.overmap.overmap_type
+    formatted_map_tiles = ["".join(line) for line in map_tiles]
+    return json.dumps({"map_tiles": formatted_map_tiles, "map_specials": map_specials, "map_types": map_types, 
+                        "title": overmap_title, "theme": theme, "illegal_moves": illegal_moves, "overmap_type": overmap_type})
 
 def get_viewport(x: int, y: int, client: Optional[sessions.Player]) -> str:
     if client is None: print("no client"); return "No client dumpass"
@@ -604,6 +613,7 @@ def console_commands(player: sessions.SubPlayer, content: str):
         case "overmap_move":
             direction = args[0]
             player.attempt_overmap_move(direction)
+            return overmap_data(player)
         case "change_vial":
             vial = args[0]
             player.secondaryvial = vial

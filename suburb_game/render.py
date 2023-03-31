@@ -1565,11 +1565,8 @@ class Overmap(UIElement):
             new_specials[f"{true_x}, {true_y}"] = self.specials[name]
         return new_specials
 
-    def update_map(self):
-        t = time.time()
-        reply = client.requestdic(intent="current_overmap")
-        print(f"requestdic took {time.time()-t:.2f} seconds")
-        map_tiles = reply["map_tiles"]
+    def update_map(self, reply: dict):
+        map_tiles = [list(line) for line in reply["map_tiles"]]
         specials = reply["map_specials"]
         map_types = reply["map_types"]
         illegal_moves = reply["illegal_moves"]
@@ -1632,8 +1629,8 @@ class Overmap(UIElement):
 
     def move_by_relative_vector(self, dx, dy):
         direction = get_cardinal_direction(dx, dy, self.rotation)
-        client.requestplus(intent="overmap_move", content=direction)
-        self.update_map()
+        reply = client.requestplusdic(intent="overmap_move", content=direction)
+        self.update_map(reply)
 
     def keypress(self, event):
         if event.key == pygame.K_q: self.rotate(-90)
@@ -1659,8 +1656,8 @@ class OvermapTile(UIElement):
     def get_button_func(self, input_dx, input_dy, rotation):
         def button_func():
             direction = get_cardinal_direction(input_dx, input_dy, rotation)
-            client.requestplus(intent="overmap_move", content=direction)
-            self.overmap.update_map()
+            reply = client.requestplusdic(intent="overmap_move", content=direction)
+            self.overmap.update_map(reply)
         return button_func
     
     def get_inactive_condition(self, rotation):
