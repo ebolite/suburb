@@ -1117,14 +1117,14 @@ def overmap():
     title = reply["title"]
     overmap_type = reply["overmap_type"]
     if overmap_type == "kingdom" or overmap_type == "moon":
-        block_image_path = "sprites/overmap/moon_block.png"
+        top_block_image_path = "sprites/overmap/moon_block.png"
         water_image_path = "sprites/overmap/moon_water.png"
     else:
-        block_image_path = "sprites/overmap/block.png"
+        top_block_image_path = "sprites/overmap/block.png"
         water_image_path = "sprites/overmap/water.png"
     theme = themes.themes[theme_name]
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
-    overmap = render.Overmap(0.5, 0.75, map_tiles, map_specials, map_types, illegal_moves=illegal_moves, theme=theme, block_path=block_image_path, water_path=water_image_path)
+    overmap = render.Overmap(0.5, 0.75, map_tiles, map_specials, map_types, illegal_moves=illegal_moves, theme=theme, top_block_path=top_block_image_path, water_path=water_image_path)
     backbutton = render.Button(0.1, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", map_scene, theme=theme)
     render.always_on_top_check.append(backbutton)
     render.update_check.remove(backbutton)
@@ -1674,7 +1674,7 @@ def test_overmap():
     test_overmap_tiles = [list(line) for line in test_overmap_tiles if line]
     theme = themes.derse
     render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
-    render.Overmap(0.5, 0.5, test_overmap_tiles, theme=theme, block_path="sprites/overmap/alts/moon_block.png", water_path="sprites/overmap/moon_water.png")
+    render.Overmap(0.5, 0.5, test_overmap_tiles, theme=theme, top_block_path="sprites/overmap/moon_block.png", water_path="sprites/overmap/moon_water.png")
 
 @scene
 def connection_screen():
@@ -1726,8 +1726,8 @@ if __name__ == "__main__":
     connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
-        login_scene() # normal game start
-        # test_overmap()
+        # login_scene() # normal game start
+        test_overmap()
     else:
         connection_screen()
     main()
