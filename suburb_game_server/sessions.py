@@ -459,8 +459,11 @@ class Map():
             case "gate7":
                 map = map_from_file(f"frame7.txt", "gateframe")
             case _:
-                map = deepcopy(random.choice(file_map_tiles["land"]))
-                self.overmaptile = "#"
+                if self.overmap.overmap_type == "land":
+                    map = deepcopy(random.choice(file_map_tiles["land"]))
+                    self.overmaptile = "#"
+                else:
+                    map = map_from_file("empty.txt")
         self.map_tiles = map
 
     def gen_rooms(self):
