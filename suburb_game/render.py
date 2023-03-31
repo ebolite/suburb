@@ -1684,7 +1684,6 @@ class OvermapTile(UIElement):
                 if i == self.height-1: 
                     self.blit_surf.blit(self.overmap.top_block_image, ((draw_x, draw_y)))
                     if self.right_edge and self.up_edge:
-                        print("blitting both")
                         self.blit_surf.blit(self.overmap.both_block_image, ((draw_x, draw_y)))
                     elif self.right_edge:
                         self.blit_surf.blit(self.overmap.right_block_image, ((draw_x, draw_y)))
