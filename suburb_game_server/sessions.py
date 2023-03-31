@@ -1333,7 +1333,6 @@ class SubPlayer(Player):
             return True
         if instance_name not in self.sylladex: return False
         self.sylladex.remove(instance_name)
-        print(f"consuming {instance_name}")
         return True
     
     def drop_empty_card(self) -> bool:
@@ -1807,7 +1806,6 @@ def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=N
         map_tiles[y][x] = "*" # placeholder terrain tile
         map_tiles = gen_terrain(x, y, map_tiles, "~", lakerate)
     if special == "block":
-        print("block special")
         map_tiles = modify_block(map_tiles, "#", "~")
         map_tiles = modify_block(map_tiles, "~", "#")
     if extralands != None:

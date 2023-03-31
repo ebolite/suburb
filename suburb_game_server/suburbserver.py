@@ -207,9 +207,6 @@ def handle_request(dict):
         new_player.land_name = land.name
         new_player.land_session = session.name
         housemap = land.get_map(land.housemap_name)
-        print(f"housemap {housemap.name} {housemap}")
-        print(f"housemap session {housemap.session.name} {housemap.session}")
-        print(f"overmap {housemap.overmap.name} {housemap.overmap}")
         room = housemap.random_valid_room(config.starting_tiles)
         room.add_instance(alchemy.Instance(alchemy.Item("Sburb disc")).name)
         # create subplayers (real and dream)
@@ -289,7 +286,6 @@ def handle_request(dict):
             npc_name = content["npc_name"]
             interaction_name = content["interaction_name"]
             additional_data = content["additional_data"]
-            print(f"npc interaction with {npc_name}: {interaction_name}")
             if npc_name not in player.room.npcs: return False
             if interaction_name not in npcs.npc_interactions: return False
             if interaction_name not in npcs.Npc(npc_name).interactions: return False
@@ -385,12 +381,8 @@ def handle_request(dict):
         case "submit_strife_action":
             skill_name = content["skill_name"]
             targets = content["targets"]
-            print("submitting skill")
-            print(player.strife)
             if player.strife is None: print("strife is none"); return json.dumps({})
-            print("strife is not None")
             success = player.strife.get_griefer(player.name).submit_skill(skill_name, targets)
-            print("determined success", success)
             if success: return json.dumps(player.strife.get_dict())
             else: return json.dumps({})
         case "unsubmit_skill":
@@ -562,7 +554,6 @@ def computer_shit(player: sessions.SubPlayer, content: dict, session:sessions.Se
             alchemiter_location = player.client_player.land.housemap.get_alchemiter_location()
             return json.dumps({"alchemiter_location": alchemiter_location})
         case "server_alchemy":
-            print("server alchemy")
             if player.client_player is None: return "No client."
             alchemiter_loc = player.client_player.land.housemap.get_alchemiter_location()
             if alchemiter_loc is None: return "No alchemiter."
@@ -610,7 +601,6 @@ def console_commands(player: sessions.SubPlayer, content: str):
             underling = npcs.underlings[underling_type]
             for i in range(num):
                 underling.make_npc(grist_name, player.land.gristcategory, player.room)
-            print(player.room.npcs)
         case "overmap_move":
             direction = args[0]
             player.attempt_overmap_move(direction)
@@ -782,7 +772,6 @@ def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name
                 code_to_punch = target_instance.item.code
             else:
                 code_to_punch = additional_data
-                print(f"punching {code_to_punch}")
             if len(code_to_punch) != 8: print("invalid code"); return False
             for char in code_to_punch:
                 if char not in binaryoperations.bintable: print("invalid code"); return False
@@ -797,7 +786,6 @@ def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name
                 if target_instance is not None: 
                     inserted_instance.punched_item_name = target_instance.item.displayname
                     player.session.add_to_excursus(target_instance.item.name)
-                    print(f"punching {inserted_instance.name} with {target_instance.name}")
                 else:
                     new_item = alchemy.Item(util.codes[code_to_punch])
                     player.session.add_to_excursus(new_item.name)
@@ -812,7 +800,6 @@ def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name
                 inserted_instance.punched_code = alchemized_item.code
                 inserted_instance.punched_item_name = alchemized_item.displayname
                 player.session.add_to_excursus(alchemized_item.name)
-                print(f"punching {currently_punched_item.name} with {additional_item.name} makes {alchemized_item.displayname}")
                 return True
             else:
                 print("This should not happen")
