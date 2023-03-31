@@ -199,6 +199,8 @@ def handle_request(dict):
         new_player.gristcategory = content["gristcategory"]
         new_player.secondaryvial = content["secondaryvial"]
         new_player.symbol_dict = content["symbol_dict"]
+        # todo: moon selection
+        new_player.moon_name = random.choice(["prospit", "derse"])
         new_player.starting_session_name = session.name
         new_player.add_modus(content["modus"])
         land = sessions.Land.create(f"{new_player.id}{session.name}", session, new_player)
@@ -216,7 +218,7 @@ def handle_request(dict):
         real_self = sessions.SubPlayer.create_subplayer(new_player, "real")
         real_self.goto_room(room)
         dream_self = sessions.SubPlayer.create_subplayer(new_player, "dream")
-        dream_self.goto_room(room)
+        new_player.kingdom.moon.spawn_player_in_tower(dream_self)
         new_player.current_subplayer_type = "real"
         # session
         session.starting_players.append(new_player.id)

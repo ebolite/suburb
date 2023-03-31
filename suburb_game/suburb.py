@@ -144,7 +144,7 @@ def play(page=0):
         box_button.draw_sprite = False
         box_button.absolute = True
         box_button.bind_to(session_box)
-    if session_names[page+1*4:page+1*4 + 4]:
+    if session_names+[""][page+1*4:page+1*4 + 4]:
         def right_button():
             play(page+1)
         rightpage = render.TextButton(0.95, 0.4, 96, 32, "->", right_button)

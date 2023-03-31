@@ -75,6 +75,8 @@ class Session():
         self.overmaps = {}
         self.prototypes: list[Optional[str]] = []
         self.set_password(password)
+        Kingdom.create("prospit", self, "prospit")
+        Kingdom.create("derse", self, "derse")
 
     def add_to_excursus(self, item_name):
         if item_name not in self.excursus:
@@ -134,6 +136,14 @@ class Session():
     @property
     def name(self) -> str:
         return self.__dict__["_id"]
+    
+    @property
+    def prospit(self) -> "Kingdom":
+        return Kingdom("prospit", self)
+    
+    @property
+    def derse(self) -> "Kingdom":
+        return Kingdom("derse", self)
 
 class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player.session}"
     def __init__(self, name: str, session: Session):
@@ -214,6 +224,77 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
     @property
     def name(self) -> str:
         return self.__dict__["name"]
+
+class Kingdom(Overmap):
+    @classmethod
+    def create(cls, name: str, session: Session, kingdom_name: str):
+        session.overmaps[name] = {}
+        kingdom = cls(name, session)
+        kingdom.setup_defaults(name, kingdom_name)
+        return kingdom
+    
+    def setup_defaults(self, name: str, kingdom_name: str):
+        super().setup_defaults(name)
+        self.overmap_type = "kingdom"
+        self.kingdom_name = kingdom_name # prospit or derse
+        self.theme = kingdom_name
+        self.gen_kingdom_map()
+        self.moon_name = f"{self.name}moon"
+        moon = Moon.create(self.moon_name, self)
+
+    def gen_kingdom_map(self):
+        self.map_tiles = gen_prospitderse()
+
+    @property
+    def moon(self):
+        return Moon(self.moon_name, self.session)
+    
+class Moon(Overmap):
+    @classmethod
+    def create(cls, name: str, kingdom: Kingdom):
+        kingdom.session.overmaps[name] = {}
+        moon = cls(name, kingdom.session)
+        moon.setup_defaults(name, kingdom)
+        return moon
+
+    def setup_defaults(self, name, kingdom: Kingdom):
+        super().setup_defaults(name)
+        self.theme = kingdom.theme
+        self.kingdom_name = kingdom.name
+        self.player_towers: dict[str, str] = {}
+        self.tower_map_names = []
+        self.gen_moon_map()
+
+    def gen_moon_map(self):
+        self.map_tiles = gen_moon()
+        for y, line in enumerate(self.map_tiles):
+            for x, char in enumerate(line):
+                if char == "9":
+                    self.chain_map_name = f"{x}, {y}"
+                if char == "8":
+                    self.tower_map_names.append(f"{x}, {y}")
+        for tower_map in self.towers_list:
+            tower_map.gen_map("tower")
+
+    def spawn_player_in_tower(self, player: "SubPlayer"):
+        valid_towers = [tower for tower in self.towers_list if tower.name not in self.player_towers.values()]
+        if not valid_towers: valid_towers = self.towers_list
+        tower = random.choice(valid_towers)
+        room = tower.random_valid_room(config.starting_tiles)
+        player.goto_room(room)
+        self.player_towers[player.player.id] = tower.name
+
+    @property
+    def kingdom(self):
+        return Kingdom(self.kingdom_name, self.session)
+    
+    @property
+    def towers_list(self):
+        return [Map(tower_name, self.session, self) for tower_name in self.tower_map_names]
+
+    @property
+    def chain_map(self):
+        return Map(self.chain_map_name, self.session, self)
 
 class Land(Overmap):
     @classmethod
@@ -358,6 +439,8 @@ class Map():
             case "house":
                 map = map_from_file("gates.txt")
                 map += deepcopy(random.choice(file_map_tiles["house"]))
+            case "tower":
+                map = map_from_file("tower.txt", "kingdoms")
             case "gate1":
                 map = map_from_file(f"frame1.txt", "gateframe")
             case "gate2":
@@ -807,6 +890,7 @@ class Player():
         self.secondaryvial = ""
         self.land_name = ""
         self.land_session = ""
+        self.moon_name = ""
         self.prototyped_before_entry = False
         # phernalia registry is a default list of deployable objects minus the deployed phernalia
         self.deployed_phernalia = []
@@ -1026,6 +1110,10 @@ class Player():
     @property
     def land(self) -> Land:
         return Land(self.land_name, Session(self.land_session))
+    
+    @property
+    def kingdom(self) -> Kingdom:
+        return Kingdom(self.moon_name, Session(self.land_session))
     
     @property
     def server_player(self) -> Optional["Player"]:
@@ -1782,12 +1870,12 @@ def gen_prospitderse():
         "000000000000",
         "011111111110",
         "013331133310",
-        "013931139310",
+        "013831138310",
         "013331133310",
         "011111111110",
         "011111111110",
         "013331133310",
-        "013931139310",
+        "013831138310",
         "013331133310",
         "011111111110",
         "000000000000",
