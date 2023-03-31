@@ -1427,6 +1427,7 @@ class SubPlayer(Player):
             if target_tile.impassible: return False
             if direction == "up":
                 if not self.flying and not target_tile.stair and not current_tile.stair: return False    # obey gravity
+                if target_tile.ramp: return False
                 if target_tile.automove:
                     target_y -= 1
                     continue
