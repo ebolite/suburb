@@ -319,18 +319,22 @@ class Npc():
 
     @property
     def session(self) -> "sessions.Session":
+        assert self.session_name is not None
         return sessions.Session(self.session_name)
     
     @property
     def overmap(self) -> "sessions.Overmap":
+        assert self.overmap_name is not None
         return sessions.Overmap(self.overmap_name, self.session)
     
     @property
     def map(self) -> "sessions.Map":
+        assert self.map_name is not None
         return sessions.Map(self.map_name, self.session, self.overmap)
     
     @property
     def room(self) -> "sessions.Room":
+        assert self.room_name is not None
         return sessions.Room(self.room_name, self.session, self.overmap, self.map)
 
 class KernelAI(GrieferAI):
