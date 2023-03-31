@@ -9,9 +9,18 @@ class ItemEditor():
         self.theme = themes.default
         self.item_name = "adjective+1 adjective+2 base"
         self.code = ""
+        self.power = 0
+        self.inheritpower = 10
+        self.weight = 5
+        self.size = 5
 
     def draw_scene(self):
         suburb.new_scene()
+        self.draw_name_and_adjectives()
+        self.draw_code()
+        self.draw_power_weight_size()
+
+    def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)
         item_name_box.text = self.item_name
         def item_name_func():
@@ -32,15 +41,14 @@ class ItemEditor():
         item_name_label.text_func = item_name_label_func
         item_name_label.fontsize = 20
         item_name_label.color = self.theme.dark
+
+    def draw_code(self):
         code_box = render.InputTextBox(0.1, 0.15, w=160, h=32)
         def code_box_func():
             self.code = code_box.text
         code_box.key_press_func = code_box_func
         code_box.text = self.code
-        code_box_label = render.Text(0.5, 1.4, "captchalogue code")
-        code_box_label.fontsize = 16
-        code_box_label.color = self.theme.dark
-        code_box_label.bind_to(code_box)
+        code_box_label = self.make_label(0.5, 1.4, "captchalogue code", code_box)
         valid_label = render.Text(0.5, 1.8, "")
         def valid_label_func():
             if self.code == "": return "(random)"
@@ -51,6 +59,43 @@ class ItemEditor():
         valid_label.text_func = valid_label_func
         valid_label.fontsize = 16
         valid_label.bind_to(code_box)
+
+    def draw_power_weight_size(self):
+        power_box = render.InputTextBox(0.3, 0.23, w=128, h=32)
+        power_box.numbers_only = True
+        power_box.text = str(self.power)
+        def power_box_func():
+            self.power = int(power_box.text)
+        power_box.key_press_func = power_box_func
+        power_label = self.make_label(0.5, 1.4, "power", power_box)
+        power_tooltip = render.ToolTip(0, 0, 128, 32)
+        power_tooltip.bind_to(power_box)
+        power_tooltip.make_always_on_top()
+        power_tooltip_label = self.make_label(0, 20, "Examples: Paper: 1; Knife: 10; Baseball Bat: 20; Sword: 40; Pistol: 100", power_tooltip)
+        power_tooltip_label.absolute = True
+        #
+        inheritpower_box = render.InputTextBox(0.45, 0.23, w=128, h=32)
+        inheritpower_box.numbers_only = True
+        inheritpower_box.text = str(self.inheritpower)
+        def inheritpower_box_func():
+            self.inheritpower = int(inheritpower_box.text)
+        inheritpower_box.key_press_func = inheritpower_box_func
+        inheritpower_label = self.make_label(0.5, 1.4, "inherited power", inheritpower_box)
+        inheritpower_tooltip = render.ToolTip(0, 0, 128, 32)
+        inheritpower_tooltip.bind_to(inheritpower_box)
+        inheritpower_tooltip.make_always_on_top()
+        inheritpower_tooltip_label_line1 = self.make_label(0, 20, "This is how metaphorically powerful or cool the item is. Usually 0.", inheritpower_tooltip)
+        inheritpower_tooltip_label_line1.absolute = True
+        inheritpower_tooltip_label_line2 = self.make_label(0, 40, "Examples: Yoyo: 10; Chainsaw: 30; Statue of Liberty: 250; Clock: 300", inheritpower_tooltip)
+        inheritpower_tooltip_label_line2.absolute = True
+
+    def make_label(self, x, y, text, binding) -> "render.Text":
+        label = render.Text(x, y, text)
+        label.bind_to(binding)
+        label.fontsize = 16
+        label.color = self.theme.dark
+        label.outline_color = self.theme.light
+        return label
 
     @property
     def base(self):
