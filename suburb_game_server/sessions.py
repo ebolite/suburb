@@ -279,13 +279,14 @@ class Moon(Overmap):
         for tower_map in self.towers_list:
             tower_map.gen_map("tower")
 
-    def spawn_player_in_tower(self, player: "SubPlayer"):
+    def spawn_player_in_tower(self, player: "SubPlayer") -> "Room":
         valid_towers = [tower for tower in self.towers_list if tower.name not in self.player_towers.values()]
         if not valid_towers: valid_towers = self.towers_list
         tower = random.choice(valid_towers)
         room = tower.random_valid_room(config.starting_tiles)
         player.goto_room(room)
         self.player_towers[player.player.id] = tower.name
+        return room
 
     @property
     def kingdom(self):

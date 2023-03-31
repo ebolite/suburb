@@ -212,14 +212,15 @@ def handle_request(dict):
         print(f"overmap {housemap.overmap.name} {housemap.overmap}")
         room = housemap.random_valid_room(config.starting_tiles)
         room.add_instance(alchemy.Instance(alchemy.Item("Sburb disc")).name)
-        for interest in new_player.interests:
-            room.generate_loot(tiles.get_tile(interest).get_loot_list())
         # create subplayers (real and dream)
         real_self = sessions.SubPlayer.create_subplayer(new_player, "real")
         real_self.goto_room(room)
         dream_self = sessions.SubPlayer.create_subplayer(new_player, "dream")
-        new_player.kingdom.moon.spawn_player_in_tower(dream_self)
+        dream_room = new_player.kingdom.moon.spawn_player_in_tower(dream_self)
         new_player.current_subplayer_type = "real"
+        for interest in new_player.interests:
+            room.generate_loot(tiles.get_tile(interest).get_loot_list())
+            dream_room.generate_loot(tiles.get_tile(interest).get_loot_list())
         # session
         session.starting_players.append(new_player.id)
         session.user_players[user.name] = new_player.id
