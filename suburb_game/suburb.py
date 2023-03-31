@@ -1116,7 +1116,6 @@ def overmap():
     illegal_moves = reply["illegal_moves"]
     title = reply["title"]
     overmap_type = reply["overmap_type"]
-    print(f"overmap type {overmap_type}")
     if overmap_type == "kingdom" or overmap_type == "moon":
         block_image_path = "sprites/overmap/moon_block.png"
         water_image_path = "sprites/overmap/moon_water.png"

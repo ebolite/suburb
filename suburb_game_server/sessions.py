@@ -1392,7 +1392,8 @@ class SubPlayer(Player):
         target_map = self.overmap.find_map(target_x, target_y)
         if not target_map.map_tiles:
             target_map.gen_map()
-            target_map.populate_with_scaled_underlings()
+            if target_map.overmap.overmap_type == "land":
+                target_map.populate_with_scaled_underlings()
         entry_direction = "left"
         # if direction == "north" or direction == "east": entry_direction = "left"
         # else: entry_direction = "right"
