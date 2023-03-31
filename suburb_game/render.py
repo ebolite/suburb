@@ -630,7 +630,7 @@ class InputTextBox(UIElement):
         self.absolute_text = True
         self.suffix = ""
         self.secure = False
-        self.allowed_characters = []
+        self.disallowed_characters = []
         self.button: Union[Button, TextButton, None] = None
         self.enter_func: Optional[Callable] = None
         self.key_press_func: Optional[Callable] = None
@@ -701,6 +701,7 @@ class InputTextBox(UIElement):
         else:
             if self.max_characters != 0 and len(self.text)+1 > self.max_characters: return
             if event.unicode.isascii() and event.unicode not in ["\n", "\t", "\r"]: #no newline, tab or carriage return
+                if event.unicode in self.disallowed_characters: return
                 if self.numbers_only:
                     try: int(event.unicode)
                     except ValueError: return

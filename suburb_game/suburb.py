@@ -17,6 +17,7 @@ import client
 import config
 import themes
 import strife
+import itemeditor
 import sylladex
 from sylladex import Instance, Sylladex, Modus
 
@@ -1693,6 +1694,10 @@ def connection_screen():
     try_again_button = render.TextButton(0.5, 0.7, 196, 32, ">TRY AGAIN", try_again)
     spiro = render.get_spirograph(0.5, 0.3, False)
 
+def item_editor_scene():
+    item_editor = itemeditor.ItemEditor()
+    item_editor.draw_scene()
+
 def render_loop():
     while render.render():
         pass
@@ -1729,7 +1734,8 @@ if __name__ == "__main__":
     connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
-        login_scene() # normal game start
+        # login_scene() # normal game start
+        item_editor_scene()
         # test_overmap()
     else:
         connection_screen()
