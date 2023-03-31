@@ -75,7 +75,6 @@ class BaseStatistics():
         self.secretadjectives: list[str] = properties["secretadjectives"]
         self.power: int = properties["power"]
         self.inheritpower: int = properties["inheritpower"]
-        self.weight: int = properties["weight"]
         self.size: int = properties["size"]
         self.kinds: list[str] = properties["kinds"]
         self.wearable: bool = properties["wearable"]
@@ -182,8 +181,6 @@ class InheritedStatistics():
         return base, adjectives, merged_bases, secretadjectives
 
     def gen_statistics(self):
-        self.weight: int = self.inherit_stat_from_base(self.component_1.weight, self.component_2.weight)
-        self.weight += self.stat_adjust_from_base(self.component_1.weight, self.component_2.weight)
         self.size: int = self.inherit_stat_from_base(self.component_1.size, self.component_2.size)
         self.size += self.stat_adjust_from_base(self.component_1.size, self.component_2.size)
         # power
@@ -328,7 +325,6 @@ class Item(): # Items are the base of instants.
         self.base = statistics.base
         self.power = statistics.power
         self.inheritpower = statistics.inheritpower
-        self.weight = statistics.weight
         self.size = statistics.size
         self.kinds = statistics.kinds
         self.wearable = statistics.wearable
@@ -490,7 +486,6 @@ def display_item(item: Item):
     CODE: {item.code}
     POWER: {item.power}
     DICE: {round(item.dicemin, 2)} {round(item.dicemax, 2)}
-    WEIGHT: {item.weight}
     SIZE: {item.size} 
     """
     return out
@@ -523,7 +518,7 @@ defaults = {
     "forbiddencode": False,
     "power": 1, # how powerful is the item?
     "inheritpower": 0, # how much extra power this item gives when it's alchemized
-    "weight": 1, # how much the thing weighs, will mostly be used for determining sylladex ejection damage
+    # "weight": 1, # how much the thing weighs, will mostly be used for determining sylladex ejection damage
     "size": 1, # how big the thing is. determines if it's wieldable (size 20 or less)
     "kinds": {}, # the strife specibi that allow this item to be equipped and its weight (how likely it is to be inherited). if it is a list, the second item is the adjective/base that guarantees inheritance
     "wearable": False, # whether the item can be worn
@@ -558,6 +553,8 @@ for base, base_dict in util.bases.items():
         base_dict["cost"]["build"] = 0.5
     if "prototype_name" not in base_dict:
         base_dict["prototype_name"] = None
+    if "weight" in base_dict:
+        base_dict.pop("weight")
     code = base_dict["code"]
     util.codes[code] = base
 util.writejson(util.bases, "bases")

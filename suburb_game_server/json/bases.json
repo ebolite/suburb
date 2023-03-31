@@ -3,7 +3,6 @@
         "base": true,
         "code": "00000000",
         "power": 1,
-        "weight": 5,
         "size": 5,
         "kinds": [
             "dicekind"
@@ -37,7 +36,6 @@
         "base": true,
         "code": "!!!!!!!!",
         "power": 1,
-        "weight": 5,
         "size": 5,
         "kinds": [
             "ballkind"
@@ -71,7 +69,6 @@
         "base": true,
         "code": "11111111",
         "power": 20,
-        "weight": 5,
         "size": 5,
         "kinds": [
             "cardkind"
@@ -109,7 +106,6 @@
         "base": true,
         "code": "11112221",
         "power": 30,
-        "weight": 5,
         "size": 5,
         "kinds": [
             "cardkind"
@@ -151,7 +147,6 @@
         "base": true,
         "code": "11112222",
         "power": 30,
-        "weight": 5,
         "size": 5,
         "kinds": [
             "cardkind"
@@ -195,7 +190,6 @@
         "code": "1I1a1w1e",
         "forbiddencode": true,
         "power": 30,
-        "weight": 40,
         "size": 20,
         "kinds": [
             "rollingpinkind"
@@ -231,7 +225,6 @@
         "base": true,
         "code": "I11w1a11",
         "power": 10,
-        "weight": 9,
         "size": 6,
         "kinds": [],
         "wearable": false,
@@ -268,7 +261,6 @@
         "base": true,
         "code": "L229BxoG",
         "power": 100,
-        "weight": 50,
         "size": 50,
         "kinds": [
             "appliancekind"
@@ -307,7 +299,6 @@
         "base": true,
         "code": "LGG9AxoG",
         "power": 100,
-        "weight": 500,
         "size": 200,
         "kinds": [
             "appliancekind"
@@ -341,7 +332,6 @@
         "base": true,
         "code": "LGG9AxoH",
         "power": 100,
-        "weight": 500,
         "size": 200,
         "kinds": [
             "appliancekind"
@@ -377,7 +367,6 @@
         "base": true,
         "code": "LGG9AxoF",
         "power": 100,
-        "weight": 200,
         "size": 100,
         "kinds": [
             "appliancekind"
@@ -414,7 +403,6 @@
         "base": true,
         "code": "LGG9AlcG",
         "power": 100,
-        "weight": 500,
         "size": 200,
         "kinds": [
             "appliancekind"
@@ -449,7 +437,6 @@
         "base": true,
         "code": "grIsTB1T",
         "power": 10,
-        "weight": 2,
         "size": 2,
         "kinds": [
             "disckind"
@@ -488,7 +475,6 @@
         "base": true,
         "code": "s!bSbur?",
         "power": 7,
-        "weight": 2,
         "size": 2,
         "kinds": [
             "disckind"
@@ -531,7 +517,6 @@
     "lap top": {
         "base": true,
         "power": 15,
-        "weight": 8,
         "size": 7,
         "kinds": [
             "appliancekind"
@@ -571,7 +556,6 @@
     "desktop computer": {
         "base": true,
         "power": 25,
-        "weight": 15,
         "size": 18,
         "kinds": [
             "appliancekind"
@@ -611,7 +595,6 @@
     "paper": {
         "base": true,
         "power": 1,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "paperkind"
@@ -646,7 +629,6 @@
     "pizza cutter": {
         "base": true,
         "power": 5,
-        "weight": 5,
         "size": 3,
         "kinds": [
             "pizzacutterkind"
@@ -684,7 +666,6 @@
     "baseball bat": {
         "base": true,
         "power": 20,
-        "weight": 10,
         "size": 10,
         "kinds": [
             "batkind"
@@ -715,7 +696,6 @@
     "aluminum bat": {
         "base": true,
         "power": 20,
-        "weight": 7,
         "size": 10,
         "kinds": [
             "batkind"
@@ -751,7 +731,6 @@
     "rolling pin": {
         "base": true,
         "power": 7,
-        "weight": 2,
         "size": 2,
         "kinds": [
             "rollingpinkind"
@@ -788,7 +767,6 @@
     "plunger": {
         "base": true,
         "power": 3,
-        "weight": 2,
         "size": 6,
         "kinds": [
             "plungerkind"
@@ -826,7 +804,6 @@
     "yoyo": {
         "base": true,
         "power": 5,
-        "weight": 2,
         "size": 2,
         "kinds": [
             "yoyokind"
@@ -865,7 +842,6 @@
     "scissors": {
         "base": true,
         "power": 5,
-        "weight": 2,
         "size": 1,
         "kinds": [
             "scissorkind"
@@ -903,7 +879,6 @@
     "shears": {
         "base": true,
         "power": 10,
-        "weight": 4,
         "size": 4,
         "kinds": [
             "mundane",
@@ -945,7 +920,6 @@
     "safety scissors": {
         "base": true,
         "power": 2,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "scissorkind"
@@ -983,7 +957,6 @@
     "pepper spray": {
         "base": true,
         "power": 30,
-        "weight": 1,
         "size": 2,
         "kinds": [
             "pepperspraykind",
@@ -1027,7 +1000,6 @@
     "chainsaw": {
         "base": true,
         "power": 40,
-        "weight": 10,
         "size": 10,
         "kinds": [
             "chainsawkind",
@@ -1071,7 +1043,6 @@
     "weed whacker": {
         "base": true,
         "power": 10,
-        "weight": 7,
         "size": 7,
         "kinds": [
             "chainsawkind"
@@ -1103,7 +1074,6 @@
     "crowbar": {
         "base": true,
         "power": 20,
-        "weight": 10,
         "size": 10,
         "kinds": [
             "crowbarkind"
@@ -1139,7 +1109,6 @@
     "halligan bar": {
         "base": true,
         "power": 25,
-        "weight": 13,
         "size": 10,
         "kinds": [
             "crowbarkind"
@@ -1180,7 +1149,6 @@
     "broom": {
         "base": true,
         "power": 5,
-        "weight": 3,
         "size": 7,
         "kinds": [
             "broomkind"
@@ -1217,7 +1185,6 @@
     "straw broom": {
         "base": true,
         "power": 7,
-        "weight": 2,
         "size": 8,
         "kinds": [
             "broomkind"
@@ -1262,7 +1229,6 @@
     "fire poker": {
         "base": true,
         "power": 15,
-        "weight": 6,
         "size": 6,
         "kinds": [
             "pokerkind"
@@ -1295,7 +1261,6 @@
     "spear": {
         "base": true,
         "power": 50,
-        "weight": 20,
         "size": 16,
         "kinds": [
             "pokerkind"
@@ -1330,7 +1295,6 @@
     "ice pick": {
         "base": true,
         "power": 10,
-        "weight": 3,
         "size": 3,
         "kinds": [
             "icepickkind"
@@ -1370,7 +1334,6 @@
     "golf club": {
         "base": true,
         "power": 18,
-        "weight": 12,
         "size": 10,
         "kinds": [
             "golfclubkind"
@@ -1412,7 +1375,6 @@
     "hammer": {
         "base": true,
         "power": 10,
-        "weight": 7,
         "size": 2,
         "kinds": [
             "hammerkind"
@@ -1448,7 +1410,6 @@
     "sledge hammer": {
         "base": true,
         "power": 80,
-        "weight": 70,
         "size": 15,
         "kinds": [
             "hammerkind"
@@ -1501,7 +1462,6 @@
     "rubber mallet": {
         "base": true,
         "power": 2,
-        "weight": 2,
         "size": 2,
         "kinds": [
             "hammerkind"
@@ -1541,7 +1501,6 @@
     "jump rope": {
         "base": true,
         "power": 4,
-        "weight": 3,
         "size": 10,
         "kinds": [
             "jumpropekind",
@@ -1581,7 +1540,6 @@
     "piano wire": {
         "base": true,
         "power": 10,
-        "weight": 2,
         "size": 2,
         "kinds": [
             "jumpropekind",
@@ -1622,7 +1580,6 @@
     "shovel": {
         "base": true,
         "power": 12,
-        "weight": 10,
         "size": 10,
         "kinds": [
             "shovelkind",
@@ -1657,7 +1614,6 @@
     "hatchet": {
         "base": true,
         "power": 16,
-        "weight": 7,
         "size": 3,
         "kinds": [
             "hatchetkind",
@@ -1697,7 +1653,6 @@
     "axe": {
         "base": true,
         "power": 35,
-        "weight": 16,
         "size": 11,
         "kinds": [
             "axekind"
@@ -1739,7 +1694,6 @@
     "fire axe": {
         "base": true,
         "power": 40,
-        "weight": 18,
         "size": 11,
         "kinds": [
             "axekind"
@@ -1783,7 +1737,6 @@
     "wooden spoon": {
         "base": true,
         "power": 4,
-        "weight": 4,
         "size": 2,
         "kinds": [
             "spoonkind"
@@ -1820,7 +1773,6 @@
     "silver spoon": {
         "base": true,
         "power": 2,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "spoonkind"
@@ -1857,7 +1809,6 @@
     "Abraham+Lincoln bust": {
         "base": true,
         "power": 16,
-        "weight": 25,
         "size": 10,
         "kinds": [
             "bustkind",
@@ -1901,7 +1852,6 @@
     "Julius+Caesar bust": {
         "base": true,
         "power": 21,
-        "weight": 25,
         "size": 10,
         "kinds": [
             "bustkind",
@@ -1945,7 +1895,6 @@
     "miniature The+Thinker statue": {
         "base": true,
         "power": 10,
-        "weight": 18,
         "size": 6,
         "kinds": [
             "statuekind"
@@ -1990,7 +1939,6 @@
     "woman-sized Statue+of Liberty": {
         "base": true,
         "power": 120,
-        "weight": 240,
         "size": 60,
         "kinds": [
             "statuekind"
@@ -2042,7 +1990,6 @@
     "spatula": {
         "base": true,
         "power": 6,
-        "weight": 4,
         "size": 2,
         "kinds": [
             "spatulakind"
@@ -2079,7 +2026,6 @@
     "golden spatula": {
         "base": true,
         "power": 16,
-        "weight": 20,
         "size": 2,
         "kinds": [
             "spatulakind"
@@ -2124,7 +2070,6 @@
     "flat-head screwdriver": {
         "base": true,
         "power": 9,
-        "weight": 6,
         "size": 1,
         "kinds": [
             "screwdriverkind"
@@ -2162,7 +2107,6 @@
     "Phillips screwdriver": {
         "base": true,
         "power": 11,
-        "weight": 6,
         "size": 1,
         "kinds": [
             "screwdriverkind"
@@ -2200,7 +2144,6 @@
     "magnetic screwdriver": {
         "base": true,
         "power": 14,
-        "weight": 7,
         "size": 1,
         "kinds": [
             "screwdriverkind"
@@ -2239,7 +2182,6 @@
     "sword": {
         "base": true,
         "power": 40,
-        "weight": 7,
         "size": 10,
         "kinds": [
             "bladekind"
@@ -2278,7 +2220,6 @@
     "katana": {
         "base": true,
         "power": 40,
-        "weight": 7,
         "size": 10,
         "kinds": [
             "bladekind"
@@ -2320,7 +2261,6 @@
     "cheap piece-of-shit katana": {
         "base": true,
         "power": 3,
-        "weight": 7,
         "size": 10,
         "kinds": [
             "bladekind"
@@ -2358,7 +2298,6 @@
     "anime katana": {
         "base": true,
         "power": 400,
-        "weight": 7,
         "size": 10,
         "kinds": [
             "bladekind"
@@ -2410,7 +2349,6 @@
     "rapier": {
         "base": true,
         "power": 60,
-        "weight": 5,
         "size": 9,
         "kinds": [
             "bladekind"
@@ -2449,7 +2387,6 @@
     "zweihander": {
         "base": true,
         "power": 65,
-        "weight": 15,
         "size": 20,
         "kinds": [
             "bladekind"
@@ -2489,7 +2426,6 @@
     "pistol": {
         "base": true,
         "power": 100,
-        "weight": 3,
         "size": 4,
         "kinds": [
             "pistolkind"
@@ -2524,7 +2460,6 @@
     ".44 magnum": {
         "base": true,
         "power": 200,
-        "weight": 5,
         "size": 6,
         "kinds": [
             "pistolkind"
@@ -2570,7 +2505,6 @@
     "lamp": {
         "base": true,
         "power": 11,
-        "weight": 15,
         "size": 10,
         "kinds": [
             "lampkind"
@@ -2610,7 +2544,6 @@
     "desk lamp": {
         "base": true,
         "power": 7,
-        "weight": 7,
         "size": 6,
         "kinds": [
             "lampkind"
@@ -2652,7 +2585,6 @@
     "stun gun": {
         "base": true,
         "power": 50,
-        "weight": 3,
         "size": 4,
         "kinds": [
             "stungunkind"
@@ -2697,7 +2629,6 @@
     "heavy-duty taser": {
         "base": true,
         "power": 80,
-        "weight": 6,
         "size": 5,
         "kinds": [
             "stungunkind"
@@ -2744,7 +2675,6 @@
     "basketball": {
         "base": true,
         "power": 8,
-        "weight": 5,
         "size": 7,
         "kinds": [
             "ballkind"
@@ -2783,7 +2713,6 @@
     "football": {
         "base": true,
         "power": 6,
-        "weight": 5,
         "size": 7,
         "kinds": [
             "ballkind"
@@ -2821,7 +2750,6 @@
     "dodgeball": {
         "base": true,
         "power": 16,
-        "weight": 4,
         "size": 6,
         "kinds": [
             "ballkind"
@@ -2862,7 +2790,6 @@
     "bowling ball": {
         "base": true,
         "power": 12,
-        "weight": 40,
         "size": 6,
         "kinds": [
             "ballkind"
@@ -2901,7 +2828,6 @@
     "rake": {
         "base": true,
         "power": 8,
-        "weight": 5,
         "size": 10,
         "kinds": [
             "rakekind"
@@ -2937,7 +2863,6 @@
     "wooden plank": {
         "base": true,
         "power": 10,
-        "weight": 10,
         "size": 10,
         "kinds": [
             "plankkind"
@@ -2973,7 +2898,6 @@
     "brass knuckles": {
         "base": true,
         "power": 17,
-        "weight": 16,
         "size": 2,
         "kinds": [
             "glovekind",
@@ -3014,7 +2938,6 @@
     "sap": {
         "base": true,
         "power": 21,
-        "weight": 16,
         "size": 2,
         "kinds": [
             "glovekind"
@@ -3049,7 +2972,6 @@
     "caestus": {
         "base": true,
         "power": 29,
-        "weight": 16,
         "size": 2,
         "kinds": [
             "glovekind",
@@ -3086,7 +3008,6 @@
     "mittens": {
         "base": true,
         "power": 3,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "glovekind"
@@ -3128,7 +3049,6 @@
     "gloves": {
         "base": true,
         "power": 4,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "glovekind"
@@ -3171,7 +3091,6 @@
     "silver fork": {
         "base": true,
         "power": 2,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "forkkind"
@@ -3209,7 +3128,6 @@
     "trident": {
         "base": true,
         "power": 55,
-        "weight": 10,
         "size": 15,
         "kinds": [
             "forkkind",
@@ -3259,7 +3177,6 @@
     "tuning fork": {
         "base": true,
         "power": 9,
-        "weight": 7,
         "size": 1,
         "kinds": [
             "forkkind"
@@ -3295,7 +3212,6 @@
     "pitch fork": {
         "base": true,
         "power": 26,
-        "weight": 10,
         "size": 15,
         "kinds": [
             "forkkind",
@@ -3340,7 +3256,6 @@
     "walking cane": {
         "base": true,
         "power": 10,
-        "weight": 4,
         "size": 8,
         "kinds": [
             "canekind"
@@ -3380,7 +3295,6 @@
     "bull-penis cane": {
         "base": true,
         "power": 36,
-        "weight": 10,
         "size": 8,
         "kinds": [
             "canekind"
@@ -3423,7 +3337,6 @@
     "candy cane": {
         "base": true,
         "power": 5,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "canekind"
@@ -3465,7 +3378,6 @@
     "curling iron": {
         "base": true,
         "power": 6,
-        "weight": 3,
         "size": 3,
         "kinds": [
             "curlingironkind"
@@ -3506,7 +3418,6 @@
     "chain": {
         "base": true,
         "power": 18,
-        "weight": 35,
         "size": 11,
         "kinds": [
             "chainkind"
@@ -3547,7 +3458,6 @@
     "bike chain": {
         "base": true,
         "power": 8,
-        "weight": 15,
         "size": 6,
         "kinds": [
             "chainkind"
@@ -3584,7 +3494,6 @@
     "key chain": {
         "base": true,
         "power": 2,
-        "weight": 2,
         "size": 1,
         "kinds": [
             "chainkind"
@@ -3625,7 +3534,6 @@
     "knife": {
         "base": true,
         "power": 10,
-        "weight": 5,
         "size": 3,
         "kinds": [
             "knifekind"
@@ -3665,7 +3573,6 @@
     "butcher knife": {
         "base": true,
         "power": 29,
-        "weight": 9,
         "size": 4,
         "kinds": [
             "knifekind",
@@ -3708,7 +3615,6 @@
     "edgy knife": {
         "base": true,
         "power": 15,
-        "weight": 5,
         "size": 3,
         "kinds": [
             "knifekind"
@@ -3748,7 +3654,6 @@
     "table leg": {
         "base": true,
         "power": 12,
-        "weight": 8,
         "size": 10,
         "kinds": [
             "tablelegkind"
@@ -3787,7 +3692,6 @@
         "base": true,
         "power": 30,
         "inheritpower": 100,
-        "weight": 8,
         "size": 10,
         "kinds": [
             "tablelegkind",
@@ -3825,7 +3729,6 @@
     "shotgun": {
         "base": true,
         "power": 200,
-        "weight": 10,
         "size": 10,
         "kinds": [
             "shotgunkind"
@@ -3862,7 +3765,6 @@
     "double-barreled shotgun": {
         "base": true,
         "power": 222,
-        "weight": 10,
         "size": 10,
         "kinds": [
             "shotgunkind"
@@ -3905,7 +3807,6 @@
     "sewing needles": {
         "base": true,
         "power": 10,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "needlekind"
@@ -3944,7 +3845,6 @@
     "knitting needles": {
         "base": true,
         "power": 10,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "needlekind"
@@ -3981,7 +3881,6 @@
     "5-pound dumbbell": {
         "base": true,
         "power": 5,
-        "weight": 5,
         "size": 3,
         "kinds": [
             "dumbbellkind"
@@ -4027,7 +3926,6 @@
     "15-pound dumbbell": {
         "base": true,
         "power": 15,
-        "weight": 15,
         "size": 5,
         "kinds": [
             "dumbbellkind"
@@ -4073,7 +3971,6 @@
     "100-pound dumbbell": {
         "base": true,
         "power": 100,
-        "weight": 100,
         "size": 30,
         "kinds": [
             "dumbbellkind"
@@ -4124,7 +4021,6 @@
     "hockey stick": {
         "base": true,
         "power": 21,
-        "weight": 8,
         "size": 10,
         "kinds": [
             "hockeystickkind"
@@ -4163,7 +4059,6 @@
     "vacuum cleaner": {
         "base": true,
         "power": 9,
-        "weight": 12,
         "size": 8,
         "kinds": [
             "vacuumkind",
@@ -4204,7 +4099,6 @@
     "mop": {
         "base": true,
         "power": 10,
-        "weight": 6,
         "size": 10,
         "kinds": [
             "mopkind"
@@ -4246,7 +4140,6 @@
     "trophy": {
         "base": true,
         "power": 32,
-        "weight": 32,
         "size": 6,
         "kinds": [
             "trophykind"
@@ -4287,7 +4180,6 @@
     "fancy+santa": {
         "base": true,
         "power": 47,
-        "weight": 8,
         "size": 5,
         "kinds": [
             "fancysantakind"
@@ -4328,7 +4220,6 @@
     "ladle": {
         "base": true,
         "power": 7,
-        "weight": 3,
         "size": 2,
         "kinds": [
             "ladlekind",
@@ -4368,7 +4259,6 @@
     "extension cable": {
         "base": true,
         "power": 11,
-        "weight": 15,
         "size": 15,
         "kinds": [
             "cordkind"
@@ -4408,7 +4298,6 @@
     "rope": {
         "base": true,
         "power": 10,
-        "weight": 10,
         "size": 10,
         "kinds": [
             "cordkind",
@@ -4447,7 +4336,6 @@
     "clothing iron": {
         "base": true,
         "power": 12,
-        "weight": 9,
         "size": 5,
         "kinds": [
             "ironkind"
@@ -4489,7 +4377,6 @@
     "hack saw": {
         "base": true,
         "power": 13,
-        "weight": 6,
         "size": 3,
         "kinds": [
             "sawkind"
@@ -4527,7 +4414,6 @@
     "ice skates": {
         "base": true,
         "power": 10,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "iceskatekind"
@@ -4573,7 +4459,6 @@
     "pipe wrench": {
         "base": true,
         "power": 23,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "wrenchkind"
@@ -4613,7 +4498,6 @@
     "umbrella": {
         "base": true,
         "power": 19,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "umbrellakind"
@@ -4654,7 +4538,6 @@
     "bed": {
         "base": true,
         "power": 19,
-        "weight": 50,
         "size": 45,
         "kinds": [
             "furniturekind"
@@ -4695,7 +4578,6 @@
     "dresser": {
         "base": true,
         "power": 35,
-        "weight": 50,
         "size": 35,
         "kinds": [
             "furniturekind"
@@ -4730,7 +4612,6 @@
     "pillow": {
         "base": true,
         "power": 7,
-        "weight": 1,
         "size": 5,
         "kinds": [
             "pillowkind"
@@ -4775,7 +4656,6 @@
     "blanket": {
         "base": true,
         "power": 7,
-        "weight": 5,
         "size": 16,
         "kinds": [
             "tarpkind"
@@ -4817,7 +4697,6 @@
     "refrigerator": {
         "base": true,
         "power": 33,
-        "weight": 70,
         "size": 45,
         "kinds": [
             "appliancekind"
@@ -4856,7 +4735,6 @@
     "oven": {
         "base": true,
         "power": 45,
-        "weight": 70,
         "size": 40,
         "kinds": [
             "appliancekind"
@@ -4896,7 +4774,6 @@
     "pot": {
         "base": true,
         "power": 9,
-        "weight": 15,
         "size": 6,
         "kinds": [
             "potkind"
@@ -4933,7 +4810,6 @@
     "frying pan": {
         "base": true,
         "power": 11,
-        "weight": 15,
         "size": 6,
         "kinds": [
             "pankind"
@@ -4976,7 +4852,6 @@
     "sink": {
         "base": true,
         "power": 19,
-        "weight": 40,
         "size": 25,
         "kinds": [
             "appliancekind"
@@ -5012,7 +4887,6 @@
     "plate": {
         "base": true,
         "power": 4,
-        "weight": 3,
         "size": 5,
         "kinds": [
             "disckind"
@@ -5046,7 +4920,6 @@
     "cup": {
         "base": true,
         "power": 3,
-        "weight": 3,
         "size": 4,
         "kinds": [
             "cupkind"
@@ -5078,7 +4951,6 @@
     "mug": {
         "base": true,
         "power": 4,
-        "weight": 5,
         "size": 5,
         "kinds": [
             "cupkind"
@@ -5110,7 +4982,6 @@
     "table": {
         "base": true,
         "power": 30,
-        "weight": 40,
         "size": 30,
         "kinds": [
             "furniturekind"
@@ -5145,7 +5016,6 @@
         "base": true,
         "power": 20,
         "inheritpower": 413,
-        "weight": 40,
         "size": 30,
         "kinds": [
             "furniturekind"
@@ -5195,7 +5065,6 @@
         "base": true,
         "power": 6,
         "inheritpower": 300,
-        "weight": 5,
         "size": 3,
         "kinds": [
             "furniturekind"
@@ -5234,7 +5103,6 @@
     "toilet": {
         "base": true,
         "power": 24,
-        "weight": 35,
         "size": 30,
         "kinds": [
             "appliancekind"
@@ -5282,7 +5150,6 @@
     "bath tub": {
         "base": true,
         "power": 32,
-        "weight": 60,
         "size": 40,
         "kinds": [
             "appliancekind"
@@ -5324,7 +5191,6 @@
     "shower": {
         "base": true,
         "power": 37,
-        "weight": 60,
         "size": 40,
         "kinds": [
             "appliancekind"
@@ -5364,7 +5230,6 @@
     "fireplace": {
         "base": true,
         "power": 65,
-        "weight": 210,
         "size": 70,
         "kinds": [
             "furniturekind"
@@ -5410,7 +5275,6 @@
     "bench": {
         "base": true,
         "power": 25,
-        "weight": 31,
         "size": 23,
         "kinds": [
             "furniturekind"
@@ -5444,7 +5308,6 @@
     "arm chair": {
         "base": true,
         "power": 34,
-        "weight": 51,
         "size": 41,
         "kinds": [
             "furniturekind"
@@ -5481,7 +5344,6 @@
     "couch": {
         "base": true,
         "power": 34,
-        "weight": 43,
         "size": 56,
         "kinds": [
             "furniturekind"
@@ -5515,7 +5377,6 @@
     "television": {
         "base": true,
         "power": 16,
-        "weight": 43,
         "size": 16,
         "kinds": [
             "furniturekind"
@@ -5550,7 +5411,6 @@
     "washing machine": {
         "base": true,
         "power": 25,
-        "weight": 75,
         "size": 50,
         "kinds": [
             "appliancekind"
@@ -5588,7 +5448,6 @@
     "drying machine": {
         "base": true,
         "power": 25,
-        "weight": 75,
         "size": 50,
         "kinds": [
             "appliancekind"
@@ -5626,7 +5485,6 @@
     "ballpoint pen": {
         "base": true,
         "power": 5,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "penkind"
@@ -5662,7 +5520,6 @@
     "#2 pencil": {
         "base": true,
         "power": 5,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "penkind"
@@ -5704,7 +5561,6 @@
     "stapler": {
         "base": true,
         "power": 9,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "staplerkind"
@@ -5741,7 +5597,6 @@
     "fax machine": {
         "base": true,
         "power": 30,
-        "weight": 25,
         "size": 20,
         "kinds": [
             "appliancekind"
@@ -5778,7 +5633,6 @@
     "copying machine": {
         "base": true,
         "power": 40,
-        "weight": 50,
         "size": 35,
         "kinds": [
             "appliancekind"
@@ -5817,7 +5671,6 @@
     "exercise ball": {
         "base": true,
         "power": 6,
-        "weight": 15,
         "size": 15,
         "kinds": [
             "ballkind"
@@ -5856,7 +5709,6 @@
     "water bottle": {
         "base": true,
         "power": 4,
-        "weight": 4,
         "size": 2,
         "kinds": [
             "bottlekind"
@@ -5899,7 +5751,6 @@
     "steroid bottle": {
         "base": true,
         "power": 10,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "bottlekind"
@@ -5937,7 +5788,6 @@
     "boxing gloves": {
         "base": true,
         "power": 20,
-        "weight": 2,
         "size": 5,
         "kinds": [
             "glovekind",
@@ -5988,7 +5838,6 @@
     "miku figurine": {
         "base": true,
         "power": 6,
-        "weight": 2,
         "size": 4,
         "kinds": [
             "statuekind"
@@ -6032,7 +5881,6 @@
     "anime dvd": {
         "base": true,
         "power": 6,
-        "weight": 2,
         "size": 2,
         "kinds": [
             "disckind"
@@ -6073,7 +5921,6 @@
     "anime poster": {
         "base": true,
         "power": 5,
-        "weight": 2,
         "size": 5,
         "kinds": [
             "paperkind"
@@ -6114,7 +5961,6 @@
     "manga": {
         "base": true,
         "power": 6,
-        "weight": 2,
         "size": 3,
         "kinds": [
             "bookkind"
@@ -6153,7 +5999,6 @@
     "bodypillow": {
         "base": true,
         "power": 8,
-        "weight": 1,
         "size": 10,
         "kinds": [
             "pillowkind"
@@ -6195,7 +6040,6 @@
     "shuriken": {
         "base": true,
         "power": 35,
-        "weight": 3,
         "size": 2,
         "kinds": [
             "throwingstarkind"
@@ -6235,7 +6079,6 @@
     "thrasher poster": {
         "base": true,
         "power": 5,
-        "weight": 2,
         "size": 5,
         "kinds": [
             "paperkind"
@@ -6277,7 +6120,6 @@
     "nirvana album": {
         "base": true,
         "power": 5,
-        "weight": 2,
         "size": 5,
         "kinds": [
             "disckind"
@@ -6317,7 +6159,6 @@
     "electric guitar": {
         "base": true,
         "power": 25,
-        "weight": 10,
         "size": 9,
         "kinds": [
             "guitarkind"
@@ -6356,7 +6197,6 @@
     "acoustic guitar": {
         "base": true,
         "power": 15,
-        "weight": 10,
         "size": 9,
         "kinds": [
             "guitarkind"
@@ -6393,7 +6233,6 @@
     "drum set": {
         "base": true,
         "power": 35,
-        "weight": 30,
         "size": 30,
         "kinds": [
             "drumkind"
@@ -6431,7 +6270,6 @@
     "atlas": {
         "base": true,
         "power": 10,
-        "weight": 4,
         "size": 5,
         "kinds": [
             "bookkind"
@@ -6467,7 +6305,6 @@
     "history book": {
         "base": true,
         "power": 10,
-        "weight": 4,
         "size": 5,
         "kinds": [
             "bookkind"
@@ -6501,7 +6338,6 @@
     "globe": {
         "base": true,
         "power": 15,
-        "weight": 5,
         "size": 7,
         "kinds": [
             "ballkind"
@@ -6538,7 +6374,6 @@
     "flute": {
         "base": true,
         "power": 11,
-        "weight": 3,
         "size": 3,
         "kinds": [
             "woodwindkind"
@@ -6571,7 +6406,6 @@
     "saxophone": {
         "base": true,
         "power": 13,
-        "weight": 16,
         "size": 7,
         "kinds": [
             "woodwindkind"
@@ -6610,7 +6444,6 @@
     "grand piano": {
         "base": true,
         "power": 46,
-        "weight": 60,
         "size": 40,
         "kinds": [
             "furniturekind"
@@ -6651,7 +6484,6 @@
     "headphones": {
         "base": true,
         "power": 6,
-        "weight": 3,
         "size": 5,
         "kinds": [
             "headphonekind"
@@ -6694,7 +6526,6 @@
     "empty wrapper": {
         "base": true,
         "power": 1,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "paperkind"
@@ -6732,7 +6563,6 @@
     "empty soda can": {
         "base": true,
         "power": 1,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "cankind"
@@ -6771,7 +6601,6 @@
     "plastic bag": {
         "base": true,
         "power": 1,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "bagkind"
@@ -6810,7 +6639,6 @@
     "sord": {
         "base": true,
         "power": 1,
-        "weight": 7,
         "size": 7,
         "kinds": [
             "bladekind"
@@ -6845,7 +6673,6 @@
     "virtual+reality headset": {
         "base": true,
         "power": 12,
-        "weight": 7,
         "size": 5,
         "kinds": [
             "hatkind"
@@ -6891,7 +6718,6 @@
     "smart phone": {
         "base": true,
         "power": 8,
-        "weight": 2,
         "size": 2,
         "kinds": [
             "cubekind"
@@ -6927,7 +6753,6 @@
     "rc drone": {
         "base": true,
         "power": 10,
-        "weight": 5,
         "size": 11,
         "kinds": [
             "cubekind"
@@ -6968,7 +6793,6 @@
     "gaming computer": {
         "base": true,
         "power": 30,
-        "weight": 15,
         "size": 18,
         "kinds": [
             "appliancekind"
@@ -7013,7 +6837,6 @@
     "graphics card": {
         "base": true,
         "power": 12,
-        "weight": 5,
         "size": 5,
         "kinds": [
             "cardkind"
@@ -7058,7 +6881,6 @@
     "cowboy hat": {
         "base": true,
         "power": 8,
-        "weight": 3,
         "size": 5,
         "kinds": [
             "hatkind"
@@ -7106,7 +6928,6 @@
     "cowboy boots": {
         "base": true,
         "power": 8,
-        "weight": 3,
         "size": 5,
         "kinds": [
             "shoekind"
@@ -7152,7 +6973,6 @@
     "bandana": {
         "base": true,
         "power": 14,
-        "weight": 3,
         "size": 5,
         "kinds": [
             "hatkind"
@@ -7194,7 +7014,6 @@
     "clown shoes": {
         "base": true,
         "power": 9,
-        "weight": 3,
         "size": 6,
         "kinds": [
             "shoekind"
@@ -7239,7 +7058,6 @@
     "clown nose": {
         "base": true,
         "power": 10,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "ballkind"
@@ -7285,7 +7103,6 @@
         "base": true,
         "code": "00080020",
         "power": 15,
-        "weight": 1,
         "size": 1,
         "kinds": [
             "statuekind"
@@ -7324,7 +7141,6 @@
         "base": true,
         "code": "CuPA8LpQ",
         "power": 5,
-        "weight": 2,
         "size": 5,
         "kinds": [
             "paperkind"
@@ -7363,7 +7179,6 @@
         "base": true,
         "code": "CuP28LnQ",
         "power": 5,
-        "weight": 2,
         "size": 5,
         "kinds": [
             "paperkind"
@@ -7400,7 +7215,6 @@
     "red faygo": {
         "base": true,
         "power": 11,
-        "weight": 4,
         "size": 3,
         "kinds": [
             "bottlekind"
@@ -7441,7 +7255,6 @@
     "grape faygo": {
         "base": true,
         "power": 11,
-        "weight": 4,
         "size": 3,
         "kinds": [
             "bottlekind"
@@ -7480,7 +7293,6 @@
     "cola faygo": {
         "base": true,
         "power": 11,
-        "weight": 4,
         "size": 3,
         "kinds": [
             "bottlekind"
@@ -7520,7 +7332,6 @@
     "cotton+candy faygo": {
         "base": true,
         "power": 21,
-        "weight": 4,
         "size": 3,
         "kinds": [
             "bottlekind"
@@ -7560,7 +7371,6 @@
     "kiwi+strawberry faygo": {
         "base": true,
         "power": 21,
-        "weight": 4,
         "size": 3,
         "kinds": [
             "bottlekind"
@@ -7603,7 +7413,6 @@
     "candy+apple faygo": {
         "base": true,
         "power": 105,
-        "weight": 4,
         "size": 3,
         "kinds": [
             "bottlekind"

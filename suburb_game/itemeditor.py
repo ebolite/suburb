@@ -18,7 +18,7 @@ class ItemEditor():
         suburb.new_scene()
         self.draw_name_and_adjectives()
         self.draw_code()
-        self.draw_power_weight_size()
+        self.draw_power_size()
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)
@@ -60,8 +60,8 @@ class ItemEditor():
         valid_label.fontsize = 16
         valid_label.bind_to(code_box)
 
-    def draw_power_weight_size(self):
-        power_box = render.InputTextBox(0.3, 0.23, w=128, h=32)
+    def draw_power_size(self):
+        power_box = render.InputTextBox(0.35, 0.23, w=128, h=32)
         power_box.numbers_only = True
         power_box.text = str(self.power)
         def power_box_func():
@@ -76,7 +76,7 @@ class ItemEditor():
         power_tooltip_label_line2 = self.make_label(0, 40, "Paper: 1; Lamp: 11; Toilet: 24; Bathtub: 32; Fireplace: 65", power_tooltip)
         power_tooltip_label_line2.absolute = True
         #
-        inheritpower_box = render.InputTextBox(0.45, 0.23, w=128, h=32)
+        inheritpower_box = render.InputTextBox(0.5, 0.23, w=128, h=32)
         inheritpower_box.numbers_only = True
         inheritpower_box.text = str(self.inheritpower)
         def inheritpower_box_func():
@@ -90,6 +90,17 @@ class ItemEditor():
         inheritpower_tooltip_label_line1.absolute = True
         inheritpower_tooltip_label_line2 = self.make_label(0, 40, "Examples: Yoyo: 10; Chainsaw: 30; Statue of Liberty: 250; Clock: 300", inheritpower_tooltip)
         inheritpower_tooltip_label_line2.absolute = True
+        #
+        size_box = render.InputTextBox(0.6, 0.23, w=128, h=32)
+        size_box.numbers_only = True
+        size_box.text = str(self.size)
+        def size_box_func():
+            self.size = int(size_box.text)
+        size_box.key_press_func = size_box_func
+        size_label = self.make_label(0.65, 1.4, "size", size_box)
+        size_tooltip = render.ToolTip(0, 0, 128, 32)
+        size_tooltip_label = self.make_label(0, 20, "Examples: Paper: 1; Knife: 2; Baseball Bat: 10; Zweihander: 20; Toilet: 30; Refrigerator: 45", size_tooltip)
+        size_tooltip_label.absolute = True
 
     def make_label(self, x, y, text, binding) -> "render.Text":
         label = render.Text(x, y, text)
