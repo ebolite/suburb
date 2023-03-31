@@ -1098,7 +1098,7 @@ def map_scene():
     portfolio_button.fill_color = themes.strife.dark
     portfolio_button.text_color = themes.strife.light
     portfolio_button.outline_color = themes.strife.black
-    if player_data["entered"]:
+    if player_data["entered"] or player_data["overmap_name"] in ["prospit", "derse", "prospitmoon", "dersemoon"]:
         overmap_button = render.TextButton(0.9, 0.1, 196, 64, ">OVERMAP", overmap)
     log = render.LogWindow(map_scene, tilemap=tilemap, draw_console=True)
 
@@ -1115,9 +1115,17 @@ def overmap():
     theme_name = reply["theme"]
     illegal_moves = reply["illegal_moves"]
     title = reply["title"]
+    overmap_type = reply["overmap_type"]
+    print(f"overmap type {overmap_type}")
+    if overmap_type == "kingdom" or overmap_type == "moon":
+        block_image_path = "sprites/overmap/moon_block.png"
+        water_image_path = "sprites/overmap/moon_water.png"
+    else:
+        block_image_path = "sprites/overmap/block.png"
+        water_image_path = "sprites/overmap/water.png"
     theme = themes.themes[theme_name]
     background = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
-    overmap = render.Overmap(0.5, 0.75, map_tiles, map_specials, map_types, illegal_moves=illegal_moves, theme=theme)
+    overmap = render.Overmap(0.5, 0.75, map_tiles, map_specials, map_types, illegal_moves=illegal_moves, theme=theme, block_path=block_image_path, water_path=water_image_path)
     backbutton = render.Button(0.1, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", map_scene, theme=theme)
     render.always_on_top_check.append(backbutton)
     render.update_check.remove(backbutton)

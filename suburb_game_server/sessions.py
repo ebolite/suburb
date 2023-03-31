@@ -238,6 +238,7 @@ class Kingdom(Overmap):
         self.overmap_type = "kingdom"
         self.kingdom_name = kingdom_name # prospit or derse
         self.theme = kingdom_name
+        self.title = kingdom_name.capitalize()
         self.gen_kingdom_map()
         self.moon_name = f"{self.name}moon"
         moon = Moon.create(self.moon_name, self)
@@ -260,8 +261,10 @@ class Moon(Overmap):
     def setup_defaults(self, name, kingdom: Kingdom):
         super().setup_defaults(name)
         self.theme = kingdom.theme
+        self.overmap_type = "moon"
         self.kingdom_name = kingdom.name
         self.player_towers: dict[str, str] = {}
+        self.title = kingdom.title
         self.tower_map_names = []
         self.gen_moon_map()
 
@@ -1362,7 +1365,8 @@ class SubPlayer(Player):
                 target_x = player_x - 1
                 target_y = player_y
             target_map = self.overmap.find_map(target_x, target_y)
-            if abs(target_map.height - self.map.height) > 1 or target_map.height == 0: illegal_moves.append(direction)
+            if not self.flying:
+                if abs(target_map.height - self.map.height) > 1 or target_map.height == 0: illegal_moves.append(direction)
         return illegal_moves
 
     def attempt_overmap_move(self, direction: str) -> bool:
@@ -1412,7 +1416,7 @@ class SubPlayer(Player):
             target_tile = map.get_tile(target_x, target_y)
             if target_tile.impassible: return False
             if direction == "up":
-                if not target_tile.stair and not current_tile.stair: return False    # obey gravity
+                if not self.flying and not target_tile.stair and not current_tile.stair: return False    # obey gravity
                 if target_tile.automove:
                     target_y -= 1
                     continue
@@ -1435,22 +1439,23 @@ class SubPlayer(Player):
                     continue
             break
         # fall
-        while not target_tile.stair:
-            fall_tile = map.get_tile(target_x, target_y+1)
-            if fall_tile.infallible or fall_tile.impassible: break
-            # fall in opposite direction that ramps face
-            if fall_tile.ramp and fall_tile.ramp_direction == "left": 
-                target_x += 1
-                target_y += 1
-            elif fall_tile.ramp and fall_tile.ramp_direction == "right": 
-                target_x -= 1
-                target_y += 1
-            elif fall_tile.ramp and fall_tile.ramp_direction == "both":
-                if direction == "right": target_x += 1
-                if direction == "left": target_x -= 1
-            else:
-                target_y += 1
-            target_tile = map.get_tile(target_x, target_y)
+        if not self.flying:
+            while not target_tile.stair:
+                fall_tile = map.get_tile(target_x, target_y+1)
+                if fall_tile.infallible or fall_tile.impassible: break
+                # fall in opposite direction that ramps face
+                if fall_tile.ramp and fall_tile.ramp_direction == "left": 
+                    target_x += 1
+                    target_y += 1
+                elif fall_tile.ramp and fall_tile.ramp_direction == "right": 
+                    target_x -= 1
+                    target_y += 1
+                elif fall_tile.ramp and fall_tile.ramp_direction == "both":
+                    if direction == "right": target_x += 1
+                    if direction == "left": target_x -= 1
+                else:
+                    target_y += 1
+                target_tile = map.get_tile(target_x, target_y)
         new_room = map.find_room(target_x, target_y)
         # check if entered gate room
         try: 
@@ -1584,6 +1589,11 @@ class SubPlayer(Player):
     @property
     def name(self):
         return f"{self.player.id}%{self.player_type}"
+    
+    @property
+    def flying(self) -> bool:
+        if self.player_type == "dream": return True
+        return False
 
     def __getattr__(self, attr):
         try:
@@ -1938,7 +1948,6 @@ def gen_moon():
             break
         tower_points.append((towerx, towery))
     for x, y in tower_points:
-        print("placing tower")
         map_tiles = place_structure(map_tiles, x, y, tower_structure)
     return map_tiles
 
