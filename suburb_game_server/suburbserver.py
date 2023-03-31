@@ -215,6 +215,7 @@ def handle_request(dict):
         dream_self = sessions.SubPlayer.create_subplayer(new_player, "dream")
         dream_self.sleeping = True
         dream_room = new_player.kingdom.moon.spawn_player_in_tower(dream_self)
+        dream_room.map.special_type = "dreamer_tower"
         new_player.current_subplayer_type = "real"
         for interest in new_player.interests:
             room.generate_loot(tiles.get_tile(interest).get_loot_list())
