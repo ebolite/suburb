@@ -1118,7 +1118,10 @@ def overmap():
     overmap_type = reply["overmap_type"]
     if overmap_type == "kingdom" or overmap_type == "moon":
         top_block_image_path = "sprites/overmap/moon_block.png"
-        water_image_path = "sprites/overmap/moon_water.png"
+        if theme_name == "prospit":
+            water_image_path = "sprites/overmap/prospit_water.png"
+        else:
+            water_image_path = "sprites/overmap/derse_water.png"
     else:
         top_block_image_path = "sprites/overmap/block.png"
         water_image_path = "sprites/overmap/water.png"
@@ -1726,8 +1729,8 @@ if __name__ == "__main__":
     connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
-        # login_scene() # normal game start
-        test_overmap()
+        login_scene() # normal game start
+        # test_overmap()
     else:
         connection_screen()
     main()
