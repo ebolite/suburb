@@ -514,7 +514,7 @@ def alchemize_instance(code: str, player: "sessions.Player", room: "sessions.Roo
     if new_instance.item.name == "entry item":
         new_instance.color = player.color
     room.add_instance(new_instance.name)
-    player.session.add_to_excursus(new_item.name)
+    player.land.session.add_to_excursus(new_item.name)
     return True
 
 defaults = {
