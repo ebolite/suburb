@@ -44,6 +44,7 @@ def all_maps_in_folder(folder): # returns a list of all of the maps in a folder
 file_map_tiles["house"] = all_maps_in_folder("house")
 file_map_tiles["land"] = all_maps_in_folder("land")
 file_map_tiles["gateframe"] = all_maps_in_folder("gateframe")
+empty_map = map_from_file("empty.txt")
 
 class Session():
     def __new__(cls, name) -> Optional["Session"]:
@@ -464,7 +465,7 @@ class Map():
                     map = deepcopy(random.choice(file_map_tiles["land"]))
                     self.overmaptile = "#"
                 else:
-                    map = map_from_file("empty.txt")
+                    map = deepcopy(empty_map)
         self.map_tiles = map
 
     def gen_rooms(self):
