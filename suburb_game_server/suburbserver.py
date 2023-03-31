@@ -213,6 +213,7 @@ def handle_request(dict):
         real_self = sessions.SubPlayer.create_subplayer(new_player, "real")
         real_self.goto_room(room)
         dream_self = sessions.SubPlayer.create_subplayer(new_player, "dream")
+        dream_self.sleeping = True
         dream_room = new_player.kingdom.moon.spawn_player_in_tower(dream_self)
         new_player.current_subplayer_type = "real"
         for interest in new_player.interests:

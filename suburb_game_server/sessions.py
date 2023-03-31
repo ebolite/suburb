@@ -944,9 +944,13 @@ class Player():
 
     def sleep(self):
         if self.current_subplayer_type == "real":
+            self.current_subplayer.sleeping = True
             self.current_subplayer_type = "dream"
+            self.current_subplayer.sleeping = False
         elif self.current_subplayer_type == "dream":
+            self.current_subplayer.sleeping = True
             self.current_subplayer_type = "real"
+            self.current_subplayer.sleeping = False
 
     def add_unclaimed_grist(self, spoils_dict: dict):
         for grist_name, amount in spoils_dict.items():
@@ -1190,6 +1194,7 @@ class SubPlayer(Player):
         self.wielding: Optional[str] = None
         self.worn_instance_name: Optional[str] = None
         self.player_type = player_type
+        self.sleeping = False
 
     @property
     def player(self) -> Player:
