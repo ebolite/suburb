@@ -68,13 +68,6 @@ class ItemEditor():
             self.power = int(power_box.text)
         power_box.key_press_func = power_box_func
         power_label = self.make_label(0.5, 1.4, "power", power_box)
-        power_tooltip = render.ToolTip(0, 0, 128, 32)
-        power_tooltip.bind_to(power_box)
-        power_tooltip.make_always_on_top()
-        power_tooltip_label_line1 = self.make_label(0, 20, "Examples: Spoon: 2; Knife: 10; Baseball Bat: 20; Sword: 40; Pistol: 100", power_tooltip)
-        power_tooltip_label_line1.absolute = True
-        power_tooltip_label_line2 = self.make_label(0, 40, "Paper: 1; Lamp: 11; Toilet: 24; Bathtub: 32; Fireplace: 65", power_tooltip)
-        power_tooltip_label_line2.absolute = True
         #
         inheritpower_box = render.InputTextBox(0.5, 0.23, w=128, h=32)
         inheritpower_box.numbers_only = True
@@ -83,25 +76,37 @@ class ItemEditor():
             self.inheritpower = int(inheritpower_box.text)
         inheritpower_box.key_press_func = inheritpower_box_func
         inheritpower_label = self.make_label(0.5, 1.4, "inherited power", inheritpower_box)
-        inheritpower_tooltip = render.ToolTip(0, 0, 128, 32)
-        inheritpower_tooltip.bind_to(inheritpower_box)
-        inheritpower_tooltip.make_always_on_top()
-        inheritpower_tooltip_label_line1 = self.make_label(0, 20, "This is how metaphorically powerful or cool the item is. Usually 0.", inheritpower_tooltip)
-        inheritpower_tooltip_label_line1.absolute = True
-        inheritpower_tooltip_label_line2 = self.make_label(0, 40, "Examples: Yoyo: 10; Chainsaw: 30; Statue of Liberty: 250; Clock: 300", inheritpower_tooltip)
-        inheritpower_tooltip_label_line2.absolute = True
         #
-        size_box = render.InputTextBox(0.6, 0.23, w=128, h=32)
+        size_box = render.InputTextBox(0.65, 0.23, w=128, h=32)
         size_box.numbers_only = True
         size_box.text = str(self.size)
         def size_box_func():
             self.size = int(size_box.text)
         size_box.key_press_func = size_box_func
-        size_label = self.make_label(0.65, 1.4, "size", size_box)
+        size_label = self.make_label(0.5, 1.4, "size", size_box)
+        #
+        power_tooltip = render.ToolTip(0, 0, 128, 32)
+        power_tooltip.bind_to(power_box)
+        power_tooltip_label_line1 = self.make_label(0, 20, "Examples: Spoon: 2; Knife: 10; Baseball Bat: 20; Sword: 40; Pistol: 100", power_tooltip)
+        power_tooltip_label_line1.absolute = True
+        power_tooltip_label_line2 = self.make_label(0, 40, "Paper: 1; Lamp: 11; Toilet: 24; Bathtub: 32; Fireplace: 65", power_tooltip)
+        power_tooltip_label_line2.absolute = True
+        inheritpower_tooltip = render.ToolTip(0, 0, 128, 32)
+        inheritpower_tooltip.bind_to(inheritpower_box)
+        inheritpower_tooltip_label_line1 = self.make_label(-300, 20, "This is how metaphorically powerful or cool the item is. Usually 0.", inheritpower_tooltip)
+        inheritpower_tooltip_label_line1.absolute = True
+        inheritpower_tooltip_label_line2 = self.make_label(-300, 40, "Examples: Yoyo: 10; Chainsaw: 30; Statue of Liberty: 250; Clock: 300", inheritpower_tooltip)
+        inheritpower_tooltip_label_line2.absolute = True
         size_tooltip = render.ToolTip(0, 0, 128, 32)
-        size_tooltip_label = self.make_label(0, 20, "Examples: Paper: 1; Knife: 2; Baseball Bat: 10; Zweihander: 20; Toilet: 30; Refrigerator: 45", size_tooltip)
+        size_tooltip.bind_to(size_box)
+        size_tooltip_label = self.make_label(-450, 20, "Examples: Paper: 1; Knife: 2; Baseball Bat: 10; Zweihander: 20; Toilet: 30; Refrigerator: 45", size_tooltip)
         size_tooltip_label.absolute = True
-
+        power_tooltip_label_line1.make_always_on_top()
+        power_tooltip_label_line2.make_always_on_top()
+        inheritpower_tooltip_label_line1.make_always_on_top()
+        inheritpower_tooltip_label_line2.make_always_on_top()
+        size_tooltip_label.make_always_on_top()
+        
     def make_label(self, x, y, text, binding) -> "render.Text":
         label = render.Text(x, y, text)
         label.bind_to(binding)
