@@ -713,8 +713,9 @@ class Room():
             out_dict[npc_name] = npc.get_dict()
         return out_dict
     
-    def get_players(self) -> list:
-        return [SubPlayer.from_name(player_name).nickname for player_name in self.players]
+    def get_players(self) -> dict[str, dict]:
+        subplayers = [SubPlayer.from_name(player_name) for player_name in self.players]
+        return {subplayer.name:subplayer.get_dict() for subplayer in subplayers}
 
     def deploy_phernalia(self, client: "Player", item_name: str) -> bool:
         if item_name not in client.available_phernalia: print("not in phernalia"); return False
@@ -805,7 +806,7 @@ class Room():
         special_dict = {}
         for player_name in self.players:
             player = SubPlayer.from_name(player_name)
-            special_dict[player.calledby] = ("player", player.symbol_dict["color"])
+            special_dict[player_name] = ("player", player.symbol_dict["color"])
         for instance_name in self.instances:
             instance = alchemy.Instance(instance_name)
             if instance.item.name in config.special_items:
@@ -1221,6 +1222,7 @@ class SubPlayer(Player):
         leeching = self.leeching
         out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
         out["name"] = self.name
+        out["nickname"] = self.nickname
         return out
 
     def assign_specibus(self, kind_name) -> bool:
@@ -1524,12 +1526,12 @@ class SubPlayer(Player):
         assert self.map_name is not None
         return Map(self.map_name, self.session, self.overmap)
     
-    def get_view(self, view_tiles=6) -> tuple[list, dict, dict, dict, list, dict]:
+    def get_view(self, view_tiles=6) -> tuple[list, dict, dict, dict, dict, dict]:
         map_tiles, map_specials = self.map.get_view(self.room.x, self.room.y, view_tiles)
         room_instances = self.room.get_instances()
         room_npcs = self.room.get_npcs()
         room_players = self.room.get_players()
-        if self.nickname in room_players: room_players.remove(self.nickname)
+        if self.name in room_players: room_players.pop(self.name)
         if self.strife is None: strife = {}
         else: strife = self.strife.get_dict()
         return map_tiles, map_specials, room_instances, room_npcs, room_players, strife
