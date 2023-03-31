@@ -1509,6 +1509,16 @@ class Overmap(UIElement):
         self.block_image = pygame.image.load(block_path).convert()
         self.block_image = self.convert_to_theme(self.block_image)
         self.block_image.set_colorkey(pygame.Color(0, 0, 0))
+        self.up_block_image = pygame.image.load("sprites/overmap/up_edge_block.png").convert()
+        self.up_block_image = self.convert_to_theme(self.up_block_image)
+        self.up_block_image.set_colorkey(pygame.Color(0, 0, 0))
+        self.right_block_image = pygame.image.load("sprites/overmap/right_edge_block.png").convert()
+        self.right_block_image = self.convert_to_theme(self.right_block_image)
+        self.right_block_image.set_colorkey(pygame.Color(0, 0, 0))
+        self.both_block_image = pygame.image.load("sprites/overmap/both_edge_block.png").convert()
+        self.both_block_image = self.convert_to_theme(self.both_block_image)
+        self.both_block_image.set_colorkey(pygame.Color(0, 0, 0))
+
         self.top_block_image = pygame.image.load(top_block_path).convert()
         self.top_block_image = self.convert_to_theme(self.top_block_image)
         self.top_block_image.set_colorkey(pygame.Color(0, 0, 0))
@@ -1583,11 +1593,21 @@ class Overmap(UIElement):
                 draw_tiles = np.rot90(self.map_tiles, 3, axes=(0, 1))
             case _:
                 draw_tiles = self.map_tiles
+        self.draw_tiles: list[list[str]] = list(draw_tiles)
+        last_x_char = "0"
         for y, line in enumerate(draw_tiles):
             for x, char in enumerate(reversed(line)):
-                overmap_tile = OvermapTile(x, y, int(char), self)
+                if int(last_x_char) < int(char): right_edge = True
+                else: right_edge = False
+                last_line = list(draw_tiles)[y-1]
+                last_line = list(reversed(last_line))
+                if int(last_line[x]) < int(char): 
+                    up_edge = True
+                else: up_edge = False
+                overmap_tile = OvermapTile(x, y, int(char), self, up_edge, right_edge)
                 overmap_tile.blit_surf = self.surf
                 overmap_tile.draw_to_surface(rotation)
+                last_x_char = char
 
     def update(self):
         self.mousepan(0)
@@ -1624,11 +1644,13 @@ class Overmap(UIElement):
         return len(self.map_tiles[0])//2, len(self.map_tiles)//2
 
 class OvermapTile(UIElement):
-    def __init__(self, x, y, height:int, overmap: Overmap):
+    def __init__(self, x, y, height:int, overmap: Overmap, up_edge: bool, right_edge: bool):
         self.x = x
         self.y = y
         self.height = height
         self.overmap = overmap
+        self.up_edge = up_edge
+        self.right_edge = right_edge
 
     def get_button_func(self, input_dx, input_dy, rotation):
         def button_func():
@@ -1661,6 +1683,13 @@ class OvermapTile(UIElement):
                 # top of stack
                 if i == self.height-1: 
                     self.blit_surf.blit(self.overmap.top_block_image, ((draw_x, draw_y)))
+                    if self.right_edge and self.up_edge:
+                        print("blitting both")
+                        self.blit_surf.blit(self.overmap.both_block_image, ((draw_x, draw_y)))
+                    elif self.right_edge:
+                        self.blit_surf.blit(self.overmap.right_block_image, ((draw_x, draw_y)))
+                    elif self.up_edge:
+                        self.blit_surf.blit(self.overmap.up_block_image, ((draw_x, draw_y)))
                 else: 
                     self.blit_surf.blit(self.overmap.block_image, ((draw_x, draw_y)))
                 draw_y -= 16
@@ -1716,7 +1745,7 @@ class OvermapTile(UIElement):
     
     @property
     def tile(self) -> str:
-        return self.overmap.map_tiles[self.y][self.x]
+        return self.overmap.draw_tiles[self.y][self.x]
 
 class CaptchalogueButton(Button):
     def __init__(self, x, y, instance_name: str, instances: dict):
