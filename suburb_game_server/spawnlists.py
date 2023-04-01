@@ -34,8 +34,8 @@ class SpawnList():
         else: return None
 
     @classmethod
-    def create_spawnlist(cls, name: str) -> Optional["SpawnList"]:
-        if name in util.spawnlists: return None
+    def create_spawnlist(cls, name: str) -> "SpawnList":
+        if name in util.spawnlists: return cls(name)
         util.spawnlists[name] = {}
         spawnlist = cls(name)
         spawnlist.setup_defaults(name)
@@ -89,18 +89,12 @@ class SpawnList():
                     output.append(random.choice(self.exotic))
         return output
     
+interests = ["ill jams", "nuclear physics", "classy", "baking", "guns", "wizards", "comedy", "nature", "horror", "terrible movies", "paranormal", "magic",
+             "dead things", "amateur photography", "zoologically dubious", "creative writing", "psychoanalysis", "horticulture", "nostalgic cartoons", "furry",
+             "squiddles"]
+
 if __name__ == "__main__":
-    for tile_name in config.itemcategoryrarities:
-        new_spawnlist = SpawnList.create_spawnlist(tile_name)
-        if new_spawnlist is not None:
-            rarities: dict = config.itemcategoryrarities[tile_name]
-            always = rarities.get("always", [])
-            common = rarities.get("common", [])
-            uncommon = rarities.get("uncommon", [])
-            rare = rarities.get("rare", [])
-            exotic = rarities.get("exotic", [])
-            new_spawnlist.set_loot(always, common, uncommon, rare, exotic)
-    for interest_name in config.interests:
-        interest_spawnlist = SpawnList(interest_name)
+    for interest_name in interests:
+        interest_spawnlist = SpawnList.create_spawnlist(interest_name)
         interest_spawnlist.spawnlist_type = "interest"
     util.writejson(util.spawnlists, "spawnlists")

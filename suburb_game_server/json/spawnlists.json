@@ -926,5 +926,173 @@
         "exotic": [
             "pepper spray"
         ]
+    },
+    "ill jams": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "nuclear physics": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "classy": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "baking": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "guns": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "wizards": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "comedy": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "nature": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "horror": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "terrible movies": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "paranormal": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "magic": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "dead things": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "amateur photography": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "zoologically dubious": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "creative writing": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "psychoanalysis": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "horticulture": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "nostalgic cartoons": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "furry": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "squiddles": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
     }
 }
