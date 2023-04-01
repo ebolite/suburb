@@ -1,0 +1,930 @@
+{
+    "anywhere": {
+        "spawnlist_type": "tile",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [
+            "empty captchalogue card"
+        ],
+        "exotic": [
+            "fancy+santa"
+        ]
+    },
+    "bedroom": {
+        "spawnlist_type": "tile",
+        "always": [
+            "bed",
+            "dresser",
+            "pillow",
+            "blanket"
+        ],
+        "common": [
+            "lap top",
+            "desktop computer",
+            "mittens",
+            "gloves",
+            "ice skates",
+            "cowboy hat",
+            "cowboy boots",
+            "bandana",
+            "lamp",
+            "desk lamp"
+        ],
+        "uncommon": [
+            "paper",
+            "key chain",
+            "clock"
+        ],
+        "rare": [
+            "candy cane",
+            "water bottle",
+            "red faygo",
+            "grape faygo",
+            "cola faygo",
+            "cotton+candy faygo",
+            "kiwi+strawberry faygo"
+        ],
+        "exotic": [
+            "pepper spray"
+        ]
+    },
+    "kitchen": {
+        "spawnlist_type": "tile",
+        "always": [
+            "refrigerator",
+            "oven",
+            "knife",
+            "sink"
+        ],
+        "common": [
+            "candy cane",
+            "water bottle",
+            "red faygo",
+            "grape faygo",
+            "cola faygo",
+            "cotton+candy faygo",
+            "kiwi+strawberry faygo",
+            "table",
+            "cup",
+            "mug",
+            "plate",
+            "frying pan",
+            "pot",
+            "silver spoon",
+            "silver fork",
+            "spatula",
+            "wooden spoon",
+            "scissors",
+            "rolling pin",
+            "pizza cutter",
+            "ladle"
+        ],
+        "uncommon": [
+            "broom",
+            "straw broom",
+            "vacuum cleaner",
+            "mop",
+            "shears",
+            "safety scissors",
+            "butcher knife"
+        ],
+        "rare": [
+            "golden spatula",
+            "clock"
+        ],
+        "exotic": []
+    },
+    "dining room": {
+        "spawnlist_type": "tile",
+        "always": [
+            "silver spoon",
+            "silver fork",
+            "plate",
+            "table"
+        ],
+        "common": [
+            "knife",
+            "cup",
+            "mug"
+        ],
+        "uncommon": [
+            "lamp",
+            "clock",
+            "candy cane",
+            "water bottle",
+            "red faygo",
+            "grape faygo",
+            "cola faygo",
+            "cotton+candy faygo",
+            "kiwi+strawberry faygo"
+        ],
+        "rare": [
+            "grandfather clock"
+        ],
+        "exotic": []
+    },
+    "garage": {
+        "spawnlist_type": "tile",
+        "always": [],
+        "common": [
+            "scissors",
+            "shears",
+            "chainsaw",
+            "weed whacker",
+            "crowbar",
+            "ice pick",
+            "hammer",
+            "sledge hammer",
+            "shovel",
+            "hatchet",
+            "axe",
+            "flat-head screwdriver",
+            "Phillips screwdriver",
+            "magnetic screwdriver",
+            "rake",
+            "wooden plank",
+            "chain",
+            "bike chain",
+            "extension cable",
+            "rope",
+            "hack saw",
+            "pipe wrench"
+        ],
+        "uncommon": [],
+        "rare": [
+            "halligan bar",
+            "fire axe"
+        ],
+        "exotic": []
+    },
+    "bathroom": {
+        "spawnlist_type": "tile",
+        "always": [
+            "plunger",
+            "sink",
+            "toilet",
+            "bath tub"
+        ],
+        "common": [
+            "broom",
+            "straw broom",
+            "vacuum cleaner",
+            "mop",
+            "curling iron",
+            "shower"
+        ],
+        "uncommon": [],
+        "rare": [],
+        "exotic": [
+            "grandfather clock"
+        ]
+    },
+    "foyer": {
+        "spawnlist_type": "tile",
+        "always": [],
+        "common": [
+            "walking cane",
+            "umbrella",
+            "table",
+            "lamp",
+            "bench"
+        ],
+        "uncommon": [
+            "Abraham Lincoln bust",
+            "Julius Caesar bust",
+            "miniature The+Thinker statue",
+            "woman-sized Statue+of Liberty",
+            "fire poker",
+            "bull-penis cane",
+            "fireplace",
+            "arm chair"
+        ],
+        "rare": [
+            "spear",
+            "sword",
+            "katana",
+            "rapier",
+            "zweihander",
+            "sap",
+            "caestus",
+            "trident",
+            "piano wire",
+            "grandfather clock",
+            "grand piano"
+        ],
+        "exotic": []
+    },
+    "living room": {
+        "spawnlist_type": "tile",
+        "always": [
+            "couch"
+        ],
+        "common": [
+            "table",
+            "arm chair",
+            "television"
+        ],
+        "uncommon": [
+            "candy cane",
+            "water bottle",
+            "red faygo",
+            "grape faygo",
+            "cola faygo",
+            "cotton+candy faygo",
+            "kiwi+strawberry faygo",
+            "walking cane",
+            "umbrella"
+        ],
+        "rare": [
+            "Abraham Lincoln bust",
+            "Julius Caesar bust",
+            "miniature The+Thinker statue",
+            "woman-sized Statue+of Liberty",
+            "piano wire",
+            "bull-penis cane",
+            "fire poker",
+            "grandfather clock"
+        ],
+        "exotic": []
+    },
+    "laundry room": {
+        "spawnlist_type": "tile",
+        "always": [
+            "washing machine"
+        ],
+        "common": [
+            "mittens",
+            "gloves",
+            "ice skates",
+            "cowboy hat",
+            "cowboy boots",
+            "bandana",
+            "clothing iron"
+        ],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "office": {
+        "spawnlist_type": "tile",
+        "always": [
+            "desktop computer",
+            "table"
+        ],
+        "common": [
+            "scissors",
+            "ballpoint pen",
+            "#2 pencil",
+            "paper",
+            "clock"
+        ],
+        "uncommon": [
+            "ballpoint pen",
+            "stapler",
+            "fax machine",
+            "copying machine"
+        ],
+        "rare": [],
+        "exotic": []
+    },
+    "workout room": {
+        "spawnlist_type": "tile",
+        "always": [
+            "5-pound dumbbell",
+            "water bottle"
+        ],
+        "common": [
+            "5-pound dumbbell",
+            "15-pound dumbbell",
+            "water bottle"
+        ],
+        "uncommon": [
+            "rope",
+            "boxing gloves",
+            "15-pound dumbbell"
+        ],
+        "rare": [
+            "baseball bat",
+            "aluminum bat",
+            "golf club",
+            "basketball",
+            "football",
+            "dodgeball",
+            "bowling ball",
+            "hockey stick",
+            "trophy",
+            "boxing gloves",
+            "steroid bottle"
+        ],
+        "exotic": [
+            "100-pound dumbbell",
+            "steroid bottle"
+        ]
+    },
+    "cellar": {
+        "spawnlist_type": "tile",
+        "always": [],
+        "common": [
+            "table",
+            "couch",
+            "arm chair",
+            "television",
+            "bed",
+            "dresser",
+            "broom",
+            "straw broom",
+            "vacuum cleaner",
+            "mop"
+        ],
+        "uncommon": [
+            "electric guitar",
+            "acoustic guitar",
+            "drum set",
+            "flute",
+            "saxophone",
+            "grand piano",
+            "sewing needles",
+            "knitting needles"
+        ],
+        "rare": [
+            "spear",
+            "sword",
+            "katana",
+            "rapier",
+            "zweihander",
+            "sap",
+            "caestus",
+            "trident",
+            "grandfather clock"
+        ],
+        "exotic": []
+    },
+    "attic": {
+        "spawnlist_type": "tile",
+        "always": [],
+        "common": [
+            "table",
+            "couch",
+            "arm chair",
+            "television",
+            "bed",
+            "dresser",
+            "broom",
+            "straw broom",
+            "vacuum cleaner",
+            "mop"
+        ],
+        "uncommon": [
+            "electric guitar",
+            "acoustic guitar",
+            "drum set",
+            "flute",
+            "saxophone",
+            "grand piano",
+            "sewing needles",
+            "knitting needles"
+        ],
+        "rare": [
+            "spear",
+            "sword",
+            "katana",
+            "rapier",
+            "zweihander",
+            "sap",
+            "caestus",
+            "trident",
+            "grandfather clock"
+        ],
+        "exotic": []
+    },
+    "security": {
+        "spawnlist_type": "tile",
+        "always": [],
+        "common": [
+            "pepper spray",
+            "stun gun"
+        ],
+        "uncommon": [
+            "heavy-duty taser",
+            "sap"
+        ],
+        "rare": [
+            "shotgun",
+            "pistol"
+        ],
+        "exotic": [
+            ".44 magnum",
+            "double-barreled shotgun"
+        ]
+    },
+    "game room": {
+        "spawnlist_type": "tile",
+        "always": [],
+        "common": [
+            "baseball bat",
+            "aluminum bat",
+            "golf club",
+            "basketball",
+            "football",
+            "dodgeball",
+            "bowling ball",
+            "hockey stick",
+            "trophy",
+            "boxing gloves",
+            "pool cue"
+        ],
+        "uncommon": [
+            "yoyo",
+            "rubber mallet",
+            "jump rope"
+        ],
+        "rare": [],
+        "exotic": []
+    },
+    "anime": {
+        "spawnlist_type": "interest",
+        "always": [
+            "anime dvd",
+            "anime poster"
+        ],
+        "common": [
+            "anime dvd",
+            "anime poster",
+            "manga"
+        ],
+        "uncommon": [
+            "miku figurine",
+            "cheap piece-of-shit katana",
+            "bodypillow"
+        ],
+        "rare": [
+            "katana",
+            "shuriken"
+        ],
+        "exotic": [
+            "anime katana"
+        ]
+    },
+    "punk": {
+        "spawnlist_type": "interest",
+        "always": [
+            "edgy knife"
+        ],
+        "common": [
+            "edgy knife",
+            "baseball bat",
+            "electric guitar",
+            "thrasher poster",
+            "nirvana album"
+        ],
+        "uncommon": [
+            "brass knuckles",
+            "acoustic guitar",
+            "drum set"
+        ],
+        "rare": [
+            "electric guitar",
+            "acoustic guitar",
+            "drum set",
+            "flute",
+            "saxophone",
+            "grand piano"
+        ],
+        "exotic": [
+            "pistol",
+            "shotgun"
+        ]
+    },
+    "history": {
+        "spawnlist_type": "interest",
+        "always": [
+            "history book"
+        ],
+        "common": [
+            "Abraham Lincoln bust",
+            "Julius Caesar bust",
+            "miniature The+Thinker statue",
+            "woman-sized Statue+of Liberty",
+            "atlas",
+            "history book"
+        ],
+        "uncommon": [
+            "Abraham Lincoln bust",
+            "Julius Caesar bust",
+            "miniature The+Thinker statue",
+            "woman-sized Statue+of Liberty",
+            "pitchfork"
+        ],
+        "rare": [
+            "spear",
+            "sword",
+            "katana",
+            "rapier",
+            "zweihander",
+            "sap",
+            "caestus",
+            "trident"
+        ],
+        "exotic": []
+    },
+    "music": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "electric guitar",
+            "acoustic guitar",
+            "drum set",
+            "flute",
+            "saxophone",
+            "grand piano"
+        ],
+        "uncommon": [
+            "headphones",
+            "tuning fork",
+            "thrasher poster",
+            "nirvana album"
+        ],
+        "rare": [],
+        "exotic": []
+    },
+    "sports": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "baseball bat",
+            "aluminum bat",
+            "golf club",
+            "basketball",
+            "football",
+            "dodgeball",
+            "bowling ball",
+            "hockey stick",
+            "trophy",
+            "boxing gloves"
+        ],
+        "uncommon": [
+            "water bottle"
+        ],
+        "rare": [],
+        "exotic": []
+    },
+    "garbage": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "paper",
+            "empty wrapper",
+            "water bottle",
+            "empty soda can",
+            "plastic bag"
+        ],
+        "uncommon": [
+            "lap top",
+            "desktop computer",
+            "broom",
+            "straw broom",
+            "vacuum cleaner",
+            "mop",
+            "scissors",
+            "shears",
+            "chainsaw",
+            "weed whacker",
+            "crowbar",
+            "ice pick",
+            "hammer",
+            "sledge hammer",
+            "shovel",
+            "hatchet",
+            "axe",
+            "flat-head screwdriver",
+            "Phillips screwdriver",
+            "magnetic screwdriver",
+            "rake",
+            "wooden plank",
+            "chain",
+            "bike chain",
+            "extension cable",
+            "rope",
+            "hack saw",
+            "pipe wrench",
+            "baseball bat",
+            "aluminum bat",
+            "golf club",
+            "basketball",
+            "football",
+            "dodgeball",
+            "bowling ball",
+            "hockey stick",
+            "trophy",
+            "boxing gloves",
+            "yoyo",
+            "rubber mallet",
+            "jump rope",
+            "spear",
+            "sword",
+            "katana",
+            "rapier",
+            "zweihander",
+            "sap",
+            "caestus",
+            "trident",
+            "Abraham Lincoln bust",
+            "Julius Caesar bust",
+            "miniature The+Thinker statue",
+            "woman-sized Statue+of Liberty",
+            "mittens",
+            "gloves",
+            "ice skates",
+            "cowboy hat",
+            "cowboy boots",
+            "bandana",
+            "candy cane",
+            "water bottle",
+            "red faygo",
+            "grape faygo",
+            "cola faygo",
+            "cotton+candy faygo",
+            "kiwi+strawberry faygo",
+            "electric guitar",
+            "acoustic guitar",
+            "drum set",
+            "flute",
+            "saxophone",
+            "grand piano"
+        ],
+        "rare": [
+            "lap top",
+            "desktop computer",
+            "broom",
+            "straw broom",
+            "vacuum cleaner",
+            "mop",
+            "scissors",
+            "shears",
+            "chainsaw",
+            "weed whacker",
+            "crowbar",
+            "ice pick",
+            "hammer",
+            "sledge hammer",
+            "shovel",
+            "hatchet",
+            "axe",
+            "flat-head screwdriver",
+            "Phillips screwdriver",
+            "magnetic screwdriver",
+            "rake",
+            "wooden plank",
+            "chain",
+            "bike chain",
+            "extension cable",
+            "rope",
+            "hack saw",
+            "pipe wrench",
+            "baseball bat",
+            "aluminum bat",
+            "golf club",
+            "basketball",
+            "football",
+            "dodgeball",
+            "bowling ball",
+            "hockey stick",
+            "trophy",
+            "boxing gloves",
+            "yoyo",
+            "rubber mallet",
+            "jump rope",
+            "spear",
+            "sword",
+            "katana",
+            "rapier",
+            "zweihander",
+            "sap",
+            "caestus",
+            "trident",
+            "Abraham Lincoln bust",
+            "Julius Caesar bust",
+            "miniature The+Thinker statue",
+            "woman-sized Statue+of Liberty",
+            "mittens",
+            "gloves",
+            "ice skates",
+            "cowboy hat",
+            "cowboy boots",
+            "bandana",
+            "candy cane",
+            "water bottle",
+            "red faygo",
+            "grape faygo",
+            "cola faygo",
+            "cotton+candy faygo",
+            "kiwi+strawberry faygo",
+            "electric guitar",
+            "acoustic guitar",
+            "drum set",
+            "flute",
+            "saxophone",
+            "grand piano"
+        ],
+        "exotic": [
+            "sord"
+        ]
+    },
+    "technology": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "lap top",
+            "desktop computer",
+            "smart phone",
+            "graphics card"
+        ],
+        "uncommon": [
+            "virtual+reality headset",
+            "rc drone",
+            "gaming computer"
+        ],
+        "rare": [],
+        "exotic": []
+    },
+    "cowboy": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "walking cane",
+            "cowboy hat",
+            "cowboy boots",
+            "bandana"
+        ],
+        "uncommon": [
+            "rope",
+            "cowboy hat"
+        ],
+        "rare": [
+            "pistol"
+        ],
+        "exotic": [
+            ".44 magnum"
+        ]
+    },
+    "clown": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "joker figurine",
+            "clown poster",
+            "red faygo",
+            "grape faygo",
+            "cola faygo"
+        ],
+        "uncommon": [
+            "clown shoes",
+            "clown nose"
+        ],
+        "rare": [
+            "cotton+candy faygo",
+            "kiwi+strawberry faygo"
+        ],
+        "exotic": [
+            "candy+apple faygo"
+        ]
+    },
+    "pathetic": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "red faygo",
+            "grape faygo",
+            "cola faygo",
+            "paper",
+            "empty wrapper",
+            "water bottle"
+        ],
+        "uncommon": [
+            "gaming computer",
+            "anime dvd",
+            "anime poster",
+            "edgy knife",
+            "headphones"
+        ],
+        "rare": [
+            "lap top",
+            "desktop computer",
+            "broom",
+            "straw broom",
+            "vacuum cleaner",
+            "mop",
+            "scissors",
+            "shears",
+            "chainsaw",
+            "weed whacker",
+            "crowbar",
+            "ice pick",
+            "hammer",
+            "sledge hammer",
+            "shovel",
+            "hatchet",
+            "axe",
+            "flat-head screwdriver",
+            "Phillips screwdriver",
+            "magnetic screwdriver",
+            "rake",
+            "wooden plank",
+            "chain",
+            "bike chain",
+            "extension cable",
+            "rope",
+            "hack saw",
+            "pipe wrench",
+            "baseball bat",
+            "aluminum bat",
+            "golf club",
+            "basketball",
+            "football",
+            "dodgeball",
+            "bowling ball",
+            "hockey stick",
+            "trophy",
+            "boxing gloves",
+            "yoyo",
+            "rubber mallet",
+            "jump rope",
+            "spear",
+            "sword",
+            "katana",
+            "rapier",
+            "zweihander",
+            "sap",
+            "caestus",
+            "trident",
+            "Abraham Lincoln bust",
+            "Julius Caesar bust",
+            "miniature The+Thinker statue",
+            "woman-sized Statue+of Liberty",
+            "mittens",
+            "gloves",
+            "ice skates",
+            "cowboy hat",
+            "cowboy boots",
+            "bandana",
+            "candy cane",
+            "water bottle",
+            "red faygo",
+            "grape faygo",
+            "cola faygo",
+            "cotton+candy faygo",
+            "kiwi+strawberry faygo",
+            "electric guitar",
+            "acoustic guitar",
+            "drum set",
+            "flute",
+            "saxophone",
+            "grand piano"
+        ],
+        "exotic": [
+            "sord"
+        ]
+    },
+    "studio apartment": {
+        "spawnlist_type": "tile",
+        "always": [
+            "bed",
+            "dresser",
+            "pillow",
+            "blanket",
+            "refrigerator",
+            "oven",
+            "sink"
+        ],
+        "common": [
+            "lap top",
+            "desktop computer",
+            "mittens",
+            "gloves",
+            "ice skates",
+            "cowboy hat",
+            "cowboy boots",
+            "bandana",
+            "lamp",
+            "desk lamp"
+        ],
+        "uncommon": [
+            "paper",
+            "key chain",
+            "clock"
+        ],
+        "rare": [
+            "candy cane",
+            "water bottle",
+            "red faygo",
+            "grape faygo",
+            "cola faygo",
+            "cotton+candy faygo",
+            "kiwi+strawberry faygo"
+        ],
+        "exotic": [
+            "pepper spray"
+        ]
+    }
+}
