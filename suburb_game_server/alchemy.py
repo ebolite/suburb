@@ -555,6 +555,11 @@ for base, base_dict in util.bases.items():
         base_dict["prototype_name"] = None
     if "weight" in base_dict:
         base_dict.pop("weight")
+    if "code" not in base_dict:
+        code = binaryoperations.random_valid_code()
+        while code in util.codes:
+            code = binaryoperations.random_valid_code()
+        base_dict["code"] = code
     code = base_dict["code"]
     util.codes[code] = base
 util.writejson(util.bases, "bases")

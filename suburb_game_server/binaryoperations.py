@@ -1,3 +1,5 @@
+import random
+
 bintable = { # key: input value: output
     "0": 0,
     "1": 1,
@@ -117,3 +119,9 @@ def codeor(code1: str, code2: str): # codes as code string
     finalbin = bitor(bin1, bin2)
     final = bintostring(finalbin)
     return final
+
+def random_valid_code() -> str:
+    code = []
+    for i in range(8):
+        code.append(random.choice(list(bintable.keys())))
+    return "".join(code)
