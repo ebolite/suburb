@@ -1845,12 +1845,6 @@ class LogWindow(UIElement):
                 self.elements.append(text)
             except IndexError:
                 pass
-        def console_enter_func(textbox: InputTextBox):
-            util.log(">"+textbox.text)
-            reply = client.requestplus(intent="console_command", content=textbox.text)
-            if reply != "None": util.log(reply)
-            textbox.text = ""
-            if self.last_scene: self.last_scene()
         surf = pygame.Surface((self.width, self.height))
         self.rect = surf.get_rect()
         self.rect.x, self.rect.y = x, self.y
@@ -1858,6 +1852,14 @@ class LogWindow(UIElement):
         console_y = self.y + (self.lines_to_display)*self.fontsize + (self.lines_to_display)*self.padding
         self.console = InputTextBox(x, console_y, self.width, self.fontsize+self.padding)
         self.console.absolute = True
+        def console_enter_func():
+            assert self.console is not None
+            console_command = self.console.text
+            util.log(">"+console_command)
+            reply = client.requestplus(intent="console_command", content=console_command)
+            if reply != "None": util.log(reply)
+            self.console.text = ""
+            if self.last_scene: self.last_scene()
         self.console.enter_func = console_enter_func
         self.console.inactive_color = self.background_color
         self.console.active_color = self.active_color
