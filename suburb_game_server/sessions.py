@@ -1536,8 +1536,8 @@ class SubPlayer(Player):
         return map_tiles, map_specials, room_instances, room_npcs, room_players, strife
     
     def get_overmap_view(self, view_tiles=12):
-        view_tiles = view_tiles + self.map.height*2
         if self.flying: view_tiles = view_tiles + 18
+        else: view_tiles = view_tiles + self.map.height*2
         theme = self.overmap.theme
         map_tiles, map_specials, map_types = self.overmap.get_view(self.map.x, self.map.y, view_tiles)
         return map_tiles, map_specials, map_types, theme
