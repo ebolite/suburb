@@ -74,6 +74,8 @@ class ItemEditor():
                 logtext.text = "Successfully submitted your item!"
             else:
                 logtext.text = reply
+            logtext.fontsize = 32
+            logtext.set_fontsize_by_width(1200)
         confirmbutton = render.Button(.5, .3, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm)
         def back(): self.draw_scene()
         backbutton = render.Button(0.5, 0.4, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
@@ -97,7 +99,10 @@ class ItemEditor():
         def save(): 
             self.save()
             savelog.text = f"saved at {datetime.datetime.now().strftime('%I:%M:%S')}"
-        savebutton = render.TextButton(0.5, 0.85, 128, 32, "SAVE", save)
+        savebutton = render.TextButton(0.43, 0.85, 128, 32, "SAVE", save)
+        def submit():
+            self.submission_scene()
+        submitbutton = render.TextButton(0.57, 0.85, 128, 32, "SUBMIT", submit)
         backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
 
     def draw_name_and_adjectives(self):
@@ -565,7 +570,8 @@ class ItemEditor():
         if not self.description: return "Please include a description for your item."
         if len(self.cost) == 1: return "Include at least one other grist type for your item to cost."
         if len(self.secretadjectives) < 4: return "Please include at least 4 secret adjectives for your item."
-        if not binaryoperations.is_valid_code(self.code): return "Invalid captchalogue code."
+        if self.code:
+            if not binaryoperations.is_valid_code(self.code): return "Invalid captchalogue code."
         if len(self.interests+self.tiles) == 0: return "Include at least once place for your item to spawn, and interest or a room."
         reply = client.requestplus(intent="submit_item", content={"item_name": self.item_name, "item_dict": self.get_dict()})
         if reply != "True": return reply
