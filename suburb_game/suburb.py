@@ -1662,6 +1662,7 @@ def title():
     logout_button.bind_to(conntext)
     debug_button = render.Button(.1, .92, "sprites\\buttons\\debug.png", "sprites\\buttons\\debug.png", debug_speedrun)
     debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
+    item_editor_button = render.TextButton(0.1, 0.2, 160, 32, "Item Editor", item_editor_scene)
     # crash_button = render.TextButton(0.8, 0.5, 128, 32, "crash me", crash_button_func)
 
 def map_from_file(file):
@@ -1734,8 +1735,8 @@ if __name__ == "__main__":
     connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
-        # login_scene() # normal game start
-        item_editor_scene()
+        login_scene() # normal game start
+        # item_editor_scene()
         # test_overmap()
     else:
         connection_screen()
