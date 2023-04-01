@@ -9,6 +9,9 @@ import util
 
 class ItemEditor():
     def __init__(self):
+        self.setup_defaults()
+
+    def setup_defaults(self):
         self.theme = themes.default
         self.item_name = "my+cool item"
         self.code = ""
@@ -30,6 +33,33 @@ class ItemEditor():
         self.prototype_name: Optional[str] = None
         self.secretadjectives = []
 
+    def item_editor_scene(self):
+        suburb.new_scene()
+        def last_scene():
+            self.item_editor_scene()
+        def load_item_func_constructor(item_name):
+            def button_func():
+                self.load(item_name)
+                self.draw_scene()
+            return button_func
+        def load_item_button_func():
+            item_names = [item_name for item_name in util.saved_items]
+            show_options_with_search(item_names, load_item_func_constructor, "What item do you want to load?", last_scene, self.theme)
+        load_item_button = render.TextButton(0.5, 0.4, 196, 32, "Load Item", load_item_button_func)
+        def new_item_button_func():
+            self.setup_defaults()
+            self.draw_scene()
+        new_item_button = render.TextButton(0.5, 0.5, 196, 32, "New Item", new_item_button_func)
+        title_button = render.TextButton(0.5, 0.6, 196, 32, "Back to Title", suburb.title)
+
+    def confirm_leave(self):
+        suburb.new_scene()
+        text = render.Text(0.5, 0.2, "Are you sure you want to leave? Any unsaved changes will be lost.")
+        def confirm(): self.item_editor_scene()
+        confirmbutton = render.Button(.5, .3, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", suburb.title)
+        def back(): self.draw_scene()
+        backbutton = render.Button(0.5, 0.4, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
+
     def draw_scene(self):
         suburb.new_scene()
         self.draw_name_and_adjectives()
@@ -42,6 +72,10 @@ class ItemEditor():
         self.draw_states()
         self.draw_sprite_name()
         self.draw_secret_adjectives()
+        def back(): self.confirm_leave()
+        def save(): self.save()
+        savebutton = render.TextButton(0.5, 0.85, 128, 32, "SAVE", save)
+        backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)

@@ -1697,7 +1697,7 @@ def connection_screen():
 
 def item_editor_scene():
     item_editor = itemeditor.ItemEditor()
-    item_editor.draw_scene()
+    item_editor.item_editor_scene()
 
 def render_loop():
     while render.render():
