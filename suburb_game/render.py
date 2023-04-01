@@ -677,6 +677,8 @@ class InputTextBox(UIElement):
             if self.waitframes > 15:
                 if self.waitframes % 3 == 0:
                     self.text = self.text[:-1]
+                    if self.numbers_only and self.text == "": self.text = "0"
+                    if self.key_press_func is not None: self.key_press_func()
             self.waitframes += 1
         else:
             self.waitframes = 0

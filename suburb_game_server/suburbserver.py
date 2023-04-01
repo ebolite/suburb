@@ -17,6 +17,7 @@ import config
 import tiles
 import binaryoperations
 import npcs
+import stateseffects
 
 conns = []
 
@@ -134,6 +135,17 @@ def handle_request(dict):
         return json.dumps(util.kinds)
     if intent == "grists":
         return json.dumps(config.grists)
+    if intent == "item_states":
+        item_states = list(stateseffects.item_states.values())
+        out_states = {}
+        for state in item_states:
+            out_states[state.name] = {
+                "potency": 1.0,
+                "duration": 2,
+                "tooltip": state.tooltip,
+                "passive": state.passive,
+            }
+        return json.dumps(out_states)
     username = dict["username"]
     password = dict["password"]
     content = dict["content"]

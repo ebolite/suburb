@@ -6,6 +6,9 @@ import config
 
 states: dict[str, "State"] = {}
 class_passives: dict[str, dict[str, dict[str, int]]] = {}
+item_states: dict[str, "State"] = {}
+def make_item_state(state: "State"):
+    item_states[state.name] = state
 
 class State():
     def __init__(self, name):
@@ -68,6 +71,7 @@ class DamageState(OneTimeState):
 damage = DamageState("damage")
 damage.beneficial = False
 damage.tooltip = "Deals damage to the target."
+make_item_state(damage)
 
 class HealState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
@@ -80,6 +84,7 @@ class HealState(OneTimeState):
 heal = HealState("heal")
 heal.beneficial = False
 heal.tooltip = "Recovers the target's HP."
+make_item_state(heal)
 
 class SateState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
@@ -93,6 +98,7 @@ class SateState(OneTimeState):
 sate = SateState("sate")
 sate.beneficial = True
 sate.tooltip = "Increases the target's VIM and HEALTH."
+make_item_state(sate)
 
 class RefreshState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
@@ -106,6 +112,7 @@ class RefreshState(OneTimeState):
 refresh = RefreshState("refresh")
 refresh.beneficial = True
 refresh.tooltip = "Increases the target's HEALTH and ASPECT."
+make_item_state(refresh)
 
 class CaffeinateState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
@@ -119,6 +126,7 @@ class CaffeinateState(OneTimeState):
 caffeinate = CaffeinateState("caffeinate")
 caffeinate.beneficial = True
 caffeinate.tooltip = "Increases the target's VIM and ASPECT."
+make_item_state(caffeinate)
 
 class DouseState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
@@ -132,6 +140,7 @@ class DouseState(OneTimeState):
 douse = DouseState("douse")
 douse.beneficial = True
 douse.tooltip = "Removes a negative state of the target."
+make_item_state(douse)
 
 class LeechState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
@@ -148,6 +157,7 @@ class LeechState(OneTimeState):
 leech = LeechState("leech")
 leech.beneficial = True
 leech.tooltip = "Gives grist to all griefers in the strife when applied."
+make_item_state(leech)
 
 class StunState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
@@ -162,6 +172,7 @@ class StunState(OneTimeState):
 stun = StunState("stun")
 stun.beneficial = False
 stun.tooltip = "Significantly reduces VIM. Can only be applied once per target per strife."
+make_item_state(stun)
 
 class FreezeState(OneTimeState):
     def on_apply(self, griefer: "strife.Griefer"):
@@ -175,6 +186,7 @@ class FreezeState(OneTimeState):
 freeze = FreezeState("freeze")
 freeze.beneficial = False
 freeze.tooltip = "Deals significant damage. Can only be applied once per target per strife."
+make_item_state(freeze)
 
 # basic states
 class AbjureState(State):
@@ -197,6 +209,7 @@ class WeakState(State):
 weak = WeakState("weak")
 weak.beneficial = False
 weak.tooltip = "Reduces damage dealt."
+make_item_state(weak)
 
 class StrengthState(State):
     def modify_damage_dealt(self, damage: int, griefer: "strife.Griefer") -> int:
@@ -207,6 +220,7 @@ class StrengthState(State):
 strength = StrengthState("strength")
 strength.beneficial = True
 strength.tooltip = "Increases damage dealt."
+make_item_state(strength)
 
 class VulnerableState(State):
     def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
@@ -217,6 +231,7 @@ class VulnerableState(State):
 vulnerable = VulnerableState("vulnerable")
 vulnerable.beneficial = False
 vulnerable.tooltip = "Increases damage taken."
+make_item_state(vulnerable)
 
 class GuardState(State):
     def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
@@ -242,6 +257,7 @@ class BlindState(State):
 blind = BlindState("blind")
 blind.beneficial = False
 blind.tooltip = "Increases damage taken and decreases damage dealt."
+make_item_state(blind)
 
 class DemoralizeState(State):
     def new_turn(self, griefer: "strife.Griefer"):
@@ -253,6 +269,7 @@ class DemoralizeState(State):
 demoralize = DemoralizeState("demoralize")
 demoralize.beneficial = False
 demoralize.tooltip = "Reduces hope each turn."
+make_item_state(demoralize)
 
 class InspireState(State):
     def new_turn(self, griefer: "strife.Griefer"):
@@ -264,6 +281,7 @@ class InspireState(State):
 inspire = InspireState("inspire")
 inspire.beneficial = True
 inspire.tooltip = "Increases hope each turn."
+make_item_state(inspire)
 
 class TriggeredState(State):
     def new_turn(self, griefer: "strife.Griefer"):
@@ -275,6 +293,7 @@ class TriggeredState(State):
 trigger = TriggeredState("triggered")
 trigger.beneficial = True
 trigger.tooltip = "Increases rage each turn."
+make_item_state(trigger)
 
 class NumbState(State):
     def new_turn(self, griefer: "strife.Griefer"):
@@ -286,6 +305,7 @@ class NumbState(State):
 numb = NumbState("numb")
 numb.beneficial = True
 numb.tooltip = "Decreases rage each turn."
+make_item_state(numb)
 
 class DisarmState(State):
     def lock_categories(self, griefer: "strife.Griefer") -> list[str]:
@@ -312,6 +332,7 @@ class BleedState(State):
 bleed = BleedState("bleed")
 bleed.beneficial = False
 bleed.tooltip = "Taking damage at the start of each turn."
+make_item_state(bleed)
 
 class IgniteState(State):
     def new_turn(self, griefer: "strife.Griefer"):
@@ -322,6 +343,7 @@ class IgniteState(State):
 ignite = IgniteState("ignite")
 ignite.beneficial = False
 ignite.tooltip = "Taking damage at the start of each turn. Potency reduces each turn."
+make_item_state(ignite)
 
 class PoisonState(State):
     def new_turn(self, griefer: "strife.Griefer"):
@@ -333,6 +355,7 @@ class PoisonState(State):
 poison = PoisonState("poison")
 poison.beneficial = False
 poison.tooltip = "Taking damage at the start of each turn. Potency increases each turn."
+make_item_state(poison)
 
 class FocusState(State):
     def coinflip_modifier(self, griefer: "strife.Griefer") -> float:
@@ -342,6 +365,7 @@ class FocusState(State):
 focus = FocusState("focus")
 focus.beneficial = True
 focus.tooltip = "Chance to flip HEADS is increased."
+make_item_state(focus)
 
 # aspect states
 

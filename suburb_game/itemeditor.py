@@ -9,7 +9,7 @@ import binaryoperations
 class ItemEditor():
     def __init__(self):
         self.theme = themes.default
-        self.item_name = "adjective+1 adjective+2 base"
+        self.item_name = "my+cool item"
         self.code = ""
         self.power = 10
         self.inheritpower = 10
@@ -20,8 +20,12 @@ class ItemEditor():
         self.description = ""
         self.cost = {
             "build": 0.5,
-            "jet": 0.5
+            "jet": 0.1
         }
+        self.onhit_states = {}
+        self.wear_states = {}
+        self.consume_states = {}
+        self.secret_states = {}
 
     def draw_scene(self):
         suburb.new_scene()
@@ -32,6 +36,7 @@ class ItemEditor():
         self.draw_wearable_toggle()
         self.draw_description()
         self.draw_costs()
+        self.draw_states()
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)
@@ -104,18 +109,23 @@ class ItemEditor():
         power_tooltip.bind_to(self.power_box)
         power_tooltip_label_line1 = self.make_label(0, 20, "Examples: Spoon: 2; Knife: 10; Baseball Bat: 20; Sword: 40; Pistol: 100", power_tooltip)
         power_tooltip_label_line1.absolute = True
+        power_tooltip_label_line1.color = self.theme.black
         power_tooltip_label_line2 = self.make_label(0, 40, "Paper: 1; Lamp: 11; Toilet: 24; Bathtub: 32; Fireplace: 65", power_tooltip)
         power_tooltip_label_line2.absolute = True
+        power_tooltip_label_line2.color = self.theme.black
         inheritpower_tooltip = render.ToolTip(0, 0, 128, 32)
         inheritpower_tooltip.bind_to(inheritpower_box)
         inheritpower_tooltip_label_line1 = self.make_label(-300, 20, "This is how metaphorically powerful or cool the item is. Usually 0.", inheritpower_tooltip)
         inheritpower_tooltip_label_line1.absolute = True
+        inheritpower_tooltip_label_line1.color = self.theme.black
         inheritpower_tooltip_label_line2 = self.make_label(-300, 40, "Examples: Yoyo: 10; Chainsaw: 30; Statue of Liberty: 250; Clock: 300", inheritpower_tooltip)
         inheritpower_tooltip_label_line2.absolute = True
+        inheritpower_tooltip_label_line2.color = self.theme.black
         size_tooltip = render.ToolTip(0, 0, 128, 32)
         size_tooltip.bind_to(size_box)
         size_tooltip_label = self.make_label(-450, 20, "Examples: Paper: 1; Knife: 2; Baseball Bat: 10; Zweihander: 20; Toilet: 30; Refrigerator: 45", size_tooltip)
         size_tooltip_label.absolute = True
+        size_tooltip_label.color = self.theme.black
         power_tooltip_label_line1.make_always_on_top()
         power_tooltip_label_line2.make_always_on_top()
         inheritpower_tooltip_label_line1.make_always_on_top()
@@ -125,7 +135,7 @@ class ItemEditor():
     def draw_kinds_button(self):
         kinds_label = render.Text(0.15, 0.35, "Kinds")
         kinds_label.color = self.theme.dark
-        kinds_display = self.make_label(0.5, 1.4, f"{', '.join(self.kinds) if self.kinds else 'none!!'}", kinds_label)
+        kinds_display = self.make_label(0.5, 1.4, f"{', '.join(self.kinds) if self.kinds else '!!none!!'}", kinds_label)
         def last_scene():
             self.draw_scene()
         def select_button_constructor(kind_name: str):
@@ -177,9 +187,9 @@ class ItemEditor():
         ok_button = render.TextButton(0.5, 0.5, 128, 32, "OK", last_scene)
 
     def draw_costs(self):
-        label = render.Text(0.5, 0.31, "Cost")
-        label.color = self.theme.dark
-        grist_icons = render.make_grist_cost_display(0.5, 0.4, 24, self.true_cost, text_color = self.theme.dark, absolute=False, return_grist_icons=True)
+        # label = render.Text(0.5, 0.31, "Cost")
+        # label.color = self.theme.dark
+        grist_icons = render.make_grist_cost_display(0.5, 0.35, 24, self.true_cost, text_color = self.theme.dark, absolute=False, return_grist_icons=True)
         assert isinstance(grist_icons, dict)
         def get_increase_cost_func(grist_name: str):
             def button_func():
@@ -216,7 +226,112 @@ class ItemEditor():
             available_grists = [grist for grist in available_grists if grist not in self.cost]
             if "rainbow" in available_grists: available_grists.remove("rainbow")
             show_options_with_search(available_grists, pick_grist_scene_constructor, "Choose grist to add.", last_scene, self.theme, image_path_func=get_grist_icon_path, image_scale=0.5)
-        add_grist_button = render.TextButton(0.5, 0.5, 128, 24, "Add grist", add_grist_func)
+        add_grist_button = render.TextButton(0.5, 0.45, 128, 24, "Add grist", add_grist_func)
+
+    def draw_state_icons(self, states_type: str, binding: "render.UIElement", item_states: dict[str, dict]):
+        STATE_PADDING = 11
+        if states_type == "onhit": states_dict = self.onhit_states
+        elif states_type == "wear": states_dict = self.wear_states
+        elif states_type == "consume": states_dict = self.consume_states
+        else: states_dict = self.secret_states
+        def get_increase_potency_func(state_name: str):
+            def button_func():
+                states_dict[state_name] += 0.1
+                self.draw_scene()
+            return button_func
+        def get_decrease_potency_func(state_name: str):
+            def button_func():
+                states_dict[state_name] -= 0.1
+                # account for floating point error
+                if states_dict[state_name] - 0.05 <= 0:
+                    states_dict.pop(state_name)
+                self.draw_scene()
+            return button_func
+        state_icons = []
+        for state_name, potency in states_dict.items():
+            state_dict = item_states[state_name].copy()
+            state_dict["potency"] = potency
+            if len(state_icons) == 0:
+                x, y = 0.5, 1.65
+                offsetx = (16+STATE_PADDING) * (len(states_dict) - 1)
+                offsetx = offsetx//2 * -1
+            else:
+                x, y = 1, 0.5
+                offsetx = STATE_PADDING + 8
+            icon = render.NoGrieferStateIcon(x, y, state_name, state_dict, theme=self.theme)
+            icon.rect_x_offset = offsetx
+            if len(state_icons) == 0: icon.bind_to(binding)
+            else: icon.bind_to(state_icons[-1])
+            state_icons.append(icon)
+            increase_cost_button = render.TextButton(0.5, -0.5, 12, 12, "+", get_increase_potency_func(state_name))
+            increase_cost_button.bind_to(icon)
+            increase_cost_button.fontsize = 10
+            decrease_cost_button = render.TextButton(0.5, 1.5, 12, 12, "-", get_decrease_potency_func(state_name))
+            decrease_cost_button.bind_to(icon)
+            decrease_cost_button.fontsize = 10
+            potency_label = render.Text(0.5, 2.5, f"{potency:.1f}")
+            potency_label.fontsize = 10
+            potency_label.color = self.theme.dark
+            potency_label.bind_to(icon)
+
+    def draw_states(self):
+        item_states = client.requestdic("item_states")
+        def last_scene():
+            self.draw_scene()
+        def pick_state_constructor_constructor(state_type: str):
+            if state_type == "onhit": states_dict = self.onhit_states
+            elif state_type == "wear": states_dict = self.wear_states
+            elif state_type == "consume": states_dict = self.consume_states
+            else: states_dict = self.secret_states
+            def pick_state_constructor(state_name: str):
+                def button_func():
+                    states_dict[state_name] = 0.1
+                    self.draw_scene()
+                return button_func
+            return pick_state_constructor
+        def add_state_button_constructor(state_type: str):
+            if state_type == "onhit": states_dict = self.onhit_states
+            elif state_type == "wear": states_dict = self.wear_states
+            elif state_type == "consume": states_dict = self.consume_states
+            else: states_dict = self.secret_states
+            def button_func():
+                possible_states = list(client.requestdic("item_states"))
+                possible_states = [state_name for state_name in possible_states if state_name not in states_dict]
+                show_options_with_search(possible_states, pick_state_constructor_constructor(state_type), "Choose state to add.", last_scene, self.theme)
+            return button_func
+        onhit_label = render.Text(0.25, 0.55, "On-Hit States")
+        onhit_label.color = self.theme.dark
+        self.draw_state_icons("onhit", onhit_label, item_states)
+        add_onhit_state_button = render.TextButton(1.15, 0.5, 32, 32, "+", add_state_button_constructor("onhit"))
+        add_onhit_state_button.bind_to(onhit_label)
+        wear_label = render.Text(0.75, 0.55, "Donned States")
+        wear_label.color = self.theme.dark
+        self.draw_state_icons("wear", wear_label, item_states)
+        add_wear_state_button = render.TextButton(1.15, 0.5, 32, 32, "+", add_state_button_constructor("wear"))
+        add_wear_state_button.bind_to(wear_label)
+        consume_label = render.Text(0.25, 0.7, "Consume States")
+        consume_label.color = self.theme.dark
+        self.draw_state_icons("consume", consume_label, item_states)
+        add_consume_state_button = render.TextButton(1.15, 0.5, 32, 32, "+", add_state_button_constructor("consume"))
+        add_consume_state_button.bind_to(consume_label)
+        secret_label = render.Text(0.75, 0.7, "Secret States")
+        secret_label.color = self.theme.dark
+        self.draw_state_icons("secret", secret_label, item_states)
+        add_secret_state_button = render.TextButton(1.15, 0.5, 32, 32, "+", add_state_button_constructor("secret"))
+        add_secret_state_button.bind_to(secret_label)
+        secret_tooltip_text = render.Text(-0.1, 0.5, "(?)")
+        secret_tooltip_text.fontsize = 24
+        secret_tooltip_text.color = self.theme.dark
+        secret_tooltip_text.outline_color = self.theme.white
+        secret_tooltip_text.bind_to(secret_label)
+        secret_tooltip = render.ToolTip(0, 0, secret_tooltip_text.get_width(), 24)
+        secret_tooltip.bind_to(secret_tooltip_text)
+        secret_tooltip_label_1 = self.make_label(-200, 20, "Secret tooltips may manifest after alchemy.", secret_tooltip)
+        secret_tooltip_label_1.absolute = True
+        secret_tooltip_label_1.color = self.theme.black
+        secret_tooltip_label_2 = self.make_label(-200, 40, "They represent the metaphorical abilities of the item.", secret_tooltip)
+        secret_tooltip_label_2.absolute = True
+        secret_tooltip_label_2.color = self.theme.black
 
     def make_label(self, x, y, text, binding) -> "render.Text":
         label = render.Text(x, y, text)
