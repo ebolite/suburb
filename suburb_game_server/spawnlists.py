@@ -4,8 +4,12 @@ import config
 import util
 import random
 
-tile_spawns = []
-interests = []
+def get_interest_spawnlists() -> list[str]:
+    return [spawnlist_name for spawnlist_name in util.spawnlists if SpawnList(spawnlist_name).spawnlist_type == "interest"]
+
+def get_tile_spawnlists() -> list[str]:
+    return [spawnlist_name for spawnlist_name in util.spawnlists if SpawnList(spawnlist_name).spawnlist_type == "tile"]
+
 COMMON_WEIGHT = 65
 UNCOMMON_WEIGHT = 27
 RARE_WEIGHT = 7
