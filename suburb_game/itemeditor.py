@@ -26,6 +26,7 @@ class ItemEditor():
         self.wear_states = {}
         self.consume_states = {}
         self.secret_states = {}
+        self.prototype_name: Optional[str] = None
 
     def draw_scene(self):
         suburb.new_scene()
@@ -37,6 +38,7 @@ class ItemEditor():
         self.draw_description()
         self.draw_costs()
         self.draw_states()
+        self.draw_sprite_name()
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)
@@ -332,6 +334,36 @@ class ItemEditor():
         secret_tooltip_label_2 = self.make_label(-200, 40, "They represent the metaphorical abilities of the item.", secret_tooltip)
         secret_tooltip_label_2.absolute = True
         secret_tooltip_label_2.color = self.theme.black
+
+    def draw_sprite_name(self):
+        def button_func():
+            self.choose_sprite_name()
+        sprite_name_box = render.TextButton(0.85, 0.35, 256, 32, "", button_func)
+        sprite_name_text = render.Text(0.5, 0.5, "")
+        sprite_name_text.fontsize = 18
+        def sprite_name_func():
+            return f"{self.base.replace('+','')}sprite" if self.prototype_name is None else f"{self.prototype_name}sprite"
+        sprite_name_text.text_func = sprite_name_func
+        sprite_name_text.bind_to(sprite_name_box)
+        sprite_name_label = self.make_label(0.5, 1.4, "Sprite Name", sprite_name_box)
+
+    def choose_sprite_name(self):
+        suburb.new_scene()
+        name_box = render.InputTextBox(0.5, 0.4)
+        name_box.fontsize = 16
+        def label_func():
+            return f"{self.base.replace('+','')}sprite" if not name_box.text else f"{name_box.text}sprite"
+        label = render.Text(0.5, 0.3, "")
+        label.color = self.theme.dark
+        label.text_func = label_func
+        def last_scene():
+            if name_box.text:
+                self.prototype_name = name_box.text
+            else:
+                self.prototype_name = None
+            self.draw_scene()
+        ok_button = render.TextButton(0.5, 0.5, 128, 32, "OK", last_scene)
+        
 
     def make_label(self, x, y, text, binding) -> "render.Text":
         label = render.Text(x, y, text)
