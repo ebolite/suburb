@@ -226,6 +226,7 @@ def handle_request(dict):
             verified_item_dict["prototype_name"] = str(item_dict["prototype_name"])
         verified_item_dict["creator"] = user.name
         util.base_submissions[item_name] = verified_item_dict
+        util.writejson(util.base_submissions, "base_submissions")
     # session verification
     session_name = dict["session_name"]
     if session_name in user.sessions and intent == "join_session": return "You are already in that session!"
