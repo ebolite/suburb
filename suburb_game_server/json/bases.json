@@ -881,7 +881,6 @@
         "power": 10,
         "size": 4,
         "kinds": [
-            "mundane",
             "scissorkind"
         ],
         "wearable": false,

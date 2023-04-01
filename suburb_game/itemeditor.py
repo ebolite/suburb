@@ -1,3 +1,5 @@
+from typing import Optional, Callable
+
 import render
 import client
 import suburb
@@ -13,12 +15,14 @@ class ItemEditor():
         self.inheritpower = 10
         self.weight = 5
         self.size = 5
+        self.kinds = []
 
     def draw_scene(self):
         suburb.new_scene()
         self.draw_name_and_adjectives()
         self.draw_code()
         self.draw_power_size()
+        self.draw_kinds_button()
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)
@@ -43,7 +47,7 @@ class ItemEditor():
         item_name_label.color = self.theme.dark
 
     def draw_code(self):
-        code_box = render.InputTextBox(0.1, 0.15, w=160, h=32)
+        code_box = render.InputTextBox(0.15, 0.23, w=160, h=32)
         def code_box_func():
             self.code = code_box.text
         code_box.key_press_func = code_box_func
@@ -106,7 +110,31 @@ class ItemEditor():
         inheritpower_tooltip_label_line1.make_always_on_top()
         inheritpower_tooltip_label_line2.make_always_on_top()
         size_tooltip_label.make_always_on_top()
-        
+
+    def draw_kinds_button(self):
+        kinds_label = render.Text(0.15, 0.35, "Kinds")
+        kinds_label.color = self.theme.dark
+        kinds_display = self.make_label(0.5, 1.4, f"{', '.join(self.kinds) if self.kinds else 'none!!'}", kinds_label)
+        def last_scene():
+            self.draw_scene()
+        def select_button_constructor(kind_name: str):
+            def button_func():
+                if kind_name not in self.kinds:
+                    self.kinds.append(kind_name)
+                self.draw_scene()
+            return button_func
+        def kinds_button_func():
+            kinds = client.requestdic(intent="kinds")
+            kinds = list(kinds)
+            kinds = [kind for kind in kinds if kind not in self.kinds]
+            show_options_with_search(kinds, select_button_constructor, "Select a kind to add.", last_scene, self.theme, 0)
+        kinds_button = render.TextButton(0.15, 0.45, 128, 32, "Add kind", kinds_button_func)
+        if self.kinds:
+            def remove_kinds_button_func():
+                self.kinds.pop()
+                self.draw_scene()
+            remove_kinds_button = render.TextButton(0.15, 0.5, 128, 32, "Remove kind", remove_kinds_button_func)
+
     def make_label(self, x, y, text, binding) -> "render.Text":
         label = render.Text(x, y, text)
         label.bind_to(binding)
@@ -132,3 +160,29 @@ class ItemEditor():
     @property
     def descriptors(self):
         return self.item_name.split(" ")
+    
+def show_options_with_search(options: list, button_func_constructor: Callable, label:str, last_scene: Callable, theme: "themes.Theme", page=0, search: Optional[str]=None):
+    suburb.new_scene()
+    OPTIONS_PER_PAGE = 12
+    label_text = render.Text(0.5, 0.05, label)
+    label_text.color = theme.dark
+    if search is not None: possible_options = [option for option in options if search in option]
+    else: possible_options = options.copy()
+    display_options = possible_options[page*OPTIONS_PER_PAGE:(page+1)*OPTIONS_PER_PAGE]
+    for i, option in enumerate(display_options):
+        y = 0.20 + 0.05*i
+        button = render.TextButton(0.5, y, 196, 32, option, button_func_constructor(option))
+    if page != 0:
+        def previous_page(): show_options_with_search(options, button_func_constructor, label, last_scene, theme, page=page-1, search=search)
+        previous_page_button = render.TextButton(0.5, 0.15, 32, 32, "▲", previous_page)
+    if possible_options[(page+1)*OPTIONS_PER_PAGE:(page+2)*OPTIONS_PER_PAGE]:
+        def next_page(): show_options_with_search(options, button_func_constructor, label, last_scene, theme, page=page+1, search=search)
+        next_page_button = render.TextButton(0.5, 0.8, 32, 32, "▼", next_page)
+    search_bar = render.InputTextBox(0.5, 0.9)
+    def search_func():
+        show_options_with_search(options, button_func_constructor, label, last_scene, theme, page, search=search_bar.text)
+    search_bar.key_press_func = search_func
+    if search is not None: 
+        search_bar.active = True
+        search_bar.text = search
+    backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)

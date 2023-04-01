@@ -128,6 +128,10 @@ def handle_request(dict):
         return "Successfully connected."
     if intent == "server_tiles":
         return json.dumps({"server_tiles": tiles.server_tiles, "labels": {tile.tile_char:tile.name for tile in tiles.tiles.values()}})
+    if intent == "interests":
+        return json.dumps(config.interests)
+    if intent == "kinds":
+        return json.dumps(util.kinds)
     username = dict["username"]
     password = dict["password"]
     content = dict["content"]
@@ -158,8 +162,6 @@ def handle_request(dict):
             if session_player is None: out_dict[session_name] = None
             else: out_dict[session_name] = session_player.get_dict()
         return json.dumps(out_dict)
-    if intent == "interests":
-        return json.dumps(config.interests)
     # session verification
     session_name = dict["session_name"]
     if session_name in user.sessions and intent == "join_session": return "You are already in that session!"
