@@ -424,6 +424,7 @@ class ItemEditor():
             "code": self.code if self.code else None,
             "attached_skills": [],
             "prototype_name": self.prototype_name,
+            "creator": client.dic["username"],
         }
         return out_dict
 
