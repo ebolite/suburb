@@ -87,6 +87,7 @@ class BaseStatistics():
         self.secret_states: dict = properties["secret_states"]
         self.forbiddencode: bool = properties["forbiddencode"]
         self.prototype_name: Optional[str] = properties["prototype_name"]
+        self.creator: Optional[str] = properties["creator"]
 
 # todo: captchalogue code inheritance
 class InheritedStatistics():
@@ -100,6 +101,7 @@ class InheritedStatistics():
         self.forbiddencode = False
         self.prototype_name = None
         self.description = None
+        self.creator = None
         self.all_components = Components(self.name).get_all_components()
         self.gen_statistics()
 
@@ -338,6 +340,7 @@ class Item(): # Items are the base of instants.
         self.secretadjectives = statistics.secretadjectives
         self.forbiddencode = statistics.forbiddencode
         self.prototype_name = statistics.prototype_name
+        self.creator = statistics.creator
 
     def create_item(self, name):
         util.memory_items[name] = {}
