@@ -27,6 +27,7 @@ class ItemEditor():
         self.consume_states = {}
         self.secret_states = {}
         self.prototype_name: Optional[str] = None
+        self.secretadjectives = []
 
     def draw_scene(self):
         suburb.new_scene()
@@ -39,6 +40,7 @@ class ItemEditor():
         self.draw_costs()
         self.draw_states()
         self.draw_sprite_name()
+        self.draw_secret_adjectives()
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)
@@ -363,7 +365,34 @@ class ItemEditor():
                 self.prototype_name = None
             self.draw_scene()
         ok_button = render.TextButton(0.5, 0.5, 128, 32, "OK", last_scene)
-        
+
+    def draw_secret_adjectives(self):
+        secret_adjectives_label = render.Text(0.8, 0.85, f"{'!!' if not self.secretadjectives else ''} ({len(self.secretadjectives)} inheritable adjectives) {'!!' if not self.secretadjectives else ''}")
+        secret_adjectives_label.fontsize = 16
+        secret_adjectives_label.color = self.theme.dark
+        def button_func():
+            self.set_secret_adjectives()
+        add_secret_adjectives_button = render.TextButton(0.8, 0.9, 96, 32, "Set", button_func)
+
+    def set_secret_adjectives(self):
+        suburb.new_scene()
+        adjectives_box = render.InputTextBox(0.5, 0.4)
+        adjectives_box.fontsize = 16
+        label = render.Text(0.5, 0.2, "Inherited adjectives may be gained upon alchemizing.")
+        label.color = self.theme.dark
+        label_2 = render.Text(0.5, 0.3, "Choose 4-10 words related to the item.")
+        label_2.color = self.theme.dark
+        adjectives_label = render.Text(0.5, 0.5, "")
+        def adjectives_label_func():
+            return ", ".join(adjectives_box.text.split(" ")).replace("+", " ")
+        adjectives_label.color = self.theme.dark
+        adjectives_label.fontsize = 16
+        adjectives_label.text_func = adjectives_label_func
+        def last_scene():
+            secretadjectives = adjectives_box.text.split(" ")
+            self.secretadjectives = [adj for adj in secretadjectives if adj]
+            self.draw_scene()
+        ok_button = render.TextButton(0.5, 0.6, 128, 32, "OK", last_scene)
 
     def make_label(self, x, y, text, binding) -> "render.Text":
         label = render.Text(x, y, text)
