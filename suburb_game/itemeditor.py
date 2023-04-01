@@ -32,6 +32,10 @@ class ItemEditor():
         self.secret_states = {}
         self.prototype_name: Optional[str] = None
         self.secretadjectives = []
+        self.interests = []
+        self.interests_rarity = "uncommon"
+        self.tiles = []
+        self.tile_rarity = "uncommon"
 
     def item_editor_scene(self):
         suburb.new_scene()
@@ -72,6 +76,7 @@ class ItemEditor():
         self.draw_states()
         self.draw_sprite_name()
         self.draw_secret_adjectives()
+        self.draw_interests()
         def back(): self.confirm_leave()
         def save(): self.save()
         savebutton = render.TextButton(0.5, 0.85, 128, 32, "SAVE", save)
@@ -338,22 +343,22 @@ class ItemEditor():
                 possible_states = [state_name for state_name in possible_states if state_name not in states_dict]
                 show_options_with_search(possible_states, pick_state_constructor_constructor(state_type), "Choose state to add.", last_scene, self.theme)
             return button_func
-        onhit_label = render.Text(0.25, 0.55, "On-Hit States")
+        onhit_label = render.Text(0.15, 0.55, "On-Hit States")
         onhit_label.color = self.theme.dark
         self.draw_state_icons("onhit", onhit_label, item_states)
         add_onhit_state_button = render.TextButton(1.15, 0.5, 32, 32, "+", add_state_button_constructor("onhit"))
         add_onhit_state_button.bind_to(onhit_label)
-        wear_label = render.Text(0.75, 0.55, "Donned States")
+        wear_label = render.Text(0.5, 0.55, "Donned States")
         wear_label.color = self.theme.dark
         self.draw_state_icons("wear", wear_label, item_states)
         add_wear_state_button = render.TextButton(1.15, 0.5, 32, 32, "+", add_state_button_constructor("wear"))
         add_wear_state_button.bind_to(wear_label)
-        consume_label = render.Text(0.25, 0.7, "Consume States")
+        consume_label = render.Text(0.15, 0.7, "Consume States")
         consume_label.color = self.theme.dark
         self.draw_state_icons("consume", consume_label, item_states)
         add_consume_state_button = render.TextButton(1.15, 0.5, 32, 32, "+", add_state_button_constructor("consume"))
         add_consume_state_button.bind_to(consume_label)
-        secret_label = render.Text(0.75, 0.7, "Secret States")
+        secret_label = render.Text(0.5, 0.7, "Secret States")
         secret_label.color = self.theme.dark
         self.draw_state_icons("secret", secret_label, item_states)
         add_secret_state_button = render.TextButton(1.15, 0.5, 32, 32, "+", add_state_button_constructor("secret"))
@@ -402,12 +407,81 @@ class ItemEditor():
         ok_button = render.TextButton(0.5, 0.5, 128, 32, "OK", last_scene)
 
     def draw_secret_adjectives(self):
-        secret_adjectives_label = render.Text(0.8, 0.85, f"{'!!' if not self.secretadjectives else ''} ({len(self.secretadjectives)} inheritable adjectives) {'!!' if not self.secretadjectives else ''}")
+        secret_adjectives_label = render.Text(0.8, 0.85, f"{'!!' if not self.secretadjectives else ''} ({len(self.secretadjectives)} inheritable adjective{'s' if len(self.secretadjectives) != 1 else ''}) {'!!' if not self.secretadjectives else ''}")
         secret_adjectives_label.fontsize = 16
         secret_adjectives_label.color = self.theme.dark
         def button_func():
             self.set_secret_adjectives()
         add_secret_adjectives_button = render.TextButton(0.8, 0.9, 96, 32, "Set", button_func)
+
+    def draw_interests(self):
+        interests_text = f"{len(self.interests)} Interest{'s' if len(self.interests) != 1 else ''}"
+        interests_label = render.Text(0.85, 0.45, interests_text)
+        interests_label.color = self.theme.dark
+        def last_scene():
+            self.draw_scene()
+        def choose_interests_button_constructor(interest: str):
+            def button_func():
+                if interest in self.interests:
+                    self.interests.remove(interest)
+                else:
+                    self.interests.append(interest)
+            return button_func
+        def is_interest_in_interests(interest: str):
+            if interest in self.interests: return True
+            else: return False
+        def choose_interests():
+            options = client.requestdic("interests")
+            options = list(options)
+            show_options_with_search(options, choose_interests_button_constructor, "Choose interests for this item.", last_scene, self.theme, option_active_func=is_interest_in_interests, reload_on_button_press=True)
+        choose_interests_button = render.TextButton(0.5, 2.5, 128, 32, "Choose", choose_interests)
+        choose_interests_button.bind_to(interests_label)
+        def interest_rarity_button_func():
+            match self.interests_rarity:
+                case "common":
+                    self.interests_rarity = "uncommon"
+                case "uncommon":
+                    self.interests_rarity = "rare"
+                case "rare":
+                    self.interests_rarity = "exotic"
+                case "exotic":
+                    self.interests_rarity = "common"
+            self.draw_scene()
+        interests_rarity_button = render.TextButton(0.5, 1.4, 128, 32, self.interests_rarity, interest_rarity_button_func)
+        interests_rarity_button.bind_to(interests_label)
+
+        tiles_text = f"{len(self.tiles)} Room{'s' if len(self.tiles) != 1 else ''}"
+        tiles_label = render.Text(0.85, 0.6, tiles_text)
+        tiles_label.color = self.theme.dark
+        def choose_tiles_button_constructor(tile: str):
+            def button_func():
+                if tile in self.tiles:
+                    self.tiles.remove(tile)
+                else:
+                    self.tiles.append(tile)
+            return button_func
+        def is_tile_in_tiles(tile: str):
+            if tile in self.tiles: return True
+            else: return False
+        def choose_tiles():
+            options = client.requestdic("tile_spawnlists")
+            options = list(options)
+            show_options_with_search(options, choose_tiles_button_constructor, "Choose room spawnlists for this item.", last_scene, self.theme, option_active_func=is_tile_in_tiles, reload_on_button_press=True)
+        choose_tiles_button = render.TextButton(0.5, 2.5, 128, 32, "Choose", choose_tiles)
+        choose_tiles_button.bind_to(tiles_label)
+        def tile_rarity_button_func():
+            match self.tile_rarity:
+                case "common":
+                    self.tile_rarity = "uncommon"
+                case "uncommon":
+                    self.tile_rarity = "rare"
+                case "rare":
+                    self.tile_rarity = "exotic"
+                case "exotic":
+                    self.tile_rarity = "common"
+            self.draw_scene()
+        tiles_rarity_button = render.TextButton(0.5, 1.4, 128, 32, self.tile_rarity, tile_rarity_button_func)
+        tiles_rarity_button.bind_to(tiles_label)
 
     def set_secret_adjectives(self):
         suburb.new_scene()
@@ -499,8 +573,15 @@ class ItemEditor():
         return out
     
 def show_options_with_search(options: list, button_func_constructor: Callable, label:str, last_scene: Callable, theme: "themes.Theme", page=0, 
-                             search: Optional[str]=None, image_path_func: Optional[Callable]=None, image_scale=1.0):
+                             search: Optional[str]=None, image_path_func: Optional[Callable]=None, image_scale=1.0, option_active_func: Optional[Callable]=None,
+                             reload_on_button_press=False):
+    args = (options, button_func_constructor, label, last_scene, theme, page, search, image_path_func, image_scale, option_active_func, reload_on_button_press)
     suburb.new_scene()
+    def wrap_button_func_with_reload(button_func):
+        def wrapped():
+            button_func()
+            show_options_with_search(*args)
+        return wrapped
     OPTIONS_PER_PAGE = 12
     label_text = render.Text(0.5, 0.05, label)
     label_text.color = theme.dark
@@ -512,21 +593,26 @@ def show_options_with_search(options: list, button_func_constructor: Callable, l
         display_options = possible_options[page*OPTIONS_PER_PAGE:(page+1)*OPTIONS_PER_PAGE]
     for i, option in enumerate(display_options):
         y = 0.20 + 0.05*i
-        button = render.TextButton(0.5, y, 196, 32, option, button_func_constructor(option))
+        button_func = button_func_constructor(option)
+        if reload_on_button_press:
+            button_func = wrap_button_func_with_reload(button_func)
+        button = render.TextButton(0.5, y, 196, 32, option, button_func)
+        if option_active_func is not None and option_active_func(option):
+            button.fill_color = theme.light
         if image_path_func is not None:
             image = render.Image(0.4, y, image_path_func(option))
             image.scale = image_scale
     if page != 0:
         def previous_page(): 
-            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page=page-1, search=search, image_path_func=image_path_func, image_scale=image_scale)
+            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page-1, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
         previous_page_button = render.TextButton(0.5, 0.15, 32, 32, "▲", previous_page)
     if possible_options[(page+1)*OPTIONS_PER_PAGE:(page+2)*OPTIONS_PER_PAGE]:
         def next_page(): 
-            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page=page+1, search=search, image_path_func=image_path_func, image_scale=image_scale)
+            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page+1, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
         next_page_button = render.TextButton(0.5, 0.8, 32, 32, "▼", next_page)
     search_bar = render.InputTextBox(0.5, 0.9)
     def search_func():
-        show_options_with_search(options, button_func_constructor, label, last_scene, theme, page, search=search_bar.text, image_path_func=image_path_func, image_scale=image_scale)
+        show_options_with_search(options, button_func_constructor, label, last_scene, theme, page, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
     search_bar.key_press_func = search_func
     if search is not None: 
         search_bar.active = True
