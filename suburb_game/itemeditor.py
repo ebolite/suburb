@@ -469,7 +469,9 @@ class ItemEditor():
     def load(self, item_name):
         assert item_name in util.saved_items
         load_dict = util.saved_items[item_name]
-        self.__dict__ = load_dict
+        self.__dict__.update(load_dict)
+        self.item_name = item_name
+        if self.code is None: self.code = ""
 
     @property
     def base(self):
