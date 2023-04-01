@@ -229,8 +229,14 @@ def handle_request(dict):
         else:
             verified_item_dict["prototype_name"] = str(item_dict["prototype_name"])
         verified_item_dict["creator"] = user.name
+        if len(item_dict["interests"]+item_dict["tiles"]) == 0: return "Include at least one place for your item to spawn."
+        verified_item_dict["interests"] = item_dict["interests"]
+        verified_item_dict["interests_rarity"] = item_dict["interests_rarity"]
+        verified_item_dict["tiles"] = item_dict["tiles"]
+        verified_item_dict["tiles_rarity"] = item_dict["tiles_rarity"]
         util.base_submissions[item_name] = verified_item_dict
         util.writejson(util.base_submissions, "base_submissions")
+        return True
     # session verification
     session_name = dict["session_name"]
     if session_name in user.sessions and intent == "join_session": return "You are already in that session!"

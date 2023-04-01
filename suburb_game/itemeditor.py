@@ -1,4 +1,5 @@
 from typing import Optional, Callable
+import datetime
 
 import render
 import client
@@ -35,7 +36,7 @@ class ItemEditor():
         self.interests = []
         self.interests_rarity = "uncommon"
         self.tiles = []
-        self.tile_rarity = "uncommon"
+        self.tiles_rarity = "uncommon"
 
     def item_editor_scene(self):
         suburb.new_scene()
@@ -60,7 +61,20 @@ class ItemEditor():
         suburb.new_scene()
         text = render.Text(0.5, 0.2, "Are you sure you want to leave? Any unsaved changes will be lost.")
         def confirm(): self.item_editor_scene()
-        confirmbutton = render.Button(.5, .3, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", suburb.title)
+        confirmbutton = render.Button(.5, .3, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm)
+        def back(): self.draw_scene()
+        backbutton = render.Button(0.5, 0.4, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
+
+    def submission_scene(self):
+        suburb.new_scene()
+        logtext = render.Text(0.5, 0.2, "Are you sure you want to submit your item? This cannot be undone.")
+        def confirm():
+            reply = self.verify_and_submit()
+            if reply is True:
+                logtext.text = "Successfully submitted your item!"
+            else:
+                logtext.text = reply
+        confirmbutton = render.Button(.5, .3, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm)
         def back(): self.draw_scene()
         backbutton = render.Button(0.5, 0.4, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
 
@@ -78,7 +92,11 @@ class ItemEditor():
         self.draw_secret_adjectives()
         self.draw_interests()
         def back(): self.confirm_leave()
-        def save(): self.save()
+        savelog = render.Text(0.5, 0.8, "")
+        savelog.fontsize = 16
+        def save(): 
+            self.save()
+            savelog.text = f"saved at {datetime.datetime.now().strftime('%I:%M:%S')}"
         savebutton = render.TextButton(0.5, 0.85, 128, 32, "SAVE", save)
         backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
 
@@ -470,17 +488,17 @@ class ItemEditor():
         choose_tiles_button = render.TextButton(0.5, 2.5, 128, 32, "Choose", choose_tiles)
         choose_tiles_button.bind_to(tiles_label)
         def tile_rarity_button_func():
-            match self.tile_rarity:
+            match self.tiles_rarity:
                 case "common":
-                    self.tile_rarity = "uncommon"
+                    self.tiles_rarity = "uncommon"
                 case "uncommon":
-                    self.tile_rarity = "rare"
+                    self.tiles_rarity = "rare"
                 case "rare":
-                    self.tile_rarity = "exotic"
+                    self.tiles_rarity = "exotic"
                 case "exotic":
-                    self.tile_rarity = "common"
+                    self.tiles_rarity = "common"
             self.draw_scene()
-        tiles_rarity_button = render.TextButton(0.5, 1.4, 128, 32, self.tile_rarity, tile_rarity_button_func)
+        tiles_rarity_button = render.TextButton(0.5, 1.4, 128, 32, self.tiles_rarity, tile_rarity_button_func)
         tiles_rarity_button.bind_to(tiles_label)
 
     def set_secret_adjectives(self):
@@ -533,8 +551,25 @@ class ItemEditor():
             "attached_skills": [],
             "prototype_name": self.prototype_name,
             "creator": client.dic["username"],
+            "interests": self.interests,
+            "interests_rarity": self.interests_rarity,
+            "tiles": self.tiles,
+            "tiles_rarity": self.tiles_rarity,
         }
         return out_dict
+
+    def verify_and_submit(self):
+        if self.power == 0: return "Power cannot be 0."
+        if self.size == 0: return "Size cannot be 0."
+        if not self.kinds: return "You must choose at least one kind. If none make sense, save and ask the dev to add another."
+        if not self.description: return "Please include a description for your item."
+        if len(self.cost) == 1: return "Include at least one other grist type for your item to cost."
+        if len(self.secretadjectives) < 4: return "Please include at least 4 secret adjectives for your item."
+        if not binaryoperations.is_valid_code(self.code): return "Invalid captchalogue code."
+        if len(self.interests+self.tiles) == 0: return "Include at least once place for your item to spawn, and interest or a room."
+        reply = client.requestplus(intent="submit_item", content={"item_name": self.item_name, "item_dict": self.get_dict()})
+        if reply != "True": return reply
+        else: return True
 
     def save(self):
         util.saved_items[self.item_name] = self.get_dict()
