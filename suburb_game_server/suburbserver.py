@@ -176,6 +176,56 @@ def handle_request(dict):
             if session_player is None: out_dict[session_name] = None
             else: out_dict[session_name] = session_player.get_dict()
         return json.dumps(out_dict)
+    if intent == "submit_item":
+        item_name = str(content["item_name"])
+        item_dict = content["item_dict"]
+        if item_name in util.memory_items:
+            return f"The item {item_name} was already made!"
+        verified_item_dict = {}
+        verified_item_dict["base"] = True
+        verified_item_dict["power"] = int(item_dict["power"])
+        verified_item_dict["size"] = int(item_dict["size"])
+        if not item_dict["kinds"]: return "Your item needs at least one kind!"
+        verified_item_dict["kinds"] = [kind_name for kind_name in item_dict["kinds"] if kind_name in util.kinds]
+        verified_item_dict["wearable"] = bool(item_dict["wearable"])
+        if not item_dict["description"]: return "You need to give your item a description!"
+        verified_item_dict["description"] = str(item_dict["description"])
+        if "build" not in item_dict["cost"] or item_dict["cost"]["build"] != 0.5: return "fucker..."
+        for state_name in item_dict["onhit_states"]:
+            if state_name not in stateseffects.item_states: return f"Invalid state {state_name}"
+        for state_name in item_dict["wear_states"]:
+            if state_name not in stateseffects.item_states: return f"Invalid state {state_name}"
+        for state_name in item_dict["consume_states"]:
+            if state_name not in stateseffects.item_states: return f"Invalid state {state_name}"
+        for state_name in item_dict["secret_states"]:
+            if state_name not in stateseffects.item_states: return f"Invalid state {state_name}"
+        verified_item_dict["onhit_states"] = item_dict["onhit_states"]
+        verified_item_dict["wear_states"] = item_dict["wear_states"]
+        verified_item_dict["consume_states"] = item_dict["consume_states"]
+        verified_item_dict["secret_states"] = item_dict["secret_states"]
+        verified_item_dict["secretadjectives"] = [str(adjective) for adjective in item_dict["secretadjectives"]]
+        verified_item_dict["forbiddencode"] = False
+        verified_item_dict["use"] = [] # todo: add use to item creation
+        verified_item_dict["inheritpower"] = int(item_dict["inheritpower"])
+        adjectives: list[str] = item_name.split(" ")
+        adjectives.pop()
+        verified_item_dict["adjectives"] = adjectives
+        if item_dict["code"] is None:
+            code = binaryoperations.random_valid_code()
+            while code in util.codes:
+                code = binaryoperations.random_valid_code()
+        else:
+            if not binaryoperations.is_valid_code(item_dict["code"]): return f"Invalid code {item_dict['code']}"
+            elif item_dict["code"] in util.codes: return "That code is already taken."
+            else: code = item_dict["code"]
+        verified_item_dict["code"] = code
+        verified_item_dict["attached_skills"] = []
+        if item_dict["prototype_name"] is None:
+            verified_item_dict["prototype_name"] = item_dict["prototype_name"]
+        else:
+            verified_item_dict["prototype_name"] = str(item_dict["prototype_name"])
+        verified_item_dict["creator"] = user.name
+        util.base_submissions[item_name] = verified_item_dict
     # session verification
     session_name = dict["session_name"]
     if session_name in user.sessions and intent == "join_session": return "You are already in that session!"

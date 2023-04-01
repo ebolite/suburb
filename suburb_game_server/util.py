@@ -108,6 +108,9 @@ memory_users = {instance_dict["_id"]:instance_dict for instance_dict in db_users
 codes = {} # key: item code value: item name
 codes = readjson(codes, "codes")
 
+base_submissions = {}
+base_submissions = readjson(base_submissions, "base_submissions")
+
 kinds: list[str] = []
 for base in bases:
     for kind in bases[base]["kinds"]:

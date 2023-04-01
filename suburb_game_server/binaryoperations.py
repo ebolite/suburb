@@ -120,6 +120,12 @@ def codeor(code1: str, code2: str): # codes as code string
     final = bintostring(finalbin)
     return final
 
+def is_valid_code(code) -> bool:
+    if len(code) != 8: return False
+    validated_code = "".join([char for char in code if char in bintable])
+    if code != validated_code: return False
+    return True
+
 def random_valid_code() -> str:
     code = []
     for i in range(8):
