@@ -534,6 +534,7 @@ defaults = {
     "attached_skills": [], # a list of skills this item teaches when worn/wielded
     "secretadjectives": [], # a list of adjectives that might be inherited but don't show up on the item
     "prototype_name": None, # either None or a word that will be used when prototyped for the first time(cowboy boots is "cowboy" for example)
+    "creator": None,
 }
 
 missing_states = set()
