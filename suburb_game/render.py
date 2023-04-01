@@ -1596,7 +1596,6 @@ class Overmap(UIElement):
             new_overmap.rotate(90)
 
     def initialize_map(self, rotation):
-        t = time.time()
         self.rect = pygame.Rect(0, 0, self.w, self.h)
         self.surf = pygame.Surface((self.w, self.h))
         self.surf.fill(self.theme.black)
@@ -1624,7 +1623,6 @@ class Overmap(UIElement):
                 overmap_tile.blit_surf = self.surf
                 overmap_tile.draw_to_surface(rotation)
                 last_x_char = char
-        print(f"map init took {time.time()-t:.2f} seconds")
 
     def update(self):
         self.mousepan(0)
