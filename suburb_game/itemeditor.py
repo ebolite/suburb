@@ -17,6 +17,7 @@ class ItemEditor():
         self.size = 5
         self.kinds = []
         self.wearable = False
+        self.description = ""
 
     def draw_scene(self):
         suburb.new_scene()
@@ -25,6 +26,7 @@ class ItemEditor():
         self.draw_power_size()
         self.draw_kinds_button()
         self.draw_wearable_toggle()
+        self.draw_description()
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)
@@ -146,6 +148,27 @@ class ItemEditor():
         label.color = self.theme.dark
         wearable_text = "yes" if self.wearable else "no"
         button = render.TextButton(0.85, 0.25, 96, 32, wearable_text, wearable_button_func)
+
+    def draw_description(self):
+        description = self.description if self.description else "!! no description !!"
+        description = render.Text(0.5, 0.97, description)
+        description.color = self.theme.dark
+        description.fontsize = 14
+        def set_description_button_func():
+            self.set_description_scene()
+        set_description_button = render.TextButton(0.5, 0.93, 160, 32, "Set description", set_description_button_func)
+
+    def set_description_scene(self):
+        suburb.new_scene()
+        label = render.Text(0.5, 0.3, "Description:")
+        label.color = self.theme.dark
+        description_box = render.InputTextBox(0.5, 0.4)
+        description_box.fontsize = 16
+        def last_scene():
+            self.description = description_box.text
+            self.draw_scene()
+        ok_button = render.TextButton(0.5, 0.5, 128, 32, "OK", last_scene)
+
 
     def make_label(self, x, y, text, binding) -> "render.Text":
         label = render.Text(x, y, text)
