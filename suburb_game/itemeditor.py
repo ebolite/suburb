@@ -24,8 +24,7 @@ class ItemEditor():
         self.wearable = False
         self.description = ""
         self.cost = {
-            "build": 0.5,
-            "jet": 0.1
+            "build": 0.5
         }
         self.onhit_states = {}
         self.wear_states = {}
