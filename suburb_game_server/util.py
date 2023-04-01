@@ -119,6 +119,16 @@ for base in bases:
     for kind in bases[base]["kinds"]:
         if kind not in kinds:
             kinds.append(kind)
+
+additional_kinds = ["plungerkind", "hosekind", "bookkind", "bustkind", "spadekind", "pipekind", "nailgunkind", "hairdryerkind", "lacrossstickkind", "throwingstarkind", "tongskind",
+                    "razorkind", "fireextinguisherkind", "branchkind", "bowlingpinkind", "bombkind", "woodwindkind", "staplerkind", "riflekind", "candlestickkind", "paddlekind", "bowkind",
+                    "barbedwirekind", "dartkind", "marblekind", "plierkind", "fireworkkind", "chiselkind", "aerosolkind", "shoekind", "puppetkind", "fankind", "brasskind", "rockkind",
+                    "scythekind", "dicekind", "cardkind", "puppetkind"]
+
+for kind in additional_kinds:
+    if kind not in kinds:
+        kinds.append(kind)
+
 print(sorted(kinds))
 
 def saveall():
