@@ -634,11 +634,14 @@ class InputTextBox(UIElement):
         self.button: Union[Button, TextButton, None] = None
         self.enter_func: Optional[Callable] = None
         self.key_press_func: Optional[Callable] = None
+        self.tab_box: Optional[InputTextBox] = None
+        self.just_tabbed = False
         click_check.append(self)
         key_check.append(self)
         keypress_update_check.append(self)
 
     def update(self, keys):
+        if self.just_tabbed: self.just_tabbed = False
         if self.secure:
             t = self.suffix + ("*" * len(self.text))
             self.text_surf = self.font.render(t, self.antialias, self.text_color)
@@ -691,12 +694,16 @@ class InputTextBox(UIElement):
 
     def keypress(self, event):
         if not self.active: return
-        if event.key == pygame.K_BACKSPACE:
+        if event.key == pygame.K_TAB and self.tab_box is not None and not self.just_tabbed:
+            self.tab_box.active = True
+            self.tab_box.just_tabbed = True
+            self.active = False
+        elif event.key == pygame.K_BACKSPACE:
             self.text = self.text[:-1]
             if self.numbers_only and self.text == "": self.text = "0"
             if self.key_press_func is not None: self.key_press_func()
         elif event.key == pygame.K_RETURN and self.enter_func != None:
-            self.enter_func(self)
+            self.enter_func()
         # if enter is pressed and this text box has a button assigned to it, press that button
         elif event.key == pygame.K_RETURN and self.button != None:
             self.button.mouseup(True)

@@ -172,6 +172,9 @@ def register():
     confirm.outline_color = current_theme().black
     confirmbox = render.InputTextBox(.5, .55)
     confirmbox.secure = True
+    namebox.tab_box = pwbox
+    pwbox.tab_box = confirmbox
+    confirmbox.tab_box = namebox
     def verify():
         if pwbox.text != confirmbox.text: log.text = "Passwords do not match."; return
         if len(namebox.text) == 0: log.text = "Username must not be empty."; return
@@ -185,6 +188,9 @@ def register():
             client.dic["username"] = ""
             client.dic["password"] = ""
         print(f"log text {log.text}")
+    namebox.enter_func = verify
+    pwbox.enter_func = verify
+    confirmbox.enter_func = verify
     registerbutton = render.Button(.5, .67, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", login_scene)
 
@@ -223,6 +229,8 @@ def login_scene():
     pw.outline_color = current_theme().black
     pwbox = render.InputTextBox(.5, .50)
     pwbox.secure = True
+    namebox.tab_box = pwbox
+    pwbox.tab_box = namebox
     def verify():
         if len(namebox.text) == 0: log.text = "Username must not be empty."; return
         if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
@@ -231,6 +239,8 @@ def login_scene():
         reply = login()
         if reply is not None:
             log.text = reply
+    namebox.enter_func = verify
+    pwbox.enter_func = verify
     loginbutton = render.Button(.5, .62, "sprites\\buttons\\login.png", "sprites\\buttons\\loginpressed.png", verify)
     registerbutton = render.Button(.5, .75, "sprites\\buttons\\register.png", "sprites\\buttons\\registerpressed.png", register)
 
@@ -272,6 +282,9 @@ def newsession():
     confirm.outline_color = current_theme().black
     confirmbox = render.InputTextBox(.5, .55)
     confirmbox.secure = True
+    namebox.tab_box = pwbox
+    pwbox.tab_box = confirmbox
+    confirmbox.tab_box = namebox
     def verify():
         if pwbox.text != confirmbox.text: log.text = "Passwords do not match."; return
         if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
@@ -285,6 +298,9 @@ def newsession():
             client.dic["session_name"] = ""
         client.dic["session_password"] = ""
         print(f"log text {log.text}")
+    namebox.enter_func = verify
+    pwbox.enter_func = verify
+    confirmbox.enter_func = verify
     confirm = render.Button(.5, .67, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .80, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", title)
 
@@ -303,6 +319,8 @@ def connect():
     pw.outline_color = current_theme().black
     pwbox = render.InputTextBox(.5, .50)
     pwbox.secure = True
+    namebox.tab_box = pwbox
+    pwbox.tab_box = namebox
     def verify():
         if len(namebox.text) == 0: log.text = "Session name must not be empty."; return
         if len(pwbox.text) == 0: log.text = "Password must not be empty."; return
@@ -317,6 +335,8 @@ def connect():
             client.dic["session_password"] = ""
             namecharacter()
         print(f"log text {log.text}")
+    namebox.enter_func = verify
+    pwbox.enter_func = verify
     confirm = render.Button(.5, .62, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
     back = render.Button(.5, .75, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", play)
 
