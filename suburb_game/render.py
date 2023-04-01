@@ -898,8 +898,9 @@ def get_spirograph(x, y, thick=True) -> Image:
 
 def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict]=None, binding: Optional[UIElement]=None, 
                             text_color: pygame.Color=suburb.current_theme().dark, temporary=True, absolute=True, scale_mult=1.0,
-                            flipped=False, tooltip=True) -> UIElement:
+                            flipped=False, tooltip=True, return_grist_icons=False) -> Union[UIElement, dict[str, UIElement]]:
     elements: list[Union[Image, Text]] = []
+    grist_icons = {}
     padding = 5
     scale = (h / 48) * scale_mult
     fontsize = int(h * scale_mult)
@@ -914,6 +915,7 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
         if grist_name == "rainbow":
             icon_path = "sprites/grists/rainbow"
         icon = Image(icon_x, icon_y, icon_path)
+        grist_icons[grist_name] = icon
         if grist_name == "rainbow":
             icon.animated = True
             icon.animframes = 4
@@ -950,7 +952,7 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
         elements.append(label)
     total_element_w = 0
     for element in elements:
-        total_element_w += element.get_width()
+        total_element_w += element.get_width() + padding
     if not absolute:
         if binding is None:
             binding_w = SCREEN_WIDTH
@@ -963,7 +965,9 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
     else:
         if binding is not None and flipped:
             elements[0].x = -total_element_w
-    return elements[0]
+    if not return_grist_icons:
+        return elements[0]
+    else: return grist_icons
 
 class TileMap(UIElement):
     def __init__(self, x, y, server_view=False, item_display_x=70, item_display_y=190):

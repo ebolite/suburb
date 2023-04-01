@@ -132,6 +132,8 @@ def handle_request(dict):
         return json.dumps(config.interests)
     if intent == "kinds":
         return json.dumps(util.kinds)
+    if intent == "grists":
+        return json.dumps(config.grists)
     username = dict["username"]
     password = dict["password"]
     content = dict["content"]

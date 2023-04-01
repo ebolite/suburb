@@ -11,13 +11,17 @@ class ItemEditor():
         self.theme = themes.default
         self.item_name = "adjective+1 adjective+2 base"
         self.code = ""
-        self.power = 0
+        self.power = 10
         self.inheritpower = 10
         self.weight = 5
         self.size = 5
         self.kinds = []
         self.wearable = False
         self.description = ""
+        self.cost = {
+            "build": 0.5,
+            "jet": 0.5
+        }
 
     def draw_scene(self):
         suburb.new_scene()
@@ -27,6 +31,7 @@ class ItemEditor():
         self.draw_kinds_button()
         self.draw_wearable_toggle()
         self.draw_description()
+        self.draw_costs()
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)
@@ -69,13 +74,15 @@ class ItemEditor():
         valid_label.bind_to(code_box)
 
     def draw_power_size(self):
-        power_box = render.InputTextBox(0.35, 0.23, w=128, h=32)
-        power_box.numbers_only = True
-        power_box.text = str(self.power)
+        self.power_box = render.InputTextBox(0.35, 0.23, w=128, h=32)
+        self.power_box.numbers_only = True
+        self.power_box.text = str(self.power)
         def power_box_func():
-            self.power = int(power_box.text)
-        power_box.key_press_func = power_box_func
-        power_label = self.make_label(0.5, 1.4, "power", power_box)
+            self.power = int(self.power_box.text)
+            self.draw_scene()
+            self.power_box.active = True
+        self.power_box.key_press_func = power_box_func
+        power_label = self.make_label(0.5, 1.4, "power", self.power_box)
         #
         inheritpower_box = render.InputTextBox(0.5, 0.23, w=128, h=32)
         inheritpower_box.numbers_only = True
@@ -94,7 +101,7 @@ class ItemEditor():
         size_label = self.make_label(0.5, 1.4, "size", size_box)
         #
         power_tooltip = render.ToolTip(0, 0, 128, 32)
-        power_tooltip.bind_to(power_box)
+        power_tooltip.bind_to(self.power_box)
         power_tooltip_label_line1 = self.make_label(0, 20, "Examples: Spoon: 2; Knife: 10; Baseball Bat: 20; Sword: 40; Pistol: 100", power_tooltip)
         power_tooltip_label_line1.absolute = True
         power_tooltip_label_line2 = self.make_label(0, 40, "Paper: 1; Lamp: 11; Toilet: 24; Bathtub: 32; Fireplace: 65", power_tooltip)
@@ -169,6 +176,47 @@ class ItemEditor():
             self.draw_scene()
         ok_button = render.TextButton(0.5, 0.5, 128, 32, "OK", last_scene)
 
+    def draw_costs(self):
+        label = render.Text(0.5, 0.31, "Cost")
+        label.color = self.theme.dark
+        grist_icons = render.make_grist_cost_display(0.5, 0.4, 24, self.true_cost, text_color = self.theme.dark, absolute=False, return_grist_icons=True)
+        assert isinstance(grist_icons, dict)
+        def get_increase_cost_func(grist_name: str):
+            def button_func():
+                self.cost[grist_name] += 0.1
+                self.draw_scene()
+            return button_func
+        def get_decrease_cost_func(grist_name: str):
+            def button_func():
+                self.cost[grist_name] -= 0.1
+                if self.cost[grist_name] <= 0:
+                    self.cost.pop(grist_name)
+                self.draw_scene()
+            return button_func
+        for grist_name, icon in grist_icons.items():
+            if grist_name == "build": continue
+            increase_cost_button = render.TextButton(0.5, -0.75, 24, 24, "+", get_increase_cost_func(grist_name))
+            increase_cost_button.bind_to(icon)
+            decrease_cost_button = render.TextButton(0.5, 1.75, 24, 24, "-", get_decrease_cost_func(grist_name))
+            decrease_cost_button.bind_to(icon)
+        last_grist = list(grist_icons)[-1]
+        last_icon = grist_icons[last_grist]
+        def last_scene():
+            self.draw_scene()
+        def get_grist_icon_path(grist_name: str):
+            return f"sprites/grists/{grist_name}.png"
+        def pick_grist_scene_constructor(grist_name: str):
+            def button_func():
+                self.cost[grist_name] = 0.1
+                self.draw_scene()
+            return button_func
+        def add_grist_func():
+            available_grists = client.requestdic(intent="grists")
+            available_grists = list(available_grists)
+            available_grists = [grist for grist in available_grists if grist not in self.cost]
+            if "rainbow" in available_grists: available_grists.remove("rainbow")
+            show_options_with_search(available_grists, pick_grist_scene_constructor, "Choose grist to add.", last_scene, self.theme, image_path_func=get_grist_icon_path, image_scale=0.5)
+        add_grist_button = render.TextButton(0.5, 0.5, 128, 24, "Add grist", add_grist_func)
 
     def make_label(self, x, y, text, binding) -> "render.Text":
         label = render.Text(x, y, text)
@@ -196,7 +244,15 @@ class ItemEditor():
     def descriptors(self):
         return self.item_name.split(" ")
     
-def show_options_with_search(options: list, button_func_constructor: Callable, label:str, last_scene: Callable, theme: "themes.Theme", page=0, search: Optional[str]=None):
+    @property
+    def true_cost(self):
+        out = {}
+        for grist_name, value in self.cost.items():
+            out[grist_name] = int(self.power*value)
+        return out
+    
+def show_options_with_search(options: list, button_func_constructor: Callable, label:str, last_scene: Callable, theme: "themes.Theme", page=0, 
+                             search: Optional[str]=None, image_path_func: Optional[Callable]=None, image_scale=1.0):
     suburb.new_scene()
     OPTIONS_PER_PAGE = 12
     label_text = render.Text(0.5, 0.05, label)
@@ -204,18 +260,26 @@ def show_options_with_search(options: list, button_func_constructor: Callable, l
     if search is not None: possible_options = [option for option in options if search in option]
     else: possible_options = options.copy()
     display_options = possible_options[page*OPTIONS_PER_PAGE:(page+1)*OPTIONS_PER_PAGE]
+    if not display_options: 
+        page=0
+        display_options = possible_options[page*OPTIONS_PER_PAGE:(page+1)*OPTIONS_PER_PAGE]
     for i, option in enumerate(display_options):
         y = 0.20 + 0.05*i
         button = render.TextButton(0.5, y, 196, 32, option, button_func_constructor(option))
+        if image_path_func is not None:
+            image = render.Image(0.4, y, image_path_func(option))
+            image.scale = image_scale
     if page != 0:
-        def previous_page(): show_options_with_search(options, button_func_constructor, label, last_scene, theme, page=page-1, search=search)
+        def previous_page(): 
+            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page=page-1, search=search, image_path_func=image_path_func, image_scale=image_scale)
         previous_page_button = render.TextButton(0.5, 0.15, 32, 32, "▲", previous_page)
     if possible_options[(page+1)*OPTIONS_PER_PAGE:(page+2)*OPTIONS_PER_PAGE]:
-        def next_page(): show_options_with_search(options, button_func_constructor, label, last_scene, theme, page=page+1, search=search)
+        def next_page(): 
+            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page=page+1, search=search, image_path_func=image_path_func, image_scale=image_scale)
         next_page_button = render.TextButton(0.5, 0.8, 32, 32, "▼", next_page)
     search_bar = render.InputTextBox(0.5, 0.9)
     def search_func():
-        show_options_with_search(options, button_func_constructor, label, last_scene, theme, page, search=search_bar.text)
+        show_options_with_search(options, button_func_constructor, label, last_scene, theme, page, search=search_bar.text, image_path_func=image_path_func, image_scale=image_scale)
     search_bar.key_press_func = search_func
     if search is not None: 
         search_bar.active = True
