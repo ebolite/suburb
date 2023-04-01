@@ -7,6 +7,8 @@ import random
 def get_interest_spawnlists() -> list[str]:
     return [spawnlist_name for spawnlist_name in util.spawnlists if SpawnList(spawnlist_name).spawnlist_type == "interest"]
 
+print(f"INTERESTS {', '.join(get_interest_spawnlists())}")
+
 def get_tile_spawnlists() -> list[str]:
     return [spawnlist_name for spawnlist_name in util.spawnlists if SpawnList(spawnlist_name).spawnlist_type == "tile"]
 
