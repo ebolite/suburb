@@ -5,6 +5,7 @@ import client
 import suburb
 import themes
 import binaryoperations
+import util
 
 class ItemEditor():
     def __init__(self):
@@ -401,6 +402,39 @@ class ItemEditor():
         label.color = self.theme.dark
         label.outline_color = self.theme.light
         return label
+
+    def get_dict(self):
+        out_dict = {
+            "base": True,
+            "power": self.power,
+            "size": self.size,
+            "kinds": self.kinds,
+            "wearable": self.wearable,
+            "description": self.description,
+            "cost": self.cost,
+            "onhit_states": self.onhit_states,
+            "wear_states": self.wear_states,
+            "consume_states": self.consume_states,
+            "secret_states": self.secret_states,
+            "secretadjectives": self.secretadjectives,
+            "forbiddencode": False,
+            "use": [],
+            "inheritpower": self.inheritpower,
+            "adjectives": self.adjectives,
+            "code": self.code if self.code else None,
+            "attached_skills": [],
+            "prototype_name": self.prototype_name,
+        }
+        return out_dict
+
+    def save(self):
+        util.saved_items[self.item_name] = self.get_dict()
+        util.writejson(util.saved_items, "saved_items")
+
+    def load(self, item_name):
+        assert item_name in util.saved_items
+        load_dict = util.saved_items[item_name]
+        self.__dict__ = load_dict
 
     @property
     def base(self):
