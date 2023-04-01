@@ -693,7 +693,7 @@ itemcategoryrarities = {
         "rare": ["pistol"],
         "exotic": [".44 magnum"]
         },
-    "clowns": {
+    "clown": {
         "common": ["joker figurine", "clown poster", "red faygo", "grape faygo", "cola faygo"],
         "uncommon": ["clown shoes", "clown nose"],
         "rare": ["cotton+candy faygo", "kiwi+strawberry faygo"],

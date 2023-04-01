@@ -683,7 +683,6 @@ class Room():
             self.players.remove(player.name)
 
     def generate_loot(self, spawns: Optional[list[str]] = None):
-        if not self.tile.generate_loot: return
         if spawns is None:
             spawns = self.tile.get_loot_list()
         for item_name in spawns:

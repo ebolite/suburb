@@ -18,6 +18,7 @@ import tiles
 import binaryoperations
 import npcs
 import stateseffects
+import spawnlists
 
 conns = []
 
@@ -203,6 +204,7 @@ def handle_request(dict):
         verified_item_dict["wear_states"] = item_dict["wear_states"]
         verified_item_dict["consume_states"] = item_dict["consume_states"]
         verified_item_dict["secret_states"] = item_dict["secret_states"]
+        if not item_dict["secretadjectives"]: return f"You need to put in inherited adjectives! Please include at least 4."
         verified_item_dict["secretadjectives"] = [str(adjective) for adjective in item_dict["secretadjectives"]]
         verified_item_dict["forbiddencode"] = False
         verified_item_dict["use"] = [] # todo: add use to item creation
@@ -285,8 +287,12 @@ def handle_request(dict):
         dream_room.map.special_type = "dreamer_tower"
         new_player.current_subplayer_type = "real"
         for interest in new_player.interests:
-            room.generate_loot(tiles.get_tile(interest).get_loot_list())
-            dream_room.generate_loot(tiles.get_tile(interest).get_loot_list())
+            interest_spawnlist = spawnlists.SpawnList.find_spawnlist(interest)
+            if interest_spawnlist is None:
+                print(f"!!! interest missing {interest} !!!")
+                continue
+            room.generate_loot(interest_spawnlist.get_loot_list())
+            dream_room.generate_loot(interest_spawnlist.get_loot_list())
         # session
         session.starting_players.append(new_player.id)
         session.user_players[user.name] = new_player.id

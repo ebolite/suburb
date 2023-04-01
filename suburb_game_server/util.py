@@ -111,6 +111,9 @@ codes = readjson(codes, "codes")
 base_submissions = {}
 base_submissions = readjson(base_submissions, "base_submissions")
 
+spawnlists = {}
+spawnlists = readjson(spawnlists, "spawnlists")
+
 kinds: list[str] = []
 for base in bases:
     for kind in bases[base]["kinds"]:
