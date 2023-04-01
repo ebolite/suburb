@@ -16,6 +16,7 @@ class ItemEditor():
         self.weight = 5
         self.size = 5
         self.kinds = []
+        self.wearable = False
 
     def draw_scene(self):
         suburb.new_scene()
@@ -23,6 +24,7 @@ class ItemEditor():
         self.draw_code()
         self.draw_power_size()
         self.draw_kinds_button()
+        self.draw_wearable_toggle()
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)
@@ -134,6 +136,16 @@ class ItemEditor():
                 self.kinds.pop()
                 self.draw_scene()
             remove_kinds_button = render.TextButton(0.15, 0.5, 128, 32, "Remove kind", remove_kinds_button_func)
+    
+    def draw_wearable_toggle(self):
+        def wearable_button_func():
+            self.wearable = not self.wearable
+            self.draw_scene()
+        label = render.Text(0.85, 0.21, "Donnable / wearable?")
+        label.fontsize = 20
+        label.color = self.theme.dark
+        wearable_text = "yes" if self.wearable else "no"
+        button = render.TextButton(0.85, 0.25, 96, 32, wearable_text, wearable_button_func)
 
     def make_label(self, x, y, text, binding) -> "render.Text":
         label = render.Text(x, y, text)
