@@ -14,7 +14,7 @@ class ItemEditor():
 
     def setup_defaults(self):
         self.theme = themes.default
-        self.item_name = "my+cool item"
+        self.item_name = "adjective base"
         self.display_name = ""
         self.code = ""
         self.power = 10
