@@ -56,6 +56,7 @@ if __name__ == "__main__":
                 break
             else: print("Invalid option.")
         reply = reply.lower()
+        base_submissions = util.get_base_submissions()
         base_submissions.pop(base_name)
         util.update_base_submissions(base_submissions)
         match reply:
