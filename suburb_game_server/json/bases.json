@@ -31,7 +31,8 @@
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "completely+useless object": {
         "base": true,
@@ -65,7 +66,8 @@
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "captchalogue card": {
         "base": true,
@@ -103,7 +105,8 @@
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": "captcha",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "pre-punched card": {
         "base": true,
@@ -145,7 +148,8 @@
         ],
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "punched card": {
         "base": true,
@@ -188,7 +192,8 @@
         ],
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "cruxite dowel": {
         "base": true,
@@ -225,7 +230,8 @@
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": "cruxite",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "entry item": {
         "base": true,
@@ -262,7 +268,8 @@
         "forbiddencode": false,
         "attached_skills": [],
         "prototype_name": "entry",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "punch designix": {
         "base": true,
@@ -301,7 +308,8 @@
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "cruxtruder": {
         "base": true,
@@ -335,7 +343,8 @@
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "sealed cruxtruder": {
         "base": true,
@@ -371,7 +380,8 @@
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "totem lathe": {
         "base": true,
@@ -408,7 +418,8 @@
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "alchemiter": {
         "base": true,
@@ -443,7 +454,8 @@
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": "alchemy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "gristTorrent disc": {
         "base": true,
@@ -482,7 +494,8 @@
         "inheritpower": 100,
         "attached_skills": [],
         "prototype_name": "gristy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "Sburb disc": {
         "base": true,
@@ -526,7 +539,8 @@
         "inheritpower": 10000,
         "attached_skills": [],
         "prototype_name": "sburb",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "lap top": {
         "base": true,
@@ -566,7 +580,8 @@
         "code": "KUn2ywTK",
         "attached_skills": [],
         "prototype_name": "laptop",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "desktop computer": {
         "base": true,
@@ -606,7 +621,8 @@
         "code": "SkyldajN",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "paper": {
         "base": true,
@@ -641,7 +657,8 @@
         "code": "TOOn0XOp",
         "attached_skills": [],
         "prototype_name": "origami",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "pizza cutter": {
         "base": true,
@@ -679,7 +696,8 @@
         "code": "o0NJzubR",
         "attached_skills": [],
         "prototype_name": "pizza",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "baseball bat": {
         "base": true,
@@ -710,7 +728,8 @@
         "code": "GvOkKnLy",
         "attached_skills": [],
         "prototype_name": "baseball",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "aluminum bat": {
         "base": true,
@@ -746,7 +765,8 @@
         "code": "1EprzWku",
         "attached_skills": [],
         "prototype_name": "punk",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "rolling pin": {
         "base": true,
@@ -783,7 +803,8 @@
         "code": "zMuf?7X4",
         "attached_skills": [],
         "prototype_name": "baker",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "plunger": {
         "base": true,
@@ -821,7 +842,8 @@
         "code": "yHSVolaN",
         "attached_skills": [],
         "prototype_name": "plumber",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "yoyo": {
         "base": true,
@@ -860,7 +882,8 @@
         "code": "W32Pasmf",
         "attached_skills": [],
         "prototype_name": "coolkid",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "scissors": {
         "base": true,
@@ -898,7 +921,8 @@
         "code": "joxYm8M1",
         "attached_skills": [],
         "prototype_name": "crafty",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "shears": {
         "base": true,
@@ -939,7 +963,8 @@
         "code": "d9IwbYEC",
         "attached_skills": [],
         "prototype_name": "shepherd",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "safety scissors": {
         "base": true,
@@ -977,7 +1002,8 @@
         "code": "vGkY7esP",
         "attached_skills": [],
         "prototype_name": "kiddy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "pepper spray": {
         "base": true,
@@ -1021,7 +1047,8 @@
         "code": "r?OIRUys",
         "attached_skills": [],
         "prototype_name": "pepper",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "chainsaw": {
         "base": true,
@@ -1065,7 +1092,8 @@
         "code": "O64F55nO",
         "attached_skills": [],
         "prototype_name": "murder",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "weed whacker": {
         "base": true,
@@ -1097,7 +1125,8 @@
         "code": "054zjJuz",
         "attached_skills": [],
         "prototype_name": "garden",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "crowbar": {
         "base": true,
@@ -1133,7 +1162,8 @@
         "code": "ZDucn2T?",
         "attached_skills": [],
         "prototype_name": "freeman",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "halligan bar": {
         "base": true,
@@ -1174,7 +1204,8 @@
         "code": "?Qlw!VLV",
         "attached_skills": [],
         "prototype_name": "fire",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "broom": {
         "base": true,
@@ -1211,7 +1242,8 @@
         "code": "oXliKcd1",
         "attached_skills": [],
         "prototype_name": "maid",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "straw broom": {
         "base": true,
@@ -1256,7 +1288,8 @@
         "code": "RJSyJSky",
         "attached_skills": [],
         "prototype_name": "witch",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "fire poker": {
         "base": true,
@@ -1289,7 +1322,8 @@
         "code": "pAler55a",
         "attached_skills": [],
         "prototype_name": "fire",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "spear": {
         "base": true,
@@ -1324,7 +1358,8 @@
         "code": "dd7T9L0D",
         "attached_skills": [],
         "prototype_name": "phalanx",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "ice pick": {
         "base": true,
@@ -1364,7 +1399,8 @@
         "code": "mpG!?!H7",
         "attached_skills": [],
         "prototype_name": "climber",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "golf club": {
         "base": true,
@@ -1406,7 +1442,8 @@
         "code": "xcPzH8un",
         "attached_skills": [],
         "prototype_name": "golf",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "hammer": {
         "base": true,
@@ -1442,7 +1479,8 @@
         "code": "Rdn1c2aX",
         "attached_skills": [],
         "prototype_name": "handy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "sledge hammer": {
         "base": true,
@@ -1495,7 +1533,8 @@
         "code": "dFqJnIPj",
         "attached_skills": [],
         "prototype_name": "demolition",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "rubber mallet": {
         "base": true,
@@ -1535,7 +1574,8 @@
         "code": "xY?u8lN7",
         "attached_skills": [],
         "prototype_name": "kiddy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "jump rope": {
         "base": true,
@@ -1575,7 +1615,8 @@
         "code": "cG927kxS",
         "attached_skills": [],
         "prototype_name": "kiddy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "piano wire": {
         "base": true,
@@ -1616,7 +1657,8 @@
         "code": "ihlc2YdM",
         "attached_skills": [],
         "prototype_name": "music",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "shovel": {
         "base": true,
@@ -1651,7 +1693,8 @@
         "code": "G9RfcJtP",
         "attached_skills": [],
         "prototype_name": "digger",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "hatchet": {
         "base": true,
@@ -1691,7 +1734,8 @@
         "code": "sNSv5uSG",
         "attached_skills": [],
         "prototype_name": "survival",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "axe": {
         "base": true,
@@ -1733,7 +1777,8 @@
         "code": "NPKI1BBy",
         "attached_skills": [],
         "prototype_name": "lumber",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "fire axe": {
         "base": true,
@@ -1777,7 +1822,8 @@
         "code": "6GVz6Y0c",
         "attached_skills": [],
         "prototype_name": "fire",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "wooden spoon": {
         "base": true,
@@ -1814,7 +1860,8 @@
         "code": "5?e7IBEk",
         "attached_skills": [],
         "prototype_name": "chef",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "silver spoon": {
         "base": true,
@@ -1851,7 +1898,8 @@
         "code": "rWZURMDP",
         "attached_skills": [],
         "prototype_name": "posh",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "Abraham+Lincoln bust": {
         "base": true,
@@ -1895,7 +1943,8 @@
         "code": "ZEwFW0tJ",
         "attached_skills": [],
         "prototype_name": "lincoln",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "Julius+Caesar bust": {
         "base": true,
@@ -1939,7 +1988,8 @@
         "code": "kLx6j?Q4",
         "attached_skills": [],
         "prototype_name": "caesar",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "miniature The+Thinker statue": {
         "base": true,
@@ -1984,7 +2034,8 @@
         "code": "wwPMhjTT",
         "attached_skills": [],
         "prototype_name": "thinker",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "woman-sized Statue+of Liberty": {
         "base": true,
@@ -2036,7 +2087,8 @@
         "code": "MLFoUTXH",
         "attached_skills": [],
         "prototype_name": "liberty",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "spatula": {
         "base": true,
@@ -2073,7 +2125,8 @@
         "code": "OqYQjTBn",
         "attached_skills": [],
         "prototype_name": "frycook",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "golden spatula": {
         "base": true,
@@ -2118,7 +2171,8 @@
         "code": "M9AsSh82",
         "attached_skills": [],
         "prototype_name": "goldenfrycook",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "flat-head screwdriver": {
         "base": true,
@@ -2156,7 +2210,8 @@
         "code": "o86OREtp",
         "attached_skills": [],
         "prototype_name": "handy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "Phillips screwdriver": {
         "base": true,
@@ -2194,7 +2249,8 @@
         "code": "?yjn4Nbq",
         "attached_skills": [],
         "prototype_name": "handy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "magnetic screwdriver": {
         "base": true,
@@ -2233,7 +2289,8 @@
         "code": "S2rvPZTO",
         "attached_skills": [],
         "prototype_name": "handy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "sword": {
         "base": true,
@@ -2272,7 +2329,8 @@
         "code": "WTMyrpet",
         "attached_skills": [],
         "prototype_name": "knight",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "katana": {
         "base": true,
@@ -2314,7 +2372,8 @@
         "code": "U46!Pwme",
         "attached_skills": [],
         "prototype_name": "samurai",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "cheap piece-of-shit katana": {
         "base": true,
@@ -2352,7 +2411,8 @@
         "code": "lGHkP?LD",
         "attached_skills": [],
         "prototype_name": "shittysamurai",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "anime katana": {
         "base": true,
@@ -2404,7 +2464,8 @@
         "code": "HMgQe8Gl",
         "attached_skills": [],
         "prototype_name": "protagonist",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "rapier": {
         "base": true,
@@ -2443,7 +2504,8 @@
         "code": "fva2By9j",
         "attached_skills": [],
         "prototype_name": "fencer",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "zweihander": {
         "base": true,
@@ -2483,7 +2545,8 @@
         "code": "Ve5m4EnN",
         "attached_skills": [],
         "prototype_name": "doppelhander",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "pistol": {
         "base": true,
@@ -2518,7 +2581,8 @@
         "code": "5f3mtYir",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     ".44 magnum": {
         "base": true,
@@ -2564,7 +2628,8 @@
         "code": "rhm2Nlsv",
         "attached_skills": [],
         "prototype_name": "cowboy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "lamp": {
         "base": true,
@@ -2604,7 +2669,8 @@
         "code": "iJBQxowm",
         "attached_skills": [],
         "prototype_name": "light",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "desk lamp": {
         "base": true,
@@ -2646,7 +2712,8 @@
         "code": "CT5XRb2m",
         "attached_skills": [],
         "prototype_name": "light",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "stun gun": {
         "base": true,
@@ -2691,7 +2758,8 @@
         "code": "XKfUGhER",
         "attached_skills": [],
         "prototype_name": "stun",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "heavy-duty taser": {
         "base": true,
@@ -2738,7 +2806,8 @@
         "code": "Wj7Ppzzc",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "basketball": {
         "base": true,
@@ -2777,7 +2846,8 @@
         "code": "si5x!nHE",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "football": {
         "base": true,
@@ -2815,7 +2885,8 @@
         "code": "7Z3gQ?9A",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "dodgeball": {
         "base": true,
@@ -2856,7 +2927,8 @@
         "code": "3WNF3OJ?",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "bowling ball": {
         "base": true,
@@ -2895,7 +2967,8 @@
         "code": "2f45xpf8",
         "attached_skills": [],
         "prototype_name": "bowling",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "rake": {
         "base": true,
@@ -2931,7 +3004,8 @@
         "code": "8wDY8fxP",
         "attached_skills": [],
         "prototype_name": "garden",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "wooden plank": {
         "base": true,
@@ -2967,7 +3041,8 @@
         "code": "8slmZw48",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "brass knuckles": {
         "base": true,
@@ -3008,7 +3083,8 @@
         "code": "xRQ?AjeC",
         "attached_skills": [],
         "prototype_name": "knuckle",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "sap": {
         "base": true,
@@ -3043,7 +3119,8 @@
         "code": "IrpKg3EY",
         "attached_skills": [],
         "prototype_name": "leather",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "caestus": {
         "base": true,
@@ -3080,7 +3157,8 @@
         "code": "eGlfH83s",
         "attached_skills": [],
         "prototype_name": "leather",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "mittens": {
         "base": true,
@@ -3122,7 +3200,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "winter",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "gloves": {
         "base": true,
@@ -3165,7 +3244,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "winter",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "silver fork": {
         "base": true,
@@ -3203,7 +3283,8 @@
         "code": "nuFtwpyw",
         "attached_skills": [],
         "prototype_name": "posh",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "trident": {
         "base": true,
@@ -3253,7 +3334,8 @@
         "code": "3opksOeE",
         "attached_skills": [],
         "prototype_name": "3",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "tuning fork": {
         "base": true,
@@ -3289,7 +3371,8 @@
         "code": "CF2JkQu5",
         "attached_skills": [],
         "prototype_name": "music",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "pitch fork": {
         "base": true,
@@ -3334,7 +3417,8 @@
         "code": "QDmCqh?q",
         "attached_skills": [],
         "prototype_name": "farmer",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "walking cane": {
         "base": true,
@@ -3374,7 +3458,8 @@
         "code": "!oAhZsx9",
         "attached_skills": [],
         "prototype_name": "elder",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "bull-penis cane": {
         "base": true,
@@ -3417,7 +3502,8 @@
         "code": "bjfktlzY",
         "attached_skills": [],
         "prototype_name": "penis",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "candy cane": {
         "base": true,
@@ -3459,7 +3545,8 @@
         "code": "HMvcbrR9",
         "attached_skills": [],
         "prototype_name": "candy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "curling iron": {
         "base": true,
@@ -3500,7 +3587,8 @@
         "code": "pZt?m1B2",
         "attached_skills": [],
         "prototype_name": "curly",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "chain": {
         "base": true,
@@ -3541,7 +3629,8 @@
         "code": "Kb4lpfCZ",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "bike chain": {
         "base": true,
@@ -3578,7 +3667,8 @@
         "code": "ooOm7NEu",
         "attached_skills": [],
         "prototype_name": "biker",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "key chain": {
         "base": true,
@@ -3619,7 +3709,8 @@
         "code": "HWaF3Sf8",
         "attached_skills": [],
         "prototype_name": "keychain",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "knife": {
         "base": true,
@@ -3659,7 +3750,8 @@
         "code": "KuDTLljq",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "butcher knife": {
         "base": true,
@@ -3702,7 +3794,8 @@
         "code": "Wp5nJwnL",
         "attached_skills": [],
         "prototype_name": "butcher",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "edgy knife": {
         "base": true,
@@ -3742,7 +3835,8 @@
         "code": "ATZhDdZv",
         "attached_skills": [],
         "prototype_name": "edgy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "table leg": {
         "base": true,
@@ -3780,7 +3874,8 @@
         "code": "5qU8GXQr",
         "attached_skills": [],
         "prototype_name": "1/2table",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "pool cue": {
         "base": true,
@@ -3819,7 +3914,8 @@
         "code": "9k4k2JDB",
         "attached_skills": [],
         "prototype_name": "pool",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "shotgun": {
         "base": true,
@@ -3856,7 +3952,8 @@
         "code": "K1VJnry?",
         "attached_skills": [],
         "prototype_name": "scatter",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "double-barreled shotgun": {
         "base": true,
@@ -3899,7 +3996,8 @@
         "code": "0T!AihUJ",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "sewing needles": {
         "base": true,
@@ -3938,7 +4036,8 @@
         "code": "srqmkI1A",
         "attached_skills": [],
         "prototype_name": "seamstress",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "knitting needles": {
         "base": true,
@@ -3975,7 +4074,8 @@
         "code": "jxg1xd8d",
         "attached_skills": [],
         "prototype_name": "grandma",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "5-pound dumbbell": {
         "base": true,
@@ -4021,7 +4121,8 @@
         "code": "h6y!gWrP",
         "attached_skills": [],
         "prototype_name": "weak",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "15-pound dumbbell": {
         "base": true,
@@ -4067,7 +4168,8 @@
         "code": "DprzIwmD",
         "attached_skills": [],
         "prototype_name": "exer",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "100-pound dumbbell": {
         "base": true,
@@ -4118,7 +4220,8 @@
         "code": "G0Dv!6wO",
         "attached_skills": [],
         "prototype_name": "strong",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "hockey stick": {
         "base": true,
@@ -4157,7 +4260,8 @@
         "code": "!2dgQthy",
         "attached_skills": [],
         "prototype_name": "hockey",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "vacuum cleaner": {
         "base": true,
@@ -4198,7 +4302,8 @@
         "code": "0nwwJvhJ",
         "attached_skills": [],
         "prototype_name": "vacuum",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "mop": {
         "base": true,
@@ -4240,7 +4345,8 @@
         "code": "8H15U5ls",
         "attached_skills": [],
         "prototype_name": "janitor",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "trophy": {
         "base": true,
@@ -4281,7 +4387,8 @@
         "code": "qSL7jfMh",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "fancy+santa": {
         "base": true,
@@ -4322,7 +4429,8 @@
         "code": "6A!vtqPY",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "ladle": {
         "base": true,
@@ -4362,7 +4470,8 @@
         "code": "OKH9NSaL",
         "attached_skills": [],
         "prototype_name": "chef",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "extension cable": {
         "base": true,
@@ -4402,7 +4511,8 @@
         "code": "E?hdwdbi",
         "attached_skills": [],
         "prototype_name": "electric",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "rope": {
         "base": true,
@@ -4441,7 +4551,8 @@
         "code": "n!KbTz6!",
         "attached_skills": [],
         "prototype_name": "survival",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "clothing iron": {
         "base": true,
@@ -4483,7 +4594,8 @@
         "code": "VbGxKVsv",
         "attached_skills": [],
         "prototype_name": "maid",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "hack saw": {
         "base": true,
@@ -4521,7 +4633,8 @@
         "code": "ULB!S1b0",
         "attached_skills": [],
         "prototype_name": "handy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "ice skates": {
         "base": true,
@@ -4567,7 +4680,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "ice",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "pipe wrench": {
         "base": true,
@@ -4607,7 +4721,8 @@
         "code": "Q4NwXmsJ",
         "attached_skills": [],
         "prototype_name": "pipe",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "umbrella": {
         "base": true,
@@ -4648,7 +4763,8 @@
         "code": "0g76QRTd",
         "attached_skills": [],
         "prototype_name": "rainy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "bed": {
         "base": true,
@@ -4689,7 +4805,8 @@
         "code": "L9aaQOL3",
         "attached_skills": [],
         "prototype_name": "sleepy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "dresser": {
         "base": true,
@@ -4724,7 +4841,8 @@
         "code": "5G8vKvts",
         "attached_skills": [],
         "prototype_name": "fashion",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "pillow": {
         "base": true,
@@ -4769,7 +4887,8 @@
         "code": "D29acNhB",
         "attached_skills": [],
         "prototype_name": "sleepy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "blanket": {
         "base": true,
@@ -4811,7 +4930,8 @@
         "code": "uMpxCS1B",
         "attached_skills": [],
         "prototype_name": "sleepy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "refrigerator": {
         "base": true,
@@ -4850,7 +4970,8 @@
         "code": "g2kGqJ1B",
         "attached_skills": [],
         "prototype_name": "fridge",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "oven": {
         "base": true,
@@ -4890,7 +5011,8 @@
         "code": "36gRusfz",
         "attached_skills": [],
         "prototype_name": "baker",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "pot": {
         "base": true,
@@ -4927,7 +5049,8 @@
         "code": "3cVSwPMc",
         "attached_skills": [],
         "prototype_name": "boil",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "frying pan": {
         "base": true,
@@ -4970,7 +5093,8 @@
         "code": "5Q4S?p2I",
         "attached_skills": [],
         "prototype_name": "fry",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "sink": {
         "base": true,
@@ -5006,7 +5130,8 @@
         "code": "DHvQF!NT",
         "attached_skills": [],
         "prototype_name": "soapy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "plate": {
         "base": true,
@@ -5040,7 +5165,8 @@
         "code": "Rv?7wim5",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "cup": {
         "base": true,
@@ -5072,7 +5198,8 @@
         "code": "P!9KZDU4",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "mug": {
         "base": true,
@@ -5104,7 +5231,8 @@
         "code": "LwTABn6i",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "table": {
         "base": true,
@@ -5138,7 +5266,8 @@
         "code": "JdVSJs16",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "grandfather clock": {
         "base": true,
@@ -5188,7 +5317,8 @@
         "code": "W8MeYxB1",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "clock": {
         "base": true,
@@ -5228,7 +5358,8 @@
         "code": "IYqL9FDd",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "toilet": {
         "base": true,
@@ -5276,7 +5407,8 @@
         "code": "h3TJTKKj",
         "attached_skills": [],
         "prototype_name": "poopy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "bath tub": {
         "base": true,
@@ -5318,7 +5450,8 @@
         "code": "rFYUNxJp",
         "attached_skills": [],
         "prototype_name": "bath",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "shower": {
         "base": true,
@@ -5358,7 +5491,8 @@
         "code": "nlvgGGUH",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "fireplace": {
         "base": true,
@@ -5404,7 +5538,8 @@
         "code": "wneGpibF",
         "attached_skills": [],
         "prototype_name": "fire",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "bench": {
         "base": true,
@@ -5438,7 +5573,8 @@
         "code": "ZCmS1f6Q",
         "attached_skills": [],
         "prototype_name": "lazy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "arm chair": {
         "base": true,
@@ -5475,7 +5611,8 @@
         "code": "YSfUEJqL",
         "attached_skills": [],
         "prototype_name": "lazy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "couch": {
         "base": true,
@@ -5509,7 +5646,8 @@
         "code": "WMR0GRbO",
         "attached_skills": [],
         "prototype_name": "lazy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "television": {
         "base": true,
@@ -5544,7 +5682,8 @@
         "code": "4iF1zoL?",
         "attached_skills": [],
         "prototype_name": "tv",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "washing machine": {
         "base": true,
@@ -5582,7 +5721,8 @@
         "code": "QvnMXdep",
         "attached_skills": [],
         "prototype_name": "washer",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "drying machine": {
         "base": true,
@@ -5620,7 +5760,8 @@
         "code": "av6I4AdF",
         "attached_skills": [],
         "prototype_name": "dryer",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "ballpoint pen": {
         "base": true,
@@ -5656,7 +5797,8 @@
         "code": "CZO0anz8",
         "attached_skills": [],
         "prototype_name": "ink",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "#2 pencil": {
         "base": true,
@@ -5698,7 +5840,8 @@
         "code": "5fUHdaHe",
         "attached_skills": [],
         "prototype_name": "eraser",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "stapler": {
         "base": true,
@@ -5735,7 +5878,8 @@
         "code": "NfFO8gfd",
         "attached_skills": [],
         "prototype_name": "staple",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "fax machine": {
         "base": true,
@@ -5772,7 +5916,8 @@
         "code": "M8SPV?QJ",
         "attached_skills": [],
         "prototype_name": "fax",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "copying machine": {
         "base": true,
@@ -5811,7 +5956,8 @@
         "code": "yjrBat7i",
         "attached_skills": [],
         "prototype_name": "copy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "exercise ball": {
         "base": true,
@@ -5850,7 +5996,8 @@
         "code": "KVFXOgYO",
         "attached_skills": [],
         "prototype_name": "exer",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "water bottle": {
         "base": true,
@@ -5893,7 +6040,8 @@
         "code": "o8c?MzJ5",
         "attached_skills": [],
         "prototype_name": "water",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "steroid bottle": {
         "base": true,
@@ -5931,7 +6079,8 @@
         "code": "PmeafFaE",
         "attached_skills": [],
         "prototype_name": "strong",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "boxing gloves": {
         "base": true,
@@ -5982,7 +6131,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "boxer",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "miku figurine": {
         "base": true,
@@ -6026,7 +6176,8 @@
         "code": "gnZ1Rk6O",
         "attached_skills": [],
         "prototype_name": "miku",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "anime dvd": {
         "base": true,
@@ -6067,7 +6218,8 @@
         "code": "YAEnY2gy",
         "attached_skills": [],
         "prototype_name": "anime",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "anime poster": {
         "base": true,
@@ -6108,7 +6260,8 @@
         "code": "JmLJra30",
         "attached_skills": [],
         "prototype_name": "anime",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "manga": {
         "base": true,
@@ -6147,7 +6300,8 @@
         "code": "EcUoMP8I",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "bodypillow": {
         "base": true,
@@ -6189,7 +6343,8 @@
         "code": "RGAFRgKX",
         "attached_skills": [],
         "prototype_name": "waifu",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "shuriken": {
         "base": true,
@@ -6229,7 +6384,8 @@
         "code": "SIkIcutr",
         "attached_skills": [],
         "prototype_name": "ninja",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "thrasher poster": {
         "base": true,
@@ -6271,7 +6427,8 @@
         "code": "sEStZVNx",
         "attached_skills": [],
         "prototype_name": "thrasher",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "nirvana album": {
         "base": true,
@@ -6311,7 +6468,8 @@
         "code": "LgiWReOx",
         "attached_skills": [],
         "prototype_name": "nirvana",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "electric guitar": {
         "base": true,
@@ -6350,7 +6508,8 @@
         "code": "BHH1??Ff",
         "attached_skills": [],
         "prototype_name": "rock",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "acoustic guitar": {
         "base": true,
@@ -6387,7 +6546,8 @@
         "code": "ONqj8u!8",
         "attached_skills": [],
         "prototype_name": "acoustic",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "drum set": {
         "base": true,
@@ -6425,7 +6585,8 @@
         "code": "NBCw5wYI",
         "attached_skills": [],
         "prototype_name": "drum",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "atlas": {
         "base": true,
@@ -6461,7 +6622,8 @@
         "code": "GdkpY4FJ",
         "attached_skills": [],
         "prototype_name": "world",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "history book": {
         "base": true,
@@ -6495,7 +6657,8 @@
         "code": "979uYokj",
         "attached_skills": [],
         "prototype_name": "history",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "globe": {
         "base": true,
@@ -6532,7 +6695,8 @@
         "code": "Z2IAsae2",
         "attached_skills": [],
         "prototype_name": "world",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "flute": {
         "base": true,
@@ -6565,7 +6729,8 @@
         "code": "XR0kNfRZ",
         "attached_skills": [],
         "prototype_name": "music",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "saxophone": {
         "base": true,
@@ -6604,7 +6769,8 @@
         "code": "dkdkqyVg",
         "attached_skills": [],
         "prototype_name": "saxxy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "grand piano": {
         "base": true,
@@ -6645,7 +6811,8 @@
         "code": "0fuwgGbP",
         "attached_skills": [],
         "prototype_name": "concerto",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "headphones": {
         "base": true,
@@ -6688,7 +6855,8 @@
         "wearable": false,
         "attached_skills": [],
         "prototype_name": "headphone",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "empty wrapper": {
         "base": true,
@@ -6726,7 +6894,8 @@
         "code": "ImGuu3Zb",
         "attached_skills": [],
         "prototype_name": "garbage",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "empty soda can": {
         "base": true,
@@ -6765,7 +6934,8 @@
         "code": "NAZflaQZ",
         "attached_skills": [],
         "prototype_name": "garbage",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "plastic bag": {
         "base": true,
@@ -6804,7 +6974,8 @@
         "code": "VIgd8U?5",
         "attached_skills": [],
         "prototype_name": "garbage",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "sord": {
         "base": true,
@@ -6839,7 +7010,8 @@
         "code": "9dzHhLlq",
         "attached_skills": [],
         "prototype_name": "...S",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "virtual+reality headset": {
         "base": true,
@@ -6885,7 +7057,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "vr",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "smart phone": {
         "base": true,
@@ -6921,7 +7094,8 @@
         "code": "tXhGeHjU",
         "attached_skills": [],
         "prototype_name": "smart",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "rc drone": {
         "base": true,
@@ -6962,7 +7136,8 @@
         "code": "Qu4PhcBT",
         "attached_skills": [],
         "prototype_name": "rc",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "gaming computer": {
         "base": true,
@@ -7007,7 +7182,8 @@
         "code": "EY!1CT9h",
         "attached_skills": [],
         "prototype_name": "gamer",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "graphics card": {
         "base": true,
@@ -7052,7 +7228,8 @@
         "code": "7lb2SLcS",
         "attached_skills": [],
         "prototype_name": "gamer",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "cowboy hat": {
         "base": true,
@@ -7100,7 +7277,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "cowboy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "cowboy boots": {
         "base": true,
@@ -7146,7 +7324,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "cowboy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "bandana": {
         "base": true,
@@ -7188,7 +7367,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "cool",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "clown shoes": {
         "base": true,
@@ -7233,7 +7413,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "clown",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "clown nose": {
         "base": true,
@@ -7278,7 +7459,8 @@
         "wearable": true,
         "attached_skills": [],
         "prototype_name": "clown",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "joker figurine": {
         "base": true,
@@ -7317,7 +7499,8 @@
         ],
         "attached_skills": [],
         "prototype_name": "joker",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "clown poster": {
         "base": true,
@@ -7356,7 +7539,8 @@
         ],
         "attached_skills": [],
         "prototype_name": "clown",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "cosby poster": {
         "base": true,
@@ -7394,7 +7578,8 @@
         ],
         "attached_skills": [],
         "prototype_name": "cosby",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "red faygo": {
         "base": true,
@@ -7435,7 +7620,8 @@
         "code": "w9bnIUvR",
         "attached_skills": [],
         "prototype_name": "juggalo",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "grape faygo": {
         "base": true,
@@ -7474,7 +7660,8 @@
         "code": "Zl5hYRzZ",
         "attached_skills": [],
         "prototype_name": "juggalo",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "cola faygo": {
         "base": true,
@@ -7514,7 +7701,8 @@
         "code": "aGozpf1J",
         "attached_skills": [],
         "prototype_name": "juggalo",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "cotton+candy faygo": {
         "base": true,
@@ -7554,7 +7742,8 @@
         "code": "yS5Ax0!r",
         "attached_skills": [],
         "prototype_name": "juggalo",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "kiwi+strawberry faygo": {
         "base": true,
@@ -7597,7 +7786,8 @@
         "code": "bDedY?m2",
         "attached_skills": [],
         "prototype_name": "juggalo",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     },
     "candy+apple faygo": {
         "base": true,
@@ -7641,6 +7831,7 @@
         "code": "XYiov!ED",
         "attached_skills": [],
         "prototype_name": "juggalo",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null
     }
 }

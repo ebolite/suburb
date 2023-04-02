@@ -191,6 +191,7 @@ def handle_request(dict):
             return f"The item {item_name} was already made!"
         verified_item_dict = {}
         verified_item_dict["base"] = True
+        verified_item_dict["display_name"] = str(item_dict["display_name"]) if item_dict["display_name"] else None
         verified_item_dict["power"] = int(item_dict["power"])
         verified_item_dict["size"] = int(item_dict["size"])
         if not item_dict["kinds"]: return "Your item needs at least one kind!"

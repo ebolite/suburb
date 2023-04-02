@@ -15,6 +15,7 @@ class ItemEditor():
     def setup_defaults(self):
         self.theme = themes.default
         self.item_name = "my+cool item"
+        self.display_name = ""
         self.code = ""
         self.power = 10
         self.inheritpower = 10
@@ -128,6 +129,28 @@ class ItemEditor():
         item_name_label.text_func = item_name_label_func
         item_name_label.fontsize = 20
         item_name_label.color = self.theme.dark
+        display_name_text = f"{self.display_name if self.display_name else self.item_name.replace('+', ' ')}"
+        display_name = render.Text(0.37, 0.47, display_name_text)
+        display_name.color = self.theme.dark
+        display_name.fontsize = 18
+        display_name.set_fontsize_by_width(475)
+        display_name_label = render.Text(0.37, 0.44, "display name")
+        display_name_label.fontsize = 14
+        display_name_label.color = self.theme.dark
+        def set_display_name_button_func():
+            self.set_display_name_scene()
+        set_display_name_button = render.TextButton(0.37, 0.4, 128, 32, "Set", set_display_name_button_func)
+
+    def set_display_name_scene(self):
+        suburb.new_scene()
+        label = render.Text(0.5, 0.3, "Display name (for named items):")
+        label.color = self.theme.dark
+        description_box = render.InputTextBox(0.5, 0.4)
+        description_box.fontsize = 16
+        def last_scene():
+            self.display_name = description_box.text
+            self.draw_scene()
+        ok_button = render.TextButton(0.5, 0.5, 128, 32, "OK", last_scene)
 
     def draw_code(self):
         code_box = render.InputTextBox(0.15, 0.23, w=160, h=32)
@@ -258,7 +281,7 @@ class ItemEditor():
     def draw_costs(self):
         # label = render.Text(0.5, 0.31, "Cost")
         # label.color = self.theme.dark
-        grist_icons = render.make_grist_cost_display(0.5, 0.35, 24, self.true_cost, text_color = self.theme.dark, absolute=False, return_grist_icons=True)
+        grist_icons = render.make_grist_cost_display(0.6, 0.35, 24, self.true_cost, text_color = self.theme.dark, absolute=False, return_grist_icons=True)
         assert isinstance(grist_icons, dict)
         def get_increase_cost_func(grist_name: str):
             def button_func():
@@ -295,7 +318,7 @@ class ItemEditor():
             available_grists = [grist for grist in available_grists if grist not in self.cost]
             if "rainbow" in available_grists: available_grists.remove("rainbow")
             show_options_with_search(available_grists, pick_grist_scene_constructor, "Choose grist to add.", last_scene, self.theme, image_path_func=get_grist_icon_path, image_scale=0.5)
-        add_grist_button = render.TextButton(0.5, 0.45, 128, 24, "Add grist", add_grist_func)
+        add_grist_button = render.TextButton(0.6, 0.45, 128, 24, "Add grist", add_grist_func)
 
     def draw_state_icons(self, states_type: str, binding: "render.UIElement", item_states: dict[str, dict]):
         STATE_PADDING = 11
@@ -562,6 +585,7 @@ class ItemEditor():
             "interests_rarity": self.interests_rarity,
             "tiles": self.tiles,
             "tiles_rarity": self.tiles_rarity,
+            "display_name": self.display_name,
         }
         return out_dict
 

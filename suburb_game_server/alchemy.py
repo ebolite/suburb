@@ -72,6 +72,7 @@ class BaseStatistics():
         self.base: str = descriptors.pop() # last descriptor is the base
         self.adjectives: list = list(set(descriptors)) # everything else are adjectives, remove duplicates
         properties = deepcopy(util.bases[base_name])
+        self.display_name = properties["display_name"]
         self.secretadjectives: list[str] = properties["secretadjectives"]
         self.power: int = properties["power"]
         self.inheritpower: int = properties["inheritpower"]
@@ -102,6 +103,7 @@ class InheritedStatistics():
         self.prototype_name = None
         self.description = None
         self.creator = None
+        self.display_name = None
         self.all_components = Components(self.name).get_all_components()
         self.gen_statistics()
 
@@ -341,6 +343,7 @@ class Item(): # Items are the base of instants.
         self.forbiddencode = statistics.forbiddencode
         self.prototype_name = statistics.prototype_name
         self.creator = statistics.creator
+        self.display_name = statistics.display_name
 
     def create_item(self, name):
         util.memory_items[name] = {}
@@ -356,6 +359,7 @@ class Item(): # Items are the base of instants.
 
     @property
     def displayname(self):
+        if self.display_name is not None: return self.display_name
         name = " ".join(self.adjectives+[self.base])
         out = name.replace("+", " ")
         return out
@@ -518,6 +522,7 @@ def alchemize_instance(code: str, player: "sessions.Player", room: "sessions.Roo
 defaults = {
     #"code": None, #todo: add procedural hex generation for items
     "base": True, # is this item a base?
+    "display_name": None, # for proper named items
     "forbiddencode": False,
     "power": 1, # how powerful is the item?
     "inheritpower": 0, # how much extra power this item gives when it's alchemized
