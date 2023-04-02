@@ -46,7 +46,11 @@
             "cotton+candy faygo",
             "kiwi+strawberry faygo",
             "deer skull",
-            "clown nose"
+            "clown nose",
+            "red smuppet",
+            "green smuppet",
+            "blue smuppet",
+            "purple smuppet"
         ],
         "exotic": [
             "pepper spray",
@@ -258,7 +262,11 @@
             "bull-penis cane",
             "fire poker",
             "grandfather clock",
-            "deer skull"
+            "deer skull",
+            "red smuppet",
+            "green smuppet",
+            "blue smuppet",
+            "purple smuppet"
         ],
         "exotic": []
     },
@@ -395,7 +403,8 @@
             "broom",
             "straw broom",
             "vacuum cleaner",
-            "mop"
+            "mop",
+            "football helmet"
         ],
         "uncommon": [
             "electric guitar",
@@ -508,7 +517,8 @@
         "uncommon": [
             "brass knuckles",
             "acoustic guitar",
-            "drum set"
+            "drum set",
+            "football helmet"
         ],
         "rare": [
             "electric guitar",
@@ -595,7 +605,8 @@
         ],
         "uncommon": [
             "water bottle",
-            "blender"
+            "blender",
+            "football helmet"
         ],
         "rare": [],
         "exotic": []
@@ -609,7 +620,11 @@
             "water bottle",
             "empty soda can",
             "plastic bag",
-            "stone"
+            "stone",
+            "red smuppet",
+            "green smuppet",
+            "blue smuppet",
+            "purple smuppet"
         ],
         "uncommon": [
             "lap top",
@@ -837,7 +852,11 @@
             "cola faygo",
             "paper",
             "empty wrapper",
-            "water bottle"
+            "water bottle",
+            "red smuppet",
+            "green smuppet",
+            "blue smuppet",
+            "purple smuppet"
         ],
         "uncommon": [
             "gaming computer",
@@ -971,7 +990,12 @@
     "ill jams": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
+        "common": [
+            "red smuppet",
+            "green smuppet",
+            "blue smuppet",
+            "purple smuppet"
+        ],
         "uncommon": [],
         "rare": [],
         "exotic": []
@@ -1032,7 +1056,11 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [
-            "banana"
+            "banana",
+            "red smuppet",
+            "green smuppet",
+            "blue smuppet",
+            "purple smuppet"
         ],
         "uncommon": [
             "bleach bottle",
@@ -1215,7 +1243,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "Halo helmet"
+        ],
         "rare": [],
         "exotic": [
             "azure grimoire"
@@ -1224,7 +1254,12 @@
     "plushies": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
+        "common": [
+            "red smuppet",
+            "green smuppet",
+            "blue smuppet",
+            "purple smuppet"
+        ],
         "uncommon": [
             "scarf"
         ],

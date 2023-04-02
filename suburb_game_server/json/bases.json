@@ -8383,5 +8383,293 @@
             "marble": 0.2,
             "sandstone": 0.2
         }
+    },
+    "football helmet": {
+        "base": true,
+        "display_name": null,
+        "power": 10,
+        "size": 7,
+        "kinds": [
+            "hatkind"
+        ],
+        "wearable": true,
+        "description": "Football helmet, simple as that. You wear it, and play football.",
+        "onhit_states": {
+            "stun": 0.20000000000000004,
+            "vulnerable": 0.20000000000000004
+        },
+        "wear_states": {
+            "strength": 0.20000000000000004,
+            "guard": 0.4
+        },
+        "consume_states": {},
+        "secret_states": {
+            "stun": 0.30000000000000004
+        },
+        "secretadjectives": [
+            "hardy",
+            "dense",
+            "protected",
+            "thick"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 10,
+        "adjectives": [
+            "football"
+        ],
+        "code": "t3Nh94T1",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "Sky",
+        "cost": {
+            "build": 0.5,
+            "iron": 0.4,
+            "lead": 0.4
+        }
+    },
+    "Halo helmet": {
+        "base": true,
+        "display_name": "Replica Master Chief Helmet",
+        "power": 4,
+        "size": 8,
+        "kinds": [
+            "hatkind"
+        ],
+        "wearable": true,
+        "description": "For when you want to LARP as Master Chief in a hoodie.",
+        "onhit_states": {},
+        "wear_states": {
+            "inspire": 0.4
+        },
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "spartan",
+            "legendary",
+            "supersoldier",
+            "armored",
+            "helmeted"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 50,
+        "adjectives": [
+            "Halo"
+        ],
+        "code": "L0v3H4l0",
+        "attached_skills": [],
+        "prototype_name": "spartan",
+        "creator": "bec",
+        "cost": {
+            "build": 0.5,
+            "malachite": 0.30000000000000004,
+            "titanium": 0.30000000000000004,
+            "topaz": 0.30000000000000004
+        }
+    },
+    "red smuppet": {
+        "base": true,
+        "display_name": null,
+        "power": 2,
+        "size": 2,
+        "kinds": [
+            "puppetkind",
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "A perfect, fluffy plush red smuppet. It's limp and lifeless.",
+        "onhit_states": {
+            "weak": 0.30000000000000004,
+            "demoralize": 0.9999999999999999
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {
+            "weak": 0.5,
+            "stun": 0.5,
+            "numb": 0.30000000000000004,
+            "demoralize": 0.9999999999999999
+        },
+        "secretadjectives": [
+            "ironic",
+            "humorous",
+            "soft",
+            "plush",
+            "smutty",
+            "awesome",
+            "bare",
+            "plump",
+            "fuzzy",
+            "frolicksome",
+            "fluffy"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [
+            "red"
+        ],
+        "code": "qUMIr25w",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "garnet": 0.5
+        }
+    },
+    "green smuppet": {
+        "base": true,
+        "display_name": null,
+        "power": 2,
+        "size": 2,
+        "kinds": [
+            "puppetkind",
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "A savvy green smuppet. It's wonderfully plump.",
+        "onhit_states": {
+            "weak": 0.30000000000000004,
+            "demoralize": 0.9999999999999999
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {
+            "weak": 0.5,
+            "stun": 0.5,
+            "numb": 0.30000000000000004,
+            "demoralize": 0.9999999999999999
+        },
+        "secretadjectives": [
+            "ironic",
+            "humorous",
+            "soft",
+            "plush",
+            "smutty",
+            "awesome",
+            "bare",
+            "plump",
+            "fuzzy",
+            "frolicksome",
+            "fluffy"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [
+            "green"
+        ],
+        "code": "ftn1Mz0u",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "malachite": 0.5
+        }
+    },
+    "blue smuppet": {
+        "base": true,
+        "display_name": null,
+        "power": 2,
+        "size": 2,
+        "kinds": [
+            "puppetkind",
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "A quirky blue smuppet. It's looking at you a certain kind of way.",
+        "onhit_states": {
+            "weak": 0.30000000000000004,
+            "demoralize": 0.9999999999999999
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {
+            "weak": 0.5,
+            "stun": 0.5,
+            "numb": 0.30000000000000004,
+            "demoralize": 0.9999999999999999
+        },
+        "secretadjectives": [
+            "ironic",
+            "humorous",
+            "soft",
+            "plush",
+            "smutty",
+            "awesome",
+            "bare",
+            "plump",
+            "fuzzy",
+            "frolicksome",
+            "fluffy"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [
+            "blue"
+        ],
+        "code": "hSdfeNcz",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "cobalt": 0.5
+        }
+    },
+    "purple smuppet": {
+        "base": true,
+        "display_name": null,
+        "power": 2,
+        "size": 2,
+        "kinds": [
+            "puppetkind",
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "A brooding purple smuppet. It's quite fuzzy.",
+        "onhit_states": {
+            "weak": 0.30000000000000004,
+            "demoralize": 0.9999999999999999
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {
+            "weak": 0.5,
+            "stun": 0.5,
+            "numb": 0.30000000000000004,
+            "demoralize": 0.9999999999999999
+        },
+        "secretadjectives": [
+            "ironic",
+            "humorous",
+            "soft",
+            "plush",
+            "smutty",
+            "awesome",
+            "bare",
+            "plump",
+            "fuzzy",
+            "frolicksome",
+            "fluffy"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [
+            "purple"
+        ],
+        "code": "Wfy2nykg",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "amethyst": 0.5
+        }
     }
 }
