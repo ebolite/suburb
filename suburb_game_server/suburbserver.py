@@ -132,7 +132,9 @@ def handle_request(dict):
     if intent == "connect":
         return "Successfully connected."
     if intent == "search_items":
-        results = difflib.get_close_matches(content, list(util.bases.keys()), n=5, cutoff=0.3)
+        results = difflib.get_close_matches(content, list(util.bases.keys()), n=5, cutoff=0.5)
+        if content in util.kinds:
+            results += [base_name for base_name in util.bases if content in alchemy.Item(base_name).kinds]
         return json.dumps(results)
     if intent == "item_info":
         item_name = content
