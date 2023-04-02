@@ -4849,7 +4849,8 @@
         "power": 7,
         "size": 5,
         "kinds": [
-            "pillowkind"
+            "pillowkind",
+            "plushkind"
         ],
         "wearable": false,
         "description": "A soft, fluffy pillow.",
