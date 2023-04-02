@@ -131,12 +131,12 @@ def handle_request(dict):
     if intent == "connect":
         return "Successfully connected."
     if intent == "search_items":
-        results = difflib.get_close_matches(content, list(util.bases.keys()) + list(util.base_submissions.keys()), n=5, cutoff=0.3)
+        results = difflib.get_close_matches(content, list(util.bases.keys()), n=5, cutoff=0.3)
         return json.dumps(results)
     if intent == "item_info":
         item_name = content
-        if item_name not in util.memory_items: return json.dumps({})
-        else: return json.dumps(alchemy.Item(item_name).get_dict())
+        if item_name not in util.bases: return json.dumps({})
+        else: return json.dumps(alchemy.Item(item_name).get_dict(raw=True))
     if intent == "server_tiles":
         return json.dumps({"server_tiles": tiles.server_tiles, "labels": {tile.tile_char:tile.name for tile in tiles.tiles.values()}})
     if intent == "interests":

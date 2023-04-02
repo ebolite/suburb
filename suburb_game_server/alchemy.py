@@ -378,8 +378,9 @@ class Item(): # Items are the base of instants.
     def __getattr__(self, attr):
         return util.memory_items[self.__dict__["_id"]][attr]
 
-    def get_dict(self):
+    def get_dict(self, raw=False):
         out = deepcopy(util.memory_items[self.__dict__["_id"]])
+        if raw: return out
         out["name"] = self.__dict__["_id"]
         out["display_name"] = self.displayname
         onhit_states = {}
