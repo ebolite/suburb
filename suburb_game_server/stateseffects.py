@@ -242,6 +242,7 @@ class GuardState(State):
 guard = GuardState("guard")
 guard.beneficial = True
 guard.tooltip = "Decreases damage taken."
+make_item_state(guard)
 
 class BlindState(State):
     def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
