@@ -16,6 +16,7 @@ class MapEditor():
     def __init__(self):
         self.setup_defaults()
         self.current_mode = "select"
+        self.current_selected_tile = "."
         self.theme = suburb.current_theme()
         self.viewx = len(self.map_tiles[0])//2
         self.viewy = len(self.map_tiles)//2

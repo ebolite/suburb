@@ -1254,6 +1254,18 @@ class Tile(UIElement):
                 cursor_image = self.convert_to_theme(cursor_image)
             cursor_image.set_colorkey(pygame.Color(0, 0, 0))
             self.surf.blit(cursor_image, (0, 0), (0, 0, tile_wh, tile_wh))
+        elif self.tile_map.map_editor is not None and self.is_mouseover():
+            if self.tile_map.map_editor.current_mode == "deploy":
+                cursor_image_path = config.icons["deploy"]
+            elif self.tile_map.map_editor.current_mode == "revise":
+                cursor_image_path = config.tiles[self.tile_map.map_editor.current_selected_tile]
+            else:
+                cursor_image_path = config.icons["select"]
+            cursor_image = pygame.image.load(cursor_image_path)
+            if self.tile_map.map_editor.current_mode == "revise":
+                cursor_image = self.convert_to_theme(cursor_image)
+            cursor_image.set_colorkey(pygame.Color(0, 0, 0))
+            self.surf.blit(cursor_image, (0, 0), (0, 0, tile_wh, tile_wh))
         if self.server_view and self.x == len(self.tile_map.map)//2 and self.y == len(self.tile_map.map)//2:
             center_path = config.icons["center"]
             center_image = pygame.image.load(center_path)
