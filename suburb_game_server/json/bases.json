@@ -8342,5 +8342,45 @@
             "quartz": 0.3,
             "sandstone": 0.3
         }
+    },
+    "boulder": {
+        "base": true,
+        "display_name": null,
+        "power": 50,
+        "size": 45,
+        "kinds": [
+            "rockkind"
+        ],
+        "wearable": false,
+        "description": "A massive rock. How you managed to fit it through the front door is the wonder of all your friends.",
+        "onhit_states": {
+            "stun": 0.9999999999999999,
+            "vulnerable": 0.30000000000000004
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "rockhard",
+            "petrified",
+            "stone",
+            "monolithic",
+            "huge",
+            "resilient"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [],
+        "code": "HUG3R0CK",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "bec",
+        "cost": {
+            "build": 0.5,
+            "quartz": 0.2,
+            "marble": 0.2,
+            "sandstone": 0.2
+        }
     }
 }

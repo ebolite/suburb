@@ -1053,7 +1053,9 @@
         "uncommon": [
             "deer skull"
         ],
-        "rare": [],
+        "rare": [
+            "boulder"
+        ],
         "exotic": []
     },
     "horror": {
@@ -1232,17 +1234,27 @@
     "geology": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": ["stone", "pet rock"],
+        "common": [
+            "stone",
+            "pet rock"
+        ],
         "uncommon": [],
-        "rare": [],
+        "rare": [
+            "boulder"
+        ],
         "exotic": []
     },
     "archaeology": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": ["stone"],
+        "common": [
+            "stone"
+        ],
         "uncommon": [],
-        "rare": ["pet rock"],
+        "rare": [
+            "pet rock",
+            "boulder"
+        ],
         "exotic": []
     }
 }
