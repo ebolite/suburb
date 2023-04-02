@@ -42,7 +42,8 @@
             "green squiddle",
             "AAA game",
             "purple squiddle",
-            "yellow squiddle"
+            "yellow squiddle",
+            "detachable scissors"
         ],
         "rare": [
             "candy cane",
@@ -57,12 +58,14 @@
             "red smuppet",
             "green smuppet",
             "blue smuppet",
-            "purple smuppet"
+            "purple smuppet",
+            "tarot cards"
         ],
         "exotic": [
             "pepper spray",
             "pet rock",
-            "black squiddle"
+            "black squiddle",
+            "water extinguisher"
         ]
     },
     "kitchen": {
@@ -106,13 +109,16 @@
             "mop",
             "shears",
             "safety scissors",
-            "butcher knife"
+            "butcher knife",
+            "detachable scissors"
         ],
         "rare": [
             "golden spatula",
             "clock"
         ],
-        "exotic": []
+        "exotic": [
+            "water extinguisher"
+        ]
     },
     "dining room": {
         "spawnlist_type": "tile",
@@ -137,7 +143,8 @@
             "grape faygo",
             "cola faygo",
             "cotton+candy faygo",
-            "kiwi+strawberry faygo"
+            "kiwi+strawberry faygo",
+            "detachable scissors"
         ],
         "rare": [
             "grandfather clock"
@@ -179,7 +186,9 @@
             "fire axe",
             "stone"
         ],
-        "exotic": []
+        "exotic": [
+            "water extinguisher"
+        ]
     },
     "bathroom": {
         "spawnlist_type": "tile",
@@ -280,7 +289,9 @@
             "blue smuppet",
             "purple smuppet"
         ],
-        "exotic": []
+        "exotic": [
+            "water extinguisher"
+        ]
     },
     "laundry room": {
         "spawnlist_type": "tile",
@@ -305,7 +316,9 @@
             "clown nose",
             "flip flops"
         ],
-        "exotic": []
+        "exotic": [
+            "water extinguisher"
+        ]
     },
     "office": {
         "spawnlist_type": "tile",
@@ -447,7 +460,9 @@
             "top hat",
             "clown nose"
         ],
-        "exotic": []
+        "exotic": [
+            "water extinguisher"
+        ]
     },
     "security": {
         "spawnlist_type": "tile",
@@ -466,7 +481,8 @@
         ],
         "exotic": [
             ".44 magnum",
-            "double-barreled shotgun"
+            "double-barreled shotgun",
+            "water extinguisher"
         ]
     },
     "game room": {
@@ -538,7 +554,8 @@
             "brass knuckles",
             "acoustic guitar",
             "drum set",
-            "football helmet"
+            "football helmet",
+            "detachable scissors"
         ],
         "rare": [
             "electric guitar",
@@ -1008,11 +1025,13 @@
             "grape faygo",
             "cola faygo",
             "cotton+candy faygo",
-            "kiwi+strawberry faygo"
+            "kiwi+strawberry faygo",
+            "tarot cards"
         ],
         "exotic": [
             "pepper spray",
-            "black squiddle"
+            "black squiddle",
+            "water extinguisher"
         ]
     },
     "ill jams": {
@@ -1080,7 +1099,9 @@
             ".44 magnum",
             "double-barreled shotgun"
         ],
-        "exotic": []
+        "exotic": [
+            "water extinguisher"
+        ]
     },
     "wizards": {
         "spawnlist_type": "interest",
@@ -1163,7 +1184,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "tarot cards"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -1302,7 +1325,8 @@
         ],
         "uncommon": [
             "ghost pepper",
-            "blender"
+            "blender",
+            "detachable scissors"
         ],
         "rare": [
             "golden spatula"
@@ -1446,7 +1470,9 @@
             "butcher knife",
             "edgy knife"
         ],
-        "uncommon": [],
+        "uncommon": [
+            "detachable scissors"
+        ],
         "rare": [],
         "exotic": []
     }

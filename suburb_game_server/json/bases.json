@@ -9310,5 +9310,129 @@
             "jet": 2.0000000000000004,
             "obsidian": 0.6
         }
+    },
+    "tarot cards": {
+        "base": true,
+        "display_name": null,
+        "power": 5,
+        "size": 1,
+        "kinds": [
+            "cardkind"
+        ],
+        "wearable": false,
+        "description": "A classic, gently used pack of Rider-Waite tarot cards",
+        "onhit_states": {
+            "demoralize": 0.5
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "tarot",
+            "cards",
+            "thin",
+            "used"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 15,
+        "adjectives": [
+            "tarot"
+        ],
+        "code": "T4R007CR",
+        "attached_skills": [],
+        "prototype_name": "tarot",
+        "creator": "acatalepticCatalogue",
+        "cost": {
+            "build": 0.5,
+            "shale": 0.5
+        }
+    },
+    "detachable scissors": {
+        "base": true,
+        "display_name": "Detachable Scissors",
+        "power": 11,
+        "size": 2,
+        "kinds": [
+            "scissorkind",
+            "bladekind",
+            "knifekind"
+        ],
+        "wearable": false,
+        "description": "A pair of scissors. You can take them apart and use them as knives.",
+        "onhit_states": {
+            "bleed": 0.4
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "detachable",
+            "sharp",
+            "metal",
+            "cooking",
+            "pointy",
+            "stainless"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [
+            "detachable"
+        ],
+        "code": "d3TACHAB",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "acatalepticCatalogue",
+        "cost": {
+            "build": 0.5,
+            "iron": 0.2
+        }
+    },
+    "water extinguisher": {
+        "base": true,
+        "display_name": null,
+        "power": 200,
+        "size": 15,
+        "kinds": [
+            "fireextinguisherkind",
+            "firekind",
+            "aerosolkind"
+        ],
+        "wearable": false,
+        "description": "Also known as: AAAAAARGH FLAMETHROWER OH GOD IT BURNS",
+        "onhit_states": {
+            "ignite": 0.7999999999999999
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {
+            "douse": 0.4
+        },
+        "secretadjectives": [
+            "hot",
+            "burning",
+            "burnt",
+            "charred",
+            "wet",
+            "fire",
+            "water"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 30,
+        "adjectives": [
+            "water"
+        ],
+        "code": "WATERF1R",
+        "attached_skills": [],
+        "prototype_name": "flamethrower",
+        "creator": "acatalepticCatalogue",
+        "cost": {
+            "build": 0.5,
+            "neon": 0.6,
+            "sulfur": 0.6,
+            "garnet": 0.5
+        }
     }
 }
