@@ -55,10 +55,46 @@ class ItemEditor():
             self.setup_defaults()
             self.draw_scene()
         new_item_button = render.TextButton(0.5, 0.5, 196, 32, "New Item", new_item_button_func)
-        title_button = render.TextButton(0.5, 0.6, 196, 32, "Back to Title", suburb.title)
+        title_button = render.TextButton(0.5, 0.8, 196, 32, "Back to Title", suburb.title)
         def continue_func():
             self.draw_scene()
-        continue_button = render.TextButton(0.5, 0.7, 196, 32, "Resume Editing", continue_func)
+        continue_button = render.TextButton(0.5, 0.6, 196, 32, "Resume Editing", continue_func)
+        def search_func():
+            self.search_scene()
+        search_button = render.TextButton(0.5, 0.7, 196, 32, "Search Items", search_func)
+
+    def search_scene(self):
+        suburb.new_scene()
+        label = render.Text(0.5, 0.3, "Search existing items:")
+        label.color = self.theme.dark
+        search_box = render.InputTextBox(0.5, 0.4)
+        search_box.fontsize = 16
+        def last_scene():
+            self.item_editor_scene()
+        def search_func():
+            reply = client.requestplusdic(intent="search_items", content=search_box.text)
+            options = list(reply)
+            self.display_search_results(options)
+        search_button = render.TextButton(0.5, 0.5, 128, 32, "SEARCH", search_func)
+        back_button = render.TextButton(0.5, 0.6, 128, 32, "BACK", last_scene)
+
+    def display_search_results(self, results):
+        suburb.new_scene()
+        label_text = render.Text(0.5, 0.05, "Search Results")
+        label_text.color = self.theme.dark
+        def last_scene():
+            self.item_editor_scene()
+        def button_func_constructor(option:str):
+            def button_func():
+                item_info = client.requestplusdic(intent="item_info", content=option)
+                self.loadinfo(option, item_info)
+                self.draw_scene()
+            return button_func
+        for i, option in enumerate(results):
+            y = 0.20 + 0.05*i
+            button_func = button_func_constructor(option)
+            button = render.TextButton(0.5, y, 196, 32, option, button_func)
+        backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
 
     def confirm_leave(self):
         suburb.new_scene()
@@ -607,12 +643,15 @@ class ItemEditor():
         util.saved_items[self.item_name] = self.get_dict()
         util.writejson(util.saved_items, "saved_items")
 
-    def load(self, item_name):
-        assert item_name in util.saved_items
-        load_dict = util.saved_items[item_name]
+    def loadinfo(self, item_name, load_dict):
         self.__dict__.update(load_dict)
         self.item_name = item_name
         if self.code is None: self.code = ""
+
+    def load(self, item_name):
+        assert item_name in util.saved_items
+        load_dict = util.saved_items[item_name]
+        self.loadinfo(item_name, load_dict)
 
     @property
     def base(self):
