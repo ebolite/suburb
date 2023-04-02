@@ -194,7 +194,7 @@ def handle_request(dict):
     if intent == "submit_item":
         item_name = str(content["item_name"])
         item_dict = content["item_dict"]
-        if item_name in database.memory_items:
+        if item_name in database.memory_items or item_name in util.bases:
             return f"The item {item_name} was already made!"
         verified_item_dict = {}
         verified_item_dict["base"] = True
