@@ -140,6 +140,8 @@ def handle_request(dict):
         item_name = content
         if item_name not in util.bases: return json.dumps({})
         else: return json.dumps(alchemy.Item(item_name).get_dict(raw=True))
+    if intent == "all_tiles":
+        return json.dumps({"tiles": list(tiles.tiles.keys()), "labels": {tile.tile_char:tile.name for tile in tiles.tiles.values()}})
     if intent == "server_tiles":
         return json.dumps({"server_tiles": tiles.server_tiles, "labels": {tile.tile_char:tile.name for tile in tiles.tiles.values()}})
     if intent == "interests":
