@@ -140,9 +140,9 @@ def handle_request(dict):
     if intent == "server_tiles":
         return json.dumps({"server_tiles": tiles.server_tiles, "labels": {tile.tile_char:tile.name for tile in tiles.tiles.values()}})
     if intent == "interests":
-        return json.dumps(spawnlists.get_interest_spawnlists())
+        return json.dumps(sorted(spawnlists.get_interest_spawnlists()))
     if intent == "tile_spawnlists":
-        return json.dumps(spawnlists.get_tile_spawnlists())
+        return json.dumps(sorted(spawnlists.get_tile_spawnlists()))
     if intent == "kinds":
         return json.dumps(util.kinds)
     if intent == "grists":
