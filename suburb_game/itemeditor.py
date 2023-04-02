@@ -135,7 +135,7 @@ class ItemEditor():
         self.draw_secret_adjectives()
         self.draw_interests()
         def back(): self.confirm_leave()
-        savelog = render.Text(0.5, 0.8, "")
+        savelog = render.Text(0.5, 0.82, "")
         savelog.fontsize = 16
         def save(): 
             self.save()
