@@ -49,7 +49,8 @@
             "clown nose"
         ],
         "exotic": [
-            "pepper spray"
+            "pepper spray",
+            "pet rock"
         ]
     },
     "kitchen": {
@@ -161,7 +162,8 @@
         "uncommon": [],
         "rare": [
             "halligan bar",
-            "fire axe"
+            "fire axe",
+            "stone"
         ],
         "exotic": []
     },
@@ -221,7 +223,8 @@
             "grandfather clock",
             "grand piano",
             "top hat",
-            "deer skull"
+            "deer skull",
+            "stone"
         ],
         "exotic": []
     },
@@ -550,6 +553,7 @@
             "caestus",
             "trident",
             "dated rifle",
+            "barbed wire",
             "barbed wire"
         ],
         "exotic": []
@@ -604,7 +608,8 @@
             "empty wrapper",
             "water bottle",
             "empty soda can",
-            "plastic bag"
+            "plastic bag",
+            "stone"
         ],
         "uncommon": [
             "lap top",
@@ -753,7 +758,8 @@
             "drum set",
             "flute",
             "saxophone",
-            "grand piano"
+            "grand piano",
+            "pet rock"
         ],
         "exotic": [
             "sord"
@@ -913,7 +919,8 @@
             "drum set",
             "flute",
             "saxophone",
-            "grand piano"
+            "grand piano",
+            "pet rock"
         ],
         "exotic": [
             "sord"
@@ -1032,13 +1039,17 @@
             "ghost pepper",
             "clown nose"
         ],
-        "rare": [],
+        "rare": [
+            "pet rock"
+        ],
         "exotic": []
     },
     "nature": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
+        "common": [
+            "stone"
+        ],
         "uncommon": [
             "deer skull"
         ],
@@ -1054,6 +1065,7 @@
             "clown nose"
         ],
         "rare": [
+            "barbed wire",
             "barbed wire"
         ],
         "exotic": []
@@ -1145,7 +1157,9 @@
         "always": [],
         "common": [],
         "uncommon": [],
-        "rare": [],
+        "rare": [
+            "pet rock"
+        ],
         "exotic": []
     },
     "furry": {

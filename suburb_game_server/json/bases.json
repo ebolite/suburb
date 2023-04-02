@@ -8083,7 +8083,9 @@
         "forbiddencode": false,
         "use": [],
         "inheritpower": 13,
-        "adjectives": [],
+        "adjectives": [
+            "deer"
+        ],
         "code": "dS903l11",
         "attached_skills": [],
         "prototype_name": "deerghost",
@@ -8201,5 +8203,76 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "Sky"
+    },
+    "pet rock": {
+        "base": true,
+        "display_name": null,
+        "power": 5,
+        "size": 2,
+        "kinds": [
+            "rockkind"
+        ],
+        "wearable": false,
+        "description": "Your loyal petrock. Won't ever leave your side.",
+        "onhit_states": {
+            "stun": 0.5,
+            "inspire": 0.2
+        },
+        "wear_states": {
+            "inspire": 0.5
+        },
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "loving",
+            "stoic",
+            "rockhard",
+            "stone",
+            "tacky",
+            "novelty"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 10,
+        "adjectives": [
+            "pet"
+        ],
+        "code": "l0ver0ck",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "bec"
+    },
+    "stone": {
+        "base": true,
+        "display_name": null,
+        "power": 6,
+        "size": 3,
+        "kinds": [
+            "rockkind"
+        ],
+        "wearable": false,
+        "description": "Like a rock, but with a bit more oomph to it.",
+        "onhit_states": {
+            "stun": 0.5
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "rockhard",
+            "stone",
+            "petrified",
+            "weighty",
+            "gravel",
+            "geological"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 10,
+        "adjectives": [],
+        "code": "c00lr0ck",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "bec"
     }
 }
