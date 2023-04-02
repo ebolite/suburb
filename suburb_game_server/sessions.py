@@ -17,6 +17,7 @@ import npcs
 import strife
 import skills
 import stateseffects
+import database
 from strife import Strife
 
 
@@ -48,7 +49,7 @@ empty_map = map_from_file("empty.txt")
 
 class Session():
     def __new__(cls, name) -> Optional["Session"]:
-        if name not in util.memory_sessions:
+        if name not in database.memory_sessions:
             return None
         else: return super().__new__(cls)
 
@@ -57,8 +58,8 @@ class Session():
 
     @classmethod
     def create_session(cls, name, password) -> Optional["Session"]:
-        if name in util.memory_sessions: return None
-        util.memory_sessions[name] = {}
+        if name in database.memory_sessions: return None
+        database.memory_sessions[name] = {}
         session = cls(name)
         session.setup_defaults(name, password)
         return session
@@ -92,11 +93,11 @@ class Session():
         return best_seeds
 
     def __setattr__(self, attr, value):
-        util.memory_sessions[self.__dict__["_id"]][attr] = value
+        database.memory_sessions[self.__dict__["_id"]][attr] = value
         self.__dict__[attr] = value
         
     def __getattr__(self, attr):
-        self.__dict__[attr] = (util.memory_sessions[self.__dict__["_id"]]
+        self.__dict__[attr] = (database.memory_sessions[self.__dict__["_id"]]
                                [attr])
         return self.__dict__[attr]
     
@@ -863,23 +864,21 @@ class Room():
                                [attr])
         return self.__dict__[attr]
 
+# for now
 def does_player_exist(name):
-    if name not in util.memory_players:
-        if util.db_players.find_one({"_id": name}) is None:
-            return False
-    return True
+    return name in database.memory_players
 
 class Player():
     def __init__(self, name):
         self.__dict__["_id"] = name
-        if name not in util.memory_players:
+        if name not in database.memory_players:
             raise KeyError
 
     @classmethod
     def create_player(cls, name, owner_username) -> "Player":
-        while name in util.memory_players:
+        while name in database.memory_players:
             name += random.choice(ascii_letters)
-        util.memory_players[name] = {}
+        database.memory_players[name] = {}
         player = cls(name)
         player.setup_defaults(name, owner_username)
         return player
@@ -931,10 +930,10 @@ class Player():
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        util.memory_players[self.__dict__["_id"]][attr] = value
+        database.memory_players[self.__dict__["_id"]][attr] = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = util.memory_players[self.__dict__["_id"]][attr]
+        self.__dict__[attr] = database.memory_players[self.__dict__["_id"]][attr]
         return self.__dict__[attr]
     
     def add_modus(self, modus_name: str) -> bool:
@@ -1201,7 +1200,7 @@ class SubPlayer(Player):
         return Player(self.__dict__["player_name"])
 
     def get_dict(self):
-        out: dict = deepcopy(util.memory_players[self.__dict__["player_name"]])
+        out: dict = deepcopy(database.memory_players[self.__dict__["player_name"]])
         out.update(deepcopy(self.player.sub_players[self.__dict__["player_type"]]))
         out["grist_cache_limit"] = self.grist_cache_limit
         out["total_gutter_grist"] = self.total_gutter_grist

@@ -10,6 +10,7 @@ import binaryoperations
 import adjectiveorder
 import sessions
 import stateseffects
+import database
 
 COMPOUND_NAME_CHANCE = 0.2 # chance for having compound names in && operations
 DICEMIN_MINIMUM_SOFTCAP = -2.8
@@ -277,7 +278,7 @@ def get_code_from_name(name: str) -> str: # from name
 
 def does_item_exist(name):
     print(f"checking if item exists {name}")
-    if name in util.memory_items: return True
+    if name in database.memory_items: return True
     else: return False
 
 class Item(): # Items are the base of instants.
@@ -287,7 +288,7 @@ class Item(): # Items are the base of instants.
         if code in util.codes: # if this code already exists, give the item the code corresponds to instead
             name = util.codes[code]
         self.__dict__["_id"] = name
-        if name not in util.memory_items:
+        if name not in database.memory_items:
             self.create_item(name)
             statistics = self.get_name_statistics(name)
             self.make_statistics(statistics)
@@ -302,8 +303,8 @@ class Item(): # Items are the base of instants.
         else: # paradox item
             component_1, component_2 = paradoxify(code)
             name = f"({component_1.name}??{component_2.name})"
-            util.memory_items[name] = {}
-            util.memory_items[name]["_id"] = name
+            database.memory_items[name] = {}
+            database.memory_items[name]["_id"] = name
             util.codes[code] = name
             item = Item(name)
             operation = random.choice(["&&", "||"])
@@ -346,7 +347,7 @@ class Item(): # Items are the base of instants.
         self.display_name = statistics.display_name
 
     def create_item(self, name):
-        util.memory_items[name] = {}
+        database.memory_items[name] = {}
         self._id = name
 
     @property
@@ -372,14 +373,14 @@ class Item(): # Items are the base of instants.
         return out
     
     def __setattr__(self, attr, value):
-        util.memory_items[self.__dict__["_id"]][attr] = value
+        database.memory_items[self.__dict__["_id"]][attr] = value
         self.__dict__[attr] = value
 
     def __getattr__(self, attr):
-        return util.memory_items[self.__dict__["_id"]][attr]
+        return database.memory_items[self.__dict__["_id"]][attr]
 
     def get_dict(self, raw=False):
-        out = deepcopy(util.memory_items[self.__dict__["_id"]])
+        out = deepcopy(database.memory_items[self.__dict__["_id"]])
         if raw: return out
         out["name"] = self.__dict__["_id"]
         out["display_name"] = self.displayname
@@ -419,7 +420,7 @@ class Item(): # Items are the base of instants.
         return out
 
 def does_instance_exist(name):
-    if name in util.memory_instances: return True
+    if name in database.memory_instances: return True
     else: return False
 
 class Instance():
@@ -434,11 +435,11 @@ class Instance():
             self.__dict__["_id"] = name
             self.create_instance(name)
             self.item_name = identifier.name
-        if name not in util.memory_instances:
+        if name not in database.memory_instances:
             self.create_instance(name)
 
     def create_instance(self, name):
-        util.memory_instances[name] = {}
+        database.memory_instances[name] = {}
         self._id = name
         self.punched_code: str = ""
         self.punched_item_name: str = ""
@@ -459,14 +460,14 @@ class Instance():
         self.__dict__["_id"] = value
 
     def __setattr__(self, attr, value):
-        util.memory_instances[self.__dict__["_id"]][attr] = value
+        database.memory_instances[self.__dict__["_id"]][attr] = value
         self.__dict__[attr] = value
 
     def __getattr__(self, attr):
-        return util.memory_instances[self.__dict__["_id"]][attr]
+        return database.memory_instances[self.__dict__["_id"]][attr]
     
     def get_dict(self):
-        output = deepcopy(util.memory_instances[self.__dict__["_id"]])
+        output = deepcopy(database.memory_instances[self.__dict__["_id"]])
         output["instance_name"] = self.__dict__["_id"]
         if output["contained"] != "":
             output["contained"] = Instance(output["contained"]).get_dict()

@@ -20,12 +20,13 @@ import binaryoperations
 import npcs
 import stateseffects
 import spawnlists
+import database
 
 conns = []
 
 class User():
     def __new__(cls, name) -> Optional["User"]:
-        if name not in util.memory_users:
+        if name not in database.memory_users:
             return None
         else: return super().__new__(cls)
 
@@ -34,8 +35,8 @@ class User():
 
     @classmethod
     def create_user(cls, name, password) -> Optional["User"]:
-        if name in util.memory_users: return None
-        util.memory_users[name] = {}
+        if name in database.memory_users: return None
+        database.memory_users[name] = {}
         user = cls(name)
         user.setup_defaults(name, password)
         return user
@@ -47,10 +48,10 @@ class User():
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        util.memory_users[self.__dict__["_id"]][attr] = value
+        database.memory_users[self.__dict__["_id"]][attr] = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = util.memory_users[self.__dict__["_id"]][attr]
+        self.__dict__[attr] = database.memory_users[self.__dict__["_id"]][attr]
         return self.__dict__[attr]
     
     def set_password(self, password: str):
@@ -99,7 +100,7 @@ class User():
     def name(self) -> str:
         return self.__dict__["_id"]
 
-for user_name in util.memory_users:
+for user_name in database.memory_users:
     user = User(user_name)
     for session_name in user.sessions.copy():
         if sessions.Session(session_name) is None:
@@ -191,7 +192,7 @@ def handle_request(dict):
     if intent == "submit_item":
         item_name = str(content["item_name"])
         item_dict = content["item_dict"]
-        if item_name in util.memory_items:
+        if item_name in database.memory_items:
             return f"The item {item_name} was already made!"
         verified_item_dict = {}
         verified_item_dict["base"] = True
@@ -1030,9 +1031,11 @@ def construct_chain(player_name: str) -> list:
 def autosave():
     last_save = time.time()
     util.saveall()
+    database.save_databases()
     while True:
         if time.time() - last_save > 60:
             util.saveall()
+            database.save_databases()
             last_save = time.time()
 
 def console():

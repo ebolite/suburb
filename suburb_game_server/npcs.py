@@ -10,6 +10,7 @@ import sessions
 import strife
 import skills
 import alchemy
+import database
 
 underlings: dict[str, "Underling"] = {}
 griefer_ai: dict[str, "GrieferAI"] = {}
@@ -173,7 +174,7 @@ acheron.actions = 2
 acheron.ai_type = "ogre"
 
 def does_npc_exist(name):
-    if name in util.memory_npcs: return True
+    if name in database.memory_npcs: return True
     else: return False
 
 class Npc():
@@ -186,11 +187,11 @@ class Npc():
 
     def __init__(self, name: str):
         self.__dict__["_id"] = name
-        if name not in util.memory_npcs: # load the session into memory
+        if name not in database.memory_npcs: # load the session into memory
             self.create_npc(name)
 
     def create_npc(self, name):
-        util.memory_npcs[name] = {}
+        database.memory_npcs[name] = {}
         self._id = name
         self.session_name = None
         self.overmap_name = None
@@ -224,14 +225,14 @@ class Npc():
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        util.memory_npcs[self.__dict__["_id"]][attr] = value
+        database.memory_npcs[self.__dict__["_id"]][attr] = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = util.memory_npcs[self.__dict__["_id"]][attr]
+        self.__dict__[attr] = database.memory_npcs[self.__dict__["_id"]][attr]
         return self.__dict__[attr]
     
     def get_dict(self) -> dict:
-        out = deepcopy(util.memory_npcs[self.__dict__["_id"]])
+        out = deepcopy(database.memory_npcs[self.__dict__["_id"]])
         return out
     
     def make_spoils(self, num_players: int) -> dict:
