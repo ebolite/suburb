@@ -19,8 +19,7 @@ class ItemEditor():
         self.code = ""
         self.power = 10
         self.inheritpower = 10
-        self.weight = 5
-        self.size = 5
+        self.size = 0
         self.kinds = []
         self.wearable = False
         self.description = ""
@@ -57,8 +56,10 @@ class ItemEditor():
         new_item_button = render.TextButton(0.5, 0.5, 196, 32, "New Item", new_item_button_func)
         title_button = render.TextButton(0.5, 0.8, 196, 32, "Back to Title", suburb.title)
         def continue_func():
+            self.load("autosave")
             self.draw_scene()
-        continue_button = render.TextButton(0.5, 0.6, 196, 32, "Resume Editing", continue_func)
+        if "autosave" in util.saved_items:
+            continue_button = render.TextButton(0.5, 0.6, 196, 32, "Resume Editing", continue_func)
         def search_func():
             self.search_scene()
         search_button = render.TextButton(0.5, 0.7, 196, 32, "Search Items", search_func)
@@ -121,6 +122,7 @@ class ItemEditor():
 
     def draw_scene(self):
         suburb.new_scene()
+        self.autosave()
         self.draw_name_and_adjectives()
         self.draw_code()
         self.draw_power_size()
@@ -641,6 +643,10 @@ class ItemEditor():
 
     def save(self):
         util.saved_items[self.item_name] = self.get_dict()
+        util.writejson(util.saved_items, "saved_items")
+
+    def autosave(self):
+        util.saved_items["autosave"] = self.get_dict()
         util.writejson(util.saved_items, "saved_items")
 
     def loadinfo(self, item_name, load_dict):

@@ -1094,5 +1094,45 @@
         "uncommon": [],
         "rare": [],
         "exotic": []
+    },
+    "cooking": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "vehicles": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "art": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "video games": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "plushies": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
     }
 }
