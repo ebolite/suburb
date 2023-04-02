@@ -35,7 +35,8 @@
             "paper",
             "key chain",
             "clock",
-            "scarf"
+            "scarf",
+            "fedora"
         ],
         "rare": [
             "candy cane",
@@ -212,7 +213,8 @@
             "fire poker",
             "bull-penis cane",
             "fireplace",
-            "arm chair"
+            "arm chair",
+            "dapper pipe"
         ],
         "rare": [
             "spear",
@@ -286,10 +288,12 @@
             "bleach bottle"
         ],
         "uncommon": [
-            "scarf"
+            "scarf",
+            "fedora"
         ],
         "rare": [
-            "clown nose"
+            "clown nose",
+            "flip flops"
         ],
         "exotic": []
     },
@@ -310,7 +314,8 @@
             "ballpoint pen",
             "stapler",
             "fax machine",
-            "copying machine"
+            "copying machine",
+            "dapper pipe"
         ],
         "rare": [
             "deer skull"
@@ -415,7 +420,9 @@
             "grand piano",
             "sewing needles",
             "knitting needles",
-            "scarf"
+            "scarf",
+            "fedora",
+            "dapper pipe"
         ],
         "rare": [
             "spear",
@@ -492,7 +499,8 @@
         "uncommon": [
             "miku figurine",
             "cheap piece-of-shit katana",
-            "bodypillow"
+            "bodypillow",
+            "fedora"
         ],
         "rare": [
             "katana",
@@ -864,7 +872,8 @@
             "anime poster",
             "edgy knife",
             "headphones",
-            "clown nose"
+            "clown nose",
+            "flip flops"
         ],
         "rare": [
             "lap top",
@@ -1014,9 +1023,12 @@
         "always": [],
         "common": [
             "top hat",
-			"walking cane"
+            "walking cane"
         ],
-        "uncommon": [],
+        "uncommon": [
+            "fedora",
+            "dapper pipe"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -1089,7 +1101,8 @@
             "shovel"
         ],
         "uncommon": [
-            "deer skull"
+            "deer skull",
+            "flip flops"
         ],
         "rare": [
             "boulder"
@@ -1178,7 +1191,8 @@
         "common": [],
         "uncommon": [
             "deer skull",
-            "scarf"
+            "scarf",
+            "dapper pipe"
         ],
         "rare": [],
         "exotic": []
@@ -1190,7 +1204,8 @@
             "shovel"
         ],
         "uncommon": [
-            "ghost pepper"
+            "ghost pepper",
+            "flip flops"
         ],
         "rare": [],
         "exotic": []
@@ -1199,7 +1214,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "dapper pipe"
+        ],
         "rare": [
             "pet rock"
         ],
@@ -1269,7 +1286,8 @@
         "always": [],
         "common": [],
         "uncommon": [
-            "Halo helmet"
+            "Halo helmet",
+            "fast boxing gloves"
         ],
         "rare": [],
         "exotic": [

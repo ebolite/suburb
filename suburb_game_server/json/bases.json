@@ -8671,5 +8671,185 @@
             "build": 0.5,
             "amethyst": 0.5
         }
+    },
+    "flip flops": {
+        "base": true,
+        "display_name": null,
+        "power": 6,
+        "size": 4,
+        "kinds": [
+            "shoekind"
+        ],
+        "wearable": true,
+        "description": "A pair of flip flops, fitted to you comfortably.",
+        "onhit_states": {
+            "vulnerable": 0.1
+        },
+        "wear_states": {
+            "inspire": 0.1
+        },
+        "consume_states": {},
+        "secret_states": {
+            "strength": 0.20000000000000004,
+            "refresh": 0.20000000000000004
+        },
+        "secretadjectives": [
+            "floppy",
+            "cheap",
+            "rubber",
+            "loose"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 8,
+        "adjectives": [
+            "flip"
+        ],
+        "code": "53fRR5dQ",
+        "attached_skills": [],
+        "prototype_name": "flipflop",
+        "creator": "Sky",
+        "cost": {
+            "build": 0.5,
+            "silk": 0.6
+        }
+    },
+    "fedora": {
+        "base": true,
+        "display_name": null,
+        "power": 5,
+        "size": 3,
+        "kinds": [
+            "hatkind"
+        ],
+        "wearable": true,
+        "description": "A fine hat, which suits any common gentlemans' tastes.",
+        "onhit_states": {
+            "triggered": 0.1,
+            "demoralize": 0.2
+        },
+        "wear_states": {
+            "caffeinate": 0.4
+        },
+        "consume_states": {},
+        "secret_states": {
+            "inspire": 0.4
+        },
+        "secretadjectives": [
+            "proper",
+            "simple",
+            "cringe",
+            "classy"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 7,
+        "adjectives": [],
+        "code": "mL4d3yY5",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "Sky",
+        "cost": {
+            "build": 0.5,
+            "silk": 0.9999999999999999
+        }
+    },
+    "dapper pipe": {
+        "base": true,
+        "display_name": null,
+        "power": 3,
+        "size": 1,
+        "kinds": [
+            "pipekind"
+        ],
+        "wearable": true,
+        "description": "Puffing on this turns your vision black and white.",
+        "onhit_states": {
+            "blind": 0.2
+        },
+        "wear_states": {
+            "focus": 0.6,
+            "numb": 0.2
+        },
+        "consume_states": {
+            "focus": 0.7999999999999999,
+            "numb": 0.4
+        },
+        "secret_states": {},
+        "secretadjectives": [
+            "relaxed",
+            "chill",
+            "smokey",
+            "quaint",
+            "gentleman",
+            "dashing"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 5,
+        "adjectives": [
+            "dapper"
+        ],
+        "code": "Y3sQU1t3",
+        "attached_skills": [],
+        "prototype_name": "dapper",
+        "creator": "bec",
+        "cost": {
+            "build": 0.5,
+            "mist": 0.4,
+            "tar": 0.4
+        }
+    },
+    "fast boxing gloves": {
+        "base": true,
+        "display_name": "Gloves of Running Urgently",
+        "power": 20,
+        "size": 5,
+        "kinds": [
+            "glovekind",
+            "fistkind"
+        ],
+        "wearable": true,
+        "description": "Level 10 Boxing Gloves that will make you move faster at the cost of your very fucking soul.",
+        "onhit_states": {
+            "stun": 1
+        },
+        "wear_states": {
+            "strength": 0.1,
+            "quick": 0.9999999999999999,
+            "damage": 0.1
+        },
+        "consume_states": {
+            "strength": 0.5
+        },
+        "secret_states": {
+            "damage": 0.4
+        },
+        "secretadjectives": [
+            "fighting",
+            "leather",
+            "weighted",
+            "heavyweight",
+            "aggressive",
+            "quick",
+            "flame-pattern"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [
+            "fast",
+            "boxing"
+        ],
+        "code": "uRg3NtlY",
+        "attached_skills": [],
+        "prototype_name": "gru",
+        "creator": "bec",
+        "cost": {
+            "garnet": 1,
+            "silicon": 0.5,
+            "build": 0.5,
+            "sulfur": 0.5
+        }
     }
 }
