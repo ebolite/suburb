@@ -7451,7 +7451,10 @@
         "code": "kX8wKnFE",
         "attached_skills": [],
         "prototype_name": "clown",
-        "creator": "Sky"
+        "creator": "Sky",
+        "cost": {
+            "build": 1
+        }
     },
     "joker figurine": {
         "base": true,
@@ -7860,7 +7863,11 @@
         "code": "vULoiZRo",
         "attached_skills": [],
         "prototype_name": "classy",
-        "creator": "ebolite"
+        "creator": "ebolite",
+        "display_name": null,
+        "cost": {
+            "build": 1
+        }
     },
     "dated rifle": {
         "base": true,
@@ -7900,7 +7907,10 @@
         "code": "b4ngp1ng",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "bec"
+        "creator": "bec",
+        "cost": {
+            "build": 1
+        }
     },
     "banana": {
         "base": true,
@@ -7937,7 +7947,10 @@
         "code": "!b4nan4!",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "bec"
+        "creator": "bec",
+        "cost": {
+            "build": 1
+        }
     },
     "azure grimoire": {
         "base": true,
@@ -7978,7 +7991,10 @@
         "code": "8l4z8lu3",
         "attached_skills": [],
         "prototype_name": "azure",
-        "creator": "bec"
+        "creator": "bec",
+        "cost": {
+            "build": 1
+        }
     },
     "barbed wire": {
         "base": true,
@@ -8017,7 +8033,10 @@
         "code": "p4inw!re",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "bec"
+        "creator": "bec",
+        "cost": {
+            "build": 1
+        }
     },
     "bleach bottle": {
         "base": true,
@@ -8053,7 +8072,11 @@
         "code": "7Yw8Ed4V",
         "attached_skills": [],
         "prototype_name": "bleach",
-        "creator": "bec"
+        "creator": "bec",
+        "display_name": null,
+        "cost": {
+            "build": 1
+        }
     },
     "deer skull": {
         "base": true,
@@ -8090,7 +8113,10 @@
         "code": "dS903l11",
         "attached_skills": [],
         "prototype_name": "deerghost",
-        "creator": "Sky"
+        "creator": "Sky",
+        "cost": {
+            "build": 1
+        }
     },
     "ghost pepper": {
         "base": true,
@@ -8131,7 +8157,10 @@
         "code": "sp1cy!!!",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "bec"
+        "creator": "bec",
+        "cost": {
+            "build": 1
+        }
     },
     "blender": {
         "base": true,
@@ -8166,7 +8195,10 @@
         "code": "b92N4bg2",
         "attached_skills": [],
         "prototype_name": "blender",
-        "creator": "Sky"
+        "creator": "Sky",
+        "cost": {
+            "build": 1
+        }
     },
     "scarf": {
         "base": true,
@@ -8203,7 +8235,10 @@
         "code": "w2NG48i0",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "Sky"
+        "creator": "Sky",
+        "cost": {
+            "build": 1
+        }
     },
     "pet rock": {
         "base": true,
@@ -8241,7 +8276,10 @@
         "code": "l0ver0ck",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "bec"
+        "creator": "bec",
+        "cost": {
+            "build": 1
+        }
     },
     "stone": {
         "base": true,
@@ -8274,6 +8312,9 @@
         "code": "c00lr0ck",
         "attached_skills": [],
         "prototype_name": null,
-        "creator": "bec"
+        "creator": "bec",
+        "cost": {
+            "build": 1
+        }
     }
 }
