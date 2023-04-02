@@ -486,7 +486,7 @@ class ItemEditor():
         label.text_func = label_func
         def last_scene():
             if name_box.text:
-                self.prototype_name = name_box.text
+                self.prototype_name = name_box.text.lower()
             else:
                 self.prototype_name = None
             self.draw_scene()
