@@ -600,6 +600,7 @@ class ItemEditor():
 
     def get_dict(self):
         out_dict = {
+            "item_name": self.item_name,
             "base": True,
             "power": self.power,
             "size": self.size,
@@ -653,6 +654,7 @@ class ItemEditor():
     def loadinfo(self, item_name, load_dict):
         self.__dict__.update(load_dict)
         self.item_name = item_name
+        if "item_name" in load_dict: self.item_name = load_dict["item_name"]
         if self.code is None: self.code = ""
 
     def load(self, item_name):
