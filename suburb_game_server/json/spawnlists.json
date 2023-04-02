@@ -36,7 +36,13 @@
             "key chain",
             "clock",
             "scarf",
-            "fedora"
+            "fedora",
+            "red squiddle",
+            "blue squiddle",
+            "green squiddle",
+            "AAA game",
+            "purple squiddle",
+            "yellow squiddle"
         ],
         "rare": [
             "candy cane",
@@ -55,7 +61,8 @@
         ],
         "exotic": [
             "pepper spray",
-            "pet rock"
+            "pet rock",
+            "black squiddle"
         ]
     },
     "kitchen": {
@@ -255,7 +262,8 @@
             "cotton+candy faygo",
             "kiwi+strawberry faygo",
             "walking cane",
-            "umbrella"
+            "umbrella",
+            "AAA game"
         ],
         "rare": [
             "Abraham Lincoln bust",
@@ -480,7 +488,8 @@
         "uncommon": [
             "yoyo",
             "rubber mallet",
-            "jump rope"
+            "jump rope",
+            "AAA game"
         ],
         "rare": [
             "deer skull"
@@ -985,7 +994,12 @@
         "uncommon": [
             "paper",
             "key chain",
-            "clock"
+            "clock",
+            "red squiddle",
+            "blue squiddle",
+            "green squiddle",
+            "purple squiddle",
+            "yellow squiddle"
         ],
         "rare": [
             "candy cane",
@@ -997,7 +1011,8 @@
             "kiwi+strawberry faygo"
         ],
         "exotic": [
-            "pepper spray"
+            "pepper spray",
+            "black squiddle"
         ]
     },
     "ill jams": {
@@ -1125,7 +1140,9 @@
             "barbed wire",
             "barbed wire"
         ],
-        "exotic": []
+        "exotic": [
+            "black squiddle"
+        ]
     },
     "terrible movies": {
         "spawnlist_type": "interest",
@@ -1174,12 +1191,20 @@
     "zoologically dubious": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
+        "common": [
+            "red squiddle",
+            "blue squiddle",
+            "green squiddle",
+            "purple squiddle",
+            "yellow squiddle"
+        ],
         "uncommon": [
             "scarf"
         ],
         "rare": [],
-        "exotic": []
+        "exotic": [
+            "black squiddle"
+        ]
     },
     "creative writing": {
         "spawnlist_type": "interest",
@@ -1217,14 +1242,22 @@
     "nostalgic cartoons": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
+        "common": [
+            "red squiddle",
+            "blue squiddle",
+            "green squiddle",
+            "purple squiddle",
+            "yellow squiddle"
+        ],
         "uncommon": [
             "dapper pipe"
         ],
         "rare": [
             "pet rock"
         ],
-        "exotic": []
+        "exotic": [
+            "black squiddle"
+        ]
     },
     "furry": {
         "spawnlist_type": "interest",
@@ -1239,10 +1272,18 @@
     "squiddles": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
+        "common": [
+            "red squiddle",
+            "blue squiddle",
+            "green squiddle",
+            "purple squiddle",
+            "yellow squiddle"
+        ],
         "uncommon": [],
         "rare": [],
-        "exotic": []
+        "exotic": [
+            "black squiddle"
+        ]
     },
     "cooking": {
         "spawnlist_type": "interest",
@@ -1290,14 +1331,17 @@
     "video games": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
+        "common": [
+            "AAA game"
+        ],
         "uncommon": [
             "Halo helmet",
             "fast boxing gloves"
         ],
         "rare": [],
         "exotic": [
-            "azure grimoire"
+            "azure grimoire",
+            "minecraft pickaxe"
         ]
     },
     "plushies": {
@@ -1307,13 +1351,20 @@
             "red smuppet",
             "green smuppet",
             "blue smuppet",
-            "purple smuppet"
+            "purple smuppet",
+            "red squiddle",
+            "blue squiddle",
+            "green squiddle",
+            "purple squiddle",
+            "yellow squiddle"
         ],
         "uncommon": [
             "scarf"
         ],
         "rare": [],
-        "exotic": []
+        "exotic": [
+            "black squiddle"
+        ]
     },
     "geology": {
         "spawnlist_type": "interest",
@@ -1326,7 +1377,9 @@
         "rare": [
             "boulder"
         ],
-        "exotic": []
+        "exotic": [
+            "minecraft pickaxe"
+        ]
     },
     "archaeology": {
         "spawnlist_type": "interest",

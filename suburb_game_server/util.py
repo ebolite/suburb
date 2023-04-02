@@ -115,9 +115,11 @@ for kind in additional_kinds:
 
 print(sorted(kinds))
 
-def update_bases():
+def update_jsons():
     global bases
+    global spawnlists
     bases = readjson(bases, "bases")
+    spawnlists = readjson(spawnlists, "spawnlists")
 
 def saveall():
     t = time.time()

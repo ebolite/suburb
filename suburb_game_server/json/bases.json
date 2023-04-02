@@ -8899,5 +8899,416 @@
             "acid": 0.2,
             "blood": 0.1
         }
+    },
+    "red squiddle": {
+        "base": true,
+        "display_name": null,
+        "power": 3,
+        "size": 2,
+        "kinds": [
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "A red squiddle plush. This one is of Rimerhyme, a minor character that has grown to be beloved by fans.",
+        "onhit_states": {
+            "weak": 0.30000000000000004
+        },
+        "wear_states": {
+            "heal": 0.30000000000000004,
+            "focus": 0.30000000000000004,
+            "refresh": 0.5
+        },
+        "consume_states": {
+            "refresh": 0.9999999999999999
+        },
+        "secret_states": {
+            "inspire": 0.7999999999999999,
+            "caffeinate": 0.7999999999999999
+        },
+        "secretadjectives": [
+            "soft",
+            "plush",
+            "aquatic",
+            "friendly",
+            "squiddy",
+            "tangle",
+            "horrifying",
+            "eldritch"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 5,
+        "adjectives": [
+            "red"
+        ],
+        "code": "aVrTTQWB",
+        "attached_skills": [],
+        "prototype_name": "rimerhyme",
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "garnet": 0.5
+        }
+    },
+    "blue squiddle": {
+        "base": true,
+        "display_name": null,
+        "power": 3,
+        "size": 2,
+        "kinds": [
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "One of the incredibly large cast of Squiddle characters. What was this one's name again?",
+        "onhit_states": {
+            "weak": 0.30000000000000004
+        },
+        "wear_states": {
+            "heal": 0.30000000000000004,
+            "focus": 0.30000000000000004,
+            "refresh": 0.5
+        },
+        "consume_states": {
+            "refresh": 0.9999999999999999
+        },
+        "secret_states": {
+            "inspire": 0.7999999999999999,
+            "caffeinate": 0.7999999999999999
+        },
+        "secretadjectives": [
+            "soft",
+            "plush",
+            "aquatic",
+            "friendly",
+            "squiddy",
+            "tangle",
+            "horrifying",
+            "eldritch"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 5,
+        "adjectives": [
+            "blue"
+        ],
+        "code": "7hVpBszc",
+        "attached_skills": [],
+        "prototype_name": "bubblebeak",
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "aquamarine": 0.5
+        }
+    },
+    "green squiddle": {
+        "base": true,
+        "display_name": null,
+        "power": 3,
+        "size": 2,
+        "kinds": [
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "This character is called Kelperton. Once beloved by fans, a massive controversy came out about the voice actor, and the character was killed off.",
+        "onhit_states": {
+            "weak": 0.30000000000000004
+        },
+        "wear_states": {
+            "heal": 0.30000000000000004,
+            "focus": 0.30000000000000004,
+            "refresh": 0.5
+        },
+        "consume_states": {
+            "refresh": 0.9999999999999999
+        },
+        "secret_states": {
+            "inspire": 0.7999999999999999,
+            "caffeinate": 0.7999999999999999
+        },
+        "secretadjectives": [
+            "soft",
+            "plush",
+            "aquatic",
+            "friendly",
+            "squiddy",
+            "tangle",
+            "horrifying",
+            "eldritch"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 5,
+        "adjectives": [
+            "green"
+        ],
+        "code": "v6wcuT2k",
+        "attached_skills": [],
+        "prototype_name": "kelperton",
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "malachite": 0.4
+        }
+    },
+    "AAA game": {
+        "base": true,
+        "display_name": "CoD Modern Warfare",
+        "power": 2,
+        "size": 1,
+        "kinds": [
+            "disckind"
+        ],
+        "wearable": false,
+        "description": "Just like war, this game never changes.",
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {
+            "damage": 0.4,
+            "vulnerable": 0.6
+        },
+        "secretadjectives": [
+            "soldier",
+            "warring",
+            "squeaker",
+            "gaming",
+            "racist",
+            "misogynist",
+            "army",
+            "navy-seal"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 5,
+        "adjectives": [
+            "AAA"
+        ],
+        "code": "c4LlDUTY",
+        "attached_skills": [],
+        "prototype_name": "soap",
+        "creator": "bec",
+        "cost": {
+            "build": 0.5,
+            "sulfur": 0.5,
+            "jet": 0.5
+        }
+    },
+    "purple squiddle": {
+        "base": true,
+        "display_name": null,
+        "power": 3,
+        "size": 2,
+        "kinds": [
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "A purple squiddle plush. It's probably one of the ten thousand characters from that stupid show.",
+        "onhit_states": {
+            "weak": 0.30000000000000004
+        },
+        "wear_states": {
+            "heal": 0.30000000000000004,
+            "focus": 0.30000000000000004,
+            "refresh": 0.5
+        },
+        "consume_states": {
+            "refresh": 0.9999999999999999
+        },
+        "secret_states": {
+            "inspire": 0.7999999999999999,
+            "caffeinate": 0.7999999999999999
+        },
+        "secretadjectives": [
+            "soft",
+            "plush",
+            "aquatic",
+            "friendly",
+            "squiddy",
+            "tangle",
+            "horrifying",
+            "eldritch"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 5,
+        "adjectives": [
+            "purple"
+        ],
+        "code": "KHjIyl!9",
+        "attached_skills": [],
+        "prototype_name": "smarty",
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "shale": 0.4
+        }
+    },
+    "yellow squiddle": {
+        "base": true,
+        "display_name": null,
+        "power": 3,
+        "size": 2,
+        "kinds": [
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "A plush of a yellow squiddle named Amberphore. Though initially shy, she eventually opens up and attains ultimate power through destruction.",
+        "onhit_states": {
+            "weak": 0.30000000000000004
+        },
+        "wear_states": {
+            "heal": 0.30000000000000004,
+            "focus": 0.30000000000000004,
+            "refresh": 0.5
+        },
+        "consume_states": {
+            "refresh": 0.9999999999999999
+        },
+        "secret_states": {
+            "inspire": 0.7999999999999999,
+            "caffeinate": 0.7999999999999999
+        },
+        "secretadjectives": [
+            "soft",
+            "plush",
+            "aquatic",
+            "friendly",
+            "squiddy",
+            "tangle",
+            "horrifying",
+            "eldritch"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 5,
+        "adjectives": [
+            "yellow"
+        ],
+        "code": "!n5avlf4",
+        "attached_skills": [],
+        "prototype_name": "amberphore",
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "amber": 0.4
+        }
+    },
+    "minecraft pickaxe": {
+        "base": true,
+        "display_name": "Limited Edition Diamond Pickaxe",
+        "power": 20,
+        "size": 12,
+        "kinds": [
+            "icepickkind",
+            "axekind"
+        ],
+        "wearable": false,
+        "description": "Mining away is a requirement if you want to get to building brown bricks.",
+        "onhit_states": {
+            "vulnerable": 0.7,
+            "stun": 0.9999999999999999
+        },
+        "wear_states": {
+            "inspire": 0.5
+        },
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "mining",
+            "diamond",
+            "indie",
+            "creeping",
+            "ender",
+            "skeletal",
+            "zombie",
+            "spider",
+            "cubic",
+            "blocky"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 400,
+        "adjectives": [
+            "minecraft"
+        ],
+        "code": "M1n3CR4P",
+        "attached_skills": [],
+        "prototype_name": "steve",
+        "creator": "bec",
+        "cost": {
+            "build": 0.5,
+            "diamond": 0.1,
+            "gold": 0.2,
+            "iron": 0.30000000000000004,
+            "copper": 0.2,
+            "emerald": 0.1,
+            "redstone": 0.30000000000000004,
+            "marble": 0.2,
+            "wood": 0.5,
+            "sandstone": 0.5,
+            "obsidian": 0.1,
+            "quartz": 0.30000000000000004
+        }
+    },
+    "black squiddle": {
+        "base": true,
+        "display_name": null,
+        "power": 50,
+        "size": 2,
+        "kinds": [
+            "plushkind"
+        ],
+        "wearable": false,
+        "description": "You don't remember this one from the show.",
+        "onhit_states": {
+            "numb": 1.5000000000000002,
+            "stun": 0.5
+        },
+        "wear_states": {
+            "focus": 2.0000000000000004,
+            "stun": 0.9999999999999999,
+            "damage": 0.30000000000000004,
+            "numb": 0.30000000000000004
+        },
+        "consume_states": {
+            "vulnerable": 2.0000000000000004,
+            "numb": 0.9999999999999999,
+            "bleed": 0.5,
+            "stun": 0.9999999999999999
+        },
+        "secret_states": {
+            "damage": 0.30000000000000004,
+            "weak": 0.6,
+            "vulnerable": 0.7999999999999999
+        },
+        "secretadjectives": [
+            "soft",
+            "plush",
+            "horrifying",
+            "terrible",
+            "eldritch",
+            "outer",
+            "whispering",
+            "godlike",
+            "furthest",
+            "tangled"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 500,
+        "adjectives": [
+            "black"
+        ],
+        "code": "?KrADXXq",
+        "attached_skills": [],
+        "prototype_name": "horrorterror",
+        "creator": "ebolite",
+        "cost": {
+            "build": 0.5,
+            "onyx": 0.6999999999999997,
+            "tar": 0.6,
+            "jet": 2.0000000000000004,
+            "obsidian": 0.6
+        }
     }
 }

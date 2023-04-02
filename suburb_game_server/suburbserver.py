@@ -1034,7 +1034,7 @@ def construct_chain(player_name: str) -> list:
 
 def autosave():
     last_save = time.time()
-    util.update_bases()
+    util.update_jsons()
     util.saveall()
     database.save_databases()
     while True:
