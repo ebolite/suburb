@@ -468,7 +468,7 @@
         "wearable": false,
         "description": "You're like the Robin Hood of stealing shit from your friends.",
         "cost": {
-            "build": 0.50
+            "build": 10
         },
         "onhit_states": {
             "leech": 0.5
