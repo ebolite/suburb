@@ -9328,10 +9328,10 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "tarot",
+            "mystic",
+            "esoteric",
             "cards",
-            "thin",
-            "used"
+            "thin"
         ],
         "forbiddencode": false,
         "use": [],
@@ -9367,7 +9367,6 @@
         "consume_states": {},
         "secret_states": {},
         "secretadjectives": [
-            "detachable",
             "sharp",
             "metal",
             "cooking",
@@ -9402,7 +9401,7 @@
         "wearable": false,
         "description": "Also known as: AAAAAARGH FLAMETHROWER OH GOD IT BURNS",
         "onhit_states": {
-            "ignite": 0.7999999999999999
+            "ignite": 1.1
         },
         "wear_states": {},
         "consume_states": {},
@@ -9415,8 +9414,7 @@
             "burnt",
             "charred",
             "wet",
-            "fire",
-            "water"
+            "fire"
         ],
         "forbiddencode": false,
         "use": [],
