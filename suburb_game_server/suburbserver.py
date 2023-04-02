@@ -248,8 +248,9 @@ def handle_request(dict):
         verified_item_dict["tiles"] = item_dict["tiles"]
         verified_item_dict["tiles_rarity"] = item_dict["tiles_rarity"]
         verified_item_dict["cost"] = item_dict["cost"]
-        util.base_submissions[item_name] = verified_item_dict
-        util.writejson(util.base_submissions, "base_submissions")
+        base_submissions = util.get_base_submissions()
+        base_submissions[item_name] = verified_item_dict
+        util.update_base_submissions(base_submissions)
         return True
     # session verification
     session_name = dict["session_name"]
@@ -1033,6 +1034,7 @@ def construct_chain(player_name: str) -> list:
 
 def autosave():
     last_save = time.time()
+    util.update_bases()
     util.saveall()
     database.save_databases()
     while True:

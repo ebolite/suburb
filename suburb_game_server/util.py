@@ -83,8 +83,14 @@ writejson(base_names_adjectives, "base_names_adjectives")
 codes = {} # key: item code value: item name
 codes = readjson(codes, "codes")
 
-base_submissions = {}
-base_submissions = readjson(base_submissions, "base_submissions")
+def get_base_submissions():
+    base_submissions = {}
+    base_submissions = readjson(base_submissions, "base_submissions")
+    return base_submissions
+
+def update_base_submissions(submissions_dict: dict):
+    base_submissions = submissions_dict
+    writejson(base_submissions, "base_submissions")
 
 considered_submissions = {}
 considered_submissions = readjson(considered_submissions, "considered_submissions")
@@ -108,6 +114,10 @@ for kind in additional_kinds:
         kinds.append(kind)
 
 print(sorted(kinds))
+
+def update_bases():
+    global bases
+    bases = readjson(bases, "bases")
 
 def saveall():
     t = time.time()

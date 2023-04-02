@@ -43,9 +43,10 @@ if __name__ == "__main__":
             util.considered_submissions.pop(base_name)
         util.writejson(util.considered_submissions, "considered_submissions")
         print("Accepted.")
-    for base_name in deepcopy(util.base_submissions):
+    base_submissions = util.get_base_submissions()
+    for base_name in deepcopy(base_submissions):
         print(f"-- {base_name} --")
-        base_dict = deepcopy(util.base_submissions[base_name])
+        base_dict = deepcopy(base_submissions[base_name])
         for element in base_dict:
             print(f"{element}: {base_dict[element]}")
         print(f"(A)ccept, (C)onsider, (D)eny, (B)an")
@@ -55,8 +56,8 @@ if __name__ == "__main__":
                 break
             else: print("Invalid option.")
         reply = reply.lower()
-        util.base_submissions.pop(base_name)
-        util.writejson(util.base_submissions, "base_submissions")
+        base_submissions.pop(base_name)
+        util.update_base_submissions(base_submissions)
         match reply:
             case "a":
                 print("Accepted.")
