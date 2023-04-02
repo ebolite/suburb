@@ -55,6 +55,9 @@ class ItemEditor():
             self.draw_scene()
         new_item_button = render.TextButton(0.5, 0.5, 196, 32, "New Item", new_item_button_func)
         title_button = render.TextButton(0.5, 0.6, 196, 32, "Back to Title", suburb.title)
+        def continue_func():
+            self.draw_scene()
+        continue_button = render.TextButton(0.5, 0.7, 196, 32, "Resume Editing", continue_func)
 
     def confirm_leave(self):
         suburb.new_scene()
