@@ -8,6 +8,7 @@ import datetime
 import random
 import ssl
 import uuid
+import difflib
 from typing import Optional
 
 import sessions
@@ -126,8 +127,12 @@ def threaded_client(connection):
 
 def handle_request(dict):
     intent = dict["intent"]
+    content = dict["content"]
     if intent == "connect":
         return "Successfully connected."
+    if intent == "search_items":
+        results = difflib.get_close_matches(content, list(util.bases.keys()) + list(util.base_submissions.keys()), n=5, cutoff=0.3)
+        return json.dumps(results)
     if intent == "server_tiles":
         return json.dumps({"server_tiles": tiles.server_tiles, "labels": {tile.tile_char:tile.name for tile in tiles.tiles.values()}})
     if intent == "interests":
@@ -151,7 +156,7 @@ def handle_request(dict):
         return json.dumps(out_states)
     username = dict["username"]
     password = dict["password"]
-    content = dict["content"]
+    
     if intent == "create_account":
         if len(username) == 0 or len(password) == 0: return "Can you please just be fucking normal"
         user = User.create_user(username, password)
