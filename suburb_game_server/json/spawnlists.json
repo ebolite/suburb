@@ -164,7 +164,9 @@
             "hack saw",
             "pipe wrench"
         ],
-        "uncommon": [],
+        "uncommon": [
+            "hot glue gun"
+        ],
         "rare": [
             "halligan bar",
             "fire axe",
@@ -500,7 +502,8 @@
             "miku figurine",
             "cheap piece-of-shit katana",
             "bodypillow",
-            "fedora"
+            "fedora",
+            "hot glue gun"
         ],
         "rare": [
             "katana",
@@ -707,7 +710,8 @@
             "flute",
             "saxophone",
             "grand piano",
-            "blender"
+            "blender",
+            "hot glue gun"
         ],
         "rare": [
             "lap top",
@@ -1277,7 +1281,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "hot glue gun"
+        ],
         "rare": [],
         "exotic": []
     },

@@ -8851,5 +8851,53 @@
             "build": 0.5,
             "sulfur": 0.5
         }
+    },
+    "hot glue gun": {
+        "base": true,
+        "display_name": null,
+        "power": 10,
+        "size": 3,
+        "kinds": [
+            "pistolkind"
+        ],
+        "wearable": false,
+        "description": "Good for sticking things together and burning your fingers.",
+        "onhit_states": {
+            "slow": 0.30000000000000004,
+            "ignite": 0.30000000000000004
+        },
+        "wear_states": {},
+        "consume_states": {
+            "slow": 0.6,
+            "ignite": 0.6
+        },
+        "secret_states": {},
+        "secretadjectives": [
+            "sticky",
+            "melty",
+            "blistered",
+            "white",
+            "molten",
+            "gooey",
+            "adhesive",
+            "glued"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [
+            "hot",
+            "glue"
+        ],
+        "code": "0wOwH0T!",
+        "attached_skills": [],
+        "prototype_name": "glue",
+        "creator": "bec",
+        "cost": {
+            "build": 0.5,
+            "caulk": 0.2,
+            "acid": 0.2,
+            "blood": 0.1
+        }
     }
 }
