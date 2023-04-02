@@ -1719,6 +1719,10 @@ def item_editor_scene():
     item_editor = itemeditor.ItemEditor()
     item_editor.item_editor_scene()
 
+def map_editor_scene():
+    map_editor = itemeditor.MapEditor()
+    map_editor.draw_scene()
+
 def render_loop():
     while render.render():
         pass
@@ -1757,6 +1761,7 @@ if __name__ == "__main__":
     if client.connect(): # connect to server
         login_scene() # normal game start
         # item_editor_scene()
+        # map_editor_scene()
         # test_overmap()
     else:
         connection_screen()

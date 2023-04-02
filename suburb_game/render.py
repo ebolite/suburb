@@ -20,6 +20,7 @@ import sburbserver
 from strife import Griefer, Strife
 from npcs import Npc
 from sylladex import Instance, Item, Sylladex
+import itemeditor
 
 pygame.init()
 
@@ -979,12 +980,13 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
     else: return grist_icons
 
 class TileMap(UIElement):
-    def __init__(self, x, y, server_view=False, item_display_x=70, item_display_y=190):
+    def __init__(self, x, y, server_view=False, item_display_x=70, item_display_y=190, map_editor: Optional["itemeditor.MapEditor"]=None):
         super(TileMap, self).__init__()
         self.x = x
         self.y = y
         self.tiles: dict[str, "Tile"] = {}
         self.server_view = server_view
+        self.map_editor = map_editor
         if not self.server_view:
             self.label = Text(0.5, 0, "")
             self.label.bind_to(self)
@@ -1033,6 +1035,8 @@ class TileMap(UIElement):
             if self.server_view:
                 sburbserver.update_viewport_dic()
                 map_dict = sburbserver.viewport_dic
+            elif self.map_editor is not None:
+                map_dict = self.map_editor.get_view()
             else:
                 map_dict = client.requestdic("current_map")
         old_theme = self.theme
@@ -1055,6 +1059,15 @@ class TileMap(UIElement):
         if self.info_window is not None and self.info_text is not None:
             sburbserver.update_info_window(self.info_window, self.info_text)
 
+    def move(self, direction):
+        if self.server_view:
+            sburbserver.move_view_by_direction(direction)
+        elif self.map_editor is not None:
+            self.map_editor.move_view_by_direction(direction)
+        else:
+            client.requestplus("move", direction)
+        self.update_map()
+
     def keypress(self, event):
         if self.input_text_box is not None and self.input_text_box.active: return
         match event.key:
@@ -1067,17 +1080,15 @@ class TileMap(UIElement):
             case pygame.K_RIGHT: direction = "right"
             case pygame.K_d: direction = "right"
             case _: return
-        if self.server_view:
-            sburbserver.move_view_by_direction(direction)
-        else:
-            client.requestplus("move", direction)
-        self.update_map()
-        
+        self.move(direction)
 
     def delete(self):
         for tile in self.tiles:
             self.tiles[tile].delete()
         super(TileMap, self).delete()
+
+class ServerTileMap(TileMap):
+    ...
 
 allowedtiles = {
 "#": ["|", "=", "+", "'", "_"],
@@ -1122,8 +1133,7 @@ class Tile(UIElement):
         self.last_tile = self.tile
         self.last_theme = self.tile_map.theme
         self.known_invalid_tiles: list[str] = []
-        if server_view:
-            click_check.append(self)
+        click_check.append(self)
 
     def load_image(self):
         self.theme = self.tile_map.theme
@@ -1145,26 +1155,30 @@ class Tile(UIElement):
             center_tile_y = len(self.tile_map.map)//2
             x_diff = self.x - center_tile_x
             y_diff = self.y - center_tile_y
-            target_x = sburbserver.current_x+x_diff
-            target_y = sburbserver.current_y+y_diff
-            match sburbserver.current_mode:
-                case "deploy":
-                    viewport_dict = sburbserver.deploy_item(target_x, target_y)
-                    if viewport_dict is not None:
-                        sburbserver.update_viewport_dic(viewport_dict)
-                        self.tile_map.update_map(viewport_dict, True)
-                case "revise":
-                    if self.tile == sburbserver.current_selected_tile: return
-                    if sburbserver.current_selected_tile in self.known_invalid_tiles: return 
-                    viewport_dict = sburbserver.revise_tile(target_x, target_y)
-                    if viewport_dict is None: self.known_invalid_tiles.append(sburbserver.current_selected_tile)
-                    else:
-                        sburbserver.update_viewport_dic(viewport_dict)
-                        self.tile_map.update_map(viewport_dict)
-                case _:
-                    if x_diff == 0 and y_diff == 0: return
-                    sburbserver.move_view_to_tile(target_x, target_y)
-                    self.tile_map.update_map()
+            if self.server_view:
+                target_x = sburbserver.current_x+x_diff
+                target_y = sburbserver.current_y+y_diff
+                match sburbserver.current_mode:
+                    case "deploy":
+                        viewport_dict = sburbserver.deploy_item(target_x, target_y)
+                        if viewport_dict is not None:
+                            sburbserver.update_viewport_dic(viewport_dict)
+                            self.tile_map.update_map(viewport_dict, True)
+                    case "revise":
+                        if self.tile == sburbserver.current_selected_tile: return
+                        if sburbserver.current_selected_tile in self.known_invalid_tiles: return 
+                        viewport_dict = sburbserver.revise_tile(target_x, target_y)
+                        if viewport_dict is None: self.known_invalid_tiles.append(sburbserver.current_selected_tile)
+                        else:
+                            sburbserver.update_viewport_dic(viewport_dict)
+                            self.tile_map.update_map(viewport_dict)
+                    case _:
+                        if x_diff == 0 and y_diff == 0: return
+                        sburbserver.move_view_to_tile(target_x, target_y)
+                        self.tile_map.update_map()
+            elif self.tile_map.map_editor is not None:
+                self.tile_map.map_editor.move_view(x_diff, y_diff)
+                self.tile_map.update_map()
 
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly

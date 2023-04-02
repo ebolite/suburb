@@ -8,6 +8,73 @@ import themes
 import binaryoperations
 import util
 
+class MapEditor():
+    view_tiles = 9
+    def __init__(self):
+        self.setup_defaults()
+        self.viewx = len(self.map_tiles[0])//2
+        self.viewy = len(self.map_tiles)//2
+
+    def setup_defaults(self):
+        self.map_tiles = [["." for i in range(24)] for i in range(12)]
+        self.map_tiles += [["#" for i in range(24)] for i in range(2)]
+
+    def draw_scene(self):
+        suburb.new_scene()
+        self.tilemap = render.TileMap(0.5, 0.5, map_editor=self)
+
+    def move_view(self, dx, dy):
+        if self.is_tile_in_bounds(self.viewx+dx, self.viewy+dy):
+            self.viewx, self.viewy = self.viewx+dx, self.viewy+dy
+
+    def move_view_by_direction(self, direction: str):
+        match direction:
+            case "right":
+                dx = 1
+                dy = 0
+            case "left":
+                dx = -1
+                dy = 0
+            case "up":
+                dx = 0
+                dy = -1
+            case "down":
+                dx = 0
+                dy = 1
+            case _:
+                return
+        self.move_view(dx, dy)
+        
+
+    def get_view(self):
+        out_map_tiles = []
+        map_tiles = self.map_tiles
+        for map_tile_y, real_y in enumerate(range(self.viewy-self.view_tiles, self.viewy+self.view_tiles+1)):
+            new_line = []
+            for map_tile_x, real_x in enumerate(range(self.viewx-self.view_tiles, self.viewx+self.view_tiles+1)):
+                if real_y < 0 or real_y >= len(map_tiles): new_line.append("?") # out of bounds
+                elif real_x < 0 or real_x >= len(map_tiles[0]): new_line.append("?") # out of bounds
+                else: 
+                    new_line.append(map_tiles[real_y][real_x])
+            out_map_tiles.append(new_line)
+        map_dict = {
+            "map": out_map_tiles,
+            "instances": {}, # todo
+            "specials": {},
+            "npcs": {},
+            "players": {},
+            "room_name": "",
+            "theme": "default"
+        }
+        return map_dict
+    
+    def is_tile_in_bounds(self, x, y) -> bool:
+        if y < 0: return False
+        if x < 0: return False
+        if y >= len(self.map_tiles): return False
+        if x >= len(self.map_tiles[0]): return False
+        return True
+
 class ItemEditor():
     def __init__(self):
         self.setup_defaults()
