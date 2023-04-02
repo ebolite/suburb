@@ -1,3 +1,5 @@
+import time
+
 from pymongo import MongoClient
 import util
 
@@ -25,6 +27,7 @@ db_users = users_db["users"]
 memory_users = {instance_dict["_id"]:instance_dict for instance_dict in db_users.find({})}
 
 def save_databases():
+    t = time.time()
     def callback(session):
         users = session.client["users"]["users"]
         users_data = {item_dict["_id"]:item_dict for item_dict in users.find({})}
@@ -84,3 +87,4 @@ def save_databases():
         if inserted: print(f"Inserted {len(inserted)}")
     with db_client.start_session() as session:
         session.with_transaction(callback)
+    print(f"database save took {time.time()-t:.2f} secs")
