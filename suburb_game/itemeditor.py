@@ -573,6 +573,7 @@ class ItemEditor():
         suburb.new_scene()
         adjectives_box = render.InputTextBox(0.5, 0.4)
         adjectives_box.fontsize = 16
+        adjectives_box.text = " ".join(self.secretadjectives)
         label = render.Text(0.5, 0.2, "Inherited adjectives may be gained upon alchemizing.")
         label.color = self.theme.dark
         label_2 = render.Text(0.5, 0.3, "Choose 4-10 words related to the item.")
