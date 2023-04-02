@@ -1228,5 +1228,21 @@
         ],
         "rare": [],
         "exotic": []
+    },
+    "geology": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": ["stone", "pet rock"],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "archaeology": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": ["stone"],
+        "uncommon": [],
+        "rare": ["pet rock"],
+        "exotic": []
     }
 }
