@@ -31,21 +31,37 @@ class MapEditor():
         top_bar.absolute = False
         top_bar.outline_color = self.theme.dark
         top_bar.border_radius = 12
-        selectbutton_background = render.SolidColor(-2, -2, 49, 49, self.theme.white)
+        select_color = self.theme.white
+        revise_color = self.theme.white
+        deploy_color = self.theme.white
+        match self.current_mode:
+            case "select": select_color = self.theme.dark
+            case "revise": revise_color = self.theme.dark
+            case "deploy": deploy_color = self.theme.dark
+        def select_func():
+            self.current_mode = "select"
+            self.draw_scene()
+        selectbutton_background = render.SolidColor(-2, -2, 49, 49, select_color)
         selectbutton_background.border_radius = 2
-        selectbutton = render.Button(0.25, 0.75, "sprites/computer/Sburb/select_button.png", None, placeholder)
+        selectbutton = render.Button(0.25, 0.75, "sprites/computer/Sburb/select_button.png", None, select_func)
         selectbutton.overlay_on_click = True
         selectbutton_background.bind_to(selectbutton)
         selectbutton.bind_to(top_bar)
-        revisebutton_background = render.SolidColor(-2, -2, 49, 49, self.theme.white)
+        def revise_func():
+            self.current_mode = "revise"
+            self.draw_scene()
+        revisebutton_background = render.SolidColor(-2, -2, 49, 49, revise_color)
         revisebutton_background.border_radius = 2
-        revisebutton = render.Button(0.5, 0.75, "sprites/computer/Sburb/revise_button.png", None, placeholder)
+        revisebutton = render.Button(0.5, 0.75, "sprites/computer/Sburb/revise_button.png", None, revise_func)
         revisebutton.overlay_on_click = True
         revisebutton_background.bind_to(revisebutton)
         revisebutton.bind_to(top_bar)
-        deploybutton_background = render.SolidColor(-2, -2, 49, 49, self.theme.white)
+        def deploy_func():
+            self.current_mode = "deploy"
+            self.draw_scene()
+        deploybutton_background = render.SolidColor(-2, -2, 49, 49, deploy_color)
         deploybutton_background.border_radius = 2
-        deploybutton = render.Button(0.75, 0.75, "sprites/computer/Sburb/deploy_button.png", None, placeholder)
+        deploybutton = render.Button(0.75, 0.75, "sprites/computer/Sburb/deploy_button.png", None, deploy_func)
         deploybutton.overlay_on_click = True
         deploybutton_background.bind_to(deploybutton)
         deploybutton.bind_to(top_bar)
