@@ -93,7 +93,8 @@ print(f"INTERESTS {', '.join(sorted(get_interest_spawnlists()))}")
 
 interests = ["ill jams", "nuclear physics", "classy", "baking", "guns", "wizards", "comedy", "nature", "horror", "terrible movies", "paranormal", "magic",
              "dead things", "amateur photography", "zoologically dubious", "creative writing", "psychoanalysis", "horticulture", "nostalgic cartoons", "furry",
-             "squiddles", "cooking", "vehicles", "art", "video games", "plushies", "geology", "archaeology"]
+             "squiddles", "cooking", "vehicles", "art", "video games", "plushies", "geology", "archaeology", "crocheting", "true crime", "statues", "creepypasta",
+             "knives"]
 
 if __name__ == "__main__":
     for interest_name in interests:

@@ -1392,5 +1392,62 @@
             "boulder"
         ],
         "exotic": []
+    },
+    "crocheting": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "true crime": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "fedora"
+        ],
+        "uncommon": [
+            "fireplace"
+        ],
+        "rare": [
+            "pistol"
+        ],
+        "exotic": []
+    },
+    "statues": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "miniature The+Thinker statue",
+            "joker figurine"
+        ],
+        "uncommon": [
+            "Abraham+Lincoln bust",
+            "Julius+Caesar bust",
+            "woman-sized Statue+of Liberty"
+        ],
+        "rare": [],
+        "exotic": []
+    },
+    "creepypasta": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
+    },
+    "knives": {
+        "spawnlist_type": "interest",
+        "always": [],
+        "common": [
+            "knife",
+            "butcher knife",
+            "edgy knife"
+        ],
+        "uncommon": [],
+        "rare": [],
+        "exotic": []
     }
 }
