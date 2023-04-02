@@ -392,6 +392,7 @@ def display_phernalia_registry(info_window: "render.SolidColor", info_text: "ren
             cost_label_box.bind_to(item_box)
             if selected: cost_label_box.outline_color = info_window.theme.dark
             cost_label = render.make_grist_cost_display(0, 0, cost_label_h, item.true_cost, grist_cache, cost_label_box, info_window.theme.dark)
+            assert isinstance(cost_label, render.UIElement)
             cost_label.bind_to(cost_label_box)
 
 def display_revise(info_window: "render.SolidColor", info_text: "render.Text", page=0):
@@ -526,6 +527,7 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
                 tooltip.tooltip_offsetx = -20
                 tooltip.bind_to(recycle_button)
                 value_display = render.make_grist_cost_display(padding, padding, 20, instance.item.true_cost, binding=tooltip, flipped=True, tooltip=False)
+                assert isinstance(value_display, render.UIElement)
                 value_display.bind_to(tooltip)
                 value_display.bring_to_top()
                 results_sprites.append(recycle_button)
