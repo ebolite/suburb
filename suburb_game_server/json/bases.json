@@ -7418,30 +7418,22 @@
     },
     "clown nose": {
         "base": true,
-        "power": 10,
-        "size": 1,
+        "display_name": null,
+        "power": 2,
+        "size": 2,
         "kinds": [
             "ballkind"
         ],
-        "slots": {
-            "accessory": [
-                0.6,
-                "nose"
-            ]
-        },
-        "description": "A red clown nose that squeaks when you squeeze it.",
-        "cost": {
-            "garnet": 1,
-            "build": 0.5
-        },
+        "wearable": true,
+        "description": "A lovely red clown nose. Squeeze it for a surprise.",
         "onhit_states": {},
         "wear_states": {
-            "strength": 0.1
+            "weak": 0.1
         },
         "consume_states": {},
         "secret_states": {
-            "inspire": 0.7,
-            "caffeinate": 0.7
+            "inspire": 0.4,
+            "caffeinate": 0.4
         },
         "secretadjectives": [
             "funny",
@@ -7451,16 +7443,14 @@
         ],
         "forbiddencode": false,
         "use": [],
-        "inheritpower": -2,
+        "inheritpower": 0,
         "adjectives": [
             "clown"
         ],
-        "code": "kTksYlU!",
-        "wearable": true,
+        "code": "kX8wKnFE",
         "attached_skills": [],
         "prototype_name": "clown",
-        "creator": "ebolite",
-        "display_name": null
+        "creator": "Sky"
     },
     "joker figurine": {
         "base": true,
@@ -7833,5 +7823,383 @@
         "prototype_name": "juggalo",
         "creator": "ebolite",
         "display_name": null
+    },
+    "top hat": {
+        "base": true,
+        "power": 2,
+        "size": 5,
+        "kinds": [
+            "hatkind"
+        ],
+        "wearable": true,
+        "description": "A hat for a distinguished gentleman.",
+        "onhit_states": {},
+        "wear_states": {
+            "inspire": 0.5
+        },
+        "consume_states": {},
+        "secret_states": {
+            "inspire": 0.7999999999999999,
+            "focus": 0.5
+        },
+        "secretadjectives": [
+            "classy",
+            "tall",
+            "dapper",
+            "gentlemanly",
+            "posh",
+            "polite"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 10,
+        "adjectives": [
+            "top"
+        ],
+        "code": "vULoiZRo",
+        "attached_skills": [],
+        "prototype_name": "classy",
+        "creator": "ebolite"
+    },
+    "dated rifle": {
+        "base": true,
+        "display_name": "M1 Garand",
+        "power": 150,
+        "size": 12,
+        "kinds": [
+            "riflekind",
+            "bladekind",
+            "knifekind"
+        ],
+        "wearable": false,
+        "description": "An old rifle known for the distinctive ping it makes when reloading. This particular one is fitted with a bayonet.",
+        "onhit_states": {
+            "bleed": 0.5,
+            "damage": 0.2
+        },
+        "wear_states": {
+            "inspire": 0.5
+        },
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "bayoneted",
+            "loud",
+            "distinguished",
+            "old-fashioned",
+            "american",
+            "gas-operated"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 50,
+        "adjectives": [
+            "dated"
+        ],
+        "code": "b4ngp1ng",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "bec"
+    },
+    "banana": {
+        "base": true,
+        "display_name": null,
+        "power": 2,
+        "size": 2,
+        "kinds": [
+            "foodkind"
+        ],
+        "wearable": false,
+        "description": "It sure would be a shame if you misplaced the peel after eating this superfood.",
+        "onhit_states": {
+            "demoralize": 0.4
+        },
+        "wear_states": {},
+        "consume_states": {
+            "sate": 1.2
+        },
+        "secret_states": {
+            "stun": 0.5
+        },
+        "secretadjectives": [
+            "golden",
+            "funny",
+            "slapstick",
+            "slippery",
+            "yellow",
+            "nutritious"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [],
+        "code": "!b4nan4!",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "bec"
+    },
+    "azure grimoire": {
+        "base": true,
+        "display_name": "Azure Grimoire",
+        "power": 300,
+        "size": 10,
+        "kinds": [
+            "grimoirekind",
+            "fistkind"
+        ],
+        "wearable": true,
+        "description": "A shapeshifting grimoire said to be capable of practically anything. Makes for a sweet arm prosthetic.",
+        "onhit_states": {
+            "weak": 0.30000000000000004,
+            "demoralize": 0.30000000000000004
+        },
+        "wear_states": {
+            "heal": 0.30000000000000004,
+            "triggered": 0.5
+        },
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "wish-granting",
+            "soul-eating",
+            "azure",
+            "shapeshifting",
+            "amorphus",
+            "coveted",
+            "magical"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 100,
+        "adjectives": [
+            "azure"
+        ],
+        "code": "8l4z8lu3",
+        "attached_skills": [],
+        "prototype_name": "azure",
+        "creator": "bec"
+    },
+    "barbed wire": {
+        "base": true,
+        "display_name": null,
+        "power": 10,
+        "size": 7,
+        "kinds": [
+            "barbedwirekind"
+        ],
+        "wearable": true,
+        "description": "Brutal wire used both for security and inexpensive fences. ",
+        "onhit_states": {
+            "bleed": 0.7
+        },
+        "wear_states": {
+            "damage": 0.1,
+            "bleed": 0.9999999999999999
+        },
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "pointy",
+            "spiked",
+            "barbed",
+            "wired",
+            "bleeding",
+            "bloody",
+            "scarred"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 10,
+        "adjectives": [
+            "barbed"
+        ],
+        "code": "p4inw!re",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "bec"
+    },
+    "bleach bottle": {
+        "base": true,
+        "power": 5,
+        "size": 4,
+        "kinds": [
+            "bottlekind"
+        ],
+        "wearable": false,
+        "description": "A cleaning agent that's inedible despite the suggestions of pranksters on the internet.",
+        "onhit_states": {
+            "poison": 0.30000000000000004
+        },
+        "wear_states": {},
+        "consume_states": {
+            "poison": 2.0000000000000004
+        },
+        "secret_states": {
+            "ignite": 0.2
+        },
+        "secretadjectives": [
+            "poisonous",
+            "bleached",
+            "white",
+            "caustic"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [
+            "bleach"
+        ],
+        "code": "7Yw8Ed4V",
+        "attached_skills": [],
+        "prototype_name": "bleach",
+        "creator": "bec"
+    },
+    "deer skull": {
+        "base": true,
+        "display_name": null,
+        "power": 10,
+        "size": 10,
+        "kinds": [
+            "trophykind"
+        ],
+        "wearable": true,
+        "description": "A deer skull you managed to get your hands on. Gnarly, AND ghastly!",
+        "onhit_states": {
+            "bleed": 0.30000000000000004
+        },
+        "wear_states": {
+            "strength": 0.30000000000000004
+        },
+        "consume_states": {
+            "damage": 0.5
+        },
+        "secret_states": {},
+        "secretadjectives": [
+            "cervid",
+            "furry",
+            "antlered",
+            "skeletal"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 13,
+        "adjectives": [],
+        "code": "dS903l11",
+        "attached_skills": [],
+        "prototype_name": "deerghost",
+        "creator": "Sky"
+    },
+    "ghost pepper": {
+        "base": true,
+        "display_name": null,
+        "power": 2,
+        "size": 1,
+        "kinds": [
+            "foodkind"
+        ],
+        "wearable": false,
+        "description": "The famous one million scoville Chili Pepper. Be sure to turn on a camera before eating.",
+        "onhit_states": {
+            "ignite": 0.5
+        },
+        "wear_states": {},
+        "consume_states": {
+            "ignite": 0.9999999999999999,
+            "sate": 0.30000000000000004,
+            "stun": 0.7
+        },
+        "secret_states": {
+            "stun": 0.7
+        },
+        "secretadjectives": [
+            "red-hot",
+            "spicy",
+            "fiery",
+            "hottest",
+            "bhutan",
+            "chili"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 5,
+        "adjectives": [
+            "ghost"
+        ],
+        "code": "sp1cy!!!",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "bec"
+    },
+    "blender": {
+        "base": true,
+        "display_name": null,
+        "power": 13,
+        "size": 5,
+        "kinds": [
+            "appliancekind",
+            "bladekind"
+        ],
+        "wearable": false,
+        "description": "A basic blender, with the ability to spin, and blend. Shocker.",
+        "onhit_states": {
+            "bleed": 0.4,
+            "weak": 0.2
+        },
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {
+            "bleed": 0.4
+        },
+        "secretadjectives": [
+            "spinning",
+            "blending",
+            "sharp",
+            "pointy"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 15,
+        "adjectives": [],
+        "code": "b92N4bg2",
+        "attached_skills": [],
+        "prototype_name": "blender",
+        "creator": "Sky"
+    },
+    "scarf": {
+        "base": true,
+        "display_name": null,
+        "power": 5,
+        "size": 2,
+        "kinds": [
+            "cordkind",
+            "fabrickind"
+        ],
+        "wearable": true,
+        "description": "Comfy, nicely woven, and decently long- pretty nice quality.",
+        "onhit_states": {
+            "blind": 0.30000000000000004
+        },
+        "wear_states": {
+            "focus": 0.30000000000000004,
+            "caffeinate": 0.2
+        },
+        "consume_states": {},
+        "secret_states": {
+            "focus": 0.5
+        },
+        "secretadjectives": [
+            "warm",
+            "long",
+            "soft",
+            "snug"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 5,
+        "adjectives": [],
+        "code": "w2NG48i0",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "Sky"
     }
 }

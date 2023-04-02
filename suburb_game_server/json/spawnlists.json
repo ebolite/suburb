@@ -34,7 +34,8 @@
         "uncommon": [
             "paper",
             "key chain",
-            "clock"
+            "clock",
+            "scarf"
         ],
         "rare": [
             "candy cane",
@@ -43,7 +44,9 @@
             "grape faygo",
             "cola faygo",
             "cotton+candy faygo",
-            "kiwi+strawberry faygo"
+            "kiwi+strawberry faygo",
+            "deer skull",
+            "clown nose"
         ],
         "exotic": [
             "pepper spray"
@@ -78,7 +81,10 @@
             "scissors",
             "rolling pin",
             "pizza cutter",
-            "ladle"
+            "ladle",
+            "banana",
+            "bleach bottle",
+            "blender"
         ],
         "uncommon": [
             "broom",
@@ -106,7 +112,8 @@
         "common": [
             "knife",
             "cup",
-            "mug"
+            "mug",
+            "banana"
         ],
         "uncommon": [
             "lamp",
@@ -172,7 +179,8 @@
             "vacuum cleaner",
             "mop",
             "curling iron",
-            "shower"
+            "shower",
+            "bleach bottle"
         ],
         "uncommon": [],
         "rare": [],
@@ -211,7 +219,9 @@
             "trident",
             "piano wire",
             "grandfather clock",
-            "grand piano"
+            "grand piano",
+            "top hat",
+            "deer skull"
         ],
         "exotic": []
     },
@@ -244,7 +254,8 @@
             "piano wire",
             "bull-penis cane",
             "fire poker",
-            "grandfather clock"
+            "grandfather clock",
+            "deer skull"
         ],
         "exotic": []
     },
@@ -260,10 +271,15 @@
             "cowboy hat",
             "cowboy boots",
             "bandana",
-            "clothing iron"
+            "clothing iron",
+            "bleach bottle"
         ],
-        "uncommon": [],
-        "rare": [],
+        "uncommon": [
+            "scarf"
+        ],
+        "rare": [
+            "clown nose"
+        ],
         "exotic": []
     },
     "office": {
@@ -285,7 +301,9 @@
             "fax machine",
             "copying machine"
         ],
-        "rare": [],
+        "rare": [
+            "deer skull"
+        ],
         "exotic": []
     },
     "workout room": {
@@ -297,7 +315,8 @@
         "common": [
             "5-pound dumbbell",
             "15-pound dumbbell",
-            "water bottle"
+            "water bottle",
+            "blender"
         ],
         "uncommon": [
             "rope",
@@ -383,7 +402,8 @@
             "saxophone",
             "grand piano",
             "sewing needles",
-            "knitting needles"
+            "knitting needles",
+            "scarf"
         ],
         "rare": [
             "spear",
@@ -394,7 +414,9 @@
             "sap",
             "caestus",
             "trident",
-            "grandfather clock"
+            "grandfather clock",
+            "top hat",
+            "clown nose"
         ],
         "exotic": []
     },
@@ -439,7 +461,9 @@
             "rubber mallet",
             "jump rope"
         ],
-        "rare": [],
+        "rare": [
+            "deer skull"
+        ],
         "exotic": []
     },
     "anime": {
@@ -524,7 +548,9 @@
             "zweihander",
             "sap",
             "caestus",
-            "trident"
+            "trident",
+            "dated rifle",
+            "barbed wire"
         ],
         "exotic": []
     },
@@ -564,7 +590,8 @@
             "boxing gloves"
         ],
         "uncommon": [
-            "water bottle"
+            "water bottle",
+            "blender"
         ],
         "rare": [],
         "exotic": []
@@ -651,7 +678,8 @@
             "drum set",
             "flute",
             "saxophone",
-            "grand piano"
+            "grand piano",
+            "blender"
         ],
         "rare": [
             "lap top",
@@ -743,7 +771,8 @@
         "uncommon": [
             "virtual+reality headset",
             "rc drone",
-            "gaming computer"
+            "gaming computer",
+            "blender"
         ],
         "rare": [],
         "exotic": []
@@ -759,7 +788,8 @@
         ],
         "uncommon": [
             "rope",
-            "cowboy hat"
+            "cowboy hat",
+            "scarf"
         ],
         "rare": [
             "pistol"
@@ -776,10 +806,12 @@
             "clown poster",
             "red faygo",
             "grape faygo",
-            "cola faygo"
+            "cola faygo",
+            "banana"
         ],
         "uncommon": [
             "clown shoes",
+            "clown nose",
             "clown nose"
         ],
         "rare": [
@@ -806,7 +838,8 @@
             "anime dvd",
             "anime poster",
             "edgy knife",
-            "headphones"
+            "headphones",
+            "clown nose"
         ],
         "rare": [
             "lap top",
@@ -907,7 +940,8 @@
             "cowboy boots",
             "bandana",
             "lamp",
-            "desk lamp"
+            "desk lamp",
+            "blender"
         ],
         "uncommon": [
             "paper",
@@ -946,7 +980,9 @@
     "classy": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
+        "common": [
+            "top hat"
+        ],
         "uncommon": [],
         "rare": [],
         "exotic": []
@@ -954,8 +990,12 @@
     "baking": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
-        "uncommon": [],
+        "common": [
+            "banana"
+        ],
+        "uncommon": [
+            "blender"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -963,23 +1003,35 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
-        "rare": [],
+        "uncommon": [
+            "deer skull"
+        ],
+        "rare": [
+            "dated rifle"
+        ],
         "exotic": []
     },
     "wizards": {
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "scarf"
+        ],
         "rare": [],
         "exotic": []
     },
     "comedy": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
-        "uncommon": [],
+        "common": [
+            "banana"
+        ],
+        "uncommon": [
+            "bleach bottle",
+            "ghost pepper",
+            "clown nose"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -987,7 +1039,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "deer skull"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -995,8 +1049,13 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
-        "rare": [],
+        "uncommon": [
+            "deer skull",
+            "clown nose"
+        ],
+        "rare": [
+            "barbed wire"
+        ],
         "exotic": []
     },
     "terrible movies": {
@@ -1027,7 +1086,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "deer skull"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -1035,7 +1096,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "scarf"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -1043,7 +1106,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "scarf"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -1059,7 +1124,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "deer skull"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -1067,7 +1134,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "ghost pepper"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -1083,7 +1152,9 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "deer skull"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -1098,8 +1169,13 @@
     "cooking": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
-        "uncommon": [],
+        "common": [
+            "banana"
+        ],
+        "uncommon": [
+            "ghost pepper",
+            "blender"
+        ],
         "rare": [],
         "exotic": []
     },
@@ -1125,13 +1201,17 @@
         "common": [],
         "uncommon": [],
         "rare": [],
-        "exotic": []
+        "exotic": [
+            "azure grimoire"
+        ]
     },
     "plushies": {
         "spawnlist_type": "interest",
         "always": [],
         "common": [],
-        "uncommon": [],
+        "uncommon": [
+            "scarf"
+        ],
         "rare": [],
         "exotic": []
     }
