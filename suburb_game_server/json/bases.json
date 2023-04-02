@@ -4895,7 +4895,8 @@
         "power": 7,
         "size": 16,
         "kinds": [
-            "tarpkind"
+            "tarpkind",
+            "fabrickind"
         ],
         "wearable": true,
         "description": "A blanket for covering oneself with during sleep.",
