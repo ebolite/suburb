@@ -8,10 +8,15 @@ import themes
 import binaryoperations
 import util
 
+def placeholder():
+    pass
+
 class MapEditor():
     view_tiles = 9
     def __init__(self):
         self.setup_defaults()
+        self.current_mode = "select"
+        self.theme = suburb.current_theme()
         self.viewx = len(self.map_tiles[0])//2
         self.viewy = len(self.map_tiles)//2
 
@@ -22,6 +27,28 @@ class MapEditor():
     def draw_scene(self):
         suburb.new_scene()
         self.tilemap = render.TileMap(0.5, 0.5, map_editor=self)
+        top_bar = render.SolidColor(0.5, 0, 200, 140, self.theme.light)
+        top_bar.absolute = False
+        top_bar.outline_color = self.theme.dark
+        top_bar.border_radius = 12
+        selectbutton_background = render.SolidColor(-2, -2, 49, 49, self.theme.white)
+        selectbutton_background.border_radius = 2
+        selectbutton = render.Button(0.25, 0.75, "sprites/computer/Sburb/select_button.png", None, placeholder)
+        selectbutton.overlay_on_click = True
+        selectbutton_background.bind_to(selectbutton)
+        selectbutton.bind_to(top_bar)
+        revisebutton_background = render.SolidColor(-2, -2, 49, 49, self.theme.white)
+        revisebutton_background.border_radius = 2
+        revisebutton = render.Button(0.5, 0.75, "sprites/computer/Sburb/revise_button.png", None, placeholder)
+        revisebutton.overlay_on_click = True
+        revisebutton_background.bind_to(revisebutton)
+        revisebutton.bind_to(top_bar)
+        deploybutton_background = render.SolidColor(-2, -2, 49, 49, self.theme.white)
+        deploybutton_background.border_radius = 2
+        deploybutton = render.Button(0.75, 0.75, "sprites/computer/Sburb/deploy_button.png", None, placeholder)
+        deploybutton.overlay_on_click = True
+        deploybutton_background.bind_to(deploybutton)
+        deploybutton.bind_to(top_bar)
 
     def move_view(self, dx, dy):
         if self.is_tile_in_bounds(self.viewx+dx, self.viewy+dy):
