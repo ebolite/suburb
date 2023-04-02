@@ -23,6 +23,9 @@ class State():
     
     def applier_stats(self, griefer: "strife.Griefer") -> dict:
         return griefer.get_applier_stats(self.name)
+    
+    def modify_speed(self, speed: int, griefer: "strife.Griefer"):
+        return speed
 
     def modify_damage_received(self, damage: int, griefer: "strife.Griefer") -> int:
         return damage
@@ -367,6 +370,30 @@ focus = FocusState("focus")
 focus.beneficial = True
 focus.tooltip = "Chance to flip HEADS is increased."
 make_item_state(focus)
+
+class QuickState(State):
+    def modify_speed(self, speed: int, griefer: "strife.Griefer"):
+        add = 1 * self.potency(griefer)
+        mod = 1 + add
+        return int(speed * mod)
+    
+quick = QuickState("quick")
+quick.beneficial = True
+quick.tooltip = "Position in turn order is increased."
+make_item_state(quick)
+
+class SlowState(State):
+    def modify_speed(self, speed: int, griefer: "strife.Griefer"):
+        sub = 0.5 * self.potency(griefer)
+        mod = 1 - sub
+        new_speed = int(speed * mod)
+        new_speed = max(new_speed, 0)
+        return new_speed
+    
+slow = SlowState("slow")
+slow.beneficial = False
+slow.tooltip = "Position in turn order is decreased."
+make_item_state(slow)
 
 # aspect states
 

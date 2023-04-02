@@ -641,6 +641,14 @@ class Griefer():
         self.add_bonus(game_attr, amount)
     
     @property
+    def speed(self) -> int:
+        speed = self.get_stat("savvy")
+        for state in self.states_list:
+            speed = state.modify_speed(speed, self)
+        speed = int(speed)
+        return speed
+
+    @property
     def dead(self) -> bool:
         return not self.name in self.strife.griefers
 
@@ -865,7 +873,7 @@ class Strife():
 
     def resolve_skills(self):
         # sorted by savvy in descending order
-        for griefer_name in sorted(self.griefers.keys(), key=lambda x: self.get_griefer(x).get_stat("savvy"), reverse=True):
+        for griefer_name in sorted(self.griefers.keys(), key=lambda x: self.get_griefer(x).speed, reverse=True):
             # mf died
             if griefer_name not in self.griefers:
                 continue
