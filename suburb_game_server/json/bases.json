@@ -45,7 +45,7 @@
         "wearable": false,
         "description": "An item that is absolutely useless. Yes, this is a challenge.",
         "cost": {
-            "build": 1
+            "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
@@ -468,7 +468,7 @@
         "wearable": false,
         "description": "You're like the Robin Hood of stealing shit from your friends.",
         "cost": {
-            "build": 10
+            "build": 0.50
         },
         "onhit_states": {
             "leech": 0.5
@@ -1105,7 +1105,7 @@
         "wearable": false,
         "description": "A gardening implement.",
         "cost": {
-            "build": 1,
+            "build": 0.5,
             "copper": 0.2,
             "jet": 0.1
         },
@@ -1546,7 +1546,7 @@
         "wearable": false,
         "description": "This is a toy hammer, not a proper rubber mallet... It's a mallet made entirely of rubber.",
         "cost": {
-            "build": 1,
+            "build": 0.5,
             "frosting": 0.5,
             "chalk": 0.5,
             "tar": 0.5
@@ -2558,7 +2558,7 @@
         "wearable": false,
         "description": "A handgun.",
         "cost": {
-            "build": 1,
+            "build": 0.5,
             "titanium": 1,
             "tar": 0.3
         },
@@ -3889,7 +3889,7 @@
         "wearable": false,
         "description": "A wooden cue used for sinking pool balls.",
         "cost": {
-            "build": 1,
+            "build": 0.5,
             "onyx": 0.1
         },
         "onhit_states": {
@@ -3927,7 +3927,7 @@
         "wearable": false,
         "description": "A pump-action shotgun.",
         "cost": {
-            "build": 1,
+            "build": 0.5,
             "titanium": 1,
             "iron": 1,
             "tar": 0.3
@@ -6636,7 +6636,7 @@
         "wearable": false,
         "description": "A book about history.",
         "cost": {
-            "build": 1,
+            "build": 0.5,
             "rust": 0.5
         },
         "onhit_states": {},
@@ -7453,7 +7453,8 @@
         "prototype_name": "clown",
         "creator": "Sky",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "garnet": 0.5
         }
     },
     "joker figurine": {
@@ -7866,7 +7867,8 @@
         "creator": "ebolite",
         "display_name": null,
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "shale": 0.4
         }
     },
     "dated rifle": {
@@ -7909,7 +7911,10 @@
         "prototype_name": null,
         "creator": "bec",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "lead": 0.4,
+            "wood": 0.3,
+            "iron": 0.4
         }
     },
     "banana": {
@@ -7949,7 +7954,9 @@
         "prototype_name": null,
         "creator": "bec",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "gold": 0.5,
+            "topaz": 0.5
         }
     },
     "azure grimoire": {
@@ -7993,7 +8000,13 @@
         "prototype_name": "azure",
         "creator": "bec",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "blood": 0.2,
+            "tar": 0.2,
+            "ruby": 0.1,
+            "star sapphire": 0.1,
+            "onyx": 0.1,
+            "cobalt": 0.1
         }
     },
     "barbed wire": {
@@ -8035,7 +8048,9 @@
         "prototype_name": null,
         "creator": "bec",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "rust": 0.3,
+            "blood": 0.3
         }
     },
     "bleach bottle": {
@@ -8075,7 +8090,9 @@
         "creator": "bec",
         "display_name": null,
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "acid": 0.5,
+            "fluorite": 0.5
         }
     },
     "deer skull": {
@@ -8115,7 +8132,9 @@
         "prototype_name": "deerghost",
         "creator": "Sky",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "chalk": 0.5,
+            "jet": 0.5
         }
     },
     "ghost pepper": {
@@ -8159,7 +8178,8 @@
         "prototype_name": null,
         "creator": "bec",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "ruby": 0.5
         }
     },
     "blender": {
@@ -8197,7 +8217,8 @@
         "prototype_name": "blender",
         "creator": "Sky",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "iron": 0.5
         }
     },
     "scarf": {
@@ -8237,7 +8258,8 @@
         "prototype_name": null,
         "creator": "Sky",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "chalk": 0.4
         }
     },
     "pet rock": {
@@ -8278,7 +8300,9 @@
         "prototype_name": null,
         "creator": "bec",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "quartz": 0.2,
+            "rose quartz": 0.2
         }
     },
     "stone": {
@@ -8314,7 +8338,9 @@
         "prototype_name": null,
         "creator": "bec",
         "cost": {
-            "build": 1
+            "build": 0.5,
+            "quartz": 0.3,
+            "sandstone": 0.3
         }
     }
 }
