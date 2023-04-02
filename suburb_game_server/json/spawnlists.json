@@ -994,7 +994,8 @@
             "red smuppet",
             "green smuppet",
             "blue smuppet",
-            "purple smuppet"
+            "purple smuppet",
+            "drum set"
         ],
         "uncommon": [],
         "rare": [],
@@ -1012,7 +1013,8 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [
-            "top hat"
+            "top hat",
+			"walking cane"
         ],
         "uncommon": [],
         "rare": [],
@@ -1022,7 +1024,10 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [
-            "banana"
+            "banana",
+            "oven",
+            "rolling pin",
+            "spatula"
         ],
         "uncommon": [
             "blender"
@@ -1035,10 +1040,14 @@
         "always": [],
         "common": [],
         "uncommon": [
-            "deer skull"
+            "deer skull",
+            "pistol"
         ],
         "rare": [
-            "dated rifle"
+            "shotgun",
+            "dated rifle",
+            ".44 magnum",
+            "double-barreled shotgun"
         ],
         "exotic": []
     },
@@ -1076,7 +1085,8 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [
-            "stone"
+            "stone",
+            "shovel"
         ],
         "uncommon": [
             "deer skull"
@@ -1167,7 +1177,8 @@
         "always": [],
         "common": [],
         "uncommon": [
-            "deer skull"
+            "deer skull",
+            "scarf"
         ],
         "rare": [],
         "exotic": []
@@ -1175,7 +1186,9 @@
     "horticulture": {
         "spawnlist_type": "interest",
         "always": [],
-        "common": [],
+        "common": [
+            "shovel"
+        ],
         "uncommon": [
             "ghost pepper"
         ],
@@ -1214,13 +1227,25 @@
         "spawnlist_type": "interest",
         "always": [],
         "common": [
-            "banana"
+            "banana",
+            "knife",
+            "silver fork",
+            "silver spoon",
+            "pot",
+            "frying pan",
+            "pizza cutter",
+            "refrigerator",
+            "spatula",
+            "wooden spoon",
+            "rolling pin"
         ],
         "uncommon": [
             "ghost pepper",
             "blender"
         ],
-        "rare": [],
+        "rare": [
+            "golden spatula"
+        ],
         "exotic": []
     },
     "vehicles": {
