@@ -81,7 +81,7 @@ def play(page=0):
                 client.dic["session_name"] = session_name
                 if current_sessions[session_name] is None:
                     character_creator = CharacterCreator()
-                    character_creator.namecharacter()
+                    character_creator.start()
                 else:
                     newgame()
         return button_func
@@ -335,7 +335,7 @@ def connect():
         else:
             client.dic["session_password"] = ""
             creator = CharacterCreator()
-            creator.namecharacter()
+            creator.start()
         print(f"log text {log.text}")
     namebox.enter_func = verify
     pwbox.enter_func = verify
@@ -355,103 +355,8 @@ class CharacterCreator():
         self.gristcategory: str = "stone"
         self.symbol_dict: dict = config.get_random_symbol()
 
-    @scene
-    def namecharacter(self):
-        log = render.Text(0.5, 0.20, "")
-        l1text = render.Text(0.5, 0.3, "A young being of indeterminate nature exists in some kind of area.")
-        l1text.color = current_theme().dark
-        l1text.outline_color = current_theme().black
-        l2text = render.Text(0.5, 0.4, "What will this being's name be?")
-        l2text.color = current_theme().dark
-        l2text.outline_color = current_theme().black
-        namebox = render.InputTextBox(.5, .48)
-        def verify():
-            if len(namebox.text) > 0 and len(namebox.text) < 32:
-                self.name = namebox.text
-                self.nouncharacter()
-            else:
-                log.text = "Name is too long or too short."
-        confirm = render.Button(.50, .57, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
-
-    @scene
-    def nouncharacter(self):
-        log = render.Text(0.5, 0.20, "")
-        log2 = render.Text(0.5, 0.30, "")
-        l1text = render.Text(0.5, 0.4, f"You don't think \"being\" is a very accurate descriptor.")
-        l1text.color = current_theme().dark
-        l1text.outline_color = current_theme().black
-        l2text = render.Text(0.5, 0.5, f"What word best describes {self.name}?")
-        l2text.color = current_theme().dark
-        l2text.outline_color = current_theme().black
-        namebox = render.InputTextBox(.5, .6)
-        def verify():
-            if len(namebox.text) > 0 and len(namebox.text) < 32:
-                example = f"A newly-created {namebox.text} stands in a room."
-                if log.text == example:
-                    self.noun = namebox.text
-                    self.pronounscharacter()
-                else:
-                    log.text = example
-                    log2.text = "Press confirm again if this sounds okay."
-            else:
-                log.text = "That word is too long or too short."
-                log2.text = ""
-        confirm = render.Button(.5, .72, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
-
-    @scene
-    def pronounscharacter(self):
-        log = render.Text(0.5, 0.20, "")
-        log2 = render.Text(0.5, 0.30, "")
-        log3 = render.Text(0.5, 0.40, "")
-        l1text = render.Text(0.5, 0.5, f"What pronouns should this {self.noun} go by?")
-        l1text.color = current_theme().dark
-        l1text.outline_color = current_theme().black
-        def confirmnouns(pronouns): # [0] they [1] them [2] their [3] theirs
-            example1 = f"A newly-created {self.noun} stands in {pronouns[2]} room. It surrounds {pronouns[1]}."
-            example2 = f"Today {pronouns[0]} will play a game with some friends of {pronouns[3]}."
-            if log.text == example1 and log2.text == example2:
-                self.pronouns = pronouns
-                self.make_symbol()
-            else:
-                log.text = example1
-                log2.text = example2
-                log3.text = "Press your selection again if this sounds okay."
-        def himnouns():
-            pronouns = ["he", "him", "his", "his"]
-            confirmnouns(pronouns)
-        def hernouns():
-            pronouns = ["she", "her", "her", "hers"]
-            confirmnouns(pronouns)
-        def themnouns():
-            pronouns = ["they", "them", "their", "theirs"]
-            confirmnouns(pronouns)
-        hehim = render.Button(.20, 0.62, "sprites\\buttons\\hehim.png", "sprites\\buttons\\hehimpressed.png", himnouns)
-        sheher = render.Button(.4, .62, "sprites\\buttons\\sheher.png", "sprites\\buttons\\sheherpressed.png", hernouns)
-        theyem = render.Button(.6, .62, "sprites\\buttons\\theyem.png", "sprites\\buttons\\theyempressed.png", themnouns)
-        other = render.Button(.8, .62, "sprites\\buttons\\other.png", "sprites\\buttons\\otherpressed.png", self.custom_pronouns)
-
-    @scene
-    def custom_pronouns(self):
-        example1 = f"        stands in        room. It surrounds       ."
-        example2 = f"Today        will play a game with some friends of        ."
-        name = render.Text(0.15, 0.2, str(self.name))
-        name.set_fontsize_by_width(200)
-        name.color = current_theme().dark
-        log = render.Text(0.5, 0.20, example1)
-        log2 = render.Text(0.5, 0.30, example2)
-        their_box = render.InputTextBox(0.435, 0.2, 120, 32)
-        their_box.text = "their"
-        them_box = render.InputTextBox(0.815, 0.2, 120, 32)
-        them_box.text = "them"
-        they_box = render.InputTextBox(0.195, 0.3, 120, 32)
-        they_box.text = "they"
-        theirs_box = render.InputTextBox(0.865, 0.3, 120, 32)
-        theirs_box.text = "theirs"
-        def confirm_func():
-            self.pronouns = (they_box.text, them_box.text, their_box.text, theirs_box.text)
-            self.make_symbol()
-        confirm_button = render.Button(0.5, 0.5, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm_func)
-        backbutton = render.Button(0.5, 0.66, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.pronounscharacter)
+    def start(self):
+        self.make_symbol()
 
     @scene
     def make_symbol(self):
@@ -564,7 +469,7 @@ class CharacterCreator():
                 current_row += 1
         custom_color_button = render.TextButton(1080, 65, 128, 32, ">CUSTOM", self.pick_custom_color)
         custom_color_button.absolute = True
-        confirm_button = render.Button(0.65, 0.75, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", self.aspectcharacter)
+        confirm_button = render.Button(0.65, 0.75, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", self.namecharacter)
 
     @scene
     def pick_custom_color(self):
@@ -608,6 +513,106 @@ class CharacterCreator():
             self.symbol_dict["color"] = [r, g, b]
             self.make_symbol()
         confirm_button = render.Button(0.5, 0.85, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm_button_func)
+
+    @scene
+    def namecharacter(self):
+        symbol = render.Symbol(0.5, 0.65, self.symbol_dict)
+        log = render.Text(0.5, 0.10, "")
+        l2text = render.Text(0.5, 0.3, "What will this being's name be?")
+        l2text.color = current_theme().dark
+        l2text.outline_color = current_theme().black
+        namebox = render.InputTextBox(.5, .4)
+        def verify():
+            if len(namebox.text) > 0 and len(namebox.text) < 32:
+                self.name = namebox.text
+                self.nouncharacter()
+            else:
+                log.text = "Name is too long or too short."
+        confirm = render.Button(.5, 0.9, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
+        backbutton = render.Button(0.08, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.make_symbol)
+        
+
+    @scene
+    def nouncharacter(self):
+        log = render.Text(0.5, 0.20, "")
+        log2 = render.Text(0.5, 0.30, "")
+        l1text = render.Text(0.5, 0.4, f"You don't think \"being\" is a very accurate descriptor.")
+        l1text.color = current_theme().dark
+        l1text.outline_color = current_theme().black
+        l2text = render.Text(0.5, 0.5, f"What word best describes {self.name}?")
+        l2text.color = current_theme().dark
+        l2text.outline_color = current_theme().black
+        namebox = render.InputTextBox(.5, .6)
+        def verify():
+            if len(namebox.text) > 0 and len(namebox.text) < 32:
+                example = f"A newly-created {namebox.text} stands in a room."
+                if log.text == example:
+                    self.noun = namebox.text
+                    self.pronounscharacter()
+                else:
+                    log.text = example
+                    log2.text = "Press confirm again if this sounds okay."
+            else:
+                log.text = "That word is too long or too short."
+                log2.text = ""
+        confirm = render.Button(.5, .72, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
+        backbutton = render.Button(0.5, 0.8, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.namecharacter)
+
+    @scene
+    def pronounscharacter(self):
+        log = render.Text(0.5, 0.20, "")
+        log2 = render.Text(0.5, 0.30, "")
+        log3 = render.Text(0.5, 0.40, "")
+        l1text = render.Text(0.5, 0.5, f"What pronouns should this {self.noun} go by?")
+        l1text.color = current_theme().dark
+        l1text.outline_color = current_theme().black
+        def confirmnouns(pronouns): # [0] they [1] them [2] their [3] theirs
+            example1 = f"A newly-created {self.noun} stands in {pronouns[2]} room. It surrounds {pronouns[1]}."
+            example2 = f"Today {pronouns[0]} will play a game with some friends of {pronouns[3]}."
+            if log.text == example1 and log2.text == example2:
+                self.pronouns = pronouns
+                self.make_symbol()
+            else:
+                log.text = example1
+                log2.text = example2
+                log3.text = "Press your selection again if this sounds okay."
+        def himnouns():
+            pronouns = ["he", "him", "his", "his"]
+            confirmnouns(pronouns)
+        def hernouns():
+            pronouns = ["she", "her", "her", "hers"]
+            confirmnouns(pronouns)
+        def themnouns():
+            pronouns = ["they", "them", "their", "theirs"]
+            confirmnouns(pronouns)
+        hehim = render.Button(.20, 0.62, "sprites\\buttons\\hehim.png", "sprites\\buttons\\hehimpressed.png", himnouns)
+        sheher = render.Button(.4, .62, "sprites\\buttons\\sheher.png", "sprites\\buttons\\sheherpressed.png", hernouns)
+        theyem = render.Button(.6, .62, "sprites\\buttons\\theyem.png", "sprites\\buttons\\theyempressed.png", themnouns)
+        other = render.Button(.8, .62, "sprites\\buttons\\other.png", "sprites\\buttons\\otherpressed.png", self.custom_pronouns)
+        backbutton = render.Button(0.5, 0.8, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.namecharacter)
+
+    @scene
+    def custom_pronouns(self):
+        example1 = f"        stands in        room. It surrounds       ."
+        example2 = f"Today        will play a game with some friends of        ."
+        name = render.Text(0.15, 0.2, str(self.name))
+        name.set_fontsize_by_width(200)
+        name.color = current_theme().dark
+        log = render.Text(0.5, 0.20, example1)
+        log2 = render.Text(0.5, 0.30, example2)
+        their_box = render.InputTextBox(0.435, 0.2, 120, 32)
+        their_box.text = "their"
+        them_box = render.InputTextBox(0.815, 0.2, 120, 32)
+        them_box.text = "them"
+        they_box = render.InputTextBox(0.195, 0.3, 120, 32)
+        they_box.text = "they"
+        theirs_box = render.InputTextBox(0.865, 0.3, 120, 32)
+        theirs_box.text = "theirs"
+        def confirm_func():
+            self.pronouns = (they_box.text, them_box.text, their_box.text, theirs_box.text)
+            self.make_symbol()
+        confirm_button = render.Button(0.5, 0.5, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm_func)
+        backbutton = render.Button(0.5, 0.66, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.pronounscharacter)
 
     def make_asbutton(self, aspect):
         def button():
