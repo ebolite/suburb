@@ -20,32 +20,44 @@ import stateseffects
 import database
 from strife import Strife
 
+# def map_from_file(file, folder=None):
+#     if folder == None:
+#         os.chdir(f"{util.homedir}\\maps")
+#     else:
+#         os.chdir(f"{util.homedir}\\maps\\{folder}")
+#     with open(f"{file}", "r") as f:
+#         content = f.read()
+#     content = content.split("\n") #split y axis
+#     map = []
+#     for line in content:
+#         map.append(list(line)) # split each string in content into a list of letters
+#     return map
 
-file_map_tiles = {}
+# def all_maps_in_folder(folder): # returns a list of all of the maps in a folder
+#     maps = []
+#     for filename in os.listdir(f"{util.homedir}\\maps\\{folder}"):
+#         maps.append(map_from_file(filename, folder))
+#     return maps
 
-def map_from_file(file, folder=None):
-    if folder == None:
-        os.chdir(f"{util.homedir}\\maps")
-    else:
-        os.chdir(f"{util.homedir}\\maps\\{folder}")
-    with open(f"{file}", "r") as f:
-        content = f.read()
-    content = content.split("\n") #split y axis
-    map = []
-    for line in content:
-        map.append(list(line)) # split each string in content into a list of letters
-    return map
+class MapData():
+    def __init__(self, map_dict: dict):
+        self.map_name = map_dict["map_name"]
+        self.map_tiles = map_dict["map_tiles"]
+        self.create = map_dict["creator"]
 
-def all_maps_in_folder(folder): # returns a list of all of the maps in a folder
-    maps = []
-    for filename in os.listdir(f"{util.homedir}\\maps\\{folder}"):
-        maps.append(map_from_file(filename, folder))
-    return maps
+def load_map_json(filename) -> dict[str, dict]:
+    maps_dict = {}
+    maps_dict = util.readjson(maps_dict, filename, f"{util.homedir}/maps")
+    return maps_dict
 
-file_map_tiles["house"] = all_maps_in_folder("house")
-file_map_tiles["land"] = all_maps_in_folder("land")
-file_map_tiles["gateframe"] = all_maps_in_folder("gateframe")
-empty_map = map_from_file("empty.txt")
+house_maps = load_map_json("house")
+land_maps = load_map_json("outside")
+structure_maps = load_map_json("structures")
+
+def get_map_tiles(maps_dict, map_name:Optional[str]=None) -> list[list[str]]:
+    if map_name is None:
+        map_name = random.choice(list(maps_dict.keys()))
+    return [list(line) for line in maps_dict[map_name]["map_tiles"]]
 
 class Session():
     def __new__(cls, name) -> Optional["Session"]:
@@ -451,30 +463,38 @@ class Map():
         map = None
         match type:
             case "house":
-                map = map_from_file("gates.txt")
-                map += deepcopy(random.choice(file_map_tiles["house"]))
+                house_map = get_map_tiles(house_maps) # todo: housemap picking
+                map = [["." for i in range(len(house_map[0]))] for n in range(100)]
+                map += house_map
             case "tower":
-                map = map_from_file("tower.txt", "kingdoms")
+                map = map = get_map_tiles(structure_maps, "tower")
             case "gate1":
-                map = map_from_file(f"frame1.txt", "gateframe")
+                map = get_map_tiles(structure_maps, "gate_frame")
+                map = [[char.replace("0", "1") for char in line] for line in map]
             case "gate2":
-                map = map_from_file(f"frame2.txt", "gateframe")
+                map = get_map_tiles(structure_maps, "gate_frame")
+                map = [[char.replace("0", "2") for char in line] for line in map]
             case "gate3":
-                map = map_from_file(f"frame3.txt", "gateframe")
+                map = get_map_tiles(structure_maps, "gate_frame")
+                map = [[char.replace("0", "3") for char in line] for line in map]
             case "gate4":
-                map = map_from_file(f"frame4.txt", "gateframe")
+                map = get_map_tiles(structure_maps, "gate_frame")
+                map = [[char.replace("0", "4") for char in line] for line in map]
             case "gate5":
-                map = map_from_file(f"frame5.txt", "gateframe")
+                map = get_map_tiles(structure_maps, "gate_frame")
+                map = [[char.replace("0", "5") for char in line] for line in map]
             case "gate6":
-                map = map_from_file(f"frame6.txt", "gateframe")
+                map = get_map_tiles(structure_maps, "gate_frame")
+                map = [[char.replace("0", "6") for char in line] for line in map]
             case "gate7":
-                map = map_from_file(f"frame7.txt", "gateframe")
+                map = get_map_tiles(structure_maps, "gate_frame")
+                map = [[char.replace("0", "7") for char in line] for line in map]
             case _:
                 if self.overmap.overmap_type == "land":
-                    map = deepcopy(random.choice(file_map_tiles["land"]))
+                    map = get_map_tiles(land_maps)
                     self.overmaptile = "#"
                 else:
-                    map = deepcopy(empty_map)
+                    map = get_map_tiles(structure_maps, "empty")
         self.map_tiles = map
 
     def gen_rooms(self):

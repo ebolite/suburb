@@ -836,8 +836,17 @@ def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name
                 if not player.consume_instance(instance.name): return False
                 player.land.session.entered_players.append(player.player.id)
                 player.land.theme = player.aspect
-                player.map.populate_with_underlings("imp", 4, random.randint(40, 60), 1, 7)
-                player.map.populate_with_underlings("ogre", 1, random.randint(1, 4), 1, 2)
+                player.land.housemap.populate_with_underlings("imp", 4, random.randint(40, 60), 1, 7)
+                player.land.housemap.populate_with_underlings("ogre", 1, random.randint(1, 4), 1, 2)
+                midpoint = len(player.land.housemap.map_tiles[0])//2
+                # gates
+                player.land.housemap.map_tiles[7][midpoint] = "7"
+                player.land.housemap.map_tiles[34][midpoint] = "6"
+                player.land.housemap.map_tiles[54][midpoint] = "5"
+                player.land.housemap.map_tiles[71][midpoint] = "4"
+                player.land.housemap.map_tiles[85][midpoint] = "3"
+                player.land.housemap.map_tiles[95][midpoint] = "2"
+                player.land.housemap.map_tiles[100][midpoint] = "1"
                 if not player.prototyped_before_entry: player.session.prototypes.append(None)
                 return True
             else: return False
