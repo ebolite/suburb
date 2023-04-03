@@ -145,9 +145,41 @@ class MapEditor():
             self.save()
             savelog.text = f"saved at {datetime.datetime.now().strftime('%I:%M:%S')}"
         savebutton = render.TextButton(0.8, 0.85, 128, 32, "SAVE", save)
+        def resize_func():
+            self.autosave()
+            self.resize_scene()
+        resizebutton = render.TextButton(0.92, 0.85, 128, 32, "RESIZE", resize_func)
         def back():
             self.confirm_leave()
         backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
+
+    def resize_scene(self):
+        suburb.new_scene()
+        def last_scene():
+            self.draw_scene()
+        label = render.Text(0.5, 0.3, "Resize by how much and in what direction? (negative is smaller)")
+        label.color = self.theme.dark
+        label.set_fontsize_by_width(1200)
+        amount_box = render.InputTextBox(0.5, 0.4)
+        amount_box.text = "0"
+        amount_box.numbers_only = True
+        def resize_left():
+            self.resize("left", int(amount_box.text))
+            self.draw_scene()
+        def resize_right():
+            self.resize("right", int(amount_box.text))
+            self.draw_scene()
+        def resize_up():
+            self.resize("up", int(amount_box.text))
+            self.draw_scene()
+        def resize_down():
+            self.resize("down", int(amount_box.text))
+            self.draw_scene()
+        up_button = render.TextButton(0.5, 0.5, 128, 32, "UP", resize_up)
+        down_button = render.TextButton(0.5, 0.6, 128, 32, "DOWN", resize_down)
+        left_button = render.TextButton(0.4, 0.55, 128, 32, "LEFT", resize_left)
+        right_button = render.TextButton(0.6, 0.55, 128, 32, "RIGHT", resize_right)
+        cancel_button = render.TextButton(0.5, 0.8, 128, 32, "CANCEL", last_scene)
 
     def confirm_leave(self):
         suburb.new_scene()
@@ -240,6 +272,28 @@ class MapEditor():
         assert map_name in util.saved_maps
         load_dict = util.saved_maps[map_name]
         self.loadinfo(map_name, load_dict)
+
+    def resize(self, direction:str, amount: int):
+        if amount > 0:
+            match direction:
+                case "up": self.map_tiles = [list("."*self.width) for i in range(amount)] + self.map_tiles
+                case "down": self.map_tiles = self.map_tiles + [list("#"*self.width) for i in range(amount)]
+                case "right": self.map_tiles = [line+list("."*amount) for line in self.map_tiles]
+                case "left": self.map_tiles = [list("."*amount)+line for line in self.map_tiles]
+        elif amount < 0:
+            match direction:
+                case "up": self.map_tiles = self.map_tiles[:self.height-amount]
+                case "down": self.map_tiles = self.map_tiles[amount:]
+                case "right": self.map_tiles = [line[:amount] for line in self.map_tiles]
+                case "left": self.map_tiles = [line[:self.width-amount] for line in self.map_tiles]
+
+    @property
+    def width(self):
+        return len(self.map_tiles[0])
+    
+    @property
+    def height(self):
+        return len(self.map_tiles)
 
 class ItemEditor():
     def __init__(self):
