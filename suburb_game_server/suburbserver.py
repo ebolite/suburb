@@ -290,7 +290,7 @@ def handle_request(dict):
         new_player.pronouns = content["pronouns"]
         new_player.interests = content["interests"]
         new_player.aspect = content["aspect"]
-        new_player.gameclass = content["class"]
+        new_player.gameclass = content["gameclass"]
         new_player.gristcategory = content["gristcategory"]
         new_player.secondaryvial = content["secondaryvial"]
         new_player.symbol_dict = content["symbol_dict"]
