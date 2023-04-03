@@ -1272,7 +1272,7 @@ class Tile(UIElement):
                 cursor_image = self.convert_to_theme(cursor_image)
             cursor_image.set_colorkey(pygame.Color(0, 0, 0))
             self.surf.blit(cursor_image, (0, 0), (0, 0, tile_wh, tile_wh))
-        if self.server_view and self.x == len(self.tile_map.map)//2 and self.y == len(self.tile_map.map)//2:
+        if (self.server_view or self.tile_map.map_editor is not None) and self.x == len(self.tile_map.map)//2 and self.y == len(self.tile_map.map)//2:
             center_path = config.icons["center"]
             center_image = pygame.image.load(center_path)
             center_image = self.convert_to_theme(center_image, suburb.current_theme())
