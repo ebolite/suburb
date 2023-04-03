@@ -733,7 +733,7 @@ class ItemEditor():
         label_2.color = self.theme.dark
         adjectives_label = render.Text(0.5, 0.5, "")
         def adjectives_label_func():
-            return ", ".join(adjectives_box.text.split(" ")).replace("+", " ")
+            return ", ".join(self.adjectives+adjectives_box.text.split(" ")).replace("+", " ")
         adjectives_label.color = self.theme.dark
         adjectives_label.fontsize = 16
         adjectives_label.text_func = adjectives_label_func
