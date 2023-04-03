@@ -714,7 +714,11 @@ class InputTextBox(UIElement):
                 if event.unicode in self.disallowed_characters: return
                 if self.numbers_only:
                     try: int(event.unicode)
-                    except ValueError: return
+                    except ValueError: 
+                        if event.unicode == "-":
+                            if self.text[0] != "-": self.text = "-"+self.text
+                            else: self.text = self.text.replace("-", "")
+                        return
                 self.text += event.unicode
                 if self.numbers_only: 
                     number = int(self.text)
