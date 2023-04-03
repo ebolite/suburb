@@ -69,6 +69,12 @@ class MapEditor():
         deploybutton.overlay_on_click = True
         deploybutton_background.bind_to(deploybutton)
         deploybutton.bind_to(top_bar)
+        def make_tile_button(tile: str):
+            def button_func():
+                self.current_selected_tile = tile
+                self.current_mode = "revise"
+                self.draw_scene()
+            return button_func
         row = 0
         column = 0
         COLUMNS = 6
@@ -85,6 +91,11 @@ class MapEditor():
                 tile_background = render.SolidColor(x-PADDING//2, y-PADDING//2, render.tile_wh+(PADDING), render.tile_wh+(PADDING), self.theme.dark)
             tile_display = render.TileDisplay(x, y, tile)
             tile_display.absolute = True
+            tile_display.tooltip = self.tile_labels[tile]
+            tile_button = render.TextButton(0, 0, render.tile_wh, render.tile_wh, "", make_tile_button(tile))
+            tile_button.absolute = True
+            tile_button.bind_to(tile_display)
+            tile_button.draw_sprite = False
             column += 1
             if column == COLUMNS:
                 column = 0
