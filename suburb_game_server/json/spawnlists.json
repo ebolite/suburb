@@ -252,7 +252,8 @@
             "grand piano",
             "top hat",
             "deer skull",
-            "stone"
+            "stone",
+            "chainmail"
         ],
         "exotic": []
     },
@@ -320,7 +321,8 @@
         "rare": [
             "clown nose",
             "flip flops",
-            "cloak"
+            "cloak",
+            "chainmail"
         ],
         "exotic": [
             "water extinguisher"
@@ -421,7 +423,8 @@
             "sap",
             "caestus",
             "trident",
-            "grandfather clock"
+            "grandfather clock",
+            "chainmail"
         ],
         "exotic": []
     },
@@ -466,7 +469,8 @@
             "grandfather clock",
             "top hat",
             "clown nose",
-            "cloak"
+            "cloak",
+            "chainmail"
         ],
         "exotic": [
             "water extinguisher"
@@ -609,7 +613,8 @@
             "trident",
             "dated rifle",
             "barbed wire",
-            "barbed wire"
+            "barbed wire",
+            "chainmail"
         ],
         "exotic": []
     },

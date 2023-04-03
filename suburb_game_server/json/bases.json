@@ -9513,5 +9513,42 @@
             "build": 0.5,
             "silicon": 0.2
         }
+    },
+    "chainmail": {
+        "base": true,
+        "display_name": null,
+        "power": 15,
+        "size": 15,
+        "kinds": [
+            "chainkind"
+        ],
+        "wearable": true,
+        "description": "A chainmail shirt, made out of... chains.",
+        "onhit_states": {
+            "damage": 0.1
+        },
+        "wear_states": {
+            "guard": 0.6
+        },
+        "consume_states": {},
+        "secret_states": {},
+        "secretadjectives": [
+            "metal",
+            "chainmail",
+            "loud",
+            "protective"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 10,
+        "adjectives": [],
+        "code": "CHNM18i1",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "acatalepticCatalogue",
+        "cost": {
+            "build": 0.5,
+            "iron": 0.5
+        }
     }
 }
