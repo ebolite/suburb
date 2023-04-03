@@ -220,6 +220,7 @@ class MapEditor():
         out = {}
         out["map_name"] = self.map_name
         out["map_tiles"] = self.map_tiles
+        out["creator"] = client.dic["username"]
         return out
     
     def save(self):
