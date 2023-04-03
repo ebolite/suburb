@@ -26,6 +26,7 @@ class Tile():
         self.door = False
         self.forbidden = False      # tiles that cannot be placed or modified by servers
         self.special = False        # tiles that are otherwise special for some reason
+        self.debug = False          # cannot be placed by map editor
         self.build_cost = 10
         self.always_spawn = []
         self.common_spawn = []
@@ -68,11 +69,13 @@ def get_tile(tile_char) -> Tile:
 debug_tile = Tile("*", "debug tile")
 debug_tile.forbidden = True
 debug_tile.solid = False
+debug_tile.debug = True
 
 out_of_bounds = Tile("?", "out of bounds")
 out_of_bounds.forbidden = True
 out_of_bounds.impassible = True
 out_of_bounds.solid = False
+out_of_bounds.debug = True
 
 air = Tile(".", "air")
 air.build_cost = 0
@@ -105,13 +108,13 @@ right_ramp.ramp = True
 right_ramp.ramp_direction = "right"
 right_ramp.build_cost = 50
 
-cross_ramp = Tile("X", "cross ramp")
-cross_ramp.ramp = True
-cross_ramp.ramp_direction = "both"
-cross_ramp.infallible = True
-cross_ramp.build_cost = 50
-# todo: make cross-ramp tile
-cross_ramp.forbidden = True
+# cross_ramp = Tile("X", "cross ramp")
+# cross_ramp.ramp = True
+# cross_ramp.ramp_direction = "both"
+# cross_ramp.infallible = True
+# cross_ramp.build_cost = 50
+# # todo: make cross-ramp tile
+# cross_ramp.forbidden = True
 
 stairs = Tile("^", "stairs")
 stairs.stair = True
