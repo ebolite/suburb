@@ -15,6 +15,9 @@ class MapEditor():
     view_tiles = 9
     def __init__(self):
         self.setup_defaults()
+        reply = client.requestdic(intent="all_tiles")
+        self.available_tiles: list[str] = reply["tiles"]
+        self.tile_labels: dict[str, str] = reply["labels"]
         self.current_mode = "select"
         self.current_selected_tile = "."
         self.theme = suburb.current_theme()
@@ -66,6 +69,26 @@ class MapEditor():
         deploybutton.overlay_on_click = True
         deploybutton_background.bind_to(deploybutton)
         deploybutton.bind_to(top_bar)
+        row = 0
+        column = 0
+        COLUMNS = 6
+        PADDING = 4
+        STARTING_X = 1000
+        STARTING_Y = 200
+        palette_window = render.SolidColor(STARTING_X-25, STARTING_Y-25, COLUMNS*(render.tile_wh+PADDING) + 50 - PADDING, 400, self.theme.white)
+        palette_window.outline_color = self.theme.dark
+        palette_window.border_radius = 4
+        for tile in self.available_tiles:
+            x = STARTING_X + (render.tile_wh+PADDING)*column
+            y = STARTING_Y + (render.tile_wh+PADDING) * row
+            if self.current_selected_tile == tile:
+                tile_background = render.SolidColor(x-PADDING//2, y-PADDING//2, render.tile_wh+(PADDING), render.tile_wh+(PADDING), self.theme.dark)
+            tile_display = render.TileDisplay(x, y, tile)
+            tile_display.absolute = True
+            column += 1
+            if column == COLUMNS:
+                column = 0
+                row += 1
 
     def move_view(self, dx, dy):
         if self.is_tile_in_bounds(self.viewx+dx, self.viewy+dy):
