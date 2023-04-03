@@ -1177,13 +1177,19 @@ class Tile(UIElement):
                         sburbserver.move_view_to_tile(target_x, target_y)
                         self.tile_map.update_map()
             elif self.tile_map.map_editor is not None:
-                self.tile_map.map_editor.move_view(x_diff, y_diff)
-                self.tile_map.update_map()
+                match self.tile_map.map_editor.current_mode:
+                    case "revise":
+                        self.tile_map.map_editor.change_relative_tile(x_diff, y_diff, self.tile_map.map_editor.current_selected_tile)
+                        self.tile_map.update_map()
+                    case _:
+                        self.tile_map.map_editor.move_view(x_diff, y_diff)
+                        self.tile_map.update_map()
 
     def update(self):
         if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly
         if self.x == len(self.tile_map.map[0]) - 1 or self.y == len(self.tile_map.map) - 1: return # ^
-        if self.server_view and sburbserver.current_mode == "revise" and self.is_mouseover() and pygame.mouse.get_pressed()[0]:
+        if ((self.server_view and sburbserver.current_mode == "revise") or (self.tile_map.map_editor is not None and self.tile_map.map_editor.current_mode == "revise")) \
+            and self.is_mouseover() and pygame.mouse.get_pressed()[0]:
             self.onclick(True)
         self.update_image()
         self.surf = pygame.Surface((tile_wh, tile_wh))

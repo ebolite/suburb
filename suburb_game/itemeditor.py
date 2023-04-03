@@ -101,6 +101,14 @@ class MapEditor():
                 column = 0
                 row += 1
 
+    def change_tile(self, x, y, tile: str):
+        self.map_tiles[y][x] = tile
+
+    def change_relative_tile(self, dx, dy, tile: str):
+        x = self.viewx + dx
+        y = self.viewy + dy
+        self.change_tile(x, y, tile)
+
     def move_view(self, dx, dy):
         if self.is_tile_in_bounds(self.viewx+dx, self.viewy+dy):
             self.viewx, self.viewy = self.viewx+dx, self.viewy+dy
