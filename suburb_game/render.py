@@ -908,17 +908,17 @@ def get_spirograph(x, y, thick=True) -> Image:
 
 def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict]=None, binding: Optional[UIElement]=None, 
                             text_color: pygame.Color=suburb.current_theme().dark, temporary=True, absolute=True, scale_mult=1.0,
-                            flipped=False, tooltip=True, return_grist_icons=False) -> Union[UIElement, dict[str, UIElement]]:
+                            flipped=False, tooltip=True, return_grist_icons=False, fontsize_mult=1.0) -> Union[UIElement, dict[str, UIElement]]:
     elements: list[Union[Image, Text]] = []
     grist_icons = {}
     padding = 5
     scale = (h / 48) * scale_mult
-    fontsize = int(h * scale_mult)
+    fontsize = int(h * scale_mult * fontsize_mult)
     for grist_name, grist_cost in true_cost.items():
         icon_path = config.grists[grist_name]["image"]
         if len(elements) != 0:
             icon_x = padding+elements[-1].get_width()
-            icon_y = 0
+            icon_y = -(int(48*scale) - fontsize)//2 # account for label size diff
         else:
             icon_x = x
             icon_y = y
@@ -951,7 +951,8 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
             tt_label.outline_color = get_dark_color(r, g, b)
             tt_label.make_always_on_top()
         label_x = padding + int(48*scale)
-        label = Text(label_x, 0, str(grist_cost))
+        label_y = (int(48*scale) - fontsize)//2
+        label = Text(label_x, label_y, str(grist_cost))
         if grist_cache is None or grist_cost <= grist_cache[grist_name]:
             label.color = text_color
         else:

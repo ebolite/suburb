@@ -472,17 +472,18 @@ class ItemEditor():
     def draw_costs(self):
         # label = render.Text(0.5, 0.31, "Cost")
         # label.color = self.theme.dark
-        grist_icons = render.make_grist_cost_display(0.6, 0.35, 24, self.true_cost, text_color = self.theme.dark, absolute=False, return_grist_icons=True)
+        grist_icons = render.make_grist_cost_display(0.6, 0.35, 24, self.cost_display, text_color = self.theme.dark, absolute=False, return_grist_icons=True, fontsize_mult=0.5)
         assert isinstance(grist_icons, dict)
         def get_increase_cost_func(grist_name: str):
             def button_func():
-                self.cost[grist_name] += 0.1
+                self.cost[grist_name] = round(self.cost[grist_name] + 0.1, 1)
                 self.draw_scene()
             return button_func
         def get_decrease_cost_func(grist_name: str):
             def button_func():
-                self.cost[grist_name] -= 0.1
-                if self.cost[grist_name] <= 0:
+                self.cost[grist_name] = round(self.cost[grist_name] - 0.1, 1)
+                # account for floating point error
+                if self.cost[grist_name]- 0.05 <= 0:
                     self.cost.pop(grist_name)
                 self.draw_scene()
             return button_func
@@ -519,12 +520,12 @@ class ItemEditor():
         else: states_dict = self.secret_states
         def get_increase_potency_func(state_name: str):
             def button_func():
-                states_dict[state_name] += 0.1
+                states_dict[state_name] = round(states_dict[state_name] + 0.1, 1)
                 self.draw_scene()
             return button_func
         def get_decrease_potency_func(state_name: str):
             def button_func():
-                states_dict[state_name] -= 0.1
+                states_dict[state_name] = round(states_dict[state_name] - 0.1, 1)
                 # account for floating point error
                 if states_dict[state_name] - 0.05 <= 0:
                     states_dict.pop(state_name)
@@ -834,10 +835,10 @@ class ItemEditor():
         return self.item_name.split(" ")
     
     @property
-    def true_cost(self):
+    def cost_display(self):
         out = {}
         for grist_name, value in self.cost.items():
-            out[grist_name] = int(self.power*value)
+            out[grist_name] = f"{int(self.power*value)} ({round(value*100)}%)"
         return out
     
 def show_options_with_search(options: list, button_func_constructor: Callable, label:str, last_scene: Callable, theme: "themes.Theme", page=0, 
