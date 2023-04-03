@@ -278,8 +278,8 @@ class MapEditor():
             match direction:
                 case "up": self.map_tiles = [list("."*self.width) for i in range(amount)] + self.map_tiles
                 case "down": self.map_tiles = self.map_tiles + [list("#"*self.width) for i in range(amount)]
-                case "right": self.map_tiles = [line+list("."*amount) for line in self.map_tiles]
-                case "left": self.map_tiles = [list("."*amount)+line for line in self.map_tiles]
+                case "right": self.map_tiles = [line+list(line[-1]*amount) for line in self.map_tiles]
+                case "left": self.map_tiles = [list(line[0]*amount)+line for line in self.map_tiles]
         elif amount < 0:
             match direction:
                 case "up": self.map_tiles = self.map_tiles[:self.height-amount]
