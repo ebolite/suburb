@@ -190,7 +190,8 @@ class MapEditor():
         backbutton = render.Button(0.5, 0.4, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
 
     def change_tile(self, x, y, tile: str):
-        self.map_tiles[y][x] = tile
+        if self.is_tile_in_bounds(x, y):
+            self.map_tiles[y][x] = tile
 
     def change_relative_tile(self, dx, dy, tile: str):
         x = self.viewx + dx
