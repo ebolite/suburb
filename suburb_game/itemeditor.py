@@ -219,7 +219,7 @@ class MapEditor():
     def get_dict(self) -> dict:
         out = {}
         out["map_name"] = self.map_name
-        out["map_tiles"] = self.map_tiles
+        out["map_tiles"] = ["".join(line) for line in self.map_tiles]
         out["creator"] = client.dic["username"]
         return out
     
@@ -232,9 +232,9 @@ class MapEditor():
         util.writejson(util.saved_maps, "saved_maps")
 
     def loadinfo(self, map_name, load_dict):
-        self.__dict__.update(load_dict)
         self.map_name = map_name
         if "map_name" in load_dict: self.map_name = load_dict["map_name"]
+        self.map_tiles = [list(line) for line in load_dict["map_tiles"]]
 
     def load(self, map_name):
         assert map_name in util.saved_maps
