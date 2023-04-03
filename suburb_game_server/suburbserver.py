@@ -9,6 +9,7 @@ import random
 import ssl
 import uuid
 import difflib
+import traceback
 from typing import Optional
 
 import sessions
@@ -1042,7 +1043,10 @@ def autosave():
     while True:
         if time.time() - last_save > 60:
             util.saveall()
-            database.save_databases()
+            try:
+                database.save_databases()
+            except Exception as e:
+                traceback.print_exception(e)
             last_save = time.time()
 
 def console():
