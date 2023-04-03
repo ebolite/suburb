@@ -9432,5 +9432,86 @@
             "sulfur": 0.6,
             "garnet": 0.5
         }
+    },
+    "cloak": {
+        "base": true,
+        "display_name": "Cloak",
+        "power": 10,
+        "size": 13,
+        "kinds": [
+            "fabrickind"
+        ],
+        "wearable": true,
+        "description": "Your average hooded cloak. Tied together with a brass button, and knee-length.",
+        "onhit_states": {
+            "blind": 0.6
+        },
+        "wear_states": {
+            "guard": 0.4
+        },
+        "consume_states": {},
+        "secret_states": {
+            "focus": 0.30000000000000004
+        },
+        "secretadjectives": [
+            "snug",
+            "large",
+            "fabric",
+            "thick",
+            "warm",
+            "cozy"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 15,
+        "adjectives": [],
+        "code": "CL0AH18K",
+        "attached_skills": [],
+        "prototype_name": null,
+        "creator": "acatalepticCatalogue",
+        "cost": {
+            "build": 0.5,
+            "chalk": 0.20000000000000004
+        }
+    },
+    "crochet hook": {
+        "base": true,
+        "display_name": "5mm crochet hook",
+        "power": 4,
+        "size": 1,
+        "kinds": [
+            "needlekind"
+        ],
+        "wearable": false,
+        "description": "Your average everyday crochet hook. Rubber grip.",
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "secret_states": {
+            "inspire": 0.30000000000000004
+        },
+        "secretadjectives": [
+            "hooked",
+            "metal",
+            "blunt",
+            "curved",
+            "short",
+            "thin",
+            "crocheted"
+        ],
+        "forbiddencode": false,
+        "use": [],
+        "inheritpower": 0,
+        "adjectives": [
+            "crochet"
+        ],
+        "code": "CROCHEHK",
+        "attached_skills": [],
+        "prototype_name": "crochet",
+        "creator": "acatalepticCatalogue",
+        "cost": {
+            "build": 0.5,
+            "silicon": 0.2
+        }
     }
 }
