@@ -25,11 +25,40 @@ class MapEditor():
         self.viewy = len(self.map_tiles)//2
 
     def setup_defaults(self):
+        self.map_name = "unnamed"
         self.map_tiles = [["." for i in range(24)] for i in range(12)]
         self.map_tiles += [["#" for i in range(24)] for i in range(2)]
 
+    def map_editor_scene(self):
+        suburb.new_scene()
+        def last_scene():
+            self.map_editor_scene()
+        def load_map_func_constructor(map_name):
+            def button_func():
+                self.load(map_name)
+                self.draw_scene()
+            return button_func
+        def load_map_button_func():
+            map_names = [map_name for map_name in util.saved_maps]
+            show_options_with_search(map_names, load_map_func_constructor, "What map do you want to load?", last_scene, self.theme)
+        load_map_button = render.TextButton(0.5, 0.4, 196, 32, "Load Map", load_map_button_func)
+        def new_map_button_func():
+            self.setup_defaults()
+            self.draw_scene()
+        new_map_button = render.TextButton(0.5, 0.5, 196, 32, "New Map", new_map_button_func)
+        title_button = render.TextButton(0.5, 0.7, 196, 32, "Back to Title", suburb.title)
+        def continue_func():
+            self.load("autosave")
+            self.draw_scene()
+        if "autosave" in util.saved_items:
+            continue_button = render.TextButton(0.5, 0.6, 196, 32, "Resume Editing", continue_func)
+        # def search_func():
+        #     self.search_scene()
+        # search_button = render.TextButton(0.5, 0.7, 196, 32, "Search Items", search_func)
+
     def draw_scene(self):
         suburb.new_scene()
+        self.autosave()
         self.tilemap = render.TileMap(0.5, 0.5, map_editor=self)
         top_bar = render.SolidColor(0.5, 0, 200, 140, self.theme.light)
         top_bar.absolute = False
@@ -100,6 +129,33 @@ class MapEditor():
             if column == COLUMNS:
                 column = 0
                 row += 1
+        map_name_box = render.InputTextBox(0.5, 0.95)
+        map_name_box.text = self.map_name
+        def map_name_func():
+            self.map_name = map_name_box.text
+        map_name_box.key_press_func = map_name_func
+        self.tilemap.input_text_box = map_name_box
+        map_name_label = render.Text(0.5, -0.4, "map name")
+        map_name_label.bind_to(map_name_box)
+        map_name_label.fontsize = 16
+        map_name_label.color = self.theme.dark
+        savelog = render.Text(0.8, 0.89, "")
+        savelog.fontsize = 16
+        def save(): 
+            self.save()
+            savelog.text = f"saved at {datetime.datetime.now().strftime('%I:%M:%S')}"
+        savebutton = render.TextButton(0.8, 0.85, 128, 32, "SAVE", save)
+        def back():
+            self.confirm_leave()
+        backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
+
+    def confirm_leave(self):
+        suburb.new_scene()
+        text = render.Text(0.5, 0.2, "Are you sure you want to leave? Any unsaved changes will be lost.")
+        def confirm(): self.map_editor_scene()
+        confirmbutton = render.Button(.5, .3, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm)
+        def back(): self.draw_scene()
+        backbutton = render.Button(0.5, 0.4, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
 
     def change_tile(self, x, y, tile: str):
         self.map_tiles[y][x] = tile
@@ -131,7 +187,6 @@ class MapEditor():
                 return
         self.move_view(dx, dy)
         
-
     def get_view(self):
         out_map_tiles = []
         map_tiles = self.map_tiles
@@ -160,6 +215,30 @@ class MapEditor():
         if y >= len(self.map_tiles): return False
         if x >= len(self.map_tiles[0]): return False
         return True
+    
+    def get_dict(self) -> dict:
+        out = {}
+        out["map_name"] = self.map_name
+        out["map_tiles"] = self.map_tiles
+        return out
+    
+    def save(self):
+        util.saved_maps[self.map_name] = self.get_dict()
+        util.writejson(util.saved_maps, "saved_maps")
+
+    def autosave(self):
+        util.saved_items["autosave"] = self.get_dict()
+        util.writejson(util.saved_maps, "saved_maps")
+
+    def loadinfo(self, map_name, load_dict):
+        self.__dict__.update(load_dict)
+        self.map_name = map_name
+        if "map_name" in load_dict: self.map_name = load_dict["map_name"]
+
+    def load(self, map_name):
+        assert map_name in util.saved_maps
+        load_dict = util.saved_maps[map_name]
+        self.loadinfo(map_name, load_dict)
 
 class ItemEditor():
     def __init__(self):

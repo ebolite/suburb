@@ -1722,7 +1722,7 @@ def item_editor_scene():
 
 def map_editor_scene():
     map_editor = itemeditor.MapEditor()
-    map_editor.draw_scene()
+    map_editor.map_editor_scene()
 
 def render_loop():
     while render.render():
