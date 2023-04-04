@@ -76,6 +76,7 @@ class SpawnList():
             rarities_weights.append(EXOTIC_WEIGHT)
         num_items = random.randint(min_items, max_items)
         if num_items == 0: return output
+        if not possible_rarities: return output
         rarities = random.choices(possible_rarities, weights=rarities_weights, k=num_items)
         for rarity in rarities:
             match rarity:
