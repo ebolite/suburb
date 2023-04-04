@@ -1425,6 +1425,14 @@ aunter.cooldown = 2
 aunter.target_self = True
 aunter.parryable = False
 
+# pizzacutterkind
+asiago = AbstratusSkill("asiago")
+asiago.description = f"Pizza. Deals large damage and SATEs the target."
+asiago.action_cost = 0
+asiago.damage_formula = ASSAULT_FORMULA
+asiago.add_apply_state("sate", 1, "0.5")
+asiago.cooldown = 2
+
 # pokerkind
 accroach = AbstratusSkill("accroach")
 accroach.description = "Deals a small amount of damage and applies VULNERABLE with a potency of 1.0 to the target this turn."
@@ -1643,6 +1651,7 @@ add_abstratus_skill("pistolkind", aunter, 75)
 # pizzacutterkind
 add_abstratus_skill("pizzacutterkind", applot, 1)
 add_abstratus_skill("pizzacutterkind", arraign, 50)
+add_abstratus_skill("pizzacutterkind", asiago, 75)
 
 # plungerkind
 add_abstratus_skill("plungerkind", arraign, 50)
