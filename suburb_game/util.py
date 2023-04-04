@@ -1,7 +1,7 @@
 import os
 import json
 
-VERSION = "v1.6.2-alpha"
+VERSION = "v1.7.0-alpha"
 homedir = os.getcwd()
 subdirectories = next(os.walk("."))[1]
 if "suburb_game" in subdirectories: # if this is being run in vscode lol
