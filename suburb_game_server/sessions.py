@@ -1019,6 +1019,7 @@ class Player():
         return room.deploy_atheneum(self, instance_name)
     
     def revise(self, tile_char, target_x, target_y) -> bool:
+        if not self.land.housemap.is_tile_in_bounds(target_x, target_y): return False
         room = self.land.housemap.find_room(target_x, target_y)
         return room.revise(self, tile_char)
     
