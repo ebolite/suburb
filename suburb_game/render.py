@@ -1507,7 +1507,7 @@ class RoomItemDisplay(UIElement):
                 self.buttons.append(new_button)
             elif item_name in self.tile_map.players:
                 display_name = self.tile_map.players[item_name]["nickname"]
-                sleeping = self.tile_map.players[item_name]
+                sleeping = self.tile_map.players[item_name]["sleeping"]
                 if sleeping: display_name = f"{display_name} (zzz)"
                 new_button = TextButton(self.x, y, self.w, self.h, display_name, lambda *args: None, truncate_text=True)
                 new_button.absolute = True
