@@ -1092,6 +1092,7 @@ class Player():
         random.shuffle(possible_players)
         for sub_player in possible_players:
             if sub_player.id == self.id: continue
+            if not sub_player.grist_gutter: continue
             player = sub_player.player
             grist_name, amount = player.grist_gutter.pop()
             if grist_name in spoils_dict: spoils_dict[grist_name] += amount
