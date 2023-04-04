@@ -1011,10 +1011,12 @@ class Player():
         
     # deploys an item to this user's map at the specified coordinates
     def deploy_phernalia(self, item_name, target_x, target_y) -> bool:
+        if not self.land.housemap.is_tile_in_bounds(target_x, target_y): return False
         room = self.land.housemap.find_room(target_x, target_y)
         return room.deploy_phernalia(self, item_name)
     
     def deploy_atheneum(self, instance_name, target_x, target_y) -> bool:
+        if not self.land.housemap.is_tile_in_bounds(target_x, target_y): return False
         room = self.land.housemap.find_room(target_x, target_y)
         return room.deploy_atheneum(self, instance_name)
     
