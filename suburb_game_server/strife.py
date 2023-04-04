@@ -12,6 +12,7 @@ import stateseffects
 import alchemy
 
 vials: dict[str, "Vial"] = {}
+secondary_vials = []
 
 def stats_from_ratios(stat_ratios: dict[str, int], power: int):
     total_ratios = 0
@@ -100,6 +101,11 @@ class Vial():
     def use_skill(self, griefer: "Griefer", skill: "skills.Skill"):
         pass
 
+class SecondaryVial(Vial):
+    def __init__(self, name):
+        super().__init__(name)
+        secondary_vials.append(name)
+
 class HpVial(Vial):
     def new_turn(self, griefer: "Griefer"):
         regen_mult = 0.025 + 0.15 * (griefer.get_stat("tact")/griefer.get_stat("power"))
@@ -185,7 +191,7 @@ rage.maximum_formula = "{power}*3"
 rage.starting_formula = "{maximum}//2"
 rage.hidden_vial = True
 
-class MangritVial(Vial):
+class MangritVial(SecondaryVial):
     def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
         value = self.get_current(griefer)
         power = griefer.power
@@ -199,7 +205,7 @@ mangrit.starting_formula = "0"
 mangrit.optional_vial = True
 mangrit.tact_vial = True
 
-class ImaginationVial(Vial):
+class ImaginationVial(SecondaryVial):
     def new_turn(self, griefer: "Griefer"):
         griefer.change_vial("aspect", self.get_current(griefer)//2)
 
@@ -208,7 +214,7 @@ imagination.maximum_formula = "{power} + {tac}*6"
 imagination.starting_formula = "0"
 imagination.optional_vial = True
 
-class HorseshitometerVial(Vial):
+class HorseshitometerVial(SecondaryVial):
     def parry_roll_modifier(self, griefer: "Griefer") -> float:
         diff = self.difference_from_starting(griefer)
         power = griefer.power
@@ -224,7 +230,7 @@ horseshitometer.starting_formula = "{maximum}//2"
 horseshitometer.optional_vial = True
 horseshitometer.tact_vial
 
-class GambitVial(Vial):
+class GambitVial(SecondaryVial):
     def __init__(self, name):
         super().__init__(name)
 

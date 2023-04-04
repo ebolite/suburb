@@ -13,6 +13,7 @@ import traceback
 from typing import Optional
 
 import sessions
+import strife
 import alchemy
 import util
 import config
@@ -153,6 +154,8 @@ def handle_request(dict):
         return json.dumps(util.kinds)
     if intent == "grists":
         return json.dumps(config.grists)
+    if intent == "secondary_vials":
+        return json.dumps(strife.secondary_vials)
     if intent == "item_states":
         item_states = list(stateseffects.item_states.values())
         out_states = {}
