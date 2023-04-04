@@ -180,7 +180,7 @@ foyer.stair = True
 
 living_room = Tile("L", "living room")
 
-laundry_room = Tile("l", "laundry_room")
+laundry_room = Tile("l", "laundry room")
 
 kitchen = Tile("K", "kitchen")
 
