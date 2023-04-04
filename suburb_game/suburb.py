@@ -785,73 +785,119 @@ class CharacterCreator():
         theme = themes.themes[self.aspect]
         bg = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.light)
         knighttitle = render.Text(.14, .19, f"Knight")
+        knighttitle.color = theme.black
+        knighttitle.outline_color = theme.white
         knightsymbol = render.Button(.14, .3, "sprites\\classes\\knight.png", None, self.make_classbutton("knight"), theme=theme)
         knighttext = render.Text(.14, .4, f"Fights with {self.aspect.upper()}")
         knighttext.fontsize = 15
+        knighttext.color = theme.black
         knighttext2 = render.Text(.14, .42, f"Exploits {self.aspect.upper()}")
         knighttext2.fontsize = 15
+        knighttext2.color = theme.black
         pagetitle = render.Text(.14, .59, f"Page")
+        pagetitle.color = theme.black
+        pagetitle.outline_color = theme.white
         pagesymbol = render.Button(.14, .7, "sprites\\classes\\page.png", None, self.make_classbutton("page"), theme=theme)
         pagetext = render.Text(.14, .8, f"Provides {self.aspect.upper()}")
         pagetext.fontsize = 15
+        pagetext.color = theme.black
         pagetext2 = render.Text(.14, .82, f"Scales")
         pagetext2.fontsize = 15
+        pagetext2.color = theme.black
         princetitle = render.Text(.29, .19, f"Prince")
+        princetitle.color = theme.black
+        princetitle.outline_color = theme.white
         princesymbol = render.Button(.29, .3, "sprites\\classes\\prince.png", None, self.make_classbutton("prince"), theme=theme)
         princetext = render.Text(.29, .4, f"Destroys {self.aspect.upper()}")
         princetext.fontsize = 15
+        princetext.color = theme.black
         princetext2 = render.Text(.29, .42, f"Destroys with {self.aspect.upper()}")
         princetext2.fontsize = 15
+        princetext2.color = theme.black
         bardtitle = render.Text(.29, .59, f"Bard")
+        bardtitle.color = theme.black
+        bardtitle.outline_color = theme.white
         bardsymbol = render.Button(.29, .7, "sprites\\classes\\bard.png", None, self.make_classbutton("bard"), theme=theme)
         bardtext = render.Text(.29, .8, f"{self.aspect.upper()}less")
         bardtext.fontsize = 15
+        bardtext.color = theme.black
         bardtext2 = render.Text(.29, .82, f"Heralds {self.aspect.upper()}-stinction")
         bardtext2.fontsize = 15
+        bardtext2.color = theme.black
         thieftitle = render.Text(.43, .19, f"Thief")
+        thieftitle.color = theme.black
+        thieftitle.outline_color = theme.white
         thiefsymbol = render.Button(.43, .3, "sprites\\classes\\thief.png", None, self.make_classbutton("thief"), theme=theme)
         thieftext = render.Text(.43, .4, f"Steals {self.aspect.upper()}")
         thieftext.fontsize = 15
+        thieftext.color = theme.black
         thieftext2 = render.Text(.43, .42, f"Hoards {self.aspect.upper()}")
         thieftext2.fontsize = 15
+        thieftext2.color = theme.black
         roguetitle = render.Text(.43, .59, f"Rogue")
+        roguetitle.color = theme.black
+        roguetitle.outline_color = theme.white
         roguesymbol = render.Button(.43, .7, "sprites\\classes\\rogue.png", None, self.make_classbutton("rogue"), theme=theme)
         roguetext = render.Text(.43, .8, f"Steals {self.aspect.upper()}")
         roguetext.fontsize = 15
+        roguetext.color = theme.black
         roguetext2 = render.Text(.43, .82, f"Shares {self.aspect.upper()}")
         roguetext2.fontsize = 15
+        roguetext2.color = theme.black
         magetitle = render.Text(.57, .19, f"Mage")
+        magetitle.color = theme.black
+        magetitle.outline_color = theme.white
         magesymbol = render.Button(.57, .3, "sprites\\classes\\placeholder.png", None, self.make_classbutton("mage"), theme=theme)
         magetext = render.Text(.57, .4, f"Sees {self.aspect.upper()}")
         magetext.fontsize = 15
+        magetext.color = theme.black
         magetext2 = render.Text(.57, .42, f"Pursues {self.aspect.upper()}")
         magetext2.fontsize = 15
+        magetext2.color = theme.black
         seertitle = render.Text(.57, .59, f"Seer")
+        seertitle.color = theme.black
+        seertitle.outline_color = theme.white
         seersymbol = render.Button(.57, .7, "sprites\\classes\\seer.png", None, self.make_classbutton("seer"), theme=theme)
         seertext = render.Text(.57, .8, f"Sees {self.aspect.upper()}")
         seertext.fontsize = 15
+        seertext.color = theme.black
         seertext2 = render.Text(.57, .82, f"Avoids {self.aspect.upper()}")
         seertext2.fontsize = 15
+        seertext2.color = theme.black
         witchtitle = render.Text(.71, .19, f"Witch")
+        witchtitle.color = theme.black
+        witchtitle.outline_color = theme.white
         witchsymbol = render.Button(.71, .3, "sprites\\classes\\witch.png", None, self.make_classbutton("witch"), theme=theme)
         witchtext = render.Text(.71, .4, f"Manipulates {self.aspect.upper()}")
         witchtext.fontsize = 15
+        witchtext.color = theme.black
         heirtitle = render.Text(.71, .59, f"Heir")
+        heirtitle.color = theme.black
+        heirtitle.outline_color = theme.white
         heirsymbol = render.Button(.71, .7, "sprites\\classes\\heir.png", None, self.make_classbutton("heir"), theme=theme)
         heirtext = render.Text(.71, .8, f"Becomes {self.aspect.upper()}")
         heirtext.fontsize = 15
+        heirtext.color = theme.black
         heirtext2 = render.Text(.71, .82, f"Inherits {self.aspect.upper()}")
         heirtext2.fontsize = 15
+        heirtext2.color = theme.black
         maidtitle = render.Text(.86, .19, f"Maid")
+        maidtitle.color = theme.black
+        maidtitle.outline_color = theme.white
         maidsymbol = render.Button(.86, .3, "sprites\\classes\\maid.png", None, self.make_classbutton("maid"), theme=theme)
         maidtext = render.Text(.86, .4, f"Creates {self.aspect.upper()}")
         maidtext.fontsize = 15
+        maidtext.color = theme.black
         sylphtitle = render.Text(.86, .59, f"Sylph")
+        sylphtitle.color = theme.black
+        sylphtitle.outline_color = theme.white
         sylphsymbol = render.Button(.86, .7, "sprites\\classes\\sylph.png", None, self.make_classbutton("sylph"), theme=theme)
         sylphtext = render.Text(.86, .8, f"Restores {self.aspect.upper()}")
         sylphtext.fontsize = 15
+        sylphtext.color = theme.black
         sylphtext2 = render.Text(.86, .82, f"Heals with {self.aspect.upper()}")
         sylphtext2.fontsize = 15
+        sylphtext2.color = theme.black
         backbutton = render.Button(0.1, 0.08, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.choose_aspect, theme=theme)
 
     @scene
