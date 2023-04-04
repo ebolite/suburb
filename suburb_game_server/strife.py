@@ -400,7 +400,7 @@ class Griefer():
                 player_griefer.player.add_gutter_and_leech()
         elif self.player is not None:
             self.strife.log(f"{self.nickname}: DEAD.")
-            self.strife.dead_players.append(self.player.name)
+            self.strife.banned_players.append(self.player.name)
         self.strife.remove_griefer(self)
         self.strife.verify_strife()
 
@@ -491,7 +491,7 @@ class Griefer():
 
     @classmethod
     def from_player(cls, strife: "Strife", player: "sessions.SubPlayer") -> Optional["Griefer"]:
-        if player.name in strife.dead_players: return None
+        if player.name in strife.banned_players: return None
         griefer = cls(player.name, strife)
         griefer.player_name = player.name
         griefer.type = "player"
@@ -852,12 +852,12 @@ class Strife():
             self.griefers
             self.turn_num
             self.strife_log
-            self.dead_players
+            self.banned_players
         except KeyError:
             self.griefers = {}
             self.turn_num: int = 0
             self.strife_log = ["STRIFE BEGIN!"]
-            self.dead_players = []
+            self.banned_players = []
 
     def add_griefer(self, identifier: Union["sessions.SubPlayer", "npcs.Npc"]):
         if isinstance(identifier, sessions.SubPlayer):
