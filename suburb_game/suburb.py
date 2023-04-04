@@ -903,27 +903,25 @@ class CharacterCreator():
     @scene
     def chooseinterests(self):
         #text = render.Text(0.5, 0.2, f"Interests: {client.requestdic('interests')}")
-        logtext = render.Text(0.5, 0.1, "Select two interests.")
-        interests = client.requestdic("interests")
-        interestbuttons = {}
-        for i, interest in enumerate(interests):
-            y = 0.6 * ((i+1) / (len(interests)+1))
-            y += .2
-            b = render.TextButton(0.5, y, 110, 33, interest, placeholder)
-            b.toggle = True
-            interestbuttons[interest] = b
-        def on_confirm():
-            chosen = []
-            for interest in interestbuttons:
-                if interestbuttons[interest].active: chosen.append(interest)
-            if len(chosen) < 2:
-                logtext = "You need to choose at least two interests."
-            elif len(chosen) > 2:
-                logtext = "You may only choose two interests."
-            else:
-                self.interests = chosen
-                self.choosevial()
-        confirm = render.Button(0.5, 0.9, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", on_confirm)
+        logtext = render.Text(0.5, 0.2, "Choose 3 interests.")
+        if self.interests:
+            interests_text = render.Text(0.5, 0.3, f'Chosen: {", ".join(self.interests)}')
+        def option_active_func(interest: str):
+            if interest in self.interests: return True
+            else: return False
+        def choose_interest_func_constructor(interest: str):
+            def button_func():
+                if interest in self.interests:
+                    self.interests.remove(interest)
+                else:
+                    self.interests.append(interest)
+            return button_func
+        def choose():
+            interests = list(client.requestdic("interests"))
+            render.show_options_with_search(interests, choose_interest_func_constructor, "Choose 3 interests.", self.chooseinterests, current_theme(), option_active_func=option_active_func, reload_on_button_press=True)
+        choose_button = render.TextButton(0.5, 0.5, 192, 32, "Choose", choose)
+        if len(self.interests) == 3:
+            confirm = render.Button(0.5, 0.7, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", self.choosevial)
         backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.chooseclass)
 
     @scene
@@ -1908,7 +1906,7 @@ if __name__ == "__main__":
     if client.connect(): # connect to server
         # login_scene() # normal game start
         character_creator = CharacterCreator()
-        character_creator.choose_aspect()
+        character_creator.chooseinterests()
         # item_editor_scene()
         # map_editor_scene()
         # test_overmap()

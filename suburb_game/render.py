@@ -2569,7 +2569,7 @@ def show_options_with_search(options: list, button_func_constructor: Callable, l
             show_options_with_search(*args)
         return wrapped
     OPTIONS_PER_PAGE = 12
-    label_text = render.Text(0.5, 0.05, label)
+    label_text = Text(0.5, 0.05, label)
     label_text.color = theme.dark
     if search is not None: possible_options = [option for option in options if search in option]
     else: possible_options = options.copy()
@@ -2582,28 +2582,28 @@ def show_options_with_search(options: list, button_func_constructor: Callable, l
         button_func = button_func_constructor(option)
         if reload_on_button_press:
             button_func = wrap_button_func_with_reload(button_func)
-        button = render.TextButton(0.5, y, 196, 32, option, button_func)
+        button = TextButton(0.5, y, 256, 32, option, button_func)
         if option_active_func is not None and option_active_func(option):
             button.fill_color = theme.light
         if image_path_func is not None:
-            image = render.Image(0.4, y, image_path_func(option))
+            image = Image(0.4, y, image_path_func(option))
             image.scale = image_scale
     if page != 0:
         def previous_page(): 
             show_options_with_search(options, button_func_constructor, label, last_scene, theme, page-1, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
-        previous_page_button = render.TextButton(0.5, 0.15, 32, 32, "▲", previous_page)
+        previous_page_button = TextButton(0.5, 0.15, 32, 32, "▲", previous_page)
     if possible_options[(page+1)*OPTIONS_PER_PAGE:(page+2)*OPTIONS_PER_PAGE]:
         def next_page(): 
             show_options_with_search(options, button_func_constructor, label, last_scene, theme, page+1, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
-        next_page_button = render.TextButton(0.5, 0.8, 32, 32, "▼", next_page)
-    search_bar = render.InputTextBox(0.5, 0.9)
+        next_page_button = TextButton(0.5, 0.8, 32, 32, "▼", next_page)
+    search_bar = InputTextBox(0.5, 0.9)
     def search_func():
         show_options_with_search(options, button_func_constructor, label, last_scene, theme, page, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
     search_bar.key_press_func = search_func
-    if search is not None: 
+    if search: 
         search_bar.active = True
         search_bar.text = search
-    backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
+    backbutton = Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
 
 def render():
     for ui_element in move_to_top.copy():
