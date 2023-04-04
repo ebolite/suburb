@@ -2182,11 +2182,15 @@ class GrieferVial(Vial):
 
     @property
     def usable_filled_percent(self) -> float:
-        return min(self.griefer.get_usable_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type), 1)
+        try:
+            return min(self.griefer.get_usable_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type), 1)
+        except ZeroDivisionError: return 0
 
     @property
     def filled_percent(self) -> float:
-        return self.griefer.get_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type)  
+        try:
+            return self.griefer.get_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type)
+        except ZeroDivisionError: return 0
 
 class Symbol(Image):
     player_image_crop = (144, 98, 114, 196)
