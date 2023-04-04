@@ -40,7 +40,7 @@ class MapEditor():
             return button_func
         def load_map_button_func():
             map_names = [map_name for map_name in util.saved_maps]
-            show_options_with_search(map_names, load_map_func_constructor, "What map do you want to load?", last_scene, self.theme)
+            render.show_options_with_search(map_names, load_map_func_constructor, "What map do you want to load?", last_scene, self.theme)
         load_map_button = render.TextButton(0.5, 0.4, 196, 32, "Load Map", load_map_button_func)
         def new_map_button_func():
             self.setup_defaults()
@@ -336,7 +336,7 @@ class ItemEditor():
             return button_func
         def load_item_button_func():
             item_names = [item_name for item_name in util.saved_items]
-            show_options_with_search(item_names, load_item_func_constructor, "What item do you want to load?", last_scene, self.theme)
+            render.show_options_with_search(item_names, load_item_func_constructor, "What item do you want to load?", last_scene, self.theme)
         load_item_button = render.TextButton(0.5, 0.4, 196, 32, "Load Item", load_item_button_func)
         def new_item_button_func():
             self.setup_defaults()
@@ -566,7 +566,7 @@ class ItemEditor():
             kinds = client.requestdic(intent="kinds")
             kinds = list(kinds)
             kinds = [kind for kind in kinds if kind not in self.kinds]
-            show_options_with_search(kinds, select_button_constructor, "Select a kind to add.", last_scene, self.theme, 0)
+            render.show_options_with_search(kinds, select_button_constructor, "Select a kind to add.", last_scene, self.theme, 0)
         kinds_button = render.TextButton(0.15, 0.45, 128, 32, "Add kind", kinds_button_func)
         if self.kinds:
             def remove_kinds_button_func():
@@ -644,7 +644,7 @@ class ItemEditor():
             available_grists = list(available_grists)
             available_grists = [grist for grist in available_grists if grist not in self.cost]
             if "rainbow" in available_grists: available_grists.remove("rainbow")
-            show_options_with_search(available_grists, pick_grist_scene_constructor, "Choose grist to add.", last_scene, self.theme, image_path_func=get_grist_icon_path, image_scale=0.5)
+            render.show_options_with_search(available_grists, pick_grist_scene_constructor, "Choose grist to add.", last_scene, self.theme, image_path_func=get_grist_icon_path, image_scale=0.5)
         add_grist_button = render.TextButton(0.6, 0.45, 128, 24, "Add grist", add_grist_func)
 
     def draw_state_icons(self, states_type: str, binding: "render.UIElement", item_states: dict[str, dict]):
@@ -716,7 +716,7 @@ class ItemEditor():
             def button_func():
                 possible_states = list(client.requestdic("item_states"))
                 possible_states = [state_name for state_name in possible_states if state_name not in states_dict]
-                show_options_with_search(possible_states, pick_state_constructor_constructor(state_type), "Choose state to add.", last_scene, self.theme)
+                render.show_options_with_search(possible_states, pick_state_constructor_constructor(state_type), "Choose state to add.", last_scene, self.theme)
             return button_func
         onhit_label = render.Text(0.15, 0.55, "On-Hit States")
         onhit_label.color = self.theme.dark
@@ -808,7 +808,7 @@ class ItemEditor():
         def choose_interests():
             options = client.requestdic("interests")
             options = list(options)
-            show_options_with_search(options, choose_interests_button_constructor, "Choose interests for this item.", last_scene, self.theme, option_active_func=is_interest_in_interests, reload_on_button_press=True)
+            render.show_options_with_search(options, choose_interests_button_constructor, "Choose interests for this item.", last_scene, self.theme, option_active_func=is_interest_in_interests, reload_on_button_press=True)
         choose_interests_button = render.TextButton(0.5, 2.5, 128, 32, "Choose", choose_interests)
         choose_interests_button.bind_to(interests_label)
         def interest_rarity_button_func():
@@ -841,7 +841,7 @@ class ItemEditor():
         def choose_tiles():
             options = client.requestdic("tile_spawnlists")
             options = list(options)
-            show_options_with_search(options, choose_tiles_button_constructor, "Choose room spawnlists for this item.", last_scene, self.theme, option_active_func=is_tile_in_tiles, reload_on_button_press=True)
+            render.show_options_with_search(options, choose_tiles_button_constructor, "Choose room spawnlists for this item.", last_scene, self.theme, option_active_func=is_tile_in_tiles, reload_on_button_press=True)
         choose_tiles_button = render.TextButton(0.5, 2.5, 128, 32, "Choose", choose_tiles)
         choose_tiles_button.bind_to(tiles_label)
         def tile_rarity_button_func():
@@ -975,50 +975,3 @@ class ItemEditor():
         for grist_name, value in self.cost.items():
             out[grist_name] = f"{int(self.power*value)} ({round(value*100)}%)"
         return out
-    
-def show_options_with_search(options: list, button_func_constructor: Callable, label:str, last_scene: Callable, theme: "themes.Theme", page=0, 
-                             search: Optional[str]=None, image_path_func: Optional[Callable]=None, image_scale=1.0, option_active_func: Optional[Callable]=None,
-                             reload_on_button_press=False):
-    args = (options, button_func_constructor, label, last_scene, theme, page, search, image_path_func, image_scale, option_active_func, reload_on_button_press)
-    suburb.new_scene()
-    def wrap_button_func_with_reload(button_func):
-        def wrapped():
-            button_func()
-            show_options_with_search(*args)
-        return wrapped
-    OPTIONS_PER_PAGE = 12
-    label_text = render.Text(0.5, 0.05, label)
-    label_text.color = theme.dark
-    if search is not None: possible_options = [option for option in options if search in option]
-    else: possible_options = options.copy()
-    display_options = possible_options[page*OPTIONS_PER_PAGE:(page+1)*OPTIONS_PER_PAGE]
-    if not display_options: 
-        page=0
-        display_options = possible_options[page*OPTIONS_PER_PAGE:(page+1)*OPTIONS_PER_PAGE]
-    for i, option in enumerate(display_options):
-        y = 0.20 + 0.05*i
-        button_func = button_func_constructor(option)
-        if reload_on_button_press:
-            button_func = wrap_button_func_with_reload(button_func)
-        button = render.TextButton(0.5, y, 196, 32, option, button_func)
-        if option_active_func is not None and option_active_func(option):
-            button.fill_color = theme.light
-        if image_path_func is not None:
-            image = render.Image(0.4, y, image_path_func(option))
-            image.scale = image_scale
-    if page != 0:
-        def previous_page(): 
-            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page-1, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
-        previous_page_button = render.TextButton(0.5, 0.15, 32, 32, "▲", previous_page)
-    if possible_options[(page+1)*OPTIONS_PER_PAGE:(page+2)*OPTIONS_PER_PAGE]:
-        def next_page(): 
-            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page+1, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
-        next_page_button = render.TextButton(0.5, 0.8, 32, 32, "▼", next_page)
-    search_bar = render.InputTextBox(0.5, 0.9)
-    def search_func():
-        show_options_with_search(options, button_func_constructor, label, last_scene, theme, page, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
-    search_bar.key_press_func = search_func
-    if search is not None: 
-        search_bar.active = True
-        search_bar.text = search
-    backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
