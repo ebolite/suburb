@@ -348,7 +348,7 @@ class CharacterCreator():
         self.noun: str = "bug"
         self.pronouns: tuple[str, str, str, str] = ("they", "them", "their", "theirs")
         self.interests: list[str] = []
-        self.aspect: str = "time"
+        self.aspect: str = random.choice(self.ASPECTS)
         self.gameclass: str = "knight"
         self.secondaryvial: str = "mangrit"
         self.modus: str = "array"
@@ -529,8 +529,7 @@ class CharacterCreator():
             else:
                 log.text = "Name is too long or too short."
         confirm = render.Button(.5, 0.9, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
-        backbutton = render.Button(0.08, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.make_symbol)
-        
+        backbutton = render.Button(0.08, 0.1, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.make_symbol)  
 
     @scene
     def nouncharacter(self):
@@ -614,130 +613,215 @@ class CharacterCreator():
         confirm_button = render.Button(0.5, 0.5, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm_func)
         backbutton = render.Button(0.5, 0.66, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.pronounscharacter)
 
-    def make_asbutton(self, aspect):
-        def button():
-            def on_confirm():
-                self.aspect = f"{aspect}"
-                self.chooseclass()
-            render.clear_elements()
-            text = render.Text(0.5, 0.25, "Is this the aspect you wish to choose?")
-            text.color = current_theme().dark
-            text.outline_color = current_theme().black
-            blurb = render.Image(0.5, 0.39, f"sprites\\aspects\\{aspect}blurb.png")
-            blurb.convert = False
-            confirm = render.Button(0.5, 0.54, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", on_confirm)
-            backbutton = render.Button(0.5, 0.66, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.aspectcharacter)
-        return button
+    ASPECTS_DESCRIPTIONS = {
+            "space": [
+            "Associated with METTLE, the damage reduction stat.", 
+            "SPACE is a part of the fabric of reality itself.",
+            "These players are big thinkers and innovators, creatives capable of seeing the big picture."
+            ],
+            "time": [
+            "Associated with SPUNK, the damage stat.", 
+            "TIME is the counterpart to SPACE, as it composes the other part of the fabric of reality.",
+            "These players are action-driven and goal-focused."
+            ],
+            "mind": [
+            "Associated with TACT, the resource stat.",
+            "MIND players are the greatest minds in the universe.",
+            "These players are cerebral and analytic, capable of creating and executing plans materfully."
+            ],
+            "heart": [
+            "Associated with VIGOR, the maximum HP stat.",
+            "HEART represents the soul itself.",
+            "These players are very in-tune with their sense of self and emotions.",
+            ],
+            "hope": [
+            "The HOPE vial gives buffs to all stats each turn.",
+            "HOPE represents justice and hope.",
+            "These players have a very strong sense of morality.",
+            "By its very nature, HOPE defies destiny."
+            ],
+            "rage": [
+            "The RAGE vial increases both damage dealt and received.",
+            "RAGE represents negative emotions and rage.",
+            "These players are bringers of chaos, unpredictable and unstable.",
+            ],
+            "breath": [
+            "Associated with SAVVY, the auto-parry and speed stat.",
+            "BREATH represents freedom, confidence and heroism.",
+            "These players do their own thing and can't be held down by others."
+            ],
+            "blood": [
+            "Associated with the VIM vial, used as a resource in combat.",
+            "BLOOD represents bonds, both metaphorical and literal.",
+            "These players motivate their allies and form strong relationships between their teams."
+            ],
+            "life": [
+            "Associated with the HEALTH vial.",
+            "LIFE represents life, healing and empathy.",
+            "These players are caretakers and nurturers.",
+            "A LIFE palyer is deeply empathetic and intuitive.",
+            ],
+            "doom": [
+            "Associated with draining the HEALTH vial.",
+            "DOOM represents futility, restriction, and doom.",
+            "These players are cursed by fate to suffer, though their misery gives unique insight into others."
+            ],
+            "light": [
+            "Associated with LUCK, which stacks the deck for you.",
+            "LIGHT represents fortune and knowledge.",
+            "These players enjoy finding loopholes in the rules they can exploit."
+            ],
+            "void": [
+            "Associated with draining resource vials such as VIM, ASPECT and SECONDARY VIALS.",
+            "VOID represents lacking, obfuscation, and nothingness.",
+            "Players of this aspect are mysterious and skeptical.",
+            "They don't put much value in faith."
+            ]
+        }
 
-    # NIGHTMARE NIGHTMARE NIGHTMARE!!!
+    ASPECTS = list(ASPECTS_DESCRIPTIONS.keys())
+
+    CLASS_DESCRIPTIONS = {
+        "knight": [
+            "Fights with ASPECT",
+            "Exploits ASPECT",
+        ],
+        "page": [
+            "Provides ASPECT",
+            "Has great potential",
+        ],
+        "prince": [
+            "Destroys ASPECT",
+            "Destroys with ASPECT",
+        ],
+        "bard": [
+            "ASPECTless",
+            "Heralds ASPECTpocalypse",
+        ],
+        "thief": [
+            "Steals ASPECT",
+            "Hoards ASPECT",
+        ],
+        "rogue": [
+            "Steals ASPECT",
+            "Shares ASPECT",
+        ],
+        "mage": [
+            "Sees ASPECT",
+            "Pursues ASPECT",
+        ],
+        "witch": [
+            "Manipulates ASPECT"
+        ],
+        "heir": [
+            "Becomes ASPECT",
+            "Inherits ASPECT",
+        ],
+        "maid": [
+            "Creates ASPECT",
+        ],
+        "sylph": [
+            "Restores ASPECT",
+            "Heals with ASPECT"
+        ]
+    }
+
+    CLASSES = list(CLASS_DESCRIPTIONS.keys())
+
     @scene
-    def aspectcharacter(self):
-        space = render.Button(0,0, "sprites\\aspects\\space120.png", "sprites\\aspects\\space120.png", self.make_asbutton("space"), hover="sprites\\aspects\\space120hover.png")
-        space.absolute = True
-        space.convert = False
-        spaceblurb = render.Image(120, 0, "sprites\\aspects\\spaceblurb.png")
-        spaceblurb.absolute = True
-        time = render.Button(640, 0, "sprites\\aspects\\time120.png", "sprites\\aspects\\time120.png", self.make_asbutton("time"), hover="sprites\\aspects\\time120hover.png")
-        time.absolute = True
-        timeblurb = render.Image(760, 0, "sprites\\aspects\\timeblurb.png")
-        timeblurb.absolute = True
-        mind = render.Button(0, 120, "sprites\\aspects\\mind120.png", "sprites\\aspects\\mind120.png", self.make_asbutton("mind"), hover="sprites\\aspects\\mind120hover.png")
-        mind.absolute = True
-        mindblurb = render.Image(120, 120, "sprites\\aspects\\mindblurb.png")
-        mindblurb.absolute = True
-        heart = render.Button(640, 120, "sprites\\aspects\\heart120.png", "sprites\\aspects\\heart120.png", self.make_asbutton("heart"), hover="sprites\\aspects\\heart120hover.png")
-        heart.absolute = True
-        heartblurb = render.Image(760, 120, "sprites\\aspects\\heartblurb.png")
-        heartblurb.absolute = True
-        hope = render.Button(0, 240, "sprites\\aspects\\hope120.png", "sprites\\aspects\\hope120.png", self.make_asbutton("hope"), hover="sprites\\aspects\\hope120hover.png")
-        hope.absolute = True
-        hopeblurb = render.Image(120, 240, "sprites\\aspects\\hopeblurb.png")
-        hopeblurb.absolute = True
-        rage = render.Button(640, 240, "sprites\\aspects\\rage120.png", "sprites\\aspects\\rage120.png", self.make_asbutton("rage"), hover="sprites\\aspects\\rage120hover.png")
-        rage.absolute = True
-        rageblurb = render.Image(760, 240, "sprites\\aspects\\rageblurb.png")
-        rageblurb.absolute = True
-        breath = render.Button(0, 360, "sprites\\aspects\\breath120.png", "sprites\\aspects\\breath120.png", self.make_asbutton("breath"), hover="sprites\\aspects\\breath120hover.png")
-        breath.absolute = True
-        breathblurb = render.Image(120, 360, "sprites\\aspects\\breathblurb.png")
-        breathblurb.absolute = True
-        blood = render.Button(640, 360, "sprites\\aspects\\blood120.png", "sprites\\aspects\\blood120.png", self.make_asbutton("blood"), hover="sprites\\aspects\\blood120hover.png")
-        blood.absolute = True
-        bloodblurb = render.Image(760, 360, "sprites\\aspects\\bloodblurb.png")
-        bloodblurb.absolute = True
-        life = render.Button(0, 480, "sprites\\aspects\\life120.png", "sprites\\aspects\\life120.png", self.make_asbutton("life"), hover="sprites\\aspects\\life120hover.png")
-        life.absolute = True
-        lifeblurb = render.Image(120, 480, "sprites\\aspects\\lifeblurb.png")
-        lifeblurb.absolute = True
-        doom = render.Button(640, 480, "sprites\\aspects\\doom120.png", "sprites\\aspects\\doom120.png", self.make_asbutton("doom"), hover="sprites\\aspects\\doom120hover.png")
-        doom.absolute = True
-        doom.convert = False
-        doomblurb = render.Image(760, 480, "sprites\\aspects\\doomblurb.png")
-        doomblurb.absolute = True
-        doomblurb.convert = False
-        light = render.Button(0, 600, "sprites\\aspects\\light120.png", "sprites\\aspects\\light120.png", self.make_asbutton("light"), hover="sprites\\aspects\\light120hover.png")
-        light.absolute = True
-        lightblurb = render.Image(120, 600, "sprites\\aspects\\lightblurb.png")
-        lightblurb.absolute = True
-        void = render.Button(640, 600, "sprites\\aspects\\void120.png", "sprites\\aspects\\void120.png", self.make_asbutton("void"), hover="sprites\\aspects\\void120hover.png")
-        void.absolute = True
-        voidblurb = render.Image(760, 600, "sprites\\aspects\\voidblurb.png")
-        voidblurb.absolute = True
+    def choose_aspect(self):
+        current_index = self.ASPECTS.index(self.aspect)
+        try: next_aspect = self.ASPECTS[current_index+1]
+        except IndexError: next_aspect = self.ASPECTS[0]
+        next_aspect_theme = themes.themes[next_aspect]
+        previous_aspect = self.ASPECTS[current_index-1]
+        previous_aspect_theme = themes.themes[previous_aspect]
+        def next_aspect_func():
+            self.aspect = next_aspect
+            self.choose_aspect()
+        def previous_aspect_func():
+            self.aspect = previous_aspect
+            self.choose_aspect()
+        theme = themes.themes[self.aspect]
+        bg = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.light)
+        icon_bg = render.SolidColor(0.5, 0.15, 130, 130, theme.dark)
+        icon_bg.border_radius = 4
+        icon_bg.absolute = False
+        icon = render.Image(0.5, 0.15, f"sprites/aspects/{self.aspect}120.png")
+        icon.convert = False
+        previous_bg = render.SolidColor(0.4, 0.15, 64, 64, previous_aspect_theme.dark)
+        previous_bg.border_radius = 2
+        previous_bg.absolute = False
+        previous_aspect_icon = render.Button(0.4, 0.15, f"sprites/aspects/{previous_aspect}120.png", None, previous_aspect_func)
+        previous_aspect_icon.convert = False
+        previous_aspect_icon.scale = 0.5
+        next_bg = render.SolidColor(0.6, 0.15, 64, 64, next_aspect_theme.dark)
+        next_bg.border_radius = 2
+        next_bg.absolute = False
+        next_aspect_icon = render.Button(0.6, 0.15, f"sprites/aspects/{next_aspect}120.png", None, next_aspect_func)
+        next_aspect_icon.convert = False
+        next_aspect_icon.scale = 0.5
+        title = render.Text(0.5, 0.3, self.aspect.upper())
+        title.color = theme.black
+        title.outline_color = theme.white
+        y = 0.35
+        for line in self.ASPECTS_DESCRIPTIONS[self.aspect]:
+            text = render.Text(0.5, y, line)
+            text.color = theme.white
+            text.outline_color = theme.black
+            text.fontsize = 20
+            y += 0.05
+        confirm_button = render.Button(0.5, 0.65, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", self.chooseclass, theme=theme)
+        backbutton = render.Button(0.08, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.pronounscharacter, theme=theme)
 
     def make_classbutton(self, game_class):
         def button():
-            def on_confirm():
-                self.gameclass = f"{game_class}"
-                self.chooseinterests()
-            render.clear_elements()
-            text = render.Text(0.5, 0.3, f"Are you sure you want to be the {game_class.upper()} of {self.aspect.upper()}?")
-            text.color = current_theme().dark
-            text.outline_color = current_theme().black
-            confirm = render.Button(0.5, 0.40, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", on_confirm)
-            backbutton = render.Button(0.5, 0.52, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.chooseclass)
+            self.gameclass = game_class
+            self.chooseinterests()
         return button
 
     @scene
     def chooseclass(self):
         theme = themes.themes[self.aspect]
+        bg = render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.light)
         knighttitle = render.Text(.14, .19, f"Knight")
-        knightsymbol = render.Button(.14, .3, "sprites\\classes\\knight.png", "sprites\\classes\\knight.png", self.make_classbutton("knight"), theme=theme)
+        knightsymbol = render.Button(.14, .3, "sprites\\classes\\knight.png", None, self.make_classbutton("knight"), theme=theme)
         knighttext = render.Text(.14, .4, f"Fights with {self.aspect.upper()}")
         knighttext.fontsize = 15
         knighttext2 = render.Text(.14, .42, f"Exploits {self.aspect.upper()}")
         knighttext2.fontsize = 15
         pagetitle = render.Text(.14, .59, f"Page")
-        pagesymbol = render.Button(.14, .7, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", self.make_classbutton("page"), hover="sprites\\classes\\placeholderhover.png")
+        pagesymbol = render.Button(.14, .7, "sprites\\classes\\page.png", None, self.make_classbutton("page"), theme=theme)
         pagetext = render.Text(.14, .8, f"Provides {self.aspect.upper()}")
         pagetext.fontsize = 15
         pagetext2 = render.Text(.14, .82, f"Scales")
         pagetext2.fontsize = 15
         princetitle = render.Text(.29, .19, f"Prince")
-        princesymbol = render.Button(.29, .3, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", self.make_classbutton("prince"), hover="sprites\\classes\\placeholderhover.png")
+        princesymbol = render.Button(.29, .3, "sprites\\classes\\prince.png", None, self.make_classbutton("prince"), theme=theme)
         princetext = render.Text(.29, .4, f"Destroys {self.aspect.upper()}")
         princetext.fontsize = 15
         princetext2 = render.Text(.29, .42, f"Destroys with {self.aspect.upper()}")
         princetext2.fontsize = 15
         bardtitle = render.Text(.29, .59, f"Bard")
-        bardsymbol = render.Button(.29, .7, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", self.make_classbutton("bard"), hover="sprites\\classes\\placeholderhover.png")
+        bardsymbol = render.Button(.29, .7, "sprites\\classes\\bard.png", None, self.make_classbutton("bard"), theme=theme)
         bardtext = render.Text(.29, .8, f"{self.aspect.upper()}less")
         bardtext.fontsize = 15
         bardtext2 = render.Text(.29, .82, f"Heralds {self.aspect.upper()}-stinction")
         bardtext2.fontsize = 15
         thieftitle = render.Text(.43, .19, f"Thief")
-        thiefsymbol = render.Button(.43, .3, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", self.make_classbutton("thief"), hover="sprites\\classes\\placeholderhover.png")
+        thiefsymbol = render.Button(.43, .3, "sprites\\classes\\thief.png", None, self.make_classbutton("thief"), theme=theme)
         thieftext = render.Text(.43, .4, f"Steals {self.aspect.upper()}")
         thieftext.fontsize = 15
         thieftext2 = render.Text(.43, .42, f"Hoards {self.aspect.upper()}")
         thieftext2.fontsize = 15
         roguetitle = render.Text(.43, .59, f"Rogue")
-        roguesymbol = render.Button(.43, .7, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", self.make_classbutton("rogue"), hover="sprites\\classes\\placeholderhover.png")
+        roguesymbol = render.Button(.43, .7, "sprites\\classes\\rogue.png", None, self.make_classbutton("rogue"), theme=theme)
         roguetext = render.Text(.43, .8, f"Steals {self.aspect.upper()}")
         roguetext.fontsize = 15
         roguetext2 = render.Text(.43, .82, f"Shares {self.aspect.upper()}")
         roguetext2.fontsize = 15
         magetitle = render.Text(.57, .19, f"Mage")
-        magesymbol = render.Button(.57, .3, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", self.make_classbutton("mage"), hover="sprites\\classes\\placeholderhover.png")
+        magesymbol = render.Button(.57, .3, "sprites\\classes\\placeholder.png", None, self.make_classbutton("mage"), theme=theme)
         magetext = render.Text(.57, .4, f"Sees {self.aspect.upper()}")
         magetext.fontsize = 15
         magetext2 = render.Text(.57, .42, f"Pursues {self.aspect.upper()}")
@@ -753,22 +837,22 @@ class CharacterCreator():
         witchtext = render.Text(.71, .4, f"Manipulates {self.aspect.upper()}")
         witchtext.fontsize = 15
         heirtitle = render.Text(.71, .59, f"Heir")
-        heirsymbol = render.Button(.71, .7, "sprites\\classes\\heir.png", "sprites\\classes\\heir.png", self.make_classbutton("heir"), theme=theme)
+        heirsymbol = render.Button(.71, .7, "sprites\\classes\\heir.png", None, self.make_classbutton("heir"), theme=theme)
         heirtext = render.Text(.71, .8, f"Becomes {self.aspect.upper()}")
         heirtext.fontsize = 15
         heirtext2 = render.Text(.71, .82, f"Inherits {self.aspect.upper()}")
         heirtext2.fontsize = 15
         maidtitle = render.Text(.86, .19, f"Maid")
-        maidsymbol = render.Button(.86, .3, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", self.make_classbutton("maid"), hover="sprites\\classes\\placeholderhover.png")
+        maidsymbol = render.Button(.86, .3, "sprites\\classes\\maid.png", None, self.make_classbutton("maid"), theme=theme)
         maidtext = render.Text(.86, .4, f"Creates {self.aspect.upper()}")
         maidtext.fontsize = 15
         sylphtitle = render.Text(.86, .59, f"Sylph")
-        sylphsymbol = render.Button(.86, .7, "sprites\\classes\\placeholder.png", "sprites\\classes\\placeholder.png", self.make_classbutton("sylph"), hover="sprites\\classes\\placeholderhover.png")
+        sylphsymbol = render.Button(.86, .7, "sprites\\classes\\sylph.png", None, self.make_classbutton("sylph"), theme=theme)
         sylphtext = render.Text(.86, .8, f"Restores {self.aspect.upper()}")
         sylphtext.fontsize = 15
         sylphtext2 = render.Text(.86, .82, f"Heals with {self.aspect.upper()}")
         sylphtext2.fontsize = 15
-        backbutton = render.Button(0.1, 0.08, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.aspectcharacter)
+        backbutton = render.Button(0.1, 0.08, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.choose_aspect, theme=theme)
 
     @scene
     def chooseinterests(self):
@@ -1776,7 +1860,9 @@ if __name__ == "__main__":
     connecting_text.outline_color = themes.default.black
     render.render()
     if client.connect(): # connect to server
-        login_scene() # normal game start
+        # login_scene() # normal game start
+        character_creator = CharacterCreator()
+        character_creator.choose_aspect()
         # item_editor_scene()
         # map_editor_scene()
         # test_overmap()
