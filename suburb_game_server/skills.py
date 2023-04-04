@@ -725,7 +725,7 @@ seethe.description = "Increases the target's RAGE, which increases both damage d
 seethe.parryable = False
 seethe.action_cost = 0
 seethe.cooldown = 1
-seethe.add_vial_cost("aspect", "user.power")
+seethe.add_vial_cost("aspect", "user.power//2")
 seethe.add_aspect_change("rage", "user.power")
 
 subjugate = AspectSkill("subjugate", rage, 50)
