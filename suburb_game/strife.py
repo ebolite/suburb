@@ -590,7 +590,7 @@ class Strife():
             hidden = config.vials[vial_name]["hidden"]
             if hidden and self.player_griefer.get_vial(vial_name) == self.player_griefer.get_starting_vial(vial_name): continue
             vial_y += vial_y_increase
-            new_vial = render.Vial(vial_x, vial_y, 150, self.player_griefer, vial_name)
+            new_vial = render.GrieferVial(vial_x, vial_y, 150, self.player_griefer, vial_name)
             new_vial.absolute = False
             self.vials[vial_name] = new_vial
 

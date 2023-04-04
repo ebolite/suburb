@@ -2090,14 +2090,14 @@ class Window(SolidColor):
         super().delete()
 
 class Vial(SolidColor):
-    def __init__(self, x, y, w: int, griefer: Griefer, vial_type: str):
+    def __init__(self, x, y, w: int, vial_type: str, filled_amount: float):
         self.x = x
         self.y = y
         self.w = w
-        self.griefer = griefer
         self.h = 8
         self.vial_y_offset = 0
         self.vial_type = vial_type
+        self.filled_amount = filled_amount
         super().__init__(x, y, w, self.h, themes.default.white)
         self.padding = 1
         self.border_radius = 2
@@ -2169,11 +2169,24 @@ class Vial(SolidColor):
 
     @property
     def usable_filled_percent(self) -> float:
+        return self.filled_amount
+
+    @property
+    def filled_percent(self) -> float:
+        return self.filled_amount
+
+class GrieferVial(Vial):
+    def __init__(self, x, y, w: int, griefer: Griefer, vial_type: str):
+        super().__init__(x, y, w, vial_type, 0)
+        self.griefer = griefer
+
+    @property
+    def usable_filled_percent(self) -> float:
         return min(self.griefer.get_usable_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type), 1)
 
     @property
     def filled_percent(self) -> float:
-        return self.griefer.get_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type)   
+        return self.griefer.get_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type)  
 
 class Symbol(Image):
     player_image_crop = (144, 98, 114, 196)
@@ -2369,7 +2382,7 @@ class GrieferElement(UIElement):
 
     def add_vial(self, vial_type):
         if vial_type not in self.vials:
-            new_vial = Vial(0.5, 0, 150, self.griefer, vial_type)
+            new_vial = GrieferVial(0.5, 0, 150, self.griefer, vial_type)
             new_vial.absolute = False
             if isinstance(self, Enemy):
                 new_vial.rect_y_offset = -25

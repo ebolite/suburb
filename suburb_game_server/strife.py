@@ -12,7 +12,7 @@ import stateseffects
 import alchemy
 
 vials: dict[str, "Vial"] = {}
-secondary_vials = []
+secondary_vials: dict[str, str] = {}
 
 def stats_from_ratios(stat_ratios: dict[str, int], power: int):
     total_ratios = 0
@@ -102,9 +102,9 @@ class Vial():
         pass
 
 class SecondaryVial(Vial):
-    def __init__(self, name):
+    def __init__(self, name: str, description: str):
         super().__init__(name)
-        secondary_vials.append(name)
+        secondary_vials[name] = description
 
 class HpVial(Vial):
     def new_turn(self, griefer: "Griefer"):
@@ -199,7 +199,7 @@ class MangritVial(SecondaryVial):
         mod += 1
         return int(damage * mod)
 
-mangrit = MangritVial("mangrit")
+mangrit = MangritVial("mangrit", "Starts empty, but increases steadily. Increases damage.")
 mangrit.maximum_formula = "{power}//2 + {tac}*3"
 mangrit.starting_formula = "0"
 mangrit.optional_vial = True
@@ -209,7 +209,7 @@ class ImaginationVial(SecondaryVial):
     def new_turn(self, griefer: "Griefer"):
         griefer.change_vial("aspect", self.get_current(griefer)//2)
 
-imagination = ImaginationVial("imagination")
+imagination = ImaginationVial("imagination", "Starts empty, increases as ASPECT vial is drained. Increases ASPECT vial regeneration.")
 imagination.maximum_formula = "{power} + {tac}*6"
 imagination.starting_formula = "0"
 imagination.optional_vial = True
@@ -224,16 +224,13 @@ class HorseshitometerVial(SecondaryVial):
     def on_hit(self, griefer: "Griefer", damage_dealt: int):
         self.add_value(griefer, -damage_dealt//4)
 
-horseshitometer = HorseshitometerVial("horseshitometer")
+horseshitometer = HorseshitometerVial("horseshitometer", "Increases overtime, dealing damage decreases. Increases or decreases chance to AUTO-PARRY.")
 horseshitometer.maximum_formula = "{power} + {tac}*6"
 horseshitometer.starting_formula = "{maximum}//2"
 horseshitometer.optional_vial = True
 horseshitometer.tact_vial
 
 class GambitVial(SecondaryVial):
-    def __init__(self, name):
-        super().__init__(name)
-
     def initialize_vial(self, griefer: "Griefer"):
         if "gambit_skill_name" not in griefer.misc_data: griefer.misc_data["gambit_skill_name"] = None
         if "picked_gambit_skills" not in griefer.misc_data:
@@ -283,7 +280,7 @@ class GambitVial(SecondaryVial):
         else:
             return False
 
-gambit = GambitVial("gambit")
+gambit = GambitVial("gambit", "Get a prompt for a GAMBIT skill each turn. Heals you each turn you comply.")
 gambit.maximum_formula = "{power} + {tac}*6"
 gambit.starting_formula = "{maximum}//2"
 gambit.optional_vial = True

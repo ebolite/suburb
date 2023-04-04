@@ -925,42 +925,15 @@ class CharacterCreator():
         backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.chooseclass)
 
     @scene
-    def choosevial(self):
+    def choosevial(self, page=0):
+        secondary_vials = client.requestdic(intent="secondary_vials")
         def vialbutton(vial):
             def out():
                 self.secondaryvial = vial
                 self.choosemodus()
             return out
         logtext = render.Text(.5, .05, "Choose a SECONDARY VIAL.")
-        mangrittitle = render.Text(0.33, 0.24, "MANGRIT")
-        mangritimage = render.Button(0.33, 0.33, "sprites\\vials\\mangrit\\mangritexample.png", "sprites\\vials\\mangrit\\mangritexamplepressed.png", vialbutton("mangrit"))
-        mangritdescription = render.Text(0.33, 0.4, "Starts empty, but increases steadily.")
-        mangritdescription.fontsize = 16
-        mangritdescription2 = render.Text(0.33, 0.43, "Increases damage.")
-        mangritdescription2.fontsize = 16
-        imaginationtitle = render.Text(0.33, 0.57, "IMAGINATION")
-        imaginationimage = render.Button(0.33, 0.66, "sprites\\vials\\imagination\\imaginationexample.png", "sprites\\vials\\imagination\\imaginationexamplepressed.png", vialbutton("imagination"))
-        imaginationdescription = render.Text(0.33, 0.73, "Starts empty, increases as ASPECT vial is drained.")
-        imaginationdescription.fontsize = 16
-        imaginationdescription2 = render.Text(0.33, 0.76, "Increases ASPECT vial regeneration.")
-        imaginationdescription2.fontsize = 16
-        horseshitometertitle = render.Text(0.66, 0.17, "FLIGHTY BROADS AND")
-        horseshitometertitle2 = render.Text(0.66, 0.24, "THEIR SNARKY HORSESHITOMETER")
-        horseshitometerimage = render.Button(0.66, 0.33, "sprites\\vials\\horseshitometer\\horseshitometerexample.png", "sprites\\vials\\horseshitometer\\horseshitometerexamplepressed.png", vialbutton("horseshitometer"))
-        horseshitometerdescription = render.Text(0.66, 0.4, "Starts 50%.")
-        horseshitometerdescription.fontsize = 16
-        horseshitometerdescription2 = render.Text(0.66, 0.43, "AUTO-PARRYING increases, getting hit decreases.")
-        horseshitometerdescription2.fontsize = 16
-        horseshitometerdescription3 = render.Text(0.66, 0.46, "Increases or decreases chance to AUTO-PARRY.")
-        horseshitometerdescription3.fontsize = 16
-        gambittitle = render.Text(0.66, 0.57, "PRANKSTER'S GAMBIT")
-        gambitimage = render.Button(0.66, 0.66, "sprites\\vials\\gambit\\gambitexample.png", "sprites\\vials\\gambit\\gambitexamplepressed.png", vialbutton("gambit"))
-        gambitdescription = render.Text(0.66, 0.73, "Starts 50%.")
-        gambitdescription.fontsize = 16
-        gambitdescription2 = render.Text(0.66, 0.76, "Get a prompt for a GAMBIT skill each turn.")
-        gambitdescription2.fontsize = 16
-        gambitdescription3 = render.Text(0.66, 0.79, "Heals you each turn you comply.")
-        gambitdescription3.fontsize = 16
+        current_vials = secondary_vials[page*4:(page+1)*4]
         backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.chooseinterests)
 
     @scene
