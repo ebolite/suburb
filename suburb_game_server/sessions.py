@@ -1297,7 +1297,7 @@ class SubPlayer(Player):
     def wear(self, instance_name: str) -> bool:
         instance = alchemy.Instance(instance_name)
         if instance.item.size > config.max_worn_size: return False
-        if self.worn_instance_name is not None: self.unwield()
+        if self.worn_instance_name is not None: self.unwear()
         for deck in self.strife_portfolio.values():
             if instance.name in deck: 
                 self.eject_from_strife_deck(instance.name)
