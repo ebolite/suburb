@@ -50,8 +50,6 @@ class_skills: dict[str, dict[str, dict[str, int]]] = {}
 abstratus_skills = {}
 illegal_ai_skills = []
 
-SECONDARY_VIALS = ["horseshitometer", "gambit", "imagination", "mangrit"]
-
 SKILL_CATEGORIES = ["aggressive", "abstinent", "aspected", "accolades", "arsenal", "none"]
 
 def modify_damage(damage: int, griefer: "strife.Griefer"):
@@ -622,7 +620,7 @@ light.balance_mult = 1.2
 # void
 void = NegativeAspect("void")
 void.is_vial = True
-void.vials = ["vim", "aspect"] + SECONDARY_VIALS
+void.vials = ["vim", "aspect"]
 void.ratio_mult = 2
 void.balance_mult = 1.5
 void.adjustment_divisor = 2

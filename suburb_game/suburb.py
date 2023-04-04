@@ -672,7 +672,7 @@ class CharacterCreator():
             "These players enjoy finding loopholes in the rules they can exploit."
             ],
             "void": [
-            "Associated with draining resource vials such as VIM, ASPECT and SECONDARY VIALS.",
+            "Associated with draining the VIM and ASPECT vials.",
             "VOID represents lacking, obfuscation, and nothingness.",
             "Players of this aspect are mysterious and skeptical.",
             "They don't put much value in faith."
