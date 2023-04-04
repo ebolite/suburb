@@ -926,14 +926,52 @@ class CharacterCreator():
 
     @scene
     def choosevial(self, page=0):
-        secondary_vials = client.requestdic(intent="secondary_vials")
+        theme = current_theme()
+        VIAL_COORDS = {
+            0: (0.33, 0.33),
+            1: (0.66, 0.33),
+            2: (0.33, 0.66),
+            3: (0.66, 0.66)
+        }
+        secondary_vials: dict[str, str] = client.requestdic(intent="secondary_vials")
         def vialbutton(vial):
             def out():
                 self.secondaryvial = vial
                 self.choosemodus()
             return out
         logtext = render.Text(.5, .05, "Choose a SECONDARY VIAL.")
-        current_vials = secondary_vials[page*4:(page+1)*4]
+        current_vials = list(secondary_vials)[page*4:(page+1)*4]
+        for i, vial_name in enumerate(current_vials):
+            x, y = VIAL_COORDS[i]
+            vial_bg = render.SolidColor(x, y, 375, 200, theme.dark)
+            vial_bg.absolute = False
+            vial_bg.outline_color = theme.white
+            vial_bg.border_radius = 5
+            button = render.TextButton(x, y, 375, 200, "", vialbutton(vial_name))
+            button.draw_sprite = False
+            vial = render.Vial(0.5, 0.2, 150, vial_name, 1)
+            vial.absolute = False
+            vial.bind_to(vial_bg)
+            title_text = render.Text(0.5, 0.4, vial_name.upper())
+            title_text.color = theme.white
+            title_text.set_fontsize_by_width(375)
+            title_text.bind_to(vial_bg)
+            descriptions = secondary_vials[vial_name].split("\n")
+            for i, line in enumerate(descriptions):
+                y = 0.6 + 0.1*i
+                description = render.Text(0.5, y, line)
+                description.fontsize = 16
+                description.set_fontsize_by_width(375)
+                description.color = theme.white
+                description.bind_to(vial_bg)
+        def last_page():
+            self.choosevial(page-1)
+        def next_page():
+            self.choosevial(page+1)
+        if page != 0:
+            last_page_button = render.TextButton(0.1, 0.5, 64, 32, "<-", last_page)
+        if list(secondary_vials)[(page+1)*4:(page+2)*4]:
+            next_page_button = render.TextButton(0.9, 0.5, 64, 32, "->", next_page)
         backbutton = render.Button(0.1, 0.07, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.chooseinterests)
 
     @scene
@@ -1879,7 +1917,7 @@ if __name__ == "__main__":
     if client.connect(): # connect to server
         # login_scene() # normal game start
         character_creator = CharacterCreator()
-        character_creator.chooseinterests()
+        character_creator.choosevial()
         # item_editor_scene()
         # map_editor_scene()
         # test_overmap()
