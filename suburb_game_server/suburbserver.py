@@ -696,6 +696,14 @@ def computer_shit(player: sessions.SubPlayer, content: dict, session:sessions.Se
             for grist_name, amount in instance.item.true_cost.items():
                 player.client_player.add_grist(grist_name, amount)
             return True
+        case "recycle_all":
+            if player.client_player is None: return "No client."
+            for instance_name in player.client_player.atheneum.copy():
+                instance = alchemy.Instance(instance_name)
+                player.client_player.atheneum.remove(instance_name)
+                for grist_name, amount in instance.item.true_cost.items():
+                    player.client_player.add_grist(grist_name, amount)
+            return True
         case "get_alchemiter_location":
             if player.client_player is None: return "No client."
             alchemiter_location = player.client_player.land.housemap.get_alchemiter_location()

@@ -572,6 +572,11 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
     search_bar.key_press_func = key_press_func
     if last_tile_map is not None:
         last_tile_map.input_text_box = search_bar
+    def recycle_all():
+        client.requestplus(intent="computer", content={"command": "recycle_all"})
+        display_atheneum(info_window, info_text, page, search)
+    recycle_all_button = render.TextButton(0.5, 0.95, 256, 32, "Recycle ALL", recycle_all)
+    recycle_all_button.bind_to(info_window, True)
 
 def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", operation: Optional[str]="&&"):
     target_item = current_alchemy_item_3
