@@ -311,7 +311,9 @@ class Npc():
         if self.session_name is not None and self.session != room.session:
             if self.name in self.session.current_players:
                 self.session.current_players.remove(self.name)
-        if self.room_name is not None: self.room.remove_npc(self)
+        if self.room_name is not None: 
+            if self.room.strife is not None and self.name in self.room.strife.griefers: return
+            self.room.remove_npc(self)
         self.session_name = room.session.name
         self.overmap_name = room.overmap.name
         self.map_name = room.map.name
