@@ -27,6 +27,7 @@ class Tile():
         self.forbidden = False      # tiles that cannot be placed or modified by servers
         self.special = False        # tiles that are otherwise special for some reason
         self.debug = False          # cannot be placed by map editor
+        self.ban_npc_spawn = False
         self.build_cost = 10
         self.always_spawn = []
         self.common_spawn = []
@@ -149,9 +150,11 @@ elevator.build_cost = 200
 
 girder = Tile("+", "girder")
 girder.infallible = True
+girder.ban_npc_spawn = True
 
 pillar = Tile("I", "pillar")
 pillar.infallible = True
+pillar.ban_npc_spawn = True
 
 left_door = Tile("<", "left door")
 left_door.door = True
@@ -216,6 +219,7 @@ return_gate = Tile("0", "return gate")
 return_gate.forbidden = True
 return_gate.special = True
 return_gate.solid = False
+return_gate.ban_npc_spawn = True
 
 first_gate = Tile("1", "first gate")
 first_gate.forbidden = True
