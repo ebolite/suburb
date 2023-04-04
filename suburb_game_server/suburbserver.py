@@ -13,6 +13,7 @@ import traceback
 from typing import Optional
 
 import sessions
+import skills
 import strife
 import alchemy
 import util
@@ -286,19 +287,48 @@ def handle_request(dict):
     if intent == "create_character":
         if session.get_current_subplayer(user.name) is not None: return "Character was already created."
         desired_name = content["name"]
+        # verify content
+        try:
+            name = content["name"]
+            noun = content["noun"]
+            pronouns = content["pronouns"]
+            interests = content["interests"]
+            aspect = content["aspect"]
+            gameclass = content["gameclass"]
+            gristcategory = content["gristcategory"]
+            secondaryvial = content["secondaryvial"]
+            symbol_dict = content["symbol_dict"]
+            kingdom = content["kingdom"]
+            map_name = content["map_name"]
+            assert type(name) is str
+            assert type(noun) is str
+            pronouns = [str(pronoun) for pronoun in pronouns]
+            assert len(pronouns) == 4
+            interests = [str(interest) for interest in interests]
+            assert len(interests) == 3
+            for interest in interests:
+                if interest not in spawnlists.interests: raise AssertionError
+            assert aspect in skills.aspects
+            assert gameclass in skills.class_skills
+            assert gristcategory in config.gristcategories
+            assert secondaryvial in strife.secondary_vials
+            assert type(symbol_dict) is dict
+            assert kingdom in ["prospit", "derse"]
+            assert map_name in sessions.house_maps
+        except (AssertionError, KeyError): return "Failed validation"
         # create player
         new_player = sessions.Player.create_player(desired_name, username)
-        new_player.nickname = content["name"]
-        new_player.noun = content["noun"]
-        new_player.pronouns = content["pronouns"]
-        new_player.interests = content["interests"]
-        new_player.aspect = content["aspect"]
-        new_player.gameclass = content["gameclass"]
-        new_player.gristcategory = content["gristcategory"]
-        new_player.secondaryvial = content["secondaryvial"]
-        new_player.symbol_dict = content["symbol_dict"]
+        new_player.nickname = name
+        new_player.noun = noun
+        new_player.pronouns = pronouns
+        new_player.interests = interests
+        new_player.aspect = aspect
+        new_player.gameclass = gameclass
+        new_player.gristcategory = gristcategory
+        new_player.secondaryvial = secondaryvial
+        new_player.symbol_dict = symbol_dict
         # todo: moon selection
-        new_player.moon_name = random.choice(["prospit", "derse"])
+        new_player.moon_name = kingdom
         new_player.starting_session_name = session.name
         new_player.add_modus(content["modus"])
         land = sessions.Land.create(f"{new_player.id}{session.name}", session, new_player)
