@@ -353,6 +353,8 @@ class CharacterCreator():
         self.secondaryvial: str = "mangrit"
         self.modus: str = "array"
         self.gristcategory: str = "stone"
+        self.kingdom: str = "prospit"
+        self.map_name: str = ""
         self.symbol_dict: dict = config.get_random_symbol()
 
     def start(self):
@@ -979,7 +981,7 @@ class CharacterCreator():
         def modusbutton(modus_name: str):
             def out():
                 self.modus = modus_name
-                self.choosegrists()
+                self.choose_moon()
             return out
         modus_to_display = list(sylladex.moduses)[page]
         modus = sylladex.moduses[modus_to_display]
@@ -1007,6 +1009,68 @@ class CharacterCreator():
         rightbutton = render.TextButton(0.7, 0.5, 96, 32, "->", rightpage)
         backbutton = render.Button(0.1, 0.07, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", self.choosevial)
     ...
+
+    @scene
+    def choose_moon(self):
+        prospit_theme = themes.prospit
+        prospitbg = render.SolidColor(0, 0, render.SCREEN_WIDTH//2, render.SCREEN_HEIGHT, prospit_theme.light)
+        prospit_image = render.Image(0.5, 0.37, "sprites/prospit.png", convert=False)
+        prospit_image.bind_to(prospitbg)
+        prospit_title = render.Text(0.45, 0.6, "Prospit")
+        prospit_title.fontsize = 50
+        prospit_title.antialias = False
+        prospit_title.font_location = "./fonts/Carima Regular.ttf"
+        prospit_title.color = prospit_theme.white
+        prospit_title.outline_color = prospit_theme.dark
+        prospit_title.bind_to(prospitbg)
+        def choose_prospit():
+            self.kingdom = "prospit"
+            self.choose_map()
+        choose_prospit_button = render.TextButton(0.5, 0.95, 128, 48, "CHOOSE", choose_prospit, theme=prospit_theme)
+        choose_prospit_button.text_color = prospit_theme.dark
+        choose_prospit_button.bind_to(prospitbg)
+        prospit_line_1 = render.Text(0.5, 0.75, "Prospit dreamers are optimistic, reactive and intuitive.")
+        prospit_line_1.fontsize = 18
+        prospit_line_1.color = prospit_theme.white
+        prospit_line_1.outline_color = prospit_theme.dark
+        prospit_line_1.bind_to(prospitbg)
+        prospit_line_2 = render.Text(0.5, 0.8, "These dreamers enjoy the visions of Skaia.")
+        prospit_line_2.fontsize = 18
+        prospit_line_2.color = prospit_theme.white
+        prospit_line_2.outline_color = prospit_theme.dark
+        prospit_line_2.bind_to(prospitbg)
+        derse_theme = themes.derse
+        dersebg = render.SolidColor(render.SCREEN_WIDTH//2, 0, render.SCREEN_WIDTH//2, render.SCREEN_HEIGHT, derse_theme.light)
+        derse_image = render.Image(0.5, 0.37, "sprites/derse.png", convert=False)
+        derse_image.bind_to(dersebg)
+        derse_title = render.Text(0.54, 0.6, "Derse")
+        derse_title.fontsize = 50
+        derse_title.antialias = False
+        derse_title.font_location = "./fonts/Carima Regular.ttf"
+        derse_title.color = derse_theme.white
+        derse_title.outline_color = derse_theme.dark
+        derse_title.bind_to(dersebg)
+        def choose_derse():
+            self.kingdom = "derse"
+            self.choose_map()
+        choose_derse_button = render.TextButton(0.5, 0.95, 128, 48, "CHOOSE", choose_derse, theme=derse_theme)
+        choose_derse_button.text_color = derse_theme.dark
+        choose_derse_button.bind_to(dersebg)
+        derse_line_1 = render.Text(0.5, 0.75, "Prospit dreamers are skeptical and rebellious.")
+        derse_line_1.fontsize = 18
+        derse_line_1.color = derse_theme.black
+        derse_line_1.outline_color = derse_theme.dark
+        derse_line_1.bind_to(dersebg)
+        derse_line_2 = render.Text(0.5, 0.8, "They hear the whispers of the Furthest Ring.")
+        derse_line_2.fontsize = 18
+        derse_line_2.color = derse_theme.black
+        derse_line_2.outline_color = derse_theme.dark
+        derse_line_2.bind_to(dersebg)
+        backbutton = render.Button(0.08, 0.05, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.choosemodus, theme=prospit_theme)
+
+    @scene
+    def choose_map(self):
+        ...
 
     @scene
     def choosegrists(self):
@@ -1050,7 +1114,7 @@ class CharacterCreator():
                     img.highlight_color = current_theme().dark
                 elif "exotic" in config.grists[grist] and config.grists[grist]["exotic"]:
                     img.highlight_color = pygame.Color(255,255,0)
-        backbutton = render.Button(0.08, 0.05, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.choosemodus)
+        backbutton = render.Button(0.08, 0.05, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.choose_moon)
 
     def get_dict(self):
         return self.__dict__
@@ -1917,7 +1981,7 @@ if __name__ == "__main__":
     if client.connect(): # connect to server
         # login_scene() # normal game start
         character_creator = CharacterCreator()
-        character_creator.choosevial()
+        character_creator.choose_moon()
         # item_editor_scene()
         # map_editor_scene()
         # test_overmap()
