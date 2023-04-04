@@ -1583,7 +1583,7 @@ def display_item(instance: Instance, last_scene:Callable, modus:Optional[Modus] 
         return kind_button_func
     for i, kind in enumerate(instance.item.kinds):
         x = 1.2
-        y = (1/(num_kinds+1))*num_kinds/(i+1)
+        y = 1/(num_kinds+1) * (i+1)
         kind_card_image = render.Button(x, y, "sprites\\itemdisplay\\strife_card.png", None, get_kind_button_func(kind))
         kind_card_image.bind_to(captcha_image)
         kind_card_image.hover_to_top = True
