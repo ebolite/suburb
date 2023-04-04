@@ -1036,6 +1036,11 @@ class TileMap(UIElement):
                     self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials, self.server_view)
 
     def update_map(self, map_dict: Optional[dict]=None, update_info_window=False):
+        if not self.server_view and self.map_editor is None:
+            strife_data = client.requestdic(intent="strife_data")
+            if strife_data: 
+                suburb.strife_scene(strife_data)
+                return
         if map_dict is None:
             if self.server_view:
                 sburbserver.update_viewport_dic()
