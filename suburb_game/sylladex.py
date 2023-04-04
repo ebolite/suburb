@@ -249,8 +249,12 @@ class Modus():
     
     def convert_from_deck(self, deck: dict, sylladex: "Sylladex") -> list[str]:
         invalid_instance_names = []
-        for instance_name in deck:
-            sylladex.data_list.append(instance_name)
+        for instance_name in deck.copy():
+            if instance_name not in sylladex.data_list:
+                sylladex.data_list.append(instance_name)
+        for instance_name in sylladex.data_list.copy():
+            if instance_name not in deck:
+                sylladex.data_list.remove(instance_name)
         return invalid_instance_names
     
     def get_instance_name(self, instance: Instance, short=False):
