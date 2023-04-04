@@ -341,6 +341,7 @@ class Land(Overmap):
         self.gen_land_name()
 
     def gen_land_map(self):
+        assert self.player is not None
         islands = config.categoryproperties[self.gristcategory]["islands"]
         landrate = config.categoryproperties[self.gristcategory]["landrate"]
         lakes = config.categoryproperties[self.gristcategory]["lakes"]
@@ -354,7 +355,7 @@ class Land(Overmap):
         self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
         housemap_x, housemap_y = get_random_land_coords(self.map_tiles)
         housemap = self.find_map(housemap_x, housemap_y)
-        housemap.gen_map("house")
+        housemap.gen_house_map(self.player.starting_map_name)
         housemap.special_type = "house"
         self.housemap_name = housemap.name
         self.specials.append(housemap.name)
@@ -459,13 +460,17 @@ class Map():
             self.map_tiles = []
             self.special_type = ""
 
+    def gen_house_map(self, map_name):
+        house_map = get_map_tiles(house_maps, map_name) # todo: housemap picking
+        map = [["." for i in range(len(house_map[0]))] for n in range(100)]
+        map += house_map
+        self.map_tiles = map
+
     def gen_map(self, type=None):
         map = None
         match type:
             case "house":
-                house_map = get_map_tiles(house_maps) # todo: housemap picking
-                map = [["." for i in range(len(house_map[0]))] for n in range(100)]
-                map += house_map
+                raise AssertionError
             case "tower":
                 map = map = get_map_tiles(structure_maps, "tower")
             case "gate1":
@@ -923,6 +928,7 @@ class Player():
         self.land_name = ""
         self.land_session = ""
         self.moon_name = ""
+        self.starting_map_name = ""
         self.prototyped_before_entry = False
         # phernalia registry is a default list of deployable objects minus the deployed phernalia
         self.deployed_phernalia = []

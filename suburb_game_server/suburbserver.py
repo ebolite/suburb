@@ -329,6 +329,7 @@ def handle_request(dict):
         new_player.gristcategory = gristcategory
         new_player.secondaryvial = secondaryvial
         new_player.symbol_dict = symbol_dict
+        new_player.starting_map_name = map_name
         # todo: moon selection
         new_player.moon_name = kingdom
         new_player.starting_session_name = session.name
