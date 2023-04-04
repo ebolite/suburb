@@ -268,6 +268,8 @@ class MapEditor():
         self.map_name = map_name
         if "map_name" in load_dict: self.map_name = load_dict["map_name"]
         self.map_tiles = [list(line) for line in load_dict["map_tiles"]]
+        self.viewx = len(self.map_tiles[0])//2
+        self.viewy = len(self.map_tiles)//2
 
     def load(self, map_name):
         assert map_name in util.saved_maps

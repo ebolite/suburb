@@ -157,6 +157,8 @@ def handle_request(dict):
         return json.dumps(config.grists)
     if intent == "secondary_vials":
         return json.dumps(strife.secondary_vials)
+    if intent == "house_maps":
+        return json.dumps(sessions.house_maps)
     if intent == "item_states":
         item_states = list(stateseffects.item_states.values())
         out_states = {}

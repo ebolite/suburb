@@ -1008,7 +1008,6 @@ class CharacterCreator():
         leftbutton = render.TextButton(0.3, 0.5, 96, 32, "<-", leftpage)
         rightbutton = render.TextButton(0.7, 0.5, 96, 32, "->", rightpage)
         backbutton = render.Button(0.1, 0.07, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", self.choosevial)
-    ...
 
     @scene
     def choose_moon(self):
@@ -1070,7 +1069,24 @@ class CharacterCreator():
 
     @scene
     def choose_map(self):
-        ...
+        maps = client.requestdic(intent="house_maps")
+        choices = list(maps)
+        def button_func_constructor(map_name):
+            def button_func():
+                self.display_map(map_name, maps[map_name])
+            return button_func
+        render.show_options_with_search(choices, button_func_constructor, "Choose a starting map.", self.choose_moon, theme=current_theme())
+
+    @scene
+    def display_map(self, map_name, map_dict):
+        map_editor = itemeditor.MapEditor()
+        map_editor.loadinfo(map_name, map_dict)
+        map_editor.tilemap = render.TileMap(0.5, 0.45, map_editor=map_editor)
+        def confirm():
+            self.map_name = map_name
+            self.choosegrists()
+        confirm_button = render.Button(0.5, 0.9, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm)
+        backbutton = render.Button(0.08, 0.05, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.choose_map)
 
     @scene
     def choosegrists(self):
