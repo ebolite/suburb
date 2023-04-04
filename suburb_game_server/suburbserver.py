@@ -309,15 +309,16 @@ def handle_request(dict):
             interests = [str(interest) for interest in interests]
             assert len(interests) == 3
             for interest in interests:
-                if interest not in spawnlists.interests: raise AssertionError
+                if interest not in spawnlists.get_interest_spawnlists(): raise AssertionError
             assert aspect in skills.aspects
             assert gameclass in skills.class_skills
             assert gristcategory in config.gristcategories
             assert secondaryvial in strife.secondary_vials
-            assert type(symbol_dict) is dict
             assert kingdom in ["prospit", "derse"]
             assert map_name in sessions.house_maps
-        except (AssertionError, KeyError): return "Failed validation"
+        except (AssertionError, KeyError) as e: 
+            traceback.print_exception(e)
+            return "Failed validation"
         # create player
         new_player = sessions.Player.create_player(desired_name, username)
         new_player.nickname = name

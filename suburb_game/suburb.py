@@ -535,15 +535,15 @@ class CharacterCreator():
 
     @scene
     def nouncharacter(self):
-        log = render.Text(0.5, 0.20, "")
-        log2 = render.Text(0.5, 0.30, "")
-        l1text = render.Text(0.5, 0.4, f"You don't think \"being\" is a very accurate descriptor.")
+        log = render.Text(0.5, 0.10, "")
+        log2 = render.Text(0.5, 0.20, "")
+        l1text = render.Text(0.5, 0.3, f"You don't think \"being\" is a very accurate descriptor.")
         l1text.color = current_theme().dark
         l1text.outline_color = current_theme().black
-        l2text = render.Text(0.5, 0.5, f"What word best describes {self.name}?")
+        l2text = render.Text(0.5, 0.4, f"What word best describes {self.name}?")
         l2text.color = current_theme().dark
         l2text.outline_color = current_theme().black
-        namebox = render.InputTextBox(.5, .6)
+        namebox = render.InputTextBox(.5, .5)
         def verify():
             if len(namebox.text) > 0 and len(namebox.text) < 32:
                 example = f"A newly-created {namebox.text} stands in a room."
@@ -556,8 +556,8 @@ class CharacterCreator():
             else:
                 log.text = "That word is too long or too short."
                 log2.text = ""
-        confirm = render.Button(.5, .72, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
-        backbutton = render.Button(0.5, 0.8, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.namecharacter)
+        confirm = render.Button(.5, .6, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", verify)
+        backbutton = render.Button(0.5, 0.7, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.namecharacter)
 
     @scene
     def pronounscharacter(self):
@@ -572,7 +572,7 @@ class CharacterCreator():
             example2 = f"Today {pronouns[0]} will play a game with some friends of {pronouns[3]}."
             if log.text == example1 and log2.text == example2:
                 self.pronouns = pronouns
-                self.make_symbol()
+                self.choose_aspect()
             else:
                 log.text = example1
                 log2.text = example2
@@ -611,7 +611,7 @@ class CharacterCreator():
         theirs_box.text = "theirs"
         def confirm_func():
             self.pronouns = (they_box.text, them_box.text, their_box.text, theirs_box.text)
-            self.make_symbol()
+            self.choose_aspect()
         confirm_button = render.Button(0.5, 0.5, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm_func)
         backbutton = render.Button(0.5, 0.66, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", self.pronounscharacter)
 
@@ -1137,7 +1137,8 @@ class CharacterCreator():
 
 def newgame(character_creator: Optional["CharacterCreator"]=None):
     if character_creator is not None:
-        client.requestplus("create_character", character_creator.get_dict())
+        reply = client.requestplus("create_character", character_creator.get_dict())
+        print(reply)
     player_info = client.requestdic("player_info")
     player_name = player_info["name"]
     Sylladex.update_character(player_name)
