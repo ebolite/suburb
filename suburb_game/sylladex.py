@@ -117,8 +117,7 @@ class Instance():
                 card_instance = self.contained_instance()
                 if card_instance is not None:
                     syl.captchalogue(card_instance)
-                else:
-                    syl.update_deck()
+                syl.update_deck()
                 return True
             case "combine_card":
                 if target_name is not None and target_name in syl.deck:
