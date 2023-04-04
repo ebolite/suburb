@@ -1385,6 +1385,16 @@ assassinate.cooldown = 3
 assassinate.add_apply_state("bleed", 3, "target.doom.ratio * 3")
 assassinate.need_damage_to_apply_states = True
 
+# lampkind
+aglow = AbstratusSkill("aglow")
+aglow.description = "Recovers a large amount of ASPECT and applies INSPIRE for 3 turns with 2.0 potency."
+aglow.add_vial_cost("aspect", "user.power*-1")
+aglow.add_apply_state("inspire", 3, "2.0")
+aglow.target_self = True
+aglow.parryable = False
+aglow.beneficial = True
+aglow.cooldown = 2
+
 # penkind
 def autograph_effect(user: "strife.Griefer", target: "strife.Griefer"):
     if "autographed" in target.tags:
@@ -1620,6 +1630,11 @@ add_abstratus_skill("knifekind", assassinate, 75)
 # ladlekind
 add_abstratus_skill("ladlekind", assemble, 1)
 add_abstratus_skill("ladlekind", attack, 50)
+
+# lampkind
+add_abstratus_skill("lampkind", aglow, 1)
+add_abstratus_skill("lampkind", avenge, 50)
+add_abstratus_skill("lampkind", ablate, 75)
 
 # pankind
 add_abstratus_skill("pankind", assemble, 1)
