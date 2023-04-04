@@ -9350,7 +9350,7 @@
     },
     "detachable scissors": {
         "base": true,
-        "display_name": "Detachable Scissors",
+        "display_name": null,
         "power": 11,
         "size": 2,
         "kinds": [
