@@ -305,7 +305,7 @@ class FistometerVial(SecondaryVial):
 fistometer = FistometerVial("fistometer", "Starts at 0, increases over time exponentially.\nDealing damage consumes the vial as additional damage.")
 fistometer.maximum_formula = "{power}*6 + {tac}*36"
 fistometer.starting_formula = "0"
-fistometer.tact_vial
+fistometer.tact_vial = True
 
 class FakenessVial(SecondaryVial):
     def new_turn(self, griefer: "Griefer"):
