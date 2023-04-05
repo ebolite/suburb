@@ -307,7 +307,7 @@ vials: dict[str, dict] = {
     "realness": {
         "name": "REALNESS",
         "hidden": False,
-        "fill_color": Color(1, 1, 1),
+        "fill_color": Color(92, 92, 92),
         "shade_color": Color(255, 255, 255)
     },
     "fakeness": {
@@ -317,6 +317,12 @@ vials: dict[str, dict] = {
         "fill_color": Color(255, 255, 255),
         "shade_color": Color(128, 128, 128)
     },
+    "hysteria": {
+        "name": "HYSTERIA",
+        "segmented_vial": True,
+        "fill_color": Color(254, 0, 0),
+        "shade_color": Color(254, 0, 0),
+    }
 }
 
 for vial_name in vials:

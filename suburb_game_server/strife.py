@@ -300,7 +300,7 @@ class FistometerVial(SecondaryVial):
         current_amount = self.get_current(griefer)
         griefer.change_vial(self.name, current_amount//10)
 
-fistometer = FistometerVial("fistometer", "Starts at 0, increases over time exponentially. Dealing damage consumes the vial as additional damage.")
+fistometer = FistometerVial("fistometer", "Starts at 0, increases over time exponentially.\nDealing damage consumes the vial as additional damage.")
 fistometer.maximum_formula = "{power}*6 + {tac}*36"
 fistometer.starting_formula = "0"
 fistometer.tact_vial
@@ -314,7 +314,7 @@ class FakenessVial(SecondaryVial):
         if self.get_current(griefer) > 0: return 0
         else: return 1
 
-fakeness = FakenessVial("fakeness", "Starts full, and gradually reduces. Gives you an extra action when it's empty.")
+fakeness = FakenessVial("fakeness", "Starts full, and gradually reduces.\nGives you an extra action when it's empty.")
 fakeness.maximum_formula = "{power}*1.5"
 fakeness.starting_formula = "{maximum}"
 
@@ -329,9 +329,24 @@ class RealnessVial(SecondaryVial):
         vial_change = -griefer.power//2
         griefer.change_vial(self.name, vial_change)
 
-realness = RealnessVial("realness", "Starts full, and gradually reduces. Gives you damage reduction the more you have.")
+realness = RealnessVial("realness", "Starts full, and gradually reduces.\nGives you damage reduction the more you have.")
 realness.maximum_formula = "{power} + {tac}*6"
 realness.starting_formula = "{maximum}"
+
+class HysteriaVial(SecondaryVial):
+    def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
+        if self.get_current(griefer) != self.get_maximum(griefer): return damage
+        else: return damage*2
+    
+    def new_turn(self, griefer: "Griefer"):
+        if self.get_current(griefer) == self.get_maximum(griefer): griefer.change_vial(self.name, -self.get_maximum(griefer))
+        vial_change = griefer.get_stat("tact") + griefer.power//6
+        vial_change = max(vial_change, 0)
+        griefer.change_vial(self.name, vial_change)
+
+hysteria = HysteriaVial("hysteria", "Starts empty, gradually increases.\nDoes nothing until full, then doubles damage for the turn before depleting.")
+hysteria.maximum_formula = "{power}*1.5"
+hysteria.starting_formula = "0"
 
 class Griefer():
     strife: "Strife"

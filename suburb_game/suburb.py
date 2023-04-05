@@ -1920,8 +1920,8 @@ def title():
     debug_button_2 = render.Button(.1, .82, "sprites\\buttons\\debug_2.png", "sprites\\buttons\\debug_2.png", debug_speedrun_2)
     item_editor_button = render.TextButton(0.1, 0.2, 160, 32, "Item Editor", item_editor_scene)
     map_editor_button = render.TextButton(0.1, 0.3, 160, 32, "Map Editor", map_editor_scene)
-    vial = render.Vial(0.5, 0.2, 150, "realness", 0.5)
-    vial.absolute = False
+    # vial = render.Vial(0.5, 0.2, 150, "realness", 0.5)
+    # vial.absolute = False
     # crash_button = render.TextButton(0.8, 0.5, 128, 32, "crash me", crash_button_func)
 
 def map_from_file(file):
