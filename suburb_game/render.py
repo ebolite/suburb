@@ -1539,7 +1539,8 @@ class Overmap(UIElement):
     def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, 
                  map_types: Optional[dict[str, str]]=None, illegal_moves: list[str]=[], 
                  theme=themes.default, offsetx=0, offsety=0, 
-                 block_path="sprites/overmap/block.png", top_block_path="sprites/overmap/block.png", water_path="sprites/overmap/water.png"):
+                 block_path="sprites/overmap/block.png", top_block_path="sprites/overmap/block.png", water_path="sprites/overmap/water.png", 
+                 select_water_path="sprites/overmap/select_water.png"):
         super().__init__()
         self.x = x
         self.y = y
@@ -1567,6 +1568,7 @@ class Overmap(UIElement):
         self.block_path = block_path
         self.top_block_path = top_block_path
         self.water_path = water_path
+        self.select_water_path = select_water_path
         self.block_image = pygame.image.load(block_path).convert()
         self.block_image = self.convert_to_theme(self.block_image)
         self.block_image.set_colorkey(pygame.Color(0, 0, 0))
@@ -1592,6 +1594,9 @@ class Overmap(UIElement):
         self.select_image = pygame.image.load("sprites/overmap/selectable.png").convert()
         self.select_image = self.convert_to_theme(self.select_image)
         self.select_image.set_colorkey(pygame.Color(0, 0, 0))
+        self.select_water_image = pygame.image.load(self.select_water_path).convert()
+        self.select_water_image = self.convert_to_theme(self.select_water_image)
+        self.select_water_image.set_colorkey(pygame.Color(0, 0, 0))
         self.buttons: list[TextButton] = []
         self.w = (len(self.map_tiles[0]) + len(self.map_tiles))*16
         self.h = (len(self.map_tiles[0]) + len(self.map_tiles))*8
@@ -1759,7 +1764,9 @@ class OvermapTile(UIElement):
         elif abs(dy) != abs(dx) and abs(dx) <= 1 and abs(dy) <= 1:
             direction = get_cardinal_direction(dx, dy, rotation)
             if direction not in self.overmap.illegal_moves:
-                self.blit_surf.blit(self.overmap.select_image, ((draw_x, draw_y)))
+                if self.height == 0: select_image = self.overmap.select_water_image
+                else: select_image = self.overmap.select_image
+                self.blit_surf.blit(select_image, ((draw_x, draw_y)))
                 button = TextButton(draw_x, draw_y+16, 32, 16, "", self.get_button_func(dx, dy, rotation))
                 button.absolute = True
                 button.bind_to(self.overmap)

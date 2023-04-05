@@ -1398,20 +1398,27 @@ class SubPlayer(Player):
         illegal_moves = []
         for direction in ["north", "south", "east", "west"]:
             if direction == "north":
-                target_x = player_x
-                target_y = player_y - 1
+                dx = 0
+                dy = -1
             elif direction == "south":
-                target_x = player_x
-                target_y = player_y + 1
+                dx = 0
+                dy = 1
             elif direction == "east":
-                target_x = player_x + 1
-                target_y = player_y
+                dx = 1
+                dy = 0
             else: # west
-                target_x = player_x - 1
-                target_y = player_y
+                dx = -1
+                dy = 0
+            target_x, target_y = player_x + dx, player_y + dy
             target_map = self.overmap.find_map(target_x, target_y)
             if not self.flying:
-                if abs(target_map.height - self.map.height) > 1 or target_map.height == 0: illegal_moves.append(direction)
+                if abs(target_map.height - self.map.height) > 1: illegal_moves.append(direction)
+            while target_map.height == 0 and not self.flying:
+                target_x += dx
+                target_y += dy
+                target_map = self.overmap.find_map(target_x, target_y)
+            if not self.flying:
+                if abs(target_map.height - self.map.height) > 1: illegal_moves.append(direction)
         return illegal_moves
 
     def attempt_overmap_move(self, direction: str) -> bool:
@@ -1421,20 +1428,25 @@ class SubPlayer(Player):
         player_y = self.map.y
         match direction:
             case "north":
-                target_x = player_x
-                target_y = player_y - 1
+                dx = 0
+                dy = -1
             case "south":
-                target_x = player_x
-                target_y = player_y + 1
+                dx = 0
+                dy = 1
             case "east":
-                target_x = player_x + 1
-                target_y = player_y
+                dx = 1
+                dy = 0
             case "west":
-                target_x = player_x - 1
-                target_y = player_y
+                dx = -1
+                dy = 0
             case _:
                 return False
+        target_x, target_y = player_x + dx, player_y + dy
         target_map = self.overmap.find_map(target_x, target_y)
+        while target_map.height == 0 and not self.flying:
+            target_x += dx
+            target_y += dy
+            target_map = self.overmap.find_map(target_x, target_y)
         if not target_map.map_tiles:
             target_map.gen_map()
             if target_map.overmap.overmap_type == "land":

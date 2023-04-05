@@ -1158,12 +1158,14 @@ def debug_speedrun():
     character_creator.name = "Inness"
     character_creator.noun = "rabbit girl"
     character_creator.pronouns = "she", "her", "her", "hers"
-    character_creator.interests = ["music", "technology"]
+    character_creator.interests = ["music", "technology", "squiddles"]
     character_creator.aspect = "life"
     character_creator.gameclass = "sylph"
     character_creator.secondaryvial = "imagination"
     character_creator.modus = "array"
     character_creator.gristcategory = "amber"
+    character_creator.kingdom = "prospit"
+    character_creator.map_name = "suburban_1"
     style_dict = config.default_style_dict.copy()
     style_dict.update({
             "pants": "rgb",
@@ -1194,12 +1196,14 @@ def debug_speedrun_2():
     character_creator.name = "Azaral"
     character_creator.noun = "basement demon"
     character_creator.pronouns = "he", "him", "his", "his"
-    character_creator.interests = ["garbage", "anime"]
+    character_creator.interests = ["garbage", "anime", "horror"]
     character_creator.aspect = "doom"
     character_creator.gameclass = "bard"
     character_creator.secondaryvial = "gambit"
     character_creator.modus = "array"
     character_creator.gristcategory = "dark"
+    character_creator.kingdom = "derse"
+    character_creator.map_name = "urban"
     style_dict = config.default_style_dict.copy()
     style_dict.update({
             "pants": "trollian",
@@ -1938,7 +1942,7 @@ def test_overmap():
     test_overmap_tiles = [list(line) for line in test_overmap_tiles if line]
     theme = themes.derse
     render.SolidColor(0, 0, render.SCREEN_WIDTH, render.SCREEN_HEIGHT, theme.black)
-    render.Overmap(0.5, 0.5, test_overmap_tiles, theme=theme, top_block_path="sprites/overmap/moon_block.png", water_path="sprites/overmap/moon_water.png")
+    render.Overmap(0.5, 0.5, test_overmap_tiles, theme=theme, top_block_path="sprites/overmap/moon_block.png", water_path="sprites/overmap/moon_water.png", select_water_path="sprites/overmap/selectable.png")
 
 @scene
 def connection_screen():
