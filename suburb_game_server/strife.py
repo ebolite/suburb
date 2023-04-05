@@ -314,7 +314,7 @@ class FakenessVial(SecondaryVial):
         if self.get_current(griefer) > 0: return 0
         else: return 1
 
-fakeness = FakenessVial("fakeness", "Starts full, and gradually reduces.\nGives you an extra action when it's empty.")
+fakeness = FakenessVial("fakeness", "Starts full and gradually reduces.\nGives you an extra action when it's empty.")
 fakeness.maximum_formula = "{power}*1.5"
 fakeness.starting_formula = "{maximum}"
 
