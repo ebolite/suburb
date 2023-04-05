@@ -345,7 +345,7 @@ class HysteriaVial(SecondaryVial):
         griefer.change_vial(self.name, vial_change)
 
 hysteria = HysteriaVial("hysteria", "Starts empty, gradually increases.\nDoes nothing until full, then doubles damage for the turn before depleting.")
-hysteria.maximum_formula = "{power}*1.5"
+hysteria.maximum_formula = "{power}"
 hysteria.starting_formula = "0"
 
 class Griefer():
