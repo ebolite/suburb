@@ -1306,19 +1306,14 @@ class SubPlayer(Player):
         if instance_name in self.room.instances:
             self.room.remove_instance(instance_name)
             self.worn_instance_name = instance_name
+            self.session.add_to_excursus(instance.name)
             return True
         elif instance_name in self.sylladex:
             self.sylladex.remove(instance_name)
             self.worn_instance_name = instance_name
+            self.session.add_to_excursus(instance.name)
             return True
-        else:
-            for kind_name, deck in self.strife_portfolio.items():
-                if instance_name in deck:
-                    self.eject_from_strife_deck(instance_name)
-                    self.worn_instance_name = instance_name
-                    return True
-            else:
-                return False
+        else: return False
             
     def unwear(self):
         if self.worn_instance_name is None: return False
