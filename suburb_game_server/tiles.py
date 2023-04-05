@@ -205,8 +205,14 @@ studio_apartment = Tile("S", "studio apartment")
 
 security = Tile("s", "security")
 
-stash = Tile("$", "stash")
+stash = Tile("%", "stash")
 stash.forbidden = True
+
+trove = Tile("&", "trove")
+trove.forbidden = True
+
+bounty = Tile("$", "bounty")
+bounty.forbidden = True
 
 nest = Tile("n", "nest")
 nest.forbidden = True
