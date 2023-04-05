@@ -296,6 +296,27 @@ vials: dict[str, dict] = {
         "shade_color": Color(147, 28, 165),
         "middle_color": Color(255, 148, 198),
     },
+    "fistometer": {
+        "name": "BBATBF-OMETER",
+        "hidden": False,
+        "segmented_vial": True,
+        "fill_color": Color(117, 0, 0),
+        "shade_color": Color(255, 0, 0),
+        "middle_color": Color(255, 0, 0),
+    },
+    "realness": {
+        "name": "REALNESS",
+        "hidden": False,
+        "fill_color": Color(1, 1, 1),
+        "shade_color": Color(255, 255, 255)
+    },
+    "fakeness": {
+        "name": "FAKENESS",
+        "hidden": False,
+        "gel_vial": True,
+        "fill_color": Color(255, 255, 255),
+        "shade_color": Color(128, 128, 128)
+    },
 }
 
 for vial_name in vials:

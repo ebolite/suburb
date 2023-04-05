@@ -343,6 +343,7 @@ class SolidColor(UIElement):
         self.follow_mouse = False
         self.right_click_pan = False
         self.offsetx, self.offsety = 0, 0
+        self.rect_width = 0
         if binding:
             self.bind_to(binding)
         update_check.append(self)
@@ -386,8 +387,10 @@ class SolidColor(UIElement):
         if self.outline_color is not None: 
             self.outline_rect = self.outline_surf.get_rect()
             self.outline_rect.x, self.outline_rect.y = self.rect.x-self.outline_width, self.rect.y-self.outline_width
-            pygame.draw.rect(self.blit_surf, self.outline_color, self.outline_rect, border_radius = self.border_radius+self.outline_width)
-        pygame.draw.rect(self.blit_surf, fill_color, self.rect, border_radius = self.border_radius)
+            if self.rect_width: rect_width = self.rect_width + self.outline_width
+            else: rect_width = self.rect_width
+            pygame.draw.rect(self.blit_surf, self.outline_color, self.outline_rect, rect_width, border_radius = self.border_radius+self.outline_width)
+        pygame.draw.rect(self.blit_surf, fill_color, self.rect, self.rect_width, border_radius = self.border_radius)
 
 class Div(SolidColor):
     def __init__(self, x, y, w, h):
@@ -2099,14 +2102,15 @@ class Vial(SolidColor):
         self.x = x
         self.y = y
         self.w = w
-        self.h = 8
+        self.h = 10
         self.vial_y_offset = 0
         self.vial_type = vial_type
         self.filled_amount = filled_amount
-        super().__init__(x, y, w, self.h, themes.default.white)
+        super().__init__(x, y, w, self.h, Color(1, 1, 1))
+        self.rect_width = 1
         self.padding = 1
         self.border_radius = 2
-        self.outline_width = 3
+        self.outline_width = 2
         self.outline_color = themes.default.black
         self.name = config.vials[self.vial_type]["name"]
         self.gel_vial: bool = config.vials[self.vial_type]["gel_vial"]
@@ -2122,7 +2126,7 @@ class Vial(SolidColor):
 
     def make_fill_surf(self):
         fill_width = self.w-self.padding*4
-        fill_height = self.h-self.padding*2
+        fill_height = self.h-self.padding*4
         shade_surf = pygame.Surface((fill_width, fill_height))
         shade_surf.fill(self.shade_color)
         fill_surf = pygame.Surface((fill_width, fill_height - 1))
@@ -2168,7 +2172,7 @@ class Vial(SolidColor):
         if self.gel_vial: x_offset = self.fill_surf.get_width() - unusable_fill_width
         else: x_offset = 0
         blit_x = self.rect.x+self.padding*2+x_offset
-        blit_y = self.rect.y+self.padding
+        blit_y = self.rect.y+self.padding*2
         if unusable_fill_surf is not None and unusable_fill_rect is not None: self.blit_surf.blit(unusable_fill_surf, (blit_x, blit_y), unusable_fill_rect)
         self.blit_surf.blit(self.fill_surf, (blit_x, blit_y), fill_rect)
 

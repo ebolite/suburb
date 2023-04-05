@@ -86,6 +86,9 @@ class Vial():
     def modify_stat(self, stat_name: str, value: int, griefer: "Griefer") -> int:
         return value
     
+    def extra_actions(self, griefer: "Griefer") -> int:
+        return 0
+
     def parry_roll_modifier(self, griefer: "Griefer") -> float:
         return 1.0
     
@@ -284,6 +287,51 @@ gambit = GambitVial("gambit", "Get a prompt for a GAMBIT skill each turn.\nHeals
 gambit.maximum_formula = "{power} + {tac}*6"
 gambit.starting_formula = "{maximum}//2"
 gambit.optional_vial = True
+
+class FistometerVial(SecondaryVial):
+    def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
+        if damage <= 0: return damage
+        current_amount = self.get_current(griefer)
+        damage += current_amount
+        griefer.change_vial(self.name, -current_amount)
+        return damage
+
+    def new_turn(self, griefer: "Griefer"):
+        current_amount = self.get_current(griefer)
+        griefer.change_vial(self.name, current_amount//10)
+
+fistometer = FistometerVial("fistometer", "Starts at 0, increases over time exponentially. Dealing damage consumes the vial as additional damage.")
+fistometer.maximum_formula = "{power}*6 + {tac}*36"
+fistometer.starting_formula = "0"
+fistometer.tact_vial
+
+class FakenessVial(SecondaryVial):
+    def new_turn(self, griefer: "Griefer"):
+        vial_change = -(griefer.power//6 + griefer.get_stat("tact"))
+        griefer.change_vial(self.name, vial_change)
+
+    def extra_actions(self, griefer: "Griefer") -> int:
+        if self.get_current(griefer) > 0: return 0
+        else: return 1
+
+fakeness = FakenessVial("fakeness", "Starts full, and gradually reduces. Gives you an extra action when it's empty.")
+fakeness.maximum_formula = "{power}*1.5"
+fakeness.starting_formula = "{maximum}"
+
+class RealnessVial(SecondaryVial):
+    def modify_damage_received(self, damage: int, griefer: "Griefer") -> int:
+        current_percent = self.get_current(griefer) / self.get_maximum(griefer)
+        reduction = 0.75 * current_percent
+        mod = 1 - reduction
+        return int(damage * mod)
+
+    def new_turn(self, griefer: "Griefer"):
+        vial_change = -griefer.power//2
+        griefer.change_vial(self.name, vial_change)
+
+realness = RealnessVial("realness", "Starts full, and gradually reduces. Gives you damage reduction the more you have.")
+realness.maximum_formula = "{power} + {tac}*6"
+realness.starting_formula = "{maximum}"
 
 class Griefer():
     strife: "Strife"
@@ -798,6 +846,8 @@ class Griefer():
         actions = self.actions
         for state in self.states_list:
             actions += state.extra_actions(self)
+        for vial in self.vials_list:
+            actions += vial.extra_actions(self)
         return actions
 
     @property
