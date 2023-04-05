@@ -203,7 +203,7 @@ class MangritVial(SecondaryVial):
         return int(damage * mod)
 
 mangrit = MangritVial("mangrit", "Starts empty, but increases steadily.\nIncreases damage.")
-mangrit.maximum_formula = "{power}//2 + {tac}*3"
+mangrit.maximum_formula = "{power} + {tac}*6"
 mangrit.starting_formula = "0"
 mangrit.optional_vial = True
 mangrit.tact_vial = True
