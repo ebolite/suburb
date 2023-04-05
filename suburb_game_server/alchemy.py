@@ -118,6 +118,11 @@ class InheritedStatistics():
             else:
                 e += 0.1
         return e
+    
+    @property
+    def entropy_mult(self) -> float:
+        if self.entropy >= 0: return 1 + self.entropy
+        else: return 1/-(self.entropy+1)
 
     def get_descriptors(self, guaranteed_compound_name = False, depth = 0) -> tuple[str, list, list, list]:
         required_inheritors = []
@@ -200,14 +205,18 @@ class InheritedStatistics():
             self.power: int = total_power + average_power
         elif self.operation == "||":
             self.power: int = total_power + power_difference
-        if self.entropy >= 0: power_mult = 1 + self.entropy
-        else: power_mult = 1/-(self.entropy+1)
+        power_mult = self.entropy_mult
         self.power = int(self.power*power_mult)
         self.inheritpower: int = self.component_1.inheritpower + self.component_2.inheritpower
         # costs (dict of grist: float)
         self.cost: dict = self.component_1.cost.copy()
-        for cost in self.component_2.cost:
-            self.cost[cost] = self.component_2.cost[cost]
+        for grist_name in self.component_2.cost:
+            if grist_name not in self.cost:
+                self.cost[grist_name] = self.component_2.cost[grist_name]
+            else:
+                self.cost[grist_name] += self.component_2.cost[grist_name]
+        for grist_name, cost in self.cost.items():
+            self.cost[grist_name] = int(cost*self.entropy_mult)
         # dict inherits
         self.onhit_states: dict = self.dictionary_inherit(self.component_1.onhit_states, self.component_2.onhit_states)
         self.wear_states: dict = self.dictionary_inherit(self.component_1.wear_states, self.component_2.wear_states)
