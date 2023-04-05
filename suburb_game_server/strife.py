@@ -211,6 +211,8 @@ mangrit.tact_vial = True
 class ImaginationVial(SecondaryVial):
     def new_turn(self, griefer: "Griefer"):
         griefer.change_vial("aspect", self.get_current(griefer)//2)
+    
+    # increasing as ASPECT is drained is hard coded
 
 imagination = ImaginationVial("imagination", "Starts empty, increases as ASPECT vial is drained.\nIncreases ASPECT vial regeneration.")
 imagination.maximum_formula = "{power} + {tac}*6"
