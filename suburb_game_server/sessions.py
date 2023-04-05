@@ -1269,6 +1269,8 @@ class SubPlayer(Player):
         if kind_name not in self.strife_portfolio: return False
         self.sylladex.remove(instance_name)
         self.strife_portfolio[kind_name].append(instance_name)
+        instance = alchemy.Instance(instance_name)
+        self.session.add_to_excursus(instance.item.name)
         return True
     
     def eject_from_strife_deck(self, instance_name):
