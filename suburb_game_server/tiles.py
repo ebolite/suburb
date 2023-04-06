@@ -215,8 +215,7 @@ class LootTile(Tile):
     def get_loot_list(self, room: "sessions.Room") -> list[str]:
         out = []
         possible_items = list(util.bases.keys())
-        # 0-4 random base items
-        num_random_bases = random.randint(0, 4)
+        num_random_bases = random.randint(2, 6)
         for i in range(num_random_bases):
             out.append(random.choice(possible_items))
         # 1-3 grystals
