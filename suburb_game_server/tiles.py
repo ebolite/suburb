@@ -2,6 +2,8 @@ import config
 import random
 
 import spawnlists
+import util
+import sessions
 
 tiles: dict[str, "Tile"] = {}      # tile_char: Tile
 # tiles "revise"able by sburb servers
@@ -57,7 +59,7 @@ class Tile():
         if self.special: return True
         return False
 
-    def get_loot_list(self) -> list[str]:
+    def get_loot_list(self, room: "sessions.Room") -> list[str]:
         spawnlist = spawnlists.SpawnList.find_spawnlist(self.name)
         if spawnlist is None: return []
         else: 
@@ -205,16 +207,52 @@ studio_apartment = Tile("S", "studio apartment")
 
 security = Tile("s", "security")
 
-stash = Tile("%", "stash")
+class LootTile(Tile):
+    def __init__(self, tile_char, name, loot_type: str):
+        super().__init__(tile_char, name)
+        self.loot_type = loot_type
+
+    def get_loot_list(self, room: "sessions.Room") -> list[str]:
+        out = []
+        possible_items = list(util.bases.keys())
+        # 0-4 random base items
+        num_random_bases = random.randint(0, 4)
+        for i in range(num_random_bases):
+            out.append(random.choice(possible_items))
+        # 1-3 grystals
+        num_grystals = random.randint(1, 3)
+        possible_grist_types = self.get_possible_grist_types(room)
+        for i in range(num_grystals):
+            grist_type = random.choice(possible_grist_types)
+            grystal_type = random.choice(self.get_possible_grystal_types())
+            out.append(f"{grystal_type} {grist_type} grystal")
+        return out
+    
+    def get_possible_grystal_types(self) -> list[str]:
+        if self.loot_type == "bounty": return ["rough", "fine", "choice"]
+        elif self.loot_type == "trove": return ["rough", "fine"]
+        else: return ["rough"]
+
+    def get_possible_grist_types(self, room: "sessions.Room") -> list[str]:
+        if self.loot_type == "stash": max_tier = 3
+        elif self.loot_type == "trove": max_tier = 7
+        elif self.loot_type == "bounty": max_tier = 9
+        else: max_tier = 0
+        possible_grist_types = [grist_name for grist_name in config.grists if config.grists[grist_name]["tier"] <= max_tier]
+        if room.overmap.land is not None:
+            possible_grist_types += config.gristcategories[room.overmap.land.gristcategory]
+        return possible_grist_types
+
+stash = LootTile("%", "stash", "stash")
 stash.forbidden = True
 
-trove = Tile("&", "trove")
+trove = LootTile("&", "trove", "trove")
 trove.forbidden = True
 
-bounty = Tile("$", "bounty")
+bounty = LootTile("$", "bounty", "bounty")
 bounty.forbidden = True
 
-nest = Tile("n", "nest")
+nest = LootTile("n", "nest", "stash")
 nest.forbidden = True
 
 stalactite = Tile("'", "stalactite")
@@ -267,8 +305,4 @@ for tile_name, tile in tiles.items():
         server_tiles[tile.tile_char] = tile.build_cost
 
 if __name__ == "__main__":
-    for tile_char in tiles:
-        tile = tiles[tile_char]
-        loot_list = tile.get_loot_list()
-        if not loot_list: continue
-        print(f"{tile.name} loot: {' - '.join(loot_list)}")
+    ...

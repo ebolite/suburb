@@ -246,6 +246,12 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
     @property
     def name(self) -> str:
         return self.__dict__["name"]
+    
+    @property
+    def land(self) -> Optional["Land"]:
+        if self.player is not None:
+            return Land(self.name, self.session)
+        else: return None
 
 class Kingdom(Overmap):
     @classmethod
@@ -711,7 +717,7 @@ class Room():
 
     def generate_loot(self, spawns: Optional[list[str]] = None):
         if spawns is None:
-            spawns = self.tile.get_loot_list()
+            spawns = self.tile.get_loot_list(self)
         for item_name in spawns:
             item = alchemy.Item(item_name)
             instance = alchemy.Instance(item)
