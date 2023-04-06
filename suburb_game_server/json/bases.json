@@ -9550,5 +9550,5938 @@
             "build": 0.5,
             "iron": 0.5
         }
+    },
+    "rough build grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 build grist.",
+        "cost": {
+            "build": 10
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "build",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "53ZE5z8W"
+    },
+    "fine build grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 build grist.",
+        "cost": {
+            "build": 100
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "build",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "DvcdgUfa"
+    },
+    "choice build grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 build grist.",
+        "cost": {
+            "build": 1000
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "build",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "g7oOP!o4"
+    },
+    "rough acid grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 acid grist.",
+        "cost": {
+            "acid": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "acid",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "SEOQlbau"
+    },
+    "fine acid grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 acid grist.",
+        "cost": {
+            "acid": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "acid",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "B8aR9F93"
+    },
+    "choice acid grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 acid grist.",
+        "cost": {
+            "acid": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "acid",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "KoWyOETN"
+    },
+    "rough amber grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 amber grist.",
+        "cost": {
+            "amber": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "amber",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "?bniif4G"
+    },
+    "fine amber grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 amber grist.",
+        "cost": {
+            "amber": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "amber",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "4CkIETfo"
+    },
+    "choice amber grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 amber grist.",
+        "cost": {
+            "amber": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "amber",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "47HpcO05"
+    },
+    "rough amethyst grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 amethyst grist.",
+        "cost": {
+            "amethyst": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "amethyst",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "SVkUHl82"
+    },
+    "fine amethyst grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 amethyst grist.",
+        "cost": {
+            "amethyst": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "amethyst",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "2AKL5aff"
+    },
+    "choice amethyst grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 amethyst grist.",
+        "cost": {
+            "amethyst": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "amethyst",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "6UPag?aq"
+    },
+    "rough aquamarine grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 aquamarine grist.",
+        "cost": {
+            "aquamarine": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "aquamarine",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "SnAP7pHi"
+    },
+    "fine aquamarine grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 aquamarine grist.",
+        "cost": {
+            "aquamarine": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "aquamarine",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "aTWa!TGj"
+    },
+    "choice aquamarine grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 aquamarine grist.",
+        "cost": {
+            "aquamarine": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "aquamarine",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "TFb0kFul"
+    },
+    "rough blood grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 blood grist.",
+        "cost": {
+            "blood": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "blood",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "?l?QhUeP"
+    },
+    "fine blood grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 blood grist.",
+        "cost": {
+            "blood": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "blood",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "kKej9Yvb"
+    },
+    "choice blood grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 blood grist.",
+        "cost": {
+            "blood": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "blood",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "iIIiI7LB"
+    },
+    "rough caulk grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 caulk grist.",
+        "cost": {
+            "caulk": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "caulk",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "!3M4H!GC"
+    },
+    "fine caulk grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 caulk grist.",
+        "cost": {
+            "caulk": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "caulk",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "4S2i36PI"
+    },
+    "choice caulk grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 caulk grist.",
+        "cost": {
+            "caulk": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "caulk",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "?QGTJRAQ"
+    },
+    "rough chalk grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 chalk grist.",
+        "cost": {
+            "chalk": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "chalk",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "?121CQbG"
+    },
+    "fine chalk grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 chalk grist.",
+        "cost": {
+            "chalk": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "chalk",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Jpsb4kGm"
+    },
+    "choice chalk grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 chalk grist.",
+        "cost": {
+            "chalk": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "chalk",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "UhvDOenA"
+    },
+    "rough cobalt grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 cobalt grist.",
+        "cost": {
+            "cobalt": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "cobalt",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "gTdMOieR"
+    },
+    "fine cobalt grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 cobalt grist.",
+        "cost": {
+            "cobalt": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "cobalt",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "9KGHku5D"
+    },
+    "choice cobalt grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 cobalt grist.",
+        "cost": {
+            "cobalt": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "cobalt",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Bf0ao7qK"
+    },
+    "rough copper grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 copper grist.",
+        "cost": {
+            "copper": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "copper",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "3ZhRL4MG"
+    },
+    "fine copper grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 copper grist.",
+        "cost": {
+            "copper": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "copper",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "4Qiv6MpF"
+    },
+    "choice copper grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 copper grist.",
+        "cost": {
+            "copper": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "copper",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "D8sfwv5a"
+    },
+    "rough diamond grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 diamond grist.",
+        "cost": {
+            "diamond": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "diamond",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "8YQCm8JI"
+    },
+    "fine diamond grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 diamond grist.",
+        "cost": {
+            "diamond": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "diamond",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "ID7g7iIW"
+    },
+    "choice diamond grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 diamond grist.",
+        "cost": {
+            "diamond": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "diamond",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "qgSTzjrJ"
+    },
+    "rough emerald grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 emerald grist.",
+        "cost": {
+            "emerald": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "emerald",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "zoJO!qi8"
+    },
+    "fine emerald grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 emerald grist.",
+        "cost": {
+            "emerald": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "emerald",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "CiKStr33"
+    },
+    "choice emerald grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 emerald grist.",
+        "cost": {
+            "emerald": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "emerald",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "dN0?8KXR"
+    },
+    "rough fluorite grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 fluorite grist.",
+        "cost": {
+            "fluorite": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "fluorite",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "1Yfq1I01"
+    },
+    "fine fluorite grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 fluorite grist.",
+        "cost": {
+            "fluorite": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "fluorite",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "omCyC4wc"
+    },
+    "choice fluorite grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 fluorite grist.",
+        "cost": {
+            "fluorite": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "fluorite",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "hNMFhA?N"
+    },
+    "rough frosting grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 frosting grist.",
+        "cost": {
+            "frosting": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "frosting",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Ni7xW553"
+    },
+    "fine frosting grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 frosting grist.",
+        "cost": {
+            "frosting": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "frosting",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "UBI9bg2t"
+    },
+    "choice frosting grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 frosting grist.",
+        "cost": {
+            "frosting": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "frosting",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "fGaUkhZh"
+    },
+    "rough garnet grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 garnet grist.",
+        "cost": {
+            "garnet": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "garnet",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "alan4mND"
+    },
+    "fine garnet grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 garnet grist.",
+        "cost": {
+            "garnet": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "garnet",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "p2c3KYIx"
+    },
+    "choice garnet grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 garnet grist.",
+        "cost": {
+            "garnet": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "garnet",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "8x946brH"
+    },
+    "rough gold grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 gold grist.",
+        "cost": {
+            "gold": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "gold",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "j5dpByax"
+    },
+    "fine gold grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 gold grist.",
+        "cost": {
+            "gold": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "gold",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "nUeHMb32"
+    },
+    "choice gold grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 gold grist.",
+        "cost": {
+            "gold": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "gold",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Du7JmmjZ"
+    },
+    "rough iodine grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 iodine grist.",
+        "cost": {
+            "iodine": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "iodine",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "srtgT4bg"
+    },
+    "fine iodine grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 iodine grist.",
+        "cost": {
+            "iodine": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "iodine",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "X8ss!6m4"
+    },
+    "choice iodine grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 iodine grist.",
+        "cost": {
+            "iodine": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "iodine",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "XEdAZXOh"
+    },
+    "rough iron grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 iron grist.",
+        "cost": {
+            "iron": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "iron",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "FJGirS5L"
+    },
+    "fine iron grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 iron grist.",
+        "cost": {
+            "iron": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "iron",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "2Ul2o4?3"
+    },
+    "choice iron grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 iron grist.",
+        "cost": {
+            "iron": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "iron",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "sa7x5Nj5"
+    },
+    "rough jet grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 jet grist.",
+        "cost": {
+            "jet": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "jet",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "r3ACjtCP"
+    },
+    "fine jet grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 jet grist.",
+        "cost": {
+            "jet": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "jet",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "JT4te7kQ"
+    },
+    "choice jet grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 jet grist.",
+        "cost": {
+            "jet": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "jet",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "GUD3UcQk"
+    },
+    "rough lead grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 lead grist.",
+        "cost": {
+            "lead": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "lead",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "vU3q1C1E"
+    },
+    "fine lead grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 lead grist.",
+        "cost": {
+            "lead": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "lead",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Cv6lI45n"
+    },
+    "choice lead grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 lead grist.",
+        "cost": {
+            "lead": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "lead",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "3nnZs2dS"
+    },
+    "rough lux grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 lux grist.",
+        "cost": {
+            "lux": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "lux",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "rkGLtTZ9"
+    },
+    "fine lux grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 lux grist.",
+        "cost": {
+            "lux": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "lux",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "7EGA0Tz5"
+    },
+    "choice lux grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 lux grist.",
+        "cost": {
+            "lux": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "lux",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "dWrSyy!W"
+    },
+    "rough malachite grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 malachite grist.",
+        "cost": {
+            "malachite": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "malachite",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "k6h01QRf"
+    },
+    "fine malachite grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 malachite grist.",
+        "cost": {
+            "malachite": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "malachite",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "PPCec?cX"
+    },
+    "choice malachite grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 malachite grist.",
+        "cost": {
+            "malachite": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "malachite",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Vp7acCen"
+    },
+    "rough marble grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 marble grist.",
+        "cost": {
+            "marble": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "marble",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "ebBaeGi6"
+    },
+    "fine marble grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 marble grist.",
+        "cost": {
+            "marble": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "marble",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "E!zv4VuB"
+    },
+    "choice marble grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 marble grist.",
+        "cost": {
+            "marble": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "marble",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "gGBdljkQ"
+    },
+    "rough mercury grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 mercury grist.",
+        "cost": {
+            "mercury": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "mercury",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "q3Nch4Te"
+    },
+    "fine mercury grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 mercury grist.",
+        "cost": {
+            "mercury": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "mercury",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "zTPjlQDs"
+    },
+    "choice mercury grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 mercury grist.",
+        "cost": {
+            "mercury": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "mercury",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "2C3myV!S"
+    },
+    "rough mist grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 mist grist.",
+        "cost": {
+            "mist": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "mist",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "B?KDD?58"
+    },
+    "fine mist grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 mist grist.",
+        "cost": {
+            "mist": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "mist",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "9GPTPVrY"
+    },
+    "choice mist grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 mist grist.",
+        "cost": {
+            "mist": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "mist",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "30Ye52iM"
+    },
+    "rough moonstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 moonstone grist.",
+        "cost": {
+            "moonstone": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "moonstone",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "82KLBZgK"
+    },
+    "fine moonstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 moonstone grist.",
+        "cost": {
+            "moonstone": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "moonstone",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "urRqMGtH"
+    },
+    "choice moonstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 moonstone grist.",
+        "cost": {
+            "moonstone": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "moonstone",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "p3lTqszn"
+    },
+    "rough neon grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 neon grist.",
+        "cost": {
+            "neon": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "neon",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "H2JlM5jz"
+    },
+    "fine neon grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 neon grist.",
+        "cost": {
+            "neon": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "neon",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "02Fz569N"
+    },
+    "choice neon grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 neon grist.",
+        "cost": {
+            "neon": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "neon",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "7QARkVqW"
+    },
+    "rough nitrogen grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 nitrogen grist.",
+        "cost": {
+            "nitrogen": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "nitrogen",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "fQ8QYP9?"
+    },
+    "fine nitrogen grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 nitrogen grist.",
+        "cost": {
+            "nitrogen": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "nitrogen",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "lYDsUOmL"
+    },
+    "choice nitrogen grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 nitrogen grist.",
+        "cost": {
+            "nitrogen": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "nitrogen",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "L0ueBif3"
+    },
+    "rough obsidian grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 obsidian grist.",
+        "cost": {
+            "obsidian": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "obsidian",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "S8TfZnS2"
+    },
+    "fine obsidian grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 obsidian grist.",
+        "cost": {
+            "obsidian": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "obsidian",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "DkGWjncm"
+    },
+    "choice obsidian grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 obsidian grist.",
+        "cost": {
+            "obsidian": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "obsidian",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "vEHHotmL"
+    },
+    "rough onyx grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 onyx grist.",
+        "cost": {
+            "onyx": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "onyx",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "C58yvTHM"
+    },
+    "fine onyx grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 onyx grist.",
+        "cost": {
+            "onyx": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "onyx",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "WOWejRsr"
+    },
+    "choice onyx grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 onyx grist.",
+        "cost": {
+            "onyx": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "onyx",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "4s9qf3Lx"
+    },
+    "rough permafrost grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 permafrost grist.",
+        "cost": {
+            "permafrost": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "permafrost",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "vg9a17s2"
+    },
+    "fine permafrost grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 permafrost grist.",
+        "cost": {
+            "permafrost": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "permafrost",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "7UNmzh0R"
+    },
+    "choice permafrost grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 permafrost grist.",
+        "cost": {
+            "permafrost": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "permafrost",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "GPejOVqH"
+    },
+    "rough quartz grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 quartz grist.",
+        "cost": {
+            "quartz": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "quartz",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "KeNnt0kb"
+    },
+    "fine quartz grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 quartz grist.",
+        "cost": {
+            "quartz": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "quartz",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "mO7yZjYF"
+    },
+    "choice quartz grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 quartz grist.",
+        "cost": {
+            "quartz": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "quartz",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "bxj41WD3"
+    },
+    "rough rainbow grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": [
+            "A rough grystal. When consumed, this gives 1 rainbow grist."
+        ],
+        "cost": {
+            "rainbow": 0.01,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rainbow",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "?fvSZ3sz"
+    },
+    "fine rainbow grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": [
+            "A fine grystal. When consumed, this gives 2 rainbow grist."
+        ],
+        "cost": {
+            "rainbow": 0.02,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rainbow",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "oPxC87l6"
+    },
+    "choice rainbow grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 rainbow grist.",
+        "cost": {
+            "rainbow": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rainbow",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "KDqpwWTG"
+    },
+    "rough redstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 redstone grist.",
+        "cost": {
+            "redstone": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "redstone",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "z1vuoxM5"
+    },
+    "fine redstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 redstone grist.",
+        "cost": {
+            "redstone": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "redstone",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "aIp3Jkw5"
+    },
+    "choice redstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 redstone grist.",
+        "cost": {
+            "redstone": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "redstone",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "sb5ku0KT"
+    },
+    "rough rock candy grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 rock candy grist.",
+        "cost": {
+            "rock candy": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rock candy",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "i04EaloL"
+    },
+    "fine rock candy grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 rock candy grist.",
+        "cost": {
+            "rock candy": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rock candy",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "sBkwjfRh"
+    },
+    "choice rock candy grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 rock candy grist.",
+        "cost": {
+            "rock candy": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rock candy",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "9rJKzWtS"
+    },
+    "rough rose quartz grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 rose quartz grist.",
+        "cost": {
+            "rose quartz": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rose quartz",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Fq2HrkSq"
+    },
+    "fine rose quartz grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 rose quartz grist.",
+        "cost": {
+            "rose quartz": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rose quartz",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Hwbk4sUv"
+    },
+    "choice rose quartz grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 rose quartz grist.",
+        "cost": {
+            "rose quartz": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rose quartz",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "X5TkVsVa"
+    },
+    "rough ruby grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 ruby grist.",
+        "cost": {
+            "ruby": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "ruby",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "tTK3dwJt"
+    },
+    "fine ruby grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 ruby grist.",
+        "cost": {
+            "ruby": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "ruby",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Dl3NJ1qH"
+    },
+    "choice ruby grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 ruby grist.",
+        "cost": {
+            "ruby": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "ruby",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "aOnXFU9m"
+    },
+    "rough rust grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 rust grist.",
+        "cost": {
+            "rust": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rust",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "NUvEZ4g0"
+    },
+    "fine rust grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 rust grist.",
+        "cost": {
+            "rust": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rust",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "hutVWXWQ"
+    },
+    "choice rust grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 rust grist.",
+        "cost": {
+            "rust": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "rust",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "x!k7B!so"
+    },
+    "rough sandstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 sandstone grist.",
+        "cost": {
+            "sandstone": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "sandstone",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "JAeH69MT"
+    },
+    "fine sandstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 sandstone grist.",
+        "cost": {
+            "sandstone": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "sandstone",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "kGE97Naw"
+    },
+    "choice sandstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 sandstone grist.",
+        "cost": {
+            "sandstone": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "sandstone",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "2zKKm6Ui"
+    },
+    "rough shale grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 shale grist.",
+        "cost": {
+            "shale": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "shale",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "eGuQSeJV"
+    },
+    "fine shale grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 shale grist.",
+        "cost": {
+            "shale": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "shale",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "m2lKEF7p"
+    },
+    "choice shale grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 shale grist.",
+        "cost": {
+            "shale": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "shale",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "icrvuRC2"
+    },
+    "rough silicon grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 silicon grist.",
+        "cost": {
+            "silicon": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "silicon",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "tP3Vy5Gp"
+    },
+    "fine silicon grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 silicon grist.",
+        "cost": {
+            "silicon": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "silicon",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "DH0pZGGk"
+    },
+    "choice silicon grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 silicon grist.",
+        "cost": {
+            "silicon": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "silicon",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "S4LXv6SI"
+    },
+    "rough silk grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 silk grist.",
+        "cost": {
+            "silk": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "silk",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "6hC6iKs3"
+    },
+    "fine silk grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 silk grist.",
+        "cost": {
+            "silk": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "silk",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "KTJ7BQLv"
+    },
+    "choice silk grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 silk grist.",
+        "cost": {
+            "silk": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "silk",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "EPnr?bfK"
+    },
+    "rough slime grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 slime grist.",
+        "cost": {
+            "slime": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "slime",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "7xRfrbOT"
+    },
+    "fine slime grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 slime grist.",
+        "cost": {
+            "slime": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "slime",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "rxmKtxRG"
+    },
+    "choice slime grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 slime grist.",
+        "cost": {
+            "slime": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "slime",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "AWIv2Dg!"
+    },
+    "rough star sapphire grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 star sapphire grist.",
+        "cost": {
+            "star sapphire": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "star sapphire",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "A4063L8k"
+    },
+    "fine star sapphire grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 star sapphire grist.",
+        "cost": {
+            "star sapphire": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "star sapphire",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "JDXeD?Xm"
+    },
+    "choice star sapphire grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 star sapphire grist.",
+        "cost": {
+            "star sapphire": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "star sapphire",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "rMQkHxmS"
+    },
+    "rough sulfur grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 sulfur grist.",
+        "cost": {
+            "sulfur": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "sulfur",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "J4PA!KHO"
+    },
+    "fine sulfur grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 sulfur grist.",
+        "cost": {
+            "sulfur": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "sulfur",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "fnJ4Ov?z"
+    },
+    "choice sulfur grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 sulfur grist.",
+        "cost": {
+            "sulfur": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "sulfur",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "4RA?1jQn"
+    },
+    "rough sunstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 sunstone grist.",
+        "cost": {
+            "sunstone": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "sunstone",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "9wfVxb4n"
+    },
+    "fine sunstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 sunstone grist.",
+        "cost": {
+            "sunstone": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "sunstone",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "AUTgU2w5"
+    },
+    "choice sunstone grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 sunstone grist.",
+        "cost": {
+            "sunstone": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "sunstone",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "QfztQ1cR"
+    },
+    "rough tar grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 tar grist.",
+        "cost": {
+            "tar": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "tar",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "XPNS5ByI"
+    },
+    "fine tar grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 tar grist.",
+        "cost": {
+            "tar": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "tar",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "j?qMcAWW"
+    },
+    "choice tar grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 tar grist.",
+        "cost": {
+            "tar": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "tar",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "BizOv5TX"
+    },
+    "rough titanium grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 titanium grist.",
+        "cost": {
+            "titanium": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "titanium",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "zOz91Azt"
+    },
+    "fine titanium grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 titanium grist.",
+        "cost": {
+            "titanium": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "titanium",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "MOKe0s8o"
+    },
+    "choice titanium grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 titanium grist.",
+        "cost": {
+            "titanium": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "titanium",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "dPFgCL!J"
+    },
+    "rough topaz grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 topaz grist.",
+        "cost": {
+            "topaz": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "topaz",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "gTTA8s4k"
+    },
+    "fine topaz grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 topaz grist.",
+        "cost": {
+            "topaz": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "topaz",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "Q3Sidw9E"
+    },
+    "choice topaz grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 topaz grist.",
+        "cost": {
+            "topaz": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "topaz",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "csq0PHqw"
+    },
+    "rough uranium grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 uranium grist.",
+        "cost": {
+            "uranium": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "uranium",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "0XH7Cjns"
+    },
+    "fine uranium grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 uranium grist.",
+        "cost": {
+            "uranium": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "uranium",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "kF4PrBiy"
+    },
+    "choice uranium grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 uranium grist.",
+        "cost": {
+            "uranium": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "uranium",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "fE7VIF3C"
+    },
+    "rough wood grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A rough grystal. When consumed, this gives 1000 wood grist.",
+        "cost": {
+            "wood": 10,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "wood",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "!cVTMjSB"
+    },
+    "fine wood grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A fine grystal. When consumed, this gives 10000 wood grist.",
+        "cost": {
+            "wood": 100,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "wood",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "kz8YjH?V"
+    },
+    "choice wood grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 wood grist.",
+        "cost": {
+            "wood": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "wood",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "25u8mRPX"
+    },
+    "rough zilium grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": [
+            "A rough grystal. When consumed, this gives 1 zilium grist."
+        ],
+        "cost": {
+            "zilium": 0.01,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "zilium",
+        "secret_states": {
+            "leech": 0.5
+        },
+        "adjectives": [
+            "rough"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "B7Yf3F2S"
+    },
+    "fine zilium grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": [
+            "A fine grystal. When consumed, this gives 2 zilium grist."
+        ],
+        "cost": {
+            "zilium": 0.02,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "zilium",
+        "secret_states": {
+            "leech": 1
+        },
+        "adjectives": [
+            "fine"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "NuRTBDWP"
+    },
+    "choice zilium grystal": {
+        "forbiddencode": true,
+        "power": 100,
+        "size": 1,
+        "description": "A choice grystal. When consumed, this gives 100000 zilium grist.",
+        "cost": {
+            "zilium": 1000,
+            "build": 0.5
+        },
+        "use": [
+            "collect"
+        ],
+        "prototype_name": "zilium",
+        "secret_states": {
+            "leech": 2
+        },
+        "adjectives": [
+            "choice"
+        ],
+        "secretadjectives": [
+            "gristy",
+            "abstract",
+            "meta",
+            "resourceful",
+            "glitchy"
+        ],
+        "creator": "ebolite",
+        "base": true,
+        "display_name": null,
+        "inheritpower": 0,
+        "kinds": {},
+        "wearable": false,
+        "onhit_states": {},
+        "wear_states": {},
+        "consume_states": {},
+        "attached_skills": [],
+        "code": "iggvN9Io"
     }
 }

@@ -11,12 +11,9 @@ import adjectiveorder
 import sessions
 import stateseffects
 import database
+import config
 
 COMPOUND_NAME_CHANCE = 0.2 # chance for having compound names in && operations
-DICEMIN_MINIMUM_SOFTCAP = -2.8
-DICEMIN_MAXIMUM_SOFTCAP = 1.4
-DICEMAX_MINIMUM_SOFTCAP = -1.4
-DICEMAX_MAXIMUM_SOFTCAP = 5.6
 INHERITANCE_BONUS_MULT = 1.25 # bonus for simply alchemizing items
 INHERITANCE_MALUS_MULT = 0.75 # malus for being above softcap
 
@@ -555,6 +552,67 @@ defaults = {
     "prototype_name": None, # either None or a word that will be used when prototyped for the first time(cowboy boots is "cowboy" for example)
     "creator": None,
 }
+
+# special items (loot items)
+for grist_name in config.grists:
+    # make grystals (consumable grist items)
+    # rough grystal
+    rough_grystal_dict = deepcopy(defaults)
+    rough_grystal_dict.update({
+        "forbiddencode": True,
+        "power": 100,
+        "size": 1,
+        "description": f"A rough grystal. When consumed, this gives 1000 {grist_name} grist.",
+        "cost": {grist_name: 10},
+        "use": ["collect"],
+        "prototype_name": grist_name,
+        "secret_states": {"leech": 0.5},
+        "adjectives": ["rough"],
+        "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
+        "creator": "ebolite",
+    })
+    if grist_name in ["rainbow", "zilium"]: 
+        rough_grystal_dict["description"] = f"A rough grystal. When consumed, this gives 1 {grist_name} grist.",
+        rough_grystal_dict["cost"] = {grist_name: 0.01}
+    util.bases[f"rough {grist_name} grystal"] = deepcopy(rough_grystal_dict)
+    # fine grystal
+    fine_grystal_dict = deepcopy(defaults)
+    fine_grystal_dict.update({
+        "forbiddencode": True,
+        "power": 100,
+        "size": 1,
+        "description": f"A fine grystal. When consumed, this gives 10000 {grist_name} grist.",
+        "cost": {grist_name: 100},
+        "use": ["collect"],
+        "prototype_name": grist_name,
+        "secret_states": {"leech": 1},
+        "adjectives": ["fine"],
+        "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
+        "creator": "ebolite",
+    })
+    if grist_name in ["rainbow", "zilium"]: 
+        fine_grystal_dict["description"] = f"A fine grystal. When consumed, this gives 2 {grist_name} grist.",
+        fine_grystal_dict["cost"] = {grist_name: 0.02}
+    util.bases[f"fine {grist_name} grystal"] = deepcopy(fine_grystal_dict)
+    # choice grystal
+    choice_grystal_dict = deepcopy(defaults)
+    choice_grystal_dict.update({
+        "forbiddencode": True,
+        "power": 100,
+        "size": 1,
+        "description": f"A choice grystal. When consumed, this gives 100000 {grist_name} grist.",
+        "cost": {grist_name: 1000},
+        "use": ["collect"],
+        "prototype_name": grist_name,
+        "secret_states": {"leech": 2},
+        "adjectives": ["choice"],
+        "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
+        "creator": "ebolite",
+    })
+    if grist_name in ["rainbow", "zilium"]: 
+        fine_grystal_dict["description"] = f"A choice grystal. When consumed, this gives 3 {grist_name} grist.",
+        fine_grystal_dict["cost"] = {grist_name: 0.03}
+    util.bases[f"choice {grist_name} grystal"] = deepcopy(choice_grystal_dict)
 
 missing_states = set()
 
