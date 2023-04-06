@@ -205,3 +205,7 @@ alchemize.use_func = use_alchemize
 
 sleep = ItemAction("sleep")
 sleep.use_prompt = "You lie down and fall asleep on the {iname}..."
+
+collect = ItemAction("collect")
+collect.use_prompt = "The {iname} explodes into grist!"
+collect.consume = True
