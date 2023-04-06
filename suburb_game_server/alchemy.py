@@ -567,7 +567,7 @@ for grist_name in config.grists:
         "use": ["collect"],
         "prototype_name": grist_name,
         "secret_states": {"leech": 0.5},
-        "adjectives": ["rough"],
+        "adjectives": ["rough", grist_name],
         "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
         "creator": "ebolite",
     })
@@ -586,7 +586,7 @@ for grist_name in config.grists:
         "use": ["collect"],
         "prototype_name": grist_name,
         "secret_states": {"leech": 1},
-        "adjectives": ["fine"],
+        "adjectives": ["fine", grist_name],
         "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
         "creator": "ebolite",
     })
@@ -605,7 +605,7 @@ for grist_name in config.grists:
         "use": ["collect"],
         "prototype_name": grist_name,
         "secret_states": {"leech": 2},
-        "adjectives": ["choice"],
+        "adjectives": ["choice", grist_name],
         "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
         "creator": "ebolite",
     })
