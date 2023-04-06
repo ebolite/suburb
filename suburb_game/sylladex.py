@@ -104,57 +104,26 @@ class Instance():
             return False
         else: 
             if action.use_prompt: util.log(action.use_message(self.display_name(), target_instance_display_name))
-            self.do_use_item_stuff(action_name, target_instance_name)
+            self.update_sylladex_for_action(action_name, target_instance_name)
             return True
 
     # returns True if go back to last scene, False don't
-    def do_use_item_stuff(self, action_name: str, target_name: Optional[str]=None) -> bool:
+    def update_sylladex_for_action(self, action_name: str, target_name: Optional[str]=None) -> bool:
         syl = Sylladex.current_sylladex()
-        match action_name:
-            case "add_card":
-                if self.name in syl.deck:
-                    syl.remove_instance(self.name)
-                card_instance = self.contained_instance()
-                if card_instance is not None:
-                    syl.captchalogue(card_instance)
-                syl.update_deck()
-                return True
-            case "combine_card":
-                if target_name is not None and target_name in syl.deck:
-                    syl.remove_instance(target_name)
-                return False
-            case "uncombine_card":
-                if self.name in syl.deck:
-                    syl.remove_instance(self.name)
-                return True
-            case "insert_card":
-                if target_name is None: raise TypeError
+        action = item_actions[action_name]
+        if action.consume:
+            if self.name in syl.deck:
+                syl.remove_instance(self.name)
+        if action.consume_target:
+            if target_name is not None and target_name in syl.deck:
                 syl.remove_instance(target_name)
-                return False
-            case "remove_card":
-                return True
-            case "punch_card":
-                return False
-            case "insert_dowel":
-                if target_name is None: raise TypeError
-                syl.remove_instance(target_name)
-                return False
-            case "insert_carved_dowel":
-                if target_name is None: raise TypeError
-                syl.remove_instance(target_name)
-                return False
-            case "remove_dowel":
-                return True
-            case "punch_card":
-                return True
-            case "install_gristtorrent":
-                syl.update_deck()
-                return True
-            case "install_sburb":
-                syl.update_deck()
-                return True
-            case _:
-                return True
+        # special, todo: put this behavior into itemactions.py
+        if action_name == "add_card":
+            card_instance = self.contained_instance()
+            if card_instance is not None:
+                syl.captchalogue(card_instance)
+        syl.update_deck()
+        return action.goto_last_scene
 
     def get_action_button_func(self, action_name: str, last_scene: Callable) -> Callable:
         if action_name not in item_actions: return lambda *args: None

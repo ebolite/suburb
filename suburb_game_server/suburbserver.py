@@ -895,6 +895,11 @@ def use_item(player: sessions.SubPlayer, instance: alchemy.Instance, action_name
                 if not player.prototyped_before_entry: player.session.prototypes.append(None)
                 return True
             else: return False
+        case "collect":
+            if not player.consume_instance(instance.name): return False
+            for grist_name, value in instance.item.true_cost.items():
+                player.add_grist(grist_name, value)
+            return True
         case "alchemize":
             if not instance.inserted: print("nothing inserted"); return False
             inserted_instance = alchemy.Instance(instance.inserted)

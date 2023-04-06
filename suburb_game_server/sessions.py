@@ -1367,6 +1367,11 @@ class SubPlayer(Player):
         return True
     
     def consume_instance(self, instance_name: str) -> bool:
+        if self.worn_instance == instance_name:
+            self.unwear()
+        for deck in self.strife_portfolio.values():
+            if instance_name in deck: 
+                self.eject_from_strife_deck(instance_name)
         if instance_name in self.room.instances:
             self.room.remove_instance(instance_name)
             return True

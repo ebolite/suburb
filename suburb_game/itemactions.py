@@ -7,7 +7,7 @@ import render
 import suburb
 import binaryoperations
 
-item_actions = {}
+item_actions: dict[str, "ItemAction"] = {}
 
 def request_use_item(instance_name: str, action_name: str, target_name:Optional[str]=None, additional_data:Optional[str]=None):
     return client.requestplus(intent="use_item", content={"instance_name": instance_name, "action_name": action_name, 
@@ -17,6 +17,9 @@ class ItemAction():
     def __init__(self, name):
         self.targeted = False
         self.special = False
+        self.consume = False
+        self.consume_target = False
+        self.goto_last_scene = True
         self.prompt = ""
         self.error_prompt = ""
         self.use_prompt = ""
@@ -56,6 +59,7 @@ class ItemAction():
 add_card = ItemAction("add_card")
 add_card.error_prompt = "You are at the maximum amount of empty cards."
 add_card.use_prompt = "You add the {iname} to your sylladex."
+add_card.consume = True
 
 computer = ItemAction("computer")
 computer.use_prompt = "You boot up the {iname}."
@@ -78,16 +82,19 @@ combine_card.targeted = True
 combine_card.prompt = "Combine {iname_lower} with what (&&)?"
 combine_card.error_prompt = ""
 combine_card.use_prompt = "You combine {iname_lower} with {tname_lower}."
+combine_card.consume_target = True
 
 uncombine_card = ItemAction("uncombine_card")
 uncombine_card.error_prompt = "This card is not combined."
 uncombine_card.use_prompt = "You uncombine the cards."
+uncombine_card.consume = True
 
 insert_card = ItemAction("insert_card")
 insert_card.targeted = True
 insert_card.prompt = "Insert what into the {iname}?"
 insert_card.error_prompt = "Something is already inserted."
 insert_card.use_prompt = "You insert the card for {tname}."
+insert_card.consume_target = True
 
 remove_card = ItemAction("remove_card")
 remove_card.prompt = "There's nothing to remove!"
@@ -139,6 +146,7 @@ insert_dowel.targeted = True
 insert_dowel.prompt = "Insert what into the {iname}?"
 insert_dowel.error_prompt = "There's already a CRUXITE DOWEL inserted."
 insert_dowel.use_prompt = "You insert a {tname} into the {iname}."
+insert_dowel.consume_target = True
 
 insert_carved_dowel = ItemAction("insert_carved_dowel")
 insert_carved_dowel.targeted = True
