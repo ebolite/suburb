@@ -397,6 +397,26 @@ make_item_state(slow)
 
 # aspect states
 
+class AddAspectState(OneTimeState):
+    def __init__(self, name, aspect: "skills.Aspect"):
+        super().__init__(name)
+        self.aspect = aspect
+        self.subtract = False
+
+    def on_apply(self, griefer: "strife.Griefer"):
+        applier_power = self.applier_stats(griefer)["power"]
+        aspect_to_add = int(applier_power * self.potency(griefer))
+        if self.subtract: aspect_to_add *= -1
+        griefer.strife.log(self.aspect.adjust(griefer, aspect_to_add))
+        return super().on_apply(griefer)
+
+for _, aspect in skills.aspects.items():
+    add_aspect = AddAspectState(f"add {aspect.name}", aspect)
+    subtract_aspect = AddAspectState(f"subtract {aspect.name}", aspect)
+    subtract_aspect.subtract = True
+
+# aspect-related states
+
 class PursuitState(State):
     def __init__(self, name, aspect: "skills.Aspect"):
         super().__init__(name)
