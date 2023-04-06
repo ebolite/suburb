@@ -412,8 +412,12 @@ class AddAspectState(OneTimeState):
 
 for _, aspect in skills.aspects.items():
     add_aspect = AddAspectState(f"add {aspect.name}", aspect)
+    add_aspect.beneficial = aspect.beneficial
+    add_aspect.tooltip = f"Increases {aspect.name.upper()}."
     subtract_aspect = AddAspectState(f"subtract {aspect.name}", aspect)
+    subtract_aspect.beneficial = not aspect.beneficial
     subtract_aspect.subtract = True
+    subtract_aspect.tooltip = f"Decreases {aspect.name.upper()}."
 
 # aspect-related states
 

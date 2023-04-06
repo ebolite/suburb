@@ -12,6 +12,7 @@ import sessions
 import stateseffects
 import database
 import config
+import skills
 
 COMPOUND_NAME_CHANCE = 0.2 # chance for having compound names in && operations
 INHERITANCE_BONUS_MULT = 1.25 # bonus for simply alchemizing items
@@ -613,6 +614,32 @@ for grist_name in config.grists:
         fine_grystal_dict["description"] = f"A choice grystal. When consumed, this gives 3 {grist_name} grist.",
         fine_grystal_dict["cost"] = {grist_name: 0.03}
     util.bases[f"choice {grist_name} grystal"] = deepcopy(choice_grystal_dict)
+
+# special pure aspect items
+for _, aspect in skills.aspects.items():
+    pure_aspect_dict = deepcopy(defaults)
+    pure_aspect_dict.update({
+        "forbiddencode": True,
+        "power": 100,
+        "inheritpower": 100,
+        "size": 1,
+        "description": f"Pure, condensed {aspect.name}.",
+        "cost": config.aspect_grists[aspect.name].copy(),
+        "adjectives": ["pure"],
+        "secretadjectives": config.aspect_secretadjectives[aspect.name].copy(),
+        "creator": "ebolite",
+        "prototype_name": aspect.name,
+    })
+    pure_aspect_dict["secret_states"] = {f"subtract {aspect.name}": 1, f"add {aspect.name}": 1}
+    if aspect.beneficial:
+        pure_aspect_dict["onhit_states"] = {f"subtract {aspect.name}": 0.5}
+        pure_aspect_dict["wear_states"] = {f"add {aspect.name}": 0.5}
+        pure_aspect_dict["consume_states"] = {f"add {aspect.name}": 0.5}
+    else:
+        pure_aspect_dict["onhit_states"] = {f"add {aspect.name}": 0.5}
+        pure_aspect_dict["wear_states"] = {f"subtract {aspect.name}": 0.5}
+        pure_aspect_dict["consume_states"] = {f"subtract {aspect.name}": 0.5}
+    util.bases[f"pure {aspect.name}"] = deepcopy(pure_aspect_dict)
 
 missing_states = set()
 

@@ -158,6 +158,81 @@ grists = {
     "zilium": {"tier": 10, "exotic": True},
 }
 
+aspect_grists = {
+    "space": {
+        "jet": 1, 
+        "chalk": 1, 
+        "onyx": 0.2
+    },
+    "time": {
+        "garnet": 1,
+        "redstone": 0.2,
+        "ruby": 0.2
+    },
+    "mind": {
+        "emerald": 0.3,
+        "acid": 0.3,
+        "uranium": 0.3
+    },
+    "heart": {
+        "frosting": 1,
+        "rock candy": 1,
+        "rose quartz": 0.4,
+    },
+    "hope": {
+        "gold": 0.5,
+        "sunstone": 0.5,
+        "amber": 1,
+    },
+    "rage": {
+        "amethyst": 1.5,
+        "shale": 1.5,
+    },
+    "breath": {
+        "aquamarine": 1,
+        "fluorite": 0.5,
+        "diamond": 0.2,
+    },
+    "blood": {
+        "blood": 1.5,
+        "rust": 0.5,
+        "iron": 0.5,
+    },
+    "life": {
+        "wood": 0.5,
+        "aquamarine": 1,
+        "slime": 0.5,
+    },
+    "doom": {
+        "malachite": 1,
+        "sulfur": 0.3,
+        "tar": 0.5,
+    },
+    "light": {
+        "lux": 1,
+        "neon": 1
+    },
+    "void": {
+        "mist": 1
+    }
+}
+
+aspect_secretadjectives = {
+    "space": ["massive", "immense", "cosmic", "reality-bending", "astronomical", "gigantic", "black", "white"],
+    "time": ["time-travelling", "clockwork", "gear-filled", "antique", "futuristic", "paradox", "ticking", "red"],
+    "mind": ["smart", "intelligent", "clever", "brainy", "cerebral", "analytical", "precise", "mind-reading", "precognitive", "teal"],
+    "heart": ["soulful", "heartfelt", "emotional", "self-absorbed", "narcissistic", "passionate", "sincere", "pink"],
+    "hope": ["hopeful", "defiant", "justice", "justified", "moral", "destined", "chosen", "faithful", "yellow", "white"],
+    "rage": ["pissed+off", "mad", "angry", "passionate", "insane", "depressed", "chaotic", "unpredictable", "unstable", "irate", "wrathful",
+             "furious", "enraged", "demented", "crazy", "deranged", "purple"],
+    "breath": ["free", "airy", "heroic", "confident", "unchained", "unrestricted", "independent", "brave", "gallant", "breathing", "blue"],
+    "blood": ["bloody", "chained", "restrained", "motivational", "inspiring", "bloodstained", "crimson", "sanguine", "gory", "red"],
+    "life": ["lively", "living", "vigorous", "breathing", "vital", "live", "wooden", "green", "pale"],
+    "doom": ["dead", "doomed", "dying", "cursed", "suffering", "miserable", "lifeless", "deceased", "the+late", "cadaverous", "necrotic", "rotting", "rotten", "green", "black"],
+    "light": ["glowing", "illuminant", "shining", "lustrous", "beaming", "vivid", "vibrant", "gleaming", "phosphorescent", "lambent", "golden", "lucky", "fortunate"],
+    "void": ["anti", "illusory", "unreal", "false", "void", "empty", "barren", "bare", "meaningless", "null", "fruitless", "vain", "hollow", "vacuous", "blue"]
+}
+
 modus_max_sizes = {"wallet": 413612}
 
 enemies = ["imp", "ogre", "basilisk", "octopisc", "lich", "titachnid", "serpentipede", "giclops", "bicephalon", "acheron"]
