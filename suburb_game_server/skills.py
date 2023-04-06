@@ -440,6 +440,7 @@ class Aspect():
         self.is_vial = False
         self.check_vials = False
         self.compare_starting_vial = False
+        self.beneficial = True
         # balance mult, higher means aspect is generally shittier / less useful, lower means aspect is inherently good
         self.balance_mult: float = 1.0
         # ratio mult affects the power of ratios specifically (doom, for example, is harder to get a lot of, so its ratio mult is increased)
@@ -613,6 +614,7 @@ doom.vials = ["hp"]
 doom.adjustment_divisor = 1/3
 doom.ratio_mult = 2
 doom.balance_mult = 1.3
+doom.beneficial = False
 
 light = Aspect("light")
 light.stat_name = "luck"
@@ -625,7 +627,7 @@ void.vials = ["vim", "aspect"]
 void.ratio_mult = 2
 void.balance_mult = 1.5
 void.adjustment_divisor = 2
-
+void.beneficial = False
 
 # aspect skills
 for aspect_name in aspects:
