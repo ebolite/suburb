@@ -243,10 +243,20 @@ class LootTile(Tile):
     def special_loot(self, room: "sessions.Room") -> list[str]:
         # todo: not always generate special loot
         loot = []
-        if room.overmap.land is not None:
-            assert room.overmap.land.player is not None
-            aspect = room.overmap.land.player.aspect
-            bases = list(util.bases.keys())
+        SPECIAL_RANGES = {
+            "stash": (-10, 1),
+            "trove": (-4, 1),
+            "bounty": (0, 2),
+        }
+        min_specials, max_specials = SPECIAL_RANGES[self.loot_type]
+        min_specials += room.map.height
+        min_specials = min(min_specials, max_specials)
+        num_specials = random.randint(min_specials, max_specials)
+        if num_specials <= 0 or room.overmap.land is None: return []
+        assert room.overmap.land.player is not None
+        aspect = room.overmap.land.player.aspect
+        bases = list(util.bases.keys())
+        for i in range(num_specials):
             # 25% chance to be of a kind someone in the session has
             if random.random() < 0.25:
                 session_kinds = []
@@ -271,10 +281,8 @@ class LootTile(Tile):
         else: return ["rough"]
 
     def get_possible_grist_types(self, room: "sessions.Room") -> list[str]:
-        if self.loot_type == "stash": max_tier = 3
-        elif self.loot_type == "trove": max_tier = 7
-        elif self.loot_type == "bounty": max_tier = 9
-        else: max_tier = 0
+        max_tier = room.map.height + 3
+        max_tier = min(max_tier, 9)
         possible_grist_types = [grist_name for grist_name in config.grists if config.grists[grist_name]["tier"] <= max_tier]
         if room.overmap.land is not None:
             possible_grist_types += config.gristcategories[room.overmap.land.gristcategory]
