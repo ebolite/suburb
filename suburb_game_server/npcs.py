@@ -42,7 +42,8 @@ class Underling():
         self.ai_type: str = "random"
 
     def make_npc(self, grist_name: str, grist_category: str, room: "sessions.Room") -> "Npc":
-        tier: int = config.grists[grist_name]["tier"]
+        grist_list = config.gristcategories[grist_category]
+        tier: int = grist_list.index(grist_name) + 1
         power = self.base_power * (tier**2)
         nickname = f"{grist_name} {self.monster_type}"
         name = Npc.make_valid_name(nickname)
