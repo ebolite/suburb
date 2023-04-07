@@ -228,6 +228,7 @@ class InheritedStatistics():
         for state_name in self.secret_states.copy():
             state = stateseffects.states[state_name]
             options = [self.consume_states, self.onhit_states, self.wear_states]
+            # secret state will never be inherited if opposed
             options = [option for option in options if state.opposing_state not in option]
             options += [None]
             random.seed(self.name+"secretstatesoption"+state_name)
