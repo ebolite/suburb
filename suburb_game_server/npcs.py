@@ -32,6 +32,8 @@ class Underling():
         self.actions = 1
         self.cluster_size = 1
         self.difficulty = 1
+        # hostility is how strong players have to be to NOT fight them automatically
+        self.hostility = 1.0
         self.variance = 0
         self.additional_skills = []
         self.onhit_states = {}
@@ -55,6 +57,7 @@ class Underling():
         npc.ai_type = self.ai_type
         npc.additional_skills = self.additional_skills.copy()
         npc.hostile = True
+        npc.hostility = self.hostility
         npc.onhit_states = self.onhit_states.copy()
         npc.wear_states = self.wear_states.copy()
         if room.session.prototypes:
@@ -78,6 +81,7 @@ imp.stat_ratios["luck"] = 3
 imp.cluster_size = 3
 imp.difficulty = 1
 imp.variance = 4
+imp.hostility = 0
 imp.ai_type = "imp"
 
 class ImpAI(GrieferAI):
@@ -204,6 +208,7 @@ class Npc():
         self.grist_type: Optional[str] = None
         self.color: Optional[list] = None
         self.hostile = True
+        self.hostility = 1.0
         self.ai_type: str = "random"
         self.stat_ratios: dict[str, int] = {
             "spunk": 1,

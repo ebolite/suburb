@@ -833,6 +833,20 @@ class Room():
         # todo: add item falling if this tile is no longer solid
         return True
 
+    # check enemy hostility
+    def provoke(self):
+        if not self.players: return
+        if not self.npcs: return
+        highest_power = 0
+        for subplayer_name in self.players:
+            subplayer = SubPlayer.from_name(subplayer_name)
+            if subplayer.power > highest_power: highest_power = subplayer.power
+        for npc_name in self.npcs:
+            npc = npcs.Npc(npc_name)
+            if npc.hostile and npc.power * npc.hostility > highest_power:
+                self.start_strife()
+                return
+
     @property
     def specials(self) -> dict[str, tuple]:
         special_dict = {}
@@ -1531,6 +1545,7 @@ class SubPlayer(Player):
             if not entered_gate: self.goto_room(new_room)
         except ValueError:
             self.goto_room(new_room)
+            new_room.provoke()
         return True
 
     def enter_gate(self, gate_num: int) -> bool:
