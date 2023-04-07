@@ -66,7 +66,8 @@
             "pepper spray",
             "pet rock",
             "black squiddle",
-            "water extinguisher"
+            "water extinguisher",
+            "laser shotgun"
         ]
     },
     "kitchen": {
@@ -186,10 +187,12 @@
             "halligan bar",
             "fire axe",
             "stone",
-            "cloak"
+            "cloak",
+            "nailgun"
         ],
         "exotic": [
-            "water extinguisher"
+            "water extinguisher",
+            "screwgun"
         ]
     },
     "bathroom": {
@@ -470,10 +473,14 @@
             "top hat",
             "clown nose",
             "cloak",
-            "chainmail"
+            "chainmail",
+            "nailgun"
         ],
         "exotic": [
-            "water extinguisher"
+            "water extinguisher",
+            "laser shotgun",
+            "screwgun",
+            "overheat nailgun"
         ]
     },
     "security": {
@@ -522,7 +529,9 @@
         "rare": [
             "deer skull"
         ],
-        "exotic": []
+        "exotic": [
+            "overheat nailgun"
+        ]
     },
     "anime": {
         "spawnlist_type": "interest",
@@ -1068,7 +1077,9 @@
         "common": [],
         "uncommon": [],
         "rare": [],
-        "exotic": []
+        "exotic": [
+            "laser shotgun"
+        ]
     },
     "classy": {
         "spawnlist_type": "interest",
@@ -1105,16 +1116,20 @@
         "common": [],
         "uncommon": [
             "deer skull",
-            "pistol"
+            "pistol",
+            "nailgun"
         ],
         "rare": [
             "shotgun",
             "dated rifle",
             ".44 magnum",
-            "double-barreled shotgun"
+            "double-barreled shotgun",
+            "screwgun"
         ],
         "exotic": [
-            "water extinguisher"
+            "water extinguisher",
+            "laser shotgun",
+            "overheat nailgun"
         ]
     },
     "wizards": {
@@ -1382,7 +1397,8 @@
         "rare": [],
         "exotic": [
             "azure grimoire",
-            "minecraft pickaxe"
+            "minecraft pickaxe",
+            "overheat nailgun"
         ]
     },
     "plushies": {
