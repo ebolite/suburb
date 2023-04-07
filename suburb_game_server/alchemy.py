@@ -582,6 +582,7 @@ for grist_name in config.grists:
     # rough grystal
     rough_grystal_dict = deepcopy(defaults)
     rough_grystal_dict.update({
+        "displayname": f"rough {grist_name} grystal",
         "forbiddencode": True,
         "power": 100,
         "size": 1,
@@ -590,7 +591,7 @@ for grist_name in config.grists:
         "use": ["collect"],
         "prototype_name": grist_name,
         "secret_states": {"leech": 0.5},
-        "adjectives": ["rough", grist_name],
+        "adjectives": [grist_name.replace(" ","+"), "rough"],
         "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
         "creator": "ebolite",
     })
@@ -601,15 +602,16 @@ for grist_name in config.grists:
     # fine grystal
     fine_grystal_dict = deepcopy(defaults)
     fine_grystal_dict.update({
+        "displayname": f"fine {grist_name} grystal",
         "forbiddencode": True,
         "power": 100,
         "size": 1,
         "description": f"A fine grystal. When consumed, this gives 10000 {grist_name} grist.",
-        "cost": {grist_name: 100},
+        "cost": {grist_name.replace(" ","+"): 100},
         "use": ["collect"],
         "prototype_name": grist_name,
         "secret_states": {"leech": 1},
-        "adjectives": ["fine", grist_name],
+        "adjectives": [grist_name.replace(" ","+"), "fine"],
         "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
         "creator": "ebolite",
     })
@@ -620,6 +622,7 @@ for grist_name in config.grists:
     # choice grystal
     choice_grystal_dict = deepcopy(defaults)
     choice_grystal_dict.update({
+        "displayname": f"choice {grist_name} grystal",
         "forbiddencode": True,
         "power": 100,
         "size": 1,
@@ -628,7 +631,7 @@ for grist_name in config.grists:
         "use": ["collect"],
         "prototype_name": grist_name,
         "secret_states": {"leech": 2},
-        "adjectives": ["choice", grist_name],
+        "adjectives": [grist_name.replace(" ","+"), "choice"],
         "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
         "creator": "ebolite",
     })

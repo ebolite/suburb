@@ -9583,11 +9583,12 @@
         ],
         "prototype_name": "build",
         "creator": "ebolite",
+        "displayname": "rough build grystal",
         "adjectives": [
-            "rough",
-            "build"
+            "build",
+            "rough"
         ],
-        "code": "pTcdOLnx"
+        "code": "aYRPMd8o"
     },
     "fine build grystal": {
         "base": true,
@@ -9621,11 +9622,12 @@
         ],
         "prototype_name": "build",
         "creator": "ebolite",
+        "displayname": "fine build grystal",
         "adjectives": [
-            "fine",
-            "build"
+            "build",
+            "fine"
         ],
-        "code": "1MIbLY16"
+        "code": "ErNcy77P"
     },
     "choice build grystal": {
         "base": true,
@@ -9659,11 +9661,12 @@
         ],
         "prototype_name": "build",
         "creator": "ebolite",
+        "displayname": "choice build grystal",
         "adjectives": [
-            "choice",
-            "build"
+            "build",
+            "choice"
         ],
-        "code": "SCvvvEom"
+        "code": "dKg0AT7S"
     },
     "rough acid grystal": {
         "base": true,
@@ -9698,11 +9701,12 @@
         ],
         "prototype_name": "acid",
         "creator": "ebolite",
+        "displayname": "rough acid grystal",
         "adjectives": [
-            "rough",
-            "acid"
+            "acid",
+            "rough"
         ],
-        "code": "XMD2MYn2"
+        "code": "oQHu4Dj1"
     },
     "fine acid grystal": {
         "base": true,
@@ -9737,11 +9741,12 @@
         ],
         "prototype_name": "acid",
         "creator": "ebolite",
+        "displayname": "fine acid grystal",
         "adjectives": [
-            "fine",
-            "acid"
+            "acid",
+            "fine"
         ],
-        "code": "iGSOhSP2"
+        "code": "9!eG3vYO"
     },
     "choice acid grystal": {
         "base": true,
@@ -9776,11 +9781,12 @@
         ],
         "prototype_name": "acid",
         "creator": "ebolite",
+        "displayname": "choice acid grystal",
         "adjectives": [
-            "choice",
-            "acid"
+            "acid",
+            "choice"
         ],
-        "code": "QIVQJy3U"
+        "code": "G6xXd1ho"
     },
     "rough amber grystal": {
         "base": true,
@@ -9815,11 +9821,12 @@
         ],
         "prototype_name": "amber",
         "creator": "ebolite",
+        "displayname": "rough amber grystal",
         "adjectives": [
-            "rough",
-            "amber"
+            "amber",
+            "rough"
         ],
-        "code": "KkxeN3A7"
+        "code": "7s02fKtp"
     },
     "fine amber grystal": {
         "base": true,
@@ -9854,11 +9861,12 @@
         ],
         "prototype_name": "amber",
         "creator": "ebolite",
+        "displayname": "fine amber grystal",
         "adjectives": [
-            "fine",
-            "amber"
+            "amber",
+            "fine"
         ],
-        "code": "Cx!jg8nO"
+        "code": "9lXcn4KB"
     },
     "choice amber grystal": {
         "base": true,
@@ -9893,11 +9901,12 @@
         ],
         "prototype_name": "amber",
         "creator": "ebolite",
+        "displayname": "choice amber grystal",
         "adjectives": [
-            "choice",
-            "amber"
+            "amber",
+            "choice"
         ],
-        "code": "I?Yx3Zs?"
+        "code": "2pwNEs9r"
     },
     "rough amethyst grystal": {
         "base": true,
@@ -9932,11 +9941,12 @@
         ],
         "prototype_name": "amethyst",
         "creator": "ebolite",
+        "displayname": "rough amethyst grystal",
         "adjectives": [
-            "rough",
-            "amethyst"
+            "amethyst",
+            "rough"
         ],
-        "code": "7Im7ctg7"
+        "code": "SnxTOq3L"
     },
     "fine amethyst grystal": {
         "base": true,
@@ -9971,11 +9981,12 @@
         ],
         "prototype_name": "amethyst",
         "creator": "ebolite",
+        "displayname": "fine amethyst grystal",
         "adjectives": [
-            "fine",
-            "amethyst"
+            "amethyst",
+            "fine"
         ],
-        "code": "tA0TlCCh"
+        "code": "wM1ewLth"
     },
     "choice amethyst grystal": {
         "base": true,
@@ -10010,11 +10021,12 @@
         ],
         "prototype_name": "amethyst",
         "creator": "ebolite",
+        "displayname": "choice amethyst grystal",
         "adjectives": [
-            "choice",
-            "amethyst"
+            "amethyst",
+            "choice"
         ],
-        "code": "7iJUXuWG"
+        "code": "CeTyOGNC"
     },
     "rough aquamarine grystal": {
         "base": true,
@@ -10049,11 +10061,12 @@
         ],
         "prototype_name": "aquamarine",
         "creator": "ebolite",
+        "displayname": "rough aquamarine grystal",
         "adjectives": [
-            "rough",
-            "aquamarine"
+            "aquamarine",
+            "rough"
         ],
-        "code": "D381st5D"
+        "code": "4wyqbe!u"
     },
     "fine aquamarine grystal": {
         "base": true,
@@ -10088,11 +10101,12 @@
         ],
         "prototype_name": "aquamarine",
         "creator": "ebolite",
+        "displayname": "fine aquamarine grystal",
         "adjectives": [
-            "fine",
-            "aquamarine"
+            "aquamarine",
+            "fine"
         ],
-        "code": "??JO5tSR"
+        "code": "?prWakEH"
     },
     "choice aquamarine grystal": {
         "base": true,
@@ -10127,11 +10141,12 @@
         ],
         "prototype_name": "aquamarine",
         "creator": "ebolite",
+        "displayname": "choice aquamarine grystal",
         "adjectives": [
-            "choice",
-            "aquamarine"
+            "aquamarine",
+            "choice"
         ],
-        "code": "PZ!xUU!j"
+        "code": "CF!hnn3D"
     },
     "rough blood grystal": {
         "base": true,
@@ -10166,11 +10181,12 @@
         ],
         "prototype_name": "blood",
         "creator": "ebolite",
+        "displayname": "rough blood grystal",
         "adjectives": [
-            "rough",
-            "blood"
+            "blood",
+            "rough"
         ],
-        "code": "CJNDH7Fw"
+        "code": "RL9JNDj1"
     },
     "fine blood grystal": {
         "base": true,
@@ -10205,11 +10221,12 @@
         ],
         "prototype_name": "blood",
         "creator": "ebolite",
+        "displayname": "fine blood grystal",
         "adjectives": [
-            "fine",
-            "blood"
+            "blood",
+            "fine"
         ],
-        "code": "pY8Nw4Gi"
+        "code": "kMWJKlZc"
     },
     "choice blood grystal": {
         "base": true,
@@ -10244,11 +10261,12 @@
         ],
         "prototype_name": "blood",
         "creator": "ebolite",
+        "displayname": "choice blood grystal",
         "adjectives": [
-            "choice",
-            "blood"
+            "blood",
+            "choice"
         ],
-        "code": "l5an8mSw"
+        "code": "lf1bvOk6"
     },
     "rough caulk grystal": {
         "base": true,
@@ -10283,11 +10301,12 @@
         ],
         "prototype_name": "caulk",
         "creator": "ebolite",
+        "displayname": "rough caulk grystal",
         "adjectives": [
-            "rough",
-            "caulk"
+            "caulk",
+            "rough"
         ],
-        "code": "ze3hF0k6"
+        "code": "MZZWdgVH"
     },
     "fine caulk grystal": {
         "base": true,
@@ -10322,11 +10341,12 @@
         ],
         "prototype_name": "caulk",
         "creator": "ebolite",
+        "displayname": "fine caulk grystal",
         "adjectives": [
-            "fine",
-            "caulk"
+            "caulk",
+            "fine"
         ],
-        "code": "cWql3UZZ"
+        "code": "!37wH9CQ"
     },
     "choice caulk grystal": {
         "base": true,
@@ -10361,11 +10381,12 @@
         ],
         "prototype_name": "caulk",
         "creator": "ebolite",
+        "displayname": "choice caulk grystal",
         "adjectives": [
-            "choice",
-            "caulk"
+            "caulk",
+            "choice"
         ],
-        "code": "vxpBnfKN"
+        "code": "ba2s8Um9"
     },
     "rough chalk grystal": {
         "base": true,
@@ -10400,11 +10421,12 @@
         ],
         "prototype_name": "chalk",
         "creator": "ebolite",
+        "displayname": "rough chalk grystal",
         "adjectives": [
-            "rough",
-            "chalk"
+            "chalk",
+            "rough"
         ],
-        "code": "EW6A2esY"
+        "code": "yw?v?bc1"
     },
     "fine chalk grystal": {
         "base": true,
@@ -10439,11 +10461,12 @@
         ],
         "prototype_name": "chalk",
         "creator": "ebolite",
+        "displayname": "fine chalk grystal",
         "adjectives": [
-            "fine",
-            "chalk"
+            "chalk",
+            "fine"
         ],
-        "code": "VV13hEcF"
+        "code": "sJTn78OI"
     },
     "choice chalk grystal": {
         "base": true,
@@ -10478,11 +10501,12 @@
         ],
         "prototype_name": "chalk",
         "creator": "ebolite",
+        "displayname": "choice chalk grystal",
         "adjectives": [
-            "choice",
-            "chalk"
+            "chalk",
+            "choice"
         ],
-        "code": "J8EToPMF"
+        "code": "pjd02O8o"
     },
     "rough cobalt grystal": {
         "base": true,
@@ -10517,11 +10541,12 @@
         ],
         "prototype_name": "cobalt",
         "creator": "ebolite",
+        "displayname": "rough cobalt grystal",
         "adjectives": [
-            "rough",
-            "cobalt"
+            "cobalt",
+            "rough"
         ],
-        "code": "APOauQca"
+        "code": "FxbR60C1"
     },
     "fine cobalt grystal": {
         "base": true,
@@ -10556,11 +10581,12 @@
         ],
         "prototype_name": "cobalt",
         "creator": "ebolite",
+        "displayname": "fine cobalt grystal",
         "adjectives": [
-            "fine",
-            "cobalt"
+            "cobalt",
+            "fine"
         ],
-        "code": "g8Rt7lBk"
+        "code": "ObcL?oRe"
     },
     "choice cobalt grystal": {
         "base": true,
@@ -10595,11 +10621,12 @@
         ],
         "prototype_name": "cobalt",
         "creator": "ebolite",
+        "displayname": "choice cobalt grystal",
         "adjectives": [
-            "choice",
-            "cobalt"
+            "cobalt",
+            "choice"
         ],
-        "code": "ke1f1qrh"
+        "code": "?wqnl6hA"
     },
     "rough copper grystal": {
         "base": true,
@@ -10634,11 +10661,12 @@
         ],
         "prototype_name": "copper",
         "creator": "ebolite",
+        "displayname": "rough copper grystal",
         "adjectives": [
-            "rough",
-            "copper"
+            "copper",
+            "rough"
         ],
-        "code": "PUQiIzZn"
+        "code": "oJnMqtbo"
     },
     "fine copper grystal": {
         "base": true,
@@ -10673,11 +10701,12 @@
         ],
         "prototype_name": "copper",
         "creator": "ebolite",
+        "displayname": "fine copper grystal",
         "adjectives": [
-            "fine",
-            "copper"
+            "copper",
+            "fine"
         ],
-        "code": "LqpPDhdP"
+        "code": "UlxyBFtW"
     },
     "choice copper grystal": {
         "base": true,
@@ -10712,11 +10741,12 @@
         ],
         "prototype_name": "copper",
         "creator": "ebolite",
+        "displayname": "choice copper grystal",
         "adjectives": [
-            "choice",
-            "copper"
+            "copper",
+            "choice"
         ],
-        "code": "D1nH8mwl"
+        "code": "?WzkAHuu"
     },
     "rough diamond grystal": {
         "base": true,
@@ -10751,11 +10781,12 @@
         ],
         "prototype_name": "diamond",
         "creator": "ebolite",
+        "displayname": "rough diamond grystal",
         "adjectives": [
-            "rough",
-            "diamond"
+            "diamond",
+            "rough"
         ],
-        "code": "rMjT?ZJm"
+        "code": "lpWxGR!Q"
     },
     "fine diamond grystal": {
         "base": true,
@@ -10790,11 +10821,12 @@
         ],
         "prototype_name": "diamond",
         "creator": "ebolite",
+        "displayname": "fine diamond grystal",
         "adjectives": [
-            "fine",
-            "diamond"
+            "diamond",
+            "fine"
         ],
-        "code": "n4FfPkAW"
+        "code": "V4FPQDmV"
     },
     "choice diamond grystal": {
         "base": true,
@@ -10829,11 +10861,12 @@
         ],
         "prototype_name": "diamond",
         "creator": "ebolite",
+        "displayname": "choice diamond grystal",
         "adjectives": [
-            "choice",
-            "diamond"
+            "diamond",
+            "choice"
         ],
-        "code": "Lw3xna1D"
+        "code": "pGCMU9zu"
     },
     "rough emerald grystal": {
         "base": true,
@@ -10868,11 +10901,12 @@
         ],
         "prototype_name": "emerald",
         "creator": "ebolite",
+        "displayname": "rough emerald grystal",
         "adjectives": [
-            "rough",
-            "emerald"
+            "emerald",
+            "rough"
         ],
-        "code": "9vVairw!"
+        "code": "Kuegw7?b"
     },
     "fine emerald grystal": {
         "base": true,
@@ -10907,11 +10941,12 @@
         ],
         "prototype_name": "emerald",
         "creator": "ebolite",
+        "displayname": "fine emerald grystal",
         "adjectives": [
-            "fine",
-            "emerald"
+            "emerald",
+            "fine"
         ],
-        "code": "sZdrKAMw"
+        "code": "FS4pm?xG"
     },
     "choice emerald grystal": {
         "base": true,
@@ -10946,11 +10981,12 @@
         ],
         "prototype_name": "emerald",
         "creator": "ebolite",
+        "displayname": "choice emerald grystal",
         "adjectives": [
-            "choice",
-            "emerald"
+            "emerald",
+            "choice"
         ],
-        "code": "?NHFIQF1"
+        "code": "HPrtk2q2"
     },
     "rough fluorite grystal": {
         "base": true,
@@ -10985,11 +11021,12 @@
         ],
         "prototype_name": "fluorite",
         "creator": "ebolite",
+        "displayname": "rough fluorite grystal",
         "adjectives": [
-            "rough",
-            "fluorite"
+            "fluorite",
+            "rough"
         ],
-        "code": "HTqmFIRd"
+        "code": "hQa60GnD"
     },
     "fine fluorite grystal": {
         "base": true,
@@ -11024,11 +11061,12 @@
         ],
         "prototype_name": "fluorite",
         "creator": "ebolite",
+        "displayname": "fine fluorite grystal",
         "adjectives": [
-            "fine",
-            "fluorite"
+            "fluorite",
+            "fine"
         ],
-        "code": "Uo6THV8t"
+        "code": "WheEO7EI"
     },
     "choice fluorite grystal": {
         "base": true,
@@ -11063,11 +11101,12 @@
         ],
         "prototype_name": "fluorite",
         "creator": "ebolite",
+        "displayname": "choice fluorite grystal",
         "adjectives": [
-            "choice",
-            "fluorite"
+            "fluorite",
+            "choice"
         ],
-        "code": "4yVBWKbS"
+        "code": "0THQju?8"
     },
     "rough frosting grystal": {
         "base": true,
@@ -11102,11 +11141,12 @@
         ],
         "prototype_name": "frosting",
         "creator": "ebolite",
+        "displayname": "rough frosting grystal",
         "adjectives": [
-            "rough",
-            "frosting"
+            "frosting",
+            "rough"
         ],
-        "code": "DcdpVlML"
+        "code": "p9Fm5jE4"
     },
     "fine frosting grystal": {
         "base": true,
@@ -11141,11 +11181,12 @@
         ],
         "prototype_name": "frosting",
         "creator": "ebolite",
+        "displayname": "fine frosting grystal",
         "adjectives": [
-            "fine",
-            "frosting"
+            "frosting",
+            "fine"
         ],
-        "code": "nbPDi4!o"
+        "code": "dR!aj!Zy"
     },
     "choice frosting grystal": {
         "base": true,
@@ -11180,11 +11221,12 @@
         ],
         "prototype_name": "frosting",
         "creator": "ebolite",
+        "displayname": "choice frosting grystal",
         "adjectives": [
-            "choice",
-            "frosting"
+            "frosting",
+            "choice"
         ],
-        "code": "UYUX34zB"
+        "code": "z2SA8F5G"
     },
     "rough garnet grystal": {
         "base": true,
@@ -11219,11 +11261,12 @@
         ],
         "prototype_name": "garnet",
         "creator": "ebolite",
+        "displayname": "rough garnet grystal",
         "adjectives": [
-            "rough",
-            "garnet"
+            "garnet",
+            "rough"
         ],
-        "code": "13kAycPh"
+        "code": "BuoAsTCJ"
     },
     "fine garnet grystal": {
         "base": true,
@@ -11258,11 +11301,12 @@
         ],
         "prototype_name": "garnet",
         "creator": "ebolite",
+        "displayname": "fine garnet grystal",
         "adjectives": [
-            "fine",
-            "garnet"
+            "garnet",
+            "fine"
         ],
-        "code": "1e6W5GRb"
+        "code": "yOUjBNWW"
     },
     "choice garnet grystal": {
         "base": true,
@@ -11297,11 +11341,12 @@
         ],
         "prototype_name": "garnet",
         "creator": "ebolite",
+        "displayname": "choice garnet grystal",
         "adjectives": [
-            "choice",
-            "garnet"
+            "garnet",
+            "choice"
         ],
-        "code": "yRhW!1Xg"
+        "code": "hqAhj6Bo"
     },
     "rough gold grystal": {
         "base": true,
@@ -11336,11 +11381,12 @@
         ],
         "prototype_name": "gold",
         "creator": "ebolite",
+        "displayname": "rough gold grystal",
         "adjectives": [
-            "rough",
-            "gold"
+            "gold",
+            "rough"
         ],
-        "code": "gqnCZ7ak"
+        "code": "SrrOmnS9"
     },
     "fine gold grystal": {
         "base": true,
@@ -11375,11 +11421,12 @@
         ],
         "prototype_name": "gold",
         "creator": "ebolite",
+        "displayname": "fine gold grystal",
         "adjectives": [
-            "fine",
-            "gold"
+            "gold",
+            "fine"
         ],
-        "code": "fIr8gRPK"
+        "code": "MjI7VDtp"
     },
     "choice gold grystal": {
         "base": true,
@@ -11414,11 +11461,12 @@
         ],
         "prototype_name": "gold",
         "creator": "ebolite",
+        "displayname": "choice gold grystal",
         "adjectives": [
-            "choice",
-            "gold"
+            "gold",
+            "choice"
         ],
-        "code": "OFFcBh4c"
+        "code": "BZ!N6Oow"
     },
     "rough iodine grystal": {
         "base": true,
@@ -11453,11 +11501,12 @@
         ],
         "prototype_name": "iodine",
         "creator": "ebolite",
+        "displayname": "rough iodine grystal",
         "adjectives": [
-            "rough",
-            "iodine"
+            "iodine",
+            "rough"
         ],
-        "code": "cd!pw9PH"
+        "code": "kuJCOVTd"
     },
     "fine iodine grystal": {
         "base": true,
@@ -11492,11 +11541,12 @@
         ],
         "prototype_name": "iodine",
         "creator": "ebolite",
+        "displayname": "fine iodine grystal",
         "adjectives": [
-            "fine",
-            "iodine"
+            "iodine",
+            "fine"
         ],
-        "code": "CzccMJeD"
+        "code": "bwIPLsws"
     },
     "choice iodine grystal": {
         "base": true,
@@ -11531,11 +11581,12 @@
         ],
         "prototype_name": "iodine",
         "creator": "ebolite",
+        "displayname": "choice iodine grystal",
         "adjectives": [
-            "choice",
-            "iodine"
+            "iodine",
+            "choice"
         ],
-        "code": "SbEP70rb"
+        "code": "BLhvy500"
     },
     "rough iron grystal": {
         "base": true,
@@ -11570,11 +11621,12 @@
         ],
         "prototype_name": "iron",
         "creator": "ebolite",
+        "displayname": "rough iron grystal",
         "adjectives": [
-            "rough",
-            "iron"
+            "iron",
+            "rough"
         ],
-        "code": "WaNUPl40"
+        "code": "R!6Q!Dhi"
     },
     "fine iron grystal": {
         "base": true,
@@ -11609,11 +11661,12 @@
         ],
         "prototype_name": "iron",
         "creator": "ebolite",
+        "displayname": "fine iron grystal",
         "adjectives": [
-            "fine",
-            "iron"
+            "iron",
+            "fine"
         ],
-        "code": "zjc5k!1V"
+        "code": "8pgTXiEg"
     },
     "choice iron grystal": {
         "base": true,
@@ -11648,11 +11701,12 @@
         ],
         "prototype_name": "iron",
         "creator": "ebolite",
+        "displayname": "choice iron grystal",
         "adjectives": [
-            "choice",
-            "iron"
+            "iron",
+            "choice"
         ],
-        "code": "!3mudc!m"
+        "code": "xYsP6u67"
     },
     "rough jet grystal": {
         "base": true,
@@ -11687,11 +11741,12 @@
         ],
         "prototype_name": "jet",
         "creator": "ebolite",
+        "displayname": "rough jet grystal",
         "adjectives": [
-            "rough",
-            "jet"
+            "jet",
+            "rough"
         ],
-        "code": "E3W3wvvB"
+        "code": "fsF?65Ad"
     },
     "fine jet grystal": {
         "base": true,
@@ -11726,11 +11781,12 @@
         ],
         "prototype_name": "jet",
         "creator": "ebolite",
+        "displayname": "fine jet grystal",
         "adjectives": [
-            "fine",
-            "jet"
+            "jet",
+            "fine"
         ],
-        "code": "QKl1PzC5"
+        "code": "gpo0dd2M"
     },
     "choice jet grystal": {
         "base": true,
@@ -11765,11 +11821,12 @@
         ],
         "prototype_name": "jet",
         "creator": "ebolite",
+        "displayname": "choice jet grystal",
         "adjectives": [
-            "choice",
-            "jet"
+            "jet",
+            "choice"
         ],
-        "code": "TQVdILz6"
+        "code": "Mg2ULsQD"
     },
     "rough lead grystal": {
         "base": true,
@@ -11804,11 +11861,12 @@
         ],
         "prototype_name": "lead",
         "creator": "ebolite",
+        "displayname": "rough lead grystal",
         "adjectives": [
-            "rough",
-            "lead"
+            "lead",
+            "rough"
         ],
-        "code": "Q2YUvLNh"
+        "code": "dDJTSNbp"
     },
     "fine lead grystal": {
         "base": true,
@@ -11843,11 +11901,12 @@
         ],
         "prototype_name": "lead",
         "creator": "ebolite",
+        "displayname": "fine lead grystal",
         "adjectives": [
-            "fine",
-            "lead"
+            "lead",
+            "fine"
         ],
-        "code": "WODoqgv6"
+        "code": "Tt4sfm!t"
     },
     "choice lead grystal": {
         "base": true,
@@ -11882,11 +11941,12 @@
         ],
         "prototype_name": "lead",
         "creator": "ebolite",
+        "displayname": "choice lead grystal",
         "adjectives": [
-            "choice",
-            "lead"
+            "lead",
+            "choice"
         ],
-        "code": "J!um03Vz"
+        "code": "Wq3PW1vq"
     },
     "rough lux grystal": {
         "base": true,
@@ -11921,11 +11981,12 @@
         ],
         "prototype_name": "lux",
         "creator": "ebolite",
+        "displayname": "rough lux grystal",
         "adjectives": [
-            "rough",
-            "lux"
+            "lux",
+            "rough"
         ],
-        "code": "ZtM8ZQDp"
+        "code": "v5ByfjIY"
     },
     "fine lux grystal": {
         "base": true,
@@ -11960,11 +12021,12 @@
         ],
         "prototype_name": "lux",
         "creator": "ebolite",
+        "displayname": "fine lux grystal",
         "adjectives": [
-            "fine",
-            "lux"
+            "lux",
+            "fine"
         ],
-        "code": "FvR2CCIW"
+        "code": "Ftw8TtwE"
     },
     "choice lux grystal": {
         "base": true,
@@ -11999,11 +12061,12 @@
         ],
         "prototype_name": "lux",
         "creator": "ebolite",
+        "displayname": "choice lux grystal",
         "adjectives": [
-            "choice",
-            "lux"
+            "lux",
+            "choice"
         ],
-        "code": "yvx?EHHw"
+        "code": "3A?wRFk8"
     },
     "rough malachite grystal": {
         "base": true,
@@ -12038,11 +12101,12 @@
         ],
         "prototype_name": "malachite",
         "creator": "ebolite",
+        "displayname": "rough malachite grystal",
         "adjectives": [
-            "rough",
-            "malachite"
+            "malachite",
+            "rough"
         ],
-        "code": "HRvY23be"
+        "code": "mWfvlhL3"
     },
     "fine malachite grystal": {
         "base": true,
@@ -12077,11 +12141,12 @@
         ],
         "prototype_name": "malachite",
         "creator": "ebolite",
+        "displayname": "fine malachite grystal",
         "adjectives": [
-            "fine",
-            "malachite"
+            "malachite",
+            "fine"
         ],
-        "code": "2!mQuFqm"
+        "code": "kCzjiz1r"
     },
     "choice malachite grystal": {
         "base": true,
@@ -12116,11 +12181,12 @@
         ],
         "prototype_name": "malachite",
         "creator": "ebolite",
+        "displayname": "choice malachite grystal",
         "adjectives": [
-            "choice",
-            "malachite"
+            "malachite",
+            "choice"
         ],
-        "code": "ZXRroxPk"
+        "code": "l2YGjmnp"
     },
     "rough marble grystal": {
         "base": true,
@@ -12155,11 +12221,12 @@
         ],
         "prototype_name": "marble",
         "creator": "ebolite",
+        "displayname": "rough marble grystal",
         "adjectives": [
-            "rough",
-            "marble"
+            "marble",
+            "rough"
         ],
-        "code": "a9QJqk?O"
+        "code": "0!XnqjMG"
     },
     "fine marble grystal": {
         "base": true,
@@ -12194,11 +12261,12 @@
         ],
         "prototype_name": "marble",
         "creator": "ebolite",
+        "displayname": "fine marble grystal",
         "adjectives": [
-            "fine",
-            "marble"
+            "marble",
+            "fine"
         ],
-        "code": "hzltl8vB"
+        "code": "tBAtF!7p"
     },
     "choice marble grystal": {
         "base": true,
@@ -12233,11 +12301,12 @@
         ],
         "prototype_name": "marble",
         "creator": "ebolite",
+        "displayname": "choice marble grystal",
         "adjectives": [
-            "choice",
-            "marble"
+            "marble",
+            "choice"
         ],
-        "code": "5QLV2XQ2"
+        "code": "pl8OO0ne"
     },
     "rough mercury grystal": {
         "base": true,
@@ -12272,11 +12341,12 @@
         ],
         "prototype_name": "mercury",
         "creator": "ebolite",
+        "displayname": "rough mercury grystal",
         "adjectives": [
-            "rough",
-            "mercury"
+            "mercury",
+            "rough"
         ],
-        "code": "FOE0nZh6"
+        "code": "ThKYHzOm"
     },
     "fine mercury grystal": {
         "base": true,
@@ -12311,11 +12381,12 @@
         ],
         "prototype_name": "mercury",
         "creator": "ebolite",
+        "displayname": "fine mercury grystal",
         "adjectives": [
-            "fine",
-            "mercury"
+            "mercury",
+            "fine"
         ],
-        "code": "UzBGT95j"
+        "code": "dwJxrYVj"
     },
     "choice mercury grystal": {
         "base": true,
@@ -12350,11 +12421,12 @@
         ],
         "prototype_name": "mercury",
         "creator": "ebolite",
+        "displayname": "choice mercury grystal",
         "adjectives": [
-            "choice",
-            "mercury"
+            "mercury",
+            "choice"
         ],
-        "code": "HlWzdvLf"
+        "code": "bUt0UzpS"
     },
     "rough mist grystal": {
         "base": true,
@@ -12389,11 +12461,12 @@
         ],
         "prototype_name": "mist",
         "creator": "ebolite",
+        "displayname": "rough mist grystal",
         "adjectives": [
-            "rough",
-            "mist"
+            "mist",
+            "rough"
         ],
-        "code": "Knvb8kHv"
+        "code": "LN36!Zdu"
     },
     "fine mist grystal": {
         "base": true,
@@ -12428,11 +12501,12 @@
         ],
         "prototype_name": "mist",
         "creator": "ebolite",
+        "displayname": "fine mist grystal",
         "adjectives": [
-            "fine",
-            "mist"
+            "mist",
+            "fine"
         ],
-        "code": "TpJZOd!C"
+        "code": "2bjLfgML"
     },
     "choice mist grystal": {
         "base": true,
@@ -12467,11 +12541,12 @@
         ],
         "prototype_name": "mist",
         "creator": "ebolite",
+        "displayname": "choice mist grystal",
         "adjectives": [
-            "choice",
-            "mist"
+            "mist",
+            "choice"
         ],
-        "code": "rxCFyesJ"
+        "code": "QuN7gRBF"
     },
     "rough moonstone grystal": {
         "base": true,
@@ -12506,11 +12581,12 @@
         ],
         "prototype_name": "moonstone",
         "creator": "ebolite",
+        "displayname": "rough moonstone grystal",
         "adjectives": [
-            "rough",
-            "moonstone"
+            "moonstone",
+            "rough"
         ],
-        "code": "BxVXhUn2"
+        "code": "QGSvD7ST"
     },
     "fine moonstone grystal": {
         "base": true,
@@ -12545,11 +12621,12 @@
         ],
         "prototype_name": "moonstone",
         "creator": "ebolite",
+        "displayname": "fine moonstone grystal",
         "adjectives": [
-            "fine",
-            "moonstone"
+            "moonstone",
+            "fine"
         ],
-        "code": "!aOADIlU"
+        "code": "ypytvvpB"
     },
     "choice moonstone grystal": {
         "base": true,
@@ -12584,11 +12661,12 @@
         ],
         "prototype_name": "moonstone",
         "creator": "ebolite",
+        "displayname": "choice moonstone grystal",
         "adjectives": [
-            "choice",
-            "moonstone"
+            "moonstone",
+            "choice"
         ],
-        "code": "orsNlEQk"
+        "code": "4ny?zcl?"
     },
     "rough neon grystal": {
         "base": true,
@@ -12623,11 +12701,12 @@
         ],
         "prototype_name": "neon",
         "creator": "ebolite",
+        "displayname": "rough neon grystal",
         "adjectives": [
-            "rough",
-            "neon"
+            "neon",
+            "rough"
         ],
-        "code": "VtYPfgpQ"
+        "code": "Y3Mh965k"
     },
     "fine neon grystal": {
         "base": true,
@@ -12662,11 +12741,12 @@
         ],
         "prototype_name": "neon",
         "creator": "ebolite",
+        "displayname": "fine neon grystal",
         "adjectives": [
-            "fine",
-            "neon"
+            "neon",
+            "fine"
         ],
-        "code": "OJKTwSgn"
+        "code": "gVGt7R6m"
     },
     "choice neon grystal": {
         "base": true,
@@ -12701,11 +12781,12 @@
         ],
         "prototype_name": "neon",
         "creator": "ebolite",
+        "displayname": "choice neon grystal",
         "adjectives": [
-            "choice",
-            "neon"
+            "neon",
+            "choice"
         ],
-        "code": "0Wj4iD!u"
+        "code": "?18ZMiCg"
     },
     "rough nitrogen grystal": {
         "base": true,
@@ -12740,11 +12821,12 @@
         ],
         "prototype_name": "nitrogen",
         "creator": "ebolite",
+        "displayname": "rough nitrogen grystal",
         "adjectives": [
-            "rough",
-            "nitrogen"
+            "nitrogen",
+            "rough"
         ],
-        "code": "xl8oPken"
+        "code": "NXJyvJAK"
     },
     "fine nitrogen grystal": {
         "base": true,
@@ -12779,11 +12861,12 @@
         ],
         "prototype_name": "nitrogen",
         "creator": "ebolite",
+        "displayname": "fine nitrogen grystal",
         "adjectives": [
-            "fine",
-            "nitrogen"
+            "nitrogen",
+            "fine"
         ],
-        "code": "P1CWr27J"
+        "code": "JBV8J??!"
     },
     "choice nitrogen grystal": {
         "base": true,
@@ -12818,11 +12901,12 @@
         ],
         "prototype_name": "nitrogen",
         "creator": "ebolite",
+        "displayname": "choice nitrogen grystal",
         "adjectives": [
-            "choice",
-            "nitrogen"
+            "nitrogen",
+            "choice"
         ],
-        "code": "7Ev8hLOt"
+        "code": "siiX9QhZ"
     },
     "rough obsidian grystal": {
         "base": true,
@@ -12857,11 +12941,12 @@
         ],
         "prototype_name": "obsidian",
         "creator": "ebolite",
+        "displayname": "rough obsidian grystal",
         "adjectives": [
-            "rough",
-            "obsidian"
+            "obsidian",
+            "rough"
         ],
-        "code": "sMOv9w!A"
+        "code": "U8zpiog0"
     },
     "fine obsidian grystal": {
         "base": true,
@@ -12896,11 +12981,12 @@
         ],
         "prototype_name": "obsidian",
         "creator": "ebolite",
+        "displayname": "fine obsidian grystal",
         "adjectives": [
-            "fine",
-            "obsidian"
+            "obsidian",
+            "fine"
         ],
-        "code": "O!rggsea"
+        "code": "UPOBCRYT"
     },
     "choice obsidian grystal": {
         "base": true,
@@ -12935,11 +13021,12 @@
         ],
         "prototype_name": "obsidian",
         "creator": "ebolite",
+        "displayname": "choice obsidian grystal",
         "adjectives": [
-            "choice",
-            "obsidian"
+            "obsidian",
+            "choice"
         ],
-        "code": "dbHqYZxY"
+        "code": "jciv!k92"
     },
     "rough onyx grystal": {
         "base": true,
@@ -12974,11 +13061,12 @@
         ],
         "prototype_name": "onyx",
         "creator": "ebolite",
+        "displayname": "rough onyx grystal",
         "adjectives": [
-            "rough",
-            "onyx"
+            "onyx",
+            "rough"
         ],
-        "code": "BIJd0sOP"
+        "code": "Ha4vLCVm"
     },
     "fine onyx grystal": {
         "base": true,
@@ -13013,11 +13101,12 @@
         ],
         "prototype_name": "onyx",
         "creator": "ebolite",
+        "displayname": "fine onyx grystal",
         "adjectives": [
-            "fine",
-            "onyx"
+            "onyx",
+            "fine"
         ],
-        "code": "N1fOaZqD"
+        "code": "rUaW5rJz"
     },
     "choice onyx grystal": {
         "base": true,
@@ -13052,11 +13141,12 @@
         ],
         "prototype_name": "onyx",
         "creator": "ebolite",
+        "displayname": "choice onyx grystal",
         "adjectives": [
-            "choice",
-            "onyx"
+            "onyx",
+            "choice"
         ],
-        "code": "6KcDDY7g"
+        "code": "msBZovcG"
     },
     "rough permafrost grystal": {
         "base": true,
@@ -13091,11 +13181,12 @@
         ],
         "prototype_name": "permafrost",
         "creator": "ebolite",
+        "displayname": "rough permafrost grystal",
         "adjectives": [
-            "rough",
-            "permafrost"
+            "permafrost",
+            "rough"
         ],
-        "code": "SFfrHvna"
+        "code": "WLRSH!ZB"
     },
     "fine permafrost grystal": {
         "base": true,
@@ -13130,11 +13221,12 @@
         ],
         "prototype_name": "permafrost",
         "creator": "ebolite",
+        "displayname": "fine permafrost grystal",
         "adjectives": [
-            "fine",
-            "permafrost"
+            "permafrost",
+            "fine"
         ],
-        "code": "6z3o9OD!"
+        "code": "kteD2Foz"
     },
     "choice permafrost grystal": {
         "base": true,
@@ -13169,11 +13261,12 @@
         ],
         "prototype_name": "permafrost",
         "creator": "ebolite",
+        "displayname": "choice permafrost grystal",
         "adjectives": [
-            "choice",
-            "permafrost"
+            "permafrost",
+            "choice"
         ],
-        "code": "wyTKSNZr"
+        "code": "vgXdTLIL"
     },
     "rough quartz grystal": {
         "base": true,
@@ -13208,11 +13301,12 @@
         ],
         "prototype_name": "quartz",
         "creator": "ebolite",
+        "displayname": "rough quartz grystal",
         "adjectives": [
-            "rough",
-            "quartz"
+            "quartz",
+            "rough"
         ],
-        "code": "FnRTnBEP"
+        "code": "94Y9ittt"
     },
     "fine quartz grystal": {
         "base": true,
@@ -13247,11 +13341,12 @@
         ],
         "prototype_name": "quartz",
         "creator": "ebolite",
+        "displayname": "fine quartz grystal",
         "adjectives": [
-            "fine",
-            "quartz"
+            "quartz",
+            "fine"
         ],
-        "code": "WgCSGka0"
+        "code": "7TSJ4v2J"
     },
     "choice quartz grystal": {
         "base": true,
@@ -13286,11 +13381,12 @@
         ],
         "prototype_name": "quartz",
         "creator": "ebolite",
+        "displayname": "choice quartz grystal",
         "adjectives": [
-            "choice",
-            "quartz"
+            "quartz",
+            "choice"
         ],
-        "code": "u1KPw7Ti"
+        "code": "J48yl!OM"
     },
     "rough rainbow grystal": {
         "base": true,
@@ -13327,11 +13423,12 @@
         ],
         "prototype_name": "rainbow",
         "creator": "ebolite",
+        "displayname": "rough rainbow grystal",
         "adjectives": [
-            "rough",
-            "rainbow"
+            "rainbow",
+            "rough"
         ],
-        "code": "60iJKSYr"
+        "code": "7fyvIixa"
     },
     "fine rainbow grystal": {
         "base": true,
@@ -13368,11 +13465,12 @@
         ],
         "prototype_name": "rainbow",
         "creator": "ebolite",
+        "displayname": "fine rainbow grystal",
         "adjectives": [
-            "fine",
-            "rainbow"
+            "rainbow",
+            "fine"
         ],
-        "code": "k6F4b!YR"
+        "code": "NGSzQQ1e"
     },
     "choice rainbow grystal": {
         "base": true,
@@ -13407,11 +13505,12 @@
         ],
         "prototype_name": "rainbow",
         "creator": "ebolite",
+        "displayname": "choice rainbow grystal",
         "adjectives": [
-            "choice",
-            "rainbow"
+            "rainbow",
+            "choice"
         ],
-        "code": "VOjtOiiG"
+        "code": "bcw56?P!"
     },
     "rough redstone grystal": {
         "base": true,
@@ -13446,11 +13545,12 @@
         ],
         "prototype_name": "redstone",
         "creator": "ebolite",
+        "displayname": "rough redstone grystal",
         "adjectives": [
-            "rough",
-            "redstone"
+            "redstone",
+            "rough"
         ],
-        "code": "ig5shmqE"
+        "code": "yQkUKw3p"
     },
     "fine redstone grystal": {
         "base": true,
@@ -13485,11 +13585,12 @@
         ],
         "prototype_name": "redstone",
         "creator": "ebolite",
+        "displayname": "fine redstone grystal",
         "adjectives": [
-            "fine",
-            "redstone"
+            "redstone",
+            "fine"
         ],
-        "code": "L3QNsTBe"
+        "code": "7w6rhCKi"
     },
     "choice redstone grystal": {
         "base": true,
@@ -13524,11 +13625,12 @@
         ],
         "prototype_name": "redstone",
         "creator": "ebolite",
+        "displayname": "choice redstone grystal",
         "adjectives": [
-            "choice",
-            "redstone"
+            "redstone",
+            "choice"
         ],
-        "code": "2E6yM5rr"
+        "code": "6em86Ijf"
     },
     "rough rock candy grystal": {
         "base": true,
@@ -13563,11 +13665,12 @@
         ],
         "prototype_name": "rock candy",
         "creator": "ebolite",
+        "displayname": "rough rock candy grystal",
         "adjectives": [
-            "rough",
-            "rock candy"
+            "rock+candy",
+            "rough"
         ],
-        "code": "cXj5VkJh"
+        "code": "IzDjR0GG"
     },
     "fine rock candy grystal": {
         "base": true,
@@ -13580,7 +13683,7 @@
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 rock candy grist.",
         "cost": {
-            "rock candy": 100,
+            "rock+candy": 100,
             "build": 0.5
         },
         "use": [
@@ -13602,11 +13705,12 @@
         ],
         "prototype_name": "rock candy",
         "creator": "ebolite",
+        "displayname": "fine rock candy grystal",
         "adjectives": [
-            "fine",
-            "rock candy"
+            "rock+candy",
+            "fine"
         ],
-        "code": "n87h0g?p"
+        "code": "se1Cmoqb"
     },
     "choice rock candy grystal": {
         "base": true,
@@ -13641,11 +13745,12 @@
         ],
         "prototype_name": "rock candy",
         "creator": "ebolite",
+        "displayname": "choice rock candy grystal",
         "adjectives": [
-            "choice",
-            "rock candy"
+            "rock+candy",
+            "choice"
         ],
-        "code": "9Wa9q?Tz"
+        "code": "drqQi86A"
     },
     "rough rose quartz grystal": {
         "base": true,
@@ -13680,11 +13785,12 @@
         ],
         "prototype_name": "rose quartz",
         "creator": "ebolite",
+        "displayname": "rough rose quartz grystal",
         "adjectives": [
-            "rough",
-            "rose quartz"
+            "rose+quartz",
+            "rough"
         ],
-        "code": "IqMY6Rhj"
+        "code": "OP39mo81"
     },
     "fine rose quartz grystal": {
         "base": true,
@@ -13697,7 +13803,7 @@
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 rose quartz grist.",
         "cost": {
-            "rose quartz": 100,
+            "rose+quartz": 100,
             "build": 0.5
         },
         "use": [
@@ -13719,11 +13825,12 @@
         ],
         "prototype_name": "rose quartz",
         "creator": "ebolite",
+        "displayname": "fine rose quartz grystal",
         "adjectives": [
-            "fine",
-            "rose quartz"
+            "rose+quartz",
+            "fine"
         ],
-        "code": "a7Ke0ugl"
+        "code": "2r33Ne99"
     },
     "choice rose quartz grystal": {
         "base": true,
@@ -13758,11 +13865,12 @@
         ],
         "prototype_name": "rose quartz",
         "creator": "ebolite",
+        "displayname": "choice rose quartz grystal",
         "adjectives": [
-            "choice",
-            "rose quartz"
+            "rose+quartz",
+            "choice"
         ],
-        "code": "7plb0beS"
+        "code": "OBpHDPam"
     },
     "rough ruby grystal": {
         "base": true,
@@ -13797,11 +13905,12 @@
         ],
         "prototype_name": "ruby",
         "creator": "ebolite",
+        "displayname": "rough ruby grystal",
         "adjectives": [
-            "rough",
-            "ruby"
+            "ruby",
+            "rough"
         ],
-        "code": "H?OlhcPX"
+        "code": "JnXl8Ch0"
     },
     "fine ruby grystal": {
         "base": true,
@@ -13836,11 +13945,12 @@
         ],
         "prototype_name": "ruby",
         "creator": "ebolite",
+        "displayname": "fine ruby grystal",
         "adjectives": [
-            "fine",
-            "ruby"
+            "ruby",
+            "fine"
         ],
-        "code": "wrk9eSHj"
+        "code": "Kd8Eyo?c"
     },
     "choice ruby grystal": {
         "base": true,
@@ -13875,11 +13985,12 @@
         ],
         "prototype_name": "ruby",
         "creator": "ebolite",
+        "displayname": "choice ruby grystal",
         "adjectives": [
-            "choice",
-            "ruby"
+            "ruby",
+            "choice"
         ],
-        "code": "n!FkyLmN"
+        "code": "wILJiVAm"
     },
     "rough rust grystal": {
         "base": true,
@@ -13914,11 +14025,12 @@
         ],
         "prototype_name": "rust",
         "creator": "ebolite",
+        "displayname": "rough rust grystal",
         "adjectives": [
-            "rough",
-            "rust"
+            "rust",
+            "rough"
         ],
-        "code": "VTAltWOw"
+        "code": "!IPu27rE"
     },
     "fine rust grystal": {
         "base": true,
@@ -13953,11 +14065,12 @@
         ],
         "prototype_name": "rust",
         "creator": "ebolite",
+        "displayname": "fine rust grystal",
         "adjectives": [
-            "fine",
-            "rust"
+            "rust",
+            "fine"
         ],
-        "code": "rvBzYoCi"
+        "code": "cnHbVtGu"
     },
     "choice rust grystal": {
         "base": true,
@@ -13992,11 +14105,12 @@
         ],
         "prototype_name": "rust",
         "creator": "ebolite",
+        "displayname": "choice rust grystal",
         "adjectives": [
-            "choice",
-            "rust"
+            "rust",
+            "choice"
         ],
-        "code": "GTs5jj?B"
+        "code": "N3sGKtYu"
     },
     "rough sandstone grystal": {
         "base": true,
@@ -14031,11 +14145,12 @@
         ],
         "prototype_name": "sandstone",
         "creator": "ebolite",
+        "displayname": "rough sandstone grystal",
         "adjectives": [
-            "rough",
-            "sandstone"
+            "sandstone",
+            "rough"
         ],
-        "code": "BHJ18ZhD"
+        "code": "Xa6brP75"
     },
     "fine sandstone grystal": {
         "base": true,
@@ -14070,11 +14185,12 @@
         ],
         "prototype_name": "sandstone",
         "creator": "ebolite",
+        "displayname": "fine sandstone grystal",
         "adjectives": [
-            "fine",
-            "sandstone"
+            "sandstone",
+            "fine"
         ],
-        "code": "Jg6hWfA2"
+        "code": "k!RHJto?"
     },
     "choice sandstone grystal": {
         "base": true,
@@ -14109,11 +14225,12 @@
         ],
         "prototype_name": "sandstone",
         "creator": "ebolite",
+        "displayname": "choice sandstone grystal",
         "adjectives": [
-            "choice",
-            "sandstone"
+            "sandstone",
+            "choice"
         ],
-        "code": "6mo7wGr7"
+        "code": "mjOoW4NV"
     },
     "rough shale grystal": {
         "base": true,
@@ -14148,11 +14265,12 @@
         ],
         "prototype_name": "shale",
         "creator": "ebolite",
+        "displayname": "rough shale grystal",
         "adjectives": [
-            "rough",
-            "shale"
+            "shale",
+            "rough"
         ],
-        "code": "n28wyRX0"
+        "code": "5pvd?joO"
     },
     "fine shale grystal": {
         "base": true,
@@ -14187,11 +14305,12 @@
         ],
         "prototype_name": "shale",
         "creator": "ebolite",
+        "displayname": "fine shale grystal",
         "adjectives": [
-            "fine",
-            "shale"
+            "shale",
+            "fine"
         ],
-        "code": "rV7myB9J"
+        "code": "CmYZP?FB"
     },
     "choice shale grystal": {
         "base": true,
@@ -14226,11 +14345,12 @@
         ],
         "prototype_name": "shale",
         "creator": "ebolite",
+        "displayname": "choice shale grystal",
         "adjectives": [
-            "choice",
-            "shale"
+            "shale",
+            "choice"
         ],
-        "code": "IBCHLAHu"
+        "code": "889sM?Lm"
     },
     "rough silicon grystal": {
         "base": true,
@@ -14265,11 +14385,12 @@
         ],
         "prototype_name": "silicon",
         "creator": "ebolite",
+        "displayname": "rough silicon grystal",
         "adjectives": [
-            "rough",
-            "silicon"
+            "silicon",
+            "rough"
         ],
-        "code": "jsBB5V8C"
+        "code": "Tu?Mhan5"
     },
     "fine silicon grystal": {
         "base": true,
@@ -14304,11 +14425,12 @@
         ],
         "prototype_name": "silicon",
         "creator": "ebolite",
+        "displayname": "fine silicon grystal",
         "adjectives": [
-            "fine",
-            "silicon"
+            "silicon",
+            "fine"
         ],
-        "code": "u5jfauG3"
+        "code": "sS7wcKnJ"
     },
     "choice silicon grystal": {
         "base": true,
@@ -14343,11 +14465,12 @@
         ],
         "prototype_name": "silicon",
         "creator": "ebolite",
+        "displayname": "choice silicon grystal",
         "adjectives": [
-            "choice",
-            "silicon"
+            "silicon",
+            "choice"
         ],
-        "code": "dDR7R6Bx"
+        "code": "8td0cllw"
     },
     "rough silk grystal": {
         "base": true,
@@ -14382,11 +14505,12 @@
         ],
         "prototype_name": "silk",
         "creator": "ebolite",
+        "displayname": "rough silk grystal",
         "adjectives": [
-            "rough",
-            "silk"
+            "silk",
+            "rough"
         ],
-        "code": "7JuGcWWP"
+        "code": "W782Lmyw"
     },
     "fine silk grystal": {
         "base": true,
@@ -14421,11 +14545,12 @@
         ],
         "prototype_name": "silk",
         "creator": "ebolite",
+        "displayname": "fine silk grystal",
         "adjectives": [
-            "fine",
-            "silk"
+            "silk",
+            "fine"
         ],
-        "code": "IbTLYXPw"
+        "code": "dbYJeUxh"
     },
     "choice silk grystal": {
         "base": true,
@@ -14460,11 +14585,12 @@
         ],
         "prototype_name": "silk",
         "creator": "ebolite",
+        "displayname": "choice silk grystal",
         "adjectives": [
-            "choice",
-            "silk"
+            "silk",
+            "choice"
         ],
-        "code": "Ra5UOXkc"
+        "code": "m2?ynNOq"
     },
     "rough slime grystal": {
         "base": true,
@@ -14499,11 +14625,12 @@
         ],
         "prototype_name": "slime",
         "creator": "ebolite",
+        "displayname": "rough slime grystal",
         "adjectives": [
-            "rough",
-            "slime"
+            "slime",
+            "rough"
         ],
-        "code": "pwF2U0eg"
+        "code": "P3k!IHyX"
     },
     "fine slime grystal": {
         "base": true,
@@ -14538,11 +14665,12 @@
         ],
         "prototype_name": "slime",
         "creator": "ebolite",
+        "displayname": "fine slime grystal",
         "adjectives": [
-            "fine",
-            "slime"
+            "slime",
+            "fine"
         ],
-        "code": "1Pp7R5mY"
+        "code": "WQxdHq5B"
     },
     "choice slime grystal": {
         "base": true,
@@ -14577,11 +14705,12 @@
         ],
         "prototype_name": "slime",
         "creator": "ebolite",
+        "displayname": "choice slime grystal",
         "adjectives": [
-            "choice",
-            "slime"
+            "slime",
+            "choice"
         ],
-        "code": "e?kOq8x!"
+        "code": "HZ8m9uzF"
     },
     "rough star sapphire grystal": {
         "base": true,
@@ -14616,11 +14745,12 @@
         ],
         "prototype_name": "star sapphire",
         "creator": "ebolite",
+        "displayname": "rough star sapphire grystal",
         "adjectives": [
-            "rough",
-            "star sapphire"
+            "star+sapphire",
+            "rough"
         ],
-        "code": "NKprz2OS"
+        "code": "3iMieITZ"
     },
     "fine star sapphire grystal": {
         "base": true,
@@ -14633,7 +14763,7 @@
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 star sapphire grist.",
         "cost": {
-            "star sapphire": 100,
+            "star+sapphire": 100,
             "build": 0.5
         },
         "use": [
@@ -14655,11 +14785,12 @@
         ],
         "prototype_name": "star sapphire",
         "creator": "ebolite",
+        "displayname": "fine star sapphire grystal",
         "adjectives": [
-            "fine",
-            "star sapphire"
+            "star+sapphire",
+            "fine"
         ],
-        "code": "63T2hPFO"
+        "code": "92cok0jM"
     },
     "choice star sapphire grystal": {
         "base": true,
@@ -14694,11 +14825,12 @@
         ],
         "prototype_name": "star sapphire",
         "creator": "ebolite",
+        "displayname": "choice star sapphire grystal",
         "adjectives": [
-            "choice",
-            "star sapphire"
+            "star+sapphire",
+            "choice"
         ],
-        "code": "QHAkIsuq"
+        "code": "zTM5RAHF"
     },
     "rough sulfur grystal": {
         "base": true,
@@ -14733,11 +14865,12 @@
         ],
         "prototype_name": "sulfur",
         "creator": "ebolite",
+        "displayname": "rough sulfur grystal",
         "adjectives": [
-            "rough",
-            "sulfur"
+            "sulfur",
+            "rough"
         ],
-        "code": "DK5FecGM"
+        "code": "P!AHhkAD"
     },
     "fine sulfur grystal": {
         "base": true,
@@ -14772,11 +14905,12 @@
         ],
         "prototype_name": "sulfur",
         "creator": "ebolite",
+        "displayname": "fine sulfur grystal",
         "adjectives": [
-            "fine",
-            "sulfur"
+            "sulfur",
+            "fine"
         ],
-        "code": "K4bSAi8u"
+        "code": "IF0j5zmW"
     },
     "choice sulfur grystal": {
         "base": true,
@@ -14811,11 +14945,12 @@
         ],
         "prototype_name": "sulfur",
         "creator": "ebolite",
+        "displayname": "choice sulfur grystal",
         "adjectives": [
-            "choice",
-            "sulfur"
+            "sulfur",
+            "choice"
         ],
-        "code": "?edkeQOZ"
+        "code": "tBD9hDh?"
     },
     "rough sunstone grystal": {
         "base": true,
@@ -14850,11 +14985,12 @@
         ],
         "prototype_name": "sunstone",
         "creator": "ebolite",
+        "displayname": "rough sunstone grystal",
         "adjectives": [
-            "rough",
-            "sunstone"
+            "sunstone",
+            "rough"
         ],
-        "code": "tY1Lyv9q"
+        "code": "LN!eOOIA"
     },
     "fine sunstone grystal": {
         "base": true,
@@ -14889,11 +15025,12 @@
         ],
         "prototype_name": "sunstone",
         "creator": "ebolite",
+        "displayname": "fine sunstone grystal",
         "adjectives": [
-            "fine",
-            "sunstone"
+            "sunstone",
+            "fine"
         ],
-        "code": "fhq0Xv9f"
+        "code": "jIHLQY9N"
     },
     "choice sunstone grystal": {
         "base": true,
@@ -14928,11 +15065,12 @@
         ],
         "prototype_name": "sunstone",
         "creator": "ebolite",
+        "displayname": "choice sunstone grystal",
         "adjectives": [
-            "choice",
-            "sunstone"
+            "sunstone",
+            "choice"
         ],
-        "code": "!2cz6DOm"
+        "code": "v6EJjiVj"
     },
     "rough tar grystal": {
         "base": true,
@@ -14967,11 +15105,12 @@
         ],
         "prototype_name": "tar",
         "creator": "ebolite",
+        "displayname": "rough tar grystal",
         "adjectives": [
-            "rough",
-            "tar"
+            "tar",
+            "rough"
         ],
-        "code": "2ZrzgTkl"
+        "code": "IQ3H6uty"
     },
     "fine tar grystal": {
         "base": true,
@@ -15006,11 +15145,12 @@
         ],
         "prototype_name": "tar",
         "creator": "ebolite",
+        "displayname": "fine tar grystal",
         "adjectives": [
-            "fine",
-            "tar"
+            "tar",
+            "fine"
         ],
-        "code": "0xeWSr8I"
+        "code": "qeGCnQvI"
     },
     "choice tar grystal": {
         "base": true,
@@ -15045,11 +15185,12 @@
         ],
         "prototype_name": "tar",
         "creator": "ebolite",
+        "displayname": "choice tar grystal",
         "adjectives": [
-            "choice",
-            "tar"
+            "tar",
+            "choice"
         ],
-        "code": "u4Axutq6"
+        "code": "l9Y7JOpO"
     },
     "rough titanium grystal": {
         "base": true,
@@ -15084,11 +15225,12 @@
         ],
         "prototype_name": "titanium",
         "creator": "ebolite",
+        "displayname": "rough titanium grystal",
         "adjectives": [
-            "rough",
-            "titanium"
+            "titanium",
+            "rough"
         ],
-        "code": "zy4EvnEW"
+        "code": "NJ3k!YdC"
     },
     "fine titanium grystal": {
         "base": true,
@@ -15123,11 +15265,12 @@
         ],
         "prototype_name": "titanium",
         "creator": "ebolite",
+        "displayname": "fine titanium grystal",
         "adjectives": [
-            "fine",
-            "titanium"
+            "titanium",
+            "fine"
         ],
-        "code": "rHPEjSo?"
+        "code": "H7IIhvAI"
     },
     "choice titanium grystal": {
         "base": true,
@@ -15162,11 +15305,12 @@
         ],
         "prototype_name": "titanium",
         "creator": "ebolite",
+        "displayname": "choice titanium grystal",
         "adjectives": [
-            "choice",
-            "titanium"
+            "titanium",
+            "choice"
         ],
-        "code": "mzs6jA1Z"
+        "code": "gbhbElsn"
     },
     "rough topaz grystal": {
         "base": true,
@@ -15201,11 +15345,12 @@
         ],
         "prototype_name": "topaz",
         "creator": "ebolite",
+        "displayname": "rough topaz grystal",
         "adjectives": [
-            "rough",
-            "topaz"
+            "topaz",
+            "rough"
         ],
-        "code": "HQvQaG9M"
+        "code": "eNJ7mh1h"
     },
     "fine topaz grystal": {
         "base": true,
@@ -15240,11 +15385,12 @@
         ],
         "prototype_name": "topaz",
         "creator": "ebolite",
+        "displayname": "fine topaz grystal",
         "adjectives": [
-            "fine",
-            "topaz"
+            "topaz",
+            "fine"
         ],
-        "code": "ly4p0qDr"
+        "code": "py!SXfJx"
     },
     "choice topaz grystal": {
         "base": true,
@@ -15279,11 +15425,12 @@
         ],
         "prototype_name": "topaz",
         "creator": "ebolite",
+        "displayname": "choice topaz grystal",
         "adjectives": [
-            "choice",
-            "topaz"
+            "topaz",
+            "choice"
         ],
-        "code": "8SPChSsu"
+        "code": "auMafj?3"
     },
     "rough uranium grystal": {
         "base": true,
@@ -15318,11 +15465,12 @@
         ],
         "prototype_name": "uranium",
         "creator": "ebolite",
+        "displayname": "rough uranium grystal",
         "adjectives": [
-            "rough",
-            "uranium"
+            "uranium",
+            "rough"
         ],
-        "code": "pTPkyM95"
+        "code": "4pSh9Qlq"
     },
     "fine uranium grystal": {
         "base": true,
@@ -15357,11 +15505,12 @@
         ],
         "prototype_name": "uranium",
         "creator": "ebolite",
+        "displayname": "fine uranium grystal",
         "adjectives": [
-            "fine",
-            "uranium"
+            "uranium",
+            "fine"
         ],
-        "code": "bi?I7Jxs"
+        "code": "jCJXMo?7"
     },
     "choice uranium grystal": {
         "base": true,
@@ -15396,11 +15545,12 @@
         ],
         "prototype_name": "uranium",
         "creator": "ebolite",
+        "displayname": "choice uranium grystal",
         "adjectives": [
-            "choice",
-            "uranium"
+            "uranium",
+            "choice"
         ],
-        "code": "28W2TmdF"
+        "code": "UYXeTzKD"
     },
     "rough wood grystal": {
         "base": true,
@@ -15435,11 +15585,12 @@
         ],
         "prototype_name": "wood",
         "creator": "ebolite",
+        "displayname": "rough wood grystal",
         "adjectives": [
-            "rough",
-            "wood"
+            "wood",
+            "rough"
         ],
-        "code": "Q7d1OJKx"
+        "code": "3Wh8mFFQ"
     },
     "fine wood grystal": {
         "base": true,
@@ -15474,11 +15625,12 @@
         ],
         "prototype_name": "wood",
         "creator": "ebolite",
+        "displayname": "fine wood grystal",
         "adjectives": [
-            "fine",
-            "wood"
+            "wood",
+            "fine"
         ],
-        "code": "UoLXgerb"
+        "code": "ngfStNZM"
     },
     "choice wood grystal": {
         "base": true,
@@ -15513,11 +15665,12 @@
         ],
         "prototype_name": "wood",
         "creator": "ebolite",
+        "displayname": "choice wood grystal",
         "adjectives": [
-            "choice",
-            "wood"
+            "wood",
+            "choice"
         ],
-        "code": "SggYOxLO"
+        "code": "AbpawWLg"
     },
     "rough zilium grystal": {
         "base": true,
@@ -15554,11 +15707,12 @@
         ],
         "prototype_name": "zilium",
         "creator": "ebolite",
+        "displayname": "rough zilium grystal",
         "adjectives": [
-            "rough",
-            "zilium"
+            "zilium",
+            "rough"
         ],
-        "code": "VFZ7Zjyw"
+        "code": "aeZLIE!P"
     },
     "fine zilium grystal": {
         "base": true,
@@ -15595,11 +15749,12 @@
         ],
         "prototype_name": "zilium",
         "creator": "ebolite",
+        "displayname": "fine zilium grystal",
         "adjectives": [
-            "fine",
-            "zilium"
+            "zilium",
+            "fine"
         ],
-        "code": "rWTHzIDw"
+        "code": "JyJRoIaQ"
     },
     "choice zilium grystal": {
         "base": true,
@@ -15634,11 +15789,12 @@
         ],
         "prototype_name": "zilium",
         "creator": "ebolite",
+        "displayname": "choice zilium grystal",
         "adjectives": [
-            "choice",
-            "zilium"
+            "zilium",
+            "choice"
         ],
-        "code": "HLMhfMlD"
+        "code": "05uS6XJg"
     },
     "pure space": {
         "base": true,
@@ -15686,7 +15842,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "CeM3BhN8"
+        "code": "ChxfsfDI"
     },
     "pure time": {
         "base": true,
@@ -15734,7 +15890,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "rztq7mYt"
+        "code": "!nfSRkP0"
     },
     "pure mind": {
         "base": true,
@@ -15784,7 +15940,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "JbPaEnke"
+        "code": "5IOJ37ql"
     },
     "pure heart": {
         "base": true,
@@ -15832,7 +15988,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "PX16b8Mw"
+        "code": "Is0wauJg"
     },
     "pure hope": {
         "base": true,
@@ -15882,7 +16038,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "NNiQpC1r"
+        "code": "T2xTlXyu"
     },
     "pure rage": {
         "base": true,
@@ -15938,7 +16094,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "FXhRfQIA"
+        "code": "BOMOmK2x"
     },
     "pure breath": {
         "base": true,
@@ -15989,7 +16145,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "2WOZhYj2"
+        "code": "jeNOHNWt"
     },
     "pure blood": {
         "base": true,
@@ -16039,7 +16195,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "m1pmnmkL"
+        "code": "N7XqwdiI"
     },
     "pure life": {
         "base": true,
@@ -16088,7 +16244,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "mELuzBoO"
+        "code": "2bSjxv7D"
     },
     "pure doom": {
         "base": true,
@@ -16143,7 +16299,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "msXLAO1P"
+        "code": "DewmEAYU"
     },
     "pure light": {
         "base": true,
@@ -16195,7 +16351,7 @@
         "adjectives": [
             "pure"
         ],
-        "code": "lCniWkV7"
+        "code": "uCh6H!tn"
     },
     "pure void": {
         "base": true,
@@ -16248,6 +16404,6 @@
         "adjectives": [
             "pure"
         ],
-        "code": "xYAsfkIy"
+        "code": "in1henm0"
     }
 }
