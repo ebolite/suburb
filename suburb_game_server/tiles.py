@@ -1,9 +1,11 @@
 import config
 import random
+from copy import deepcopy
 
 import spawnlists
 import util
 import sessions
+import alchemy
 
 tiles: dict[str, "Tile"] = {}      # tile_char: Tile
 # tiles "revise"able by sburb servers
@@ -214,6 +216,7 @@ class LootTile(Tile):
 
     def get_loot_list(self, room: "sessions.Room") -> list[str]:
         out = []
+        out += self.special_loot(room)
         possible_items = list(util.bases.keys())
         num_random_bases = random.randint(2, 6)
         for i in range(num_random_bases):
@@ -227,6 +230,41 @@ class LootTile(Tile):
             out.append(f"{grystal_type} {grist_type} grystal")
         return out
     
+    def get_random_base_in_kinds(self, valid_kinds: list[str]):
+        shuffled_bases = list(util.bases.keys())
+        random.shuffle(shuffled_bases)
+        for item_name in shuffled_bases:
+            for kind in util.bases[item_name]["kinds"]:
+                if kind in valid_kinds:
+                    return item_name
+        else:
+            return None
+
+    def special_loot(self, room: "sessions.Room") -> list[str]:
+        # todo: not always generate special loot
+        loot = []
+        if room.overmap.land is not None:
+            assert room.overmap.land.player is not None
+            aspect = room.overmap.land.player.aspect
+            bases = list(util.bases.keys())
+            # 25% chance to be of a kind someone in the session has
+            if random.random() < 0.25:
+                session_kinds = []
+                for player_name in room.overmap.session.starting_players:
+                    player = sessions.Player(player_name)
+                    subplayer = player.sub_players_list[0]
+                    for kind in subplayer.strife_portfolio:
+                        if kind not in session_kinds: session_kinds.append(kind)
+                base_item_name = self.get_random_base_in_kinds(session_kinds)
+                if base_item_name is None: base_item_name = "perfectly+generic object"
+            else:
+                base_item_name = random.choice(bases)
+                while alchemy.Item(base_item_name).forbiddencode:
+                    base_item_name = random.choice(bases)
+            new_item = alchemy.Item.modify_alchemy(base_item_name, f"pure {aspect}")
+            loot.append(new_item.name)
+        return loot
+
     def get_possible_grystal_types(self) -> list[str]:
         if self.loot_type == "bounty": return ["rough", "fine", "choice"]
         elif self.loot_type == "trove": return ["rough", "fine"]

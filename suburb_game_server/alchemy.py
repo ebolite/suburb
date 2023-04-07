@@ -91,11 +91,12 @@ class BaseStatistics():
 
 # todo: captchalogue code inheritance
 class InheritedStatistics():
-    def __init__(self, component_1: "Item", component_2: "Item", operation: str):
+    def __init__(self, component_1: "Item", component_2: "Item", operation: str, guarantee_first_base=False):
         self.name = f"({component_1.name}{operation}{component_2.name})" # for seed
         self.component_1: Item = component_1
         self.component_2: Item = component_2
         self.operation = operation
+        self.guarantee_first_base=guarantee_first_base
         self.base, self.adjectives, self.merged_bases, self.secretadjectives = self.get_descriptors()
         self.descriptors = self.adjectives + [self.base]
         self.forbiddencode = False
@@ -142,8 +143,11 @@ class InheritedStatistics():
                 if random.random() < 0.5: inheritable_bases.append(f"{self.component_1.base}-{self.component_2.base}")
                 else: inheritable_bases.append(f"{self.component_2.base}-{self.component_1.base}")
         inheritable_adjectives = self.component_1.adjectives + self.component_2.adjectives + self.component_1.secretadjectives + self.component_2.secretadjectives
-        random.seed(self.name+"base"+str(depth))
-        base = random.choice(inheritable_bases)
+        if self.guarantee_first_base:
+            base = self.component_1.base
+        else:
+            random.seed(self.name+"base"+str(depth))
+            base = random.choice(inheritable_bases)
         if base in required_inheritors: required_inheritors.remove(base)
         if base in inheritable_bases: inheritable_bases.remove(base)
         if len(inheritable_adjectives) < 1:
@@ -179,7 +183,7 @@ class InheritedStatistics():
         if new_name == component_1_name or new_name == component_2_name and depth < 50:
             base, adjectives, merged_bases, secretadjectives = self.get_descriptors(depth=depth+1)
         # check if AND is different from OR, if they are the same, guarantee a compound base
-        if self.operation == "&&":
+        if self.operation == "&&" and not self.guarantee_first_base: # don't check this if first base is guaranteed
             or_object = InheritedStatistics(self.component_1, self.component_2, "||")
             adjectives_set = set(adjectives)
             or_adjectives_set = set(or_object.adjectives)
@@ -304,7 +308,25 @@ class Item(): # Items are the base of instants.
                 util.codes[self.code] = self.name
 
     @classmethod
-    def from_code(cls, code: str):
+    def modify_alchemy(cls, base_component_name: str, modifier_component_name: str) -> "Item":
+        name = f"({base_component_name}<-{modifier_component_name})"
+        if name in database.memory_items: return Item(name)
+        database.memory_items[name] = {}
+        database.memory_items[name]["_id"] = name
+        code = binaryoperations.random_valid_code()
+        while code in util.codes: code = binaryoperations.random_valid_code()
+        util.codes[code] = name
+        item = Item(name)
+        base_component = Item(base_component_name)
+        modifier_component = Item(modifier_component_name)
+        operation = random.choice(["&&", "||"])
+        statistics = InheritedStatistics(base_component, modifier_component, operation, guarantee_first_base=True)
+        item.make_statistics(statistics)
+        item.code = code
+        return item
+
+    @classmethod
+    def from_code(cls, code: str) -> "Item":
         if code in util.codes:
             return Item(util.codes[code])
         else: # paradox item
