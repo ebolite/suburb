@@ -295,6 +295,15 @@ def get_code_from_name(name: str) -> str: # from name
             code = binaryoperations.codeor(get_code_from_name(components.component_1), get_code_from_name(components.component_2))
     return code
 
+def get_base_code_or_random(name: str) -> str:
+    if name in util.bases:
+        code = util.bases[name]["code"]
+    else:
+        code = binaryoperations.random_valid_code()
+        while code in util.codes:
+            code = binaryoperations.random_valid_code()
+    return code
+
 def does_item_exist(name):
     print(f"checking if item exists {name}")
     if name in database.memory_items: return True
@@ -588,9 +597,10 @@ defaults = {
 for grist_name in config.grists:
     # make grystals (consumable grist items)
     # rough grystal
+    name = f"rough {grist_name} grystal"
     rough_grystal_dict = deepcopy(defaults)
     rough_grystal_dict.update({
-        "displayname": f"rough {grist_name} grystal",
+        "displayname": name,
         "forbiddencode": True,
         "power": 100,
         "size": 1,
@@ -602,15 +612,17 @@ for grist_name in config.grists:
         "adjectives": [grist_name.replace(" ","+"), "rough"],
         "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
         "creator": "ebolite",
+        "code": get_base_code_or_random(name),
     })
     if grist_name in ["rainbow", "zilium"]: 
         rough_grystal_dict["description"] = f"A rough grystal. When consumed, this gives 1 {grist_name} grist.",
         rough_grystal_dict["cost"] = {grist_name: 0.01}
-    util.bases[f"rough {grist_name} grystal"] = deepcopy(rough_grystal_dict)
+    util.bases[name] = deepcopy(rough_grystal_dict)
     # fine grystal
+    name = f"fine {grist_name} grystal"
     fine_grystal_dict = deepcopy(defaults)
     fine_grystal_dict.update({
-        "displayname": f"fine {grist_name} grystal",
+        "displayname": name,
         "forbiddencode": True,
         "power": 100,
         "size": 1,
@@ -622,15 +634,17 @@ for grist_name in config.grists:
         "adjectives": [grist_name.replace(" ","+"), "fine"],
         "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
         "creator": "ebolite",
+        "code": get_base_code_or_random(name),
     })
     if grist_name in ["rainbow", "zilium"]: 
         fine_grystal_dict["description"] = f"A fine grystal. When consumed, this gives 2 {grist_name} grist.",
         fine_grystal_dict["cost"] = {grist_name: 0.02}
-    util.bases[f"fine {grist_name} grystal"] = deepcopy(fine_grystal_dict)
+    util.bases[name] = deepcopy(fine_grystal_dict)
     # choice grystal
+    name = f"choice {grist_name} grystal"
     choice_grystal_dict = deepcopy(defaults)
     choice_grystal_dict.update({
-        "displayname": f"choice {grist_name} grystal",
+        "displayname": name,
         "forbiddencode": True,
         "power": 100,
         "size": 1,
@@ -642,14 +656,16 @@ for grist_name in config.grists:
         "adjectives": [grist_name.replace(" ","+"), "choice"],
         "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
         "creator": "ebolite",
+        "code": get_base_code_or_random(name)
     })
     if grist_name in ["rainbow", "zilium"]: 
         fine_grystal_dict["description"] = f"A choice grystal. When consumed, this gives 3 {grist_name} grist.",
         fine_grystal_dict["cost"] = {grist_name: 0.03}
-    util.bases[f"choice {grist_name} grystal"] = deepcopy(choice_grystal_dict)
+    util.bases[name] = deepcopy(choice_grystal_dict)
 
 # special pure aspect items
 for _, aspect in skills.aspects.items():
+    name = f"pure {aspect.name}"
     pure_aspect_dict = deepcopy(defaults)
     pure_aspect_dict.update({
         "forbiddencode": True,
@@ -662,6 +678,7 @@ for _, aspect in skills.aspects.items():
         "secretadjectives": config.aspect_secretadjectives[aspect.name].copy(),
         "creator": "ebolite",
         "prototype_name": aspect.name,
+        "code": get_base_code_or_random(name),
     })
     pure_aspect_dict["secret_states"] = {f"subtract {aspect.name}": 1, f"add {aspect.name}": 1}
     if aspect.beneficial:
@@ -672,7 +689,7 @@ for _, aspect in skills.aspects.items():
         pure_aspect_dict["onhit_states"] = {f"add {aspect.name}": 0.5}
         pure_aspect_dict["wear_states"] = {f"subtract {aspect.name}": 0.5}
         pure_aspect_dict["consume_states"] = {f"subtract {aspect.name}": 0.5}
-    util.bases[f"pure {aspect.name}"] = deepcopy(pure_aspect_dict)
+    util.bases[name] = deepcopy(pure_aspect_dict)
 
 missing_states = set()
 
