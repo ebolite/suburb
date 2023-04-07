@@ -108,6 +108,7 @@ class SecondaryVial(Vial):
     def __init__(self, name: str, description: str):
         super().__init__(name)
         secondary_vials[name] = description
+        self.optional_vial = True
 
 class HpVial(Vial):
     def new_turn(self, griefer: "Griefer"):
@@ -205,7 +206,6 @@ class MangritVial(SecondaryVial):
 mangrit = MangritVial("mangrit", "Starts empty, but increases steadily.\nIncreases damage.")
 mangrit.maximum_formula = "{power} + {tac}*6"
 mangrit.starting_formula = "0"
-mangrit.optional_vial = True
 mangrit.tact_vial = True
 
 class ImaginationVial(SecondaryVial):
@@ -217,7 +217,6 @@ class ImaginationVial(SecondaryVial):
 imagination = ImaginationVial("imagination", "Starts empty, increases as ASPECT vial is drained.\nIncreases ASPECT vial regeneration.")
 imagination.maximum_formula = "{power} + {tac}*6"
 imagination.starting_formula = "0"
-imagination.optional_vial = True
 
 class HorseshitometerVial(SecondaryVial):
     def parry_roll_modifier(self, griefer: "Griefer") -> float:
@@ -232,8 +231,7 @@ class HorseshitometerVial(SecondaryVial):
 horseshitometer = HorseshitometerVial("horseshitometer", "Increases overtime, dealing damage decreases.\nIncreases or decreases chance to AUTO-PARRY.")
 horseshitometer.maximum_formula = "{power} + {tac}*6"
 horseshitometer.starting_formula = "{maximum}//2"
-horseshitometer.optional_vial = True
-horseshitometer.tact_vial
+horseshitometer.tact_vial = True
 
 class GambitVial(SecondaryVial):
     def initialize_vial(self, griefer: "Griefer"):
@@ -288,7 +286,6 @@ class GambitVial(SecondaryVial):
 gambit = GambitVial("gambit", "Get a prompt for a GAMBIT skill each turn.\nHeals you each turn you comply.")
 gambit.maximum_formula = "{power} + {tac}*6"
 gambit.starting_formula = "{maximum}//2"
-gambit.optional_vial = True
 
 class FistometerVial(SecondaryVial):
     def modify_damage_dealt(self, damage: int, griefer: "Griefer") -> int:
