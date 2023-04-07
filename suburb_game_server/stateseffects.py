@@ -1,4 +1,5 @@
 import random
+from typing import Optional
 
 import strife
 import skills
@@ -16,6 +17,7 @@ class State():
         self.name = name
         self.beneficial = False
         self.passive = False
+        self.opposing_state: Optional[str] = None
         self.tooltip = ""
 
     def potency(self, griefer: "strife.Griefer") -> float:
@@ -74,6 +76,7 @@ class DamageState(OneTimeState):
 damage = DamageState("damage")
 damage.beneficial = False
 damage.tooltip = "Deals damage to the target."
+damage.opposing_state = "heal"
 make_item_state(damage)
 
 class HealState(OneTimeState):
@@ -87,6 +90,7 @@ class HealState(OneTimeState):
 heal = HealState("heal")
 heal.beneficial = False
 heal.tooltip = "Recovers the target's HP."
+heal.opposing_state = "damage"
 make_item_state(heal)
 
 class SateState(OneTimeState):
@@ -212,6 +216,7 @@ class WeakState(State):
 weak = WeakState("weak")
 weak.beneficial = False
 weak.tooltip = "Reduces damage dealt."
+weak.opposing_state = "strength"
 make_item_state(weak)
 
 class StrengthState(State):
@@ -223,6 +228,7 @@ class StrengthState(State):
 strength = StrengthState("strength")
 strength.beneficial = True
 strength.tooltip = "Increases damage dealt."
+strength.opposing_state = "weak"
 make_item_state(strength)
 
 class VulnerableState(State):
@@ -234,6 +240,7 @@ class VulnerableState(State):
 vulnerable = VulnerableState("vulnerable")
 vulnerable.beneficial = False
 vulnerable.tooltip = "Increases damage taken."
+vulnerable.opposing_state = "guard"
 make_item_state(vulnerable)
 
 class GuardState(State):
@@ -245,6 +252,7 @@ class GuardState(State):
 guard = GuardState("guard")
 guard.beneficial = True
 guard.tooltip = "Decreases damage taken."
+guard.opposing_state = "vulnerable"
 make_item_state(guard)
 
 class BlindState(State):
@@ -273,6 +281,7 @@ class DemoralizeState(State):
 demoralize = DemoralizeState("demoralize")
 demoralize.beneficial = False
 demoralize.tooltip = "Reduces hope each turn."
+demoralize.opposing_state = "inspire"
 make_item_state(demoralize)
 
 class InspireState(State):
@@ -285,6 +294,7 @@ class InspireState(State):
 inspire = InspireState("inspire")
 inspire.beneficial = True
 inspire.tooltip = "Increases hope each turn."
+inspire.opposing_state = "demoralize"
 make_item_state(inspire)
 
 class TriggeredState(State):
@@ -297,6 +307,7 @@ class TriggeredState(State):
 trigger = TriggeredState("triggered")
 trigger.beneficial = True
 trigger.tooltip = "Increases rage each turn."
+trigger.opposing_state = "numb"
 make_item_state(trigger)
 
 class NumbState(State):
@@ -309,6 +320,7 @@ class NumbState(State):
 numb = NumbState("numb")
 numb.beneficial = True
 numb.tooltip = "Decreases rage each turn."
+numb.opposing_state = "triggered"
 make_item_state(numb)
 
 class DisarmState(State):
@@ -380,6 +392,7 @@ class QuickState(State):
 quick = QuickState("quick")
 quick.beneficial = True
 quick.tooltip = "Position in turn order is increased."
+quick.opposing_state = "slow"
 make_item_state(quick)
 
 class SlowState(State):
@@ -393,6 +406,7 @@ class SlowState(State):
 slow = SlowState("slow")
 slow.beneficial = False
 slow.tooltip = "Position in turn order is decreased."
+slow.opposing_state = "quick"
 make_item_state(slow)
 
 # aspect states
@@ -414,10 +428,12 @@ for _, aspect in skills.aspects.items():
     add_aspect = AddAspectState(f"add {aspect.name}", aspect)
     add_aspect.beneficial = aspect.beneficial
     add_aspect.tooltip = f"Increases {aspect.name.upper()}."
+    add_aspect.opposing_state = f"subtract {aspect.name}"
     subtract_aspect = AddAspectState(f"subtract {aspect.name}", aspect)
     subtract_aspect.beneficial = not aspect.beneficial
     subtract_aspect.subtract = True
     subtract_aspect.tooltip = f"Decreases {aspect.name.upper()}."
+    subtract_aspect.opposing_state = f"add {aspect.name}"
 
 # aspect-related states
 

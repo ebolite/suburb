@@ -225,15 +225,16 @@ class InheritedStatistics():
         self.consume_states: dict = self.dictionary_inherit(self.component_1.consume_states, self.component_2.consume_states)
         self.secret_states: dict = self.dictionary_inherit(self.component_1.secret_states, self.component_2.secret_states)
         # secret effects
-        for effect in self.secret_states.copy():
-            random.seed(self.name+"secretstatesoption"+effect)
-            option = random.choice(["consume_states", "onhit_states", "wear_states", "secret_states"]) # chance of staying dormant...
-            if option == "consume_states" and len(self.consume_states) > 0:
-                self.consume_states[effect] = self.secret_states.pop(effect)
-            if option == "onhit_states" and len(self.onhit_states) > 0:
-                self.onhit_states[effect] = self.secret_states.pop(effect)
-            if option == "wear_states" and len(self.wear_states) > 0:
-                self.wear_states[effect] = self.secret_states.pop(effect)
+        for state_name in self.secret_states.copy():
+            state = stateseffects.states[state_name]
+            options = [self.consume_states, self.onhit_states, self.wear_states]
+            options = [option for option in options if state.opposing_state not in option]
+            options += [None]
+            random.seed(self.name+"secretstatesoption"+state_name)
+            option = random.choice(options)
+            if option is None: continue
+            if len(option) <= 0: continue
+            option[state_name] = self.secret_states.pop(state_name)
         # use effect
         if self.base == self.component_1.base: 
             self.use = self.component_1.use
@@ -252,6 +253,12 @@ class InheritedStatistics():
     def dictionary_inherit(self, component_1_dict: dict, component_2_dict: dict) -> dict: # returns new dict
         new_dict = component_1_dict.copy()
         for state_name, potency in component_2_dict.items():
+            state = stateseffects.states[state_name]
+            # if states oppose, we use the one with higher potency
+            if state.opposing_state is not None and state.opposing_state in new_dict:
+                if new_dict[state.opposing_state] > potency: continue
+            else:
+                new_dict.pop(state.opposing_state)
             if state_name in new_dict and potency > new_dict[state_name]:
                 new_dict[state_name] = potency
             elif state_name not in new_dict:
