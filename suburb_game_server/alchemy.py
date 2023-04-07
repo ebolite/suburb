@@ -715,6 +715,7 @@ for base, base_dict in util.bases.items():
         while code in util.codes:
             code = binaryoperations.random_valid_code()
         base_dict["code"] = code
+    base_dict["adjectives"] = [descriptor for descriptor in base.split(" ") if descriptor != base.split(" ")[-1]]
     code = base_dict["code"]
     util.codes[code] = base
 util.writejson(util.bases, "bases")
