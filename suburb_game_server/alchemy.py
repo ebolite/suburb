@@ -258,7 +258,7 @@ class InheritedStatistics():
             # if states oppose, we use the one with higher potency
             if state.opposing_state is not None and state.opposing_state in new_dict:
                 if new_dict[state.opposing_state] > potency: continue
-            else:
+            elif state.opposing_state in new_dict:
                 new_dict.pop(state.opposing_state)
             if state_name in new_dict and potency > new_dict[state_name]:
                 new_dict[state_name] = potency
