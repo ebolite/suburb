@@ -218,7 +218,7 @@ class InheritedStatistics():
             else:
                 self.cost[grist_name] += self.component_2.cost[grist_name]
         for grist_name, cost in self.cost.items():
-            self.cost[grist_name] = int(cost*self.entropy_mult)
+            self.cost[grist_name] = cost*self.entropy_mult
         # dict inherits
         self.onhit_states: dict = self.dictionary_inherit(self.component_1.onhit_states, self.component_2.onhit_states)
         self.wear_states: dict = self.dictionary_inherit(self.component_1.wear_states, self.component_2.wear_states)
