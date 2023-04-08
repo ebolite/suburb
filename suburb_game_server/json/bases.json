@@ -9328,8 +9328,8 @@
         "secretadjectives": [
             "mystic",
             "esoteric",
-            "cards",
-            "thin"
+            "thin",
+            "magical"
         ],
         "forbiddencode": false,
         "use": [],
@@ -9556,7 +9556,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 build grist.",
         "cost": {
@@ -9595,7 +9595,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 build grist.",
         "cost": {
@@ -9634,7 +9634,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 build grist.",
         "cost": {
@@ -9673,7 +9673,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 acid grist.",
         "cost": {
@@ -9713,7 +9713,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 acid grist.",
         "cost": {
@@ -9753,7 +9753,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 acid grist.",
         "cost": {
@@ -9793,7 +9793,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 amber grist.",
         "cost": {
@@ -9833,7 +9833,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 amber grist.",
         "cost": {
@@ -9873,7 +9873,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 amber grist.",
         "cost": {
@@ -9913,7 +9913,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 amethyst grist.",
         "cost": {
@@ -9953,7 +9953,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 amethyst grist.",
         "cost": {
@@ -9993,7 +9993,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 amethyst grist.",
         "cost": {
@@ -10033,7 +10033,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 aquamarine grist.",
         "cost": {
@@ -10073,7 +10073,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 aquamarine grist.",
         "cost": {
@@ -10113,7 +10113,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 aquamarine grist.",
         "cost": {
@@ -10153,7 +10153,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 blood grist.",
         "cost": {
@@ -10193,7 +10193,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 blood grist.",
         "cost": {
@@ -10233,7 +10233,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 blood grist.",
         "cost": {
@@ -10273,7 +10273,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 caulk grist.",
         "cost": {
@@ -10313,7 +10313,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 caulk grist.",
         "cost": {
@@ -10353,7 +10353,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 caulk grist.",
         "cost": {
@@ -10393,7 +10393,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 chalk grist.",
         "cost": {
@@ -10433,7 +10433,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 chalk grist.",
         "cost": {
@@ -10473,7 +10473,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 chalk grist.",
         "cost": {
@@ -10513,7 +10513,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 cobalt grist.",
         "cost": {
@@ -10553,7 +10553,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 cobalt grist.",
         "cost": {
@@ -10593,7 +10593,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 cobalt grist.",
         "cost": {
@@ -10633,7 +10633,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 copper grist.",
         "cost": {
@@ -10673,7 +10673,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 copper grist.",
         "cost": {
@@ -10713,7 +10713,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 copper grist.",
         "cost": {
@@ -10753,7 +10753,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 diamond grist.",
         "cost": {
@@ -10793,7 +10793,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 diamond grist.",
         "cost": {
@@ -10833,7 +10833,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 diamond grist.",
         "cost": {
@@ -10873,7 +10873,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 emerald grist.",
         "cost": {
@@ -10913,7 +10913,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 emerald grist.",
         "cost": {
@@ -10953,7 +10953,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 emerald grist.",
         "cost": {
@@ -10993,7 +10993,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 fluorite grist.",
         "cost": {
@@ -11033,7 +11033,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 fluorite grist.",
         "cost": {
@@ -11073,7 +11073,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 fluorite grist.",
         "cost": {
@@ -11113,7 +11113,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 frosting grist.",
         "cost": {
@@ -11153,7 +11153,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 frosting grist.",
         "cost": {
@@ -11193,7 +11193,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 frosting grist.",
         "cost": {
@@ -11233,7 +11233,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 garnet grist.",
         "cost": {
@@ -11273,7 +11273,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 garnet grist.",
         "cost": {
@@ -11313,7 +11313,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 garnet grist.",
         "cost": {
@@ -11353,7 +11353,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 gold grist.",
         "cost": {
@@ -11393,7 +11393,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 gold grist.",
         "cost": {
@@ -11433,7 +11433,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 gold grist.",
         "cost": {
@@ -11473,7 +11473,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 iodine grist.",
         "cost": {
@@ -11513,7 +11513,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 iodine grist.",
         "cost": {
@@ -11553,7 +11553,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 iodine grist.",
         "cost": {
@@ -11593,7 +11593,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 iron grist.",
         "cost": {
@@ -11633,7 +11633,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 iron grist.",
         "cost": {
@@ -11673,7 +11673,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 iron grist.",
         "cost": {
@@ -11713,7 +11713,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 jet grist.",
         "cost": {
@@ -11753,7 +11753,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 jet grist.",
         "cost": {
@@ -11793,7 +11793,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 jet grist.",
         "cost": {
@@ -11833,7 +11833,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 lead grist.",
         "cost": {
@@ -11873,7 +11873,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 lead grist.",
         "cost": {
@@ -11913,7 +11913,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 lead grist.",
         "cost": {
@@ -11953,7 +11953,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 lux grist.",
         "cost": {
@@ -11993,7 +11993,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 lux grist.",
         "cost": {
@@ -12033,7 +12033,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 lux grist.",
         "cost": {
@@ -12073,7 +12073,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 malachite grist.",
         "cost": {
@@ -12113,7 +12113,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 malachite grist.",
         "cost": {
@@ -12153,7 +12153,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 malachite grist.",
         "cost": {
@@ -12193,7 +12193,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 marble grist.",
         "cost": {
@@ -12233,7 +12233,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 marble grist.",
         "cost": {
@@ -12273,7 +12273,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 marble grist.",
         "cost": {
@@ -12313,7 +12313,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 mercury grist.",
         "cost": {
@@ -12353,7 +12353,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 mercury grist.",
         "cost": {
@@ -12393,7 +12393,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 mercury grist.",
         "cost": {
@@ -12433,7 +12433,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 mist grist.",
         "cost": {
@@ -12473,7 +12473,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 mist grist.",
         "cost": {
@@ -12513,7 +12513,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 mist grist.",
         "cost": {
@@ -12553,7 +12553,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 moonstone grist.",
         "cost": {
@@ -12593,7 +12593,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 moonstone grist.",
         "cost": {
@@ -12633,7 +12633,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 moonstone grist.",
         "cost": {
@@ -12673,7 +12673,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 neon grist.",
         "cost": {
@@ -12713,7 +12713,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 neon grist.",
         "cost": {
@@ -12753,7 +12753,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 neon grist.",
         "cost": {
@@ -12793,7 +12793,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 nitrogen grist.",
         "cost": {
@@ -12833,7 +12833,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 nitrogen grist.",
         "cost": {
@@ -12873,7 +12873,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 nitrogen grist.",
         "cost": {
@@ -12913,7 +12913,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 obsidian grist.",
         "cost": {
@@ -12953,7 +12953,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 obsidian grist.",
         "cost": {
@@ -12993,7 +12993,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 obsidian grist.",
         "cost": {
@@ -13033,7 +13033,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 onyx grist.",
         "cost": {
@@ -13073,7 +13073,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 onyx grist.",
         "cost": {
@@ -13113,7 +13113,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 onyx grist.",
         "cost": {
@@ -13153,7 +13153,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 permafrost grist.",
         "cost": {
@@ -13193,7 +13193,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 permafrost grist.",
         "cost": {
@@ -13233,7 +13233,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 permafrost grist.",
         "cost": {
@@ -13273,7 +13273,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 quartz grist.",
         "cost": {
@@ -13313,7 +13313,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 quartz grist.",
         "cost": {
@@ -13353,7 +13353,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 quartz grist.",
         "cost": {
@@ -13393,7 +13393,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": [
             "A rough grystal. When consumed, this gives 1 rainbow grist."
@@ -13435,7 +13435,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": [
             "A fine grystal. When consumed, this gives 2 rainbow grist."
@@ -13477,7 +13477,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 rainbow grist.",
         "cost": {
@@ -13517,7 +13517,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 redstone grist.",
         "cost": {
@@ -13557,7 +13557,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 redstone grist.",
         "cost": {
@@ -13597,7 +13597,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 redstone grist.",
         "cost": {
@@ -13637,7 +13637,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 rock candy grist.",
         "cost": {
@@ -13678,7 +13678,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 rock candy grist.",
         "cost": {
@@ -13719,7 +13719,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 rock candy grist.",
         "cost": {
@@ -13760,7 +13760,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 rose quartz grist.",
         "cost": {
@@ -13801,7 +13801,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 rose quartz grist.",
         "cost": {
@@ -13842,7 +13842,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 rose quartz grist.",
         "cost": {
@@ -13883,7 +13883,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 ruby grist.",
         "cost": {
@@ -13923,7 +13923,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 ruby grist.",
         "cost": {
@@ -13963,7 +13963,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 ruby grist.",
         "cost": {
@@ -14003,7 +14003,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 rust grist.",
         "cost": {
@@ -14043,7 +14043,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 rust grist.",
         "cost": {
@@ -14083,7 +14083,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 rust grist.",
         "cost": {
@@ -14123,7 +14123,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 sandstone grist.",
         "cost": {
@@ -14163,7 +14163,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 sandstone grist.",
         "cost": {
@@ -14203,7 +14203,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 sandstone grist.",
         "cost": {
@@ -14243,7 +14243,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 shale grist.",
         "cost": {
@@ -14283,7 +14283,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 shale grist.",
         "cost": {
@@ -14323,7 +14323,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 shale grist.",
         "cost": {
@@ -14363,7 +14363,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 silicon grist.",
         "cost": {
@@ -14403,7 +14403,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 silicon grist.",
         "cost": {
@@ -14443,7 +14443,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 silicon grist.",
         "cost": {
@@ -14483,7 +14483,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 silk grist.",
         "cost": {
@@ -14523,7 +14523,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 silk grist.",
         "cost": {
@@ -14563,7 +14563,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 silk grist.",
         "cost": {
@@ -14603,7 +14603,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 slime grist.",
         "cost": {
@@ -14643,7 +14643,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 slime grist.",
         "cost": {
@@ -14683,7 +14683,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 slime grist.",
         "cost": {
@@ -14723,7 +14723,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 star sapphire grist.",
         "cost": {
@@ -14764,7 +14764,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 star sapphire grist.",
         "cost": {
@@ -14805,7 +14805,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 star sapphire grist.",
         "cost": {
@@ -14846,7 +14846,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 sulfur grist.",
         "cost": {
@@ -14886,7 +14886,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 sulfur grist.",
         "cost": {
@@ -14926,7 +14926,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 sulfur grist.",
         "cost": {
@@ -14966,7 +14966,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 sunstone grist.",
         "cost": {
@@ -15006,7 +15006,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 sunstone grist.",
         "cost": {
@@ -15046,7 +15046,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 sunstone grist.",
         "cost": {
@@ -15086,7 +15086,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 tar grist.",
         "cost": {
@@ -15126,7 +15126,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 tar grist.",
         "cost": {
@@ -15166,7 +15166,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 tar grist.",
         "cost": {
@@ -15206,7 +15206,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 titanium grist.",
         "cost": {
@@ -15246,7 +15246,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 titanium grist.",
         "cost": {
@@ -15286,7 +15286,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 titanium grist.",
         "cost": {
@@ -15326,7 +15326,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 topaz grist.",
         "cost": {
@@ -15366,7 +15366,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 topaz grist.",
         "cost": {
@@ -15406,7 +15406,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 topaz grist.",
         "cost": {
@@ -15446,7 +15446,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 uranium grist.",
         "cost": {
@@ -15486,7 +15486,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 uranium grist.",
         "cost": {
@@ -15526,7 +15526,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 uranium grist.",
         "cost": {
@@ -15566,7 +15566,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A rough grystal. When consumed, this gives 1000 wood grist.",
         "cost": {
@@ -15606,7 +15606,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 wood grist.",
         "cost": {
@@ -15646,7 +15646,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 wood grist.",
         "cost": {
@@ -15686,7 +15686,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": [
             "A rough grystal. When consumed, this gives 1 zilium grist."
@@ -15728,7 +15728,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": [
             "A fine grystal. When consumed, this gives 2 zilium grist."
@@ -15770,7 +15770,7 @@
         "power": 100,
         "inheritpower": 0,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "A choice grystal. When consumed, this gives 100000 zilium grist.",
         "cost": {
@@ -15810,7 +15810,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed space.",
         "cost": {
@@ -15858,7 +15858,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed time.",
         "cost": {
@@ -15906,7 +15906,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed mind.",
         "cost": {
@@ -15956,7 +15956,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed heart.",
         "cost": {
@@ -16004,7 +16004,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed hope.",
         "cost": {
@@ -16054,7 +16054,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed rage.",
         "cost": {
@@ -16110,7 +16110,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed breath.",
         "cost": {
@@ -16161,7 +16161,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed blood.",
         "cost": {
@@ -16211,7 +16211,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed life.",
         "cost": {
@@ -16260,7 +16260,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed doom.",
         "cost": {
@@ -16315,7 +16315,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed light.",
         "cost": {
@@ -16367,7 +16367,7 @@
         "power": 100,
         "inheritpower": 100,
         "size": 1,
-        "kinds": {},
+        "kinds": [],
         "wearable": false,
         "description": "Pure, condensed void.",
         "cost": {
