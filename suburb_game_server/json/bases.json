@@ -34,33 +34,31 @@
         "creator": "ebolite",
         "display_name": null
     },
-    "completely+useless object": {
+    "pumpkin": {
         "base": true,
         "code": "!!!!!!!!",
-        "power": 1,
+        "power": 10,
         "size": 5,
         "kinds": [
             "ballkind"
         ],
         "wearable": false,
-        "description": "An item that is absolutely useless. Yes, this is a challenge.",
+        "description": "Huh.",
         "cost": {
             "build": 0.5
         },
         "onhit_states": {},
         "wear_states": {},
         "consume_states": {
-            "poison": 1
+            "heal": 1
         },
         "secretadjectives": [
-            "stupid",
-            "worthless",
-            "useless"
+            "what",
+            "paradoxical",
+            "appearified"
         ],
         "secret_states": {},
-        "adjectives": [
-            "completely+useless"
-        ],
+        "adjectives": [],
         "use": [],
         "forbiddencode": false,
         "inheritpower": 0,
