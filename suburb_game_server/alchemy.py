@@ -576,7 +576,7 @@ defaults = {
     "inheritpower": 0, # how much extra power this item gives when it's alchemized
     # "weight": 1, # how much the thing weighs, will mostly be used for determining sylladex ejection damage
     "size": 1, # how big the thing is. determines if it's wieldable (size 20 or less)
-    "kinds": {}, # the strife specibi that allow this item to be equipped and its weight (how likely it is to be inherited). if it is a list, the second item is the adjective/base that guarantees inheritance
+    "kinds": [], # the strife specibi that allow this item to be equipped and its weight (how likely it is to be inherited). if it is a list, the second item is the adjective/base that guarantees inheritance
     "wearable": False, # whether the item can be worn
     #"stats": {}, # what stats are boosted / decreased through equipping the item (wielding or wearing) in an appropriate slot. this is a dict of dicts, where key is stat and value is % of power boost
     #"nickname": "Broken", # the default given nickname of an item. should be set to something on generation
