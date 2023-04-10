@@ -901,10 +901,11 @@ def scatter_effect_constructor(aspect: Aspect) -> Callable:
             bonus = user.power//12
             for player_name in user.player.session.starting_players:
                 player = sessions.Player(player_name)
-                if player.strife is not None:
-                    player_griefer = player.strife.get_griefer(player.name)
-                    log_message = aspect.permanent_adjust(player_griefer, bonus)
-                    player_griefer.strife.log(log_message)
+                for subplayer in player.sub_players_list:
+                    if subplayer.strife is not None:
+                        player_griefer = subplayer.strife.get_griefer(subplayer.name)
+                        log_message = aspect.permanent_adjust(player_griefer, bonus)
+                        player_griefer.strife.log(log_message)
                 else:
                     aspect.permanent_adjust_player(player, bonus)
             return f"{aspect.calculate_adjustment(bonus)} {aspect.name.upper()} was scattered!"
