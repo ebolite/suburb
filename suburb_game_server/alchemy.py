@@ -627,7 +627,7 @@ for grist_name in config.grists:
         "power": 100,
         "size": 1,
         "description": f"A fine grystal. When consumed, this gives 10000 {grist_name} grist.",
-        "cost": {grist_name.replace(" ","+"): 100},
+        "cost": {grist_name: 100},
         "use": ["collect"],
         "prototype_name": grist_name,
         "secret_states": {"leech": 1},
