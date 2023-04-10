@@ -13686,7 +13686,7 @@
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 rock candy grist.",
         "cost": {
-            "rock+candy": 100,
+            "rock candy": 100,
             "build": 0.5
         },
         "use": [
@@ -13809,7 +13809,7 @@
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 rose quartz grist.",
         "cost": {
-            "rose+quartz": 100,
+            "rose quartz": 100,
             "build": 0.5
         },
         "use": [
@@ -14772,7 +14772,7 @@
         "wearable": false,
         "description": "A fine grystal. When consumed, this gives 10000 star sapphire grist.",
         "cost": {
-            "star+sapphire": 100,
+            "star sapphire": 100,
             "build": 0.5
         },
         "use": [
