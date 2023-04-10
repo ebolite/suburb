@@ -1434,7 +1434,6 @@ abate.need_damage_to_apply_states = True
 # pistolkind
 aunter = AbstratusSkill("aunter")
 aunter.description = f"Gain an additional action this turn."
-aunter.add_vial_cost("vim", "user.power//3")
 aunter.action_cost = -1
 aunter.cooldown = 2
 aunter.target_self = True
