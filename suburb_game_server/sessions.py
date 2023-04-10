@@ -1119,6 +1119,12 @@ class Player():
             if not sub_player.grist_gutter: continue
             player = sub_player.player
             grist_name, amount = player.grist_gutter.pop()
+            if grist_name in self.grist_cache:
+                remaining_space = self.grist_cache_limit - self.grist_cache[grist_name]
+                if amount > remaining_space:
+                    player.grist_gutter.append([grist_name, amount-remaining_space])
+                    amount = remaining_space
+                    if amount == 0: continue
             if grist_name in spoils_dict: spoils_dict[grist_name] += amount
             else: spoils_dict[grist_name] = amount
         self.add_unclaimed_grist(spoils_dict)
