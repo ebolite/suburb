@@ -575,7 +575,7 @@ def display_atheneum(info_window: "render.SolidColor", info_text: "render.Text",
     def recycle_all():
         client.requestplus(intent="computer", content={"command": "recycle_all"})
         display_atheneum(info_window, info_text, page, search)
-    recycle_all_button = render.TextButton(0.5, 0.93, 256, 32, "Recycle ALL", recycle_all)
+    recycle_all_button = render.TextButton(0.5, 0.9, 256, 32, "Recycle ALL", recycle_all)
     recycle_all_button.bind_to(info_window, True)
 
 def display_alchemy(info_window: "render.SolidColor", info_text: "render.Text", operation: Optional[str]="&&"):
