@@ -8,7 +8,8 @@ db_client = MongoClient(util.db_connection_string)
 suburb_db = db_client["suburb"]
 
 db_sessions = suburb_db["sessions"]
-memory_sessions = {item_dict["_id"]:item_dict for item_dict in db_sessions.find({})}
+memory_sessions = {}
+accessed_sessions = set()
 
 db_players = suburb_db["players"]
 memory_players = {item_dict["_id"]:item_dict for item_dict in db_players.find({})}
@@ -32,7 +33,6 @@ def save_databases():
         users = session.client["users"]["users"]
         users_data = {item_dict["_id"]:item_dict for item_dict in users.find({})}
         sessions = session.client["suburb"]["sessions"]
-        sessions_data = {item_dict["_id"]:item_dict for item_dict in sessions.find({})}
         players = session.client["suburb"]["players"]
         players_data = {item_dict["_id"]:item_dict for item_dict in players.find({})}
         npcs = session.client["suburb"]["npcs"]
@@ -49,12 +49,11 @@ def save_databases():
                 users.update_one({"_id": user_name}, {"$set": user_dict}, upsert=True, session=session)
         if users_to_insert: users.insert_many(users_to_insert, session=session)
 
-        sessions_to_insert = []
-        for session_name, session_dict in memory_sessions.copy().items():
-            if session_name not in sessions_data: sessions_to_insert.append(session_dict)
-            elif session_dict != sessions_data[session_name]:
-                sessions.update_one({"_id": session_name}, {"$set": session_dict}, upsert=True, session=session)
-        if sessions_to_insert: sessions.insert_many(sessions_to_insert, session=session)
+        global accessed_sessions
+        for session_name, session_dict in memory_sessions.items():
+            sessions.update_one({"_id": session_name}, {"$set": session_dict}, upsert=True, session=session)
+            if session_name not in accessed_sessions: memory_sessions.pop(session_name)
+        accessed_sessions = set()
 
         players_to_insert = []
         for player_name, player_dict in memory_players.copy().items():

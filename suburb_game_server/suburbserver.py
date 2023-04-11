@@ -103,12 +103,6 @@ class User():
     def name(self) -> str:
         return self.__dict__["_id"]
 
-for user_name in database.memory_users:
-    user = User(user_name)
-    for session_name in user.sessions.copy():
-        if sessions.Session(session_name) is None:
-            user.sessions.remove(session_name)
-
 def threaded_client(connection):
     try:
         conns.append(connection)
@@ -1140,4 +1134,11 @@ def main():
                 print(e)
     
 if __name__ == "__main__":
+    print("validating sessions")
+    for user_name in database.memory_users:
+        user = User(user_name)
+        for session_name in user.sessions.copy():
+            if sessions.Session(session_name) is None:
+                user.sessions.remove(session_name)
+    print("done validating sessions")
     main()

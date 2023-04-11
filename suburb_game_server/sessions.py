@@ -62,8 +62,13 @@ def get_map_tiles(maps_dict, map_name:Optional[str]=None) -> list[list[str]]:
 class Session():
     def __new__(cls, name) -> Optional["Session"]:
         if name not in database.memory_sessions:
-            return None
-        else: return super().__new__(cls)
+            session = database.db_sessions.find_one({"_id": name})
+            if session is not None:
+                database.memory_sessions = session
+            else:
+                return None
+        database.accessed_sessions.add(name)
+        return super().__new__(cls)
 
     def __init__(self, name):
         self.__dict__["_id"] = name
