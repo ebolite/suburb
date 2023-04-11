@@ -64,7 +64,7 @@ class Session():
         if name not in database.memory_sessions:
             session = database.db_sessions.find_one({"_id": name})
             if session is not None:
-                database.memory_sessions = session
+                database.memory_sessions[name] = session
             else:
                 return None
         database.accessed_sessions.add(name)
