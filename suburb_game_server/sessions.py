@@ -1440,7 +1440,7 @@ class SubPlayer(Player):
             target_x, target_y = player_x + dx, player_y + dy
             target_map = self.overmap.find_map(target_x, target_y)
             if not self.flying:
-                if abs(target_map.height - self.map.height) > 1: illegal_moves.append(direction)
+                if abs(target_map.height - self.map.height) > 1 and target_map.height != 0: illegal_moves.append(direction)
             while target_map.height == 0 and not self.flying:
                 target_x += dx
                 target_y += dy
