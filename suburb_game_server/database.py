@@ -50,7 +50,7 @@ def save_databases():
         if users_to_insert: users.insert_many(users_to_insert, session=session)
 
         global accessed_sessions
-        for session_name, session_dict in memory_sessions.items():
+        for session_name, session_dict in memory_sessions.copy().items():
             sessions.update_one({"_id": session_name}, {"$set": session_dict}, upsert=True, session=session)
             if session_name not in accessed_sessions: memory_sessions.pop(session_name)
         accessed_sessions = set()
