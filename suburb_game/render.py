@@ -1456,7 +1456,7 @@ class RoomItemDisplay(UIElement):
                 left_button.absolute = True
             else:
                 left_button = SolidColor(self.x, page_buttons_y, self.w//2, self.h, self.theme.dark)
-            if list(self.tile_map.instances.keys())[(self.page+1)*self.rows:(self.page+1)*self.rows + self.rows] != []:
+            if all_items[(self.page+1)*self.rows:(self.page+1)*self.rows + self.rows] != []:
                 right_button = TextButton(self.x+left_button.w, page_buttons_y, self.w-left_button.w, self.h, "->", right_button_func)
                 right_button.absolute = True
             else:
