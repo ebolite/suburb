@@ -7,30 +7,33 @@ import util
 import sessions
 import alchemy
 
-tiles: dict[str, "Tile"] = {}      # tile_char: Tile
+tiles: dict[str, "Tile"] = {}  # tile_char: Tile
 # tiles "revise"able by sburb servers
-server_tiles: dict[str, int] = {}       # tile_char: build_cost
+server_tiles: dict[str, int] = {}  # tile_char: build_cost
 
 anywhere_rare = ["empty captchalogue card"]
 anywhere_exotic = ["fancy+santa"]
 
-class Tile():
+
+class Tile:
     def __init__(self, tile_char, name):
         self.tile_char = tile_char
         self.name = name
-        self.solid = True       # tile can support other tiles
-        self.supported = False      # tile can only be placed above a solid tile
-        self.below_allowed = True # can be placed below itself even if it would be otherwise unsupported
-        self.impassible = False     # cannot be moved into or fallen through
-        self.infallible = False     # can be moved into, but not fallen through
-        self.ramp = False       # tiles that can take you up and to the side
-        self.ramp_direction = "not a ramp bro"      # for ramps, the direction they will send you upon falling into them
-        self.stair = False      # tiles that allow you to go up and down, but prevent you from falling through
-        self.automove = False       # tiles that, when moving into, will cause you to continue to move through a chain of themself without stopping
+        self.solid = True  # tile can support other tiles
+        self.supported = False  # tile can only be placed above a solid tile
+        self.below_allowed = (
+            True  # can be placed below itself even if it would be otherwise unsupported
+        )
+        self.impassible = False  # cannot be moved into or fallen through
+        self.infallible = False  # can be moved into, but not fallen through
+        self.ramp = False  # tiles that can take you up and to the side
+        self.ramp_direction = "not a ramp bro"  # for ramps, the direction they will send you upon falling into them
+        self.stair = False  # tiles that allow you to go up and down, but prevent you from falling through
+        self.automove = False  # tiles that, when moving into, will cause you to continue to move through a chain of themself without stopping
         self.door = False
-        self.forbidden = False      # tiles that cannot be placed or modified by servers
-        self.special = False        # tiles that are otherwise special for some reason
-        self.debug = False          # cannot be placed by map editor
+        self.forbidden = False  # tiles that cannot be placed or modified by servers
+        self.special = False  # tiles that are otherwise special for some reason
+        self.debug = False  # cannot be placed by map editor
         self.ban_npc_spawn = False
         self.build_cost = 10
         self.always_spawn = []
@@ -47,29 +50,41 @@ class Tile():
 
     @property
     def deployable(self) -> bool:
-        if self.impassible: return False
-        if self.ramp: return False
-        if self.automove: return False
+        if self.impassible:
+            return False
+        if self.ramp:
+            return False
+        if self.automove:
+            return False
         return True
 
     def is_special(self) -> bool:
-        if self.impassible: return True
-        if self.infallible: return True
-        if self.ramp: return True
-        if self.stair: return True
-        if self.forbidden: return True
-        if self.special: return True
+        if self.impassible:
+            return True
+        if self.infallible:
+            return True
+        if self.ramp:
+            return True
+        if self.stair:
+            return True
+        if self.forbidden:
+            return True
+        if self.special:
+            return True
         return False
 
     def get_loot_list(self, room: "sessions.Room") -> list[str]:
         spawnlist = spawnlists.SpawnList.find_spawnlist(self.name)
-        if spawnlist is None: return []
-        else: 
+        if spawnlist is None:
+            return []
+        else:
             loot = spawnlist.get_loot_list()
             return loot
 
+
 def get_tile(tile_char) -> Tile:
     return tiles[tile_char]
+
 
 debug_tile = Tile("*", "debug tile")
 debug_tile.forbidden = True
@@ -209,6 +224,7 @@ studio_apartment = Tile("S", "studio apartment")
 
 security = Tile("s", "security")
 
+
 class LootTile(Tile):
     def __init__(self, tile_char, name, loot_type: str):
         super().__init__(tile_char, name)
@@ -229,7 +245,7 @@ class LootTile(Tile):
             grystal_type = random.choice(self.get_possible_grystal_types())
             out.append(f"{grystal_type} {grist_type} grystal")
         return out
-    
+
     def get_random_base_in_kinds(self, valid_kinds: list[str]):
         shuffled_bases = list(util.bases.keys())
         random.shuffle(shuffled_bases)
@@ -252,7 +268,8 @@ class LootTile(Tile):
         min_specials += room.map.height
         min_specials = min(min_specials, max_specials)
         num_specials = random.randint(min_specials, max_specials)
-        if num_specials <= 0 or room.overmap.land is None: return []
+        if num_specials <= 0 or room.overmap.land is None:
+            return []
         assert room.overmap.land.player is not None
         aspect = room.overmap.land.player.aspect
         bases = list(util.bases.keys())
@@ -264,9 +281,11 @@ class LootTile(Tile):
                     player = sessions.Player(player_name)
                     subplayer = player.sub_players_list[0]
                     for kind in subplayer.strife_portfolio:
-                        if kind not in session_kinds: session_kinds.append(kind)
+                        if kind not in session_kinds:
+                            session_kinds.append(kind)
                 base_item_name = self.get_random_base_in_kinds(session_kinds)
-                if base_item_name is None: base_item_name = "perfectly+generic object"
+                if base_item_name is None:
+                    base_item_name = "perfectly+generic object"
             else:
                 base_item_name = random.choice(bases)
                 while alchemy.Item(base_item_name).forbiddencode:
@@ -276,17 +295,27 @@ class LootTile(Tile):
         return loot
 
     def get_possible_grystal_types(self) -> list[str]:
-        if self.loot_type == "bounty": return ["rough", "fine", "choice"]
-        elif self.loot_type == "trove": return ["rough", "fine"]
-        else: return ["rough"]
+        if self.loot_type == "bounty":
+            return ["rough", "fine", "choice"]
+        elif self.loot_type == "trove":
+            return ["rough", "fine"]
+        else:
+            return ["rough"]
 
     def get_possible_grist_types(self, room: "sessions.Room") -> list[str]:
         max_tier = room.map.height + 3
         max_tier = min(max_tier, 9)
-        possible_grist_types = [grist_name for grist_name in config.grists if config.grists[grist_name]["tier"] <= max_tier]
+        possible_grist_types = [
+            grist_name
+            for grist_name in config.grists
+            if config.grists[grist_name]["tier"] <= max_tier
+        ]
         if room.overmap.land is not None:
-            possible_grist_types += config.gristcategories[room.overmap.land.gristcategory]
+            possible_grist_types += config.gristcategories[
+                room.overmap.land.gristcategory
+            ]
         return possible_grist_types
+
 
 stash = LootTile("%", "stash", "stash")
 stash.forbidden = True
@@ -302,7 +331,7 @@ nest.forbidden = True
 
 stalactite = Tile("'", "stalactite")
 stalactite.forbidden = True
-stalactite.solid = False
+stalactite.solid = True
 
 return_gate = Tile("0", "return gate")
 return_gate.forbidden = True
