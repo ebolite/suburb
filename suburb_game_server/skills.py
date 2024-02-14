@@ -259,6 +259,8 @@ class Skill:
                 roll = random.uniform(0, 1 + -edge)
             if roll < config.base_parry_chance:
                 target.strife.log(f"{target.nickname} AUTO-PARRIES!")
+                # parry victim takes damage equal to savvy
+                user.take_damage(target.get_stat("savvy"))
                 for vial in target.vials_list:
                     vial.on_parry(target, damage)
                 for state in target.states_list:
