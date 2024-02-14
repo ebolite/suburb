@@ -39,43 +39,39 @@ from strife import Strife
 #         maps.append(map_from_file(filename, folder))
 #     return maps
 
-class MapData():
+
+class MapData:
     def __init__(self, map_dict: dict):
         self.map_name = map_dict["map_name"]
         self.map_tiles = map_dict["map_tiles"]
         self.create = map_dict["creator"]
+
 
 def load_map_json(filename) -> dict[str, dict]:
     maps_dict = {}
     maps_dict = util.readjson(maps_dict, filename, f"{util.homedir}/maps")
     return maps_dict
 
+
 house_maps = load_map_json("house")
 land_maps = load_map_json("outside")
 structure_maps = load_map_json("structures")
 
-def get_map_tiles(maps_dict, map_name:Optional[str]=None) -> list[list[str]]:
+
+def get_map_tiles(maps_dict, map_name: Optional[str] = None) -> list[list[str]]:
     if map_name is None:
         map_name = random.choice(list(maps_dict.keys()))
     return [list(line) for line in maps_dict[map_name]["map_tiles"]]
 
-class Session():
-    def __new__(cls, name) -> Optional["Session"]:
-        if name not in database.memory_sessions:
-            session = database.db_sessions.find_one({"_id": name})
-            if session is not None:
-                database.memory_sessions[name] = session
-            else:
-                return None
-        database.accessed_sessions.add(name)
-        return super().__new__(cls)
 
-    def __init__(self, name):
+class Session:
+    def __init__(self, name: str):
         self.__dict__["_id"] = name
 
     @classmethod
     def create_session(cls, name, password) -> Optional["Session"]:
-        if name in database.memory_sessions: return None
+        if name in database.memory_sessions:
+            return None
         database.memory_sessions[name] = {}
         session = cls(name)
         session.setup_defaults(name, password)
@@ -105,35 +101,48 @@ class Session():
         best_seeds = {}
         for player in self.players_list:
             for grist_name, rate in player.seeds.items():
-                if grist_name not in best_seeds: best_seeds[grist_name] = rate
-                elif best_seeds[grist_name] < rate: best_seeds[grist_name] = rate
+                if grist_name not in best_seeds:
+                    best_seeds[grist_name] = rate
+                elif best_seeds[grist_name] < rate:
+                    best_seeds[grist_name] = rate
         return best_seeds
 
     def __setattr__(self, attr, value):
         database.memory_sessions[self.__dict__["_id"]][attr] = value
         self.__dict__[attr] = value
-        
+
     def __getattr__(self, attr):
-        self.__dict__[attr] = (database.memory_sessions[self.__dict__["_id"]]
-                               [attr])
+        try:
+            self.__dict__[attr] = database.memory_sessions[self.__dict__["_id"]][attr]
+        except KeyError as e:
+            print(f"Tried to get attr {attr}")
+            print(f"Own dictionary: {self.__dict__}")
+            print(f"Database dict:\n {database.memory_sessions[self.__dict__['_id']]}")
         return self.__dict__[attr]
-    
+
     def set_password(self, password: str):
         self.salt = os.urandom(32).hex()
         plaintext = password.encode()
-        digest = hashlib.pbkdf2_hmac("sha256", plaintext, bytes.fromhex(self.salt), 10000)
+        digest = hashlib.pbkdf2_hmac(
+            "sha256", plaintext, bytes.fromhex(self.salt), 10000
+        )
         hex_hash = digest.hex()
         self.hashed_password = hex_hash
-    
+
     def verify_password(self, password: str):
-        digest = hashlib.pbkdf2_hmac("sha256", password.encode(), bytes.fromhex(self.salt), 10000)
+        digest = hashlib.pbkdf2_hmac(
+            "sha256", password.encode(), bytes.fromhex(self.salt), 10000
+        )
         new_hash = digest.hex()
-        if new_hash == self.hashed_password: return True
-        else: return False
+        if new_hash == self.hashed_password:
+            return True
+        else:
+            return False
 
     def get_current_subplayer(self, user_name: str) -> Optional["SubPlayer"]:
         player_name = self.user_players[user_name]
-        if player_name is None: return None
+        if player_name is None:
+            return None
         player = Player(player_name)
         return player.current_subplayer
 
@@ -147,7 +156,7 @@ class Session():
                 if grist_name not in available_types:
                     available_types.append(grist_name)
         return available_types
-    
+
     @property
     def players_list(self) -> list["SubPlayer"]:
         return [SubPlayer.from_name(name) for name in self.current_players]
@@ -155,23 +164,24 @@ class Session():
     @property
     def name(self) -> str:
         return self.__dict__["_id"]
-    
+
     @property
     def prospit(self) -> "Kingdom":
         return Kingdom("prospit", self)
-    
+
     @property
     def derse(self) -> "Kingdom":
         return Kingdom("derse", self)
 
-class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player.session}"
+
+class Overmap:  # name is whatever, for player lands it's "{Player.name}{Player.session}"
     def __init__(self, name: str, session: Session):
         self.__dict__["session_name"] = session.name
         self.__dict__["name"] = name
         if name not in session.overmaps:
             print("overmap not in session")
             raise AssertionError
-        
+
     def setup_defaults(self, name):
         self.maps: dict = {}
         self.theme: str = "default"
@@ -181,8 +191,11 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         self.overmap_type: Optional[str] = None
         self.specials: list[str] = []
 
-    def get_view(self, target_x: int, target_y: int, view_tiles: int) -> tuple[list, dict, dict]:
-        if not self.is_tile_in_bounds(target_x, target_y): return ([], {}, {})
+    def get_view(
+        self, target_x: int, target_y: int, view_tiles: int
+    ) -> tuple[list, dict, dict]:
+        if not self.is_tile_in_bounds(target_x, target_y):
+            return ([], {}, {})
         out_map_tiles = []
         out_specials = {}
         map_types = {}
@@ -190,42 +203,63 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
         players = {}
         for subplayer in self.session.players_list:
             if subplayer.overmap.name == self.name:
-                if subplayer.map.name not in players: players[subplayer.map.name] = {}
-                players[subplayer.map.name][subplayer.name] = ("player", subplayer.symbol_dict["color"])
-        for map_tile_y, real_y in enumerate(range(target_y-view_tiles, target_y+view_tiles+1)):
+                if subplayer.map.name not in players:
+                    players[subplayer.map.name] = {}
+                players[subplayer.map.name][subplayer.name] = (
+                    "player",
+                    subplayer.symbol_dict["color"],
+                )
+        for map_tile_y, real_y in enumerate(
+            range(target_y - view_tiles, target_y + view_tiles + 1)
+        ):
             new_line = []
-            for map_tile_x, real_x in enumerate(range(target_x-view_tiles, target_x+view_tiles+1)):
+            for map_tile_x, real_x in enumerate(
+                range(target_x - view_tiles, target_x + view_tiles + 1)
+            ):
                 map_x, map_y = real_x, real_y
-                if map_y < 0: map_y += len(map_tiles)
-                if map_y >= len(map_tiles): map_y -= len(map_tiles) # loop if out of bounds
-                if map_x < 0: map_x += len(map_tiles[0])
-                if map_x >= len(map_tiles[0]): map_x -= len(map_tiles[0])
+                if map_y < 0:
+                    map_y += len(map_tiles)
+                if map_y >= len(map_tiles):
+                    map_y -= len(map_tiles)  # loop if out of bounds
+                if map_x < 0:
+                    map_x += len(map_tiles[0])
+                if map_x >= len(map_tiles[0]):
+                    map_x -= len(map_tiles[0])
                 new_line.append(map_tiles[map_y][map_x])
                 map = self.find_map(map_x, map_y)
                 specials = map.specials
                 if map.name in players:
                     specials.update(players[map.name])
-                if len(specials) > 0: 
+                if len(specials) > 0:
                     out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
-                if map.special_type: map_types[f"{map_tile_x}, {map_tile_y}"] = map.special_type
+                if map.special_type:
+                    map_types[f"{map_tile_x}, {map_tile_y}"] = map.special_type
             out_map_tiles.append(new_line)
         return out_map_tiles, out_specials, map_types
 
     def is_tile_in_bounds(self, x: int, y: int) -> bool:
-        if y < 0: return False
-        if x < 0: return False
-        if y >= len(self.map_tiles): return False
-        if x >= len(self.map_tiles[0]): return False
+        if y < 0:
+            return False
+        if x < 0:
+            return False
+        if y >= len(self.map_tiles):
+            return False
+        if x >= len(self.map_tiles[0]):
+            return False
         return True
 
-    def get_map(self, name:str) -> "Map":
+    def get_map(self, name: str) -> "Map":
         return Map(name, self.session, self)
 
     def find_map(self, x, y) -> "Map":
-        if y < 0: y += len(self.map_tiles)
-        if y >= len(self.map_tiles): y -= len(self.map_tiles) # loop if out of bounds
-        if x < 0: x += len(self.map_tiles[0])
-        if x >= len(self.map_tiles[0]): x -= len(self.map_tiles[0])
+        if y < 0:
+            y += len(self.map_tiles)
+        if y >= len(self.map_tiles):
+            y -= len(self.map_tiles)  # loop if out of bounds
+        if x < 0:
+            x += len(self.map_tiles[0])
+        if x >= len(self.map_tiles[0]):
+            x -= len(self.map_tiles[0])
         return Map(f"{x}, {y}", self.session, self)
 
     def __setattr__(self, attr, value):
@@ -246,17 +280,20 @@ class Overmap(): # name is whatever, for player lands it's "{Player.name}{Player
     def player(self) -> Optional["Player"]:
         try:
             return Player(self.player_name)
-        except KeyError: return None
+        except KeyError:
+            return None
 
     @property
     def name(self) -> str:
         return self.__dict__["name"]
-    
+
     @property
     def land(self) -> Optional["Land"]:
         if self.player is not None:
             return Land(self.name, self.session)
-        else: return None
+        else:
+            return None
+
 
 class Kingdom(Overmap):
     @classmethod
@@ -265,11 +302,11 @@ class Kingdom(Overmap):
         kingdom = cls(name, session)
         kingdom.setup_defaults(name, kingdom_name)
         return kingdom
-    
+
     def setup_defaults(self, name: str, kingdom_name: str):
         super().setup_defaults(name)
         self.overmap_type = "kingdom"
-        self.kingdom_name = kingdom_name # prospit or derse
+        self.kingdom_name = kingdom_name  # prospit or derse
         self.theme = kingdom_name
         self.title = kingdom_name.capitalize()
         self.gen_kingdom_map()
@@ -282,7 +319,8 @@ class Kingdom(Overmap):
     @property
     def moon(self):
         return Moon(self.moon_name, self.session)
-    
+
+
 class Moon(Overmap):
     @classmethod
     def create(cls, name: str, kingdom: Kingdom):
@@ -313,8 +351,13 @@ class Moon(Overmap):
             tower_map.gen_map("tower")
 
     def spawn_player_in_tower(self, player: "SubPlayer") -> "Room":
-        valid_towers = [tower for tower in self.towers_list if tower.name not in self.player_towers.values()]
-        if not valid_towers: valid_towers = self.towers_list
+        valid_towers = [
+            tower
+            for tower in self.towers_list
+            if tower.name not in self.player_towers.values()
+        ]
+        if not valid_towers:
+            valid_towers = self.towers_list
         tower = random.choice(valid_towers)
         room = tower.random_valid_room(config.starting_tiles)
         player.goto_room(room)
@@ -324,14 +367,17 @@ class Moon(Overmap):
     @property
     def kingdom(self):
         return Kingdom(self.kingdom_name, self.session)
-    
+
     @property
     def towers_list(self):
-        return [Map(tower_name, self.session, self) for tower_name in self.tower_map_names]
+        return [
+            Map(tower_name, self.session, self) for tower_name in self.tower_map_names
+        ]
 
     @property
     def chain_map(self):
         return Map(self.chain_map_name, self.session, self)
+
 
 class Land(Overmap):
     @classmethod
@@ -358,12 +404,27 @@ class Land(Overmap):
         lakes = config.categoryproperties[self.gristcategory]["lakes"]
         lakerate = config.categoryproperties[self.gristcategory]["lakerate"]
         special = config.categoryproperties[self.gristcategory].get("special", None)
-        extralands = config.categoryproperties[self.gristcategory].get("extralands", None)
+        extralands = config.categoryproperties[self.gristcategory].get(
+            "extralands", None
+        )
         extrarate = config.categoryproperties[self.gristcategory].get("extrarate", None)
-        extraspecial = config.categoryproperties[self.gristcategory].get("extraspecial", None)
+        extraspecial = config.categoryproperties[self.gristcategory].get(
+            "extraspecial", None
+        )
         steepness = config.categoryproperties[self.gristcategory].get("steepness", 1.0)
-        smoothness = config.categoryproperties[self.gristcategory].get("smoothness", 0.5)
-        self.map_tiles = gen_overworld(islands, landrate, lakes, lakerate, special, extralands, extrarate, extraspecial)
+        smoothness = config.categoryproperties[self.gristcategory].get(
+            "smoothness", 0.5
+        )
+        self.map_tiles = gen_overworld(
+            islands,
+            landrate,
+            lakes,
+            lakerate,
+            special,
+            extralands,
+            extrarate,
+            extraspecial,
+        )
         housemap_x, housemap_y = get_random_land_coords(self.map_tiles)
         housemap = self.find_map(housemap_x, housemap_y)
         housemap.gen_house_map(self.player.starting_map_name)
@@ -371,12 +432,22 @@ class Land(Overmap):
         self.housemap_name = housemap.name
         self.specials.append(housemap.name)
         last_gate_x, last_gate_y = 0, 0
-        for gate_num in range(1, 8): # gates 1-7
-            if gate_num % 2 == 1: # even numbered gates should be close to odd numbered gates before them
-                gate_x, gate_y = get_tile_at_distance(self.map_tiles, housemap_x, housemap_y, gate_num*9, self.specials)
+        for gate_num in range(1, 8):  # gates 1-7
+            if (
+                gate_num % 2 == 1
+            ):  # even numbered gates should be close to odd numbered gates before them
+                gate_x, gate_y = get_tile_at_distance(
+                    self.map_tiles, housemap_x, housemap_y, gate_num * 9, self.specials
+                )
                 last_gate_x, last_gate_y = gate_x, gate_y
             else:
-                gate_x, gate_y = get_tile_at_distance(self.map_tiles, last_gate_x, last_gate_y, gate_num*4, self.specials)
+                gate_x, gate_y = get_tile_at_distance(
+                    self.map_tiles,
+                    last_gate_x,
+                    last_gate_y,
+                    gate_num * 4,
+                    self.specials,
+                )
             gate_map = self.find_map(gate_x, gate_y)
             gate_map.gen_map(f"gate{gate_num}")
             gate_map.special_type = "gate"
@@ -395,7 +466,10 @@ class Land(Overmap):
         print(f"{self.gristcategory} {self.player.aspect}")
         print(f"Player {self.player} {self.player.id} {self.player_name}")
         print(f"grist {self.gristcategory} aspect {self.player.aspect}")
-        bases = config.landbases[self.gristcategory] + config.aspectbases[self.player.aspect]
+        bases = (
+            config.landbases[self.gristcategory]
+            + config.aspectbases[self.player.aspect]
+        )
         random.seed(self.player.id)
         random.shuffle(bases)
         self.base1 = bases[0]
@@ -412,7 +486,8 @@ class Land(Overmap):
 
     def clientdepth(self, depth):
         output_player = self.player
-        if output_player is None: return None
+        if output_player is None:
+            return None
         for i in range(depth):
             if output_player.client_player is not None:
                 output_player = output_player.client_player
@@ -420,10 +495,11 @@ class Land(Overmap):
                 output_player = None
                 return output_player
         return output_player
-    
+
     def serverdepth(self, depth):
         output_player = self.player
-        if output_player is None: return None
+        if output_player is None:
+            return None
         for i in range(depth):
             if output_player.server_player is not None:
                 output_player = output_player.server_player
@@ -434,28 +510,31 @@ class Land(Overmap):
 
     def gate_location(self, gate_num: int, at_house: bool) -> Optional["Player"]:
         landowner = self.player
-        gates = { # left: housegate right: landgate
-            0: [landowner, landowner], # return gate
+        gates = {  # left: housegate right: landgate
+            0: [landowner, landowner],  # return gate
             1: [landowner, landowner],
             2: [self.clientdepth(1), self.serverdepth(1)],
             3: [landowner, landowner],
             4: [self.clientdepth(2), self.serverdepth(2)],
             5: [landowner, landowner],
             6: [self.clientdepth(3), self.serverdepth(3)],
-            7: [landowner, landowner] # not implemented, second gate leads to denizen
-            }
-        if at_house: return gates[gate_num][0]
-        else: return gates[gate_num][1]
+            7: [landowner, landowner],  # not implemented, second gate leads to denizen
+        }
+        if at_house:
+            return gates[gate_num][0]
+        else:
+            return gates[gate_num][1]
 
     @property
     def housemap(self) -> "Map":
         return Map(self.housemap_name, self.session, self)
 
-class Map():
+
+class Map:
     def __init__(self, name, session: Session, overmap: Overmap):
         self.__dict__["session_name"] = session.name
         self.__dict__["overmap_name"] = overmap.name
-        self.__dict__["name"] = name  
+        self.__dict__["name"] = name
         if name not in session.overmaps[overmap.name]["maps"]:
             session.overmaps[overmap.name]["maps"][name] = {}
             self.special: Optional[str] = None
@@ -472,7 +551,7 @@ class Map():
             self.special_type = ""
 
     def gen_house_map(self, map_name):
-        house_map = get_map_tiles(house_maps, map_name) # todo: housemap picking
+        house_map = get_map_tiles(house_maps, map_name)  # todo: housemap picking
         map = [["." for i in range(len(house_map[0]))] for n in range(100)]
         map += house_map
         self.map_tiles = map
@@ -521,7 +600,7 @@ class Map():
 
     def get_room(self, name: str) -> "Room":
         return Room(name, self.session, self.overmap, self)
-    
+
     def get_alchemiter_location(self) -> Optional[tuple[int, int]]:
         # reversed so we look bottom to top
         for y, line in reversed(list(enumerate(self.map_tiles))):
@@ -535,42 +614,63 @@ class Map():
 
     def find_room(self, x: int, y: int) -> "Room":
         return Room(f"{x}, {y}", self.session, self.overmap, self)
-    
+
     def find_tiles_coords(self, valid_tiles: list) -> list:
         valid_coords = []
         for y, line in enumerate(self.map_tiles):
             for x, char in enumerate(line):
-                if char in valid_tiles: valid_coords.append((x, y))
+                if char in valid_tiles:
+                    valid_coords.append((x, y))
         return valid_coords
-    
+
     def random_valid_room(self, valid_tiles: list) -> "Room":
         valid_coords = self.find_tiles_coords(valid_tiles)
         coords = random.choice(valid_coords)
         return self.find_room(coords[0], coords[1])
-    
+
     def get_starting_room(self, direction) -> "Room":
-        if direction == "right": x = len(self.map_tiles[0]) - 1
-        else: x = 0
+        if direction == "right":
+            x = len(self.map_tiles[0]) - 1
+        else:
+            x = 0
         for y in reversed(range(len(self.map_tiles))):
             room = self.find_room(x, y)
-            if room.tile.impassible: continue
-            if room.tile.ramp: continue
+            if room.tile.impassible:
+                continue
+            if room.tile.ramp:
+                continue
             return room
-        else: raise AssertionError
+        else:
+            raise AssertionError
 
-    def populate_with_underlings(self, underling_type: str, cluster_size: int, number: int, min_tier:int, max_tier: int):
+    def populate_with_underlings(
+        self,
+        underling_type: str,
+        cluster_size: int,
+        number: int,
+        min_tier: int,
+        max_tier: int,
+    ):
         valid_rooms: list[Room] = []
         for y, line in enumerate(self.map_tiles):
             for x, char in enumerate(line):
-                if not self.is_tile_in_bounds(x, y+1): continue
-                if self.map_tiles[y+1][x] == ".": continue
+                if not self.is_tile_in_bounds(x, y + 1):
+                    continue
+                if self.map_tiles[y + 1][x] == ".":
+                    continue
                 room = self.find_room(x, y)
-                if room.tile.impassible: continue
-                if room.tile.ramp: continue
-                if room.tile.automove: continue
-                if room.tile.stair: continue
-                if room.tile.ban_npc_spawn: continue
-                if not room.above_solid_ground(): continue
+                if room.tile.impassible:
+                    continue
+                if room.tile.ramp:
+                    continue
+                if room.tile.automove:
+                    continue
+                if room.tile.stair:
+                    continue
+                if room.tile.ban_npc_spawn:
+                    continue
+                if not room.above_solid_ground():
+                    continue
                 valid_rooms.append(room)
         remaining_spawns = number
         while remaining_spawns:
@@ -578,7 +678,9 @@ class Map():
             underling = npcs.underlings[underling_type]
             for i in range(random.randint(1, min(cluster_size, remaining_spawns))):
                 grist_tier = random.randint(min_tier, max_tier)
-                grist_name = config.gristcategories[self.overmap.gristcategory][grist_tier-1]
+                grist_name = config.gristcategories[self.overmap.gristcategory][
+                    grist_tier - 1
+                ]
                 underling.make_npc(grist_name, self.overmap.gristcategory, room)
                 remaining_spawns -= 1
 
@@ -586,60 +688,83 @@ class Map():
         difficulty = self.height
         valid_underlings: list["npcs.Underling"] = []
         for underling in npcs.underlings.values():
-            if underling.difficulty <= difficulty: valid_underlings.append(underling)
-        num_clusters = 8 + difficulty*2
-        if len(valid_underlings) == 0: return
+            if underling.difficulty <= difficulty:
+                valid_underlings.append(underling)
+        num_clusters = 8 + difficulty * 2
+        if len(valid_underlings) == 0:
+            return
         for i in range(num_clusters):
             underling = random.choice(valid_underlings)
             cluster_size = underling.cluster_size
             diff_difference = difficulty - underling.difficulty
-            num_to_spawn = underling.cluster_size + underling.cluster_size*(diff_difference//2)
+            num_to_spawn = underling.cluster_size + underling.cluster_size * (
+                diff_difference // 2
+            )
             min_tier = min(1 + diff_difference, 9)
             max_tier = min(3 + difficulty + underling.variance, 9)
-            self.populate_with_underlings(underling.monster_type, cluster_size, num_to_spawn, min_tier, max_tier)
+            self.populate_with_underlings(
+                underling.monster_type, cluster_size, num_to_spawn, min_tier, max_tier
+            )
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        (self.session.overmaps[self.__dict__["overmap_name"]]
-         ["maps"][self.__dict__["name"]]
-         [attr]) = value
+        (
+            self.session.overmaps[self.__dict__["overmap_name"]]["maps"][
+                self.__dict__["name"]
+            ][attr]
+        ) = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = (self.session.overmaps[self.__dict__["overmap_name"]]
-                               ["maps"][self.__dict__["name"]]
-                               [attr])
+        self.__dict__[attr] = self.session.overmaps[self.__dict__["overmap_name"]][
+            "maps"
+        ][self.__dict__["name"]][attr]
         return self.__dict__[attr]
 
     def get_tile(self, x: int, y: int) -> tiles.Tile:
         try:
             return tiles.tiles[self.map_tiles[y][x]]
-        except KeyError: return tiles.tiles["."]
-    
+        except KeyError:
+            return tiles.tiles["."]
+
     def change_tile(self, x: int, y: int, tile_char: str):
         self.map_tiles[y][x] = tile_char
-    
+
     def is_tile_in_bounds(self, x: int, y: int) -> bool:
-        if y < 0: return False
-        if x < 0: return False
-        if y >= len(self.map_tiles): return False
-        if x >= len(self.map_tiles[0]): return False
+        if y < 0:
+            return False
+        if x < 0:
+            return False
+        if y >= len(self.map_tiles):
+            return False
+        if x >= len(self.map_tiles[0]):
+            return False
         return True
 
-    def get_view(self, target_x: int, target_y: int, view_tiles: int) -> tuple[list, dict]:
-        if not self.is_tile_in_bounds(target_x, target_y): return ([], {})
+    def get_view(
+        self, target_x: int, target_y: int, view_tiles: int
+    ) -> tuple[list, dict]:
+        if not self.is_tile_in_bounds(target_x, target_y):
+            return ([], {})
         out_map_tiles = []
         out_specials = {}
         map_tiles = self.map_tiles
         # we need both the y of the real map(real_y) and the y of the output tile(map_tile_y)
-        for map_tile_y, real_y in enumerate(range(target_y-view_tiles, target_y+view_tiles+1)):
+        for map_tile_y, real_y in enumerate(
+            range(target_y - view_tiles, target_y + view_tiles + 1)
+        ):
             new_line = []
-            for map_tile_x, real_x in enumerate(range(target_x-view_tiles, target_x+view_tiles+1)):
-                if real_y < 0 or real_y >= len(map_tiles): new_line.append("?") # out of bounds
-                elif real_x < 0 or real_x >= len(map_tiles[0]): new_line.append("?") # out of bounds
-                else: 
+            for map_tile_x, real_x in enumerate(
+                range(target_x - view_tiles, target_x + view_tiles + 1)
+            ):
+                if real_y < 0 or real_y >= len(map_tiles):
+                    new_line.append("?")  # out of bounds
+                elif real_x < 0 or real_x >= len(map_tiles[0]):
+                    new_line.append("?")  # out of bounds
+                else:
                     new_line.append(map_tiles[real_y][real_x])
                     specials = self.find_room(real_x, real_y).specials
-                    if len(specials) > 0: out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
+                    if len(specials) > 0:
+                        out_specials[f"{map_tile_x}, {map_tile_y}"] = specials
             out_map_tiles.append(new_line)
         return out_map_tiles, out_specials
 
@@ -652,8 +777,10 @@ class Map():
     @property
     def height(self) -> int:
         tile_char = self.overmap.map_tiles[self.y][self.x]
-        try: return int(tile_char)
-        except ValueError: return 0
+        try:
+            return int(tile_char)
+        except ValueError:
+            return 0
 
     @property
     def session(self) -> Session:
@@ -671,7 +798,8 @@ class Map():
     def name(self) -> str:
         return self.__dict__["name"]
 
-class Room():
+
+class Room:
     def __init__(self, name, session: Session, overmap: Overmap, map: Map):
         self.__dict__["session_name"] = session.name
         self.__dict__["overmap_name"] = overmap.name
@@ -702,7 +830,8 @@ class Room():
                 new_strife.add_griefer(npc)
             new_strife.increase_turn()
             return True
-        else: return False
+        else:
+            return False
 
     def add_npc(self, npc: "npcs.Npc"):
         if npc.name not in self.npcs:
@@ -727,11 +856,11 @@ class Room():
             item = alchemy.Item(item_name)
             instance = alchemy.Instance(item)
             self.add_instance(instance.name)
-        
+
     def add_instance(self, instance_name: str):
         if instance_name not in self.instances:
             self.instances.append(instance_name)
-    
+
     def remove_instance(self, instance_name: str):
         if instance_name in self.instances:
             self.instances.remove(instance_name)
@@ -742,23 +871,29 @@ class Room():
             instance = alchemy.Instance(instance_name)
             out_dict[instance_name] = instance.get_dict()
         return out_dict
-    
+
     def get_npcs(self) -> dict:
         out_dict = {}
         for npc_name in self.npcs:
             npc = npcs.Npc(npc_name)
             out_dict[npc_name] = npc.get_dict()
         return out_dict
-    
+
     def get_players(self) -> dict[str, dict]:
         subplayers = [SubPlayer.from_name(player_name) for player_name in self.players]
-        return {subplayer.name:subplayer.get_dict() for subplayer in subplayers}
+        return {subplayer.name: subplayer.get_dict() for subplayer in subplayers}
 
     def deploy_phernalia(self, client: "Player", item_name: str) -> bool:
-        if item_name not in client.available_phernalia: print("not in phernalia"); return False
-        if not self.tile.deployable: print("undeployable tile"); return False
-        below_room = self.map.find_room(self.x, self.y+1)
-        if not below_room.tile.infallible and not below_room.tile.impassible: print("below room not suitable"); return False
+        if item_name not in client.available_phernalia:
+            print("not in phernalia")
+            return False
+        if not self.tile.deployable:
+            print("undeployable tile")
+            return False
+        below_room = self.map.find_room(self.x, self.y + 1)
+        if not below_room.tile.infallible and not below_room.tile.impassible:
+            print("below room not suitable")
+            return False
         if item_name == "pre-punched card":
             item = alchemy.Item("punched card")
             instance = alchemy.Instance(item)
@@ -769,83 +904,107 @@ class Room():
             item = alchemy.Item(item_name)
             instance = alchemy.Instance(item)
             cost = item.true_cost
-            if not client.pay_costs(cost): print("couldn't pay cost"); return False
+            if not client.pay_costs(cost):
+                print("couldn't pay cost")
+                return False
             self.add_instance(instance.name)
         client.deployed_phernalia.append(item_name)
         return True
-    
+
     def deploy_atheneum(self, client: "Player", instance_name: str) -> bool:
-        if instance_name not in client.atheneum: return False
-        if not self.tile.deployable: print("undeployable tile"); return False
-        below_room = self.map.find_room(self.x, self.y+1)
-        if not below_room.tile.infallible and not below_room.tile.impassible: print("below room not suitable"); return False
+        if instance_name not in client.atheneum:
+            return False
+        if not self.tile.deployable:
+            print("undeployable tile")
+            return False
+        below_room = self.map.find_room(self.x, self.y + 1)
+        if not below_room.tile.infallible and not below_room.tile.impassible:
+            print("below room not suitable")
+            return False
         self.add_instance(instance_name)
         client.atheneum.remove(instance_name)
         return True
-    
+
     def above_solid_ground(self) -> bool:
-        if not self.map.is_tile_in_bounds(self.x, self.y+1): return False
-        below_room = self.map.find_room(self.x, self.y+1)
+        if not self.map.is_tile_in_bounds(self.x, self.y + 1):
+            return False
+        below_room = self.map.find_room(self.x, self.y + 1)
         return below_room.tile.infallible or below_room.tile.impassible
 
     def get_surrounding_tiles(self) -> list[tiles.Tile]:
         out_tiles = []
         for y in range(-1, 2):
             for x in range(-1, 2):
-                if x == 0 and y == 0: continue
-                if self.map.is_tile_in_bounds(self.x+x, self.y+y):
-                    out_tiles.append(self.map.find_room(self.x+x, self.y+y).tile)
+                if x == 0 and y == 0:
+                    continue
+                if self.map.is_tile_in_bounds(self.x + x, self.y + y):
+                    out_tiles.append(self.map.find_room(self.x + x, self.y + y).tile)
         return out_tiles
-    
+
     def get_orthogonal_tiles(self) -> list[tiles.Tile]:
         out_tiles = []
         for coords in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
             x, y = coords
-            if self.map.is_tile_in_bounds(self.x+x, self.y+y):
-                out_tiles.append(self.map.find_room(self.x+x, self.y+y).tile)
+            if self.map.is_tile_in_bounds(self.x + x, self.y + y):
+                out_tiles.append(self.map.find_room(self.x + x, self.y + y).tile)
         return out_tiles
 
     def revise(self, client: "Player", new_tile_char: str) -> bool:
-        if self.tile.forbidden: return False 
+        if self.tile.forbidden:
+            return False
         new_tile = tiles.tiles[new_tile_char]
-        if new_tile.forbidden: return False 
-        if self.players: return False
+        if new_tile.forbidden:
+            return False
+        if self.players:
+            return False
         # todo: return False if NPCs are in the room as well
         # can't place an impassible tile where instances of items are
-        if new_tile.impassible and self.instances: return False
+        if new_tile.impassible and self.instances:
+            return False
         surrounding_tiles = self.get_orthogonal_tiles()
         supported_from_above = False
-        if new_tile.below_allowed and self.map.find_room(self.x, self.y-1).tile.tile_char == new_tile.tile_char:
+        if (
+            new_tile.below_allowed
+            and self.map.find_room(self.x, self.y - 1).tile.tile_char
+            == new_tile.tile_char
+        ):
             pass
         else:
             for tile in surrounding_tiles:
-                if tile.solid: break
-            else: return False
-        if new_tile.supported and not self.map.find_room(self.x, self.y+1).tile.solid: return False
+                if tile.solid:
+                    break
+            else:
+                return False
+        if new_tile.supported and not self.map.find_room(self.x, self.y + 1).tile.solid:
+            return False
         # todo: some supported tile system beyond this
         # you can't build unsupported tiles directly right now but you can create them with "erasing" with air
         old_cost = self.tile.build_cost
         new_cost = new_tile.build_cost
         if old_cost > new_cost:
             build_cost = 0
-            refund = (old_cost-new_cost)//2
+            refund = (old_cost - new_cost) // 2
             client.add_grist("build", refund)
         else:
             build_cost = new_cost - old_cost
         cost = {"build": build_cost}
-        if not client.pay_costs(cost): return False 
+        if not client.pay_costs(cost):
+            return False
         self.map.change_tile(self.x, self.y, new_tile_char)
         # todo: add item falling if this tile is no longer solid
         return True
 
     # check enemy hostility
     def provoke(self):
-        if not self.players: return
-        if not self.npcs: return
+        if not self.players:
+            return
+        if not self.npcs:
+            return
         highest_power = 0
         for subplayer_name in self.players:
             subplayer = SubPlayer.from_name(subplayer_name)
-            if subplayer.power > highest_power: highest_power = subplayer.power
+            if subplayer.power > highest_power:
+                highest_power = subplayer.power
         for npc_name in self.npcs:
             npc = npcs.Npc(npc_name)
             if npc.hostile and npc.power * npc.hostility > highest_power:
@@ -878,7 +1037,7 @@ class Room():
     @property
     def overmap(self) -> Overmap:
         return Overmap(self.__dict__["overmap_name"], self.session)
-    
+
     @property
     def map(self) -> Map:
         return Map(self.__dict__["map_name"], self.session, self.overmap)
@@ -886,12 +1045,13 @@ class Room():
     @property
     def player(self) -> Optional["Player"]:
         return self.overmap.player
-    
+
     @property
     def strife(self) -> Optional["Strife"]:
         if self.strife_dict:
             return Strife(self)
-        else: return None
+        else:
+            return None
 
     @property
     def name(self) -> str:
@@ -900,47 +1060,49 @@ class Room():
     @property
     def tile(self) -> tiles.Tile:
         return self.map.get_tile(self.x, self.y)
-    
+
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
-        (self.session.overmaps[self.__dict__["overmap_name"]]
-         ["maps"][self.__dict__["map_name"]]
-         ["rooms"][self.__dict__["name"]]
-         [attr]) = value
+        (
+            self.session.overmaps[self.__dict__["overmap_name"]]["maps"][
+                self.__dict__["map_name"]
+            ]["rooms"][self.__dict__["name"]][attr]
+        ) = value
 
     def __getattr__(self, attr):
-        self.__dict__[attr] = (self.session.overmaps[self.__dict__["overmap_name"]]
-                               ["maps"][self.__dict__["map_name"]]
-                               ["rooms"][self.__dict__["name"]]
-                               [attr])
+        self.__dict__[attr] = self.session.overmaps[self.__dict__["overmap_name"]][
+            "maps"
+        ][self.__dict__["map_name"]]["rooms"][self.__dict__["name"]][attr]
         return self.__dict__[attr]
+
 
 # for now
 def does_player_exist(name):
     return name in database.memory_players
 
-class Player():
+
+class Player:
     def __init__(self, name):
         self.__dict__["_id"] = name
         if name not in database.memory_players:
             raise KeyError
 
     @classmethod
-    def create_player(cls, name, owner_username) -> "Player":
+    def create_player(cls, name, owner_username, session) -> "Player":
         while name in database.memory_players:
             name += random.choice(ascii_letters)
         database.memory_players[name] = {}
         player = cls(name)
-        player.setup_defaults(name, owner_username)
+        player.setup_defaults(name, owner_username, session)
         return player
 
-    def setup_defaults(self, name, owner_username):
+    def setup_defaults(self, name, owner_username, session: Session):
         self._id = name
         # shared between all selves
         self.sub_players = {}
         self.current_subplayer_type: str = ""
         self.owner_username = owner_username
-        self.starting_session_name = ""
+        self.starting_session_name = session.name
         self.moduses: list[str] = []
         self.setup = False
         self.nickname = ""
@@ -971,7 +1133,7 @@ class Player():
             "mettle": 1,
         }
         self.echeladder_rung: int = 1
-        self.grist_cache = {grist_name:0 for grist_name in config.grists}
+        self.grist_cache = {grist_name: 0 for grist_name in config.grists}
         self.grist_gutter: list[list] = []
         self.leeching: list[str] = []
         # key: grist value: amount
@@ -987,10 +1149,12 @@ class Player():
     def __getattr__(self, attr):
         self.__dict__[attr] = database.memory_players[self.__dict__["_id"]][attr]
         return self.__dict__[attr]
-    
+
     def add_modus(self, modus_name: str) -> bool:
-        if modus_name in self.moduses: return False
-        if modus_name not in self.moduses: self.moduses.append(modus_name)
+        if modus_name in self.moduses:
+            return False
+        if modus_name not in self.moduses:
+            self.moduses.append(modus_name)
         return True
 
     def sleep(self):
@@ -1013,14 +1177,15 @@ class Player():
     def add_rungs(self, power_defeated: int):
         combined_rungs = self.echeladder_rung + self.unclaimed_rungs
         min_for_advancement = np.power(combined_rungs, 1.2)
-        if combined_rungs > 50 and power_defeated < min_for_advancement: return 0
-        rung_reached = np.power(power_defeated, 1/1.2)
-        additional_rungs = (rung_reached-combined_rungs)//10
+        if combined_rungs > 50 and power_defeated < min_for_advancement:
+            return 0
+        rung_reached = np.power(power_defeated, 1 / 1.2)
+        additional_rungs = (rung_reached - combined_rungs) // 10
         additional_rungs = max(additional_rungs, 0)
         additional_rungs += 1
         self.unclaimed_rungs += additional_rungs
         self.unclaimed_rungs = int(self.unclaimed_rungs)
-    
+
     def claim_spoils(self):
         self.echeladder_rung += self.unclaimed_rungs
         self.unclaimed_rungs = 0
@@ -1030,44 +1195,52 @@ class Player():
 
     def add_permanent_bonus(self, game_attr: str, amount: int):
         if game_attr in self.stat_ratios or game_attr in strife.vials:
-            if game_attr not in self.permanent_stat_bonuses: self.permanent_stat_bonuses[game_attr] = 0
+            if game_attr not in self.permanent_stat_bonuses:
+                self.permanent_stat_bonuses[game_attr] = 0
             self.permanent_stat_bonuses[game_attr] += amount
         else:
             raise AttributeError
-        
+
     # deploys an item to this user's map at the specified coordinates
     def deploy_phernalia(self, item_name, target_x, target_y) -> bool:
-        if not self.land.housemap.is_tile_in_bounds(target_x, target_y): return False
+        if not self.land.housemap.is_tile_in_bounds(target_x, target_y):
+            return False
         room = self.land.housemap.find_room(target_x, target_y)
         return room.deploy_phernalia(self, item_name)
-    
+
     def deploy_atheneum(self, instance_name, target_x, target_y) -> bool:
-        if not self.land.housemap.is_tile_in_bounds(target_x, target_y): return False
+        if not self.land.housemap.is_tile_in_bounds(target_x, target_y):
+            return False
         room = self.land.housemap.find_room(target_x, target_y)
         return room.deploy_atheneum(self, instance_name)
-    
+
     def revise(self, tile_char, target_x, target_y) -> bool:
-        if not self.land.housemap.is_tile_in_bounds(target_x, target_y): return False
+        if not self.land.housemap.is_tile_in_bounds(target_x, target_y):
+            return False
         room = self.land.housemap.find_room(target_x, target_y)
         return room.revise(self, tile_char)
-    
+
     def add_grist(self, grist_name: str, amount: int):
         current_grist = self.grist_cache[grist_name]
         if current_grist + amount <= self.grist_cache_limit:
             self.grist_cache[grist_name] = current_grist + amount
             return
         else:
-            if self.grist_cache[grist_name] < self.grist_cache_limit: 
+            if self.grist_cache[grist_name] < self.grist_cache_limit:
                 self.grist_cache[grist_name] = self.grist_cache_limit
             overflow = amount - (self.grist_cache[grist_name] - current_grist)
             if len(self.grist_gutter) != 0 and self.grist_gutter[-1][0] == grist_name:
-                self.grist_gutter[-1] = [grist_name, self.grist_gutter[-1][1] + overflow]
+                self.grist_gutter[-1] = [
+                    grist_name,
+                    self.grist_gutter[-1][1] + overflow,
+                ]
             else:
                 self.grist_gutter.append([grist_name, overflow])
 
     def pay_costs(self, true_cost: dict) -> bool:
         for grist_name, value in true_cost.items():
-            if self.grist_cache[grist_name] < value: return False
+            if self.grist_cache[grist_name] < value:
+                return False
         for grist_name, value in true_cost.items():
             self.grist_cache[grist_name] -= value
         return True
@@ -1077,15 +1250,18 @@ class Player():
         tier = config.grists[grist_name]["tier"]
         tier = max(tier, 1)
         if "exotic" not in config.grists[grist_name]:
-            rate += self.echeladder_rung//2//tier
-        if self.gristcategory in config.gristcategories and grist_name in config.gristcategories[self.gristcategory]:
-            rate += self.echeladder_rung//2//tier
-        rate += int(amount//25)
+            rate += self.echeladder_rung // 2 // tier
+        if (
+            self.gristcategory in config.gristcategories
+            and grist_name in config.gristcategories[self.gristcategory]
+        ):
+            rate += self.echeladder_rung // 2 // tier
+        rate += int(amount // 25)
         return rate
 
     @property
     def seeds(self) -> dict[str, int]:
-        seeds = {grist_name:0 for grist_name in config.grists}
+        seeds = {grist_name: 0 for grist_name in config.grists}
         for grist_name, value in self.grist_cache.items():
             rate = self.get_seed_rate(grist_name, value)
             seeds[grist_name] = rate
@@ -1102,36 +1278,50 @@ class Player():
         best_seeds = {}
         for session in self.sessions:
             for grist_type, value in session.get_best_seeds().items():
-                if grist_type not in best_seeds: best_seeds[grist_type] = value
-                elif value > best_seeds[grist_type]: best_seeds[grist_type] = value
+                if grist_type not in best_seeds:
+                    best_seeds[grist_type] = value
+                elif value > best_seeds[grist_type]:
+                    best_seeds[grist_type] = value
         return best_seeds
 
     def add_gutter_and_leech(self):
         spoils_dict = {}
-        if self.leeching == []: leeching = ["build"]
-        else: leeching = self.leeching
+        if self.leeching == []:
+            leeching = ["build"]
+        else:
+            leeching = self.leeching
         best_seeds = self.get_best_seeds()
         for grist_type in leeching:
-            value = best_seeds[grist_type]//len(leeching)
+            value = best_seeds[grist_type] // len(leeching)
             spoils_dict[grist_type] = value
         possible_players: list[SubPlayer] = []
         for session in self.sessions:
-            possible_players += [player for player in session.players_list if player.grist_gutter and player.player.id is not self.id]
-        if not possible_players: return self.add_unclaimed_grist(spoils_dict)
+            possible_players += [
+                player
+                for player in session.players_list
+                if player.grist_gutter and player.player.id is not self.id
+            ]
+        if not possible_players:
+            return self.add_unclaimed_grist(spoils_dict)
         random.shuffle(possible_players)
         for sub_player in possible_players:
-            if sub_player.id == self.id: continue
-            if not sub_player.grist_gutter: continue
+            if sub_player.id == self.id:
+                continue
+            if not sub_player.grist_gutter:
+                continue
             player = sub_player.player
             grist_name, amount = player.grist_gutter.pop()
             if grist_name in self.grist_cache:
                 remaining_space = self.grist_cache_limit - self.grist_cache[grist_name]
                 if amount > remaining_space:
-                    player.grist_gutter.append([grist_name, amount-remaining_space])
+                    player.grist_gutter.append([grist_name, amount - remaining_space])
                     amount = remaining_space
-                    if amount == 0: continue
-            if grist_name in spoils_dict: spoils_dict[grist_name] += amount
-            else: spoils_dict[grist_name] = amount
+                    if amount == 0:
+                        continue
+            if grist_name in spoils_dict:
+                spoils_dict[grist_name] += amount
+            else:
+                spoils_dict[grist_name] = amount
         self.add_unclaimed_grist(spoils_dict)
 
     def get_base_stat(self, stat):
@@ -1143,18 +1333,26 @@ class Player():
 
     @property
     def sub_players_list(self) -> list["SubPlayer"]:
-        return [SubPlayer(self, sub_player_type) for sub_player_type in self.sub_players]
+        return [
+            SubPlayer(self, sub_player_type) for sub_player_type in self.sub_players
+        ]
 
     @property
     def grist_cache_limit(self):
-        mult = 1 + self.echeladder_rung//50
-        if self.echeladder_rung > 10: mult += 1
-        return 10*self.echeladder_rung*mult
-    
+        mult = 1 + self.echeladder_rung // 50
+        if self.echeladder_rung > 10:
+            mult += 1
+        return 10 * self.echeladder_rung * mult
+
     @property
     def available_phernalia(self):
         connected = self.starting_session.connected
-        available_phernalia = ["sealed cruxtruder", "totem lathe", "alchemiter", "pre-punched card"]
+        available_phernalia = [
+            "sealed cruxtruder",
+            "totem lathe",
+            "alchemiter",
+            "pre-punched card",
+        ]
         if len(connected) >= 2:
             available_phernalia.append("gristTorrent disc")
             available_phernalia.append("punch designix")
@@ -1180,7 +1378,7 @@ class Player():
     @property
     def calledby(self):
         return self.nickname
-    
+
     @property
     def color(self):
         return self.symbol_dict["color"]
@@ -1188,21 +1386,24 @@ class Player():
     @property
     def land(self) -> Land:
         return Land(self.land_name, Session(self.land_session))
-    
+
     @property
     def kingdom(self) -> Kingdom:
         return Kingdom(self.moon_name, Session(self.land_session))
-    
+
     @property
     def server_player(self) -> Optional["Player"]:
-        if self.server_player_name is None: return None
-        else: 
+        if self.server_player_name is None:
+            return None
+        else:
             return Player(self.server_player_name)
-    
+
     @property
     def client_player(self) -> Optional["Player"]:
-        if self.client_player_name is None: return None
-        else: return Player(self.client_player_name)
+        if self.client_player_name is None:
+            return None
+        else:
+            return Player(self.client_player_name)
 
     @property
     def current_subplayer(self) -> "SubPlayer":
@@ -1220,6 +1421,7 @@ class Player():
                 sessions_list.append(sub_player.session)
         return sessions_list
 
+
 class SubPlayer(Player):
     def __init__(self, player: Player, player_type: str):
         self.__dict__["player_name"] = player.id
@@ -1227,22 +1429,22 @@ class SubPlayer(Player):
         self.__dict__["_id"] = player.id
         if player_type not in player.sub_players:
             raise KeyError
-        
+
     @classmethod
     def create_subplayer(cls, player: Player, player_type: str):
         player.sub_players[player_type] = {}
         subplayer = SubPlayer(player, player_type)
-        subplayer.setup_defaults(player_type)
+        subplayer.setup_defaults(player, player_type)
         return subplayer
-    
+
     @classmethod
-    def from_name(cls, name:str):
+    def from_name(cls, name: str):
         player_name, player_type = name.split("%")
         player = Player(player_name)
         return SubPlayer(player, player_type)
-    
-    def setup_defaults(self, player_type):
-        self.session_name = None
+
+    def setup_defaults(self, player: Player, player_type):
+        self.session_name = player.starting_session_name
         self.overmap_name = None
         self.map_name = None
         self.room_name = None
@@ -1268,42 +1470,61 @@ class SubPlayer(Player):
         out["total_gutter_grist"] = self.total_gutter_grist
         out["available_phernalia"] = self.available_phernalia
         for kind_name in self.strife_portfolio:
-            out["strife_portfolio"][kind_name] = {instance_name:alchemy.Instance(instance_name).get_dict() for instance_name in self.strife_portfolio[kind_name]}
+            out["strife_portfolio"][kind_name] = {
+                instance_name: alchemy.Instance(instance_name).get_dict()
+                for instance_name in self.strife_portfolio[kind_name]
+            }
         out["power"] = self.power
         out["entered"] = self.entered
-        out["atheneum"] = {instance.name:instance.get_dict() for instance in [alchemy.Instance(instance_name) for instance_name in self.atheneum]}
+        out["atheneum"] = {
+            instance.name: instance.get_dict()
+            for instance in [
+                alchemy.Instance(instance_name) for instance_name in self.atheneum
+            ]
+        }
         out["seeds"] = self.seeds
         out["title"] = self.title
         if self.worn_instance_name is not None:
-            out["worn_instance_dict"] = alchemy.Instance(self.worn_instance_name).get_dict()
+            out["worn_instance_dict"] = alchemy.Instance(
+                self.worn_instance_name
+            ).get_dict()
         else:
             out["worn_instance_dict"] = None
         best_seeds = self.player.get_best_seeds()
         leeching = self.leeching
-        out["leeching"] = {grist_name:(best_seeds[grist_name]//len(leeching)) for grist_name in leeching}
+        out["leeching"] = {
+            grist_name: (best_seeds[grist_name] // len(leeching))
+            for grist_name in leeching
+        }
         out["name"] = self.name
         out["nickname"] = self.nickname
         return out
 
     def assign_specibus(self, kind_name) -> bool:
-        if kind_name not in util.kinds: return False
-        if self.unassigned_specibi <= 0: return False
-        if kind_name in self.strife_portfolio: return False
+        if kind_name not in util.kinds:
+            return False
+        if self.unassigned_specibi <= 0:
+            return False
+        if kind_name in self.strife_portfolio:
+            return False
         for sub_player in self.player.sub_players_list:
             sub_player.strife_portfolio[kind_name] = []
             sub_player.unassigned_specibi -= 1
-            if sub_player.current_strife_deck is None: sub_player.current_strife_deck = kind_name
+            if sub_player.current_strife_deck is None:
+                sub_player.current_strife_deck = kind_name
         return True
-    
+
     def move_to_strife_deck(self, instance_name, kind_name) -> bool:
-        if instance_name not in self.sylladex: return False
-        if kind_name not in self.strife_portfolio: return False
+        if instance_name not in self.sylladex:
+            return False
+        if kind_name not in self.strife_portfolio:
+            return False
         self.sylladex.remove(instance_name)
         self.strife_portfolio[kind_name].append(instance_name)
         instance = alchemy.Instance(instance_name)
         self.session.add_to_excursus(instance.item.name)
         return True
-    
+
     def eject_from_strife_deck(self, instance_name):
         for kind_name in self.strife_portfolio:
             if instance_name in self.strife_portfolio[kind_name]:
@@ -1311,28 +1532,34 @@ class SubPlayer(Player):
                 self.room.add_instance(instance_name)
                 return True
         return False
-    
+
     def wield(self, instance_name: str) -> bool:
         instance = alchemy.Instance(instance_name)
-        if instance.item.size > config.max_wielded_size: return False
+        if instance.item.size > config.max_wielded_size:
+            return False
         for deck in self.strife_portfolio.values():
-            if instance.name not in deck: return False
-        if self.wielding is not None: self.unwield()
+            if instance.name not in deck:
+                return False
+        if self.wielding is not None:
+            self.unwield()
         self.wielding = instance.name
         return True
 
     def unwield(self):
-        if self.wielding is None: return False
+        if self.wielding is None:
+            return False
         instance = alchemy.Instance(self.wielding)
         self.wielding = None
         return True
-    
+
     def wear(self, instance_name: str) -> bool:
         instance = alchemy.Instance(instance_name)
-        if instance.item.size > config.max_worn_size: return False
-        if self.worn_instance_name is not None: self.unwear()
+        if instance.item.size > config.max_worn_size:
+            return False
+        if self.worn_instance_name is not None:
+            self.unwear()
         for deck in self.strife_portfolio.values():
-            if instance.name in deck: 
+            if instance.name in deck:
                 self.eject_from_strife_deck(instance.name)
         if instance_name in self.room.instances:
             self.room.remove_instance(instance_name)
@@ -1344,10 +1571,12 @@ class SubPlayer(Player):
             self.worn_instance_name = instance_name
             self.session.add_to_excursus(instance.name)
             return True
-        else: return False
-            
+        else:
+            return False
+
     def unwear(self):
-        if self.worn_instance_name is None: return False
+        if self.worn_instance_name is None:
+            return False
         else:
             self.room.add_instance(self.worn_instance_name)
             self.worn_instance_name = None
@@ -1355,13 +1584,17 @@ class SubPlayer(Player):
 
     @property
     def wielded_instance(self) -> Optional["alchemy.Instance"]:
-        if self.wielding is None: return None
-        else: return alchemy.Instance(self.wielding)
+        if self.wielding is None:
+            return None
+        else:
+            return alchemy.Instance(self.wielding)
 
     @property
     def worn_instance(self) -> Optional["alchemy.Instance"]:
-        if self.worn_instance_name is None: return None
-        else: return alchemy.Instance(self.worn_instance_name)
+        if self.worn_instance_name is None:
+            return None
+        else:
+            return alchemy.Instance(self.worn_instance_name)
 
     @property
     def power(self) -> int:
@@ -1369,62 +1602,72 @@ class SubPlayer(Player):
         if self.wielded_instance is not None:
             base_power += self.wielded_instance.item.power
         if self.worn_instance is not None:
-            base_power += self.worn_instance.item.power//2
+            base_power += self.worn_instance.item.power // 2
         return base_power
 
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:
-        if instance_name not in self.room.instances: return False
-        if modus_name not in self.moduses: return False
-        if instance_name in self.sylladex: return False
-        if len(self.sylladex) + 1 > self.empty_cards: return False
+        if instance_name not in self.room.instances:
+            return False
+        if modus_name not in self.moduses:
+            return False
+        if instance_name in self.sylladex:
+            return False
+        if len(self.sylladex) + 1 > self.empty_cards:
+            return False
         max_size = config.modus_max_sizes.get(modus_name, 30)
         instance = alchemy.Instance(instance_name)
-        if instance.item.size > max_size: return False
+        if instance.item.size > max_size:
+            return False
         self.sylladex.append(instance_name)
         self.room.remove_instance(instance_name)
         return True
-    
+
     def eject(self, instance_name: str, modus_name: str, velocity: int) -> bool:
-        if instance_name not in self.sylladex: return False
+        if instance_name not in self.sylladex:
+            return False
         # todo: make this shit fly based on its velocity
         self.sylladex.remove(instance_name)
         self.room.add_instance(instance_name)
         return True
-    
+
     def uncaptchalogue(self, instance_name: str) -> bool:
-        if instance_name not in self.sylladex: return False
+        if instance_name not in self.sylladex:
+            return False
         self.sylladex.remove(instance_name)
         self.room.add_instance(instance_name)
         return True
-    
+
     def consume_instance(self, instance_name: str) -> bool:
         if self.worn_instance == instance_name:
             self.unwear()
         for deck in self.strife_portfolio.values():
-            if instance_name in deck: 
+            if instance_name in deck:
                 self.eject_from_strife_deck(instance_name)
         if instance_name in self.room.instances:
             self.room.remove_instance(instance_name)
             return True
-        if instance_name not in self.sylladex: return False
+        if instance_name not in self.sylladex:
+            return False
         self.sylladex.remove(instance_name)
         return True
-    
+
     def drop_empty_card(self) -> bool:
         if self.empty_cards - len(self.sylladex) > 0:
             self.empty_cards -= 1
-            self.room.add_instance(alchemy.Instance(alchemy.Item("captchalogue card")).name)
+            self.room.add_instance(
+                alchemy.Instance(alchemy.Item("captchalogue card")).name
+            )
             return True
         else:
             return False
-        
+
     def sylladex_instances(self) -> dict:
         out_dict = {}
         for instance_name in self.sylladex:
             instance = alchemy.Instance(instance_name)
             out_dict[instance_name] = instance.get_dict()
         return out_dict
-    
+
     def get_illegal_overmap_moves(self) -> list[str]:
         player_x = self.map.x
         player_y = self.map.y
@@ -1439,24 +1682,31 @@ class SubPlayer(Player):
             elif direction == "east":
                 dx = 1
                 dy = 0
-            else: # west
+            else:  # west
                 dx = -1
                 dy = 0
             target_x, target_y = player_x + dx, player_y + dy
             target_map = self.overmap.find_map(target_x, target_y)
             if not self.flying:
-                if abs(target_map.height - self.map.height) > 1 and target_map.height != 0: illegal_moves.append(direction)
+                if (
+                    abs(target_map.height - self.map.height) > 1
+                    and target_map.height != 0
+                ):
+                    illegal_moves.append(direction)
             while target_map.height == 0 and not self.flying:
                 target_x += dx
                 target_y += dy
                 target_map = self.overmap.find_map(target_x, target_y)
             if not self.flying:
-                if abs(target_map.height - self.map.height) > 1: illegal_moves.append(direction)
+                if abs(target_map.height - self.map.height) > 1:
+                    illegal_moves.append(direction)
         return illegal_moves
 
     def attempt_overmap_move(self, direction: str) -> bool:
-        if self.strife is not None: return False
-        if direction in self.get_illegal_overmap_moves(): return False
+        if self.strife is not None:
+            return False
+        if direction in self.get_illegal_overmap_moves():
+            return False
         player_x = self.map.x
         player_y = self.map.y
         match direction:
@@ -1491,24 +1741,33 @@ class SubPlayer(Player):
         return True
 
     def attempt_move(self, direction: str) -> bool:
-        if self.strife is not None: return False
+        if self.strife is not None:
+            return False
         player_x = self.room.x
         player_y = self.room.y
         map = self.map
         target_x: int = 0
         target_y: int = 0
-        if direction == "up": target_x, target_y = player_x, player_y-1
-        if direction == "down": target_x, target_y = player_x, player_y+1
-        if direction == "left": target_x, target_y = player_x-1, player_y
-        if direction == "right": target_x, target_y = player_x+1, player_y
-        if not map.is_tile_in_bounds(target_x, target_y): return False
+        if direction == "up":
+            target_x, target_y = player_x, player_y - 1
+        if direction == "down":
+            target_x, target_y = player_x, player_y + 1
+        if direction == "left":
+            target_x, target_y = player_x - 1, player_y
+        if direction == "right":
+            target_x, target_y = player_x + 1, player_y
+        if not map.is_tile_in_bounds(target_x, target_y):
+            return False
         current_tile = map.get_tile(player_x, player_y)
         while True:
             target_tile = map.get_tile(target_x, target_y)
-            if target_tile.impassible: return False
+            if target_tile.impassible:
+                return False
             if direction == "up":
-                if not self.flying and not target_tile.stair and not current_tile.stair: return False    # obey gravity
-                if target_tile.ramp: return False
+                if not self.flying and not target_tile.stair and not current_tile.stair:
+                    return False  # obey gravity
+                if target_tile.ramp:
+                    return False
                 if target_tile.automove:
                     target_y -= 1
                     continue
@@ -1521,11 +1780,17 @@ class SubPlayer(Player):
                 else:
                     break
             if direction in ["right", "left"] and target_tile.ramp:
-                if direction == "right" and target_tile.ramp_direction in ["right", "both"]:
+                if direction == "right" and target_tile.ramp_direction in [
+                    "right",
+                    "both",
+                ]:
                     target_x += 1
                     target_y -= 1
                     continue
-                elif direction == "left" and target_tile.ramp_direction in ["left", "both"]:
+                elif direction == "left" and target_tile.ramp_direction in [
+                    "left",
+                    "both",
+                ]:
                     target_x -= 1
                     target_y -= 1
                     continue
@@ -1533,27 +1798,31 @@ class SubPlayer(Player):
         # fall
         if not self.flying:
             while not target_tile.stair:
-                fall_tile = map.get_tile(target_x, target_y+1)
-                if fall_tile.infallible or fall_tile.impassible: break
+                fall_tile = map.get_tile(target_x, target_y + 1)
+                if fall_tile.infallible or fall_tile.impassible:
+                    break
                 # fall in opposite direction that ramps face
-                if fall_tile.ramp and fall_tile.ramp_direction == "left": 
+                if fall_tile.ramp and fall_tile.ramp_direction == "left":
                     target_x += 1
                     target_y += 1
-                elif fall_tile.ramp and fall_tile.ramp_direction == "right": 
+                elif fall_tile.ramp and fall_tile.ramp_direction == "right":
                     target_x -= 1
                     target_y += 1
                 elif fall_tile.ramp and fall_tile.ramp_direction == "both":
-                    if direction == "right": target_x += 1
-                    if direction == "left": target_x -= 1
+                    if direction == "right":
+                        target_x += 1
+                    if direction == "left":
+                        target_x -= 1
                 else:
                     target_y += 1
                 target_tile = map.get_tile(target_x, target_y)
         new_room = map.find_room(target_x, target_y)
         # check if entered gate room
-        try: 
+        try:
             gate_num = int(new_room.tile.tile_char)
             entered_gate = self.enter_gate(gate_num)
-            if not entered_gate: self.goto_room(new_room)
+            if not entered_gate:
+                self.goto_room(new_room)
         except ValueError:
             self.goto_room(new_room)
             new_room.provoke()
@@ -1567,72 +1836,93 @@ class SubPlayer(Player):
             at_house = True
         else:
             at_house = False
-        if gate_num == 0: # return gate
+        if gate_num == 0:  # return gate
             destination_player = land.player
-            if destination_player is None: print("no destination player"); return False
+            if destination_player is None:
+                print("no destination player")
+                return False
             destination_map = destination_player.land.housemap
-            room = destination_map.random_valid_room([str(1)]) # go back to first gate
+            room = destination_map.random_valid_room([str(1)])  # go back to first gate
             self.goto_room(room)
             return True
         destination_player = land.gate_location(gate_num, at_house)
-        if destination_player is None: print("no destination player"); return False
-        if not destination_player.entered: print("destination player not entered"); return False
+        if destination_player is None:
+            print("no destination player")
+            return False
+        if not destination_player.entered:
+            print("destination player not entered")
+            return False
         if at_house:
-            destination_map = destination_player.land.get_map(destination_player.land.gate_maps[str(gate_num)])
+            destination_map = destination_player.land.get_map(
+                destination_player.land.gate_maps[str(gate_num)]
+            )
             room = destination_map.random_valid_room([str(gate_num)])
         else:
             destination_map = destination_player.land.housemap
             room = destination_map.random_valid_room([str(gate_num)])
-            if not room.above_solid_ground(): print("not above solid ground"); return False
+            if not room.above_solid_ground():
+                print("not above solid ground")
+                return False
         self.goto_room(room)
         return True
 
     @property
     def session(self) -> Session:
         return Session(self.session_name)
-    
+
     @property
     def overmap(self) -> Overmap:
         assert self.overmap_name is not None
         return Overmap(self.overmap_name, self.session)
-    
+
     @property
     def map(self) -> Map:
         assert self.map_name is not None
         return Map(self.map_name, self.session, self.overmap)
-    
+
     def get_view(self, view_tiles=6) -> tuple[list, dict, dict, dict, dict, dict]:
-        map_tiles, map_specials = self.map.get_view(self.room.x, self.room.y, view_tiles)
+        map_tiles, map_specials = self.map.get_view(
+            self.room.x, self.room.y, view_tiles
+        )
         room_instances = self.room.get_instances()
         room_npcs = self.room.get_npcs()
         room_players = self.room.get_players()
-        if self.name in room_players: room_players.pop(self.name)
-        if self.strife is None: strife = {}
-        else: strife = self.strife.get_dict()
+        if self.name in room_players:
+            room_players.pop(self.name)
+        if self.strife is None:
+            strife = {}
+        else:
+            strife = self.strife.get_dict()
         return map_tiles, map_specials, room_instances, room_npcs, room_players, strife
-    
+
     def get_overmap_view(self, view_tiles=12):
-        if self.flying: view_tiles = view_tiles + 18
-        else: view_tiles = view_tiles + self.map.height*2
+        if self.flying:
+            view_tiles = view_tiles + 18
+        else:
+            view_tiles = view_tiles + self.map.height * 2
         theme = self.overmap.theme
-        map_tiles, map_specials, map_types = self.overmap.get_view(self.map.x, self.map.y, view_tiles)
+        map_tiles, map_specials, map_types = self.overmap.get_view(
+            self.map.x, self.map.y, view_tiles
+        )
         return map_tiles, map_specials, map_types, theme
 
     @property
     def room(self) -> Room:
         assert self.room_name is not None
         return Room(self.room_name, self.session, self.overmap, self.map)
-    
+
     def goto_room(self, room: Room):
         if self.session is not None and self.session != room.session:
             if self.name in self.session.current_players:
                 self.session.current_players.remove(self.name)
-        if self.room_name is not None: self.room.remove_player(self)
+        if self.room_name is not None:
+            self.room.remove_player(self)
         self.session_name = room.session.name
         self.overmap_name = room.overmap.name
         self.map_name = room.map.name
         self.room_name = room.name
-        if self.name not in self.session.current_players: self.session.current_players.append(self.name)
+        if self.name not in self.session.current_players:
+            self.session.current_players.append(self.name)
         room.add_player(self)
         for npc_name in self.npc_followers:
             npc = npcs.Npc(npc_name)
@@ -1644,38 +1934,49 @@ class SubPlayer(Player):
 
     @property
     def strife(self) -> Optional["Strife"]:
-        if self.room.strife is None: return None
+        if self.room.strife is None:
+            return None
         for griefer in self.room.strife.griefer_list:
-            if griefer.player is None: continue
-            if griefer.player.name == self.name: return self.room.strife
+            if griefer.player is None:
+                continue
+            if griefer.player.name == self.name:
+                return self.room.strife
         else:
             return None
-        
+
     def get_known_skills(self):
         known_skills = skills.base_skills + skills.player_skills
         if self.aspect in skills.aspect_skills:
             for skill_name, required_rung in skills.aspect_skills[self.aspect].items():
-                if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
+                if self.echeladder_rung >= required_rung:
+                    known_skills.append(skill_name)
         if self.gameclass in skills.class_skills:
             if self.aspect in skills.class_skills[self.gameclass]:
-                for skill_name, required_rung in skills.class_skills[self.gameclass][self.aspect].items():
-                    if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
+                for skill_name, required_rung in skills.class_skills[self.gameclass][
+                    self.aspect
+                ].items():
+                    if self.echeladder_rung >= required_rung:
+                        known_skills.append(skill_name)
         abstratus = self.current_strife_deck
         if abstratus in skills.abstratus_skills:
             for skill_name, required_rung in skills.abstratus_skills[abstratus].items():
-                if self.echeladder_rung >= required_rung: known_skills.append(skill_name)
+                if self.echeladder_rung >= required_rung:
+                    known_skills.append(skill_name)
         else:
             print(f"{abstratus} needs skills doofus!!!")
         return known_skills
-    
+
     def get_current_passives(self):
         current_passives = []
         if self.gameclass in stateseffects.class_passives:
             if self.aspect in stateseffects.class_passives[self.gameclass]:
-                for passive_name, required_rung in stateseffects.class_passives[self.gameclass][self.aspect].items():
-                    if self.echeladder_rung >= required_rung: current_passives.append(passive_name)
+                for passive_name, required_rung in stateseffects.class_passives[
+                    self.gameclass
+                ][self.aspect].items():
+                    if self.echeladder_rung >= required_rung:
+                        current_passives.append(passive_name)
         return current_passives
-    
+
     @property
     def entered(self):
         return self.player.id in self.land.session.entered_players
@@ -1683,10 +1984,11 @@ class SubPlayer(Player):
     @property
     def name(self):
         return f"{self.player.id}%{self.player_type}"
-    
+
     @property
     def flying(self) -> bool:
-        if self.player_type == "dream": return True
+        if self.player_type == "dream":
+            return True
         return False
 
     def __getattr__(self, attr):
@@ -1694,7 +1996,7 @@ class SubPlayer(Player):
             return self.player.__getattr__(attr)
         except KeyError:
             return self.player.sub_players[self.__dict__["player_type"]][attr]
-        
+
     def __setattr__(self, attr, value):
         try:
             self.player.__getattr__(attr)
@@ -1702,23 +2004,39 @@ class SubPlayer(Player):
         except KeyError:
             self.player.sub_players[self.__dict__["player_type"]][attr] = value
 
+
 def loop_coords(map_tiles, x, y) -> tuple[int, int]:
-    if x >= len(map_tiles[0]): x = x - len(map_tiles)
-    if x < 0: x = len(map_tiles[0]) + x
-    if y >= len(map_tiles): y = y - len(map_tiles)
-    if y < 0: y = len(map_tiles) + y
+    if x >= len(map_tiles[0]):
+        x = x - len(map_tiles)
+    if x < 0:
+        x = len(map_tiles[0]) + x
+    if y >= len(map_tiles):
+        y = y - len(map_tiles)
+    if y < 0:
+        y = len(map_tiles) + y
     return x, y
+
 
 def gen_terrain(x, y, map, replacetile, terrain_rate, depth=0):
     if map[y][x] == "*":
-        for coordinate in [(-1, 0), (1, 0), (0, 1), (0, -1)]: # up down left right
+        for coordinate in [(-1, 0), (1, 0), (0, 1), (0, -1)]:  # up down left right
             try:
-                tile = map[y+coordinate[1]][x+coordinate[0]]
-                if tile == "*": continue
+                tile = map[y + coordinate[1]][x + coordinate[0]]
+                if tile == "*":
+                    continue
                 rng = random.random()
-                if rng < terrain_rate - (config.terrain_decay * depth * terrain_rate): # chance to generate more terrain lowers with depth
-                    map[y+coordinate[1]][x+coordinate[0]] = "*"
-                    map = gen_terrain(x+coordinate[0], y+coordinate[1], map, tile, terrain_rate, depth+1)
+                if rng < terrain_rate - (
+                    config.terrain_decay * depth * terrain_rate
+                ):  # chance to generate more terrain lowers with depth
+                    map[y + coordinate[1]][x + coordinate[0]] = "*"
+                    map = gen_terrain(
+                        x + coordinate[0],
+                        y + coordinate[1],
+                        map,
+                        tile,
+                        terrain_rate,
+                        depth + 1,
+                    )
             except IndexError:
                 pass
     if depth == 0:
@@ -1727,6 +2045,7 @@ def gen_terrain(x, y, map, replacetile, terrain_rate, depth=0):
                 if char == "*":
                     map[y][x] = replacetile
     return map
+
 
 def modify_block(map, checktile, replacetile):
     newmap = map.copy()
@@ -1746,59 +2065,85 @@ def modify_block(map, checktile, replacetile):
             break
     return newmap
 
+
 def check_block(x, y, map, checktile):
     adjacent = 0
-    if map[y][x] != checktile: return True
-    for coordinate in [(-1, 0), (1, 0), (0, 1), (0, -1)]: # up down left right
+    if map[y][x] != checktile:
+        return True
+    for coordinate in [(-1, 0), (1, 0), (0, 1), (0, -1)]:  # up down left right
         try:
-            tile = map[y+coordinate[1]][x+coordinate[0]]
+            tile = map[y + coordinate[1]][x + coordinate[0]]
             if tile == checktile:
                 adjacent += 1
         except IndexError:
             pass
-    if adjacent != 1: return True
-    else: return False
+    if adjacent != 1:
+        return True
+    else:
+        return False
+
 
 def make_water_height_0(map_tiles: list[list[str]]) -> list[list[str]]:
     out = [list(map(lambda tile: tile.replace("~", "0"), line)) for line in map_tiles]
     return out
 
-def get_surrounding_heights(target_x: int, target_y:int, map_tiles: list[list[str]]):
+
+def get_surrounding_heights(target_x: int, target_y: int, map_tiles: list[list[str]]):
     surrounding_values: list[int] = []
     for x, y in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
-        new_x = target_x+x
-        new_y = target_y+y
-        if new_x >= len(map_tiles[0]): new_x -= (len(map_tiles[0]) - 1)
-        if new_y >= len(map_tiles): new_y -= (len(map_tiles) - 1)
+        new_x = target_x + x
+        new_y = target_y + y
+        if new_x >= len(map_tiles[0]):
+            new_x -= len(map_tiles[0]) - 1
+        if new_y >= len(map_tiles):
+            new_y -= len(map_tiles) - 1
         new_tile = map_tiles[new_y][new_x]
         try:
             tile_value = int(new_tile)
-        except ValueError: continue
+        except ValueError:
+            continue
         surrounding_values.append(tile_value)
     return surrounding_values
 
-def generate_height(target_x: int, target_y: int, map_tiles: list[list[str]], steepness: float, smoothness: float) -> Optional[int]:
-    current_tile:str = map_tiles[target_y][target_x]
+
+def generate_height(
+    target_x: int,
+    target_y: int,
+    map_tiles: list[list[str]],
+    steepness: float,
+    smoothness: float,
+) -> Optional[int]:
+    current_tile: str = map_tiles[target_y][target_x]
     try:
         return int(current_tile)
-    except ValueError: pass
-    if current_tile == "0": return 0
-    surrounding_values: list[int] = get_surrounding_heights(target_x, target_y, map_tiles)
-    if len(surrounding_values) == 0: return None
-    if 0 in surrounding_values: return 1 + round(random.uniform(0, steepness))
+    except ValueError:
+        pass
+    if current_tile == "0":
+        return 0
+    surrounding_values: list[int] = get_surrounding_heights(
+        target_x, target_y, map_tiles
+    )
+    if len(surrounding_values) == 0:
+        return None
+    if 0 in surrounding_values:
+        return 1 + round(random.uniform(0, steepness))
     # get mode of surrounding values
     average_height = round(sum(surrounding_values) / len(surrounding_values))
-    if random.random() < smoothness: 
+    if random.random() < smoothness:
         possible_values = [random.choice(surrounding_values) for i in range(1)]
         mode_height = max(set(surrounding_values), key=surrounding_values.count)
         possible_values.append(mode_height)
-        for i in range(1): possible_values.append(average_height)
+        for i in range(1):
+            possible_values.append(average_height)
         return random.choice(possible_values)
     new_height = average_height + round(random.uniform(-steepness, steepness))
     new_height = max(new_height, 1)
     return new_height
 
-def height_map_pass(map_tiles: list[list[str]], steepness: float, smoothness: float) -> list[list[str]]:
+
+def height_map_pass(
+    map_tiles: list[list[str]], steepness: float, smoothness: float
+) -> list[list[str]]:
     y_values = list(range(len(map_tiles)))
     x_values = list(range(len(map_tiles[0])))
     random.shuffle(x_values)
@@ -1807,9 +2152,11 @@ def height_map_pass(map_tiles: list[list[str]], steepness: float, smoothness: fl
         line = map_tiles[y]
         for x in x_values:
             char = line[x]
-            if char != "#": continue
+            if char != "#":
+                continue
             height = generate_height(x, y, map_tiles, steepness, smoothness)
-            if height is None: continue
+            if height is None:
+                continue
             map_tiles[y][x] = str(height)
     # for y, line in enumerate(map_tiles):
     #     for x, char in enumerate(line):
@@ -1819,7 +2166,10 @@ def height_map_pass(map_tiles: list[list[str]], steepness: float, smoothness: fl
     #         map_tiles[y][x] = str(height)
     return map_tiles
 
-def smooth_height_pits(map_tiles: list[list[str]], aggressiveness: int=1) -> list[list[str]]:
+
+def smooth_height_pits(
+    map_tiles: list[list[str]], aggressiveness: int = 1
+) -> list[list[str]]:
     new_map = deepcopy(map_tiles)
     for y, line in enumerate(map_tiles):
         for x, char in enumerate(line):
@@ -1827,8 +2177,8 @@ def smooth_height_pits(map_tiles: list[list[str]], aggressiveness: int=1) -> lis
             surrounding_tiles = []
             # check surrounding tiles
             for x_diff, y_diff in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
-                new_x = x+x_diff
-                new_y = y+y_diff
+                new_x = x + x_diff
+                new_y = y + y_diff
                 new_x, new_y = loop_coords(map_tiles, new_x, new_y)
                 surrounding_tiles.append(map_tiles[new_y][new_x])
             surrounding_tiles = [int(tile) for tile in surrounding_tiles]
@@ -1842,7 +2192,9 @@ def smooth_height_pits(map_tiles: list[list[str]], aggressiveness: int=1) -> lis
     return new_map
 
 
-def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness: float=0.5):
+def make_height_map(
+    map_tiles: list[list[str]], steepness: float = 1.0, smoothness: float = 0.5
+):
     t = time.time()
     # we want to keep any pre-defined heights from being smoothed
     old_map_tiles = deepcopy(map_tiles)
@@ -1850,72 +2202,91 @@ def make_height_map(map_tiles: list[list[str]], steepness: float=1.0, smoothness
     while True:
         map_tiles = height_map_pass(map_tiles, steepness, smoothness)
         for line in map_tiles:
-            if "#" not in line: continue
-            else: break
+            if "#" not in line:
+                continue
+            else:
+                break
         else:
             break
     print(f"height map generation took {time.time()-t} seconds")
     t = time.time()
     if smoothness >= 0.5:
-        if smoothness > 0.75: aggressiveness = 2
-        else: aggressiveness = 1
+        if smoothness > 0.75:
+            aggressiveness = 2
+        else:
+            aggressiveness = 1
         map_tiles = smooth_height_pits(map_tiles, aggressiveness)
         # any heights pre-defined by old map tiles will be replaced here to undo smoothing
         for y, line in enumerate(old_map_tiles):
             for x, char in enumerate(line):
-                if char in ["~", "#"]: continue
+                if char in ["~", "#"]:
+                    continue
                 map_tiles[y][x] = char
     print(f"smooth map took {time.time()-t} seconds")
     return map_tiles
 
-default_map_tiles = [["~" for i in range(config.overmap_width)] for i in range(config.overmap_width)]
 
-def gen_overworld(islands, landrate, lakes, lakerate, special=None, extralands=None, extrarate=None, extraspecial=None):
+default_map_tiles = [
+    ["~" for i in range(config.overmap_width)] for i in range(config.overmap_width)
+]
+
+
+def gen_overworld(
+    islands,
+    landrate,
+    lakes,
+    lakerate,
+    special=None,
+    extralands=None,
+    extrarate=None,
+    extraspecial=None,
+):
     t = time.time()
     map_tiles = deepcopy(default_map_tiles)
-    for i in range(0, islands): # generate islands
+    for i in range(0, islands):  # generate islands
         if special == "center":
-            y = int(len(map_tiles)/2)
-            x = int(len(map_tiles[0])/2)
+            y = int(len(map_tiles) / 2)
+            x = int(len(map_tiles[0]) / 2)
         elif special == "dual":
             if i % 2 == 0:
-                x = int(len(map_tiles[0])/7)
-                y = int(len(map_tiles)/4) * 3
+                x = int(len(map_tiles[0]) / 7)
+                y = int(len(map_tiles) / 4) * 3
             else:
-                x = int(len(map_tiles[0])/7) * 6
-                y = int(len(map_tiles)/4)
+                x = int(len(map_tiles[0]) / 7) * 6
+                y = int(len(map_tiles) / 4)
         else:
-            y = random.randint(0, len(map_tiles)-1)
-            x = random.randint(0, len(map_tiles[0])-1)
-        map_tiles[y][x] = "*" # placeholder terrain tile
+            y = random.randint(0, len(map_tiles) - 1)
+            x = random.randint(0, len(map_tiles[0]) - 1)
+        map_tiles[y][x] = "*"  # placeholder terrain tile
         map_tiles = gen_terrain(x, y, map_tiles, "#", landrate)
-    for i in range(0, lakes): # generate lakes
-        y = random.randint(0, len(map_tiles)-1)
-        x = random.randint(0, len(map_tiles[0])-1)
-        map_tiles[y][x] = "*" # placeholder terrain tile
+    for i in range(0, lakes):  # generate lakes
+        y = random.randint(0, len(map_tiles) - 1)
+        x = random.randint(0, len(map_tiles[0]) - 1)
+        map_tiles[y][x] = "*"  # placeholder terrain tile
         map_tiles = gen_terrain(x, y, map_tiles, "~", lakerate)
     if special == "block":
         map_tiles = modify_block(map_tiles, "#", "~")
         map_tiles = modify_block(map_tiles, "~", "#")
     if extralands != None:
-        for i in range(0, extralands): # generate extra islands
+        for i in range(0, extralands):  # generate extra islands
             if extraspecial == "center":
-                y = int(len(map_tiles)/2)
-                x = int(len(map_tiles[0])/2)
+                y = int(len(map_tiles) / 2)
+                x = int(len(map_tiles[0]) / 2)
             elif extraspecial == "dual":
                 if i % 2 == 0:
-                    x = int(len(map_tiles[0])/7)
-                    y = int(len(map_tiles)/4) * 3
+                    x = int(len(map_tiles[0]) / 7)
+                    y = int(len(map_tiles) / 4) * 3
                 else:
-                    x = int(len(map_tiles[0])/7) * 6
-                    y = int(len(map_tiles)/4)
+                    x = int(len(map_tiles[0]) / 7) * 6
+                    y = int(len(map_tiles) / 4)
             else:
-                y = random.randint(0, len(map_tiles)-1)
-                x = random.randint(0, len(map_tiles[0])-1)
-            map_tiles[y][x] = "*" # placeholder terrain tile
+                y = random.randint(0, len(map_tiles) - 1)
+                x = random.randint(0, len(map_tiles[0]) - 1)
+            map_tiles[y][x] = "*"  # placeholder terrain tile
             map_tiles = gen_terrain(x, y, map_tiles, "#", extrarate)
     print(f"terrain gen took {time.time()-t} seconds")
     return map_tiles
+
 
 def gen_city_map(map_size=96, horizontal_roads=30, vertical_roads=30):
     t = time.time()
@@ -1953,22 +2324,28 @@ def gen_city_map(map_size=96, horizontal_roads=30, vertical_roads=30):
     # for each block of buildings their heights should be uniform
     for y, line in enumerate(map_tiles):
         for x, char in enumerate(line):
-            if char == "-": continue
+            if char == "-":
+                continue
             surrounding_heights = get_surrounding_heights(x, y, map_tiles)
-            if not surrounding_heights: map_tiles[y][x] = str(random.randint(2, 4))
+            if not surrounding_heights:
+                map_tiles[y][x] = str(random.randint(2, 4))
             else:
                 map_tiles[y][x] = str(surrounding_heights[0])
     for y, line in enumerate(map_tiles):
         for x, char in enumerate(line):
-            if char == "-": map_tiles[y][x] = "0"
+            if char == "-":
+                map_tiles[y][x] = "0"
     map_tiles = smooth_height_pits(map_tiles)
     print(f"terrain gen took {time.time()-t} seconds")
     return map_tiles
 
+
 def gen_prospitderse():
     map_tiles = gen_city_map()
     # make towers
-    towerx, towery = random.randint(0, len(map_tiles[0])-1), random.randint(0, len(map_tiles)-1)
+    towerx, towery = random.randint(0, len(map_tiles[0]) - 1), random.randint(
+        0, len(map_tiles) - 1
+    )
     tower_structure = [
         "000000000000",
         "011111111110",
@@ -1997,14 +2374,17 @@ def gen_prospitderse():
         "00000000000",
         "00000000000",
     ]
-    chainx, chainy = towerx, (len(map_tiles[0])-1)//2 + towery
+    chainx, chainy = towerx, (len(map_tiles[0]) - 1) // 2 + towery
     map_tiles = place_structure(map_tiles, chainx, chainy, chain_structure)
     return map_tiles
 
+
 def gen_moon():
     TOWERS = 12
-    map_tiles = gen_city_map(map_size = 64)
-    chainx, chainy = random.randint(0, len(map_tiles[0])-1), random.randint(0, len(map_tiles)-1)
+    map_tiles = gen_city_map(map_size=64)
+    chainx, chainy = random.randint(0, len(map_tiles[0]) - 1), random.randint(
+        0, len(map_tiles) - 1
+    )
     chain_structure = [
         "00000000000",
         "00000000000",
@@ -2028,23 +2408,30 @@ def gen_moon():
     for i in range(TOWERS):
         towerx, towery = chainx, chainy
         while True:
-            towerx = random.randint(0, len(map_tiles[0])-1)
-            if abs(chainx-towerx) < 5: continue
+            towerx = random.randint(0, len(map_tiles[0]) - 1)
+            if abs(chainx - towerx) < 5:
+                continue
             for x, y in tower_points:
-                if abs(x-towerx) < 2: continue
+                if abs(x - towerx) < 2:
+                    continue
             break
         while True:
-            towery = random.randint(0, len(map_tiles)-1)
-            if abs(chainy-towery) < 5: continue
+            towery = random.randint(0, len(map_tiles) - 1)
+            if abs(chainy - towery) < 5:
+                continue
             for x, y in tower_points:
-                if abs(y-towery) < 2: continue
+                if abs(y - towery) < 2:
+                    continue
             break
         tower_points.append((towerx, towery))
     for x, y in tower_points:
         map_tiles = place_structure(map_tiles, x, y, tower_structure)
     return map_tiles
 
-def place_structure(map_tiles, target_x, target_y, structure: Union[list[list[str]], list[str]]):
+
+def place_structure(
+    map_tiles, target_x, target_y, structure: Union[list[list[str]], list[str]]
+):
     for structure_y, line in enumerate(structure):
         y = target_y + structure_y
         for structure_x, char in enumerate(line):
@@ -2053,57 +2440,77 @@ def place_structure(map_tiles, target_x, target_y, structure: Union[list[list[st
             map_tiles[y][x] = char
     return map_tiles
 
-def set_height(map_tiles: list[list[str]], target_x, target_y, height: int, hill_radius=1, min_height=1) -> list[list[str]]:
-        for i in reversed(range(hill_radius)):
-            for x in range(-i, i+1):
-                for y in range(-i, i+1):
-                    dest_y = target_y+y
-                    dest_x = target_x+x
-                    if dest_y > len(map_tiles)-1: dest_y -= len(map_tiles)-1
-                    if dest_x > len(map_tiles[0])-1: dest_x -= len(map_tiles[0])-1
-                    if map_tiles[dest_y][dest_x] == "~": continue
-                    map_tiles[dest_y][dest_x] = str(max(height-i, min_height))
-        map_tiles[target_y][target_x] = str(height)
-        return map_tiles
 
-def get_tile_at_distance(map_tiles, x: int, y: int, distance: int, specials: list=[]) -> tuple[int, int]: # chooses a random location that's distance away from x, y
+def set_height(
+    map_tiles: list[list[str]],
+    target_x,
+    target_y,
+    height: int,
+    hill_radius=1,
+    min_height=1,
+) -> list[list[str]]:
+    for i in reversed(range(hill_radius)):
+        for x in range(-i, i + 1):
+            for y in range(-i, i + 1):
+                dest_y = target_y + y
+                dest_x = target_x + x
+                if dest_y > len(map_tiles) - 1:
+                    dest_y -= len(map_tiles) - 1
+                if dest_x > len(map_tiles[0]) - 1:
+                    dest_x -= len(map_tiles[0]) - 1
+                if map_tiles[dest_y][dest_x] == "~":
+                    continue
+                map_tiles[dest_y][dest_x] = str(max(height - i, min_height))
+    map_tiles[target_y][target_x] = str(height)
+    return map_tiles
+
+
+def get_tile_at_distance(
+    map_tiles, x: int, y: int, distance: int, specials: list = []
+) -> tuple[int, int]:  # chooses a random location that's distance away from x, y
     possiblelocs = []
     # make a ring of valid targets around x, y
-    for num in range(0, distance+1):
-        possiblelocs.append((num, distance-num))
-        possiblelocs.append((num*-1, distance-num))
-        possiblelocs.append((num, (distance-num)*-1))
-        possiblelocs.append((num*-1, (distance-num)*-1))
+    for num in range(0, distance + 1):
+        possiblelocs.append((num, distance - num))
+        possiblelocs.append((num * -1, distance - num))
+        possiblelocs.append((num, (distance - num) * -1))
+        possiblelocs.append((num * -1, (distance - num) * -1))
     random.shuffle(possiblelocs)
     for xplus, yplus in possiblelocs:
         newx = x + xplus
         newy = y + yplus
         while newx >= len(map_tiles[0]):
-            newx -= len(map_tiles[0]) # loop around to the other side
+            newx -= len(map_tiles[0])  # loop around to the other side
         while newx < 0:
-            newx = len(map_tiles[0]) + newx # loop around to the other side
+            newx = len(map_tiles[0]) + newx  # loop around to the other side
         while newy >= len(map_tiles):
-            newy -= len(map_tiles) # loop around to the other side
+            newy -= len(map_tiles)  # loop around to the other side
         while newy < 0:
-            newy = len(map_tiles) + newy # loop around to the other side
+            newy = len(map_tiles) + newy  # loop around to the other side
         if map_tiles[newy][newx] != "~" and f"{newx}, {newy}" not in specials:
             return newx, newy
-    else: # if there is no valid location around the tile
-        return get_tile_at_distance(map_tiles, x, y, distance+1, specials) # recurse, find loc further away
+    else:  # if there is no valid location around the tile
+        return get_tile_at_distance(
+            map_tiles, x, y, distance + 1, specials
+        )  # recurse, find loc further away
+
 
 def get_random_land_coords(map_tiles) -> tuple[int, int]:
-    y = random.randint(0, len(map_tiles)-1)
-    x = random.randint(0, len(map_tiles[0])-1)
+    y = random.randint(0, len(map_tiles) - 1)
+    x = random.randint(0, len(map_tiles[0]) - 1)
     while map_tiles[y][x] == "~":
-        y = random.randint(0, len(map_tiles)-1)
-        x = random.randint(0, len(map_tiles[0])-1)
+        y = random.randint(0, len(map_tiles) - 1)
+        x = random.randint(0, len(map_tiles[0]) - 1)
     return x, y
+
 
 def print_map(map_tiles: list[list[str]], replace_water=True):
     str_list = ["".join(chars) for chars in map_tiles]
     map_print = "\n".join(str_list)
-    if replace_water: map_print = map_print.replace("0", "~")
+    if replace_water:
+        map_print = map_print.replace("0", "~")
     print(map_print)
+
 
 if __name__ == "__main__":
     map_tiles = gen_moon()

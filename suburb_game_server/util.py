@@ -7,10 +7,11 @@ from copy import deepcopy
 
 import binaryoperations
 
-homedir =  os.getcwd()
+homedir = os.getcwd()
 subdirectories = next(os.walk("."))[1]
-if "suburb_game_server" in subdirectories: # if this is being run in vscode lol
+if "suburb_game_server" in subdirectories:  # if this is being run in vscode lol
     homedir += "\\suburb_game_server"
+
 
 def writejson(obj=None, fn=None, dir=f"{homedir}\\json"):
     if not os.path.exists(dir):
@@ -25,27 +26,37 @@ def writejson(obj=None, fn=None, dir=f"{homedir}\\json"):
                     data = json.dump(obj, f, indent=4)
                     f = data
 
-def readjson(obj, filename, dir=f"{homedir}\\json"):
+
+def readjson(obj: dict, filename, dir=f"{homedir}\\json", overwrite=True) -> dict:
     try:
         with open(f"{dir}/{filename}.json", "r") as f:
             try:
                 data = json.load(f)
-            except json.JSONDecodeError:
+            except json.JSONDecodeError as e:
                 print(f"UNABLE TO READ JSON {filename}")
-                writejson(obj, filename, dir)
-                data = {}
+                if overwrite:
+                    print(f"Overwriting with {obj}.")
+                    writejson(obj, filename, dir)
+                    data = obj
+                else:
+                    raise e
             return data
-    except FileNotFoundError:
-        print(f"File not found when reading json: '{filename}.json'. Overwriting with {obj}.")
-        writejson(obj, filename, dir)
-        return obj
-    
+    except FileNotFoundError as e:
+        print(f"File not found when reading json: '{filename}.json'.")
+        if overwrite:
+            print(f"Overwriting with {obj}.")
+            writejson(obj, filename, dir)
+            return obj
+        else:
+            raise e
+
+
 serversettings = {
     "ip": "",
     "port": 0,
     "path_to_cert": "",
     "path_to_key": "",
-    "db_connection_string": ""
+    "db_connection_string": "",
 }
 serversettings = readjson(serversettings, "serversettings", homedir)
 
@@ -68,8 +79,10 @@ bases: dict[str, dict] = readjson(bases, "bases")
 for base_name, base_dict in bases.items():
     words = base_name.split(" ")
     base_name = words.pop()
-    if len(words) == 0: adjectives = []
-    else: adjectives = words
+    if len(words) == 0:
+        adjectives = []
+    else:
+        adjectives = words
     base_dict["adjectives"] = adjectives
     if "kinds" in base_dict:
         base_dict["kinds"] = [kind_name for kind_name in base_dict["kinds"]]
@@ -77,20 +90,25 @@ writejson(bases, "bases")
 
 base_names_adjectives = {}
 for base_name, base_dict in bases.items():
-    base_names_adjectives[base_name] = base_dict["adjectives"] + base_dict["secretadjectives"]
+    base_names_adjectives[base_name] = (
+        base_dict["adjectives"] + base_dict["secretadjectives"]
+    )
 writejson(base_names_adjectives, "base_names_adjectives")
 
-codes = {} # key: item code value: item name
+codes = {}  # key: item code value: item name
 codes = readjson(codes, "codes")
+
 
 def get_base_submissions():
     base_submissions = {}
     base_submissions = readjson(base_submissions, "base_submissions")
     return base_submissions
 
+
 def update_base_submissions(submissions_dict: dict):
     base_submissions = submissions_dict
     writejson(base_submissions, "base_submissions")
+
 
 considered_submissions = {}
 considered_submissions = readjson(considered_submissions, "considered_submissions")
@@ -104,10 +122,51 @@ for base in bases:
         if kind not in kinds:
             kinds.append(kind)
 
-additional_kinds = ["plungerkind", "hosekind", "bookkind", "bustkind", "spadekind", "pipekind", "nailgunkind", "hairdryerkind", "lacrossstickkind", "throwingstarkind", "tongskind",
-                    "razorkind", "fireextinguisherkind", "branchkind", "bowlingpinkind", "bombkind", "woodwindkind", "staplerkind", "riflekind", "candlestickkind", "paddlekind", "bowkind",
-                    "barbedwirekind", "dartkind", "marblekind", "plierkind", "fireworkkind", "chiselkind", "aerosolkind", "shoekind", "puppetkind", "fankind", "brasskind", "rockkind",
-                    "scythekind", "dicekind", "cardkind", "puppetkind", "foodkind", "grimoirekind", "fabrickind", "plushkind", "firekind"]
+additional_kinds = [
+    "plungerkind",
+    "hosekind",
+    "bookkind",
+    "bustkind",
+    "spadekind",
+    "pipekind",
+    "nailgunkind",
+    "hairdryerkind",
+    "lacrossstickkind",
+    "throwingstarkind",
+    "tongskind",
+    "razorkind",
+    "fireextinguisherkind",
+    "branchkind",
+    "bowlingpinkind",
+    "bombkind",
+    "woodwindkind",
+    "staplerkind",
+    "riflekind",
+    "candlestickkind",
+    "paddlekind",
+    "bowkind",
+    "barbedwirekind",
+    "dartkind",
+    "marblekind",
+    "plierkind",
+    "fireworkkind",
+    "chiselkind",
+    "aerosolkind",
+    "shoekind",
+    "puppetkind",
+    "fankind",
+    "brasskind",
+    "rockkind",
+    "scythekind",
+    "dicekind",
+    "cardkind",
+    "puppetkind",
+    "foodkind",
+    "grimoirekind",
+    "fabrickind",
+    "plushkind",
+    "firekind",
+]
 
 for kind in additional_kinds:
     if kind not in kinds:
@@ -115,17 +174,20 @@ for kind in additional_kinds:
 
 print(sorted(kinds))
 
+
 def update_jsons():
     global bases
     global spawnlists
     bases = readjson(bases, "bases")
     spawnlists = readjson(spawnlists, "spawnlists")
 
+
 def saveall():
     t = time.time()
     print("Saving...")
     writejson(codes, "codes")
     print(f"Save complete. Took {time.time()-t:.2f} seconds.")
+
 
 for base in bases:
     if "code" in bases[base]:
@@ -136,7 +198,7 @@ for base in bases:
         bases[base]["code"] = code
     codes[code] = base
 
-if __name__ == "__main__": # if this file is being run, run the json editor
+if __name__ == "__main__":  # if this file is being run, run the json editor
     pass
     # bases = {}
     # bases = readjson(bases, "bases")

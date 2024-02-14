@@ -14,11 +14,12 @@ import database
 import config
 import skills
 
-COMPOUND_NAME_CHANCE = 0.2 # chance for having compound names in && operations
-INHERITANCE_BONUS_MULT = 1.25 # bonus for simply alchemizing items
-INHERITANCE_MALUS_MULT = 0.75 # malus for being above softcap
+COMPOUND_NAME_CHANCE = 0.2  # chance for having compound names in && operations
+INHERITANCE_BONUS_MULT = 1.25  # bonus for simply alchemizing items
+INHERITANCE_MALUS_MULT = 0.75  # malus for being above softcap
 
-class Components():
+
+class Components:
     def __init__(self, name: str):
         # names look like "(((baseball bat&&sledge hammer)&&(piano wire||ring))||shotgun)" so we have to find the midpoint for the components
         # if at any point all parentheses are closed (ignoring the first one), we are at the midpoint
@@ -44,12 +45,14 @@ class Components():
             self.component_2 = components[1]
             return
         for index, char in enumerate(components_name):
-            if char == "(": parentheses += 1
-            if char == ")": parentheses -= 1
+            if char == "(":
+                parentheses += 1
+            if char == ")":
+                parentheses -= 1
             component_1 += char
             if parentheses == 0:
-                operation = components_name[index+1:][:2] # get next 2 characters
-                component_2 = components_name[index+3:] # everything after that
+                operation = components_name[index + 1 :][:2]  # get next 2 characters
+                component_2 = components_name[index + 3 :]  # everything after that
                 break
         self.component_1: Optional[str] = component_1
         self.component_2: Optional[str] = component_2
@@ -57,19 +60,29 @@ class Components():
 
     def get_all_components(self) -> list[str]:
         components_list = []
-        if self.component_1 is None or self.component_2 is None: return []
-        if self.component_1 in util.bases: components_list.append(self.component_1)
-        else: components_list += Components(self.component_1).get_all_components()
-        if self.component_2 in util.bases: components_list.append(self.component_2)
-        else: components_list += Components(self.component_2).get_all_components()
+        if self.component_1 is None or self.component_2 is None:
+            return []
+        if self.component_1 in util.bases:
+            components_list.append(self.component_1)
+        else:
+            components_list += Components(self.component_1).get_all_components()
+        if self.component_2 in util.bases:
+            components_list.append(self.component_2)
+        else:
+            components_list += Components(self.component_2).get_all_components()
         return components_list
 
-class BaseStatistics():
+
+class BaseStatistics:
     def __init__(self, base_name: str):
-        descriptors = base_name.split(" ") # " " is a separator for descriptors in base name
+        descriptors = base_name.split(
+            " "
+        )  # " " is a separator for descriptors in base name
         self.descriptors: list = list(descriptors)
-        self.base: str = descriptors.pop() # last descriptor is the base
-        self.adjectives: list = list(set(descriptors)) # everything else are adjectives, remove duplicates
+        self.base: str = descriptors.pop()  # last descriptor is the base
+        self.adjectives: list = list(
+            set(descriptors)
+        )  # everything else are adjectives, remove duplicates
         properties = deepcopy(util.bases[base_name])
         self.display_name = properties["display_name"]
         self.secretadjectives: list[str] = properties["secretadjectives"]
@@ -89,15 +102,24 @@ class BaseStatistics():
         self.prototype_name: Optional[str] = properties["prototype_name"]
         self.creator: Optional[str] = properties["creator"]
 
+
 # todo: captchalogue code inheritance
-class InheritedStatistics():
-    def __init__(self, component_1: "Item", component_2: "Item", operation: str, guarantee_first_base=False):
-        self.name = f"({component_1.name}{operation}{component_2.name})" # for seed
+class InheritedStatistics:
+    def __init__(
+        self,
+        component_1: "Item",
+        component_2: "Item",
+        operation: str,
+        guarantee_first_base=False,
+    ):
+        self.name = f"({component_1.name}{operation}{component_2.name})"  # for seed
         self.component_1: Item = component_1
         self.component_2: Item = component_2
         self.operation = operation
-        self.guarantee_first_base=guarantee_first_base
-        self.base, self.adjectives, self.merged_bases, self.secretadjectives = self.get_descriptors()
+        self.guarantee_first_base = guarantee_first_base
+        self.base, self.adjectives, self.merged_bases, self.secretadjectives = (
+            self.get_descriptors()
+        )
         self.descriptors = self.adjectives + [self.base]
         self.forbiddencode = False
         self.prototype_name = None
@@ -117,99 +139,159 @@ class InheritedStatistics():
             else:
                 e += 0.1
         return e
-    
+
     @property
     def entropy_mult(self) -> float:
-        if self.entropy >= 0: return 1 + self.entropy
-        else: return 1/-(self.entropy+1)
+        if self.entropy >= 0:
+            return 1 + self.entropy
+        else:
+            return 1 / -(self.entropy + 1)
 
-    def get_descriptors(self, guaranteed_compound_name = False, depth = 0) -> tuple[str, list, list, list]:
+    def get_descriptors(
+        self, guaranteed_compound_name=False, depth=0
+    ) -> tuple[str, list, list, list]:
         required_inheritors = []
         base = ""
         adjectives: list[str] = []
         merged_bases = []
         secretadjectives = []
-        if len(self.component_1.descriptors) == 1: required_inheritors.append(self.component_1.descriptors[0])
-        if len(self.component_2.descriptors) == 1: required_inheritors.append(self.component_2.descriptors[0])
+        if len(self.component_1.descriptors) == 1:
+            required_inheritors.append(self.component_1.descriptors[0])
+        if len(self.component_2.descriptors) == 1:
+            required_inheritors.append(self.component_2.descriptors[0])
         inheritable_bases = [self.component_1.base, self.component_2.base]
-        if self.operation == "&&": # && has compound names sometimes
-            random.seed(self.name+"compound_chance"+str(depth))
+        if self.operation == "&&":  # && has compound names sometimes
+            random.seed(self.name + "compound_chance" + str(depth))
             if random.random() < COMPOUND_NAME_CHANCE or guaranteed_compound_name:
                 merged_bases = list(inheritable_bases)
                 inheritable_bases = []
-                if self.component_1.base in required_inheritors: required_inheritors.remove(self.component_1.base)
-                if self.component_2.base in required_inheritors: required_inheritors.remove(self.component_2.base)
-                random.seed(self.name+"compound_choice"+str(depth))
-                if random.random() < 0.5: inheritable_bases.append(f"{self.component_1.base}-{self.component_2.base}")
-                else: inheritable_bases.append(f"{self.component_2.base}-{self.component_1.base}")
-        inheritable_adjectives = self.component_1.adjectives + self.component_2.adjectives + self.component_1.secretadjectives + self.component_2.secretadjectives
+                if self.component_1.base in required_inheritors:
+                    required_inheritors.remove(self.component_1.base)
+                if self.component_2.base in required_inheritors:
+                    required_inheritors.remove(self.component_2.base)
+                random.seed(self.name + "compound_choice" + str(depth))
+                if random.random() < 0.5:
+                    inheritable_bases.append(
+                        f"{self.component_1.base}-{self.component_2.base}"
+                    )
+                else:
+                    inheritable_bases.append(
+                        f"{self.component_2.base}-{self.component_1.base}"
+                    )
+        inheritable_adjectives = (
+            self.component_1.adjectives
+            + self.component_2.adjectives
+            + self.component_1.secretadjectives
+            + self.component_2.secretadjectives
+        )
         if self.guarantee_first_base:
             base = self.component_1.base
         else:
-            random.seed(self.name+"base"+str(depth))
+            random.seed(self.name + "base" + str(depth))
             base = random.choice(inheritable_bases)
-        if base in required_inheritors: required_inheritors.remove(base)
-        if base in inheritable_bases: inheritable_bases.remove(base)
+        if base in required_inheritors:
+            required_inheritors.remove(base)
+        if base in inheritable_bases:
+            inheritable_bases.remove(base)
         if len(inheritable_adjectives) < 1:
             inheritable_adjectives += inheritable_bases
-        random.seed(self.name+"shuffle"+str(depth))
-        inheritable_adjectives = list(set(inheritable_adjectives)) # remove duplicates
+        random.seed(self.name + "shuffle" + str(depth))
+        inheritable_adjectives = list(set(inheritable_adjectives))  # remove duplicates
         random.shuffle(inheritable_adjectives)
         for adj in inheritable_adjectives:
-            inherit_chance = 1 - (len(adjectives) / (((len(self.component_1.descriptors) + len(self.component_2.descriptors)) / 2)+1))
-            inherit_chance -= (0.15 * len(adjectives)) # additional flat chance decrease based on how many adjectives it has already
+            inherit_chance = 1 - (
+                len(adjectives)
+                / (
+                    (
+                        (
+                            len(self.component_1.descriptors)
+                            + len(self.component_2.descriptors)
+                        )
+                        / 2
+                    )
+                    + 1
+                )
+            )
+            inherit_chance -= 0.15 * len(
+                adjectives
+            )  # additional flat chance decrease based on how many adjectives it has already
             if adj in required_inheritors:
                 required_inheritors.remove(adj)
                 adjectives.append(adj)
                 continue
-            random.seed(self.name+"inherit"+adj+str(depth))
+            random.seed(self.name + "inherit" + adj + str(depth))
             if random.random() < inherit_chance:
                 adjectives.append(adj)
         # secret adjectives
-        secretadjectives = self.component_1.secretadjectives + self.component_2.secretadjectives
+        secretadjectives = (
+            self.component_1.secretadjectives + self.component_2.secretadjectives
+        )
         for descriptor in [base] + adjectives:
             if descriptor in secretadjectives:
                 secretadjectives.remove(descriptor)
-        for descriptor in inheritable_adjectives: # unused adjectives have a 50% chance to become secrets
+        for (
+            descriptor
+        ) in (
+            inheritable_adjectives
+        ):  # unused adjectives have a 50% chance to become secrets
             if descriptor not in [base] + adjectives and descriptor != base:
-                random.seed(self.name+descriptor+"secret")
-                if random.random() < 0.5: secretadjectives.append(descriptor)
+                random.seed(self.name + descriptor + "secret")
+                if random.random() < 0.5:
+                    secretadjectives.append(descriptor)
         # sort adjectives by englishness
         adjectives = adjectiveorder.sort_by_adjectives(adjectives)
         # check if this has the exact same name as one of its components
-        new_name = adjectives+[base]
-        component_1_name = self.component_1.adjectives+[self.component_1.base]
-        component_2_name = self.component_2.adjectives+[self.component_2.base]
+        new_name = adjectives + [base]
+        component_1_name = self.component_1.adjectives + [self.component_1.base]
+        component_2_name = self.component_2.adjectives + [self.component_2.base]
         if new_name == component_1_name or new_name == component_2_name and depth < 50:
-            base, adjectives, merged_bases, secretadjectives = self.get_descriptors(depth=depth+1)
+            base, adjectives, merged_bases, secretadjectives = self.get_descriptors(
+                depth=depth + 1
+            )
         # check if AND is different from OR, if they are the same, guarantee a compound base
-        if self.operation == "&&" and not self.guarantee_first_base: # don't check this if first base is guaranteed
+        if (
+            self.operation == "&&" and not self.guarantee_first_base
+        ):  # don't check this if first base is guaranteed
             or_object = InheritedStatistics(self.component_1, self.component_2, "||")
             adjectives_set = set(adjectives)
             or_adjectives_set = set(or_object.adjectives)
-            if (base == or_object.base and 
-                (adjectives_set.issubset(or_adjectives_set) or or_adjectives_set.issubset(adjectives_set))): # convert to set so names aren't just the same thing in different order
-                base, adjectives, merged_bases, secretadjectives = self.get_descriptors(guaranteed_compound_name=True)
+            if base == or_object.base and (
+                adjectives_set.issubset(or_adjectives_set)
+                or or_adjectives_set.issubset(adjectives_set)
+            ):  # convert to set so names aren't just the same thing in different order
+                base, adjectives, merged_bases, secretadjectives = self.get_descriptors(
+                    guaranteed_compound_name=True
+                )
         return base, adjectives, merged_bases, secretadjectives
 
     def gen_statistics(self):
-        self.size: int = self.inherit_stat_from_base(self.component_1.size, self.component_2.size)
-        self.size += self.stat_adjust_from_base(self.component_1.size, self.component_2.size)
+        self.size: int = self.inherit_stat_from_base(
+            self.component_1.size, self.component_2.size
+        )
+        self.size += self.stat_adjust_from_base(
+            self.component_1.size, self.component_2.size
+        )
         # power
-        total_power = (self.component_1.power
-                          + self.component_1.inheritpower 
-                          + self.component_2.power 
-                          + self.component_2.inheritpower)
-        average_power = total_power//2
-        power_difference = abs((self.component_1.power + self.component_1.inheritpower)
-                                - (self.component_2.power + self.component_2.inheritpower))
+        total_power = (
+            self.component_1.power
+            + self.component_1.inheritpower
+            + self.component_2.power
+            + self.component_2.inheritpower
+        )
+        average_power = total_power // 2
+        power_difference = abs(
+            (self.component_1.power + self.component_1.inheritpower)
+            - (self.component_2.power + self.component_2.inheritpower)
+        )
         if self.operation == "&&":
             self.power: int = total_power + average_power
         elif self.operation == "||":
             self.power: int = total_power + power_difference
         power_mult = self.entropy_mult
-        self.power = int(self.power*power_mult)
-        self.inheritpower: int = self.component_1.inheritpower + self.component_2.inheritpower
+        self.power = int(self.power * power_mult)
+        self.inheritpower: int = (
+            self.component_1.inheritpower + self.component_2.inheritpower
+        )
         # costs (dict of grist: float)
         self.cost: dict = self.component_1.cost.copy()
         for grist_name in self.component_2.cost:
@@ -218,30 +300,42 @@ class InheritedStatistics():
             else:
                 self.cost[grist_name] += self.component_2.cost[grist_name]
         for grist_name, cost in self.cost.items():
-            self.cost[grist_name] = cost*self.entropy_mult
+            self.cost[grist_name] = cost * self.entropy_mult
         # dict inherits
-        self.onhit_states: dict = self.dictionary_inherit(self.component_1.onhit_states, self.component_2.onhit_states)
-        self.wear_states: dict = self.dictionary_inherit(self.component_1.wear_states, self.component_2.wear_states)
-        self.consume_states: dict = self.dictionary_inherit(self.component_1.consume_states, self.component_2.consume_states)
-        self.secret_states: dict = self.dictionary_inherit(self.component_1.secret_states, self.component_2.secret_states)
+        self.onhit_states: dict = self.dictionary_inherit(
+            self.component_1.onhit_states, self.component_2.onhit_states
+        )
+        self.wear_states: dict = self.dictionary_inherit(
+            self.component_1.wear_states, self.component_2.wear_states
+        )
+        self.consume_states: dict = self.dictionary_inherit(
+            self.component_1.consume_states, self.component_2.consume_states
+        )
+        self.secret_states: dict = self.dictionary_inherit(
+            self.component_1.secret_states, self.component_2.secret_states
+        )
         # secret effects
         for state_name in self.secret_states.copy():
             state = stateseffects.states[state_name]
             options = [self.consume_states, self.onhit_states, self.wear_states]
             # secret state will never be inherited if opposed
-            options = [option for option in options if state.opposing_state not in option]
+            options = [
+                option for option in options if state.opposing_state not in option
+            ]
             options += [None]
-            random.seed(self.name+"secretstatesoption"+state_name)
+            random.seed(self.name + "secretstatesoption" + state_name)
             option = random.choice(options)
-            if option is None: continue
-            if len(option) <= 0: continue
+            if option is None:
+                continue
+            if len(option) <= 0:
+                continue
             option[state_name] = self.secret_states.pop(state_name)
         # use effect
-        if self.base == self.component_1.base: 
+        if self.base == self.component_1.base:
             self.use = self.component_1.use
             self.wearable = self.component_1.wearable
             self.kinds = self.component_1.kinds
-        elif self.base == self.component_2.base: 
+        elif self.base == self.component_2.base:
             self.use = self.component_2.use
             self.wearable = self.component_2.wearable
             self.kinds = self.component_2.kinds
@@ -251,13 +345,16 @@ class InheritedStatistics():
             self.wearable = self.component_1.wearable or self.component_2.wearable
             self.kinds = self.component_1.kinds + self.component_2.kinds
 
-    def dictionary_inherit(self, component_1_dict: dict, component_2_dict: dict) -> dict: # returns new dict
+    def dictionary_inherit(
+        self, component_1_dict: dict, component_2_dict: dict
+    ) -> dict:  # returns new dict
         new_dict = component_1_dict.copy()
         for state_name, potency in component_2_dict.items():
             state = stateseffects.states[state_name]
             # if states oppose, we use the one with higher potency
             if state.opposing_state is not None and state.opposing_state in new_dict:
-                if new_dict[state.opposing_state] > potency: continue
+                if new_dict[state.opposing_state] > potency:
+                    continue
             elif state.opposing_state in new_dict:
                 new_dict.pop(state.opposing_state)
             if state_name in new_dict and potency > new_dict[state_name]:
@@ -266,34 +363,54 @@ class InheritedStatistics():
                 new_dict[state_name] = potency
         return new_dict
 
-    def inherit_stat_from_base(self, component_1_stat: int, component_2_stat:int) -> int:
-        if self.component_1.base == self.base: return component_1_stat
-        if self.component_2.base == self.base: return component_2_stat
-        return int((component_1_stat + component_2_stat) * 0.5) # compound base
-    
+    def inherit_stat_from_base(
+        self, component_1_stat: int, component_2_stat: int
+    ) -> int:
+        if self.component_1.base == self.base:
+            return component_1_stat
+        if self.component_2.base == self.base:
+            return component_2_stat
+        return int((component_1_stat + component_2_stat) * 0.5)  # compound base
+
     def stat_adjust_from_base(self, component_1_stat, component_2_stat) -> int:
-        if self.component_1.base == self.base: base_stat = component_1_stat; mult_stat = component_2_stat
-        elif self.component_2.base == self.base: base_stat = component_2_stat; mult_stat = component_1_stat
-        else: return 0
-        if base_stat == 0: base_stat = 1
-        if mult_stat == 0: mult_stat = 1
-        if base_stat > mult_stat: # adjust should be negative due to lower mult stat
+        if self.component_1.base == self.base:
+            base_stat = component_1_stat
+            mult_stat = component_2_stat
+        elif self.component_2.base == self.base:
+            base_stat = component_2_stat
+            mult_stat = component_1_stat
+        else:
+            return 0
+        if base_stat == 0:
+            base_stat = 1
+        if mult_stat == 0:
+            mult_stat = 1
+        if base_stat > mult_stat:  # adjust should be negative due to lower mult stat
             return int(-1 * (base_stat / mult_stat))
-        else: # adjust should be positive due to higher mult stat
+        else:  # adjust should be positive due to higher mult stat
             return int(mult_stat / base_stat)
 
-def get_code_from_name(name: str) -> str: # from name
+
+def get_code_from_name(name: str) -> str:  # from name
     if name in util.bases:
         code = util.bases[name]["code"]
     else:
         components = Components(name)
-        if components.component_1 is None or components.component_2 is None: return "!!!!!!!!"
+        if components.component_1 is None or components.component_2 is None:
+            return "!!!!!!!!"
         operation = components.operation
         if operation == "&&":
-            code = binaryoperations.codeand(get_code_from_name(components.component_1), get_code_from_name(components.component_2))
+            code = binaryoperations.codeand(
+                get_code_from_name(components.component_1),
+                get_code_from_name(components.component_2),
+            )
         else:
-            code = binaryoperations.codeor(get_code_from_name(components.component_1), get_code_from_name(components.component_2))
+            code = binaryoperations.codeor(
+                get_code_from_name(components.component_1),
+                get_code_from_name(components.component_2),
+            )
     return code
+
 
 def get_base_code_or_random(name: str) -> str:
     if name in util.bases:
@@ -304,16 +421,22 @@ def get_base_code_or_random(name: str) -> str:
             code = binaryoperations.random_valid_code()
     return code
 
+
 def does_item_exist(name):
     print(f"checking if item exists {name}")
-    if name in database.memory_items: return True
-    else: return False
+    if name in database.memory_items:
+        return True
+    else:
+        return False
 
-class Item(): # Items are the base of instants.
+
+class Item:  # Items are the base of instants.
     # item re-instantiation should caused alchemized items to get their properties based on their substituents
     def __init__(self, name):
         code = get_code_from_name(name)
-        if code in util.codes: # if this code already exists, give the item the code corresponds to instead
+        if (
+            code in util.codes
+        ):  # if this code already exists, give the item the code corresponds to instead
             name = util.codes[code]
         self.__dict__["_id"] = name
         if name not in database.memory_items:
@@ -325,19 +448,25 @@ class Item(): # Items are the base of instants.
                 util.codes[self.code] = self.name
 
     @classmethod
-    def modify_alchemy(cls, base_component_name: str, modifier_component_name: str) -> "Item":
+    def modify_alchemy(
+        cls, base_component_name: str, modifier_component_name: str
+    ) -> "Item":
         name = f"({base_component_name}<-{modifier_component_name})"
-        if name in database.memory_items: return Item(name)
+        if name in database.memory_items:
+            return Item(name)
         database.memory_items[name] = {}
         database.memory_items[name]["_id"] = name
         code = binaryoperations.random_valid_code()
-        while code in util.codes: code = binaryoperations.random_valid_code()
+        while code in util.codes:
+            code = binaryoperations.random_valid_code()
         util.codes[code] = name
         item = Item(name)
         base_component = Item(base_component_name)
         modifier_component = Item(modifier_component_name)
         operation = random.choice(["&&", "||"])
-        statistics = InheritedStatistics(base_component, modifier_component, operation, guarantee_first_base=True)
+        statistics = InheritedStatistics(
+            base_component, modifier_component, operation, guarantee_first_base=True
+        )
         item.make_statistics(statistics)
         item.code = code
         return item
@@ -346,7 +475,7 @@ class Item(): # Items are the base of instants.
     def from_code(cls, code: str) -> "Item":
         if code in util.codes:
             return Item(util.codes[code])
-        else: # paradox item
+        else:  # paradox item
             component_1, component_2 = paradoxify(code)
             name = f"({component_1.name}??{component_2.name})"
             database.memory_items[name] = {}
@@ -399,25 +528,26 @@ class Item(): # Items are the base of instants.
     @property
     def name(self):
         return self.__dict__["_id"]
-    
+
     @name.setter
     def name(self, value):
         self.__dict__["_id"] = value
 
     @property
     def displayname(self):
-        if self.display_name is not None: return self.display_name
-        name = " ".join(self.adjectives+[self.base])
+        if self.display_name is not None:
+            return self.display_name
+        name = " ".join(self.adjectives + [self.base])
         out = name.replace("+", " ")
         return out
-    
+
     @property
     def true_cost(self):
         out = {}
         for grist_name, value in self.cost.items():
-            out[grist_name] = int(self.power*value)
+            out[grist_name] = int(self.power * value)
         return out
-    
+
     def __setattr__(self, attr, value):
         database.memory_items[self.__dict__["_id"]][attr] = value
         self.__dict__[attr] = value
@@ -427,14 +557,17 @@ class Item(): # Items are the base of instants.
 
     def get_dict(self, raw=False):
         out = deepcopy(database.memory_items[self.__dict__["_id"]])
-        if raw: return out
+        if raw:
+            return out
         out["name"] = self.__dict__["_id"]
         out["display_name"] = self.displayname
         onhit_states = {}
         wear_states = {}
         consume_states = {}
         for state_name, potency in self.onhit_states.items():
-            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); continue
+            if state_name not in stateseffects.states:
+                print(f"!! INVALID STATE {state_name} !!")
+                continue
             state = stateseffects.states[state_name]
             onhit_states[state_name] = {
                 "potency": potency,
@@ -443,7 +576,9 @@ class Item(): # Items are the base of instants.
                 "passive": state.passive,
             }
         for state_name, potency in self.wear_states.items():
-            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); continue
+            if state_name not in stateseffects.states:
+                print(f"!! INVALID STATE {state_name} !!")
+                continue
             state = stateseffects.states[state_name]
             wear_states[state_name] = {
                 "potency": potency,
@@ -452,7 +587,9 @@ class Item(): # Items are the base of instants.
                 "passive": state.passive,
             }
         for state_name, potency in self.consume_states.items():
-            if state_name not in stateseffects.states: print(f"!! INVALID STATE {state_name} !!"); continue
+            if state_name not in stateseffects.states:
+                print(f"!! INVALID STATE {state_name} !!")
+                continue
             state = stateseffects.states[state_name]
             consume_states[state_name] = {
                 "potency": potency,
@@ -465,16 +602,20 @@ class Item(): # Items are the base of instants.
         out["consume_states"] = consume_states
         return out
 
-def does_instance_exist(name):
-    if name in database.memory_instances: return True
-    else: return False
 
-class Instance():
+def does_instance_exist(name):
+    if name in database.memory_instances:
+        return True
+    else:
+        return False
+
+
+class Instance:
     def __init__(self, identifier: Union[Item, str]):
         if isinstance(identifier, str):
             self.__dict__["_id"] = identifier
             name = identifier
-        else: # get a random name instead
+        else:  # get a random name instead
             name = identifier.name + random.choice(ascii_letters)
             while does_instance_exist(name):
                 name += random.choice(ascii_letters)
@@ -500,7 +641,7 @@ class Instance():
     @property
     def name(self):
         return self.__dict__["_id"]
-    
+
     @name.setter
     def name(self, value):
         self.__dict__["_id"] = value
@@ -511,7 +652,7 @@ class Instance():
 
     def __getattr__(self, attr):
         return database.memory_instances[self.__dict__["_id"]][attr]
-    
+
     def get_dict(self):
         output = deepcopy(database.memory_instances[self.__dict__["_id"]])
         output["instance_name"] = self.__dict__["_id"]
@@ -524,17 +665,18 @@ class Instance():
         item_dict = self.item.get_dict()
         output["item_dict"] = item_dict
         return output
-    
+
     # note this function does not remove the instance, it merely creates a card containing it
     def to_card(self) -> "Instance":
         item = Item("captchalogue card")
         instance = Instance(item)
         instance.contained = self.name
         return instance
-    
+
     @property
     def item(self) -> Item:
         return Item(self.item_name)
+
 
 def display_item(item: Item):
     out = f"""{item.displayname}
@@ -545,21 +687,30 @@ def display_item(item: Item):
     """
     return out
 
+
 def paradoxify(paradox_code: str) -> tuple[Item, Item]:
     codes = list(util.codes)
-    left_code, right_code = difflib.get_close_matches(paradox_code, codes, n=2, cutoff=0)
+    left_code, right_code = difflib.get_close_matches(
+        paradox_code, codes, n=2, cutoff=0
+    )
     item_1_name = util.codes[left_code]
     item_2_name = util.codes[right_code]
     return Item(item_1_name), Item(item_2_name)
 
+
 def alchemize(item_name1: str, item_name2: str, operation: str):
     return f"({item_name1}{operation}{item_name2})"
 
+
 def alchemize_instance(code: str, player: "sessions.Player", room: "sessions.Room"):
-    if code not in util.codes: print(f"code {code} not in codes"); return False
+    if code not in util.codes:
+        print(f"code {code} not in codes")
+        return False
     new_item_name = util.codes[code]
     new_item = Item(new_item_name)
-    if not player.pay_costs(new_item.true_cost): print("couldnt pay costs"); return False
+    if not player.pay_costs(new_item.true_cost):
+        print("couldnt pay costs")
+        return False
     new_instance = Instance(new_item)
     if new_instance.item.name == "entry item":
         new_instance.color = player.color
@@ -567,29 +718,30 @@ def alchemize_instance(code: str, player: "sessions.Player", room: "sessions.Roo
     player.land.session.add_to_excursus(new_item.name)
     return True
 
+
 defaults = {
-    #"code": None, #todo: add procedural hex generation for items
-    "base": True, # is this item a base?
-    "display_name": None, # for proper named items
+    # "code": None, #todo: add procedural hex generation for items
+    "base": True,  # is this item a base?
+    "display_name": None,  # for proper named items
     "forbiddencode": False,
-    "power": 1, # how powerful is the item?
-    "inheritpower": 0, # how much extra power this item gives when it's alchemized
+    "power": 1,  # how powerful is the item?
+    "inheritpower": 0,  # how much extra power this item gives when it's alchemized
     # "weight": 1, # how much the thing weighs, will mostly be used for determining sylladex ejection damage
-    "size": 1, # how big the thing is. determines if it's wieldable (size 20 or less)
-    "kinds": [], # the strife specibi that allow this item to be equipped and its weight (how likely it is to be inherited). if it is a list, the second item is the adjective/base that guarantees inheritance
-    "wearable": False, # whether the item can be worn
-    #"stats": {}, # what stats are boosted / decreased through equipping the item (wielding or wearing) in an appropriate slot. this is a dict of dicts, where key is stat and value is % of power boost
-    #"nickname": "Broken", # the default given nickname of an item. should be set to something on generation
-    "description": "None", # the description of the item (only for bases and items with set descriptions)
-    "cost": {"build": 1}, # cost of item. key: grist type, value: % of power
-    "use": [], # what this item does on use.
-    "onhit_states": {}, # the effect of the item as applied to the enemy key: effect value: power ratio e.g. {"healing": [.01]}
-    "wear_states": {}, # the effect of the item when worn in a slot or wielded
-    "consume_states": {}, # a list of effects that this item will have when consumed. todo: valid effects page
-    "secret_states": {}, # a list of effects that do nothing but may be turned into onhit, wear or consume effects upon alchemizing
-    "attached_skills": [], # a list of skills this item teaches when worn/wielded
-    "secretadjectives": [], # a list of adjectives that might be inherited but don't show up on the item
-    "prototype_name": None, # either None or a word that will be used when prototyped for the first time(cowboy boots is "cowboy" for example)
+    "size": 1,  # how big the thing is. determines if it's wieldable (size 20 or less)
+    "kinds": [],  # the strife specibi that allow this item to be equipped and its weight (how likely it is to be inherited). if it is a list, the second item is the adjective/base that guarantees inheritance
+    "wearable": False,  # whether the item can be worn
+    # "stats": {}, # what stats are boosted / decreased through equipping the item (wielding or wearing) in an appropriate slot. this is a dict of dicts, where key is stat and value is % of power boost
+    # "nickname": "Broken", # the default given nickname of an item. should be set to something on generation
+    "description": "None",  # the description of the item (only for bases and items with set descriptions)
+    "cost": {"build": 1},  # cost of item. key: grist type, value: % of power
+    "use": [],  # what this item does on use.
+    "onhit_states": {},  # the effect of the item as applied to the enemy key: effect value: power ratio e.g. {"healing": [.01]}
+    "wear_states": {},  # the effect of the item when worn in a slot or wielded
+    "consume_states": {},  # a list of effects that this item will have when consumed. todo: valid effects page
+    "secret_states": {},  # a list of effects that do nothing but may be turned into onhit, wear or consume effects upon alchemizing
+    "attached_skills": [],  # a list of skills this item teaches when worn/wielded
+    "secretadjectives": [],  # a list of adjectives that might be inherited but don't show up on the item
+    "prototype_name": None,  # either None or a word that will be used when prototyped for the first time(cowboy boots is "cowboy" for example)
     "creator": None,
 }
 
@@ -599,67 +751,97 @@ for grist_name in config.grists:
     # rough grystal
     name = f"rough {grist_name} grystal"
     rough_grystal_dict = deepcopy(defaults)
-    rough_grystal_dict.update({
-        "displayname": name,
-        "forbiddencode": True,
-        "power": 100,
-        "size": 1,
-        "description": f"A rough grystal. When consumed, this gives 1000 {grist_name} grist.",
-        "cost": {grist_name: 10},
-        "use": ["collect"],
-        "prototype_name": grist_name,
-        "secret_states": {"leech": 0.5},
-        "adjectives": [grist_name.replace(" ","+"), "rough"],
-        "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
-        "creator": "ebolite",
-        "code": get_base_code_or_random(name),
-    })
-    if grist_name in ["rainbow", "zilium"]: 
-        rough_grystal_dict["description"] = f"A rough grystal. When consumed, this gives 1 {grist_name} grist.",
+    rough_grystal_dict.update(
+        {
+            "displayname": name,
+            "forbiddencode": True,
+            "power": 100,
+            "size": 1,
+            "description": f"A rough grystal. When consumed, this gives 1000 {grist_name} grist.",
+            "cost": {grist_name: 10},
+            "use": ["collect"],
+            "prototype_name": grist_name,
+            "secret_states": {"leech": 0.5},
+            "adjectives": [grist_name.replace(" ", "+"), "rough"],
+            "secretadjectives": [
+                "gristy",
+                "abstract",
+                "meta",
+                "resourceful",
+                "glitchy",
+            ],
+            "creator": "ebolite",
+            "code": get_base_code_or_random(name),
+        }
+    )
+    if grist_name in ["rainbow", "zilium"]:
+        rough_grystal_dict["description"] = (
+            f"A rough grystal. When consumed, this gives 1 {grist_name} grist.",
+        )
         rough_grystal_dict["cost"] = {grist_name: 0.01}
     util.bases[name] = deepcopy(rough_grystal_dict)
     # fine grystal
     name = f"fine {grist_name} grystal"
     fine_grystal_dict = deepcopy(defaults)
-    fine_grystal_dict.update({
-        "displayname": name,
-        "forbiddencode": True,
-        "power": 100,
-        "size": 1,
-        "description": f"A fine grystal. When consumed, this gives 10000 {grist_name} grist.",
-        "cost": {grist_name: 100},
-        "use": ["collect"],
-        "prototype_name": grist_name,
-        "secret_states": {"leech": 1},
-        "adjectives": [grist_name.replace(" ","+"), "fine"],
-        "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
-        "creator": "ebolite",
-        "code": get_base_code_or_random(name),
-    })
-    if grist_name in ["rainbow", "zilium"]: 
-        fine_grystal_dict["description"] = f"A fine grystal. When consumed, this gives 2 {grist_name} grist.",
+    fine_grystal_dict.update(
+        {
+            "displayname": name,
+            "forbiddencode": True,
+            "power": 100,
+            "size": 1,
+            "description": f"A fine grystal. When consumed, this gives 10000 {grist_name} grist.",
+            "cost": {grist_name: 100},
+            "use": ["collect"],
+            "prototype_name": grist_name,
+            "secret_states": {"leech": 1},
+            "adjectives": [grist_name.replace(" ", "+"), "fine"],
+            "secretadjectives": [
+                "gristy",
+                "abstract",
+                "meta",
+                "resourceful",
+                "glitchy",
+            ],
+            "creator": "ebolite",
+            "code": get_base_code_or_random(name),
+        }
+    )
+    if grist_name in ["rainbow", "zilium"]:
+        fine_grystal_dict["description"] = (
+            f"A fine grystal. When consumed, this gives 2 {grist_name} grist.",
+        )
         fine_grystal_dict["cost"] = {grist_name: 0.02}
     util.bases[name] = deepcopy(fine_grystal_dict)
     # choice grystal
     name = f"choice {grist_name} grystal"
     choice_grystal_dict = deepcopy(defaults)
-    choice_grystal_dict.update({
-        "displayname": name,
-        "forbiddencode": True,
-        "power": 100,
-        "size": 1,
-        "description": f"A choice grystal. When consumed, this gives 100000 {grist_name} grist.",
-        "cost": {grist_name: 1000},
-        "use": ["collect"],
-        "prototype_name": grist_name,
-        "secret_states": {"leech": 2},
-        "adjectives": [grist_name.replace(" ","+"), "choice"],
-        "secretadjectives": ["gristy", "abstract", "meta", "resourceful", "glitchy"],
-        "creator": "ebolite",
-        "code": get_base_code_or_random(name)
-    })
-    if grist_name in ["rainbow", "zilium"]: 
-        fine_grystal_dict["description"] = f"A choice grystal. When consumed, this gives 3 {grist_name} grist.",
+    choice_grystal_dict.update(
+        {
+            "displayname": name,
+            "forbiddencode": True,
+            "power": 100,
+            "size": 1,
+            "description": f"A choice grystal. When consumed, this gives 100000 {grist_name} grist.",
+            "cost": {grist_name: 1000},
+            "use": ["collect"],
+            "prototype_name": grist_name,
+            "secret_states": {"leech": 2},
+            "adjectives": [grist_name.replace(" ", "+"), "choice"],
+            "secretadjectives": [
+                "gristy",
+                "abstract",
+                "meta",
+                "resourceful",
+                "glitchy",
+            ],
+            "creator": "ebolite",
+            "code": get_base_code_or_random(name),
+        }
+    )
+    if grist_name in ["rainbow", "zilium"]:
+        fine_grystal_dict["description"] = (
+            f"A choice grystal. When consumed, this gives 3 {grist_name} grist.",
+        )
         fine_grystal_dict["cost"] = {grist_name: 0.03}
     util.bases[name] = deepcopy(choice_grystal_dict)
 
@@ -667,20 +849,25 @@ for grist_name in config.grists:
 for _, aspect in skills.aspects.items():
     name = f"pure {aspect.name}"
     pure_aspect_dict = deepcopy(defaults)
-    pure_aspect_dict.update({
-        "forbiddencode": True,
-        "power": 100,
-        "inheritpower": 100,
-        "size": 1,
-        "description": f"Pure, condensed {aspect.name}.",
-        "cost": config.aspect_grists[aspect.name].copy(),
-        "adjectives": ["pure"],
-        "secretadjectives": config.aspect_secretadjectives[aspect.name].copy(),
-        "creator": "ebolite",
-        "prototype_name": aspect.name,
-        "code": get_base_code_or_random(name),
-    })
-    pure_aspect_dict["secret_states"] = {f"subtract {aspect.name}": 1, f"add {aspect.name}": 1}
+    pure_aspect_dict.update(
+        {
+            "forbiddencode": True,
+            "power": 100,
+            "inheritpower": 100,
+            "size": 1,
+            "description": f"Pure, condensed {aspect.name}.",
+            "cost": config.aspect_grists[aspect.name].copy(),
+            "adjectives": ["pure"],
+            "secretadjectives": config.aspect_secretadjectives[aspect.name].copy(),
+            "creator": "ebolite",
+            "prototype_name": aspect.name,
+            "code": get_base_code_or_random(name),
+        }
+    )
+    pure_aspect_dict["secret_states"] = {
+        f"subtract {aspect.name}": 1,
+        f"add {aspect.name}": 1,
+    }
     if aspect.beneficial:
         pure_aspect_dict["onhit_states"] = {f"subtract {aspect.name}": 0.5}
         pure_aspect_dict["wear_states"] = {f"add {aspect.name}": 0.5}
@@ -715,7 +902,11 @@ for base, base_dict in util.bases.items():
         while code in util.codes:
             code = binaryoperations.random_valid_code()
         base_dict["code"] = code
-    base_dict["adjectives"] = [descriptor for descriptor in base.split(" ") if descriptor != base.split(" ")[-1]]
+    base_dict["adjectives"] = [
+        descriptor
+        for descriptor in base.split(" ")
+        if descriptor != base.split(" ")[-1]
+    ]
     code = base_dict["code"]
     util.codes[code] = base
 util.writejson(util.bases, "bases")
@@ -728,8 +919,12 @@ if __name__ == "__main__":
     t = time.time()
     paradox_code = "bDaaT!eF"
     codes = list(util.codes)
-    left_code, right_code = difflib.get_close_matches(paradox_code, codes, n=2, cutoff=0)
-    print(f"left code {left_code} ({util.codes[left_code]}) right code {right_code} ({util.codes[right_code]}) took {time.time()-t:.2f} secs")
+    left_code, right_code = difflib.get_close_matches(
+        paradox_code, codes, n=2, cutoff=0
+    )
+    print(
+        f"left code {left_code} ({util.codes[left_code]}) right code {right_code} ({util.codes[right_code]}) took {time.time()-t:.2f} secs"
+    )
     # name_desc = {}
     # for base in util.bases:
     #     name_desc[base] = {"description": util.bases[base]["description"]}
