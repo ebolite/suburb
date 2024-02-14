@@ -236,7 +236,10 @@ class LootTile(Tile):
         possible_items = list(util.bases.keys())
         num_random_bases = random.randint(2, 6)
         for i in range(num_random_bases):
-            out.append(random.choice(possible_items))
+            item = alchemy.Item(random.choice(possible_items))
+            while item.forbiddencode:
+                item = alchemy.Item(random.choice(possible_items))
+            out.append(item.name)
         # 1-3 grystals
         num_grystals = random.randint(1, 3)
         possible_grist_types = self.get_possible_grist_types(room)
