@@ -1271,7 +1271,7 @@ for aspect_name, aspect in aspects.items():
     wardaspect = ClassSkill(f"{aspect.name} ward", aspect, "seer", 100)
     wardaspect.description = f"Decreases the {aspect.name.upper()} of the user and sharply decreases the {aspect.name.upper()} of the target."
     wardaspect.parryable = False
-    wardaspect.add_vial_cost("aspect", "-user.power//2")
+    wardaspect.add_vial_cost("aspect", "user.power//2")
     wardaspect.action_cost = 0
     wardaspect.cooldown = 1
     wardaspect.add_aspect_change(
