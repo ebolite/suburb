@@ -9,8 +9,8 @@ import util
 
 aspects: dict["str", "Aspect"] = {}
 skills: dict["str", "Skill"] = {}
-base_skills: list[str] = [] # everyone has these
-player_skills: list[str] = [] # only players get these
+base_skills: list[str] = []  # everyone has these
+player_skills: list[str] = []  # only players get these
 aspect_skills: dict[str, dict[str, int]] = {}
 # aspect_skills looks like this
 # aspect_skills = {
@@ -50,40 +50,58 @@ class_skills: dict[str, dict[str, dict[str, int]]] = {"heir": {}}
 abstratus_skills = {}
 illegal_ai_skills = []
 
-SKILL_CATEGORIES = ["aggressive", "abstinent", "aspected", "accolades", "arsenal", "none"]
+SKILL_CATEGORIES = [
+    "aggressive",
+    "abstinent",
+    "aspected",
+    "accolades",
+    "arsenal",
+    "none",
+]
+
 
 def modify_damage(damage: int, griefer: "strife.Griefer"):
     mettle = griefer.get_stat("mettle")
     mettle = max(mettle, 0)
-    if damage == 0 and mettle == 0: return 0
-    mod = griefer.power / (griefer.power + 6*mettle)
+    if damage == 0 and mettle == 0:
+        return 0
+    mod = griefer.power / (griefer.power + 6 * mettle)
     new_damage = int(damage * mod)
     return int(new_damage)
 
+
 def stat_edge(user_stat: int, target_stat: int) -> float:
-    if user_stat == 0 and target_stat == 0: return 1.0
-    if user_stat < 0: user_stat = 0
-    if target_stat < 0: target_stat = 0
+    if user_stat == 0 and target_stat == 0:
+        return 1.0
+    if user_stat < 0:
+        user_stat = 0
+    if target_stat < 0:
+        target_stat = 0
     try:
         edge = (user_stat - target_stat) / (user_stat + target_stat)
         edge += 1
         return max(edge, 0.1)
-    except ZeroDivisionError: return 1.0
+    except ZeroDivisionError:
+        return 1.0
+
 
 def flip_coin(user: "strife.Griefer", target: "strife.Griefer") -> bool:
     user_luck = user.get_stat("luck")
     target_luck = target.get_stat("luck")
-    edge = (stat_edge(user_luck, target_luck) - 1)*2
+    edge = (stat_edge(user_luck, target_luck) - 1) * 2
     if edge >= 0:
-        roll = random.uniform(0-edge, 1)
+        roll = random.uniform(0 - edge, 1)
     else:
-        roll = random.uniform(0, 1+-edge)
+        roll = random.uniform(0, 1 + -edge)
     for state in user.states_list:
         roll *= state.coinflip_modifier(user)
-    if roll < 0.5: return True
-    else: return False
+    if roll < 0.5:
+        return True
+    else:
+        return False
 
-class Skill():
+
+class Skill:
     def __init__(self, name):
         self.name: str = name
         skills[name] = self
@@ -107,7 +125,9 @@ class Skill():
         self.stat_bonus_formulas = {}
         self.user_skill: Optional[str] = None
         self.additional_skill: Optional[str] = None
-        self.special_effect: Optional[Callable[[strife.Griefer, strife.Griefer], Optional[str]]] = None
+        self.special_effect: Optional[
+            Callable[[strife.Griefer, strife.Griefer], Optional[str]]
+        ] = None
 
     def add_vial_cost(self, vial_name: str, formula: str):
         self.vial_cost_formulas[vial_name] = formula
@@ -126,7 +146,7 @@ class Skill():
 
     def add_aspect_change(self, aspect_name: str, formula: str):
         self.aspect_change_formulas[aspect_name] = formula
-    
+
     def add_stat_bonus(self, stat_name: str, formula: str):
         self.stat_bonus_formulas[stat_name] = formula
 
@@ -136,17 +156,20 @@ class Skill():
             true_cost = user.format_formula(formula, "user")
             true_costs[vial_name] = int(eval(true_cost))
         return true_costs
-    
+
     def get_valid_targets(self, user: "strife.Griefer") -> list[str]:
-        if self.target_self: return [user.name]
+        if self.target_self:
+            return [user.name]
         valid_targets = [griefer.name for griefer in user.strife.griefer_list]
         return valid_targets
 
-    def format_formula(self, formula: str, user: "strife.Griefer", target: "strife.Griefer") -> str:
+    def format_formula(
+        self, formula: str, user: "strife.Griefer", target: "strife.Griefer"
+    ) -> str:
         formula = user.format_formula(formula, "user")
         formula = target.format_formula(formula, "target")
         return formula
-    
+
     def evaluate_theoretical_damage(self, user: "strife.Griefer") -> int:
         formula = self.damage_formula
         formula = user.format_formula(formula, "user")
@@ -163,10 +186,15 @@ class Skill():
                 if self.beneficial:
                     team = user.team
                 else:
-                    if user.team == "red": team = "blue"
-                    else: team = "red"
-            targets_list = [griefer for griefer in user.strife.griefer_list if griefer.team == team]
-        if not self.is_usable_by(user): return
+                    if user.team == "red":
+                        team = "blue"
+                    else:
+                        team = "red"
+            targets_list = [
+                griefer for griefer in user.strife.griefer_list if griefer.team == team
+            ]
+        if not self.is_usable_by(user):
+            return
         costs = self.get_costs(user)
         user.pay_costs(costs)
         user.add_cooldown(self.name, self.cooldown)
@@ -175,10 +203,10 @@ class Skill():
             user.strife.log(message)
         for target in targets_list:
             self.affect(user, target)
-        if self.additional_skill is not None: 
+        if self.additional_skill is not None:
             skill = skills[self.additional_skill]
             skill.use(user, targets_list)
-        if self.user_skill is not None: 
+        if self.user_skill is not None:
             # user_skill is not used if the target is the user
             for griefer in targets_list:
                 if griefer.name == user.name:
@@ -191,13 +219,15 @@ class Skill():
                     for griefer in user.strife.griefer_list:
                         if griefer.team == user.team:
                             skill.affect(user, griefer)
-        if user.dead: return
+        if user.dead:
+            return
         for vial in user.vials_list:
             vial.use_skill(user, self)
 
     # apply skill effects to individual target
     def affect(self, user: "strife.Griefer", target: "strife.Griefer"):
-        if target.name not in self.get_valid_targets(user): return
+        if target.name not in self.get_valid_targets(user):
+            return
 
         # damage step
         damage_formula = self.format_formula(self.damage_formula, user, target)
@@ -216,13 +246,17 @@ class Skill():
         if self.parryable and target.player is not None:
             # higher target savvy = lower roll = more likely to parry
             edge = stat_edge(target.get_stat("savvy"), user.get_stat("savvy")) - 1
-            for vial in target.vials_list: edge += vial.parry_roll_modifier(target) - 1
-            for state in target.states_list: edge += state.parry_roll_modifier(target) - 1
-            edge += (stat_edge(target.get_stat("luck")//4, user.get_stat("luck")//4)) - 0.25
+            for vial in target.vials_list:
+                edge += vial.parry_roll_modifier(target) - 1
+            for state in target.states_list:
+                edge += state.parry_roll_modifier(target) - 1
+            edge += (
+                stat_edge(target.get_stat("luck") // 4, user.get_stat("luck") // 4)
+            ) - 0.25
             if edge >= 0:
-                roll = random.uniform(0-edge, 1)
+                roll = random.uniform(0 - edge, 1)
             else:
-                roll = random.uniform(0, 1+-edge)
+                roll = random.uniform(0, 1 + -edge)
             if roll < config.base_parry_chance:
                 target.strife.log(f"{target.nickname} AUTO-PARRIES!")
                 for vial in target.vials_list:
@@ -230,8 +264,10 @@ class Skill():
                 for state in target.states_list:
                     state.on_parry(target, damage)
                 return
-        if damage != 0: target.take_damage(damage, coin=coin)
-        if target.death_break(): return
+        if damage != 0:
+            target.take_damage(damage, coin=coin)
+        if target.death_break():
+            return
         if damage != 0 or not self.need_damage_to_apply_states:
             for state_name in self.apply_states:
                 potency_formula = self.apply_states[state_name]["potency_formula"]
@@ -241,7 +277,9 @@ class Skill():
                 target.apply_state(state_name, user, potency, duration)
             for state_name in self.state_potency_changes:
                 potency_change_formula = self.state_potency_changes[state_name]
-                potency_change_formula = self.format_formula(potency_change_formula, user, target)
+                potency_change_formula = self.format_formula(
+                    potency_change_formula, user, target
+                )
                 potency_change = float(eval(potency_change_formula))
                 target.add_state_potency(state_name, potency_change)
             for vial in user.vials_list:
@@ -256,26 +294,35 @@ class Skill():
                 if state_name not in target.states:
                     duration = 2
                 else:
-                    if coin: duration = 2
-                    else: duration = 1
+                    if coin:
+                        duration = 2
+                    else:
+                        duration = 1
                 target.apply_state(state_name, user, potency, duration)
-                if target.death_break(): return
+                if target.death_break():
+                    return
         # vial change step
         for vial_name in self.vial_change_formulas:
             vial_formula = self.vial_change_formulas[vial_name]
             vial_formula = self.format_formula(vial_formula, user, target)
             if vial_name in target.vials:
                 change = target.change_vial(vial_name, int(eval(vial_formula)))
-                if change > 0: user.strife.log(f"{target.nickname}'s {vial_name.upper()} increased by {change}!")
-                elif change < 0: user.strife.log(f"{target.nickname}'s {vial_name.upper()} decreased by {-change}!")
-        
+                if change > 0:
+                    user.strife.log(
+                        f"{target.nickname}'s {vial_name.upper()} increased by {change}!"
+                    )
+                elif change < 0:
+                    user.strife.log(
+                        f"{target.nickname}'s {vial_name.upper()} decreased by {-change}!"
+                    )
+
         # stat change step
         for stat_name in self.stat_bonus_formulas:
             stat_formula = self.stat_bonus_formulas[stat_name]
             stat_formula = self.format_formula(stat_formula, user, target)
             target.add_bonus(stat_name, int(eval(stat_formula)))
 
-        #aspect change step
+        # aspect change step
         for aspect_name in self.aspect_change_formulas:
             aspect_formula = self.aspect_change_formulas[aspect_name]
             aspect_formula = self.format_formula(aspect_formula, user, target)
@@ -286,39 +333,51 @@ class Skill():
         # special effect step
         if self.special_effect is not None:
             effect_log = self.special_effect(user, target)
-            if effect_log is not None: user.strife.log(effect_log)
+            if effect_log is not None:
+                user.strife.log(effect_log)
 
         # end step
         user.death_break()
         target.death_break()
 
     def is_usable_by(self, griefer: "strife.Griefer"):
-        if not griefer.can_pay_vial_costs(self.get_costs(griefer)): return False
-        if griefer.get_skill_cooldown(self.name) > 0: return False
+        if not griefer.can_pay_vial_costs(self.get_costs(griefer)):
+            return False
+        if griefer.get_skill_cooldown(self.name) > 0:
+            return False
         for state in griefer.states_list:
-            if self.category in state.lock_categories(griefer): return False
+            if self.category in state.lock_categories(griefer):
+                return False
         return True
-    
+
     def is_submittable_by(self, griefer: "strife.Griefer"):
-        if not self.is_usable_by(griefer): return False
+        if not self.is_usable_by(griefer):
+            return False
         total_costs = self.get_costs(griefer)
         for skill in griefer.submitted_skills_list:
-            if skill.name == self.name and self.cooldown > 0: return False
+            if skill.name == self.name and self.cooldown > 0:
+                return False
             for vial_name, value in skill.get_costs(griefer).items():
-                if vial_name in total_costs: total_costs[vial_name] += value
-                else: total_costs[vial_name] = value
-        if not griefer.can_pay_vial_costs(total_costs): return False
+                if vial_name in total_costs:
+                    total_costs[vial_name] += value
+                else:
+                    total_costs[vial_name] = value
+        if not griefer.can_pay_vial_costs(total_costs):
+            return False
         return True
 
     def get_dict(self, griefer: "strife.Griefer") -> dict:
         out = deepcopy(self.__dict__)
-        if self.user_skill is not None: out["user_skill"] = skills[self.user_skill].get_dict(griefer)
-        if self.additional_skill is not None: out["additional_skill"] = skills[self.additional_skill].get_dict(griefer)
+        if self.user_skill is not None:
+            out["user_skill"] = skills[self.user_skill].get_dict(griefer)
+        if self.additional_skill is not None:
+            out["additional_skill"] = skills[self.additional_skill].get_dict(griefer)
         out["costs"] = self.get_costs(griefer)
         out["valid_targets"] = self.get_valid_targets(griefer)
         out["special_effect"] = ""
         out["usable"] = self.is_usable_by(griefer)
         return out
+
 
 AGGRIEVE_FORMULA = "user.base_damage * (1 + 0.5*coin)"
 
@@ -332,7 +391,9 @@ base_skills.append("aggrieve")
 ASSAIL_FORMULA = "user.base_damage * (1.5 + 0.75*coin)"
 
 assail = Skill("assail")
-assail.description = "Deals additional damage compared to aggrieve, but costs a bit of VIM."
+assail.description = (
+    "Deals additional damage compared to aggrieve, but costs a bit of VIM."
+)
 assail.damage_formula = ASSAIL_FORMULA
 assail.category = "aggressive"
 assail.add_vial_cost("vim", "user.power//2")
@@ -370,7 +431,9 @@ abjure.add_vial_cost("vim", "user.power//2")
 base_skills.append("abjure")
 
 abstain = Skill("abstain")
-abstain.description = "The user ABSTAINS, regenerating some VIM but accomplishing nothing else."
+abstain.description = (
+    "The user ABSTAINS, regenerating some VIM but accomplishing nothing else."
+)
 abstain.parryable = False
 abstain.beneficial = True
 abstain.target_self = True
@@ -391,10 +454,12 @@ abuse.add_vial_cost("vim", "user.power")
 abuse.category = "aggressive"
 base_skills.append("abuse")
 
+
 def abscond_func(user: "strife.Griefer", target: "strife.Griefer"):
     user.strife.banned_players.append(user.name)
     user.strife.remove_griefer(user)
     user.strife.verify_strife()
+
 
 abscond = Skill("abscond")
 abscond.description = "Sweet abscond bro!"
@@ -432,7 +497,8 @@ awreak.add_apply_state("stun", 1, "1.5")
 awreak.add_vial_cost("vim", "user.power")
 awreak.damage_formula = "user.base_damage * (3 + 1.5*coin)"
 
-class Aspect():
+
+class Aspect:
     def __init__(self, name):
         aspects[name] = self
         self.name: str = name
@@ -457,15 +523,18 @@ class Aspect():
             ratios = 0
             present_vials = []
             for vial_name in self.vials:
-                if vial_name not in target.vials: continue
+                if vial_name not in target.vials:
+                    continue
                 try:
                     current = target.get_vial(vial_name)
                     maximum = target.get_vial_maximum(vial_name)
                     ratios += current / maximum
                     present_vials.append(vial_name)
-                except KeyError: continue
-            if len(present_vials) == 0: return 0.0
-            stat_ratio = ratios / len(present_vials)         
+                except KeyError:
+                    continue
+            if len(present_vials) == 0:
+                return 0.0
+            stat_ratio = ratios / len(present_vials)
         if not raw:
             stat_ratio *= self.balance_mult
             stat_ratio *= self.ratio_mult
@@ -478,12 +547,17 @@ class Aspect():
         stat_ratio *= self.balance_mult
         stat_ratio *= self.ratio_mult
         return stat_ratio
-    
+
     def adjust(self, target: "strife.Griefer", value: int, return_value=False):
-        value = int(value*self.balance_mult)
-        if self.check_vials: old_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
-        else: old_vials = {}
-        adjustment = int(value/self.adjustment_divisor)
+        value = int(value * self.balance_mult)
+        if self.check_vials:
+            old_vials = {
+                vial_name: target.get_vial_maximum(vial_name)
+                for vial_name in target.vials
+            }
+        else:
+            old_vials = {}
+        adjustment = int(value / self.adjustment_divisor)
         if self.is_vial:
             for vial_name in self.vials:
                 if vial_name in target.vials:
@@ -491,12 +565,19 @@ class Aspect():
         else:
             target.add_bonus(self.stat_name, adjustment)
         if self.check_vials:
-            new_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
+            new_vials = {
+                vial_name: target.get_vial_maximum(vial_name)
+                for vial_name in target.vials
+            }
             for vial_name in old_vials:
                 if old_vials[vial_name] != new_vials[vial_name]:
-                    target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
-        if isinstance(self, NegativeAspect): adjustment *= -1 # just for proper printing
-        if return_value: return str(adjustment)
+                    target.change_vial(
+                        vial_name, new_vials[vial_name] - old_vials[vial_name]
+                    )
+        if isinstance(self, NegativeAspect):
+            adjustment *= -1  # just for proper printing
+        if return_value:
+            return str(adjustment)
         return f"{target.nickname}'s {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} by {adjustment}!"
 
     def maximum_adjust(self, target: "strife.Griefer", value: int, return_value=False):
@@ -507,15 +588,24 @@ class Aspect():
             for vial_name in self.vials:
                 if vial_name in target.vials:
                     target.add_bonus(vial_name, adjustment)
-                    target.change_vial(vial_name, adjustment) # for half vials
-            if return_value: return str(adjustment)
-            else: return f"{target.nickname}'s maximum {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} by {adjustment}!"
+                    target.change_vial(vial_name, adjustment)  # for half vials
+            if return_value:
+                return str(adjustment)
+            else:
+                return f"{target.nickname}'s maximum {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} by {adjustment}!"
 
-    def permanent_adjust(self, target: "strife.Griefer", value: int, return_value=False):
-        value = int(value*self.balance_mult)
-        if self.check_vials: old_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
-        else: old_vials = {}
-        adjustment = int(value/self.adjustment_divisor)
+    def permanent_adjust(
+        self, target: "strife.Griefer", value: int, return_value=False
+    ):
+        value = int(value * self.balance_mult)
+        if self.check_vials:
+            old_vials = {
+                vial_name: target.get_vial_maximum(vial_name)
+                for vial_name in target.vials
+            }
+        else:
+            old_vials = {}
+        adjustment = int(value / self.adjustment_divisor)
         if self.is_vial:
             for vial_name in self.vials:
                 if vial_name in target.vials:
@@ -523,14 +613,21 @@ class Aspect():
         else:
             target.add_permanent_bonus(self.stat_name, adjustment)
         if self.check_vials:
-            new_vials = {vial_name:target.get_vial_maximum(vial_name) for vial_name in target.vials}
+            new_vials = {
+                vial_name: target.get_vial_maximum(vial_name)
+                for vial_name in target.vials
+            }
             for vial_name in old_vials:
                 if old_vials[vial_name] != new_vials[vial_name]:
-                    target.change_vial(vial_name, new_vials[vial_name]-old_vials[vial_name])
-        if isinstance(self, NegativeAspect): adjustment *= -1 # just for proper printing
-        if return_value: return str(adjustment)
+                    target.change_vial(
+                        vial_name, new_vials[vial_name] - old_vials[vial_name]
+                    )
+        if isinstance(self, NegativeAspect):
+            adjustment *= -1  # just for proper printing
+        if return_value:
+            return str(adjustment)
         return f"{target.nickname}'s {self.name.upper()} {'increased' if adjustment >= 0 else 'decreased'} PERMANENTLY by {adjustment}!"
-    
+
     def permanent_adjust_player(self, player: "sessions.Player", value: int):
         adjustment = self.calculate_adjustment(value)
         if self.is_vial:
@@ -541,30 +638,36 @@ class Aspect():
 
     def calculate_adjustment(self, value: int):
         adjustment = value * self.balance_mult
-        adjustment = int(adjustment/self.adjustment_divisor)
+        adjustment = int(adjustment / self.adjustment_divisor)
         return adjustment
-    
+
     @property
     def maximum_name(self) -> str:
-        if self.is_vial: return f"maximum {self.name.upper()}"
-        else: return self.name.upper()
+        if self.is_vial:
+            return f"maximum {self.name.upper()}"
+        else:
+            return self.name.upper()
+
 
 class NegativeAspect(Aspect):
     def ratio(self, target: "strife.Griefer", raw=False) -> float:
-        if not raw: return super().inverse_ratio(target)
-        else: return super().ratio(target, raw=True)
-    
+        if not raw:
+            return super().inverse_ratio(target)
+        else:
+            return super().ratio(target, raw=True)
+
     def inverse_ratio(self, target: "strife.Griefer") -> float:
         return super().ratio(target)
-    
+
     def adjust(self, target: "strife.Griefer", value: int):
         return super().adjust(target, -value)
 
     def permanent_adjust(self, target: "strife.Griefer", value: int):
         return super().permanent_adjust(target, -value)
-    
+
     def permanent_adjust_player(self, player: "sessions.Player", value: int):
         return super().permanent_adjust_player(player, -value)
+
 
 space = Aspect("space")
 space.stat_name = "mettle"
@@ -607,12 +710,12 @@ blood.ratio_mult = 1.5
 life = Aspect("life")
 life.is_vial = True
 life.vials = ["hp"]
-life.adjustment_divisor = 1/3
+life.adjustment_divisor = 1 / 3
 
 doom = NegativeAspect("doom")
 doom.is_vial = True
 doom.vials = ["hp"]
-doom.adjustment_divisor = 1/3
+doom.adjustment_divisor = 1 / 3
 doom.ratio_mult = 2
 doom.balance_mult = 1.3
 doom.beneficial = False
@@ -634,11 +737,13 @@ void.beneficial = False
 for aspect_name in aspects:
     aspect_skills[aspect_name] = {}
 
+
 class AspectSkill(Skill):
     def __init__(self, skill_name: str, aspect: Aspect, rung_required: int):
         super().__init__(skill_name)
         aspect_skills[aspect.name][skill_name] = rung_required
         self.category = "aspected"
+
 
 # time
 
@@ -686,7 +791,9 @@ reassess.action_cost = 0
 reassess.cooldown = 2
 
 tactics = AspectSkill("tactics", mind, 50)
-tactics.description = "Deals damage based on how much MIND (tact) you have. Unaffected by coin flips >:)."
+tactics.description = (
+    "Deals damage based on how much MIND (tact) you have. Unaffected by coin flips >:)."
+)
 tactics.add_vial_cost("aspect", "user.power")
 tactics.damage_formula = "user.base_damage * user.mind.ratio * 9"
 
@@ -725,7 +832,9 @@ vigil.damage_formula = "user.base_damage * user.hope.ratio * (5 + 2*coin)"
 
 # rage
 seethe = AspectSkill("seethe", rage, 10)
-seethe.description = "Increases the target's RAGE, which increases both damage dealt and taken."
+seethe.description = (
+    "Increases the target's RAGE, which increases both damage dealt and taken."
+)
 seethe.parryable = False
 seethe.action_cost = 0
 seethe.cooldown = 1
@@ -830,10 +939,14 @@ erase.add_vial_cost("aspect", "user.power//2")
 erase.add_aspect_change("void", "user.power")
 
 strike_between = AspectSkill("strike between", void, 50)
-strike_between.description = "Deals damage based on your VOID and increases the target's VOID."
+strike_between.description = (
+    "Deals damage based on your VOID and increases the target's VOID."
+)
 strike_between.add_vial_cost("aspect", "user.power//2")
 strike_between.add_aspect_change("void", "user.power")
-strike_between.damage_formula = "user.base_damage * user.void.ratio * 4 * (1 + 0.5*coin)"
+strike_between.damage_formula = (
+    "user.base_damage * user.void.ratio * 4 * (1 + 0.5*coin)"
+)
 
 balance_changes = {
     "thief": {"doom": 3, "void": 3},
@@ -843,87 +956,110 @@ balance_changes = {
     "bard": {"time": 1.5, "life": 1.25},
 }
 
+
 def get_balance_mult(class_name, aspect: Aspect):
     if class_name in balance_changes and aspect.name in balance_changes[class_name]:
         return aspect.balance_mult * balance_changes[class_name][aspect.name]
-    else: return aspect.balance_mult
+    else:
+        return aspect.balance_mult
+
 
 class ClassSkill(Skill):
     def __init__(self, name: str, aspect: Aspect, class_name: str, required_rung: int):
-        if class_name not in class_skills: class_skills[class_name] = {}
-        if aspect.name not in class_skills[class_name]: class_skills[class_name][aspect.name] = {}
+        if class_name not in class_skills:
+            class_skills[class_name] = {}
+        if aspect.name not in class_skills[class_name]:
+            class_skills[class_name][aspect.name] = {}
         class_skills[class_name][aspect.name][name] = required_rung
         super().__init__(name)
         self.category = "accolades"
 
+
 def steal_effect_constructor(aspect: Aspect) -> Callable:
-        def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
-            if f"stolen{aspect.name}" in target.tags:
-                return f"{target.nickname} already had {aspect.name.upper()} stolen!"
-            else:
-                target.tags.append(f"stolen{aspect.name}")
-            value = max(target.power//6, 1)
-            value *= 4
-            stolen_target = aspect.permanent_adjust(target, -value, return_value=True)
-            stolen = aspect.permanent_adjust(user, value//4, return_value=True)
-            return f"{user.nickname} stole {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
-        return steal_effect
+    def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
+        if f"stolen{aspect.name}" in target.tags:
+            return f"{target.nickname} already had {aspect.name.upper()} stolen!"
+        else:
+            target.tags.append(f"stolen{aspect.name}")
+        value = max(target.power // 6, 1)
+        value *= 4
+        stolen_target = aspect.permanent_adjust(target, -value, return_value=True)
+        stolen = aspect.permanent_adjust(user, value // 4, return_value=True)
+        return f"{user.nickname} stole {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
+
+    return steal_effect
+
 
 def robbery_effect_constructor(aspect: Aspect) -> Callable:
-        def robbery_effect(user: "strife.Griefer", target: "strife.Griefer"):
-            if target.npc is not None and user.player is not None:
-                spoils = target.npc.make_spoils(3)
-                user.player.add_unclaimed_grist(spoils)
-                user.strife.log(f"{user.nickname} stole grist!")
-            value = max(target.power//6, 1)
-            stolen_target = aspect.maximum_adjust(target, -value, return_value=True)
-            stolen = aspect.maximum_adjust(user, value//4, return_value=True)
-            return f"{user.nickname} robbed {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
-        return robbery_effect
+    def robbery_effect(user: "strife.Griefer", target: "strife.Griefer"):
+        if target.npc is not None and user.player is not None:
+            spoils = target.npc.make_spoils(3)
+            user.player.add_unclaimed_grist(spoils)
+            user.strife.log(f"{user.nickname} stole grist!")
+        value = max(target.power // 6, 1)
+        stolen_target = aspect.maximum_adjust(target, -value, return_value=True)
+        stolen = aspect.maximum_adjust(user, value // 4, return_value=True)
+        return f"{user.nickname} robbed {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
+
+    return robbery_effect
+
 
 def rogue_steal_effect_constructor(aspect: Aspect) -> Callable:
-        def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
-            if f"looted{aspect.name}" in target.tags:
-                return f"{target.nickname} already had {aspect.name.upper()} looted!"
-            else:
-                target.tags.append(f"looted{aspect.name}")
-            value = max(target.power//6, 1)
-            value *= 4
-            stolen_target = aspect.permanent_adjust(target, -value, return_value=True)
-            stolen = "0"
-            for griefer in user.team_members:
-                stolen = aspect.permanent_adjust(griefer, value//8, return_value=True)
-            return f"{user.nickname} looted {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
-        return steal_effect
+    def steal_effect(user: "strife.Griefer", target: "strife.Griefer"):
+        if f"looted{aspect.name}" in target.tags:
+            return f"{target.nickname} already had {aspect.name.upper()} looted!"
+        else:
+            target.tags.append(f"looted{aspect.name}")
+        value = max(target.power // 6, 1)
+        value *= 4
+        stolen_target = aspect.permanent_adjust(target, -value, return_value=True)
+        stolen = "0"
+        for griefer in user.team_members:
+            stolen = aspect.permanent_adjust(griefer, value // 8, return_value=True)
+        return f"{user.nickname} looted {stolen_target} {aspect.name.upper()} from {target.nickname} (+{stolen})!"
+
+    return steal_effect
+
 
 def scatter_effect_constructor(aspect: Aspect) -> Callable:
-        def scatter_effect(user: "strife.Griefer", target: "strife.Griefer"):
-            if user.player is None: return "What."
-            bonus = user.power//24
-            for player_name in user.player.session.starting_players:
-                player = sessions.Player(player_name)
-                for subplayer in player.sub_players_list:
-                    if subplayer.strife is not None:
-                        player_griefer = subplayer.strife.get_griefer(subplayer.name)
-                        log_message = aspect.permanent_adjust(player_griefer, bonus)
-                        player_griefer.strife.log(log_message)
-                else:
-                    aspect.permanent_adjust_player(player, bonus)
-            return f"{aspect.calculate_adjustment(bonus)} {aspect.name.upper()} was scattered!"
-        return scatter_effect
+    def scatter_effect(user: "strife.Griefer", target: "strife.Griefer"):
+        if user.player is None:
+            return "What."
+        bonus = user.power // 24
+        for player_name in user.player.session.starting_players:
+            player = sessions.Player(player_name)
+            for subplayer in player.sub_players_list:
+                if subplayer.strife is not None:
+                    player_griefer = subplayer.strife.get_griefer(subplayer.name)
+                    log_message = aspect.permanent_adjust(player_griefer, bonus)
+                    player_griefer.strife.log(log_message)
+            else:
+                aspect.permanent_adjust_player(player, bonus)
+        return (
+            f"{aspect.calculate_adjustment(bonus)} {aspect.name.upper()} was scattered!"
+        )
+
+    return scatter_effect
+
 
 def sway_effect_constructor(aspect: Aspect) -> Callable:
-        def sway_effect(user: "strife.Griefer", target: "strife.Griefer"):
-            bonus = int(user.power*1.5*get_balance_mult("witch", aspect))
-            decrease_team = target.team
-            if decrease_team == "blue": increase_team = "red"
-            else: increase_team = "blue"
-            for griefer in user.strife.griefer_list:
-                if griefer.team == increase_team: adjustment = bonus
-                else: adjustment = -bonus
-                aspect.adjust(griefer, adjustment)
-            return f"{aspect.calculate_adjustment(bonus)} {aspect.name.upper()} was swayed!"
-        return sway_effect
+    def sway_effect(user: "strife.Griefer", target: "strife.Griefer"):
+        bonus = int(user.power * 1.5 * get_balance_mult("witch", aspect))
+        decrease_team = target.team
+        if decrease_team == "blue":
+            increase_team = "red"
+        else:
+            increase_team = "blue"
+        for griefer in user.strife.griefer_list:
+            if griefer.team == increase_team:
+                adjustment = bonus
+            else:
+                adjustment = -bonus
+            aspect.adjust(griefer, adjustment)
+        return f"{aspect.calculate_adjustment(bonus)} {aspect.name.upper()} was swayed!"
+
+    return sway_effect
+
 
 for aspect_name, aspect in aspects.items():
     # knight
@@ -937,16 +1073,22 @@ for aspect_name, aspect in aspects.items():
     aspectloss = ClassSkill(f"{aspect.name}loss", aspect, "prince", 25)
     aspectloss.description = f"Sharply lowers the target's {aspect.name.upper()}."
     aspectloss.add_vial_cost("aspect", "user.power//2")
-    aspectloss.add_aspect_change(aspect.name, f"-user.power*1.5 * {get_balance_mult('prince', aspect)}")
+    aspectloss.add_aspect_change(
+        aspect.name, f"-user.power*1.5 * {get_balance_mult('prince', aspect)}"
+    )
     aspectloss.parryable = False
 
     aspectblast = ClassSkill(f"{aspect.name}blast", aspect, "prince", 100)
     aspectblast.description = f"Deals damage based on your {aspect.name.upper()} and lowers the target's {aspect.name.upper()}"
     aspectblast.add_vial_cost("vim", "user.power//2")
     aspectblast.add_vial_cost("aspect", "user.power")
-    aspectblast.damage_formula = f"user.base_damage * user.{aspect.name}.ratio * (5 + 2*coin)"
+    aspectblast.damage_formula = (
+        f"user.base_damage * user.{aspect.name}.ratio * (5 + 2*coin)"
+    )
     aspectblast.cooldown = 2
-    aspectblast.add_aspect_change(aspect.name, f"-user.power * {get_balance_mult('prince', aspect)}")
+    aspectblast.add_aspect_change(
+        aspect.name, f"-user.power * {get_balance_mult('prince', aspect)}"
+    )
 
     # thief
     aspectsteal = ClassSkill(f"{aspect.name}-steal", aspect, "thief", 25)
@@ -961,7 +1103,9 @@ for aspect_name, aspect in aspects.items():
     aspectrobbery.description = f"Deals damage, steals maximum {aspect.name.upper()} based on the target's power (for this strife) and steals grist from the target. No limit for use."
     aspectrobbery.add_vial_cost("vim", "user.power//2")
     aspectrobbery.add_vial_cost("aspect", "user.power")
-    aspectrobbery.damage_formula = f"user.base_damage * (1.25 + 1.5*coin) * {get_balance_mult('thief', aspect)}"
+    aspectrobbery.damage_formula = (
+        f"user.base_damage * (1.25 + 1.5*coin) * {get_balance_mult('thief', aspect)}"
+    )
     aspectrobbery.cooldown = 2
     aspectrobbery.special_effect = robbery_effect_constructor(aspect)
 
@@ -973,10 +1117,14 @@ for aspect_name, aspect in aspects.items():
     findaspect.add_vial_cost("aspect", "user.power//2")
     findaspect.cooldown = 1
     findaspect.action_cost = 0
-    findaspect.add_apply_state(f"pursuit of {aspect.name}", 5, f"{get_balance_mult('mage', aspect)}")
+    findaspect.add_apply_state(
+        f"pursuit of {aspect.name}", 5, f"{get_balance_mult('mage', aspect)}"
+    )
 
     usershared = Skill(f"user_{aspect.name}shared")
-    usershared.add_aspect_change(aspect.name, f"user.power//2 * {get_balance_mult('mage', aspect)}")
+    usershared.add_aspect_change(
+        aspect.name, f"user.power//2 * {get_balance_mult('mage', aspect)}"
+    )
     usershared.parryable = False
 
     sharedaspect = ClassSkill(f"shared {aspect.name}", aspect, "mage", 100)
@@ -985,12 +1133,16 @@ for aspect_name, aspect in aspects.items():
     sharedaspect.add_vial_cost("aspect", "user.power//2")
     sharedaspect.action_cost = 0
     sharedaspect.cooldown = 1
-    sharedaspect.add_aspect_change(aspect.name, f"user.power*2 * {get_balance_mult('mage', aspect)}")
+    sharedaspect.add_aspect_change(
+        aspect.name, f"user.power*2 * {get_balance_mult('mage', aspect)}"
+    )
     sharedaspect.user_skill = f"user_{aspect.name}shared"
 
     # witch
     userwork = Skill(f"user_{aspect.name}work")
-    userwork.add_aspect_change(aspect.name, f"user.power//1.5 * {get_balance_mult('witch', aspect)}")
+    userwork.add_aspect_change(
+        aspect.name, f"user.power//1.5 * {get_balance_mult('witch', aspect)}"
+    )
     userwork.parryable = False
 
     aspectwork = ClassSkill(f"{aspect.name}work", aspect, "witch", 25)
@@ -1000,10 +1152,14 @@ for aspect_name, aspect in aspects.items():
     aspectwork.cooldown = 1
     aspectwork.action_cost = 0
     aspectwork.user_skill = f"user_{aspect.name}work"
-    aspectwork.add_aspect_change(aspect.name, f"-1 * user.power//1.5 * {get_balance_mult('witch', aspect)}")
+    aspectwork.add_aspect_change(
+        aspect.name, f"-1 * user.power//1.5 * {get_balance_mult('witch', aspect)}"
+    )
 
     userplay = Skill(f"user_{aspect.name}play")
-    userplay.add_aspect_change(aspect.name, f"-1 * user.power//1.5 * {get_balance_mult('witch', aspect)}")
+    userplay.add_aspect_change(
+        aspect.name, f"-1 * user.power//1.5 * {get_balance_mult('witch', aspect)}"
+    )
     userplay.parryable = False
 
     aspectplay = ClassSkill(f"{aspect.name}play", aspect, "witch", 25)
@@ -1013,10 +1169,14 @@ for aspect_name, aspect in aspects.items():
     aspectplay.cooldown = 1
     aspectplay.action_cost = 0
     aspectplay.user_skill = f"user_{aspect.name}play"
-    aspectplay.add_aspect_change(aspect.name, f"user.power//1.5 * {get_balance_mult('witch', aspect)}")
+    aspectplay.add_aspect_change(
+        aspect.name, f"user.power//1.5 * {get_balance_mult('witch', aspect)}"
+    )
 
     swayaspect = ClassSkill(f"sway {aspect.name}", aspect, "witch", 100)
-    swayaspect.description = f"Decreases the {aspect.name.upper()} of one team and gives it to the other."
+    swayaspect.description = (
+        f"Decreases the {aspect.name.upper()} of one team and gives it to the other."
+    )
     swayaspect.add_vial_cost("aspect", "user.power")
     swayaspect.cooldown = 2
     swayaspect.parryable = False
@@ -1024,21 +1184,29 @@ for aspect_name, aspect in aspects.items():
 
     # maid
     aspectpiece = ClassSkill(f"{aspect.name}piece", aspect, "maid", 25)
-    aspectpiece.description = f"Very sharply increases the {aspect.name.upper()} of the target."
+    aspectpiece.description = (
+        f"Very sharply increases the {aspect.name.upper()} of the target."
+    )
     aspectpiece.add_vial_cost("aspect", "user.power")
-    aspectpiece.add_aspect_change(aspect.name, f"user.power*2*{get_balance_mult('maid', aspect)}")
+    aspectpiece.add_aspect_change(
+        aspect.name, f"user.power*2*{get_balance_mult('maid', aspect)}"
+    )
     aspectpiece.parryable = False
 
     aspectsweep = ClassSkill(f"{aspect.name}sweep", aspect, "maid", 100)
     aspectsweep.description = f"Increases the {aspect.name.upper()} of the target."
     aspectsweep.add_vial_cost("aspect", "user.power//2")
-    aspectsweep.add_aspect_change(aspect.name, f"user.power*{get_balance_mult('maid', aspect)}")
+    aspectsweep.add_aspect_change(
+        aspect.name, f"user.power*{get_balance_mult('maid', aspect)}"
+    )
     aspectsweep.parryable = False
     aspectsweep.action_cost = 0
 
     # page
     scatteraspect = ClassSkill(f"scatter {aspect.name}", aspect, "page", 25)
-    scatteraspect.description = f"Increases the {aspect.name.upper()} of everyone in the session."
+    scatteraspect.description = (
+        f"Increases the {aspect.name.upper()} of everyone in the session."
+    )
     scatteraspect.add_vial_cost("aspect", "user.power//2")
     scatteraspect.target_self = True
     scatteraspect.parryable = False
@@ -1056,7 +1224,9 @@ for aspect_name, aspect in aspects.items():
 
     # bard
     aspectclub = ClassSkill(f"{aspect.name}club", aspect, "bard", 25)
-    aspectclub.description = f"Deals damage depending on how low your {aspect.name.upper()} is. Is free."
+    aspectclub.description = (
+        f"Deals damage depending on how low your {aspect.name.upper()} is. Is free."
+    )
     aspectclub.damage_formula = f"user.base_damage * user.{aspect.name}.inverse_ratio * (2 + 0.5*coin)*{get_balance_mult('bard', aspect)}"
 
     # rogue
@@ -1069,7 +1239,9 @@ for aspect_name, aspect in aspects.items():
     aspectloot.special_effect = rogue_steal_effect_constructor(aspect)
 
     aspecttools = ClassSkill(f"{aspect.name} tools", aspect, "rogue", 100)
-    aspecttools.description = f"Increases your ASPECT based on your {aspect.name.upper()}."
+    aspecttools.description = (
+        f"Increases your ASPECT based on your {aspect.name.upper()}."
+    )
     aspecttools.parryable = False
     aspecttools.beneficial = True
     aspecttools.action_cost = 0
@@ -1086,10 +1258,14 @@ for aspect_name, aspect in aspects.items():
     denyaspect.add_vial_cost("aspect", "user.power//2")
     denyaspect.cooldown = 1
     denyaspect.action_cost = 0
-    denyaspect.add_apply_state(f"retreat from {aspect.name}", 5, f"*{get_balance_mult('seer', aspect)}")
+    denyaspect.add_apply_state(
+        f"retreat from {aspect.name}", 5, f"*{get_balance_mult('seer', aspect)}"
+    )
 
     userward = Skill(f"user_{aspect.name}ward")
-    userward.add_aspect_change(aspect.name, f"-user.power//2**{get_balance_mult('seer', aspect)}")
+    userward.add_aspect_change(
+        aspect.name, f"-user.power//2**{get_balance_mult('seer', aspect)}"
+    )
     userward.parryable = False
 
     wardaspect = ClassSkill(f"{aspect.name} hope", aspect, "seer", 100)
@@ -1098,7 +1274,9 @@ for aspect_name, aspect in aspects.items():
     wardaspect.add_vial_cost("aspect", "-user.power//2")
     wardaspect.action_cost = 0
     wardaspect.cooldown = 1
-    wardaspect.add_aspect_change(aspect.name, f"-user.power*2*{get_balance_mult('seer', aspect)}")
+    wardaspect.add_aspect_change(
+        aspect.name, f"-user.power*2*{get_balance_mult('seer', aspect)}"
+    )
     wardaspect.user_skill = f"user_{aspect.name}ward"
 
     # heir
@@ -1115,22 +1293,33 @@ for aspect_name, aspect in aspects.items():
     stitchaspect.add_vial_cost("aspect", "user.power//2")
     stitchaspect.action_cost = 0
     stitchaspect.cooldown = 1
-    stitchaspect.add_vial_change("hp", f"target.{aspect.name}.ratio*user.power*{get_balance_mult('sylph', aspect)}")
-    stitchaspect.add_aspect_change(aspect.name, f"user.power//2*{get_balance_mult('sylph', aspect)}")
+    stitchaspect.add_vial_change(
+        "hp",
+        f"target.{aspect.name}.ratio*user.power*{get_balance_mult('sylph', aspect)}",
+    )
+    stitchaspect.add_aspect_change(
+        aspect.name, f"user.power//2*{get_balance_mult('sylph', aspect)}"
+    )
 
     # 100: passive
 
+
 def add_abstratus_skill(abstratus_name: str, skill: Skill, required_rung: int):
-    if abstratus_name not in abstratus_skills: abstratus_skills[abstratus_name] = {}
+    if abstratus_name not in abstratus_skills:
+        abstratus_skills[abstratus_name] = {}
     abstratus_skills[abstratus_name][skill.name] = required_rung
+
 
 class AbstratusSkill(Skill):
     def __init__(self, name):
         super().__init__(name)
         self.category = "arsenal"
 
+
 attack = AbstratusSkill("attack")
-attack.description = f"Does as much damage as AGGRIEVE, but gives you VIM instead of costing it."
+attack.description = (
+    f"Does as much damage as AGGRIEVE, but gives you VIM instead of costing it."
+)
 attack.damage_formula = AGGRIEVE_FORMULA
 attack.cooldown = 0
 attack.add_vial_cost("vim", "-user.power//2")
@@ -1141,7 +1330,9 @@ arraign.cooldown = 0
 arraign.damage_formula = ASSAIL_FORMULA
 
 artillerate = AbstratusSkill("artillerate")
-artillerate.description = f"Does as much damage as ASSAULT, but costs as much as ASSAIL."
+artillerate.description = (
+    f"Does as much damage as ASSAULT, but costs as much as ASSAIL."
+)
 artillerate.damage_formula = ASSAULT_FORMULA
 artillerate.add_vial_cost("vim", "user.power//2")
 
@@ -1220,7 +1411,9 @@ aslurp.beneficial = True
 aslurp.target_self = True
 
 assemble = AbstratusSkill("assemble")
-assemble.description = f"ASSEMBLES some food, restoring the health vial and VIM of the target."
+assemble.description = (
+    f"ASSEMBLES some food, restoring the health vial and VIM of the target."
+)
 assemble.cooldown = 2
 assemble.parryable = False
 assemble.beneficial = True
@@ -1233,7 +1426,9 @@ useraxe.need_damage_to_apply_states = False
 useraxe.add_apply_state("vulnerable", 2, "1.0")
 
 axe = AbstratusSkill("axe")
-axe.description = f"Attacks recklessly, making you VULNERABLE for 2 turns with a 1.0 potency."
+axe.description = (
+    f"Attacks recklessly, making you VULNERABLE for 2 turns with a 1.0 potency."
+)
 axe.action_cost = 0
 axe.cooldown = 1
 axe.damage_formula = AGGRIEVE_FORMULA
@@ -1243,6 +1438,7 @@ aim = AbstratusSkill("aim")
 aim.description = f"Applies FOCUS to yourself this turn with potency 1.5, increasing the chance to flip HEADS."
 aim.action_cost = 0
 aim.cooldown = 1
+aim.parryable = False
 aim.add_vial_cost("vim", "user.power//3")
 aim.add_apply_state("focus", 1, "1.0")
 aim.target_self = True
@@ -1255,7 +1451,9 @@ aggerate.add_vial_cost("vim", "user.power//2")
 aggerate.target_team = True
 
 admonish = AbstratusSkill("admonish")
-admonish.description = f"Applies DEMORALIZE to the target for two turns and increases the potency by 0.1."
+admonish.description = (
+    f"Applies DEMORALIZE to the target for two turns and increases the potency by 0.1."
+)
 admonish.parryable = False
 admonish.action_cost = 0
 admonish.cooldown = 1
@@ -1272,14 +1470,18 @@ applot.add_apply_state("bleed", 3, "1.0")
 applot.add_state_potency_change("bleed", "0.1")
 
 auspicate = AbstratusSkill("auspicate")
-auspicate.description = "Deals all-or-nothing damage similar to AGGRESS, but costs no actions."
+auspicate.description = (
+    "Deals all-or-nothing damage similar to AGGRESS, but costs no actions."
+)
 auspicate.damage_formula = AGGRESS_FORMULA
 auspicate.add_vial_cost("vim", "user.power//2")
 auspicate.action_cost = 0
 auspicate.cooldown = 1
 
 ablate = AbstratusSkill("ablate")
-ablate.description = "Deals damage similar to ASSAIL and applies IGNITE with potency 2.0 for 4 turns."
+ablate.description = (
+    "Deals damage similar to ASSAIL and applies IGNITE with potency 2.0 for 4 turns."
+)
 ablate.damage_formula = ASSAIL_FORMULA
 ablate.add_vial_cost("vim", "user.power//2")
 ablate.add_apply_state("ignite", 4, "2.0")
@@ -1305,7 +1507,9 @@ affrap.add_vial_cost("vim", "user.power")
 
 # ballkind
 athleticize = AbstratusSkill("athleticize")
-athleticize.description = "User increases their SPUNK and gains some VIM at the cost of their health vial."
+athleticize.description = (
+    "User increases their SPUNK and gains some VIM at the cost of their health vial."
+)
 athleticize.target_self = True
 athleticize.beneficial = True
 athleticize.parryable = False
@@ -1333,13 +1537,16 @@ abdicate.cooldown = 1
 abdicate.damage_formula = AVENGE_FORMULA
 abdicate.user_skill = "userabdicate"
 
+
 # cupkind
 def assober_effect(user: "strife.Griefer", target: "strife.Griefer"):
     bad_states = [state for state in user.states_list if not state.beneficial]
-    if len(bad_states) == 0: return
+    if len(bad_states) == 0:
+        return
     cured_state = random.choice(bad_states)
     user.remove_state(cured_state.name)
     user.strife.log(f"{user.nickname} was cured of {cured_state.name.upper()}!")
+
 
 assober = AbstratusSkill("assober")
 assober.description = f"Increases your ASPECT and cures a negative state."
@@ -1364,7 +1571,9 @@ apothegmatize.add_vial_cost("vim", "-user.power//2")
 
 # fistkind / glovekind
 arrest = AbstratusSkill("arrest")
-arrest.description = "Deals damage and applies DISARM and VULNERABLE with potency 1.5 for 2 turns."
+arrest.description = (
+    "Deals damage and applies DISARM and VULNERABLE with potency 1.5 for 2 turns."
+)
 arrest.add_vial_cost("vim", "user.power//2")
 arrest.damage_formula = ASSAIL_FORMULA
 arrest.add_apply_state("disarm", 2, "1.0")
@@ -1400,6 +1609,7 @@ aglow.parryable = False
 aglow.beneficial = True
 aglow.cooldown = 2
 
+
 # penkind
 def autograph_effect(user: "strife.Griefer", target: "strife.Griefer"):
     if "autographed" in target.tags:
@@ -1411,8 +1621,9 @@ def autograph_effect(user: "strife.Griefer", target: "strife.Griefer"):
         target.change_vial("hp", hp_change)
         target.change_vial("aspect", resource_change)
     else:
-        target.change_vial("hp", -hp_change*2)
+        target.change_vial("hp", -hp_change * 2)
         target.change_vial("vim", -resource_change)
+
 
 autograph = AbstratusSkill("autograph")
 autograph.description = "Can be used once per target. If used on an ally, restores HP and ASPECT. If used on an enemy, directly drains HP and VIM."
@@ -1526,7 +1737,7 @@ add_abstratus_skill("axekind", avenge, 50)
 # bagkind
 add_abstratus_skill("bagkind", asphyxiate, 1)
 add_abstratus_skill("bagkind", awaitskill, 50)
-    # abduct
+# abduct
 
 # ballkind
 add_abstratus_skill("ballkind", antagonize, 1)
@@ -1544,7 +1755,7 @@ add_abstratus_skill("bladekind", attack, 50)
 add_abstratus_skill("bladekind", againstand, 75)
 
 # bookkind
-    # ask
+# ask
 
 # boomerangkind
 # again
@@ -1559,7 +1770,7 @@ add_abstratus_skill("bowkind", artillerate, 50)
 add_abstratus_skill("bowkind", aim, 75)
 
 # cleaverkind
-    # amputate
+# amputate
 add_abstratus_skill("cleaverkind", avenge, 50)
 add_abstratus_skill("cleaverkind", assemble, 75)
 
@@ -1586,7 +1797,7 @@ add_abstratus_skill("fistkind", arraign, 50)
 add_abstratus_skill("fistkind", anticipate, 75)
 
 # forkkind
-    # avale
+# avale
 add_abstratus_skill("forkkind", arraign, 50)
 
 # glovekind
@@ -1622,7 +1833,7 @@ add_abstratus_skill("ironkind", awaitskill, 50)
 add_abstratus_skill("ironkind", araze, 75)
 
 # jumpropekind
-    # abligate
+# abligate
 add_abstratus_skill("jumpropekind", awaitskill, 50)
 add_abstratus_skill("jumpropekind", asphyxiate, 75)
 
@@ -1646,7 +1857,7 @@ add_abstratus_skill("pankind", arraign, 50)
 
 # paperkind
 add_abstratus_skill("paperkind", awaitskill, 50)
-    # ask
+# ask
 
 # penkind
 add_abstratus_skill("penkind", antagonize, 1)
@@ -1712,7 +1923,7 @@ add_abstratus_skill("shotgunkind", avenge, 50)
 add_abstratus_skill("shotgunkind", adjudge, 75)
 
 # spoonkind
-    # avale
+# avale
 add_abstratus_skill("spoonkind", awaitskill, 50)
 add_abstratus_skill("spoonkind", antagonize, 75)
 
