@@ -23,7 +23,7 @@ aspect_skills: dict[str, dict[str, int]] = {}
 #         "big bang": 250,
 #     }
 # }
-class_skills: dict[str, dict[str, dict[str, int]]] = {}
+class_skills: dict[str, dict[str, dict[str, int]]] = {"heir": {}}
 # class_skills looks like this
 # class_skills = {
 #     "knight": {
