@@ -516,7 +516,7 @@ class Griefer:
         self.death_break()
 
     def take_damage(
-        self, damage: int, coin: Optional[bool] = None, source: Optional[str] = None
+        self, damage: int, coin: Optional[bool] = None, source: Optional[str] = None, log=True
     ) -> int:
         if damage > 0:
             damage = skills.modify_damage(damage, self)
@@ -531,14 +531,15 @@ class Griefer:
         #         modified_damage *= config.player_hp_threshold_damage_mult
         #         damage = int(threshold + modified_damage)
         self.change_vial("hp", -damage)
-        if coin is None:
-            self.strife.log(
-                f"{self.nickname} takes {damage} damage!{ f' ({source})' if source is not None else ''}"
-            )
-        else:
-            self.strife.log(
-                f"{self.nickname} takes {damage} damage! ({'heads' if coin else 'scratch'}){ f' ({source})' if source is not None else ''}"
-            )
+        if log:
+            if coin is None:
+                self.strife.log(
+                    f"{self.nickname} takes {damage} damage!{ f' ({source})' if source is not None else ''}"
+                )
+            else:
+                self.strife.log(
+                    f"{self.nickname} takes {damage} damage! ({'heads' if coin else 'scratch'}){ f' ({source})' if source is not None else ''}"
+                )
         return damage
 
     def death_break(self) -> bool:
