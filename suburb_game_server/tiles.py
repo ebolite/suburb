@@ -293,8 +293,14 @@ class LootTile(Tile):
                 base_item_name = random.choice(bases)
                 while alchemy.Item(base_item_name).forbiddencode:
                     base_item_name = random.choice(bases)
-            new_item = alchemy.Item.modify_alchemy(base_item_name, f"pure {aspect}")
-            loot.append(new_item.name)
+            if random.random() > 0.5:
+                operation = "||"
+            else:
+                operation = "&&"
+            new_item_name = alchemy.alchemize(
+                base_item_name, f"pure {aspect}", operation
+            )
+            loot.append(new_item_name)
         return loot
 
     def get_possible_grystal_types(self) -> list[str]:
