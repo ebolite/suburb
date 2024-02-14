@@ -630,6 +630,7 @@ class InputTextBox(UIElement):
         self.antialias = True
         self.max_characters = 0
         self.numbers_only = False
+        self.no_negatives = True
         self.maximum_value = 0
         self.absolute_text = True
         self.suffix = ""
@@ -718,7 +719,7 @@ class InputTextBox(UIElement):
                 if self.numbers_only:
                     try: int(event.unicode)
                     except ValueError: 
-                        if event.unicode == "-":
+                        if event.unicode == "-" and not self.no_negatives:
                             if self.text[0] != "-": self.text = "-"+self.text
                             else: self.text = self.text.replace("-", "")
                         return
