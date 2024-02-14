@@ -332,6 +332,7 @@ nest.forbidden = True
 stalactite = Tile("'", "stalactite")
 stalactite.forbidden = True
 stalactite.solid = True
+stalactite.impassible = True
 
 return_gate = Tile("0", "return gate")
 return_gate.forbidden = True
