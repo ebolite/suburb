@@ -53,17 +53,32 @@ ui_elements = []
 
 tile_wh = 32
 
-checks = [click_check, key_check, mouseup_check, update_check, always_on_top_check, always_on_bottom_check, keypress_update_check, scroll_check]
+checks = [
+    click_check,
+    key_check,
+    mouseup_check,
+    update_check,
+    always_on_top_check,
+    always_on_bottom_check,
+    keypress_update_check,
+    scroll_check,
+]
 
 icon_surf = pygame.image.load("sprites\\icon.png").convert()
 pygame.display.set_icon(icon_surf)
 pygame.display.set_caption(f"SUBURB CLIENT {util.VERSION}")
 
+
 def rotate_points_about_origin(x: int, y: int, rotation: int) -> tuple[int, int]:
-    if rotation == 90: return -y, x
-    elif rotation == 180: return -x, -y
-    elif rotation == 270: return y, -x
-    else: return x, y
+    if rotation == 90:
+        return -y, x
+    elif rotation == 180:
+        return -x, -y
+    elif rotation == 270:
+        return y, -x
+    else:
+        return x, y
+
 
 def clear_elements():
     for element in ui_elements.copy():
@@ -71,29 +86,38 @@ def clear_elements():
     for check_list in checks:
         check_list = []
 
-def palette_swap(surf: Union[pygame.Surface, pygame.surface.Surface], old_color: pygame.Color, new_color: pygame.Color):
+
+def palette_swap(
+    surf: Union[pygame.Surface, pygame.surface.Surface],
+    old_color: pygame.Color,
+    new_color: pygame.Color,
+):
     new_surf = pygame.Surface(surf.get_size())
     new_surf.fill(new_color)
     surf.set_colorkey(old_color)
     new_surf.blit(surf, (0, 0))
     return new_surf
 
+
 def get_dark_color(r, g, b) -> Color:
     sub = 30
     for color in (r, g, b):
-        if color < 20: sub+= 20
-    r, g, b = r-sub, g-sub, b-sub
+        if color < 20:
+            sub += 20
+    r, g, b = r - sub, g - sub, b - sub
     r, g, b = max(r, 0), max(g, 0), max(b, 0)
     return pygame.Color(r, g, b)
 
+
 def get_white_color(r, g, b) -> Color:
     MULT = 2
-    r, g, b = r*MULT, g*MULT, b*MULT
+    r, g, b = r * MULT, g * MULT, b * MULT
     r, g, b = min(r, 255), min(g, 255), min(b, 255)
     return Color(r, g, b)
 
+
 class UIElement(pygame.sprite.Sprite):
-    def __init__(self): # x and y as fractions of 1 (centered position on screen)
+    def __init__(self):  # x and y as fractions of 1 (centered position on screen)
         super(UIElement, self).__init__()
         self.rect: Union[pygame.Rect, pygame.rect.Rect] = pygame.Rect(0, 0, 0, 0)
         self.relative_binding: Optional[UIElement] = None
@@ -117,7 +141,7 @@ class UIElement(pygame.sprite.Sprite):
 
     def collidepoint(self, pos):
         return self.rect.collidepoint(pos)
-    
+
     def is_mouseover(self):
         return self.collidepoint(pygame.mouse.get_pos())
 
@@ -143,8 +167,10 @@ class UIElement(pygame.sprite.Sprite):
         if self in ui_elements:
             ui_elements.remove(self)
         if self.relative_binding is not None:
-            if self in self.relative_binding.bound_elements: self.relative_binding.bound_elements.remove(self)
-            if self in self.relative_binding.temporary_elements: self.relative_binding.temporary_elements.remove(self)
+            if self in self.relative_binding.bound_elements:
+                self.relative_binding.bound_elements.remove(self)
+            if self in self.relative_binding.temporary_elements:
+                self.relative_binding.temporary_elements.remove(self)
         for list in checks:
             if self in list:
                 list.remove(self)
@@ -155,7 +181,7 @@ class UIElement(pygame.sprite.Sprite):
             element.delete()
         for element in self.temporary_elements.copy():
             element.delete()
-    
+
     def kill_temporary_elements(self):
         for element in self.temporary_elements.copy():
             element.delete()
@@ -180,9 +206,15 @@ class UIElement(pygame.sprite.Sprite):
         if self not in always_on_bottom_check:
             always_on_bottom_check.append(self)
 
-    def convert_to_theme(self, surf: Union[pygame.Surface, pygame.surface.Surface], theme: Optional["themes.Theme"]=None) -> pygame.Surface:
-        if theme is not None: new_theme = theme
-        else: new_theme = self.theme
+    def convert_to_theme(
+        self,
+        surf: Union[pygame.Surface, pygame.surface.Surface],
+        theme: Optional["themes.Theme"] = None,
+    ) -> pygame.Surface:
+        if theme is not None:
+            new_theme = theme
+        else:
+            new_theme = self.theme
         default_theme = themes.default
         surf = palette_swap(surf, default_theme.white, new_theme.white)
         surf = palette_swap(surf, default_theme.light, new_theme.light)
@@ -190,10 +222,15 @@ class UIElement(pygame.sprite.Sprite):
         surf = palette_swap(surf, default_theme.black, new_theme.black)
         return surf
 
-    def get_rect_xy(self, secondary_surf:Union[pygame.Surface, pygame.surface.Surface, None] = None, absolute: Optional[bool]=None) -> tuple[int, int]:
+    def get_rect_xy(
+        self,
+        secondary_surf: Union[pygame.Surface, pygame.surface.Surface, None] = None,
+        absolute: Optional[bool] = None,
+    ) -> tuple[int, int]:
         rect_x: int = 0
         rect_y: int = 0
-        if absolute is None: absolute = self.absolute
+        if absolute is None:
+            absolute = self.absolute
         if secondary_surf is not None:
             secondary_surf_width = secondary_surf.get_width()
             secondary_surf_height = secondary_surf.get_height()
@@ -208,14 +245,20 @@ class UIElement(pygame.sprite.Sprite):
                 rect_y += self.relative_binding.rect.y
         else:
             if self.relative_binding is None:
-                rect_x = int((SCREEN_WIDTH * self.x) - secondary_surf_width/2)
-                rect_y = int((SCREEN_HEIGHT * self.y) - secondary_surf_height/2)
+                rect_x = int((SCREEN_WIDTH * self.x) - secondary_surf_width / 2)
+                rect_y = int((SCREEN_HEIGHT * self.y) - secondary_surf_height / 2)
             else:
-                rect_x = int(self.relative_binding.rect.x - secondary_surf_width/2) + self.x*self.relative_binding.rect.w
-                rect_y = int(self.relative_binding.rect.y - secondary_surf_height/2) + self.y*self.relative_binding.rect.h
-        return rect_x+self.rect_x_offset, rect_y+self.rect_y_offset
-    
-    def mousepan(self, mousebutton:int):
+                rect_x = (
+                    int(self.relative_binding.rect.x - secondary_surf_width / 2)
+                    + self.x * self.relative_binding.rect.w
+                )
+                rect_y = (
+                    int(self.relative_binding.rect.y - secondary_surf_height / 2)
+                    + self.y * self.relative_binding.rect.h
+                )
+        return rect_x + self.rect_x_offset, rect_y + self.rect_y_offset
+
+    def mousepan(self, mousebutton: int):
         if pygame.mouse.get_pressed()[mousebutton]:
             if self.last_mouse_pos is None:
                 self.last_mouse_pos = pygame.mouse.get_pos()
@@ -228,8 +271,9 @@ class UIElement(pygame.sprite.Sprite):
         else:
             self.last_mouse_pos = None
 
+
 class Dowel(UIElement):
-    def __init__(self, x, y, code: str, color:tuple[int, int, int]=(235, 1, 76)):
+    def __init__(self, x, y, code: str, color: tuple[int, int, int] = (235, 1, 76)):
         super().__init__()
         self.x = x
         self.y = y
@@ -247,9 +291,12 @@ class Dowel(UIElement):
         if self.scale != 1.0 and not self.scaled:
             w = self.surf.get_width()
             h = self.surf.get_height()
-            self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
+            self.surf = pygame.transform.scale(
+                self.surf, (int(w * self.scale), int(h * self.scale))
+            )
             self.scaled = True
-        if self.alpha != 255: self.surf.set_alpha(self.alpha)
+        if self.alpha != 255:
+            self.surf.set_alpha(self.alpha)
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
@@ -261,8 +308,10 @@ class Dowel(UIElement):
         depths = [0] + [binaryoperations.bintable[char] for char in code] + [0]
         slice_depths = []
         for i, depth in enumerate(depths):
-            try: next_depth = depths[i+1]
-            except IndexError: next_depth = depths[0]
+            try:
+                next_depth = depths[i + 1]
+            except IndexError:
+                next_depth = depths[0]
             diff = next_depth - depth
             for n in range(8):
                 slice_depth = depth + int(diff * (n / 8))
@@ -273,13 +322,17 @@ class Dowel(UIElement):
         for i in range(NUM_SLICES):
             offsety = DOWEL_H - SLICE_H - i
             depth = slice_depths[i]
-            old_depth = slice_depths[i-1]
-            if depth == 0: new_width = DOWEL_W
-            else: new_width = int(max(DOWEL_W - (45 * depth/62), 10))
-            old_width = int(max(DOWEL_W - (45 * old_depth/62), 10))
+            old_depth = slice_depths[i - 1]
+            if depth == 0:
+                new_width = DOWEL_W
+            else:
+                new_width = int(max(DOWEL_W - (45 * depth / 62), 10))
+            old_width = int(max(DOWEL_W - (45 * old_depth / 62), 10))
             width_diff = abs(old_width - new_width)
-            if new_width < old_width: width_range = range(10, old_width)
-            else: width_range = range(old_width, new_width+1)
+            if new_width < old_width:
+                width_range = range(10, old_width)
+            else:
+                width_range = range(old_width, new_width + 1)
             for width in width_range:
                 offsetx = (DOWEL_W - width) // 2
                 scaled_surf = pygame.transform.scale(slice_surf, (width, SLICE_H))
@@ -287,13 +340,15 @@ class Dowel(UIElement):
         dowel_surf.blit(cap_surf, (0, 0))
         dowel_surf = dowel_surf.convert()
         dowel_surf.set_colorkey(Color(0, 0, 0))
-        dowel_surf = pygame.transform.scale(dowel_surf, (int(DOWEL_W*2), int(DOWEL_H*2)))
+        dowel_surf = pygame.transform.scale(
+            dowel_surf, (int(DOWEL_W * 2), int(DOWEL_H * 2))
+        )
         return dowel_surf
 
     @property
     def light(self):
         return Color(*self.color)
-    
+
     @property
     def white(self):
         return get_white_color(*self.color)
@@ -301,6 +356,7 @@ class Dowel(UIElement):
     @property
     def dark(self):
         return get_dark_color(*self.color)
+
 
 class ToolTip(UIElement):
     def __init__(self, x, y, w, h):
@@ -319,13 +375,25 @@ class ToolTip(UIElement):
         self.rect.x, self.rect.y = self.get_rect_xy()
         mousex, mousey = pygame.mouse.get_pos()
         if self.rect.collidepoint((mousex, mousey)):
-            self.rect.x, self.rect.y = mousex+self.tooltip_offsetx, mousey+self.tooltip_offsety
+            self.rect.x, self.rect.y = (
+                mousex + self.tooltip_offsetx,
+                mousey + self.tooltip_offsety,
+            )
         else:
             # just go really far off screen
             self.rect.x, self.rect.y = 9999999, 9999999
 
+
 class SolidColor(UIElement):
-    def __init__(self, x, y, w, h, color: Union[pygame.Color, list[pygame.Color]], binding:Optional[UIElement]=None):
+    def __init__(
+        self,
+        x,
+        y,
+        w,
+        h,
+        color: Union[pygame.Color, list[pygame.Color]],
+        binding: Optional[UIElement] = None,
+    ):
         super(SolidColor, self).__init__()
         self.x = x
         self.y = y
@@ -349,8 +417,10 @@ class SolidColor(UIElement):
         update_check.append(self)
 
     def get_color(self) -> Union[pygame.Color, list]:
-        if self.color_func is None: return self.color
-        else: return self.color_func()
+        if self.color_func is None:
+            return self.color
+        else:
+            return self.color_func()
 
     def update(self):
         if self.right_click_pan:
@@ -366,7 +436,9 @@ class SolidColor(UIElement):
             fill_color = self.color[index]
             self.animframe += 1
         if self.outline_color is not None:
-            self.outline_surf = pygame.Surface((self.w + self.outline_width*2, self.h + self.outline_width*2))
+            self.outline_surf = pygame.Surface(
+                (self.w + self.outline_width * 2, self.h + self.outline_width * 2)
+            )
         self.rect = self.surf.get_rect()
         if self.absolute:
             self.rect.x, self.rect.y = self.get_rect_xy()
@@ -377,20 +449,42 @@ class SolidColor(UIElement):
             else:
                 width = SCREEN_WIDTH
                 height = SCREEN_HEIGHT
-            self.rect.x = int(width * self.x) - (self.w//2) + self.rect_x_offset
-            self.rect.y = int(height * self.y) - (self.h//2) + self.rect_y_offset
+            self.rect.x = int(width * self.x) - (self.w // 2) + self.rect_x_offset
+            self.rect.y = int(height * self.y) - (self.h // 2) + self.rect_y_offset
             if self.relative_binding is not None:
                 self.rect.x += self.relative_binding.rect.x
                 self.rect.y += self.relative_binding.rect.y
-        self.rect.x, self.rect.y = self.rect.x+self.offsetx, self.rect.y+self.offsety
-        if not self.draw_sprite: return
-        if self.outline_color is not None: 
+        self.rect.x, self.rect.y = (
+            self.rect.x + self.offsetx,
+            self.rect.y + self.offsety,
+        )
+        if not self.draw_sprite:
+            return
+        if self.outline_color is not None:
             self.outline_rect = self.outline_surf.get_rect()
-            self.outline_rect.x, self.outline_rect.y = self.rect.x-self.outline_width, self.rect.y-self.outline_width
-            if self.rect_width: rect_width = self.rect_width + self.outline_width
-            else: rect_width = self.rect_width
-            pygame.draw.rect(self.blit_surf, self.outline_color, self.outline_rect, rect_width, border_radius = self.border_radius+self.outline_width)
-        pygame.draw.rect(self.blit_surf, fill_color, self.rect, self.rect_width, border_radius = self.border_radius)
+            self.outline_rect.x, self.outline_rect.y = (
+                self.rect.x - self.outline_width,
+                self.rect.y - self.outline_width,
+            )
+            if self.rect_width:
+                rect_width = self.rect_width + self.outline_width
+            else:
+                rect_width = self.rect_width
+            pygame.draw.rect(
+                self.blit_surf,
+                self.outline_color,
+                self.outline_rect,
+                rect_width,
+                border_radius=self.border_radius + self.outline_width,
+            )
+        pygame.draw.rect(
+            self.blit_surf,
+            fill_color,
+            self.rect,
+            self.rect_width,
+            border_radius=self.border_radius,
+        )
+
 
 class Div(SolidColor):
     def __init__(self, x, y, w, h):
@@ -407,21 +501,36 @@ class Div(SolidColor):
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy()
 
+
 class TextButton(UIElement):
-    def __init__(self, x, y, w, h, text, onpress: Optional[Callable], hover=True, truncate_text=False, theme: Optional["themes.Theme"]=None):
+    def __init__(
+        self,
+        x,
+        y,
+        w,
+        h,
+        text,
+        onpress: Optional[Callable],
+        hover=True,
+        truncate_text=False,
+        theme: Optional["themes.Theme"] = None,
+    ):
         super(TextButton, self).__init__()
         self.x = x
         self.y = y
         self.w = w
         self.h = h
-        if onpress is None: self.onpress = lambda *args: None
-        else: self.onpress = onpress
+        if onpress is None:
+            self.onpress = lambda *args: None
+        else:
+            self.onpress = onpress
         self.hover_func: Optional[Callable] = None
         self.active = False
         self.hover = hover
         self.truncate_text = truncate_text
         self.truncated = False
-        if theme: self.theme = theme
+        if theme:
+            self.theme = theme
         self.outline_width = 2
         self.absolute = False
         self.fontsize = 16
@@ -445,21 +554,31 @@ class TextButton(UIElement):
 
     def update(self):
         if self.draw_condition is not None:
-            if not self.draw_condition(): return
+            if not self.draw_condition():
+                return
         if self.hover_func is not None and self.is_mouseover():
             self.hover_func()
         if self.truncated == True:
-            self.text_surf = self.font.render(self.text+"...", self.antialias, self.text_color)
+            self.text_surf = self.font.render(
+                self.text + "...", self.antialias, self.text_color
+            )
         else:
-            self.text_surf = self.font.render(self.text, self.antialias, self.text_color)
+            self.text_surf = self.font.render(
+                self.text, self.antialias, self.text_color
+            )
         while self.truncate_text and self.text_surf.get_width() > self.w:
             self.truncated = True
             self.text = self.text[:-1]
-            if self.text[-1] == " ": self.text = self.text[:-1]
-            self.text_surf = self.font.render(self.text+"...", self.antialias, self.text_color)
+            if self.text[-1] == " ":
+                self.text = self.text[:-1]
+            self.text_surf = self.font.render(
+                self.text + "...", self.antialias, self.text_color
+            )
         self.outline_surf = pygame.Surface((self.w, self.h))
         self.outline_surf.fill(self.outline_color)
-        self.surf = pygame.Surface((self.w-2*self.outline_width, self.h-2*self.outline_width))
+        self.surf = pygame.Surface(
+            (self.w - 2 * self.outline_width, self.h - 2 * self.outline_width)
+        )
         self.surf.fill(self.fill_color)
         if self.inactive_condition is not None and self.inactive_condition():
             self.hoversurf = pygame.Surface((self.w, self.h))
@@ -475,24 +594,46 @@ class TextButton(UIElement):
         self.rect.x, self.rect.y = self.get_rect_xy(self.outline_surf)
         if self.draw_sprite:
             self.blit_surf.blit(self.outline_surf, ((self.rect.x, self.rect.y)))
-            self.blit_surf.blit(self.surf, ((self.rect.x+self.outline_width, self.rect.y+self.outline_width)))
-            self.blit_surf.blit(self.text_surf, ((self.rect.x+(self.outline_surf.get_width()/2)-(self.text_surf.get_width()/2), self.rect.y+(self.outline_surf.get_height()/2)-(self.text_surf.get_height()/2))))
+            self.blit_surf.blit(
+                self.surf,
+                ((self.rect.x + self.outline_width, self.rect.y + self.outline_width)),
+            )
+            self.blit_surf.blit(
+                self.text_surf,
+                (
+                    (
+                        self.rect.x
+                        + (self.outline_surf.get_width() / 2)
+                        - (self.text_surf.get_width() / 2),
+                        self.rect.y
+                        + (self.outline_surf.get_height() / 2)
+                        - (self.text_surf.get_height() / 2),
+                    )
+                ),
+            )
             if self.hoversurf != None:
                 self.blit_surf.blit(self.hoversurf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
-        if self.draw_condition is not None and not self.draw_condition(): return
-        if self.inactive_condition is not None and self.inactive_condition(): return
-        if self not in click_check: return
+        if self.draw_condition is not None and not self.draw_condition():
+            return
+        if self.inactive_condition is not None and self.inactive_condition():
+            return
+        if self not in click_check:
+            return
         if isclicked:
-            if self.click_on_mouse_down: self.onpress()
+            if self.click_on_mouse_down:
+                self.onpress()
             elif not self.toggle:
                 self.active = True
 
     def mouseup(self, isclicked):
-        if self.click_on_mouse_down: return
-        if self.draw_condition is not None and not self.draw_condition(): return
-        if self.inactive_condition is not None and self.inactive_condition(): return
+        if self.click_on_mouse_down:
+            return
+        if self.draw_condition is not None and not self.draw_condition():
+            return
+        if self.inactive_condition is not None and self.inactive_condition():
+            return
         if not self.toggle:
             self.active = False
         if isclicked:
@@ -504,8 +645,13 @@ class TextButton(UIElement):
             self.onpress()
 
     def keypress(self, event):
-        if self.hotkey_inactive_condition is not None and self.hotkey_inactive_condition(): return
-        if event.key in self.click_keys: self.onpress()
+        if (
+            self.hotkey_inactive_condition is not None
+            and self.hotkey_inactive_condition()
+        ):
+            return
+        if event.key in self.click_keys:
+            self.onpress()
 
     @property
     def font(self):
@@ -513,11 +659,25 @@ class TextButton(UIElement):
 
 
 class Button(UIElement):
-    def __init__(self, x, y, unpressed_img_path:str, pressed_img_path:Optional[str], onpress:Callable, alt:Optional[Callable]=None, alt_img_path=None, altclick:Optional[Callable]=None, hover=None, theme:themes.Theme=suburb.current_theme()): # x and y as fractions of 1 (centered position on screen)
+    def __init__(
+        self,
+        x,
+        y,
+        unpressed_img_path: str,
+        pressed_img_path: Optional[str],
+        onpress: Callable,
+        alt: Optional[Callable] = None,
+        alt_img_path=None,
+        altclick: Optional[Callable] = None,
+        hover=None,
+        theme: themes.Theme = suburb.current_theme(),
+    ):  # x and y as fractions of 1 (centered position on screen)
         super(Button, self).__init__()
         self.unpressed_img_path = unpressed_img_path
-        if pressed_img_path is None: self.pressed_img_path = self.unpressed_img_path
-        else: self.pressed_img_path = pressed_img_path
+        if pressed_img_path is None:
+            self.pressed_img_path = self.unpressed_img_path
+        else:
+            self.pressed_img_path = pressed_img_path
         self.x = x
         self.y = y
         self.onpress = onpress
@@ -546,42 +706,60 @@ class Button(UIElement):
         key_check.append(self)
 
     def update(self):
-        if self.draw_condition is not None and not self.draw_condition(): return
-        if self.alt is not None and self.alt() and self.alt_img_path is not None: # alternative display condition
+        if self.draw_condition is not None and not self.draw_condition():
+            return
+        if (
+            self.alt is not None and self.alt() and self.alt_img_path is not None
+        ):  # alternative display condition
             self.surf = pygame.image.load(self.alt_img_path)
             self.surf.set_alpha(self.alt_alpha)
         else:
             if self.active:
                 self.surf = pygame.image.load(self.pressed_img_path)
                 if self.invert_on_click:
-                    inverted = pygame.Surface(self.surf.get_rect().size, pygame.SRCALPHA)
+                    inverted = pygame.Surface(
+                        self.surf.get_rect().size, pygame.SRCALPHA
+                    )
                     inverted.fill((255, 255, 255, 255))
                     inverted.blit(self.surf, (0, 0), None, pygame.BLEND_RGB_SUB)
                     self.surf = inverted
                 if self.overlay_on_click:
-                    self.surf.fill((self.overlay_intensity, self.overlay_intensity, self.overlay_intensity), None, pygame.BLEND_ADD)
+                    self.surf.fill(
+                        (
+                            self.overlay_intensity,
+                            self.overlay_intensity,
+                            self.overlay_intensity,
+                        ),
+                        None,
+                        pygame.BLEND_ADD,
+                    )
             else:
                 if self.hover != None and self.is_mouseover():
                     self.surf = pygame.image.load(self.hover)
                 else:
                     self.surf = pygame.image.load(self.unpressed_img_path)
-        if self.convert: 
+        if self.convert:
             self.surf = self.surf.convert()
             self.surf = self.convert_to_theme(self.surf)
             self.surf.set_colorkey(pygame.Color(0, 0, 0))
-        if self.alpha != 255: self.surf.set_alpha(self.alpha)
+        if self.alpha != 255:
+            self.surf.set_alpha(self.alpha)
         if self.scale != 1:
             w = self.surf.get_width()
             h = self.surf.get_height()
-            self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
+            self.surf = pygame.transform.scale(
+                self.surf, (int(w * self.scale), int(h * self.scale))
+            )
             self.scaled = True
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         if self.hover_to_top and self.is_mouseover():
             for ui_element in update_check:
-                if not ui_element.is_mouseover(): continue
+                if not ui_element.is_mouseover():
+                    continue
                 # we want to bring this to the top of drawing only if it's not behind anything
-                if update_check.index(self) < update_check.index(ui_element): break
+                if update_check.index(self) < update_check.index(ui_element):
+                    break
             else:
                 # move to top (last in update_check list)
                 move_to_top.append(self)
@@ -591,15 +769,19 @@ class Button(UIElement):
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
 
     def onclick(self, isclicked):
-        if self not in click_check: return
+        if self not in click_check:
+            return
         if isclicked:
             self.active = True
 
     def mouseup(self, isclicked):
-        if self.draw_condition is not None and not self.draw_condition(): return
+        if self.draw_condition is not None and not self.draw_condition():
+            return
         self.active = False
         if isclicked:
-            if self.double_click and time.time() - self.last_clicked > 0.5: # 500 ms allowance
+            if (
+                self.double_click and time.time() - self.last_clicked > 0.5
+            ):  # 500 ms allowance
                 self.last_clicked = time.time()
                 return
             if self.alt != None and self.alt():
@@ -609,7 +791,9 @@ class Button(UIElement):
                 self.onpress()
 
     def keypress(self, event):
-        if event.key in self.click_keys: self.onpress()
+        if event.key in self.click_keys:
+            self.onpress()
+
 
 class InputTextBox(UIElement):
     def __init__(self, x, y, w=None, h=None, theme=themes.default):
@@ -646,13 +830,16 @@ class InputTextBox(UIElement):
         keypress_update_check.append(self)
 
     def update(self, keys):
-        if self.just_tabbed: self.just_tabbed = False
+        if self.just_tabbed:
+            self.just_tabbed = False
         if self.secure:
             t = self.suffix + ("*" * len(self.text))
             self.text_surf = self.font.render(t, self.antialias, self.text_color)
         else:
-            self.text_surf = self.font.render(self.suffix+self.text, self.antialias, self.text_color)
-        width = self.w or max(100, self.text_surf.get_width()+10)
+            self.text_surf = self.font.render(
+                self.suffix + self.text, self.antialias, self.text_color
+            )
+        width = self.w or max(100, self.text_surf.get_width() + 10)
         height = self.h or 32
         outline_width = 3
         self.surf = pygame.Surface((width, height))
@@ -662,14 +849,19 @@ class InputTextBox(UIElement):
             self.surf.fill(self.inactive_color)
 
         if self.outline_color is not None:
-            self.outline_surf = pygame.Surface((width + (outline_width * 2), height + (outline_width * 2)))
+            self.outline_surf = pygame.Surface(
+                (width + (outline_width * 2), height + (outline_width * 2))
+            )
             self.outline_surf.fill(self.outline_color)
 
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
 
         if self.outline_color is not None:
-            self.blit_surf.blit(self.outline_surf, (self.rect.x-outline_width, self.rect.y-outline_width))
+            self.blit_surf.blit(
+                self.outline_surf,
+                (self.rect.x - outline_width, self.rect.y - outline_width),
+            )
 
         surfx, surfy = self.get_rect_xy(self.surf)
         self.blit_surf.blit(self.surf, (surfx, surfy))
@@ -677,16 +869,20 @@ class InputTextBox(UIElement):
         if self.absolute_text:
             textx, texty = self.get_rect_xy(self.text_surf)
         else:
-            textx = (self.rect.x + (self.rect.w//2)) - (self.text_surf.get_width()//2)
-            texty = (self.rect.y + (self.rect.h//2)) - (self.fontsize//2)
+            textx = (self.rect.x + (self.rect.w // 2)) - (
+                self.text_surf.get_width() // 2
+            )
+            texty = (self.rect.y + (self.rect.h // 2)) - (self.fontsize // 2)
         self.blit_surf.blit(self.text_surf, (textx, texty))
 
         if self.active and keys[pygame.K_BACKSPACE]:
             if self.waitframes > 15:
                 if self.waitframes % 3 == 0:
                     self.text = self.text[:-1]
-                    if self.numbers_only and self.text == "": self.text = "0"
-                    if self.key_press_func is not None: self.key_press_func()
+                    if self.numbers_only and self.text == "":
+                        self.text = "0"
+                    if self.key_press_func is not None:
+                        self.key_press_func()
             self.waitframes += 1
         else:
             self.waitframes = 0
@@ -698,45 +894,65 @@ class InputTextBox(UIElement):
             self.active = False
 
     def keypress(self, event):
-        if not self.active: return
-        if event.key == pygame.K_TAB and self.tab_box is not None and not self.just_tabbed:
+        if not self.active:
+            return
+        if (
+            event.key == pygame.K_TAB
+            and self.tab_box is not None
+            and not self.just_tabbed
+        ):
             self.tab_box.active = True
             self.tab_box.just_tabbed = True
             self.active = False
         elif event.key == pygame.K_BACKSPACE:
             self.text = self.text[:-1]
-            if self.numbers_only and self.text == "": self.text = "0"
-            if self.key_press_func is not None: self.key_press_func()
+            if self.numbers_only and self.text == "":
+                self.text = "0"
+            if self.key_press_func is not None:
+                self.key_press_func()
         elif event.key == pygame.K_RETURN and self.enter_func != None:
             self.enter_func()
         # if enter is pressed and this text box has a button assigned to it, press that button
         elif event.key == pygame.K_RETURN and self.button != None:
             self.button.mouseup(True)
         else:
-            if self.max_characters != 0 and len(self.text)+1 > self.max_characters: return
-            if event.unicode.isascii() and event.unicode not in ["\n", "\t", "\r"]: #no newline, tab or carriage return
-                if event.unicode in self.disallowed_characters: return
+            if self.max_characters != 0 and len(self.text) + 1 > self.max_characters:
+                return
+            if event.unicode.isascii() and event.unicode not in [
+                "\n",
+                "\t",
+                "\r",
+            ]:  # no newline, tab or carriage return
+                if event.unicode in self.disallowed_characters:
+                    return
                 if self.numbers_only:
-                    try: int(event.unicode)
-                    except ValueError: 
+                    try:
+                        int(event.unicode)
+                    except ValueError:
                         if event.unicode == "-" and not self.no_negatives:
-                            if self.text[0] != "-": self.text = "-"+self.text
-                            else: self.text = self.text.replace("-", "")
+                            if self.text[0] != "-":
+                                self.text = "-" + self.text
+                            else:
+                                self.text = self.text.replace("-", "")
                         return
                 self.text += event.unicode
-                if self.numbers_only: 
+                if self.numbers_only:
                     number = int(self.text)
                     if self.maximum_value != 0:
                         number = min(number, self.maximum_value)
                     self.text = str(number)
-            if self.key_press_func is not None: self.key_press_func()
+            if self.key_press_func is not None:
+                self.key_press_func()
 
     @property
     def font(self):
         return pygame.font.Font(pathlib.Path("./fonts/courbd.ttf"), int(self.fontsize))
 
+
 class Image(UIElement):
-    def __init__(self, x, y, path, theme:Optional["themes.Theme"]=None, convert=True):
+    def __init__(
+        self, x, y, path, theme: Optional["themes.Theme"] = None, convert=True
+    ):
         super(Image, self).__init__()
         self.x = x
         self.y = y
@@ -765,7 +981,7 @@ class Image(UIElement):
     def get_width(self):
         self.update()
         return self.surf.get_width()
-    
+
     def get_height(self):
         self.update()
         return self.surf.get_height()
@@ -778,7 +994,7 @@ class Image(UIElement):
             self.path = self.path_func()
             delattr(self, "surf")
         if self.animated:
-            self.surf = self.load_image(self.path+f"-{self.animframe}.png").convert()
+            self.surf = self.load_image(self.path + f"-{self.animframe}.png").convert()
             self.scaled = False
             if self.wait == self.speed:
                 self.animframe += 1
@@ -788,32 +1004,42 @@ class Image(UIElement):
             else:
                 self.wait += 1
         else:
-            try: self.surf
+            try:
+                self.surf
             except AttributeError:
                 self.surf = self.load_image(self.path)
                 if self.convert:
                     self.surf = self.surf.convert()
                     self.surf = self.convert_to_theme(self.surf)
                     for initial_color, converted_color in self.convert_colors:
-                        self.surf = palette_swap(self.surf, initial_color, converted_color)
+                        self.surf = palette_swap(
+                            self.surf, initial_color, converted_color
+                        )
                     self.surf.set_colorkey(pygame.Color(0, 0, 0))
-        if self.alpha != 255: self.surf.set_alpha(self.alpha)
-        if self.scale != 1 and not self.scaled: 
+        if self.alpha != 255:
+            self.surf.set_alpha(self.alpha)
+        if self.scale != 1 and not self.scaled:
             w = self.surf.get_width()
             h = self.surf.get_height()
-            self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
+            self.surf = pygame.transform.scale(
+                self.surf, (int(w * self.scale), int(h * self.scale))
+            )
             self.scaled = True
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.surf)
         if self.highlight_color != None:
-            self.highlight_surf = pygame.Surface((self.surf.get_width(), self.surf.get_height()))
+            self.highlight_surf = pygame.Surface(
+                (self.surf.get_width(), self.surf.get_height())
+            )
             self.highlight_surf.fill(self.highlight_color)
             self.blit_surf.blit(self.highlight_surf, (self.rect.x, self.rect.y))
         if self.hover_to_top and self.is_mouseover():
             for ui_element in update_check:
-                if not ui_element.is_mouseover(): continue
+                if not ui_element.is_mouseover():
+                    continue
                 # we want to bring this to the top of drawing only if it's not behind anything
-                if update_check.index(self) < update_check.index(ui_element): break
+                if update_check.index(self) < update_check.index(ui_element):
+                    break
             else:
                 # move to top (last in update_check list)
                 move_to_top.append(self)
@@ -821,6 +1047,7 @@ class Image(UIElement):
                 for ui_element in self.bound_elements + self.temporary_elements:
                     move_to_top.append(ui_element)
         self.blit_surf.blit(self.surf, (self.rect.x, self.rect.y))
+
 
 class Text(UIElement):
     def __init__(self, x, y, text: str):
@@ -844,7 +1071,18 @@ class Text(UIElement):
         update_check.append(self)
 
     def __setattr__(self, __name: str, __value: Any) -> None:
-        if __name in ["text", "color", "outline_color", "outline_depth", "highlight_color", "fontsize", "scale", "alpha", "antialias", "font_location"]:
+        if __name in [
+            "text",
+            "color",
+            "outline_color",
+            "outline_depth",
+            "highlight_color",
+            "fontsize",
+            "scale",
+            "alpha",
+            "antialias",
+            "font_location",
+        ]:
             self.remake_surfs = True
         return super().__setattr__(__name, __value)
 
@@ -866,15 +1104,20 @@ class Text(UIElement):
 
     def make_text_surfs(self):
         self.text_surf = self.font.render(self.get_text(), self.antialias, self.color)
-        if self.alpha != 255: self.text_surf.set_alpha(self.alpha)
+        if self.alpha != 255:
+            self.text_surf.set_alpha(self.alpha)
         if self.highlight_color is not None:
             text_rect = self.text_surf.get_rect()
             self.highlight_surf = pygame.Surface((text_rect.w, text_rect.h))
             self.highlight_surf.fill(self.highlight_color)
-        else: self.highlight_surf = None
+        else:
+            self.highlight_surf = None
         if self.outline_color is not None:
-            self.outline_surf = self.font.render(self.get_text(), self.antialias, self.outline_color)
-            if self.alpha != 255: self.outline_surf.set_alpha(self.alpha)
+            self.outline_surf = self.font.render(
+                self.get_text(), self.antialias, self.outline_color
+            )
+            if self.alpha != 255:
+                self.outline_surf.set_alpha(self.alpha)
         else:
             self.outline_surf = None
 
@@ -882,11 +1125,13 @@ class Text(UIElement):
         if self.get_text() != self.text:
             self.text = self.get_text()
             self.remake_surfs = True
-        if self.remake_surfs: 
+        if self.remake_surfs:
             self.make_text_surfs()
             self.remake_surfs = False
-        try: self.text_surf
-        except AttributeError: self.make_text_surfs()
+        try:
+            self.text_surf
+        except AttributeError:
+            self.make_text_surfs()
         self.rect = self.text_surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy(self.text_surf)
         if self.highlight_surf is not None:
@@ -896,27 +1141,54 @@ class Text(UIElement):
             # self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y + self.outline_depth)) # +y -x
             # self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y - self.outline_depth)) # -y -x
             # self.blit_surf.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y - self.outline_depth)) # -y +x
-            self.blit_surf.blit(self.outline_surf, (self.rect.x, self.rect.y + self.outline_depth))
-            self.blit_surf.blit(self.outline_surf, (self.rect.x, self.rect.y - self.outline_depth))
-            self.blit_surf.blit(self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y))
-            self.blit_surf.blit(self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y))
+            self.blit_surf.blit(
+                self.outline_surf, (self.rect.x, self.rect.y + self.outline_depth)
+            )
+            self.blit_surf.blit(
+                self.outline_surf, (self.rect.x, self.rect.y - self.outline_depth)
+            )
+            self.blit_surf.blit(
+                self.outline_surf, (self.rect.x + self.outline_depth, self.rect.y)
+            )
+            self.blit_surf.blit(
+                self.outline_surf, (self.rect.x - self.outline_depth, self.rect.y)
+            )
         self.blit_surf.blit(self.text_surf, (self.rect.x, self.rect.y))
 
     @property
     def font(self):
-        return pygame.font.Font(pathlib.Path(self.font_location), int(self.fontsize*self.scale))
+        return pygame.font.Font(
+            pathlib.Path(self.font_location), int(self.fontsize * self.scale)
+        )
+
 
 def get_spirograph(x, y, thick=True) -> Image:
-    if thick: path = "sprites/spirograph/thick/suburbspirograph"
-    else: path = "sprites/spirograph/thin/suburbspirograph"
+    if thick:
+        path = "sprites/spirograph/thick/suburbspirograph"
+    else:
+        path = "sprites/spirograph/thin/suburbspirograph"
     spirograph = Image(x, y, path)
     spirograph.animated = True
     spirograph.animframes = 164
     return spirograph
 
-def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict]=None, binding: Optional[UIElement]=None, 
-                            text_color: pygame.Color=suburb.current_theme().dark, temporary=True, absolute=True, scale_mult=1.0,
-                            flipped=False, tooltip=True, return_grist_icons=False, fontsize_mult=1.0) -> Union[UIElement, dict[str, UIElement]]:
+
+def make_grist_cost_display(
+    x,
+    y,
+    h,
+    true_cost: dict,
+    grist_cache: Optional[dict] = None,
+    binding: Optional[UIElement] = None,
+    text_color: pygame.Color = suburb.current_theme().dark,
+    temporary=True,
+    absolute=True,
+    scale_mult=1.0,
+    flipped=False,
+    tooltip=True,
+    return_grist_icons=False,
+    fontsize_mult=1.0,
+) -> Union[UIElement, dict[str, UIElement]]:
     elements: list[Union[Image, Text]] = []
     grist_icons = {}
     padding = 5
@@ -925,8 +1197,8 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
     for grist_name, grist_cost in true_cost.items():
         icon_path = config.grists[grist_name]["image"]
         if len(elements) != 0:
-            icon_x = padding+elements[-1].get_width()
-            icon_y = -(int(48*scale) - fontsize)//2 # account for label size diff
+            icon_x = padding + elements[-1].get_width()
+            icon_y = -(int(48 * scale) - fontsize) // 2  # account for label size diff
         else:
             icon_x = x
             icon_y = y
@@ -942,12 +1214,13 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
         icon.absolute = True
         if len(elements) == 0:
             elements.append(icon)
-            if binding is not None: icon.bind_to(binding, temporary)
+            if binding is not None:
+                icon.bind_to(binding, temporary)
         else:
             icon.bind_to(elements[-1])
             elements.append(icon)
         if tooltip:
-            tt_wh = int(48*scale)
+            tt_wh = int(48 * scale)
             tooltip_tt = ToolTip(0, 0, tt_wh, tt_wh)
             tooltip_tt.bind_to(icon)
             tt_label = Text(0, -tt_wh, grist_name)
@@ -958,8 +1231,8 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
             r, g, b, _ = text_color
             tt_label.outline_color = get_dark_color(r, g, b)
             tt_label.make_always_on_top()
-        label_x = padding + int(48*scale)
-        label_y = (int(48*scale) - fontsize)//2
+        label_x = padding + int(48 * scale)
+        label_y = (int(48 * scale) - fontsize) // 2
         label = Text(label_x, label_y, str(grist_cost))
         if grist_cache is None or grist_cost <= grist_cache[grist_name]:
             label.color = text_color
@@ -979,17 +1252,27 @@ def make_grist_cost_display(x, y, h, true_cost: dict, grist_cache: Optional[dict
         else:
             binding_w = binding.rect.w
             binding_h = binding.rect.h
-        elements[0].x = int(binding_w*x - total_element_w//2)
-        elements[0].y = int(binding_h*y - h//2)
+        elements[0].x = int(binding_w * x - total_element_w // 2)
+        elements[0].y = int(binding_h * y - h // 2)
     else:
         if binding is not None and flipped:
             elements[0].x = -total_element_w
     if not return_grist_icons:
         return elements[0]
-    else: return grist_icons
+    else:
+        return grist_icons
+
 
 class TileMap(UIElement):
-    def __init__(self, x, y, server_view=False, item_display_x=70, item_display_y=190, map_editor: Optional["itemeditor.MapEditor"]=None):
+    def __init__(
+        self,
+        x,
+        y,
+        server_view=False,
+        item_display_x=70,
+        item_display_y=190,
+        map_editor: Optional["itemeditor.MapEditor"] = None,
+    ):
         super(TileMap, self).__init__()
         self.x = x
         self.y = y
@@ -1004,12 +1287,20 @@ class TileMap(UIElement):
         self.input_text_box: Optional[InputTextBox] = None
         self.info_window: Optional[UIElement] = None
         self.info_text: Optional[UIElement] = None
-        self.item_display = RoomItemDisplay(item_display_x, item_display_y, self, server_view)
+        self.item_display = RoomItemDisplay(
+            item_display_x, item_display_y, self, server_view
+        )
         self.update_map()
-        self.w = (len(self.map)-2)*32
-        self.h = (len(self.map[0])-2)*32
+        self.w = (len(self.map) - 2) * 32
+        self.h = (len(self.map[0]) - 2) * 32
         outline_width = 6
-        self.background = SolidColor(32-outline_width, 32-outline_width, self.w + outline_width*2, self.h + outline_width*2, self.theme.dark)
+        self.background = SolidColor(
+            32 - outline_width,
+            32 - outline_width,
+            self.w + outline_width * 2,
+            self.h + outline_width * 2,
+            self.theme.dark,
+        )
         self.background.border_radius = 3
         self.background.bind_to(self)
         self.initialize_map(self.map)
@@ -1030,19 +1321,21 @@ class TileMap(UIElement):
     def initialize_map(self, map):
         if self.map != map or len(self.tiles) == 0:
             self.map: list[list[str]] = map
-            self.rect = pygame.Rect(0, 0, len(map[0])*tile_wh, len(map)*tile_wh)
+            self.rect = pygame.Rect(0, 0, len(map[0]) * tile_wh, len(map) * tile_wh)
             self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2))
             self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2))
             for tile in self.tiles:
                 self.tiles[tile].delete()
             for y, line in enumerate(map):
                 for x, char in enumerate(line):
-                    self.tiles[f"{x}, {y}"] = Tile(x, y, self, self.specials, self.server_view)
+                    self.tiles[f"{x}, {y}"] = Tile(
+                        x, y, self, self.specials, self.server_view
+                    )
 
-    def update_map(self, map_dict: Optional[dict]=None, update_info_window=False):
+    def update_map(self, map_dict: Optional[dict] = None, update_info_window=False):
         if not self.server_view and self.map_editor is None:
             strife_data = client.requestdic(intent="strife_data")
-            if strife_data: 
+            if strife_data:
                 suburb.strife_scene(strife_data)
                 return
         if map_dict is None:
@@ -1064,9 +1357,12 @@ class TileMap(UIElement):
         self.item_display.update_instances()
         for tile in self.tiles.values():
             tile.known_invalid_tiles = []
-        if self.label is not None: self.label.text = self.room_name
-        if update_info_window: self.update_info_window()
-        if old_theme != self.theme and hasattr(self, "background"): self.background.color = self.theme.dark
+        if self.label is not None:
+            self.label.text = self.room_name
+        if update_info_window:
+            self.update_info_window()
+        if old_theme != self.theme and hasattr(self, "background"):
+            self.background.color = self.theme.dark
         self.last_update = time.time()
 
     def update_info_window(self):
@@ -1083,17 +1379,27 @@ class TileMap(UIElement):
         self.update_map()
 
     def keypress(self, event):
-        if self.input_text_box is not None and self.input_text_box.active: return
+        if self.input_text_box is not None and self.input_text_box.active:
+            return
         match event.key:
-            case pygame.K_UP: direction = "up"
-            case pygame.K_w: direction = "up"
-            case pygame.K_DOWN: direction = "down"
-            case pygame.K_s: direction = "down"
-            case pygame.K_LEFT: direction = "left"
-            case pygame.K_a: direction = "left"
-            case pygame.K_RIGHT: direction = "right"
-            case pygame.K_d: direction = "right"
-            case _: return
+            case pygame.K_UP:
+                direction = "up"
+            case pygame.K_w:
+                direction = "up"
+            case pygame.K_DOWN:
+                direction = "down"
+            case pygame.K_s:
+                direction = "down"
+            case pygame.K_LEFT:
+                direction = "left"
+            case pygame.K_a:
+                direction = "left"
+            case pygame.K_RIGHT:
+                direction = "right"
+            case pygame.K_d:
+                direction = "right"
+            case _:
+                return
         self.move(direction)
 
     def delete(self):
@@ -1101,31 +1407,33 @@ class TileMap(UIElement):
             self.tiles[tile].delete()
         super(TileMap, self).delete()
 
-class ServerTileMap(TileMap):
-    ...
+
+class ServerTileMap(TileMap): ...
+
 
 allowedtiles = {
-"#": ["|", "=", "+", "'", "_"],
-"|": ["#", "\\", "/", "^", "=", "+"],
-"\\": ["#", "/", "X", "|", "=", "+"],
-"/": ["#", "\\", "X", "|", "=", "+"],
-"=": ["#", "\\", "/", "^", "|", "+"],
-"+": ["#", "\\", "/", "^", "|", "="],
-"'": ["#"],
-"_": ["#"],
-"i": ["#", "|"]
-} # tiles allowed for tiling
+    "#": ["|", "=", "+", "'", "_"],
+    "|": ["#", "\\", "/", "^", "=", "+"],
+    "\\": ["#", "/", "X", "|", "=", "+"],
+    "/": ["#", "\\", "X", "|", "=", "+"],
+    "=": ["#", "\\", "/", "^", "|", "+"],
+    "+": ["#", "\\", "/", "^", "|", "="],
+    "'": ["#"],
+    "_": ["#"],
+    "i": ["#", "|"],
+}  # tiles allowed for tiling
 
-nonselftiles = ["/", "\\"] # tiles that don't tile with themselves
+nonselftiles = ["/", "\\"]  # tiles that don't tile with themselves
 
-directiontiles = { # tiles that only tile from certain directions
-"/": ["right", "down"],
-"\\": ["left", "down"],
-"X": ["left", "right", "down"],
-"'": ["up", "left", "right"]
+directiontiles = {  # tiles that only tile from certain directions
+    "/": ["right", "down"],
+    "\\": ["left", "down"],
+    "X": ["left", "right", "down"],
+    "'": ["up", "left", "right"],
 }
 
-disallow_other_tiles_from_below = ["i"] # basically just rope
+disallow_other_tiles_from_below = ["i"]  # basically just rope
+
 
 def dircheck(tile, direction):
     if tile in directiontiles:
@@ -1135,6 +1443,7 @@ def dircheck(tile, direction):
             return False
     else:
         return True
+
 
 class Tile(UIElement):
     def __init__(self, x, y, tile_map: TileMap, specials: dict, server_view=False):
@@ -1156,22 +1465,24 @@ class Tile(UIElement):
         self.image.set_colorkey(pygame.Color(0, 0, 0))
 
     def update_image(self):
-        try: self.image
-        except AttributeError: self.load_image()
-        if self.last_tile != self.tile or self.last_theme != self.tile_map.theme: 
+        try:
+            self.image
+        except AttributeError:
+            self.load_image()
+        if self.last_tile != self.tile or self.last_theme != self.tile_map.theme:
             self.load_image()
             self.last_tile = self.tile
             self.last_theme = self.tile_map.theme
 
     def onclick(self, isclicked: bool):
         if isclicked:
-            center_tile_x = len(self.tile_map.map)//2
-            center_tile_y = len(self.tile_map.map)//2
+            center_tile_x = len(self.tile_map.map) // 2
+            center_tile_y = len(self.tile_map.map) // 2
             x_diff = self.x - center_tile_x
             y_diff = self.y - center_tile_y
             if self.server_view:
-                target_x = sburbserver.current_x+x_diff
-                target_y = sburbserver.current_y+y_diff
+                target_x = sburbserver.current_x + x_diff
+                target_y = sburbserver.current_y + y_diff
                 match sburbserver.current_mode:
                     case "deploy":
                         viewport_dict = sburbserver.deploy_item(target_x, target_y)
@@ -1179,59 +1490,98 @@ class Tile(UIElement):
                             sburbserver.update_viewport_dic(viewport_dict)
                             self.tile_map.update_map(viewport_dict, True)
                     case "revise":
-                        if self.tile == sburbserver.current_selected_tile: return
-                        if sburbserver.current_selected_tile in self.known_invalid_tiles: return 
+                        if self.tile == sburbserver.current_selected_tile:
+                            return
+                        if (
+                            sburbserver.current_selected_tile
+                            in self.known_invalid_tiles
+                        ):
+                            return
                         viewport_dict = sburbserver.revise_tile(target_x, target_y)
-                        if viewport_dict is None: self.known_invalid_tiles.append(sburbserver.current_selected_tile)
+                        if viewport_dict is None:
+                            self.known_invalid_tiles.append(
+                                sburbserver.current_selected_tile
+                            )
                         else:
                             sburbserver.update_viewport_dic(viewport_dict)
                             self.tile_map.update_map(viewport_dict)
                     case _:
-                        if x_diff == 0 and y_diff == 0: return
+                        if x_diff == 0 and y_diff == 0:
+                            return
                         sburbserver.move_view_to_tile(target_x, target_y)
                         self.tile_map.update_map()
             elif self.tile_map.map_editor is not None:
                 match self.tile_map.map_editor.current_mode:
                     case "revise":
-                        self.tile_map.map_editor.change_relative_tile(x_diff, y_diff, self.tile_map.map_editor.current_selected_tile)
+                        self.tile_map.map_editor.change_relative_tile(
+                            x_diff,
+                            y_diff,
+                            self.tile_map.map_editor.current_selected_tile,
+                        )
                         self.tile_map.update_map()
                     case _:
                         self.tile_map.map_editor.move_view(x_diff, y_diff)
                         self.tile_map.update_map()
 
     def update(self):
-        if self.x == 0 or self.y == 0: return # don't draw the outer edges of the tilemap, but they should still tile correctly
-        if self.x == len(self.tile_map.map[0]) - 1 or self.y == len(self.tile_map.map) - 1: return # ^
-        if ((self.server_view and sburbserver.current_mode == "revise") or (self.tile_map.map_editor is not None and self.tile_map.map_editor.current_mode == "revise")) \
-            and self.is_mouseover() and pygame.mouse.get_pressed()[0]:
+        if self.x == 0 or self.y == 0:
+            return  # don't draw the outer edges of the tilemap, but they should still tile correctly
+        if (
+            self.x == len(self.tile_map.map[0]) - 1
+            or self.y == len(self.tile_map.map) - 1
+        ):
+            return  # ^
+        if (
+            (
+                (self.server_view and sburbserver.current_mode == "revise")
+                or (
+                    self.tile_map.map_editor is not None
+                    and self.tile_map.map_editor.current_mode == "revise"
+                )
+            )
+            and self.is_mouseover()
+            and pygame.mouse.get_pressed()[0]
+        ):
             self.onclick(True)
         self.update_image()
         self.surf = pygame.Surface((tile_wh, tile_wh))
         offsety = 0
         offsetx = 0
-        if (len(self.tile_map.map) > self.y + 1 and 
-            self.tile_map.map[self.y+1][self.x] in self.allowed_below_tiles and 
-            dircheck(self.tile_map.map[self.y+1][self.x], "up")): # tile below is the same
+        if (
+            len(self.tile_map.map) > self.y + 1
+            and self.tile_map.map[self.y + 1][self.x] in self.allowed_below_tiles
+            and dircheck(self.tile_map.map[self.y + 1][self.x], "up")
+        ):  # tile below is the same
             offsety += tile_wh
-            if (self.y != 0 and 
-                self.tile_map.map[self.y-1][self.x] in self.allowedtiles and 
-                dircheck(self.tile_map.map[self.y-1][self.x], "down")): # tile above is the same
+            if (
+                self.y != 0
+                and self.tile_map.map[self.y - 1][self.x] in self.allowedtiles
+                and dircheck(self.tile_map.map[self.y - 1][self.x], "down")
+            ):  # tile above is the same
                 offsety += tile_wh
-        elif (self.y != 0 and 
-              self.tile_map.map[self.y-1][self.x] in self.allowedtiles and 
-              dircheck(self.tile_map.map[self.y-1][self.x], "down")): # tile above is the same but not tile below
+        elif (
+            self.y != 0
+            and self.tile_map.map[self.y - 1][self.x] in self.allowedtiles
+            and dircheck(self.tile_map.map[self.y - 1][self.x], "down")
+        ):  # tile above is the same but not tile below
             offsety += tile_wh * 3
-        if (len(self.tile_map.map[0]) > self.x + 1 and 
-            self.tile_map.map[self.y][self.x+1] in self.allowedtiles and 
-            dircheck(self.tile_map.map[self.y][self.x+1], "left")): # tile right is the same
+        if (
+            len(self.tile_map.map[0]) > self.x + 1
+            and self.tile_map.map[self.y][self.x + 1] in self.allowedtiles
+            and dircheck(self.tile_map.map[self.y][self.x + 1], "left")
+        ):  # tile right is the same
             offsetx += tile_wh
-            if (self.x != 0 and 
-                self.tile_map.map[self.y][self.x-1] in self.allowedtiles and 
-                dircheck(self.tile_map.map[self.y][self.x-1], "right")): # tile left is also the same
+            if (
+                self.x != 0
+                and self.tile_map.map[self.y][self.x - 1] in self.allowedtiles
+                and dircheck(self.tile_map.map[self.y][self.x - 1], "right")
+            ):  # tile left is also the same
                 offsetx += tile_wh
-        elif (self.x != 0 and 
-              self.tile_map.map[self.y][self.x-1] in self.allowedtiles and 
-              dircheck(self.tile_map.map[self.y][self.x-1], "right")): # tile left is the same but not right
+        elif (
+            self.x != 0
+            and self.tile_map.map[self.y][self.x - 1] in self.allowedtiles
+            and dircheck(self.tile_map.map[self.y][self.x - 1], "right")
+        ):  # tile left is the same but not right
             offsetx += tile_wh * 3
         self.rect = self.surf.get_rect()
         self.rect.x = (self.x * tile_wh) + self.tile_map.rect.x
@@ -1239,26 +1589,35 @@ class Tile(UIElement):
         self.surf.blit(self.image, (0, 0), (offsetx, offsety, tile_wh, tile_wh))
         if f"{self.x}, {self.y}" in self.tile_map.specials:
             room_specials = self.tile_map.specials[f"{self.x}, {self.y}"]
-            specials_keys = list(room_specials.keys()) # + [None for i in range(len(room_specials.keys()))]
-            drawing_index = int(((pygame.time.get_ticks() / 15) % FPS_CAP) / (FPS_CAP / len(specials_keys))) # full cycle each second
+            specials_keys = list(
+                room_specials.keys()
+            )  # + [None for i in range(len(room_specials.keys()))]
+            drawing_index = int(
+                ((pygame.time.get_ticks() / 15) % FPS_CAP)
+                / (FPS_CAP / len(specials_keys))
+            )  # full cycle each second
             drawing_name = specials_keys[drawing_index]
-            if drawing_name is not None: # if we're not drawing nothing (images should be flashing)
+            if (
+                drawing_name is not None
+            ):  # if we're not drawing nothing (images should be flashing)
                 drawing_type, drawing_color = room_specials[drawing_name]
-                if drawing_type in config.icons: icon_image_filename = config.icons[drawing_type]
-                else: icon_image_filename = config.icons["no_icon"]
+                if drawing_type in config.icons:
+                    icon_image_filename = config.icons[drawing_type]
+                else:
+                    icon_image_filename = config.icons["no_icon"]
                 icon_image = pygame.image.load(icon_image_filename)
-                if isinstance(drawing_color, list): # list of 3
+                if isinstance(drawing_color, list):  # list of 3
                     r, g, b = drawing_color[0], drawing_color[1], drawing_color[2]
                     light = pygame.Color(r, g, b)
                     dark = get_dark_color(r, g, b)
                     icon_image = palette_swap(icon_image, themes.default.light, light)
                     icon_image = palette_swap(icon_image, themes.default.dark, dark)
-                elif isinstance(drawing_color, str): # enemy grist type
+                elif isinstance(drawing_color, str):  # enemy grist type
                     color = config.gristcolors[drawing_color]
                     if isinstance(color, list):
                         color = random.choice(color)
                     icon_image = palette_swap(icon_image, themes.default.black, color)
-                else: # drawing color is None
+                else:  # drawing color is None
                     icon_image = self.convert_to_theme(icon_image)
                 icon_image.set_colorkey(pygame.Color(0, 0, 0))
                 self.surf.blit(icon_image, (0, 0), (0, 0, tile_wh, tile_wh))
@@ -1278,7 +1637,9 @@ class Tile(UIElement):
             if self.tile_map.map_editor.current_mode == "deploy":
                 cursor_image_path = config.icons["deploy"]
             elif self.tile_map.map_editor.current_mode == "revise":
-                cursor_image_path = config.tiles[self.tile_map.map_editor.current_selected_tile]
+                cursor_image_path = config.tiles[
+                    self.tile_map.map_editor.current_selected_tile
+                ]
             else:
                 cursor_image_path = config.icons["select"]
             cursor_image = pygame.image.load(cursor_image_path)
@@ -1286,7 +1647,11 @@ class Tile(UIElement):
                 cursor_image = self.convert_to_theme(cursor_image)
             cursor_image.set_colorkey(pygame.Color(0, 0, 0))
             self.surf.blit(cursor_image, (0, 0), (0, 0, tile_wh, tile_wh))
-        if (self.server_view or self.tile_map.map_editor is not None) and self.x == len(self.tile_map.map)//2 and self.y == len(self.tile_map.map)//2:
+        if (
+            (self.server_view or self.tile_map.map_editor is not None)
+            and self.x == len(self.tile_map.map) // 2
+            and self.y == len(self.tile_map.map) // 2
+        ):
             center_path = config.icons["center"]
             center_image = pygame.image.load(center_path)
             center_image = self.convert_to_theme(center_image, suburb.current_theme())
@@ -1308,22 +1673,26 @@ class Tile(UIElement):
 
     @property
     def allowed_below_tiles(self):
-        if self.tile in disallow_other_tiles_from_below: return [self.tile]
-        else: return self.allowedtiles
+        if self.tile in disallow_other_tiles_from_below:
+            return [self.tile]
+        else:
+            return self.allowedtiles
 
     @property
     def tile(self):
         return self.tile_map.map[self.y][self.x]
 
     @property
-    def image_path(self): # returns path to image
+    def image_path(self):  # returns path to image
         if self.tile in config.tiles:
             return config.tiles[self.tile]
         else:
             return "sprites\\tiles\\missingtile.png"
 
+
 class TileDisplay(UIElement):
     tooltip_padding = 9
+
     def __init__(self, x, y, tile_char):
         super().__init__()
         self.x = x
@@ -1343,11 +1712,13 @@ class TileDisplay(UIElement):
                 self.click_func()
 
     def update_image(self):
-        try: self.image
-        except AttributeError: self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
+        try:
+            self.image
+        except AttributeError:
+            self.image: pygame.surface.Surface = pygame.image.load(self.image_path)
 
     @property
-    def image_path(self): # returns path to image
+    def image_path(self):  # returns path to image
         if self.tile in config.tiles:
             return config.tiles[self.tile]
         else:
@@ -1359,7 +1730,7 @@ class TileDisplay(UIElement):
         return super().delete()
 
     def update(self):
-        if not self.is_mouseover() and self.popup is not None: 
+        if not self.is_mouseover() and self.popup is not None:
             self.popup.delete()
             self.popup = None
         if self.tooltip is not None and self.is_mouseover() and self.popup is None:
@@ -1368,8 +1739,14 @@ class TileDisplay(UIElement):
             self.popup_text = Text(0.5, 0.5, f"{tooltip}")
             self.popup_text.fontsize = 14
             self.popup_text.color = self.theme.dark
-            popup_width = self.popup_text.get_width()+self.tooltip_padding*2
-            self.popup = SolidColor(x, y, popup_width, self.popup_text.fontsize+self.tooltip_padding*2, self.theme.white)
+            popup_width = self.popup_text.get_width() + self.tooltip_padding * 2
+            self.popup = SolidColor(
+                x,
+                y,
+                popup_width,
+                self.popup_text.fontsize + self.tooltip_padding * 2,
+                self.theme.white,
+            )
             self.popup.outline_color = self.theme.dark
             self.popup.follow_mouse = True
             self.popup.rect_x_offset = -popup_width
@@ -1380,14 +1757,19 @@ class TileDisplay(UIElement):
             self.popup_text.bind_to(self.popup)
         self.update_image()
         self.surf = pygame.Surface((tile_wh, tile_wh))
-        self.surf.blit(self.image, (0, 0), (self.offsetx, self.offsety, tile_wh, tile_wh))
-        if self.scale != 1: 
+        self.surf.blit(
+            self.image, (0, 0), (self.offsetx, self.offsety, tile_wh, tile_wh)
+        )
+        if self.scale != 1:
             w = self.surf.get_width()
             h = self.surf.get_height()
-            self.surf = pygame.transform.scale(self.surf, (int(w*self.scale), int(h*self.scale)))
+            self.surf = pygame.transform.scale(
+                self.surf, (int(w * self.scale), int(h * self.scale))
+            )
         self.rect = self.surf.get_rect()
         self.rect.x, self.rect.y = self.get_rect_xy()
         self.blit_surf.blit(self.surf, ((self.rect.x, self.rect.y)))
+
 
 class RoomItemDisplay(UIElement):
     def __init__(self, x, y, tile_map: TileMap, server_view=False):
@@ -1399,7 +1781,7 @@ class RoomItemDisplay(UIElement):
         self.page = 0
         self.rows = 10
         self.tile_map = tile_map
-        self.server_view=server_view
+        self.server_view = server_view
         self.absolute = True
         self.buttons = []
         self.outline = None
@@ -1414,66 +1796,122 @@ class RoomItemDisplay(UIElement):
     def update_instances(self):
         def get_button_func(button_instance_name):
             if self.server_view:
-                def output_func(): 
-                    ...
+
+                def output_func(): ...
+
             else:
+
                 def output_func():
                     if button_instance_name in self.tile_map.instances:
-                        suburb.display_item(Instance(button_instance_name, self.tile_map.instances[button_instance_name]), suburb.map_scene)
-                    else: # this is an npc
+                        suburb.display_item(
+                            Instance(
+                                button_instance_name,
+                                self.tile_map.instances[button_instance_name],
+                            ),
+                            suburb.map_scene,
+                        )
+                    else:  # this is an npc
                         client.request(intent="start_strife")
                         strife_dict = client.requestdic(intent="strife_info")
                         if strife_dict:
                             suburb.strife_scene(strife_dict)
+
             return output_func
+
         def get_add_to_atheneum_button_func(button_instance_name):
             def add_to_atheneum_button_func():
                 if button_instance_name in self.tile_map.instances:
                     sburbserver.add_instance_to_atheneum(button_instance_name)
                     self.tile_map.update_map(update_info_window=True)
+
             return add_to_atheneum_button_func
+
         for button in self.buttons:
             button.delete()
         # instances and npcs are a dict so we need to convert to list to slice
-        all_items = list(self.tile_map.players.keys()) + list(self.tile_map.npcs.keys()) + list(self.tile_map.instances.keys())
-        display_items = list(all_items)[self.page*self.rows:self.page*self.rows + self.rows]
+        all_items = (
+            list(self.tile_map.players.keys())
+            + list(self.tile_map.npcs.keys())
+            + list(self.tile_map.instances.keys())
+        )
+        display_items = list(all_items)[
+            self.page * self.rows : self.page * self.rows + self.rows
+        ]
         if self.outline is not None:
             self.outline.delete()
             self.outline = None
         if len(all_items) > 0:
-            outline_element_w = self.w + self.outline_width*2
-            outline_element_h = self.h*(len(display_items) + 1) + self.outline_width*2
-            self.outline = SolidColor(self.x-self.outline_width, self.y-self.outline_width, outline_element_w, outline_element_h, self.theme.dark)
+            outline_element_w = self.w + self.outline_width * 2
+            outline_element_h = (
+                self.h * (len(display_items) + 1) + self.outline_width * 2
+            )
+            self.outline = SolidColor(
+                self.x - self.outline_width,
+                self.y - self.outline_width,
+                outline_element_w,
+                outline_element_h,
+                self.theme.dark,
+            )
             self.outline.border_radius = 3
             page_buttons_y = self.y
+
             def left_button_func():
                 self.page -= 1
                 self.update_instances()
+
             def right_button_func():
                 self.page += 1
                 self.update_instances()
+
             if self.page != 0:
-                left_button = TextButton(self.x, page_buttons_y, self.w//2, self.h, "<-", left_button_func)
+                left_button = TextButton(
+                    self.x, page_buttons_y, self.w // 2, self.h, "<-", left_button_func
+                )
                 left_button.absolute = True
             else:
-                left_button = SolidColor(self.x, page_buttons_y, self.w//2, self.h, self.theme.dark)
-            if all_items[(self.page+1)*self.rows:(self.page+1)*self.rows + self.rows] != []:
-                right_button = TextButton(self.x+left_button.w, page_buttons_y, self.w-left_button.w, self.h, "->", right_button_func)
+                left_button = SolidColor(
+                    self.x, page_buttons_y, self.w // 2, self.h, self.theme.dark
+                )
+            if all_items[
+                (self.page + 1) * self.rows : (self.page + 1) * self.rows + self.rows
+            ]:  # next page empty?
+                right_button = TextButton(
+                    self.x + left_button.w,
+                    page_buttons_y,
+                    self.w - left_button.w,
+                    self.h,
+                    "->",
+                    right_button_func,
+                )
                 right_button.absolute = True
             else:
-                right_button = SolidColor(self.x+left_button.w, page_buttons_y, self.w-left_button.w, self.h, self.theme.dark)
+                right_button = SolidColor(
+                    self.x + left_button.w,
+                    page_buttons_y,
+                    self.w - left_button.w,
+                    self.h,
+                    self.theme.dark,
+                )
             self.buttons.append(left_button)
             self.buttons.append(right_button)
         for index, item_name in enumerate(display_items):
-            y = self.y + self.h*(index+1)
-            if item_name in self.tile_map.instances: # this is an instance
+            y = self.y + self.h * (index + 1)
+            if item_name in self.tile_map.instances:  # this is an instance
                 instance = Instance(item_name, self.tile_map.instances[item_name])
                 display_name = instance.display_name()
                 if not self.server_view:
-                    captcha_button = CaptchalogueButton(self.x, y, instance.name, self.tile_map.instances)
+                    captcha_button = CaptchalogueButton(
+                        self.x, y, instance.name, self.tile_map.instances
+                    )
                     captcha_button.absolute = True
                 else:
-                    captcha_button = Button(self.x, y, "sprites/buttons/add_to_atheneum.png", "sprites/buttons/add_to_atheneum_pressed.png", get_add_to_atheneum_button_func(instance.name))
+                    captcha_button = Button(
+                        self.x,
+                        y,
+                        "sprites/buttons/add_to_atheneum.png",
+                        "sprites/buttons/add_to_atheneum_pressed.png",
+                        get_add_to_atheneum_button_func(instance.name),
+                    )
                     captcha_button.absolute = True
                 use_buttons = 0
                 if not self.server_view:
@@ -1481,20 +1919,43 @@ class RoomItemDisplay(UIElement):
                         use_buttons += 1
                         path = f"sprites/item_actions/{action_name}.png"
                         pressed_path = f"sprites/item_actions/{action_name}_pressed.png"
-                        if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
-                        if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
-                        use_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, instance.get_action_button_func(action_name, suburb.map_scene))
+                        if not os.path.isfile(path):
+                            path = "sprites/item_actions/generic_action.png"
+                        if not os.path.isfile(pressed_path):
+                            pressed_path = (
+                                "sprites/item_actions/generic_action_pressed.png"
+                            )
+                        use_button = Button(
+                            self.x + (self.w - (30 * (i + 1))),
+                            y,
+                            path,
+                            pressed_path,
+                            instance.get_action_button_func(
+                                action_name, suburb.map_scene
+                            ),
+                        )
                         use_button.absolute = True
                         self.buttons.append(use_button)
                 main_button_width = self.w
-                if captcha_button is not None: main_button_width -= 30
-                main_button_width -= 30*use_buttons
+                if captcha_button is not None:
+                    main_button_width -= 30
+                main_button_width -= 30 * use_buttons
                 main_button_x = self.x
-                if captcha_button is not None: main_button_x += 30
-                new_button = TextButton(main_button_x, y, main_button_width, self.h, util.filter_item_name(display_name), get_button_func(instance.name), truncate_text=True)
-                new_button.absolute = True 
+                if captcha_button is not None:
+                    main_button_x += 30
+                new_button = TextButton(
+                    main_button_x,
+                    y,
+                    main_button_width,
+                    self.h,
+                    util.filter_item_name(display_name),
+                    get_button_func(instance.name),
+                    truncate_text=True,
+                )
+                new_button.absolute = True
                 self.buttons.append(new_button)
-                if captcha_button is not None: self.buttons.append(captcha_button)
+                if captcha_button is not None:
+                    self.buttons.append(captcha_button)
             elif item_name in self.tile_map.npcs:
                 npc = Npc(item_name, self.tile_map.npcs[item_name])
                 display_name = npc.nickname
@@ -1503,24 +1964,56 @@ class RoomItemDisplay(UIElement):
                     for i, interaction_name in enumerate(reversed(npc.interactions)):
                         interaction_buttons += 1
                         path = f"sprites/item_actions/{interaction_name}.png"
-                        pressed_path = f"sprites/item_actions/{interaction_name}_pressed.png"
-                        if not os.path.isfile(path): path = "sprites/item_actions/generic_action.png"
-                        if not os.path.isfile(pressed_path): pressed_path = "sprites/item_actions/generic_action_pressed.png"
-                        interaction_button = Button(self.x+(self.w-(30*(i+1))), y, path, pressed_path, npc.get_npc_interaction_button(interaction_name, suburb.map_scene))
+                        pressed_path = (
+                            f"sprites/item_actions/{interaction_name}_pressed.png"
+                        )
+                        if not os.path.isfile(path):
+                            path = "sprites/item_actions/generic_action.png"
+                        if not os.path.isfile(pressed_path):
+                            pressed_path = (
+                                "sprites/item_actions/generic_action_pressed.png"
+                            )
+                        interaction_button = Button(
+                            self.x + (self.w - (30 * (i + 1))),
+                            y,
+                            path,
+                            pressed_path,
+                            npc.get_npc_interaction_button(
+                                interaction_name, suburb.map_scene
+                            ),
+                        )
                         interaction_button.absolute = True
                         self.buttons.append(interaction_button)
                 main_button_width = self.w
-                main_button_width -= 30*interaction_buttons
-                new_button = TextButton(self.x, y, main_button_width, self.h, display_name, get_button_func(npc.name), truncate_text=True)
+                main_button_width -= 30 * interaction_buttons
+                new_button = TextButton(
+                    self.x,
+                    y,
+                    main_button_width,
+                    self.h,
+                    display_name,
+                    get_button_func(npc.name),
+                    truncate_text=True,
+                )
                 new_button.absolute = True
                 self.buttons.append(new_button)
             elif item_name in self.tile_map.players:
                 display_name = self.tile_map.players[item_name]["nickname"]
                 sleeping = self.tile_map.players[item_name]["sleeping"]
-                if sleeping: display_name = f"{display_name} (zzz)"
-                new_button = TextButton(self.x, y, self.w, self.h, display_name, lambda *args: None, truncate_text=True)
+                if sleeping:
+                    display_name = f"{display_name} (zzz)"
+                new_button = TextButton(
+                    self.x,
+                    y,
+                    self.w,
+                    self.h,
+                    display_name,
+                    lambda *args: None,
+                    truncate_text=True,
+                )
                 new_button.absolute = True
                 self.buttons.append(new_button)
+
 
 def get_cardinal_direction(input_dx, input_dy, rotation):
     directions: dict[tuple[int, int], str] = {
@@ -1531,17 +2024,30 @@ def get_cardinal_direction(input_dx, input_dy, rotation):
     }
     dx, dy = input_dx, input_dy
     # i don't understand math but for some reason the directions flip on every other rotation idk why
-    if (rotation // 90) % 2: dx, dy = -dx, -dy
+    if (rotation // 90) % 2:
+        dx, dy = -dx, -dy
     dx, dy = rotate_points_about_origin(dx, dy, rotation)
     direction = directions[(dx, dy)]
     return direction
 
+
 class Overmap(UIElement):
-    def __init__(self, x, y, map_tiles:list[list[str]], specials: Optional[dict[str, dict[str, str]]]=None, 
-                 map_types: Optional[dict[str, str]]=None, illegal_moves: list[str]=[], 
-                 theme=themes.default, offsetx=0, offsety=0, 
-                 block_path="sprites/overmap/block.png", top_block_path="sprites/overmap/block.png", water_path="sprites/overmap/water.png", 
-                 select_water_path="sprites/overmap/select_water.png"):
+    def __init__(
+        self,
+        x,
+        y,
+        map_tiles: list[list[str]],
+        specials: Optional[dict[str, dict[str, str]]] = None,
+        map_types: Optional[dict[str, str]] = None,
+        illegal_moves: list[str] = [],
+        theme=themes.default,
+        offsetx=0,
+        offsety=0,
+        block_path="sprites/overmap/block.png",
+        top_block_path="sprites/overmap/block.png",
+        water_path="sprites/overmap/water.png",
+        select_water_path="sprites/overmap/select_water.png",
+    ):
         super().__init__()
         self.x = x
         self.y = y
@@ -1573,35 +2079,45 @@ class Overmap(UIElement):
         self.block_image = pygame.image.load(block_path).convert()
         self.block_image = self.convert_to_theme(self.block_image)
         self.block_image.set_colorkey(pygame.Color(0, 0, 0))
-        self.up_block_image = pygame.image.load("sprites/overmap/up_edge_block.png").convert()
+        self.up_block_image = pygame.image.load(
+            "sprites/overmap/up_edge_block.png"
+        ).convert()
         self.up_block_image = self.convert_to_theme(self.up_block_image)
         self.up_block_image.set_colorkey(pygame.Color(0, 0, 0))
-        self.right_block_image = pygame.image.load("sprites/overmap/right_edge_block.png").convert()
+        self.right_block_image = pygame.image.load(
+            "sprites/overmap/right_edge_block.png"
+        ).convert()
         self.right_block_image = self.convert_to_theme(self.right_block_image)
         self.right_block_image.set_colorkey(pygame.Color(0, 0, 0))
-        self.both_block_image = pygame.image.load("sprites/overmap/both_edge_block.png").convert()
+        self.both_block_image = pygame.image.load(
+            "sprites/overmap/both_edge_block.png"
+        ).convert()
         self.both_block_image = self.convert_to_theme(self.both_block_image)
         self.both_block_image.set_colorkey(pygame.Color(0, 0, 0))
 
         self.top_block_image = pygame.image.load(top_block_path).convert()
         self.top_block_image = self.convert_to_theme(self.top_block_image)
         self.top_block_image.set_colorkey(pygame.Color(0, 0, 0))
-        self.selected_block_image = pygame.image.load("sprites/overmap/current_block.png").convert()
+        self.selected_block_image = pygame.image.load(
+            "sprites/overmap/current_block.png"
+        ).convert()
         self.selected_block_image = self.convert_to_theme(self.selected_block_image)
         self.selected_block_image.set_colorkey(pygame.Color(0, 0, 0))
         self.water_image = pygame.image.load(water_path).convert()
         self.water_image = self.convert_to_theme(self.water_image)
         self.water_image.set_colorkey(pygame.Color(0, 0, 0))
-        self.select_image = pygame.image.load("sprites/overmap/selectable.png").convert()
+        self.select_image = pygame.image.load(
+            "sprites/overmap/selectable.png"
+        ).convert()
         self.select_image = self.convert_to_theme(self.select_image)
         self.select_image.set_colorkey(pygame.Color(0, 0, 0))
         self.select_water_image = pygame.image.load(self.select_water_path).convert()
         self.select_water_image = self.convert_to_theme(self.select_water_image)
         self.select_water_image.set_colorkey(pygame.Color(0, 0, 0))
         self.buttons: list[TextButton] = []
-        self.w = (len(self.map_tiles[0]) + len(self.map_tiles))*16
-        self.h = (len(self.map_tiles[0]) + len(self.map_tiles))*8
-        self.h += self.extra_height # extra tile height
+        self.w = (len(self.map_tiles[0]) + len(self.map_tiles)) * 16
+        self.h = (len(self.map_tiles[0]) + len(self.map_tiles)) * 8
+        self.h += self.extra_height  # extra tile height
         self.initialize_map(0)
         update_check.append(self)
         key_check.append(self)
@@ -1613,22 +2129,22 @@ class Overmap(UIElement):
             coords = name.split(", ")
             x, y = int(coords[0]), int(coords[1])
             x = len(self.map_tiles[0]) - x - 1
-            true_x, true_y = x-cx, y-cy
+            true_x, true_y = x - cx, y - cy
             true_x, true_y = rotate_points_about_origin(true_x, true_y, rotation)
-            true_x, true_y = true_x+cx, true_y+cy
+            true_x, true_y = true_x + cx, true_y + cy
             new_map_types[f"{true_x}, {true_y}"] = self.map_types[name]
         return new_map_types
-    
-    def get_specials(self, rotation): 
+
+    def get_specials(self, rotation):
         new_specials = {}
         cx, cy = self.center
         for name in self.specials:
             coords = name.split(", ")
             x, y = int(coords[0]), int(coords[1])
             x = len(self.map_tiles[0]) - x - 1
-            true_x, true_y = x-cx, y-cy
+            true_x, true_y = x - cx, y - cy
             true_x, true_y = rotate_points_about_origin(true_x, true_y, rotation)
-            true_x, true_y = true_x+cx, true_y+cy
+            true_x, true_y = true_x + cx, true_y + cy
             new_specials[f"{true_x}, {true_y}"] = self.specials[name]
         return new_specials
 
@@ -1638,12 +2154,24 @@ class Overmap(UIElement):
         map_types = reply["map_types"]
         illegal_moves = reply["illegal_moves"]
         self.rotation_surfs = {}
-        for button in self.buttons.copy(): 
+        for button in self.buttons.copy():
             button.delete()
             self.buttons.remove(button)
         self.delete()
-        new_overmap = Overmap(self.x, self.y, map_tiles, specials, map_types, illegal_moves, self.theme, self.offsetx, self.offsety, block_path=self.block_path, water_path=self.water_path)
-        for i in range(self.rotation//90):
+        new_overmap = Overmap(
+            self.x,
+            self.y,
+            map_tiles,
+            specials,
+            map_types,
+            illegal_moves,
+            self.theme,
+            self.offsetx,
+            self.offsety,
+            block_path=self.block_path,
+            water_path=self.water_path,
+        )
+        for i in range(self.rotation // 90):
             new_overmap.rotate(90)
 
     def initialize_map(self, rotation):
@@ -1663,13 +2191,16 @@ class Overmap(UIElement):
         last_x_char = "0"
         for y, line in enumerate(draw_tiles):
             for x, char in enumerate(reversed(line)):
-                if int(last_x_char) < int(char): right_edge = True
-                else: right_edge = False
-                last_line = list(draw_tiles)[y-1]
+                if int(last_x_char) < int(char):
+                    right_edge = True
+                else:
+                    right_edge = False
+                last_line = list(draw_tiles)[y - 1]
                 last_line = list(reversed(last_line))
-                if int(last_line[x]) < int(char): 
+                if int(last_line[x]) < int(char):
                     up_edge = True
-                else: up_edge = False
+                else:
+                    up_edge = False
                 overmap_tile = OvermapTile(x, y, int(char), self, up_edge, right_edge)
                 overmap_tile.blit_surf = self.surf
                 overmap_tile.draw_to_surface(rotation)
@@ -1677,8 +2208,10 @@ class Overmap(UIElement):
 
     def update(self):
         self.mousepan(0)
-        try: self.surf
-        except AttributeError: self.initialize_map(self.rotation)
+        try:
+            self.surf
+        except AttributeError:
+            self.initialize_map(self.rotation)
         self.rect.x = int((SCREEN_WIDTH * self.x) - (self.rect.w / 2)) + self.offsetx
         self.rect.y = int((SCREEN_HEIGHT * self.y) - (self.rect.h / 2)) + self.offsety
         screen.blit(self.surf, (self.rect.x, self.rect.y))
@@ -1686,10 +2219,12 @@ class Overmap(UIElement):
     def rotate(self, direction: int):
         if direction == -90:
             self.rotation -= 90
-            if self.rotation < 0: self.rotation = 270
+            if self.rotation < 0:
+                self.rotation = 270
         if direction == 90:
             self.rotation += 90
-            if self.rotation == 360: self.rotation = 0
+            if self.rotation == 360:
+                self.rotation = 0
         self.initialize_map(self.rotation)
 
     def move_by_relative_vector(self, dx, dy):
@@ -1698,19 +2233,28 @@ class Overmap(UIElement):
         self.update_map(reply)
 
     def keypress(self, event):
-        if event.key == pygame.K_q: self.rotate(-90)
-        elif event.key == pygame.K_e: self.rotate(90)
-        elif event.key == pygame.K_w or event.key == pygame.K_UP: self.move_by_relative_vector(0, 1)
-        elif event.key == pygame.K_s or event.key == pygame.K_DOWN: self.move_by_relative_vector(0, -1)
-        elif event.key == pygame.K_d or event.key == pygame.K_RIGHT: self.move_by_relative_vector(1, 0)
-        elif event.key == pygame.K_a or event.key == pygame.K_LEFT: self.move_by_relative_vector(-1, 0)
+        if event.key == pygame.K_q:
+            self.rotate(-90)
+        elif event.key == pygame.K_e:
+            self.rotate(90)
+        elif event.key == pygame.K_w or event.key == pygame.K_UP:
+            self.move_by_relative_vector(0, 1)
+        elif event.key == pygame.K_s or event.key == pygame.K_DOWN:
+            self.move_by_relative_vector(0, -1)
+        elif event.key == pygame.K_d or event.key == pygame.K_RIGHT:
+            self.move_by_relative_vector(1, 0)
+        elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
+            self.move_by_relative_vector(-1, 0)
 
     @property
     def center(self) -> tuple[int, int]:
-        return len(self.map_tiles[0])//2, len(self.map_tiles)//2
+        return len(self.map_tiles[0]) // 2, len(self.map_tiles) // 2
+
 
 class OvermapTile(UIElement):
-    def __init__(self, x, y, height:int, overmap: Overmap, up_edge: bool, right_edge: bool):
+    def __init__(
+        self, x, y, height: int, overmap: Overmap, up_edge: bool, right_edge: bool
+    ):
         self.x = x
         self.y = y
         self.height = height
@@ -1723,19 +2267,22 @@ class OvermapTile(UIElement):
             direction = get_cardinal_direction(input_dx, input_dy, rotation)
             reply = client.requestplusdic(intent="overmap_move", content=direction)
             self.overmap.update_map(reply)
+
         return button_func
-    
+
     def get_inactive_condition(self, rotation):
         def condition():
-            if self.overmap.rotation != rotation: return True
+            if self.overmap.rotation != rotation:
+                return True
             return False
+
         return condition
 
     def draw_to_surface(self, rotation: int):
         # each block starts 16 left and 8 down from the last
         # basically It Just Works(TM) don't fucking ask questions
         draw_x = -16
-        draw_x += self.overmap.rect.w//2
+        draw_x += self.overmap.rect.w // 2
         draw_x += (len(self.overmap.map_tiles) - len(self.overmap.map_tiles[0])) * -8
         draw_x += self.y * 16
         draw_x -= self.x * 16
@@ -1747,15 +2294,23 @@ class OvermapTile(UIElement):
         else:
             for i in range(self.height):
                 # top of stack
-                if i == self.height-1: 
-                    self.blit_surf.blit(self.overmap.top_block_image, ((draw_x, draw_y)))
+                if i == self.height - 1:
+                    self.blit_surf.blit(
+                        self.overmap.top_block_image, ((draw_x, draw_y))
+                    )
                     if self.right_edge and self.up_edge:
-                        self.blit_surf.blit(self.overmap.both_block_image, ((draw_x, draw_y)))
+                        self.blit_surf.blit(
+                            self.overmap.both_block_image, ((draw_x, draw_y))
+                        )
                     elif self.right_edge:
-                        self.blit_surf.blit(self.overmap.right_block_image, ((draw_x, draw_y)))
+                        self.blit_surf.blit(
+                            self.overmap.right_block_image, ((draw_x, draw_y))
+                        )
                     elif self.up_edge:
-                        self.blit_surf.blit(self.overmap.up_block_image, ((draw_x, draw_y)))
-                else: 
+                        self.blit_surf.blit(
+                            self.overmap.up_block_image, ((draw_x, draw_y))
+                        )
+                else:
                     self.blit_surf.blit(self.overmap.block_image, ((draw_x, draw_y)))
                 draw_y -= 16
         centerx, centery = self.overmap.center
@@ -1765,10 +2320,19 @@ class OvermapTile(UIElement):
         elif abs(dy) != abs(dx) and abs(dx) <= 1 and abs(dy) <= 1:
             direction = get_cardinal_direction(dx, dy, rotation)
             if direction not in self.overmap.illegal_moves:
-                if self.height == 0: select_image = self.overmap.select_water_image
-                else: select_image = self.overmap.select_image
+                if self.height == 0:
+                    select_image = self.overmap.select_water_image
+                else:
+                    select_image = self.overmap.select_image
                 self.blit_surf.blit(select_image, ((draw_x, draw_y)))
-                button = TextButton(draw_x, draw_y+16, 32, 16, "", self.get_button_func(dx, dy, rotation))
+                button = TextButton(
+                    draw_x,
+                    draw_y + 16,
+                    32,
+                    16,
+                    "",
+                    self.get_button_func(dx, dy, rotation),
+                )
                 button.absolute = True
                 button.bind_to(self.overmap)
                 button.draw_sprite = False
@@ -1795,12 +2359,16 @@ class OvermapTile(UIElement):
                 path = f"sprites/overmap/{special_type}.png"
                 if os.path.isfile(path):
                     special_surf = pygame.image.load(path)
-                    if isinstance(special_color, list): # 3 color rgb
+                    if isinstance(special_color, list):  # 3 color rgb
                         r, g, b = special_color[0], special_color[1], special_color[2]
                         light = pygame.Color(r, g, b)
                         dark = get_dark_color(r, g, b)
-                        special_surf = palette_swap(special_surf, themes.default.light, light)
-                        special_surf = palette_swap(special_surf, themes.default.dark, dark)
+                        special_surf = palette_swap(
+                            special_surf, themes.default.light, light
+                        )
+                        special_surf = palette_swap(
+                            special_surf, themes.default.dark, dark
+                        )
                     special_surf = self.overmap.convert_to_theme(special_surf)
                     special_surf.set_colorkey(Color(0, 0, 0))
                     self.blit_surf.blit(special_surf, ((draw_x, draw_y)))
@@ -1809,36 +2377,65 @@ class OvermapTile(UIElement):
     @property
     def name(self) -> str:
         return f"{self.x}, {self.y}"
-    
+
     @property
     def tile(self) -> str:
         return self.overmap.draw_tiles[self.y][self.x]
+
 
 class CaptchalogueButton(Button):
     def __init__(self, x, y, instance_name: str, instances: dict):
         self.instances = instances
         self.instance_name = instance_name
         self.instance_dict = instances[instance_name]
-        def empty(): pass
+
+        def empty():
+            pass
+
         syl = Sylladex.current_sylladex()
         if syl.can_captchalogue(Instance(self.instance_name, self.instance_dict)):
-            super().__init__(x, y, "sprites/buttons/captchalogue_symbol.png", "sprites/buttons/captchalogue_symbol_pressed.png", self.get_captchalogue_function())
+            super().__init__(
+                x,
+                y,
+                "sprites/buttons/captchalogue_symbol.png",
+                "sprites/buttons/captchalogue_symbol_pressed.png",
+                self.get_captchalogue_function(),
+            )
         else:
-            super().__init__(x, y, "sprites/buttons/captchalogue_symbol_pressed.png", "sprites/buttons/captchalogue_symbol_pressed.png", empty)
+            super().__init__(
+                x,
+                y,
+                "sprites/buttons/captchalogue_symbol_pressed.png",
+                "sprites/buttons/captchalogue_symbol_pressed.png",
+                empty,
+            )
 
     def get_captchalogue_function(self):
         instance = Instance(self.instance_name, self.instance_dict)
+
         def output_func():
             syl = Sylladex.current_sylladex()
             if syl.captchalogue(instance):
                 suburb.map_scene()
             else:
                 ...
+
         return output_func
 
+
 class LogWindow(UIElement):
-    def __init__(self, last_scene: Optional[Callable], tilemap: Optional[TileMap]=None, draw_console=False, 
-                 x=int(SCREEN_WIDTH*0.5), y=0, width=500, lines_to_display=4, fontsize=16, log_list: Optional[list[str]]=None):
+    def __init__(
+        self,
+        last_scene: Optional[Callable],
+        tilemap: Optional[TileMap] = None,
+        draw_console=False,
+        x=int(SCREEN_WIDTH * 0.5),
+        y=0,
+        width=500,
+        lines_to_display=4,
+        fontsize=16,
+        log_list: Optional[list[str]] = None,
+    ):
         super().__init__()
         self.last_scene = last_scene
         self.x = x
@@ -1852,7 +2449,8 @@ class LogWindow(UIElement):
         if log_list is None:
             util.log_window = self
             self.log_list = None
-        else: self.log_list = log_list
+        else:
+            self.log_list = log_list
         self.scroll_offset = 0
         self.background: Optional[UIElement] = None
         self.console: Optional[InputTextBox] = None
@@ -1866,28 +2464,42 @@ class LogWindow(UIElement):
 
     @property
     def height(self):
-        return self.fontsize*self.lines_to_display + self.padding*self.lines_to_display
+        return (
+            self.fontsize * self.lines_to_display + self.padding * self.lines_to_display
+        )
 
     def delete(self):
-        if util.log_window == self: util.log_window = None
+        if util.log_window == self:
+            util.log_window = None
         super().delete()
-    
+
     def update_logs(self):
-        for element in self.elements: element.delete()
+        for element in self.elements:
+            element.delete()
         if self.background is not None:
             self.background.delete()
             self.background = None
         if self.console is not None:
             self.console.delete()
             self.console = None
-            if self.tilemap is not None: self.tilemap.input_text_box = None
+            if self.tilemap is not None:
+                self.tilemap.input_text_box = None
         self.spawn_logger_lines()
 
     def spawn_logger_lines(self):
-        x = self.x - int(self.width/2)
-        self.background = SolidColor(x, self.y, self.width, self.fontsize*self.lines_to_display + self.padding*self.lines_to_display, self.background_color)
-        for loop_index, position_index in enumerate(reversed(range(self.lines_to_display))):
-            y = self.y + position_index*self.fontsize + position_index*self.padding
+        x = self.x - int(self.width / 2)
+        self.background = SolidColor(
+            x,
+            self.y,
+            self.width,
+            self.fontsize * self.lines_to_display
+            + self.padding * self.lines_to_display,
+            self.background_color,
+        )
+        for loop_index, position_index in enumerate(
+            reversed(range(self.lines_to_display))
+        ):
+            y = self.y + position_index * self.fontsize + position_index * self.padding
             try:
                 line = self.log[-loop_index - 1 - self.scroll_offset]
                 text = Text(x, y, line)
@@ -1901,18 +2513,31 @@ class LogWindow(UIElement):
         surf = pygame.Surface((self.width, self.height))
         self.rect = surf.get_rect()
         self.rect.x, self.rect.y = x, self.y
-        if not self.draw_console: return
-        console_y = self.y + (self.lines_to_display)*self.fontsize + (self.lines_to_display)*self.padding
-        self.console = InputTextBox(x, console_y, self.width, self.fontsize+self.padding)
+        if not self.draw_console:
+            return
+        console_y = (
+            self.y
+            + (self.lines_to_display) * self.fontsize
+            + (self.lines_to_display) * self.padding
+        )
+        self.console = InputTextBox(
+            x, console_y, self.width, self.fontsize + self.padding
+        )
         self.console.absolute = True
+
         def console_enter_func():
             assert self.console is not None
             console_command = self.console.text
-            util.log(">"+console_command)
-            reply = client.requestplus(intent="console_command", content=console_command)
-            if reply != "None": util.log(reply)
+            util.log(">" + console_command)
+            reply = client.requestplus(
+                intent="console_command", content=console_command
+            )
+            if reply != "None":
+                util.log(reply)
             self.console.text = ""
-            if self.last_scene: self.last_scene()
+            if self.last_scene:
+                self.last_scene()
+
         self.console.enter_func = console_enter_func
         self.console.inactive_color = self.background_color
         self.console.active_color = self.active_color
@@ -1920,22 +2545,29 @@ class LogWindow(UIElement):
         self.console.text_color = self.active_text_color
         self.console.fontsize = self.fontsize
         self.console.suffix = ">"
-        if self.tilemap is not None: self.tilemap.input_text_box = self.console
+        if self.tilemap is not None:
+            self.tilemap.input_text_box = self.console
 
     def scroll(self, y: int):
-        if self.background is None: return
-        if not self.background.is_mouseover(): return
+        if self.background is None:
+            return
+        if not self.background.is_mouseover():
+            return
         max_offset = max(len(self.log) - self.lines_to_display, 0)
         self.scroll_offset += y
-        if self.scroll_offset < 0: self.scroll_offset = 0
-        if self.scroll_offset > max_offset: self.scroll_offset = max_offset
+        if self.scroll_offset < 0:
+            self.scroll_offset = 0
+        if self.scroll_offset > max_offset:
+            self.scroll_offset = max_offset
         self.update_logs()
 
     @property
     def log(self) -> list[str]:
         if self.log_list is None:
             return util.current_log()
-        else: return self.log_list
+        else:
+            return self.log_list
+
 
 def make_item_image(x, y, instance: "Instance") -> Union[Dowel, Image, None]:
     image_path = f"sprites\\items\\{instance.item.name}.png"
@@ -1964,7 +2596,10 @@ def make_item_image(x, y, instance: "Instance") -> Union[Dowel, Image, None]:
     else:
         return None
 
-def spawn_punches(bound_element: UIElement, code: str, base_x, base_y, flipped=False, w=172, h=240):
+
+def spawn_punches(
+    bound_element: UIElement, code: str, base_x, base_y, flipped=False, w=172, h=240
+):
     padding = 1
     bin_rows = binaryoperations.captcha_code_to_bin_rows(code)
     if flipped:
@@ -1973,18 +2608,27 @@ def spawn_punches(bound_element: UIElement, code: str, base_x, base_y, flipped=F
         for row in copy:
             bin_rows.append(row[::-1])
     for row_index, row in enumerate(bin_rows):
-        y = (int(h/12)*row_index)
+        y = int(h / 12) * row_index
         for char_index, char in enumerate(row):
-            x = (int(w/4)*char_index)
+            x = int(w / 4) * char_index
             if char == "1":
-                punch_x = base_x+x + padding
-                punch_y = base_y+y + padding
-                punch_w = int(w/4) - padding*2
-                punch_h = int(h/12) - padding*2
-                punch = SolidColor(punch_x, punch_y, punch_w, punch_h, suburb.current_theme().black)
+                punch_x = base_x + x + padding
+                punch_y = base_y + y + padding
+                punch_w = int(w / 4) - padding * 2
+                punch_h = int(h / 12) - padding * 2
+                punch = SolidColor(
+                    punch_x, punch_y, punch_w, punch_h, suburb.current_theme().black
+                )
                 punch.bind_to(bound_element)
-                punch_middle = SolidColor(punch_x+padding, punch_y+padding, punch_w - padding*2, punch_h - padding*2, suburb.current_theme().white)
+                punch_middle = SolidColor(
+                    punch_x + padding,
+                    punch_y + padding,
+                    punch_w - padding * 2,
+                    punch_h - padding * 2,
+                    suburb.current_theme().white,
+                )
                 punch_middle.bind_to(bound_element)
+
 
 class FpsCounter(Text):
     def __init__(self, x, y):
@@ -1995,27 +2639,43 @@ class FpsCounter(Text):
         self.remake_surfs = True
         super().update()
 
+
 class TaskBar(UIElement):
     def __init__(self):
         super().__init__()
         self.w = SCREEN_WIDTH
         self.h = 40
         self.padding = 3
-        self.background = SolidColor(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.theme.white)
-        self.task_bar = SolidColor(0, SCREEN_HEIGHT-self.h, SCREEN_WIDTH, self.h, self.theme.dark)
+        self.background = SolidColor(
+            0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.theme.white
+        )
+        self.task_bar = SolidColor(
+            0, SCREEN_HEIGHT - self.h, SCREEN_WIDTH, self.h, self.theme.dark
+        )
         self.task_bar.outline_color = self.theme.light
         self.task_bar.outline_width = self.padding
-        self.actuate_button_box = SolidColor(0, SCREEN_HEIGHT-self.h, 120 + self.padding*2, self.h, self.theme.dark)
+        self.actuate_button_box = SolidColor(
+            0, SCREEN_HEIGHT - self.h, 120 + self.padding * 2, self.h, self.theme.dark
+        )
         self.actuate_button_box.outline_color = self.theme.light
         self.actuate_button_box.outline_width = self.padding
-        self.actuate_button = TextButton(self.padding, SCREEN_HEIGHT-self.h+self.padding, 120, self.h - self.padding*2, " ACTUATE", suburb.map_scene)
+        self.actuate_button = TextButton(
+            self.padding,
+            SCREEN_HEIGHT - self.h + self.padding,
+            120,
+            self.h - self.padding * 2,
+            " ACTUATE",
+            suburb.map_scene,
+        )
         self.actuate_button.absolute = True
         self.actuate_button.outline_color = self.theme.black
         self.actuate_button.fill_color = self.theme.dark
         self.actuate_button.hover_color = self.theme.light
         self.actuate_button.text_color = self.theme.white
         self.actuate_button.outline_width = self.padding
-        self.actuate_button_image = Image(0.15, 0.5, "sprites/computer/little_green_circle.png")
+        self.actuate_button_image = Image(
+            0.15, 0.5, "sprites/computer/little_green_circle.png"
+        )
         self.actuate_button_image.bind_to(self.actuate_button)
         # todo: time on bottom right
         self.apps = [self.actuate_button]
@@ -2027,6 +2687,7 @@ class TaskBar(UIElement):
         self.actuate_button.bring_to_top()
         self.actuate_button_image.bring_to_top()
 
+
 class AppIcon(Button):
     def __init__(self, x, y, app_name: str, task_bar: TaskBar):
         self.x = x
@@ -2035,10 +2696,13 @@ class AppIcon(Button):
         self.task_bar = task_bar
         self.path = f"sprites/computer/apps/{app_name}.png"
         self.window: Optional[Window] = None
+
         def open_window():
-            if len(self.task_bar.open_windows) > 0: return
+            if len(self.task_bar.open_windows) > 0:
+                return
             if self.window is None:
                 self.window = Window(app_name, task_bar, self)
+
         super().__init__(x, y, self.path, self.path, open_window)
         self.convert = False
         self.invert_on_click = True
@@ -2048,30 +2712,51 @@ class AppIcon(Button):
         app_label.highlight_color = self.theme.dark
         app_label.bind_to(self)
 
+
 class Window(SolidColor):
     def __init__(self, app_name: str, task_bar: TaskBar, app_icon: AppIcon):
         self.app_name = app_name
         self.task_bar = task_bar
         self.app_icon = app_icon
-        if self not in self.task_bar.open_windows: self.task_bar.open_windows.append(self)
+        if self not in self.task_bar.open_windows:
+            self.task_bar.open_windows.append(self)
         self.padding = 3
         self.head_height = 40
-        self.height = SCREEN_HEIGHT-task_bar.h
+        self.height = SCREEN_HEIGHT - task_bar.h
         self.width = SCREEN_WIDTH
         self.x = 0
         self.y = 0
-        super().__init__(self.x, self.y, self.width, self.height, suburb.current_theme().light)
-        self.viewport = SolidColor(self.padding, self.head_height, self.width - self.padding*2, self.height - (self.padding+self.head_height), self.theme.white)
+        super().__init__(
+            self.x, self.y, self.width, self.height, suburb.current_theme().light
+        )
+        self.viewport = SolidColor(
+            self.padding,
+            self.head_height,
+            self.width - self.padding * 2,
+            self.height - (self.padding + self.head_height),
+            self.theme.white,
+        )
         self.icon_path = f"sprites/computer/apps/{app_name}.png"
-        self.icon = Image(self.x+self.padding, self.y+self.padding, self.icon_path, convert=False)
+        self.icon = Image(
+            self.x + self.padding, self.y + self.padding, self.icon_path, convert=False
+        )
         self.icon.absolute = True
         self.icon.scale = 0.25
-        self.label = Text(self.x + 32 + self.padding*2, self.y+self.padding, app_name)
+        self.label = Text(
+            self.x + 32 + self.padding * 2, self.y + self.padding, app_name
+        )
         self.label.absolute = True
         self.label.color = self.theme.white
         self.label.outline_color = self.theme.black
         self.label.fontsize = 28
-        self.xbutton = TextButton(self.width-self.head_height-self.padding, self.padding, self.head_height - self.padding*2, self.head_height - self.padding*2, "x", self.delete)
+        self.xbutton = TextButton(
+            self.width - self.head_height - self.padding,
+            self.padding,
+            self.head_height - self.padding * 2,
+            self.head_height - self.padding * 2,
+            "x",
+            self.delete,
+        )
         self.xbutton.absolute = True
         self.xbutton.outline_color = self.theme.light
         self.xbutton.fill_color = self.theme.light
@@ -2102,8 +2787,10 @@ class Window(SolidColor):
         self.icon.delete()
         self.label.delete()
         self.xbutton.delete()
-        if self in self.task_bar.open_windows: self.task_bar.open_windows.remove(self)
+        if self in self.task_bar.open_windows:
+            self.task_bar.open_windows.remove(self)
         super().delete()
+
 
 class Vial(SolidColor):
     def __init__(self, x, y, w: int, vial_type: str, filled_amount: float):
@@ -2125,7 +2812,9 @@ class Vial(SolidColor):
         self.segmented_vial: bool = config.vials[self.vial_type]["segmented_vial"]
         self.fill_color: Color = config.vials[self.vial_type]["fill_color"]
         self.shade_color: Color = config.vials[self.vial_type]["shade_color"]
-        self.middle_color: Optional[Color] = config.vials[self.vial_type]["middle_color"]
+        self.middle_color: Optional[Color] = config.vials[self.vial_type][
+            "middle_color"
+        ]
         self.make_fill_surf()
         self.label = Text(0.5, 2, self.name)
         self.label.bind_to(self)
@@ -2133,8 +2822,8 @@ class Vial(SolidColor):
         self.label.fontsize = 8
 
     def make_fill_surf(self):
-        fill_width = self.w-self.padding*4
-        fill_height = self.h-self.padding*4
+        fill_width = self.w - self.padding * 4
+        fill_height = self.h - self.padding * 4
         shade_surf = pygame.Surface((fill_width, fill_height))
         shade_surf.fill(self.shade_color)
         fill_surf = pygame.Surface((fill_width, fill_height - 1))
@@ -2149,24 +2838,28 @@ class Vial(SolidColor):
             segments = 20
             segmented_surf = pygame.Surface((2, fill_height))
             segmented_surf.fill(Color(0, 0, 0))
-            midpoint_x = fill_height//2 - round(fill_width/segments/2)
+            midpoint_x = fill_height // 2 - round(fill_width / segments / 2)
             for i in range(segments):
-                xdiff = (i+1) * round(fill_width/segments)
-                self.fill_surf.blit(segmented_surf, (midpoint_x+xdiff, 0))
-                self.fill_surf.blit(segmented_surf, (midpoint_x-xdiff, 0))
+                xdiff = (i + 1) * round(fill_width / segments)
+                self.fill_surf.blit(segmented_surf, (midpoint_x + xdiff, 0))
+                self.fill_surf.blit(segmented_surf, (midpoint_x - xdiff, 0))
             self.fill_surf = self.fill_surf.convert()
             self.fill_surf.set_colorkey(Color(0, 0, 0))
 
     def update(self):
-        if self.gel_vial: 
+        if self.gel_vial:
             self.rect_x_offset = -int((1 - self.filled_percent) * self.w)
             self.label.rect_x_offset = -self.rect_x_offset
         super().update()
         # unusuable vial fill
         if not self.segmented_vial:
             unusable_fill_width = int(self.fill_surf.get_width() * self.filled_percent)
-            unusable_fill_rect = pygame.Rect(0, 0, unusable_fill_width, self.fill_surf.get_height())
-            unusable_fill_surf = pygame.Surface((unusable_fill_width, self.fill_surf.get_height()))
+            unusable_fill_rect = pygame.Rect(
+                0, 0, unusable_fill_width, self.fill_surf.get_height()
+            )
+            unusable_fill_surf = pygame.Surface(
+                (unusable_fill_width, self.fill_surf.get_height())
+            )
             unusable_fill_surf.fill(Color(255, 0, 0))
         else:
             unusable_fill_surf = None
@@ -2177,11 +2870,16 @@ class Vial(SolidColor):
         fill_rect = pygame.Rect(0, 0, fill_width, self.fill_surf.get_height())
         # blit coords
         # offset by unusable fill width because vial hasn't changed yet
-        if self.gel_vial: x_offset = self.fill_surf.get_width() - unusable_fill_width
-        else: x_offset = 0
-        blit_x = self.rect.x+self.padding*2+x_offset
-        blit_y = self.rect.y+self.padding*2
-        if unusable_fill_surf is not None and unusable_fill_rect is not None: self.blit_surf.blit(unusable_fill_surf, (blit_x, blit_y), unusable_fill_rect)
+        if self.gel_vial:
+            x_offset = self.fill_surf.get_width() - unusable_fill_width
+        else:
+            x_offset = 0
+        blit_x = self.rect.x + self.padding * 2 + x_offset
+        blit_y = self.rect.y + self.padding * 2
+        if unusable_fill_surf is not None and unusable_fill_rect is not None:
+            self.blit_surf.blit(
+                unusable_fill_surf, (blit_x, blit_y), unusable_fill_rect
+            )
         self.blit_surf.blit(self.fill_surf, (blit_x, blit_y), fill_rect)
 
     @property
@@ -2192,6 +2890,7 @@ class Vial(SolidColor):
     def filled_percent(self) -> float:
         return self.filled_amount
 
+
 class GrieferVial(Vial):
     def __init__(self, x, y, w: int, griefer: Griefer, vial_type: str):
         super().__init__(x, y, w, vial_type, 0)
@@ -2200,49 +2899,58 @@ class GrieferVial(Vial):
     @property
     def usable_filled_percent(self) -> float:
         try:
-            return min(self.griefer.get_usable_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type), 1)
-        except ZeroDivisionError: return 0
+            return min(
+                self.griefer.get_usable_vial(self.vial_type)
+                / self.griefer.get_maximum_vial(self.vial_type),
+                1,
+            )
+        except ZeroDivisionError:
+            return 0
 
     @property
     def filled_percent(self) -> float:
         try:
-            return self.griefer.get_vial(self.vial_type) / self.griefer.get_maximum_vial(self.vial_type)
-        except ZeroDivisionError: return 0
+            return self.griefer.get_vial(
+                self.vial_type
+            ) / self.griefer.get_maximum_vial(self.vial_type)
+        except ZeroDivisionError:
+            return 0
+
 
 class Symbol(Image):
     player_image_crop = (144, 98, 114, 196)
 
     def __init__(self, x, y, parts: dict):
-       self.parts = parts
-       self.base = parts["base"]
-       self.shoes = parts["shoes"]
-       self.pants = parts["pants"]
-       self.shirt = parts["shirt"]
-       self.coat = parts["coat"]
-       self.mouth = parts["mouth"]
-       self.eyes = parts["eyes"]
-       self.hair = parts["hair"]
-       self.horns = parts["horns"]
-       self.color = parts["color"]
-       self.style_dict = parts["style_dict"]
-       super().__init__(x, y, "")
-       self.load_image("")
+        self.parts = parts
+        self.base = parts["base"]
+        self.shoes = parts["shoes"]
+        self.pants = parts["pants"]
+        self.shirt = parts["shirt"]
+        self.coat = parts["coat"]
+        self.mouth = parts["mouth"]
+        self.eyes = parts["eyes"]
+        self.hair = parts["hair"]
+        self.horns = parts["horns"]
+        self.color = parts["color"]
+        self.style_dict = parts["style_dict"]
+        super().__init__(x, y, "")
+        self.load_image("")
 
     @property
     def light(self):
         r, g, b = self.color[0], self.color[1], self.color[2]
         return Color(r, g, b)
-    
+
     @property
     def dark(self) -> Color:
         r, g, b = self.color[0], self.color[1], self.color[2]
         return get_dark_color(r, g, b)
 
     def get_width(self):
-        return int(114* self.scale)
-    
+        return int(114 * self.scale)
+
     def get_height(self):
-        return int(196* self.scale)
+        return int(196 * self.scale)
 
     def get_image_path(self, part, item_name):
         style = self.style_dict[part]
@@ -2253,14 +2961,24 @@ class Symbol(Image):
 
     def load_image(self, path: str):
         base = pygame.image.load(self.get_image_path("base", self.base)).convert_alpha()
-        shoes = pygame.image.load(self.get_image_path("shoes", self.shoes)).convert_alpha()
-        pants = pygame.image.load(self.get_image_path("pants", self.pants)).convert_alpha()
-        shirt = pygame.image.load(self.get_image_path("shirt", self.shirt)).convert_alpha()
+        shoes = pygame.image.load(
+            self.get_image_path("shoes", self.shoes)
+        ).convert_alpha()
+        pants = pygame.image.load(
+            self.get_image_path("pants", self.pants)
+        ).convert_alpha()
+        shirt = pygame.image.load(
+            self.get_image_path("shirt", self.shirt)
+        ).convert_alpha()
         coat = pygame.image.load(self.get_image_path("coat", self.coat)).convert_alpha()
-        mouth = pygame.image.load(self.get_image_path("mouth", self.mouth)).convert_alpha()
+        mouth = pygame.image.load(
+            self.get_image_path("mouth", self.mouth)
+        ).convert_alpha()
         eyes = pygame.image.load(self.get_image_path("eyes", self.eyes)).convert_alpha()
         hair = pygame.image.load(self.get_image_path("hair", self.hair)).convert_alpha()
-        horns = pygame.image.load(self.get_image_path("horns", self.horns)).convert_alpha()
+        horns = pygame.image.load(
+            self.get_image_path("horns", self.horns)
+        ).convert_alpha()
         if self.base == "kid":
             eyes = pygame.PixelArray(eyes)
             eyes.replace(pygame.Color(255, 186, 41), pygame.Color(255, 255, 255))
@@ -2272,7 +2990,9 @@ class Symbol(Image):
             hair = pygame.PixelArray(hair)
             hair.replace(pygame.Color(255, 255, 255), pygame.Color(1, 1, 1))
             hair = hair.make_surface()
-        coat_back_path = f"sprites/symbol/coat-backs/{self.coat}-{self.style_dict['coat']}.png"
+        coat_back_path = (
+            f"sprites/symbol/coat-backs/{self.coat}-{self.style_dict['coat']}.png"
+        )
         if os.path.isfile(coat_back_path):
             coatback = pygame.image.load(coat_back_path).convert_alpha()
             coatback.blit(base, (0, 0))
@@ -2291,7 +3011,7 @@ class Symbol(Image):
         base.replace(pygame.Color(0, 0, 0), pygame.Color(1, 1, 1))
         base = base.make_surface()
         return base
-    
+
     def collidepoint(self, pos):
         x, y, w, h = self.player_image_crop
         x *= self.scale
@@ -2304,9 +3024,18 @@ class Symbol(Image):
         hitbox_rect = pygame.Rect(x, y, w, h)
         return hitbox_rect.collidepoint(pos)
 
+
 class StateIcon(Image):
     tooltip_padding = 5
-    def __init__(self, x, y, griefer: "Griefer", state_name: str, theme: Optional["themes.Theme"]=None):
+
+    def __init__(
+        self,
+        x,
+        y,
+        griefer: "Griefer",
+        state_name: str,
+        theme: Optional["themes.Theme"] = None,
+    ):
         path = f"sprites/strife/states/{state_name}.png"
         if not os.path.isfile(path):
             path = "sprites/strife/states/unknown_state.png"
@@ -2314,7 +3043,7 @@ class StateIcon(Image):
         self.griefer = griefer
         self.state_name = state_name
         self.popup: Optional[SolidColor] = None
-    
+
     @property
     def tooltip(self) -> str:
         return self.griefer.get_state_tooltip(self.state_name)
@@ -2322,14 +3051,14 @@ class StateIcon(Image):
     @property
     def potency(self) -> float:
         return self.griefer.get_state_potency(self.state_name)
-    
+
     @property
     def passive(self) -> bool:
         return self.griefer.is_state_passive(self.state_name)
 
     def update(self):
         super().update()
-        if not self.is_mouseover() and self.popup is not None: 
+        if not self.is_mouseover() and self.popup is not None:
             self.popup.delete()
             self.popup = None
         if self.is_mouseover() and self.popup is None:
@@ -2338,14 +3067,18 @@ class StateIcon(Image):
             if self.passive:
                 popup_text_content = f"{self.state_name.upper()} (P): {tooltip}"
             else:
-                popup_text_content = f"{self.state_name.upper()} ({self.potency:.1f}): {tooltip}"
+                popup_text_content = (
+                    f"{self.state_name.upper()} ({self.potency:.1f}): {tooltip}"
+                )
             popup_text = Text(0.5, 0.5, popup_text_content)
             popup_text.fontsize = 14
             popup_text.color = self.theme.dark
-            popup_width = popup_text.get_width()+self.tooltip_padding*2
-            popup_height = popup_text.fontsize+self.tooltip_padding*2
-            if x + popup_width > SCREEN_WIDTH: x_offset = -popup_width
-            else: x_offset = 10
+            popup_width = popup_text.get_width() + self.tooltip_padding * 2
+            popup_height = popup_text.fontsize + self.tooltip_padding * 2
+            if x + popup_width > SCREEN_WIDTH:
+                x_offset = -popup_width
+            else:
+                x_offset = 10
             self.popup = SolidColor(x, y, popup_width, popup_height, self.theme.white)
             self.popup.outline_color = self.theme.dark
             self.popup.follow_mouse = True
@@ -2353,8 +3086,16 @@ class StateIcon(Image):
             popup_text.bring_to_top()
             popup_text.bind_to(self.popup)
 
+
 class NoGrieferStateIcon(StateIcon):
-    def __init__(self, x, y, state_name: str, state_dict: dict, theme: Optional["themes.Theme"]=None):
+    def __init__(
+        self,
+        x,
+        y,
+        state_name: str,
+        state_dict: dict,
+        theme: Optional["themes.Theme"] = None,
+    ):
         path = f"sprites/strife/states/{state_name}.png"
         if not os.path.isfile(path):
             path = "sprites/strife/states/unknown_state.png"
@@ -2362,18 +3103,19 @@ class NoGrieferStateIcon(StateIcon):
         self.state_dict = state_dict
         self.state_name = state_name
         self.popup: Optional[SolidColor] = None
-    
+
     @property
     def tooltip(self) -> str:
         return self.state_dict["tooltip"]
-    
+
     @property
     def potency(self) -> float:
         return self.state_dict["potency"]
-    
+
     @property
     def passive(self) -> bool:
         return self.state_dict["passive"]
+
 
 class GrieferElement(UIElement):
     griefer: Griefer
@@ -2384,20 +3126,24 @@ class GrieferElement(UIElement):
     cached_vials_list = []
     cached_states_list = []
 
-    def onclick(self, clicked:bool):
+    def onclick(self, clicked: bool):
         if clicked:
             self.griefer.strife.click_griefer(self.griefer)
 
     def update_vials(self):
         made_new_vial = False
         for vial_name in reversed(self.griefer.vials):
-            if vial_name in self.vials: continue
+            if vial_name in self.vials:
+                continue
             hidden = config.vials[vial_name]["hidden"]
-            if hidden and self.griefer.get_vial(vial_name) == self.griefer.get_starting_vial(vial_name): continue
+            if hidden and self.griefer.get_vial(
+                vial_name
+            ) == self.griefer.get_starting_vial(vial_name):
+                continue
             else:
                 self.add_vial(vial_name)
             made_new_vial = True
-        if made_new_vial: 
+        if made_new_vial:
             self.send_to_bottom()
             self.cached_vials_list = list(self.griefer.vials)
 
@@ -2435,15 +3181,18 @@ class GrieferElement(UIElement):
 
     def get_duration_label_func(self, state_name):
         def label_func():
-            if state_name not in self.griefer.states: return ""
-            else: return f"{self.griefer.get_state_duration(state_name)}"
+            if state_name not in self.griefer.states:
+                return ""
+            else:
+                return f"{self.griefer.get_state_duration(state_name)}"
+
         return label_func
 
     def make_state_boxes(self):
         for state_icon in self.state_icons.copy():
             self.state_icons.remove(state_icon)
             state_icon.delete()
-        if len(self.griefer.states) == 0: 
+        if len(self.griefer.states) == 0:
             self.cached_states_list = list(self.griefer.states)
             return
         for state_name in self.griefer.states:
@@ -2479,15 +3228,23 @@ class GrieferElement(UIElement):
         super().update()
         if self.is_mouseover() and self.griefer.strife.selected_skill is not None:
             hover_surf = self.surf.copy()
-            hover_surf.fill((self.hover_intensity, self.hover_intensity, self.hover_intensity), None, pygame.BLEND_ADD)
-            hover_surf.set_colorkey((self.hover_intensity, self.hover_intensity, self.hover_intensity))
+            hover_surf.fill(
+                (self.hover_intensity, self.hover_intensity, self.hover_intensity),
+                None,
+                pygame.BLEND_ADD,
+            )
+            hover_surf.set_colorkey(
+                (self.hover_intensity, self.hover_intensity, self.hover_intensity)
+            )
             self.blit_surf.blit(hover_surf, (self.rect.x, self.rect.y))
         for state_icon in self.state_icons.copy():
             if not self.griefer.is_state_affected(state_icon.state_name):
                 self.state_icons.remove(state_icon)
                 state_icon.delete()
         self.update_vials()
-        if self.cached_states_list != list(self.griefer.states): self.make_state_boxes()
+        if self.cached_states_list != list(self.griefer.states):
+            self.make_state_boxes()
+
 
 class Enemy(GrieferElement, Image):
     def __init__(self, x, y, griefer: Griefer):
@@ -2504,7 +3261,7 @@ class Enemy(GrieferElement, Image):
             new_color = config.gristcolors[grist_type]
             if isinstance(new_color, list):
                 new_color = random.choice(new_color)
-        self.convert_colors.append((themes.default.dark, new_color)) 
+        self.convert_colors.append((themes.default.dark, new_color))
         self.make_labels()
         click_check.append(self)
         self.update_vials()
@@ -2512,10 +3269,11 @@ class Enemy(GrieferElement, Image):
     def get_width(self):
         image = pygame.image.load(self.path)
         return int(image.get_width() * self.scale)
-    
+
     def get_height(self):
         image = pygame.image.load(self.path)
         return int(image.get_height() * self.scale)
+
 
 class PlayerGriefer(GrieferElement, Symbol):
     def __init__(self, x, y, griefer: Griefer):
@@ -2528,20 +3286,30 @@ class PlayerGriefer(GrieferElement, Symbol):
         self.update_vials()
         click_check.append(self)
 
-def make_grist_display(x, y, w: int, h: int, padding: int, 
-                       grist_name: str, grist_amount: int, 
-                       cache_limit: int, theme: themes.Theme, 
-                       box_color: Optional[pygame.Color]=None, 
-                       filled_color: Union[pygame.Color, list[pygame.Color], None]=None,
-                       label_color: Optional[pygame.Color]=None,
-                       outline_color: Optional[pygame.Color]=None,
-                       label: Optional[str]=None,
-                       use_grist_color=False) -> SolidColor:
+
+def make_grist_display(
+    x,
+    y,
+    w: int,
+    h: int,
+    padding: int,
+    grist_name: str,
+    grist_amount: int,
+    cache_limit: int,
+    theme: themes.Theme,
+    box_color: Optional[pygame.Color] = None,
+    filled_color: Union[pygame.Color, list[pygame.Color], None] = None,
+    label_color: Optional[pygame.Color] = None,
+    outline_color: Optional[pygame.Color] = None,
+    label: Optional[str] = None,
+    use_grist_color=False,
+) -> SolidColor:
     box_color = box_color or theme.dark
-    if use_grist_color: filled_color = config.gristcolors[grist_name]
+    if use_grist_color:
+        filled_color = config.gristcolors[grist_name]
     filled_color = filled_color or theme.light
     label_color = label_color or theme.light
-    grist_box = SolidColor(x,  y, w, h, box_color)
+    grist_box = SolidColor(x, y, w, h, box_color)
     grist_box.border_radius = 2
     grist_image_path = f"sprites/grists/{grist_name}.png"
     anim_grist_image_path = f"sprites/grists/{grist_name}-1.png"
@@ -2549,7 +3317,7 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
         x = 0.1
         y = 0.5
         # grist images are 48x48, we wanna make sure they are scaled to the box plus some padding
-        grist_image_scale = min(h, w//6)/(48+padding)
+        grist_image_scale = min(h, w // 6) / (48 + padding)
         if os.path.isfile(anim_grist_image_path):
             grist_image = Image(x, y, f"sprites/grists/{grist_name}")
             grist_image.animated = True
@@ -2558,7 +3326,7 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
             grist_image = Image(x, y, grist_image_path)
         grist_image.scale = grist_image_scale
         grist_image.bind_to(grist_box)
-        tt_wh = int(48*grist_image_scale)
+        tt_wh = int(48 * grist_image_scale)
         tooltip_tt = ToolTip(0, 0, tt_wh, tt_wh)
         tooltip_tt.bind_to(grist_image)
         tt_label = Text(0, -tt_wh, grist_name)
@@ -2574,7 +3342,7 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
         r, g, b, _ = label_color
         tt_label.outline_color = get_dark_color(r, g, b)
         tt_label.make_always_on_top()
-    bar_background = SolidColor(0.585, 0.4, w//1.3, h//3.5, box_color)
+    bar_background = SolidColor(0.585, 0.4, w // 1.3, h // 3.5, box_color)
     bar_background.border_radius = 2
     if outline_color is None:
         bar_background.outline_color = theme.black
@@ -2582,37 +3350,72 @@ def make_grist_display(x, y, w: int, h: int, padding: int,
         bar_background.outline_color = outline_color
     bar_background.absolute = False
     bar_background.bind_to(grist_box)
-    filled_bar_width = int((w//1.3 - 4) * min(grist_amount, cache_limit)/cache_limit)
-    bar_filled = SolidColor(2, 2, filled_bar_width, h//3.5 - 4, filled_color)
+    filled_bar_width = int(
+        (w // 1.3 - 4) * min(grist_amount, cache_limit) / cache_limit
+    )
+    bar_filled = SolidColor(2, 2, filled_bar_width, h // 3.5 - 4, filled_color)
     bar_filled.bind_to(bar_background)
-    if label is None: label = str(grist_amount)
+    if label is None:
+        label = str(grist_amount)
     bar_label = Text(0.5, 2.2, label)
     bar_label.color = label_color
     bar_label.fontsize = 12
     bar_label.bind_to(bar_background)
     return grist_box
 
-def show_options_with_search(options: list, button_func_constructor: Callable, label:str, last_scene: Callable, theme: "themes.Theme", page=0, 
-                             search: Optional[str]=None, image_path_func: Optional[Callable]=None, image_scale=1.0, option_active_func: Optional[Callable]=None,
-                             reload_on_button_press=False):
-    args = (options, button_func_constructor, label, last_scene, theme, page, search, image_path_func, image_scale, option_active_func, reload_on_button_press)
+
+def show_options_with_search(
+    options: list,
+    button_func_constructor: Callable,
+    label: str,
+    last_scene: Callable,
+    theme: "themes.Theme",
+    page=0,
+    search: Optional[str] = None,
+    image_path_func: Optional[Callable] = None,
+    image_scale=1.0,
+    option_active_func: Optional[Callable] = None,
+    reload_on_button_press=False,
+):
+    args = (
+        options,
+        button_func_constructor,
+        label,
+        last_scene,
+        theme,
+        page,
+        search,
+        image_path_func,
+        image_scale,
+        option_active_func,
+        reload_on_button_press,
+    )
     suburb.new_scene()
+
     def wrap_button_func_with_reload(button_func):
         def wrapped():
             button_func()
             show_options_with_search(*args)
+
         return wrapped
+
     OPTIONS_PER_PAGE = 12
     label_text = Text(0.5, 0.05, label)
     label_text.color = theme.dark
-    if search is not None: possible_options = [option for option in options if search in option]
-    else: possible_options = options.copy()
-    display_options = possible_options[page*OPTIONS_PER_PAGE:(page+1)*OPTIONS_PER_PAGE]
-    if not display_options: 
-        page=0
-        display_options = possible_options[page*OPTIONS_PER_PAGE:(page+1)*OPTIONS_PER_PAGE]
+    if search is not None:
+        possible_options = [option for option in options if search in option]
+    else:
+        possible_options = options.copy()
+    display_options = possible_options[
+        page * OPTIONS_PER_PAGE : (page + 1) * OPTIONS_PER_PAGE
+    ]
+    if not display_options:
+        page = 0
+        display_options = possible_options[
+            page * OPTIONS_PER_PAGE : (page + 1) * OPTIONS_PER_PAGE
+        ]
     for i, option in enumerate(display_options):
-        y = 0.20 + 0.05*i
+        y = 0.20 + 0.05 * i
         button_func = button_func_constructor(option)
         if reload_on_button_press:
             button_func = wrap_button_func_with_reload(button_func)
@@ -2623,21 +3426,70 @@ def show_options_with_search(options: list, button_func_constructor: Callable, l
             image = Image(0.4, y, image_path_func(option))
             image.scale = image_scale
     if page != 0:
-        def previous_page(): 
-            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page-1, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
+
+        def previous_page():
+            show_options_with_search(
+                options,
+                button_func_constructor,
+                label,
+                last_scene,
+                theme,
+                page - 1,
+                search_bar.text,
+                image_path_func,
+                image_scale,
+                option_active_func,
+                reload_on_button_press,
+            )
+
         previous_page_button = TextButton(0.5, 0.15, 32, 32, "▲", previous_page)
-    if possible_options[(page+1)*OPTIONS_PER_PAGE:(page+2)*OPTIONS_PER_PAGE]:
-        def next_page(): 
-            show_options_with_search(options, button_func_constructor, label, last_scene, theme, page+1, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
+    if possible_options[(page + 1) * OPTIONS_PER_PAGE : (page + 2) * OPTIONS_PER_PAGE]:
+
+        def next_page():
+            show_options_with_search(
+                options,
+                button_func_constructor,
+                label,
+                last_scene,
+                theme,
+                page + 1,
+                search_bar.text,
+                image_path_func,
+                image_scale,
+                option_active_func,
+                reload_on_button_press,
+            )
+
         next_page_button = TextButton(0.5, 0.8, 32, 32, "▼", next_page)
     search_bar = InputTextBox(0.5, 0.9)
+
     def search_func():
-        show_options_with_search(options, button_func_constructor, label, last_scene, theme, page, search_bar.text, image_path_func, image_scale, option_active_func, reload_on_button_press)
+        show_options_with_search(
+            options,
+            button_func_constructor,
+            label,
+            last_scene,
+            theme,
+            page,
+            search_bar.text,
+            image_path_func,
+            image_scale,
+            option_active_func,
+            reload_on_button_press,
+        )
+
     search_bar.key_press_func = search_func
-    if search: 
+    if search:
         search_bar.active = True
         search_bar.text = search
-    backbutton = Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
+    backbutton = Button(
+        0.1,
+        0.92,
+        "sprites\\buttons\\back.png",
+        "sprites\\buttons\\backpressed.png",
+        last_scene,
+    )
+
 
 def render():
     for ui_element in move_to_top.copy():
@@ -2669,7 +3521,7 @@ def render():
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             for sprite in click_check.copy():
-                #sprites with click events will know if the click is on them or not
+                # sprites with click events will know if the click is on them or not
                 sprite.onclick(sprite.collidepoint(event.pos))
 
         if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
@@ -2697,6 +3549,6 @@ def render():
 
     pygame.display.flip()
 
-    #fps cap
+    # fps cap
     clock.tick(FPS_CAP)
     return True
