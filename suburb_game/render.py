@@ -2819,7 +2819,13 @@ class Vial(SolidColor):
             "middle_color"
         ]
         self.make_fill_surf()
-        self.label = Text(0.5, 2, self.name)
+        self.make_label()
+
+    def make_label(self):
+        try: self.label.delete()
+        except AttributeError: pass
+        self.label = Text(0.5, 1, self.name)
+        self.label.rect_y_offset = 8
         self.label.bind_to(self)
         self.label.color = self.fill_color
         self.label.fontsize = 8
