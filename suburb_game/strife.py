@@ -238,6 +238,7 @@ class Strife:
         self.last_displayed_skill_name: str = ""
         self.scale: float = 1
         render.ui_elements.append(self)
+        render.scroll_check.append(self)
 
     def update_strife_dict(self, strife_dict):
         if not strife_dict:
@@ -637,6 +638,13 @@ class Strife:
             else:
                 reply = client.requestdic(intent="unsubmit_skill")
                 self.update_strife_dict(reply)
+
+    def scroll(self, y: int):
+        print("scroll")
+        if self.strife_log_window.is_mouseover(): return
+        new_scale = self.scale + 0.1 * y
+        if new_scale > 0 and new_scale < 5:
+            self.scale = new_scale
 
     def delete(self):
         if self in render.ui_elements:
