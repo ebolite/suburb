@@ -3489,6 +3489,14 @@ def show_options_with_search(
         "sprites\\buttons\\backpressed.png",
         last_scene,
     )
+    # identical to back button lol
+    confirmbutton = Button(
+        0.9,
+        0.92,
+        "sprites\\buttons\\confirm.png",
+        "sprites\\buttons\\confirmpressed.png",
+        last_scene,
+    )
 
 
 def render():
