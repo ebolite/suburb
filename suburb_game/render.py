@@ -3264,6 +3264,12 @@ class GrieferElement(UIElement):
         if self.last_scale != self.scale:
             self.last_scale = self.scale
             self.make_labels()
+            # reposition vials to scale
+            for i, vial in enumerate(self.vials.values()):
+                offset = -30 * i
+                offset += 50
+                vial.rect_y_offset = -round(offset * self.scale)
+                
         super().update()
         if self.is_mouseover() and self.griefer.strife.selected_skill is not None:
             hover_surf = self.surf.copy()
