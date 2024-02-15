@@ -3125,6 +3125,9 @@ class GrieferElement(UIElement):
     hover_intensity = 30
     cached_vials_list = []
     cached_states_list = []
+    # pure battlefield offsets which convert to rect offsets based on strife zoom scale
+    battlefield_offsetx = 0
+    battlefield_offsety = 0
 
     def onclick(self, clicked: bool):
         if clicked:
@@ -3225,6 +3228,10 @@ class GrieferElement(UIElement):
         self.cached_states_list = list(self.griefer.states)
 
     def update(self):
+        # make offsets
+        self.rect_x_offset = self.battlefield_offsetx * self.griefer.strife.scale
+        self.rect_y_offset = self.battlefield_offsety * self.griefer.strife.scale
+        self.scale = self.griefer.strife.scale
         super().update()
         if self.is_mouseover() and self.griefer.strife.selected_skill is not None:
             hover_surf = self.surf.copy()

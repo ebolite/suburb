@@ -236,6 +236,7 @@ class Strife:
         self.last_update = time.time()
         self.tooltips: list[render.Text] = []
         self.last_displayed_skill_name: str = ""
+        self.scale: float = 1
         render.ui_elements.append(self)
 
     def update_strife_dict(self, strife_dict):
@@ -273,38 +274,34 @@ class Strife:
                 red_sprites.append(sprite)
             sprite.make_always_on_bottom()
         for sprite in red_sprites + blue_sprites:
-            if scale > 0.66 and sprite.get_height() > 800:
-                scale = 0.66
-            elif scale > 0.75 and sprite.get_height() > 500:
-                scale = 0.75
-        if len(red_sprites + blue_sprites) > 4 and scale > 0.66:
-            scale = 0.66
-        if len(red_sprites + blue_sprites) > 9 and scale > 0.33:
+            if scale > 0.6 and sprite.get_height() > 800:
+                scale = 0.6
+            elif scale > 0.7 and sprite.get_height() > 500:
+                scale = 0.7
+        if len(red_sprites + blue_sprites) > 4 and scale > 0.6:
+            scale = 0.6
+        if len(red_sprites + blue_sprites) > 9 and scale > 0.3:
             scale = 0.33
-        for sprite in red_sprites + blue_sprites:
-            sprite.scale = scale
-        self.reposition_sprites(red_sprites, "right", scale)
-        self.reposition_sprites(blue_sprites, "left", scale)
+        self.scale = scale
+        self.reposition_sprites(red_sprites, "right")
+        self.reposition_sprites(blue_sprites, "left")
 
     def reposition_sprites(
         self,
         sprites_list: list[Union["render.Enemy", "render.PlayerGriefer"]],
         direction: str,
-        scale: float,
     ):
-        sprites_xy = []
+        sprites_offset_xy = []
         for i, sprite in enumerate(sprites_list):
+            # all sprites start in the center and are offset by battlefield_offsetx and battlefield_offsety and their size
+            starting_x = 0.5 * self.canvas.w - sprite.get_width() // 2
+            starting_y = 0.5 * self.canvas.h - sprite.get_height() // 2
+            sprite.x = starting_x
+            sprite.y = starting_y
             if i == 0:
                 center_offset = 0.16 if direction == "right" else -0.16
-                starting_x = 0.5 + (center_offset * scale)
-                sprite.x = starting_x
-                sprite_x = starting_x * self.canvas.w - sprite.get_width() // 2
-                sprite_y = sprite.y * self.canvas.h - sprite.get_height() // 2
-                if isinstance(sprite, render.Enemy):
-                    sprite.rect_y_offset = sprite.get_height() // 3 * -1
-                else:
-                    sprite_x -= 100
-                sprites_xy.append((sprite_x, sprite_y))
+                sprite.battlefield_offsetx = center_offset * self.canvas.w
+                sprites_offset_xy.append((sprite.battlefield_offsetx, sprite.battlefield_offsety))
                 continue
             previous_sprite = sprites_list[i - 1]
             old_width = (
@@ -312,21 +309,15 @@ class Strife:
                 if isinstance(previous_sprite, render.Enemy)
                 else 200
             )
-            print(f"{previous_sprite} width {old_width}")
             dx = old_width
             if isinstance(previous_sprite, render.Enemy):
                 dx += old_width // 2
-            dx = max(dx, 150)
-            old_x, old_y = sprites_xy[i - 1]
+            dx = max(dx, 200)
+            old_x, old_y = sprites_offset_xy[i - 1]
             new_x = old_x + dx if direction == "right" else old_x - dx
-            new_y = render.SCREEN_HEIGHT // 2 + 100
-            if isinstance(sprite, render.Enemy):
-                new_y -= sprite.get_height()
-            else:
-                new_y -= 250
-            sprite.x, sprite.y = new_x, new_y
-            sprite.absolute = True
-            sprites_xy.append((new_x, new_y))
+            new_y = old_y
+            sprite.battlefield_offsetx, sprite.battlefield_offsety = new_x, new_y
+            sprites_offset_xy.append((new_x, new_y))
 
     def make_griefer_sprite(
         self, griefer: Griefer
@@ -347,6 +338,7 @@ class Strife:
             sprite = render.PlayerGriefer(*pos, griefer)
             sprite.bind_to(self.canvas)
             self.griefer_sprites[griefer.name] = sprite
+        sprite.absolute = True
         return sprite
 
     def get_skill_button_func(self, skill_name):

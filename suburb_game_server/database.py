@@ -1,5 +1,6 @@
 import time
 
+from copy import deepcopy
 import util
 
 databasedir = util.homedir + "\\database"
@@ -19,9 +20,9 @@ assert memory_users is not None
 
 
 def save_databases():
-    util.writejson(memory_sessions, "sessions", databasedir)
-    util.writejson(memory_players, "players", databasedir)
-    util.writejson(memory_npcs, "npcs", databasedir)
-    util.writejson(memory_items, "items", databasedir)
-    util.writejson(memory_instances, "instances", databasedir)
-    util.writejson(memory_users, "users", databasedir)
+    util.writejson(deepcopy(memory_sessions), "sessions", databasedir)
+    util.writejson(deepcopy(memory_players), "players", databasedir)
+    util.writejson(deepcopy(memory_npcs), "npcs", databasedir)
+    util.writejson(deepcopy(memory_items), "items", databasedir)
+    util.writejson(deepcopy(memory_instances), "instances", databasedir)
+    util.writejson(deepcopy(memory_users), "users", databasedir)
