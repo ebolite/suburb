@@ -2909,6 +2909,7 @@ class GrieferVial(Vial):
     def __init__(self, x, y, w: int, griefer: Griefer, vial_type: str):
         super().__init__(x, y, w, vial_type, 0)
         self.griefer = griefer
+        self.scale_with_screen = True
 
     @property
     def usable_filled_percent(self) -> float:
@@ -2931,9 +2932,10 @@ class GrieferVial(Vial):
             return 0
         
     def update(self):
-        old_scale = self.scale
-        self.scale = self.griefer.strife.scale
-        if self.scale != old_scale: self.make_fill_surf()
+        if self.scale_with_screen:
+            old_scale = self.scale
+            self.scale = self.griefer.strife.scale
+            if self.scale != old_scale: self.make_fill_surf()
         super().update()
 
 
@@ -3302,8 +3304,6 @@ class Enemy(GrieferElement, Image):
         self.make_labels()
         click_check.append(self)
         self.update_vials()
-
-
 
     def get_width(self):
         image = pygame.image.load(self.path)

@@ -718,6 +718,7 @@ class Strife:
                 vial_x, vial_y, 150, self.player_griefer, vial_name
             )
             new_vial.absolute = False
+            new_vial.scale_with_screen = False
             self.vials[vial_name] = new_vial
 
     def get_griefer(self, griefer_name) -> Griefer:
