@@ -302,7 +302,9 @@ class Strife:
             if i == 0:
                 center_offset = 0.16 if direction == "right" else -0.16
                 sprite.battlefield_offsetx = center_offset * self.canvas.w
-                sprites_offset_xy.append((sprite.battlefield_offsetx, sprite.battlefield_offsety))
+                sprites_offset_xy.append(
+                    (sprite.battlefield_offsetx, sprite.battlefield_offsety)
+                )
                 continue
             previous_sprite = sprites_list[i - 1]
             old_width = (
@@ -640,9 +642,10 @@ class Strife:
                 self.update_strife_dict(reply)
 
     def scroll(self, y: int):
-        if self.strife_log_window.is_mouseover(): return
+        if self.strife_log_window.is_mouseover():
+            return
         new_scale = self.scale + 0.1 * y
-        if new_scale > 0 and new_scale < 5:
+        if new_scale > 0.2 and new_scale < 4:
             self.scale = new_scale
 
     def delete(self):
