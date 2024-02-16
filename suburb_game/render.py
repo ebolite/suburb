@@ -437,7 +437,10 @@ class SolidColor(UIElement):
             self.animframe += 1
         if self.outline_color is not None:
             self.outline_surf = pygame.Surface(
-                ((self.w + self.outline_width * 2) * self.scale, (self.h + self.outline_width * 2) * self.scale)
+                (
+                    (self.w + self.outline_width * 2) * self.scale,
+                    (self.h + self.outline_width * 2) * self.scale,
+                )
             )
         self.rect = self.surf.get_rect()
         if self.absolute:
@@ -449,8 +452,12 @@ class SolidColor(UIElement):
             else:
                 width = SCREEN_WIDTH
                 height = SCREEN_HEIGHT
-            self.rect.x = int(width * self.x) - (self.w // 2) * self.scale + self.rect_x_offset
-            self.rect.y = int(height * self.y) - (self.h // 2) * self.scale + self.rect_y_offset
+            self.rect.x = (
+                int(width * self.x) - (self.w // 2) * self.scale + self.rect_x_offset
+            )
+            self.rect.y = (
+                int(height * self.y) - (self.h // 2) * self.scale + self.rect_y_offset
+            )
             if self.relative_binding is not None:
                 self.rect.x += self.relative_binding.rect.x
                 self.rect.y += self.relative_binding.rect.y
@@ -988,14 +995,12 @@ class Image(UIElement):
 
     def load_image(self, path: str):
         return pygame.image.load(path)
-    
+
     def convert_image(self):
         self.surf = self.surf.convert()
         self.surf = self.convert_to_theme(self.surf)
         for initial_color, converted_color in self.convert_colors:
-            self.surf = palette_swap(
-                self.surf, initial_color, converted_color
-            )
+            self.surf = palette_swap(self.surf, initial_color, converted_color)
         self.surf.set_colorkey(pygame.Color(0, 0, 0))
 
     def update(self):
@@ -2822,8 +2827,10 @@ class Vial(SolidColor):
         self.make_label()
 
     def make_label(self):
-        try: self.label.delete()
-        except AttributeError: pass
+        try:
+            self.label.delete()
+        except AttributeError:
+            pass
         self.label = Text(0.5, 1, self.name)
         self.label.rect_y_offset = 8
         self.label.bind_to(self)
@@ -2837,17 +2844,17 @@ class Vial(SolidColor):
         fill_height *= self.scale
         shade_surf = pygame.Surface((fill_width, fill_height))
         shade_surf.fill(self.shade_color)
-        fill_surf = pygame.Surface((fill_width, fill_height - 1*self.scale))
+        fill_surf = pygame.Surface((fill_width, fill_height - 1 * self.scale))
         fill_surf.fill(self.fill_color)
         shade_surf.blit(fill_surf, (0, 0))
         self.fill_surf = shade_surf
         if self.middle_color is not None:
-            middle_surf = pygame.Surface((fill_width, 1*self.scale))
+            middle_surf = pygame.Surface((fill_width, 1 * self.scale))
             middle_surf.fill(self.middle_color)
-            self.fill_surf.blit(middle_surf, (0, 2*self.scale))
+            self.fill_surf.blit(middle_surf, (0, 2 * self.scale))
         if self.segmented_vial:
             segments = 20
-            segmented_surf = pygame.Surface((2*self.scale, fill_height))
+            segmented_surf = pygame.Surface((2 * self.scale, fill_height))
             segmented_surf.fill(Color(0, 0, 0))
             midpoint_x = fill_height // 2 - round(fill_width / segments / 2)
             for i in range(segments):
@@ -2930,14 +2937,18 @@ class GrieferVial(Vial):
             ) / self.griefer.get_maximum_vial(self.vial_type)
         except ZeroDivisionError:
             return 0
-        
+
     def update(self):
         if self.scale_with_screen:
             old_scale = self.scale
             self.scale = self.griefer.strife.scale
-            if self.scale != old_scale: self.make_fill_surf()
-            if self.scale < 0.4: self.label.text = ""
-            else: self.label.text = self.name
+            if self.scale != old_scale:
+                self.make_fill_surf()
+            if self.scale < 0.6:
+                self.label.text = ""
+            else:
+                self.label.text = self.name
+            self.label.rect_y_offset = round(8 * self.scale)
         super().update()
 
 
@@ -3271,7 +3282,7 @@ class GrieferElement(UIElement):
                 offset = -30 * i
                 offset += 50
                 vial.rect_y_offset = -round(offset * self.scale)
-                
+
         super().update()
         if self.is_mouseover() and self.griefer.strife.selected_skill is not None:
             hover_surf = self.surf.copy()
@@ -3320,7 +3331,7 @@ class Enemy(GrieferElement, Image):
     def get_height(self):
         image = pygame.image.load(self.path)
         return int(image.get_height() * self.scale)
-    
+
     def update(self):
         new_scale = self.griefer.strife.scale
         if self.scale != new_scale:
