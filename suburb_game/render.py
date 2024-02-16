@@ -2936,6 +2936,8 @@ class GrieferVial(Vial):
             old_scale = self.scale
             self.scale = self.griefer.strife.scale
             if self.scale != old_scale: self.make_fill_surf()
+            if self.scale < 0.4: self.label.text = ""
+            else: self.label.text = self.name
         super().update()
 
 
