@@ -2840,6 +2840,14 @@ def title():
     map_editor_button = render.TextButton(
         0.1, 0.3, 160, 32, "Map Editor", map_editor_scene
     )
+
+    def character_creator_func():
+        character_creator = CharacterCreator()
+        character_creator.start()
+
+    character_editor_button = render.TextButton(
+        0.1, 0.4, 160, 32, "Character Editor", character_creator_func
+    )
     # vial = render.Vial(0.5, 0.2, 150, "realness", 0.5)
     # vial.absolute = False
     # crash_button = render.TextButton(0.8, 0.5, 128, 32, "crash me", crash_button_func)
@@ -2885,6 +2893,14 @@ def connection_screen():
     text.color = themes.default.dark
     try_again_button = render.TextButton(0.5, 0.7, 196, 32, ">TRY AGAIN", try_again)
     spiro = render.get_spirograph(0.5, 0.3, False)
+
+    def character_creator_func():
+        character_creator = CharacterCreator()
+        character_creator.start()
+
+    character_editor_button = render.TextButton(
+        0.1, 0.1, 160, 32, "Character Editor", character_creator_func
+    )
 
 
 def item_editor_scene():
