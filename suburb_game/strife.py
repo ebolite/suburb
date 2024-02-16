@@ -640,7 +640,6 @@ class Strife:
                 self.update_strife_dict(reply)
 
     def scroll(self, y: int):
-        print("scroll")
         if self.strife_log_window.is_mouseover(): return
         new_scale = self.scale + 0.1 * y
         if new_scale > 0 and new_scale < 5:
