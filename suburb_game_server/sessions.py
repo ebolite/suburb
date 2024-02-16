@@ -1225,10 +1225,18 @@ class Player:
         if current_grist + amount <= self.grist_cache_limit:
             self.grist_cache[grist_name] = current_grist + amount
             return
-        else:
-            if self.grist_cache[grist_name] < self.grist_cache_limit:
-                self.grist_cache[grist_name] = self.grist_cache_limit
+        elif self.grist_cache[grist_name] < self.grist_cache_limit:
+            self.grist_cache[grist_name] = self.grist_cache_limit
             overflow = amount - (self.grist_cache[grist_name] - current_grist)
+            if len(self.grist_gutter) != 0 and self.grist_gutter[-1][0] == grist_name:
+                self.grist_gutter[-1] = [
+                    grist_name,
+                    self.grist_gutter[-1][1] + overflow,
+                ]
+            else:
+                self.grist_gutter.append([grist_name, overflow])
+        else: # grist is currently overcapped
+            overflow = amount
             if len(self.grist_gutter) != 0 and self.grist_gutter[-1][0] == grist_name:
                 self.grist_gutter[-1] = [
                     grist_name,
