@@ -3032,6 +3032,7 @@ class Symbol(Image):
             coatback = pygame.image.load(coat_back_path).convert_alpha()
             coatback.blit(base, (0, 0))
             base = coatback
+
         base.blit(shoes, (0, 0))
         base.blit(shirt, (0, 0))
         base.blit(pants, (0, 0))
@@ -3039,6 +3040,12 @@ class Symbol(Image):
         base.blit(coat, (0, 0))
         base.blit(horns, (0, 0))
         base.blit(mouth, (0, 0))
+        base_above_path = (
+            f"sprites/symbol/base-aboves/{self.base}-{self.style_dict['base']}.png"
+        )
+        if os.path.isfile(base_above_path):
+            baseabove = pygame.image.load(base_above_path).convert_alpha()
+            base.blit(baseabove, (0, 0))
         base.blit(eyes, (0, 0))
         base = pygame.PixelArray(base)
         base.replace(themes.default.light, self.light)
