@@ -2999,11 +2999,11 @@ class Symbol(Image):
         shoes = pygame.image.load(
             self.get_image_path("shoes", self.shoes)
         ).convert_alpha()
-        pants = pygame.image.load(
-            self.get_image_path("pants", self.pants)
-        ).convert_alpha()
         shirt = pygame.image.load(
             self.get_image_path("shirt", self.shirt)
+        ).convert_alpha()
+        pants = pygame.image.load(
+            self.get_image_path("pants", self.pants)
         ).convert_alpha()
         coat = pygame.image.load(self.get_image_path("coat", self.coat)).convert_alpha()
         mouth = pygame.image.load(
