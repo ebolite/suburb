@@ -1235,7 +1235,7 @@ class Player:
                 ]
             else:
                 self.grist_gutter.append([grist_name, overflow])
-        else: # grist is currently overcapped
+        else:  # grist is currently overcapped
             overflow = amount
             if len(self.grist_gutter) != 0 and self.grist_gutter[-1][0] == grist_name:
                 self.grist_gutter[-1] = [
@@ -1608,10 +1608,17 @@ class SubPlayer(Player):
     def power(self) -> int:
         base_power = self.echeladder_rung
         if self.wielded_instance is not None:
-            base_power += self.wielded_instance.item.power
+            base_power += min(self.wielded_instance.item.power, self.item_power_limit)
         if self.worn_instance is not None:
-            base_power += self.worn_instance.item.power // 2
+            base_power += min(
+                self.worn_instance.item.power // 2, self.item_power_limit // 2
+            )
         return base_power
+
+    @property
+    def item_power_limit(self) -> int:
+        limit = max(self.echeladder_rung, 100)
+        return limit
 
     def captchalogue(self, instance_name: str, modus_name: str) -> bool:
         if instance_name not in self.room.instances:
