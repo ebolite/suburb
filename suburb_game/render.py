@@ -3033,8 +3033,8 @@ class Symbol(Image):
             coatback.blit(base, (0, 0))
             base = coatback
         base.blit(shoes, (0, 0))
-        base.blit(pants, (0, 0))
         base.blit(shirt, (0, 0))
+        base.blit(pants, (0, 0))
         base.blit(hair, (0, 0))
         base.blit(coat, (0, 0))
         base.blit(horns, (0, 0))
