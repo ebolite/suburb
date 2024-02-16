@@ -338,9 +338,8 @@ def handle_request(dict):
             print(f"session created {session_name}")
             return f"The session `{session_name}` has been successfully registered."
         elif intent == "join_session":
+            if session_name not in database.memory_sessions: return f"Session `{session_name}` does not exist."
             session = sessions.Session(session_name)
-            if session is None:
-                return f"Session `{session_name}` does not exist."
             if not session.verify_password(session_password):
                 return f"Incorrect session password."
             user.sessions.append(session_name)
