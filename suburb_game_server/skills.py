@@ -1261,7 +1261,7 @@ for aspect_name, aspect in aspects.items():
     denyaspect.cooldown = 1
     denyaspect.action_cost = 0
     denyaspect.add_apply_state(
-        f"retreat from {aspect.name}", 5, f"*{get_balance_mult('seer', aspect)}"
+        f"retreat from {aspect.name}", 5, f"{get_balance_mult('seer', aspect)}"
     )
 
     userward = Skill(f"user_{aspect.name}ward")
