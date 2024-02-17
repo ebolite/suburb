@@ -3034,7 +3034,11 @@ class Symbol(Image):
             base = coatback
 
         base.blit(shoes, (0, 0))
-        base.blit(shirt, (0, 0))
+        if self.style_dict["base"] == "wifebeater":
+            shirtoffset = 5
+        else:
+            shirtoffset = 0
+        base.blit(shirt, (0, shirtoffset))
         base.blit(pants, (0, 0))
         base.blit(hair, (0, 0))
         base.blit(coat, (0, 0))
