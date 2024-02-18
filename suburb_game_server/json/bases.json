@@ -32,7 +32,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pumpkin": {
         "base": true,
@@ -65,7 +66,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "captchalogue card": {
         "base": true,
@@ -104,7 +106,8 @@
         "attached_skills": [],
         "prototype_name": "captcha",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pre-punched card": {
         "base": true,
@@ -147,7 +150,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "punched card": {
         "base": true,
@@ -191,7 +195,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "cruxite dowel": {
         "base": true,
@@ -229,7 +234,8 @@
         "attached_skills": [],
         "prototype_name": "cruxite",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "entry item": {
         "base": true,
@@ -267,7 +273,8 @@
         "attached_skills": [],
         "prototype_name": "entry",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "punch designix": {
         "base": true,
@@ -307,7 +314,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "cruxtruder": {
         "base": true,
@@ -342,7 +350,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "sealed cruxtruder": {
         "base": true,
@@ -379,7 +388,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "totem lathe": {
         "base": true,
@@ -417,7 +427,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "alchemiter": {
         "base": true,
@@ -453,7 +464,8 @@
         "attached_skills": [],
         "prototype_name": "alchemy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "gristTorrent disc": {
         "base": true,
@@ -493,7 +505,8 @@
         "attached_skills": [],
         "prototype_name": "gristy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "Sburb disc": {
         "base": true,
@@ -538,7 +551,8 @@
         "attached_skills": [],
         "prototype_name": "sburb",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "lap top": {
         "base": true,
@@ -579,7 +593,8 @@
         "attached_skills": [],
         "prototype_name": "laptop",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "desktop computer": {
         "base": true,
@@ -620,7 +635,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "paper": {
         "base": true,
@@ -656,7 +672,8 @@
         "attached_skills": [],
         "prototype_name": "origami",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pizza cutter": {
         "base": true,
@@ -695,7 +712,8 @@
         "attached_skills": [],
         "prototype_name": "pizza",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "baseball bat": {
         "base": true,
@@ -727,7 +745,8 @@
         "attached_skills": [],
         "prototype_name": "baseball",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "aluminum bat": {
         "base": true,
@@ -764,7 +783,8 @@
         "attached_skills": [],
         "prototype_name": "punk",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "rolling pin": {
         "base": true,
@@ -802,7 +822,8 @@
         "attached_skills": [],
         "prototype_name": "baker",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "plunger": {
         "base": true,
@@ -841,7 +862,8 @@
         "attached_skills": [],
         "prototype_name": "plumber",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "yoyo": {
         "base": true,
@@ -881,7 +903,8 @@
         "attached_skills": [],
         "prototype_name": "coolkid",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "scissors": {
         "base": true,
@@ -920,7 +943,8 @@
         "attached_skills": [],
         "prototype_name": "crafty",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "shears": {
         "base": true,
@@ -962,7 +986,8 @@
         "attached_skills": [],
         "prototype_name": "shepherd",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "safety scissors": {
         "base": true,
@@ -1001,7 +1026,8 @@
         "attached_skills": [],
         "prototype_name": "kiddy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pepper spray": {
         "base": true,
@@ -1046,7 +1072,8 @@
         "attached_skills": [],
         "prototype_name": "pepper",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "chainsaw": {
         "base": true,
@@ -1091,7 +1118,8 @@
         "attached_skills": [],
         "prototype_name": "murder",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "weed whacker": {
         "base": true,
@@ -1124,7 +1152,8 @@
         "attached_skills": [],
         "prototype_name": "garden",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "crowbar": {
         "base": true,
@@ -1161,7 +1190,8 @@
         "attached_skills": [],
         "prototype_name": "freeman",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "halligan bar": {
         "base": true,
@@ -1203,7 +1233,8 @@
         "attached_skills": [],
         "prototype_name": "fire",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "broom": {
         "base": true,
@@ -1241,7 +1272,8 @@
         "attached_skills": [],
         "prototype_name": "maid",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "straw broom": {
         "base": true,
@@ -1287,7 +1319,8 @@
         "attached_skills": [],
         "prototype_name": "witch",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "fire poker": {
         "base": true,
@@ -1321,7 +1354,8 @@
         "attached_skills": [],
         "prototype_name": "fire",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "spear": {
         "base": true,
@@ -1357,7 +1391,8 @@
         "attached_skills": [],
         "prototype_name": "phalanx",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "ice pick": {
         "base": true,
@@ -1398,7 +1433,8 @@
         "attached_skills": [],
         "prototype_name": "climber",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "golf club": {
         "base": true,
@@ -1441,7 +1477,8 @@
         "attached_skills": [],
         "prototype_name": "golf",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "hammer": {
         "base": true,
@@ -1478,7 +1515,8 @@
         "attached_skills": [],
         "prototype_name": "handy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "sledge hammer": {
         "base": true,
@@ -1532,7 +1570,8 @@
         "attached_skills": [],
         "prototype_name": "demolition",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "rubber mallet": {
         "base": true,
@@ -1573,7 +1612,8 @@
         "attached_skills": [],
         "prototype_name": "kiddy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "jump rope": {
         "base": true,
@@ -1614,7 +1654,8 @@
         "attached_skills": [],
         "prototype_name": "kiddy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "piano wire": {
         "base": true,
@@ -1656,7 +1697,8 @@
         "attached_skills": [],
         "prototype_name": "music",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "shovel": {
         "base": true,
@@ -1692,7 +1734,8 @@
         "attached_skills": [],
         "prototype_name": "digger",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "hatchet": {
         "base": true,
@@ -1733,7 +1776,8 @@
         "attached_skills": [],
         "prototype_name": "survival",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "axe": {
         "base": true,
@@ -1776,7 +1820,8 @@
         "attached_skills": [],
         "prototype_name": "lumber",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "fire axe": {
         "base": true,
@@ -1821,7 +1866,8 @@
         "attached_skills": [],
         "prototype_name": "fire",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "wooden spoon": {
         "base": true,
@@ -1859,7 +1905,8 @@
         "attached_skills": [],
         "prototype_name": "chef",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "silver spoon": {
         "base": true,
@@ -1897,7 +1944,8 @@
         "attached_skills": [],
         "prototype_name": "posh",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "Abraham+Lincoln bust": {
         "base": true,
@@ -1942,7 +1990,8 @@
         "attached_skills": [],
         "prototype_name": "lincoln",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "Julius+Caesar bust": {
         "base": true,
@@ -1987,7 +2036,8 @@
         "attached_skills": [],
         "prototype_name": "caesar",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "miniature The+Thinker statue": {
         "base": true,
@@ -2033,7 +2083,8 @@
         "attached_skills": [],
         "prototype_name": "thinker",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "woman-sized Statue+of Liberty": {
         "base": true,
@@ -2086,7 +2137,8 @@
         "attached_skills": [],
         "prototype_name": "liberty",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "spatula": {
         "base": true,
@@ -2124,7 +2176,8 @@
         "attached_skills": [],
         "prototype_name": "frycook",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "golden spatula": {
         "base": true,
@@ -2170,7 +2223,8 @@
         "attached_skills": [],
         "prototype_name": "goldenfrycook",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "flat-head screwdriver": {
         "base": true,
@@ -2209,7 +2263,8 @@
         "attached_skills": [],
         "prototype_name": "handy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "Phillips screwdriver": {
         "base": true,
@@ -2248,7 +2303,8 @@
         "attached_skills": [],
         "prototype_name": "handy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "magnetic screwdriver": {
         "base": true,
@@ -2288,7 +2344,8 @@
         "attached_skills": [],
         "prototype_name": "handy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "sword": {
         "base": true,
@@ -2328,7 +2385,8 @@
         "attached_skills": [],
         "prototype_name": "knight",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "katana": {
         "base": true,
@@ -2371,7 +2429,8 @@
         "attached_skills": [],
         "prototype_name": "samurai",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "cheap piece-of-shit katana": {
         "base": true,
@@ -2410,7 +2469,8 @@
         "attached_skills": [],
         "prototype_name": "shittysamurai",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "anime katana": {
         "base": true,
@@ -2463,7 +2523,8 @@
         "attached_skills": [],
         "prototype_name": "protagonist",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "rapier": {
         "base": true,
@@ -2503,7 +2564,8 @@
         "attached_skills": [],
         "prototype_name": "fencer",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "zweihander": {
         "base": true,
@@ -2544,7 +2606,8 @@
         "attached_skills": [],
         "prototype_name": "doppelhander",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pistol": {
         "base": true,
@@ -2582,7 +2645,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     ".44 magnum": {
         "base": true,
@@ -2631,7 +2695,8 @@
         "attached_skills": [],
         "prototype_name": "cowboy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "lamp": {
         "base": true,
@@ -2672,7 +2737,8 @@
         "attached_skills": [],
         "prototype_name": "light",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "desk lamp": {
         "base": true,
@@ -2715,7 +2781,8 @@
         "attached_skills": [],
         "prototype_name": "light",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "stun gun": {
         "base": true,
@@ -2761,7 +2828,8 @@
         "attached_skills": [],
         "prototype_name": "stun",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "heavy-duty taser": {
         "base": true,
@@ -2809,7 +2877,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "basketball": {
         "base": true,
@@ -2849,7 +2918,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "football": {
         "base": true,
@@ -2888,7 +2958,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "dodgeball": {
         "base": true,
@@ -2930,7 +3001,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "bowling ball": {
         "base": true,
@@ -2970,7 +3042,8 @@
         "attached_skills": [],
         "prototype_name": "bowling",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "rake": {
         "base": true,
@@ -3007,7 +3080,8 @@
         "attached_skills": [],
         "prototype_name": "garden",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "wooden plank": {
         "base": true,
@@ -3044,7 +3118,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "brass knuckles": {
         "base": true,
@@ -3086,7 +3161,8 @@
         "attached_skills": [],
         "prototype_name": "knuckle",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "sap": {
         "base": true,
@@ -3122,7 +3198,8 @@
         "attached_skills": [],
         "prototype_name": "leather",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "caestus": {
         "base": true,
@@ -3160,7 +3237,8 @@
         "attached_skills": [],
         "prototype_name": "leather",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "mittens": {
         "base": true,
@@ -3203,7 +3281,8 @@
         "attached_skills": [],
         "prototype_name": "winter",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "gloves": {
         "base": true,
@@ -3247,7 +3326,8 @@
         "attached_skills": [],
         "prototype_name": "winter",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "silver fork": {
         "base": true,
@@ -3286,7 +3366,8 @@
         "attached_skills": [],
         "prototype_name": "posh",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "trident": {
         "base": true,
@@ -3337,7 +3418,8 @@
         "attached_skills": [],
         "prototype_name": "3",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "tuning fork": {
         "base": true,
@@ -3374,7 +3456,8 @@
         "attached_skills": [],
         "prototype_name": "music",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pitch fork": {
         "base": true,
@@ -3420,7 +3503,8 @@
         "attached_skills": [],
         "prototype_name": "farmer",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "walking cane": {
         "base": true,
@@ -3461,7 +3545,8 @@
         "attached_skills": [],
         "prototype_name": "elder",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "bull-penis cane": {
         "base": true,
@@ -3505,7 +3590,8 @@
         "attached_skills": [],
         "prototype_name": "penis",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "candy cane": {
         "base": true,
@@ -3548,7 +3634,8 @@
         "attached_skills": [],
         "prototype_name": "candy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "curling iron": {
         "base": true,
@@ -3590,7 +3677,8 @@
         "attached_skills": [],
         "prototype_name": "curly",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "chain": {
         "base": true,
@@ -3632,7 +3720,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "bike chain": {
         "base": true,
@@ -3670,7 +3759,8 @@
         "attached_skills": [],
         "prototype_name": "biker",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "key chain": {
         "base": true,
@@ -3712,7 +3802,8 @@
         "attached_skills": [],
         "prototype_name": "keychain",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "knife": {
         "base": true,
@@ -3753,7 +3844,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "butcher knife": {
         "base": true,
@@ -3797,7 +3889,8 @@
         "attached_skills": [],
         "prototype_name": "butcher",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "edgy knife": {
         "base": true,
@@ -3838,7 +3931,8 @@
         "attached_skills": [],
         "prototype_name": "edgy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "table leg": {
         "base": true,
@@ -3877,7 +3971,8 @@
         "attached_skills": [],
         "prototype_name": "1/2table",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pool cue": {
         "base": true,
@@ -3917,7 +4012,8 @@
         "attached_skills": [],
         "prototype_name": "pool",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "shotgun": {
         "base": true,
@@ -3955,7 +4051,8 @@
         "attached_skills": [],
         "prototype_name": "scatter",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "double-barreled shotgun": {
         "base": true,
@@ -3999,7 +4096,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "sewing needles": {
         "base": true,
@@ -4039,7 +4137,8 @@
         "attached_skills": [],
         "prototype_name": "seamstress",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "knitting needles": {
         "base": true,
@@ -4077,7 +4176,8 @@
         "attached_skills": [],
         "prototype_name": "grandma",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "5-pound dumbbell": {
         "base": true,
@@ -4124,7 +4224,8 @@
         "attached_skills": [],
         "prototype_name": "weak",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "15-pound dumbbell": {
         "base": true,
@@ -4171,7 +4272,8 @@
         "attached_skills": [],
         "prototype_name": "exer",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "100-pound dumbbell": {
         "base": true,
@@ -4223,7 +4325,8 @@
         "attached_skills": [],
         "prototype_name": "strong",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "hockey stick": {
         "base": true,
@@ -4263,7 +4366,8 @@
         "attached_skills": [],
         "prototype_name": "hockey",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "vacuum cleaner": {
         "base": true,
@@ -4305,7 +4409,8 @@
         "attached_skills": [],
         "prototype_name": "vacuum",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "mop": {
         "base": true,
@@ -4348,7 +4453,8 @@
         "attached_skills": [],
         "prototype_name": "janitor",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "trophy": {
         "base": true,
@@ -4390,7 +4496,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "fancy+santa": {
         "base": true,
@@ -4432,7 +4539,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "ladle": {
         "base": true,
@@ -4473,7 +4581,8 @@
         "attached_skills": [],
         "prototype_name": "chef",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "extension cable": {
         "base": true,
@@ -4514,7 +4623,8 @@
         "attached_skills": [],
         "prototype_name": "electric",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "rope": {
         "base": true,
@@ -4554,7 +4664,8 @@
         "attached_skills": [],
         "prototype_name": "survival",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "clothing iron": {
         "base": true,
@@ -4597,7 +4708,8 @@
         "attached_skills": [],
         "prototype_name": "maid",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "hack saw": {
         "base": true,
@@ -4636,7 +4748,8 @@
         "attached_skills": [],
         "prototype_name": "handy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "ice skates": {
         "base": true,
@@ -4683,7 +4796,8 @@
         "attached_skills": [],
         "prototype_name": "ice",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pipe wrench": {
         "base": true,
@@ -4724,7 +4838,8 @@
         "attached_skills": [],
         "prototype_name": "pipe",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "umbrella": {
         "base": true,
@@ -4766,7 +4881,8 @@
         "attached_skills": [],
         "prototype_name": "rainy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "bed": {
         "base": true,
@@ -4808,7 +4924,8 @@
         "attached_skills": [],
         "prototype_name": "sleepy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "dresser": {
         "base": true,
@@ -4844,7 +4961,8 @@
         "attached_skills": [],
         "prototype_name": "fashion",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pillow": {
         "base": true,
@@ -4891,7 +5009,8 @@
         "attached_skills": [],
         "prototype_name": "sleepy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "blanket": {
         "base": true,
@@ -4935,7 +5054,8 @@
         "attached_skills": [],
         "prototype_name": "sleepy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "refrigerator": {
         "base": true,
@@ -4975,7 +5095,8 @@
         "attached_skills": [],
         "prototype_name": "fridge",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "oven": {
         "base": true,
@@ -5016,7 +5137,8 @@
         "attached_skills": [],
         "prototype_name": "baker",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "pot": {
         "base": true,
@@ -5054,7 +5176,8 @@
         "attached_skills": [],
         "prototype_name": "boil",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "frying pan": {
         "base": true,
@@ -5098,7 +5221,8 @@
         "attached_skills": [],
         "prototype_name": "fry",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "sink": {
         "base": true,
@@ -5135,7 +5259,8 @@
         "attached_skills": [],
         "prototype_name": "soapy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "plate": {
         "base": true,
@@ -5170,7 +5295,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "cup": {
         "base": true,
@@ -5203,7 +5329,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "mug": {
         "base": true,
@@ -5236,7 +5363,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "table": {
         "base": true,
@@ -5271,7 +5399,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "grandfather clock": {
         "base": true,
@@ -5322,7 +5451,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "clock": {
         "base": true,
@@ -5363,7 +5493,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "toilet": {
         "base": true,
@@ -5412,7 +5543,8 @@
         "attached_skills": [],
         "prototype_name": "poopy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "bath tub": {
         "base": true,
@@ -5455,7 +5587,8 @@
         "attached_skills": [],
         "prototype_name": "bath",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "shower": {
         "base": true,
@@ -5496,7 +5629,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "fireplace": {
         "base": true,
@@ -5543,7 +5677,8 @@
         "attached_skills": [],
         "prototype_name": "fire",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "bench": {
         "base": true,
@@ -5578,7 +5713,8 @@
         "attached_skills": [],
         "prototype_name": "lazy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "arm chair": {
         "base": true,
@@ -5616,7 +5752,8 @@
         "attached_skills": [],
         "prototype_name": "lazy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "couch": {
         "base": true,
@@ -5651,7 +5788,8 @@
         "attached_skills": [],
         "prototype_name": "lazy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "television": {
         "base": true,
@@ -5687,7 +5825,8 @@
         "attached_skills": [],
         "prototype_name": "tv",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "washing machine": {
         "base": true,
@@ -5726,7 +5865,8 @@
         "attached_skills": [],
         "prototype_name": "washer",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "drying machine": {
         "base": true,
@@ -5765,7 +5905,8 @@
         "attached_skills": [],
         "prototype_name": "dryer",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "ballpoint pen": {
         "base": true,
@@ -5802,7 +5943,8 @@
         "attached_skills": [],
         "prototype_name": "ink",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "#2 pencil": {
         "base": true,
@@ -5845,7 +5987,8 @@
         "attached_skills": [],
         "prototype_name": "eraser",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "stapler": {
         "base": true,
@@ -5883,7 +6026,8 @@
         "attached_skills": [],
         "prototype_name": "staple",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "fax machine": {
         "base": true,
@@ -5921,7 +6065,8 @@
         "attached_skills": [],
         "prototype_name": "fax",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "copying machine": {
         "base": true,
@@ -5961,7 +6106,8 @@
         "attached_skills": [],
         "prototype_name": "copy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "exercise ball": {
         "base": true,
@@ -6001,7 +6147,8 @@
         "attached_skills": [],
         "prototype_name": "exer",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "water bottle": {
         "base": true,
@@ -6045,7 +6192,8 @@
         "attached_skills": [],
         "prototype_name": "water",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "steroid bottle": {
         "base": true,
@@ -6084,7 +6232,8 @@
         "attached_skills": [],
         "prototype_name": "strong",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "boxing gloves": {
         "base": true,
@@ -6136,7 +6285,8 @@
         "attached_skills": [],
         "prototype_name": "boxer",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "miku figurine": {
         "base": true,
@@ -6181,7 +6331,8 @@
         "attached_skills": [],
         "prototype_name": "miku",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "anime dvd": {
         "base": true,
@@ -6223,7 +6374,8 @@
         "attached_skills": [],
         "prototype_name": "anime",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "anime poster": {
         "base": true,
@@ -6265,7 +6417,8 @@
         "attached_skills": [],
         "prototype_name": "anime",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "manga": {
         "base": true,
@@ -6305,7 +6458,8 @@
         "attached_skills": [],
         "prototype_name": null,
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "bodypillow": {
         "base": true,
@@ -6348,7 +6502,8 @@
         "attached_skills": [],
         "prototype_name": "waifu",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "shuriken": {
         "base": true,
@@ -6389,7 +6544,8 @@
         "attached_skills": [],
         "prototype_name": "ninja",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "thrasher poster": {
         "base": true,
@@ -6432,7 +6588,8 @@
         "attached_skills": [],
         "prototype_name": "thrasher",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "nirvana album": {
         "base": true,
@@ -6473,7 +6630,8 @@
         "attached_skills": [],
         "prototype_name": "nirvana",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "electric guitar": {
         "base": true,
@@ -6513,7 +6671,8 @@
         "attached_skills": [],
         "prototype_name": "rock",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "acoustic guitar": {
         "base": true,
@@ -6551,7 +6710,8 @@
         "attached_skills": [],
         "prototype_name": "acoustic",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "drum set": {
         "base": true,
@@ -6590,7 +6750,8 @@
         "attached_skills": [],
         "prototype_name": "drum",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "atlas": {
         "base": true,
@@ -6627,7 +6788,8 @@
         "attached_skills": [],
         "prototype_name": "world",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "history book": {
         "base": true,
@@ -6662,7 +6824,8 @@
         "attached_skills": [],
         "prototype_name": "history",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "globe": {
         "base": true,
@@ -6700,7 +6863,8 @@
         "attached_skills": [],
         "prototype_name": "world",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "flute": {
         "base": true,
@@ -6734,7 +6898,8 @@
         "attached_skills": [],
         "prototype_name": "music",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "saxophone": {
         "base": true,
@@ -6774,7 +6939,8 @@
         "attached_skills": [],
         "prototype_name": "saxxy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "grand piano": {
         "base": true,
@@ -6816,7 +6982,8 @@
         "attached_skills": [],
         "prototype_name": "concerto",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "headphones": {
         "base": true,
@@ -6860,7 +7027,8 @@
         "attached_skills": [],
         "prototype_name": "headphone",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "empty wrapper": {
         "base": true,
@@ -6899,7 +7067,8 @@
         "attached_skills": [],
         "prototype_name": "garbage",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "empty soda can": {
         "base": true,
@@ -6939,7 +7108,8 @@
         "attached_skills": [],
         "prototype_name": "garbage",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "plastic bag": {
         "base": true,
@@ -6979,7 +7149,8 @@
         "attached_skills": [],
         "prototype_name": "garbage",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "sord": {
         "base": true,
@@ -7015,7 +7186,8 @@
         "attached_skills": [],
         "prototype_name": "...S",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "virtual+reality headset": {
         "base": true,
@@ -7062,7 +7234,8 @@
         "attached_skills": [],
         "prototype_name": "vr",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "smart phone": {
         "base": true,
@@ -7099,7 +7272,8 @@
         "attached_skills": [],
         "prototype_name": "smart",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "rc drone": {
         "base": true,
@@ -7141,7 +7315,8 @@
         "attached_skills": [],
         "prototype_name": "rc",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "gaming computer": {
         "base": true,
@@ -7187,7 +7362,8 @@
         "attached_skills": [],
         "prototype_name": "gamer",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "graphics card": {
         "base": true,
@@ -7233,7 +7409,8 @@
         "attached_skills": [],
         "prototype_name": "gamer",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "cowboy hat": {
         "base": true,
@@ -7282,7 +7459,8 @@
         "attached_skills": [],
         "prototype_name": "cowboy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "cowboy boots": {
         "base": true,
@@ -7329,7 +7507,8 @@
         "attached_skills": [],
         "prototype_name": "cowboy",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "bandana": {
         "base": true,
@@ -7372,7 +7551,8 @@
         "attached_skills": [],
         "prototype_name": "cool",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "clown shoes": {
         "base": true,
@@ -7418,7 +7598,8 @@
         "attached_skills": [],
         "prototype_name": "clown",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "clown nose": {
         "base": true,
@@ -7458,7 +7639,8 @@
         "cost": {
             "build": 0.5,
             "garnet": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "joker figurine": {
         "base": true,
@@ -7498,7 +7680,8 @@
         "attached_skills": [],
         "prototype_name": "joker",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "clown poster": {
         "base": true,
@@ -7538,7 +7721,8 @@
         "attached_skills": [],
         "prototype_name": "clown",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "cosby poster": {
         "base": true,
@@ -7577,7 +7761,8 @@
         "attached_skills": [],
         "prototype_name": "cosby",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "red faygo": {
         "base": true,
@@ -7619,7 +7804,8 @@
         "attached_skills": [],
         "prototype_name": "juggalo",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "grape faygo": {
         "base": true,
@@ -7659,7 +7845,8 @@
         "attached_skills": [],
         "prototype_name": "juggalo",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "cola faygo": {
         "base": true,
@@ -7700,7 +7887,8 @@
         "attached_skills": [],
         "prototype_name": "juggalo",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "cotton+candy faygo": {
         "base": true,
@@ -7741,7 +7929,8 @@
         "attached_skills": [],
         "prototype_name": "juggalo",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "kiwi+strawberry faygo": {
         "base": true,
@@ -7785,7 +7974,8 @@
         "attached_skills": [],
         "prototype_name": "juggalo",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "candy+apple faygo": {
         "base": true,
@@ -7830,7 +8020,8 @@
         "attached_skills": [],
         "prototype_name": "juggalo",
         "creator": "ebolite",
-        "display_name": null
+        "display_name": null,
+        "base_inheritable": true
     },
     "top hat": {
         "base": true,
@@ -7872,7 +8063,8 @@
         "cost": {
             "build": 0.5,
             "shale": 0.4
-        }
+        },
+        "base_inheritable": true
     },
     "dated rifle": {
         "base": true,
@@ -7918,7 +8110,8 @@
             "lead": 0.4,
             "wood": 0.3,
             "iron": 0.4
-        }
+        },
+        "base_inheritable": true
     },
     "banana": {
         "base": true,
@@ -7960,7 +8153,8 @@
             "build": 0.5,
             "gold": 0.5,
             "topaz": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "azure grimoire": {
         "base": true,
@@ -8010,7 +8204,8 @@
             "star sapphire": 0.1,
             "onyx": 0.1,
             "cobalt": 0.1
-        }
+        },
+        "base_inheritable": true
     },
     "barbed wire": {
         "base": true,
@@ -8054,7 +8249,8 @@
             "build": 0.5,
             "rust": 0.3,
             "blood": 0.3
-        }
+        },
+        "base_inheritable": true
     },
     "bleach bottle": {
         "base": true,
@@ -8096,7 +8292,8 @@
             "build": 0.5,
             "acid": 0.5,
             "fluorite": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "deer skull": {
         "base": true,
@@ -8138,7 +8335,8 @@
             "build": 0.5,
             "chalk": 0.5,
             "jet": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "ghost pepper": {
         "base": true,
@@ -8183,7 +8381,8 @@
         "cost": {
             "build": 0.5,
             "ruby": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "blender": {
         "base": true,
@@ -8222,7 +8421,8 @@
         "cost": {
             "build": 0.5,
             "iron": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "scarf": {
         "base": true,
@@ -8263,7 +8463,8 @@
         "cost": {
             "build": 0.5,
             "chalk": 0.4
-        }
+        },
+        "base_inheritable": true
     },
     "pet rock": {
         "base": true,
@@ -8306,7 +8507,8 @@
             "build": 0.5,
             "quartz": 0.2,
             "rose quartz": 0.2
-        }
+        },
+        "base_inheritable": true
     },
     "stone": {
         "base": true,
@@ -8344,7 +8546,8 @@
             "build": 0.5,
             "quartz": 0.3,
             "sandstone": 0.3
-        }
+        },
+        "base_inheritable": true
     },
     "boulder": {
         "base": true,
@@ -8384,7 +8587,8 @@
             "quartz": 0.2,
             "marble": 0.2,
             "sandstone": 0.2
-        }
+        },
+        "base_inheritable": true
     },
     "football helmet": {
         "base": true,
@@ -8428,7 +8632,8 @@
             "build": 0.5,
             "iron": 0.4,
             "lead": 0.4
-        }
+        },
+        "base_inheritable": true
     },
     "Halo helmet": {
         "base": true,
@@ -8468,7 +8673,8 @@
             "malachite": 0.30000000000000004,
             "titanium": 0.30000000000000004,
             "topaz": 0.30000000000000004
-        }
+        },
+        "base_inheritable": true
     },
     "red smuppet": {
         "base": true,
@@ -8519,7 +8725,8 @@
         "cost": {
             "build": 0.5,
             "garnet": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "green smuppet": {
         "base": true,
@@ -8570,7 +8777,8 @@
         "cost": {
             "build": 0.5,
             "malachite": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "blue smuppet": {
         "base": true,
@@ -8621,7 +8829,8 @@
         "cost": {
             "build": 0.5,
             "cobalt": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "purple smuppet": {
         "base": true,
@@ -8672,7 +8881,8 @@
         "cost": {
             "build": 0.5,
             "amethyst": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "flip flops": {
         "base": true,
@@ -8714,7 +8924,8 @@
         "cost": {
             "build": 0.5,
             "silk": 0.6
-        }
+        },
+        "base_inheritable": true
     },
     "fedora": {
         "base": true,
@@ -8754,7 +8965,8 @@
         "cost": {
             "build": 0.5,
             "silk": 0.9999999999999999
-        }
+        },
+        "base_inheritable": true
     },
     "dapper pipe": {
         "base": true,
@@ -8800,7 +9012,8 @@
             "build": 0.5,
             "mist": 0.4,
             "tar": 0.4
-        }
+        },
+        "base_inheritable": true
     },
     "fast boxing gloves": {
         "base": true,
@@ -8852,7 +9065,8 @@
             "silicon": 0.5,
             "build": 0.5,
             "sulfur": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "hot glue gun": {
         "base": true,
@@ -8900,7 +9114,8 @@
             "caulk": 0.2,
             "acid": 0.2,
             "blood": 0.1
-        }
+        },
+        "base_inheritable": true
     },
     "red squiddle": {
         "base": true,
@@ -8950,7 +9165,8 @@
         "cost": {
             "build": 0.5,
             "garnet": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "blue squiddle": {
         "base": true,
@@ -9000,7 +9216,8 @@
         "cost": {
             "build": 0.5,
             "aquamarine": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "green squiddle": {
         "base": true,
@@ -9050,7 +9267,8 @@
         "cost": {
             "build": 0.5,
             "malachite": 0.4
-        }
+        },
+        "base_inheritable": true
     },
     "AAA game": {
         "base": true,
@@ -9093,7 +9311,8 @@
             "build": 0.5,
             "sulfur": 0.5,
             "jet": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "purple squiddle": {
         "base": true,
@@ -9143,7 +9362,8 @@
         "cost": {
             "build": 0.5,
             "shale": 0.4
-        }
+        },
+        "base_inheritable": true
     },
     "yellow squiddle": {
         "base": true,
@@ -9193,7 +9413,8 @@
         "cost": {
             "build": 0.5,
             "amber": 0.4
-        }
+        },
+        "base_inheritable": true
     },
     "minecraft pickaxe": {
         "base": true,
@@ -9250,7 +9471,8 @@
             "sandstone": 0.5,
             "obsidian": 0.1,
             "quartz": 0.30000000000000004
-        }
+        },
+        "base_inheritable": true
     },
     "black squiddle": {
         "base": true,
@@ -9311,7 +9533,8 @@
             "tar": 0.6,
             "jet": 2.0000000000000004,
             "obsidian": 0.6
-        }
+        },
+        "base_inheritable": true
     },
     "tarot cards": {
         "base": true,
@@ -9348,7 +9571,8 @@
         "cost": {
             "build": 0.5,
             "shale": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "detachable scissors": {
         "base": true,
@@ -9388,7 +9612,8 @@
         "cost": {
             "build": 0.5,
             "iron": 0.2
-        }
+        },
+        "base_inheritable": true
     },
     "water extinguisher": {
         "base": true,
@@ -9433,7 +9658,8 @@
             "neon": 0.6,
             "sulfur": 0.6,
             "garnet": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "cloak": {
         "base": true,
@@ -9474,7 +9700,8 @@
         "cost": {
             "build": 0.5,
             "chalk": 0.20000000000000004
-        }
+        },
+        "base_inheritable": true
     },
     "crochet hook": {
         "base": true,
@@ -9514,7 +9741,8 @@
         "cost": {
             "build": 0.5,
             "silicon": 0.2
-        }
+        },
+        "base_inheritable": true
     },
     "chainmail": {
         "base": true,
@@ -9551,7 +9779,8 @@
         "cost": {
             "build": 0.5,
             "iron": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "rough build grystal": {
         "base": true,
@@ -9585,6 +9814,7 @@
         ],
         "prototype_name": "build",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough build grystal",
         "adjectives": [
             "rough",
@@ -9624,6 +9854,7 @@
         ],
         "prototype_name": "build",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine build grystal",
         "adjectives": [
             "fine",
@@ -9663,6 +9894,7 @@
         ],
         "prototype_name": "build",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice build grystal",
         "adjectives": [
             "choice",
@@ -9703,6 +9935,7 @@
         ],
         "prototype_name": "acid",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough acid grystal",
         "adjectives": [
             "rough",
@@ -9743,6 +9976,7 @@
         ],
         "prototype_name": "acid",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine acid grystal",
         "adjectives": [
             "fine",
@@ -9783,6 +10017,7 @@
         ],
         "prototype_name": "acid",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice acid grystal",
         "adjectives": [
             "choice",
@@ -9823,6 +10058,7 @@
         ],
         "prototype_name": "amber",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough amber grystal",
         "adjectives": [
             "rough",
@@ -9863,6 +10099,7 @@
         ],
         "prototype_name": "amber",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine amber grystal",
         "adjectives": [
             "fine",
@@ -9903,6 +10140,7 @@
         ],
         "prototype_name": "amber",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice amber grystal",
         "adjectives": [
             "choice",
@@ -9943,6 +10181,7 @@
         ],
         "prototype_name": "amethyst",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough amethyst grystal",
         "adjectives": [
             "rough",
@@ -9983,6 +10222,7 @@
         ],
         "prototype_name": "amethyst",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine amethyst grystal",
         "adjectives": [
             "fine",
@@ -10023,6 +10263,7 @@
         ],
         "prototype_name": "amethyst",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice amethyst grystal",
         "adjectives": [
             "choice",
@@ -10063,6 +10304,7 @@
         ],
         "prototype_name": "aquamarine",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough aquamarine grystal",
         "adjectives": [
             "rough",
@@ -10103,6 +10345,7 @@
         ],
         "prototype_name": "aquamarine",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine aquamarine grystal",
         "adjectives": [
             "fine",
@@ -10143,6 +10386,7 @@
         ],
         "prototype_name": "aquamarine",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice aquamarine grystal",
         "adjectives": [
             "choice",
@@ -10183,6 +10427,7 @@
         ],
         "prototype_name": "blood",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough blood grystal",
         "adjectives": [
             "rough",
@@ -10223,6 +10468,7 @@
         ],
         "prototype_name": "blood",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine blood grystal",
         "adjectives": [
             "fine",
@@ -10263,6 +10509,7 @@
         ],
         "prototype_name": "blood",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice blood grystal",
         "adjectives": [
             "choice",
@@ -10303,6 +10550,7 @@
         ],
         "prototype_name": "caulk",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough caulk grystal",
         "adjectives": [
             "rough",
@@ -10343,6 +10591,7 @@
         ],
         "prototype_name": "caulk",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine caulk grystal",
         "adjectives": [
             "fine",
@@ -10383,6 +10632,7 @@
         ],
         "prototype_name": "caulk",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice caulk grystal",
         "adjectives": [
             "choice",
@@ -10423,6 +10673,7 @@
         ],
         "prototype_name": "chalk",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough chalk grystal",
         "adjectives": [
             "rough",
@@ -10463,6 +10714,7 @@
         ],
         "prototype_name": "chalk",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine chalk grystal",
         "adjectives": [
             "fine",
@@ -10503,6 +10755,7 @@
         ],
         "prototype_name": "chalk",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice chalk grystal",
         "adjectives": [
             "choice",
@@ -10543,6 +10796,7 @@
         ],
         "prototype_name": "cobalt",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough cobalt grystal",
         "adjectives": [
             "rough",
@@ -10583,6 +10837,7 @@
         ],
         "prototype_name": "cobalt",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine cobalt grystal",
         "adjectives": [
             "fine",
@@ -10623,6 +10878,7 @@
         ],
         "prototype_name": "cobalt",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice cobalt grystal",
         "adjectives": [
             "choice",
@@ -10663,6 +10919,7 @@
         ],
         "prototype_name": "copper",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough copper grystal",
         "adjectives": [
             "rough",
@@ -10703,6 +10960,7 @@
         ],
         "prototype_name": "copper",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine copper grystal",
         "adjectives": [
             "fine",
@@ -10743,6 +11001,7 @@
         ],
         "prototype_name": "copper",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice copper grystal",
         "adjectives": [
             "choice",
@@ -10783,6 +11042,7 @@
         ],
         "prototype_name": "diamond",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough diamond grystal",
         "adjectives": [
             "rough",
@@ -10823,6 +11083,7 @@
         ],
         "prototype_name": "diamond",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine diamond grystal",
         "adjectives": [
             "fine",
@@ -10863,6 +11124,7 @@
         ],
         "prototype_name": "diamond",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice diamond grystal",
         "adjectives": [
             "choice",
@@ -10903,6 +11165,7 @@
         ],
         "prototype_name": "emerald",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough emerald grystal",
         "adjectives": [
             "rough",
@@ -10943,6 +11206,7 @@
         ],
         "prototype_name": "emerald",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine emerald grystal",
         "adjectives": [
             "fine",
@@ -10983,6 +11247,7 @@
         ],
         "prototype_name": "emerald",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice emerald grystal",
         "adjectives": [
             "choice",
@@ -11023,6 +11288,7 @@
         ],
         "prototype_name": "fluorite",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough fluorite grystal",
         "adjectives": [
             "rough",
@@ -11063,6 +11329,7 @@
         ],
         "prototype_name": "fluorite",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine fluorite grystal",
         "adjectives": [
             "fine",
@@ -11103,6 +11370,7 @@
         ],
         "prototype_name": "fluorite",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice fluorite grystal",
         "adjectives": [
             "choice",
@@ -11143,6 +11411,7 @@
         ],
         "prototype_name": "frosting",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough frosting grystal",
         "adjectives": [
             "rough",
@@ -11183,6 +11452,7 @@
         ],
         "prototype_name": "frosting",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine frosting grystal",
         "adjectives": [
             "fine",
@@ -11223,6 +11493,7 @@
         ],
         "prototype_name": "frosting",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice frosting grystal",
         "adjectives": [
             "choice",
@@ -11263,6 +11534,7 @@
         ],
         "prototype_name": "garnet",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough garnet grystal",
         "adjectives": [
             "rough",
@@ -11303,6 +11575,7 @@
         ],
         "prototype_name": "garnet",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine garnet grystal",
         "adjectives": [
             "fine",
@@ -11343,6 +11616,7 @@
         ],
         "prototype_name": "garnet",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice garnet grystal",
         "adjectives": [
             "choice",
@@ -11383,6 +11657,7 @@
         ],
         "prototype_name": "gold",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough gold grystal",
         "adjectives": [
             "rough",
@@ -11423,6 +11698,7 @@
         ],
         "prototype_name": "gold",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine gold grystal",
         "adjectives": [
             "fine",
@@ -11463,6 +11739,7 @@
         ],
         "prototype_name": "gold",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice gold grystal",
         "adjectives": [
             "choice",
@@ -11503,6 +11780,7 @@
         ],
         "prototype_name": "iodine",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough iodine grystal",
         "adjectives": [
             "rough",
@@ -11543,6 +11821,7 @@
         ],
         "prototype_name": "iodine",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine iodine grystal",
         "adjectives": [
             "fine",
@@ -11583,6 +11862,7 @@
         ],
         "prototype_name": "iodine",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice iodine grystal",
         "adjectives": [
             "choice",
@@ -11623,6 +11903,7 @@
         ],
         "prototype_name": "iron",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough iron grystal",
         "adjectives": [
             "rough",
@@ -11663,6 +11944,7 @@
         ],
         "prototype_name": "iron",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine iron grystal",
         "adjectives": [
             "fine",
@@ -11703,6 +11985,7 @@
         ],
         "prototype_name": "iron",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice iron grystal",
         "adjectives": [
             "choice",
@@ -11743,6 +12026,7 @@
         ],
         "prototype_name": "jet",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough jet grystal",
         "adjectives": [
             "rough",
@@ -11783,6 +12067,7 @@
         ],
         "prototype_name": "jet",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine jet grystal",
         "adjectives": [
             "fine",
@@ -11823,6 +12108,7 @@
         ],
         "prototype_name": "jet",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice jet grystal",
         "adjectives": [
             "choice",
@@ -11863,6 +12149,7 @@
         ],
         "prototype_name": "lead",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough lead grystal",
         "adjectives": [
             "rough",
@@ -11903,6 +12190,7 @@
         ],
         "prototype_name": "lead",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine lead grystal",
         "adjectives": [
             "fine",
@@ -11943,6 +12231,7 @@
         ],
         "prototype_name": "lead",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice lead grystal",
         "adjectives": [
             "choice",
@@ -11983,6 +12272,7 @@
         ],
         "prototype_name": "lux",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough lux grystal",
         "adjectives": [
             "rough",
@@ -12023,6 +12313,7 @@
         ],
         "prototype_name": "lux",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine lux grystal",
         "adjectives": [
             "fine",
@@ -12063,6 +12354,7 @@
         ],
         "prototype_name": "lux",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice lux grystal",
         "adjectives": [
             "choice",
@@ -12103,6 +12395,7 @@
         ],
         "prototype_name": "malachite",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough malachite grystal",
         "adjectives": [
             "rough",
@@ -12143,6 +12436,7 @@
         ],
         "prototype_name": "malachite",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine malachite grystal",
         "adjectives": [
             "fine",
@@ -12183,6 +12477,7 @@
         ],
         "prototype_name": "malachite",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice malachite grystal",
         "adjectives": [
             "choice",
@@ -12223,6 +12518,7 @@
         ],
         "prototype_name": "marble",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough marble grystal",
         "adjectives": [
             "rough",
@@ -12263,6 +12559,7 @@
         ],
         "prototype_name": "marble",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine marble grystal",
         "adjectives": [
             "fine",
@@ -12303,6 +12600,7 @@
         ],
         "prototype_name": "marble",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice marble grystal",
         "adjectives": [
             "choice",
@@ -12343,6 +12641,7 @@
         ],
         "prototype_name": "mercury",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough mercury grystal",
         "adjectives": [
             "rough",
@@ -12383,6 +12682,7 @@
         ],
         "prototype_name": "mercury",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine mercury grystal",
         "adjectives": [
             "fine",
@@ -12423,6 +12723,7 @@
         ],
         "prototype_name": "mercury",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice mercury grystal",
         "adjectives": [
             "choice",
@@ -12463,6 +12764,7 @@
         ],
         "prototype_name": "mist",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough mist grystal",
         "adjectives": [
             "rough",
@@ -12503,6 +12805,7 @@
         ],
         "prototype_name": "mist",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine mist grystal",
         "adjectives": [
             "fine",
@@ -12543,6 +12846,7 @@
         ],
         "prototype_name": "mist",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice mist grystal",
         "adjectives": [
             "choice",
@@ -12583,6 +12887,7 @@
         ],
         "prototype_name": "moonstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough moonstone grystal",
         "adjectives": [
             "rough",
@@ -12623,6 +12928,7 @@
         ],
         "prototype_name": "moonstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine moonstone grystal",
         "adjectives": [
             "fine",
@@ -12663,6 +12969,7 @@
         ],
         "prototype_name": "moonstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice moonstone grystal",
         "adjectives": [
             "choice",
@@ -12703,6 +13010,7 @@
         ],
         "prototype_name": "neon",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough neon grystal",
         "adjectives": [
             "rough",
@@ -12743,6 +13051,7 @@
         ],
         "prototype_name": "neon",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine neon grystal",
         "adjectives": [
             "fine",
@@ -12783,6 +13092,7 @@
         ],
         "prototype_name": "neon",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice neon grystal",
         "adjectives": [
             "choice",
@@ -12823,6 +13133,7 @@
         ],
         "prototype_name": "nitrogen",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough nitrogen grystal",
         "adjectives": [
             "rough",
@@ -12863,6 +13174,7 @@
         ],
         "prototype_name": "nitrogen",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine nitrogen grystal",
         "adjectives": [
             "fine",
@@ -12903,6 +13215,7 @@
         ],
         "prototype_name": "nitrogen",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice nitrogen grystal",
         "adjectives": [
             "choice",
@@ -12943,6 +13256,7 @@
         ],
         "prototype_name": "obsidian",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough obsidian grystal",
         "adjectives": [
             "rough",
@@ -12983,6 +13297,7 @@
         ],
         "prototype_name": "obsidian",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine obsidian grystal",
         "adjectives": [
             "fine",
@@ -13023,6 +13338,7 @@
         ],
         "prototype_name": "obsidian",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice obsidian grystal",
         "adjectives": [
             "choice",
@@ -13063,6 +13379,7 @@
         ],
         "prototype_name": "onyx",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough onyx grystal",
         "adjectives": [
             "rough",
@@ -13103,6 +13420,7 @@
         ],
         "prototype_name": "onyx",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine onyx grystal",
         "adjectives": [
             "fine",
@@ -13143,6 +13461,7 @@
         ],
         "prototype_name": "onyx",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice onyx grystal",
         "adjectives": [
             "choice",
@@ -13183,6 +13502,7 @@
         ],
         "prototype_name": "permafrost",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough permafrost grystal",
         "adjectives": [
             "rough",
@@ -13223,6 +13543,7 @@
         ],
         "prototype_name": "permafrost",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine permafrost grystal",
         "adjectives": [
             "fine",
@@ -13263,6 +13584,7 @@
         ],
         "prototype_name": "permafrost",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice permafrost grystal",
         "adjectives": [
             "choice",
@@ -13303,6 +13625,7 @@
         ],
         "prototype_name": "quartz",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough quartz grystal",
         "adjectives": [
             "rough",
@@ -13343,6 +13666,7 @@
         ],
         "prototype_name": "quartz",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine quartz grystal",
         "adjectives": [
             "fine",
@@ -13383,6 +13707,7 @@
         ],
         "prototype_name": "quartz",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice quartz grystal",
         "adjectives": [
             "choice",
@@ -13425,6 +13750,7 @@
         ],
         "prototype_name": "rainbow",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough rainbow grystal",
         "adjectives": [
             "rough",
@@ -13467,6 +13793,7 @@
         ],
         "prototype_name": "rainbow",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine rainbow grystal",
         "adjectives": [
             "fine",
@@ -13507,6 +13834,7 @@
         ],
         "prototype_name": "rainbow",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice rainbow grystal",
         "adjectives": [
             "choice",
@@ -13547,6 +13875,7 @@
         ],
         "prototype_name": "redstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough redstone grystal",
         "adjectives": [
             "rough",
@@ -13587,6 +13916,7 @@
         ],
         "prototype_name": "redstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine redstone grystal",
         "adjectives": [
             "fine",
@@ -13627,6 +13957,7 @@
         ],
         "prototype_name": "redstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice redstone grystal",
         "adjectives": [
             "choice",
@@ -13667,6 +13998,7 @@
         ],
         "prototype_name": "rock candy",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough rock candy grystal",
         "adjectives": [
             "rough",
@@ -13708,6 +14040,7 @@
         ],
         "prototype_name": "rock candy",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine rock candy grystal",
         "adjectives": [
             "fine",
@@ -13749,6 +14082,7 @@
         ],
         "prototype_name": "rock candy",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice rock candy grystal",
         "adjectives": [
             "choice",
@@ -13790,6 +14124,7 @@
         ],
         "prototype_name": "rose quartz",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough rose quartz grystal",
         "adjectives": [
             "rough",
@@ -13831,6 +14166,7 @@
         ],
         "prototype_name": "rose quartz",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine rose quartz grystal",
         "adjectives": [
             "fine",
@@ -13872,6 +14208,7 @@
         ],
         "prototype_name": "rose quartz",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice rose quartz grystal",
         "adjectives": [
             "choice",
@@ -13913,6 +14250,7 @@
         ],
         "prototype_name": "ruby",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough ruby grystal",
         "adjectives": [
             "rough",
@@ -13953,6 +14291,7 @@
         ],
         "prototype_name": "ruby",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine ruby grystal",
         "adjectives": [
             "fine",
@@ -13993,6 +14332,7 @@
         ],
         "prototype_name": "ruby",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice ruby grystal",
         "adjectives": [
             "choice",
@@ -14033,6 +14373,7 @@
         ],
         "prototype_name": "rust",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough rust grystal",
         "adjectives": [
             "rough",
@@ -14073,6 +14414,7 @@
         ],
         "prototype_name": "rust",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine rust grystal",
         "adjectives": [
             "fine",
@@ -14113,6 +14455,7 @@
         ],
         "prototype_name": "rust",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice rust grystal",
         "adjectives": [
             "choice",
@@ -14153,6 +14496,7 @@
         ],
         "prototype_name": "sandstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough sandstone grystal",
         "adjectives": [
             "rough",
@@ -14193,6 +14537,7 @@
         ],
         "prototype_name": "sandstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine sandstone grystal",
         "adjectives": [
             "fine",
@@ -14233,6 +14578,7 @@
         ],
         "prototype_name": "sandstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice sandstone grystal",
         "adjectives": [
             "choice",
@@ -14273,6 +14619,7 @@
         ],
         "prototype_name": "shale",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough shale grystal",
         "adjectives": [
             "rough",
@@ -14313,6 +14660,7 @@
         ],
         "prototype_name": "shale",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine shale grystal",
         "adjectives": [
             "fine",
@@ -14353,6 +14701,7 @@
         ],
         "prototype_name": "shale",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice shale grystal",
         "adjectives": [
             "choice",
@@ -14393,6 +14742,7 @@
         ],
         "prototype_name": "silicon",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough silicon grystal",
         "adjectives": [
             "rough",
@@ -14433,6 +14783,7 @@
         ],
         "prototype_name": "silicon",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine silicon grystal",
         "adjectives": [
             "fine",
@@ -14473,6 +14824,7 @@
         ],
         "prototype_name": "silicon",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice silicon grystal",
         "adjectives": [
             "choice",
@@ -14513,6 +14865,7 @@
         ],
         "prototype_name": "silk",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough silk grystal",
         "adjectives": [
             "rough",
@@ -14553,6 +14906,7 @@
         ],
         "prototype_name": "silk",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine silk grystal",
         "adjectives": [
             "fine",
@@ -14593,6 +14947,7 @@
         ],
         "prototype_name": "silk",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice silk grystal",
         "adjectives": [
             "choice",
@@ -14633,6 +14988,7 @@
         ],
         "prototype_name": "slime",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough slime grystal",
         "adjectives": [
             "rough",
@@ -14673,6 +15029,7 @@
         ],
         "prototype_name": "slime",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine slime grystal",
         "adjectives": [
             "fine",
@@ -14713,6 +15070,7 @@
         ],
         "prototype_name": "slime",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice slime grystal",
         "adjectives": [
             "choice",
@@ -14753,6 +15111,7 @@
         ],
         "prototype_name": "star sapphire",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough star sapphire grystal",
         "adjectives": [
             "rough",
@@ -14794,6 +15153,7 @@
         ],
         "prototype_name": "star sapphire",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine star sapphire grystal",
         "adjectives": [
             "fine",
@@ -14835,6 +15195,7 @@
         ],
         "prototype_name": "star sapphire",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice star sapphire grystal",
         "adjectives": [
             "choice",
@@ -14876,6 +15237,7 @@
         ],
         "prototype_name": "sulfur",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough sulfur grystal",
         "adjectives": [
             "rough",
@@ -14916,6 +15278,7 @@
         ],
         "prototype_name": "sulfur",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine sulfur grystal",
         "adjectives": [
             "fine",
@@ -14956,6 +15319,7 @@
         ],
         "prototype_name": "sulfur",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice sulfur grystal",
         "adjectives": [
             "choice",
@@ -14996,6 +15360,7 @@
         ],
         "prototype_name": "sunstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough sunstone grystal",
         "adjectives": [
             "rough",
@@ -15036,6 +15401,7 @@
         ],
         "prototype_name": "sunstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine sunstone grystal",
         "adjectives": [
             "fine",
@@ -15076,6 +15442,7 @@
         ],
         "prototype_name": "sunstone",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice sunstone grystal",
         "adjectives": [
             "choice",
@@ -15116,6 +15483,7 @@
         ],
         "prototype_name": "tar",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough tar grystal",
         "adjectives": [
             "rough",
@@ -15156,6 +15524,7 @@
         ],
         "prototype_name": "tar",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine tar grystal",
         "adjectives": [
             "fine",
@@ -15196,6 +15565,7 @@
         ],
         "prototype_name": "tar",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice tar grystal",
         "adjectives": [
             "choice",
@@ -15236,6 +15606,7 @@
         ],
         "prototype_name": "titanium",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough titanium grystal",
         "adjectives": [
             "rough",
@@ -15276,6 +15647,7 @@
         ],
         "prototype_name": "titanium",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine titanium grystal",
         "adjectives": [
             "fine",
@@ -15316,6 +15688,7 @@
         ],
         "prototype_name": "titanium",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice titanium grystal",
         "adjectives": [
             "choice",
@@ -15356,6 +15729,7 @@
         ],
         "prototype_name": "topaz",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough topaz grystal",
         "adjectives": [
             "rough",
@@ -15396,6 +15770,7 @@
         ],
         "prototype_name": "topaz",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine topaz grystal",
         "adjectives": [
             "fine",
@@ -15436,6 +15811,7 @@
         ],
         "prototype_name": "topaz",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice topaz grystal",
         "adjectives": [
             "choice",
@@ -15476,6 +15852,7 @@
         ],
         "prototype_name": "uranium",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough uranium grystal",
         "adjectives": [
             "rough",
@@ -15516,6 +15893,7 @@
         ],
         "prototype_name": "uranium",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine uranium grystal",
         "adjectives": [
             "fine",
@@ -15556,6 +15934,7 @@
         ],
         "prototype_name": "uranium",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice uranium grystal",
         "adjectives": [
             "choice",
@@ -15596,6 +15975,7 @@
         ],
         "prototype_name": "wood",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough wood grystal",
         "adjectives": [
             "rough",
@@ -15636,6 +16016,7 @@
         ],
         "prototype_name": "wood",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine wood grystal",
         "adjectives": [
             "fine",
@@ -15676,6 +16057,7 @@
         ],
         "prototype_name": "wood",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice wood grystal",
         "adjectives": [
             "choice",
@@ -15718,6 +16100,7 @@
         ],
         "prototype_name": "zilium",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "rough zilium grystal",
         "adjectives": [
             "rough",
@@ -15760,6 +16143,7 @@
         ],
         "prototype_name": "zilium",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "fine zilium grystal",
         "adjectives": [
             "fine",
@@ -15800,6 +16184,7 @@
         ],
         "prototype_name": "zilium",
         "creator": "ebolite",
+        "base_inheritable": true,
         "displayname": "choice zilium grystal",
         "adjectives": [
             "choice",
@@ -15850,6 +16235,7 @@
         ],
         "prototype_name": "space",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -15898,6 +16284,7 @@
         ],
         "prototype_name": "time",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -15948,6 +16335,7 @@
         ],
         "prototype_name": "mind",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -15996,6 +16384,7 @@
         ],
         "prototype_name": "heart",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -16046,6 +16435,7 @@
         ],
         "prototype_name": "hope",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -16102,6 +16492,7 @@
         ],
         "prototype_name": "rage",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -16153,6 +16544,7 @@
         ],
         "prototype_name": "breath",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -16203,6 +16595,7 @@
         ],
         "prototype_name": "blood",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -16252,6 +16645,7 @@
         ],
         "prototype_name": "life",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -16307,6 +16701,7 @@
         ],
         "prototype_name": "doom",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -16359,6 +16754,7 @@
         ],
         "prototype_name": "light",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -16412,6 +16808,7 @@
         ],
         "prototype_name": "void",
         "creator": "ebolite",
+        "base_inheritable": false,
         "adjectives": [
             "pure"
         ],
@@ -16459,7 +16856,8 @@
             "neon": 0.5,
             "lux": 0.5,
             "uranium": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "nailgun": {
         "base": true,
@@ -16497,7 +16895,8 @@
             "build": 0.5,
             "blood": 0.5,
             "iron": 0.5
-        }
+        },
+        "base_inheritable": true
     },
     "screwgun": {
         "base": true,
@@ -16538,7 +16937,8 @@
             "build": 0.5,
             "blood": 0.6,
             "iron": 0.6
-        }
+        },
+        "base_inheritable": true
     },
     "overheat nailgun": {
         "base": true,
@@ -16582,6 +16982,7 @@
             "iron": 0.5,
             "neon": 0.5,
             "rust": 0.5
-        }
+        },
+        "base_inheritable": true
     }
 }

@@ -101,6 +101,7 @@ class BaseStatistics:
         self.forbiddencode: bool = properties["forbiddencode"]
         self.prototype_name: Optional[str] = properties["prototype_name"]
         self.creator: Optional[str] = properties["creator"]
+        self.base_inheritable: bool = properties["base_inheritable"]
 
 
 # todo: captchalogue code inheritance
@@ -126,6 +127,7 @@ class InheritedStatistics:
         self.description = None
         self.creator = None
         self.display_name = None
+        self.base_inheritable = True
         self.all_components = Components(self.name).get_all_components()
         self.gen_statistics()
 
@@ -520,6 +522,7 @@ class Item:  # Items are the base of instants.
         self.prototype_name = statistics.prototype_name
         self.creator = statistics.creator
         self.display_name = statistics.display_name
+        self.base_inheritable = statistics.base_inheritable
 
     def create_item(self, name):
         database.memory_items[name] = {}
@@ -743,6 +746,7 @@ defaults = {
     "secretadjectives": [],  # a list of adjectives that might be inherited but don't show up on the item
     "prototype_name": None,  # either None or a word that will be used when prototyped for the first time(cowboy boots is "cowboy" for example)
     "creator": None,
+    "base_inheritable": True,  # can the base of this item be inherited? False for pure component items such as pure aspects
 }
 
 # special items (loot items)
@@ -862,6 +866,7 @@ for _, aspect in skills.aspects.items():
             "creator": "ebolite",
             "prototype_name": aspect.name,
             "code": get_base_code_or_random(name),
+            "base_inheritable": False,
         }
     )
     pure_aspect_dict["secret_states"] = {
