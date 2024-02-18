@@ -1910,6 +1910,7 @@ add_abstratus_skill("pokerkind", advance, 75)
 # potkind
 add_abstratus_skill("potkind", assemble, 1)
 add_abstratus_skill("pankind", awaitskill, 50)
+add_abstratus_skill("pankind", avale, 75)
 
 # riflekind
 add_abstratus_skill("riflekind", aim, 1)
