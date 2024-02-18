@@ -1169,6 +1169,8 @@ class Player:
 
     def add_unclaimed_grist(self, spoils_dict: dict):
         for grist_name, amount in spoils_dict.items():
+            if amount < 0:
+                continue
             if grist_name in self.unclaimed_grist:
                 self.unclaimed_grist[grist_name] += amount
             else:
