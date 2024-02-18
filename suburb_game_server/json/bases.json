@@ -374,7 +374,7 @@
         "adjectives": [
             "sealed"
         ],
-        "forbiddencode": false,
+        "forbiddencode": true,
         "inheritpower": 0,
         "attached_skills": [],
         "prototype_name": null,
