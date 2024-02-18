@@ -295,8 +295,8 @@ class Strife:
         sprites_offset_xy = []
         for i, sprite in enumerate(sprites_list):
             # all sprites start in the center and are offset by battlefield_offsetx and battlefield_offsety and their size
-            starting_x = 0.5 * self.canvas.w - sprite.get_width() // 2
-            starting_y = 0.5 * self.canvas.h - sprite.get_height() // 2
+            starting_x = 0.5 * self.canvas.w
+            starting_y = 0.5 * self.canvas.h
             sprite.x = starting_x
             sprite.y = starting_y
             if i == 0:
