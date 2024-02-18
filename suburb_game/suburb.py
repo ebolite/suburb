@@ -1690,7 +1690,7 @@ class CharacterCreator:
             0.05,
             "sprites\\buttons\\back.png",
             "sprites\\buttons\\backpressed.png",
-            self.choose_moon,
+            self.choose_map,
         )
 
     def get_dict(self):
