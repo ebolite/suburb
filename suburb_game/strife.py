@@ -313,7 +313,7 @@ class Strife:
                 if isinstance(previous_sprite, render.Enemy)
                 else 200
             )
-            dx = old_width
+            dx = old_width + 25
             # if isinstance(previous_sprite, render.Enemy):
             #     dx += old_width // 2
             dx = max(dx, 200)
