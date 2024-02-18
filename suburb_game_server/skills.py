@@ -1321,9 +1321,7 @@ class AbstratusSkill(Skill):
 
 
 attack = AbstratusSkill("attack")
-attack.description = (
-    f"Does as much damage as AGGRIEVE, but gives you VIM."
-)
+attack.description = f"Does as much damage as AGGRIEVE, but gives you VIM."
 attack.damage_formula = AGGRIEVE_FORMULA
 attack.cooldown = 0
 attack.add_vial_cost("vim", "-user.power//2")
@@ -1408,7 +1406,7 @@ aslurp.description = f"Heals you and increases your ASPECT."
 aslurp.action_cost = 0
 aslurp.cooldown = 3
 aslurp.add_vial_change("hp", "user.power")
-aslurp.add_vial_change("aspect", "user.power")
+aslurp.add_vial_cost("aspect", "-user.power")
 aslurp.parryable = False
 aslurp.beneficial = True
 aslurp.target_self = True
@@ -1417,9 +1415,8 @@ avale = AbstratusSkill("avale")
 avale.description = f"Heals you and increases your VIM."
 avale.action_cost = 0
 avale.cooldown = 3
-avale.add_vial_cost("aspect", "-user.power//2")
+avale.add_vial_cost("vim", "-user.power")
 avale.add_vial_change("hp", "user.power")
-avale.add_vial_change("vim", "user.power")
 avale.parryable = False
 avale.beneficial = True
 avale.target_self = True
