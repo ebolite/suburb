@@ -16,7 +16,8 @@ underlings: dict[str, "Underling"] = {}
 griefer_ai: dict[str, "GrieferAI"] = {}
 npc_interactions: dict[str, "NpcInteraction"] = {}
 
-class Underling():
+
+class Underling:
     def __init__(self, monster_type: str):
         underlings[monster_type] = self
         self.monster_type: str = monster_type
@@ -41,7 +42,9 @@ class Underling():
         self.immune_states = []
         self.ai_type: str = "random"
 
-    def make_npc(self, grist_name: str, grist_category: str, room: "sessions.Room") -> "Npc":
+    def make_npc(
+        self, grist_name: str, grist_category: str, room: "sessions.Room"
+    ) -> "Npc":
         grist_list = config.gristcategories[grist_category]
         tier: int = grist_list.index(grist_name) + 1
         power = self.base_power * (tier**2)
@@ -68,13 +71,17 @@ class Underling():
         npc.goto_room(room)
         return npc
 
-class GrieferAI():
+
+class GrieferAI:
     name = "random"
+
     def __init__(self):
         griefer_ai[self.name] = self
 
     def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
         return user.get_random_submittable_skill()
+
+
 GrieferAI()
 
 imp = Underling("imp")
@@ -85,11 +92,16 @@ imp.variance = 4
 imp.hostility = 0
 imp.ai_type = "imp"
 
+
 class ImpAI(GrieferAI):
     name = "imp"
+
     def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
-        if skills.skills["abuse"].is_submittable_by(user): return "abuse"
+        if skills.skills["abuse"].is_submittable_by(user):
+            return "abuse"
         return super().ai_choose_skill(user)
+
+
 ImpAI()
 
 ogre = Underling("ogre")
@@ -98,22 +110,31 @@ ogre.stat_ratios["vigor"] = 3
 ogre.stat_ratios["mettle"] = 2
 ogre.stat_ratios["spunk"] = 2
 ogre.stat_ratios["savvy"] = 0
-ogre.wear_states = {
-    "triggered": 1.0
-}
+ogre.wear_states = {"triggered": 1.0}
 ogre.cluster_size = 2
 ogre.difficulty = 1
 ogre.ai_type = "ogre"
 
+
 class OgreAI(GrieferAI):
     name = "ogre"
+
     def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
-        damaging_skills = [skill for skill in user.known_skills_list if skill.damage_formula != "0"]
-        sorted_skills = sorted(damaging_skills, key=lambda skill: skill.evaluate_theoretical_damage(user), reverse=True)
+        damaging_skills = [
+            skill for skill in user.known_skills_list if skill.damage_formula != "0"
+        ]
+        sorted_skills = sorted(
+            damaging_skills,
+            key=lambda skill: skill.evaluate_theoretical_damage(user),
+            reverse=True,
+        )
         for skill in sorted_skills:
-            if skill.is_submittable_by(user): return skill.name
+            if skill.is_submittable_by(user):
+                return skill.name
         else:
             return super().ai_choose_skill(user)
+
+
 OgreAI()
 
 lich = Underling("lich")
@@ -127,11 +148,16 @@ lich.difficulty = 3
 lich.additional_skills = ["abhor"]
 lich.ai_type = "lich"
 
+
 class LichAI(GrieferAI):
     name = "lich"
+
     def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
-        if skills.skills["abhor"].is_submittable_by(user): return "abhor"
+        if skills.skills["abhor"].is_submittable_by(user):
+            return "abhor"
         return super().ai_choose_skill(user)
+
+
 LichAI()
 
 basilisk = Underling("basilisk")
@@ -139,9 +165,7 @@ basilisk.base_power = 26
 basilisk.stat_ratios["savvy"] = 3
 basilisk.stat_ratios["spunk"] = 2
 basilisk.stat_ratios["vigor"] = 2
-basilisk.onhit_states = {
-    "poison": 1
-}
+basilisk.onhit_states = {"poison": 1}
 basilisk.cluster_size = 2
 basilisk.actions = 2
 basilisk.difficulty = 4
@@ -156,13 +180,19 @@ giclops.difficulty = 5
 giclops.ai_type = "giclops"
 giclops.additional_skills = ["awreak", "abstain"]
 
+
 class GiclopsAI(GrieferAI):
     name = "giclops"
+
     def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
-        if skills.skills["awreak"].is_submittable_by(user): return "awreak"
+        if skills.skills["awreak"].is_submittable_by(user):
+            return "awreak"
         if random.random() < 0.5:
             return super().ai_choose_skill(user)
-        else: return "abstain"
+        else:
+            return "abstain"
+
+
 GiclopsAI()
 
 acheron = Underling("acheron")
@@ -170,19 +200,21 @@ acheron.base_power = 111
 acheron.stat_ratios["tact"] = 4
 acheron.stat_ratios["spunk"] = 2
 acheron.stat_ratios["mettle"] = 2
-acheron.onhit_states = {
-    "demoralize": 1.2
-}
+acheron.onhit_states = {"demoralize": 1.2}
 acheron.cluster_size = 1
 acheron.difficulty = 6
 acheron.actions = 2
 acheron.ai_type = "ogre"
 
-def does_npc_exist(name):
-    if name in database.memory_npcs: return True
-    else: return False
 
-class Npc():
+def does_npc_exist(name):
+    if name in database.memory_npcs:
+        return True
+    else:
+        return False
+
+
+class Npc:
     @staticmethod
     def make_valid_name(name):
         new_name = name
@@ -192,7 +224,7 @@ class Npc():
 
     def __init__(self, name: str):
         self.__dict__["_id"] = name
-        if name not in database.memory_npcs: # load the session into memory
+        if name not in database.memory_npcs:  # load the session into memory
             self.create_npc(name)
 
     def create_npc(self, name):
@@ -236,13 +268,14 @@ class Npc():
     def __getattr__(self, attr):
         self.__dict__[attr] = database.memory_npcs[self.__dict__["_id"]][attr]
         return self.__dict__[attr]
-    
+
     def get_dict(self) -> dict:
         out = deepcopy(database.memory_npcs[self.__dict__["_id"]])
         return out
-    
+
     def make_spoils(self, num_players: int) -> dict:
-        if self.grist_category is None or self.grist_type is None: return {}
+        if self.grist_category is None or self.grist_type is None:
+            return {}
         spoils_dict = {}
         grist_list = config.gristcategories[self.grist_category]
         grist_index = grist_list.index(self.grist_type)
@@ -252,56 +285,75 @@ class Npc():
         for i in reversed(range(grist_index)):
             next_grist = grist_list[i]
             tier = config.grists[next_grist]["tier"]
-            amount = (self.power // (tier)) // (i*0.5 + 2)
-            if amount == 0: break
+            amount = (self.power // (tier)) // (i * 0.5 + 2)
+            if amount == 0:
+                break
             spoils_dict[next_grist] = amount
         for grist_name, amount in spoils_dict.copy().items():
-            if num_players == 0: continue
+            if num_players == 0:
+                continue
             new_amount = amount * (0.5 + random.random())
-            new_amount = math.ceil(new_amount/num_players)
+            new_amount = math.ceil(new_amount / num_players)
             spoils_dict[grist_name] = new_amount
         return spoils_dict
-    
-    def prototype_with_item(self, item_name: str, inherit_all_skills=False, nickname=False, additive_power=False):
+
+    def prototype_with_item(
+        self,
+        item_name: str,
+        inherit_all_skills=False,
+        nickname=False,
+        additive_power=False,
+    ):
         item = alchemy.Item(item_name)
         if additive_power:
             self.power += item.power + item.inheritpower
         else:
-            power_mult = 1 + (item.power + item.inheritpower)/100
+            power_mult = 1 + (item.power + item.inheritpower) / 100
             self.power = int(self.power * power_mult)
         # inherit onhits and wears
         inherited_onhits = item.onhit_states.copy()
         inherited_wears = item.wear_states.copy()
         for state_name, potency in item.secret_states.items():
-            if random.random() < 0.25: # only a chance to inherit secret states
+            if random.random() < 0.25:  # only a chance to inherit secret states
                 choice = random.choice(["onhit", "wear"])
                 if choice == "onhit":
-                    if state_name not in inherited_onhits: inherited_onhits[state_name] = potency
-                    elif inherited_onhits[state_name] < potency: inherited_onhits[state_name] = potency
+                    if state_name not in inherited_onhits:
+                        inherited_onhits[state_name] = potency
+                    elif inherited_onhits[state_name] < potency:
+                        inherited_onhits[state_name] = potency
                 else:
-                    if state_name not in inherited_wears: inherited_wears[state_name] = potency
-                    elif inherited_wears[state_name] < potency: inherited_wears[state_name] = potency
+                    if state_name not in inherited_wears:
+                        inherited_wears[state_name] = potency
+                    elif inherited_wears[state_name] < potency:
+                        inherited_wears[state_name] = potency
         for state_name, potency in inherited_onhits.items():
-            if state_name not in self.onhit_states: self.onhit_states[state_name] = potency
-            elif self.onhit_states[state_name] < potency: self.onhit_states[state_name] = potency
+            if state_name not in self.onhit_states:
+                self.onhit_states[state_name] = potency
+            elif self.onhit_states[state_name] < potency:
+                self.onhit_states[state_name] = potency
         for state_name, potency in inherited_wears.items():
-            if state_name not in self.wear_states: self.wear_states[state_name] = potency
-            elif self.wear_states[state_name] < potency: self.wear_states[state_name] = potency
+            if state_name not in self.wear_states:
+                self.wear_states[state_name] = potency
+            elif self.wear_states[state_name] < potency:
+                self.wear_states[state_name] = potency
         # inherit specibus skills
         for kind_name in item.kinds:
             if kind_name in skills.abstratus_skills:
-                for skill_name, required_rung in skills.abstratus_skills[kind_name].items():
-                    if inherit_all_skills or self.power >= required_rung*10:
-                        if skill_name not in self.additional_skills: self.additional_skills.append(skill_name)
+                for skill_name, required_rung in skills.abstratus_skills[
+                    kind_name
+                ].items():
+                    if inherit_all_skills or self.power >= required_rung * 10:
+                        if skill_name not in self.additional_skills:
+                            self.additional_skills.append(skill_name)
         # nickname
         if nickname:
-            new_adjective = random.choice(item.adjectives+item.secretadjectives)
-            self.nickname = f"{new_adjective} {self.nickname}"
+            new_adjective = random.choice(item.adjectives + item.secretadjectives)
+            self.nickname = f"{new_adjective.replace('+',' ')} {self.nickname}"
 
     @property
     def name(self):
         return self.__dict__["_id"]
-    
+
     def follow(self, player: "sessions.SubPlayer"):
         self.unfollow()
         player.npc_followers.append(self.name)
@@ -317,8 +369,9 @@ class Npc():
         if self.session_name is not None and self.session != room.session:
             if self.name in self.session.current_players:
                 self.session.current_players.remove(self.name)
-        if self.room_name is not None: 
-            if self.room.strife is not None and self.name in self.room.strife.griefers: return
+        if self.room_name is not None:
+            if self.room.strife is not None and self.name in self.room.strife.griefers:
+                return
             self.room.remove_npc(self)
         self.session_name = room.session.name
         self.overmap_name = room.overmap.name
@@ -330,34 +383,44 @@ class Npc():
     def session(self) -> "sessions.Session":
         assert self.session_name is not None
         return sessions.Session(self.session_name)
-    
+
     @property
     def overmap(self) -> "sessions.Overmap":
         assert self.overmap_name is not None
         return sessions.Overmap(self.overmap_name, self.session)
-    
+
     @property
     def map(self) -> "sessions.Map":
         assert self.map_name is not None
         return sessions.Map(self.map_name, self.session, self.overmap)
-    
+
     @property
     def room(self) -> "sessions.Room":
         assert self.room_name is not None
         return sessions.Room(self.room_name, self.session, self.overmap, self.map)
 
+
 class KernelAI(GrieferAI):
     name = "kernel"
+
     def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
         return "abstain"
+
+
 KernelAI()
+
 
 class SpriteAI(GrieferAI):
     name = "sprite"
+
     def ai_choose_skill(self, user: "strife.Griefer") -> Optional[str]:
-        if skills.skills["amend"].is_submittable_by(user): return "amend"
+        if skills.skills["amend"].is_submittable_by(user):
+            return "amend"
         return super().ai_choose_skill(user)
+
+
 SpriteAI()
+
 
 class KernelSprite(Npc):
     @classmethod
@@ -376,16 +439,28 @@ class KernelSprite(Npc):
         sprite.goto_room(player.room)
         return sprite
 
-class NpcInteraction():
+
+class NpcInteraction:
     def __init__(self, name):
         self.name = name
         npc_interactions[self.name] = self
 
-    def use(self, player: "sessions.SubPlayer", target: "Npc", additional_data: dict[str, str]):
+    def use(
+        self,
+        player: "sessions.SubPlayer",
+        target: "Npc",
+        additional_data: dict[str, str],
+    ):
         pass
 
+
 class NpcTalk(NpcInteraction):
-    def use(self, player: "sessions.SubPlayer", target: "Npc", additional_data: dict[str, str]):
+    def use(
+        self,
+        player: "sessions.SubPlayer",
+        target: "Npc",
+        additional_data: dict[str, str],
+    ):
         if target.type == "kernelsprite":
             symbols = list("•❤♫☎°♨✈✣☏■■■☀➑➑➑✂✉✉☼☆★☁☁♕♕♕♕♠♠✪░░▒▒▓▓██■¿.!≡")
             out = []
@@ -405,8 +480,8 @@ class NpcTalk(NpcInteraction):
                 "what's up with the gold and purple planets",
                 "what the fuck a dream self is",
                 "where your guardian is",
-                "if you made a mistake prototyping it"
-                ]
+                "if you made a mistake prototyping it",
+            ]
             possible_responses = [
                 ", and it dodges the question.",
                 ", and it casually avoids answering you.",
@@ -415,44 +490,65 @@ class NpcTalk(NpcInteraction):
                 ", and it almost tells you, but quickly realizes that it shouldn't.",
                 ", and it tells you, but its explanation is impossible to follow.",
                 ", but it apparently wasn't listening.",
-                ", and it responds with an infuriatingly vague answer."
+                ", and it responds with an infuriatingly vague answer.",
             ]
             possible_lines = [
                 f"{target.nickname.capitalize()} says some nonsense about an Ultimate Riddle or some shit.",
-                f"{target.nickname.capitalize()} is talking about some \"{player.title}.\" Sounds like a loser.",
+                f'{target.nickname.capitalize()} is talking about some "{player.title}." Sounds like a loser.',
                 f"{target.nickname.capitalize()} is being coy with some riddlesome bullshit again.",
                 f"{target.nickname.capitalize()} gives you a riddle you're not bothering to solve.",
-                f"{target.nickname.capitalize()} says something about The Choice but you're not really listening."
+                f"{target.nickname.capitalize()} says something about The Choice but you're not really listening.",
             ]
             for question in possible_questions:
                 for response in possible_responses:
-                    possible_lines.append(f"You ask {target.nickname.capitalize()} {question}{response}")
+                    possible_lines.append(
+                        f"You ask {target.nickname.capitalize()} {question}{response}"
+                    )
             return random.choice(possible_lines)
         else:
             return f"The {target.nickname} does not seem like one for friendly conversation."
+
+
 NpcTalk("talk")
 
+
 class NpcFollow(NpcInteraction):
-    def use(self, player: "sessions.SubPlayer", target: "Npc", additional_data: dict[str, str]):
+    def use(
+        self,
+        player: "sessions.SubPlayer",
+        target: "Npc",
+        additional_data: dict[str, str],
+    ):
         if target.following == player.name:
             target.unfollow()
             return f"{target.nickname.capitalize()} is no longer following you!"
         else:
             target.follow(player)
             return f"{target.nickname.capitalize()} is now following you!"
+
+
 NpcFollow("follow")
 
+
 class NpcPrototype(NpcInteraction):
-    def use(self, player: "sessions.SubPlayer", target: "KernelSprite", additional_data: dict[str, str]):
+    def use(
+        self,
+        player: "sessions.SubPlayer",
+        target: "KernelSprite",
+        additional_data: dict[str, str],
+    ):
         instance_name = additional_data["instance_name"]
         if instance_name in player.sylladex:
             player.sylladex.remove(instance_name)
         elif instance_name in player.room.instances:
             player.room.remove_instance(instance_name)
-        else: return False
+        else:
+            return False
         instance = alchemy.Instance(instance_name)
         prototyped_item = instance.item
-        target.prototype_with_item(prototyped_item.name, inherit_all_skills=True, additive_power=True)
+        target.prototype_with_item(
+            prototyped_item.name, inherit_all_skills=True, additive_power=True
+        )
         if not player.entered:
             player.session.prototypes.append(prototyped_item.name)
         old_name = target.nickname
@@ -466,20 +562,29 @@ class NpcPrototype(NpcInteraction):
             if prototyped_item.prototype_name is not None:
                 sprite_name = prototyped_item.prototype_name.replace("+", "").lower()
             else:
-                sprite_name = prototyped_item.base.replace("+","").lower()
+                sprite_name = prototyped_item.base.replace("+", "").lower()
             target.nickname = f"{sprite_name}sprite"
             target.prototypes.append(prototyped_item.name)
             return f"{old_name.upper()} became {target.nickname.upper()}!"
-        else: # sprite was already prototyped
-            if prototyped_item.power + prototyped_item.inheritpower > 200: f"{target.nickname.capitalize()} dodges the {prototyped_item.displayname}!"
+        else:  # sprite was already prototyped
+            if prototyped_item.power + prototyped_item.inheritpower > 200:
+                f"{target.nickname.capitalize()} dodges the {prototyped_item.displayname}!"
             if prototyped_item.name in target.prototypes:
                 target.nickname = f"2x{target.nickname}"
             else:
-                sprite_adjective = random.choice(prototyped_item.adjectives+prototyped_item.secretadjectives).replace("+", "").lower()
+                sprite_adjective = (
+                    random.choice(
+                        prototyped_item.adjectives + prototyped_item.secretadjectives
+                    )
+                    .replace("+", "")
+                    .lower()
+                )
                 target.nickname = f"{sprite_adjective}{target.nickname}"
             target.interactions.remove("prototype")
             target.prototypes.append(prototyped_item.name)
             return f"{old_name.upper()} became {target.nickname.upper()}!"
+
+
 NpcPrototype("prototype")
 
 if __name__ == "__main__":
