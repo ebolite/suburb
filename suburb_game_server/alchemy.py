@@ -186,7 +186,15 @@ class InheritedStatistics:
             + self.component_1.secretadjectives
             + self.component_2.secretadjectives
         )
-        if self.guarantee_first_base:
+        if (
+            not self.component_1.base_inheritable
+            or not self.component_2.base_inheritable
+        ):
+            if self.component_1.base_inheritable:
+                base = self.component_1.base
+            else:
+                base = self.component_2.base
+        elif self.guarantee_first_base:
             base = self.component_1.base
         else:
             random.seed(self.name + "base" + str(depth))
