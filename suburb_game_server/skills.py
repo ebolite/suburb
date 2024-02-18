@@ -259,7 +259,9 @@ class Skill:
                 roll = random.uniform(0, 1 + -edge)
             if roll < config.base_parry_chance:
                 parry_damage = user.take_damage(target.get_stat("savvy"), log=False)
-                target.strife.log(f"{target.nickname} AUTO-PARRIES! {user.nickname} takes {parry_damage} damage!")
+                target.strife.log(
+                    f"{target.nickname} AUTO-PARRIES! {user.nickname} takes {parry_damage} damage!"
+                )
                 # parry victim takes damage equal to savvy
                 for vial in target.vials_list:
                     vial.on_parry(target, damage)
@@ -1923,6 +1925,11 @@ add_abstratus_skill("scissorkind", attack, 50)
 add_abstratus_skill("shotgunkind", aggerate, 1)
 add_abstratus_skill("shotgunkind", avenge, 50)
 add_abstratus_skill("shotgunkind", adjudge, 75)
+
+# spearkind
+add_abstratus_skill("spearkind", accroach, 1)
+add_abstratus_skill("spearkind", artillerate, 50)
+add_abstratus_skill("spearkind", advance, 75)
 
 # spoonkind
 # avale
