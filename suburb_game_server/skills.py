@@ -1811,7 +1811,7 @@ add_abstratus_skill("fistkind", arraign, 50)
 add_abstratus_skill("fistkind", anticipate, 75)
 
 # forkkind
-# avale
+add_abstratus_skill("forkkind", avale, 1)
 add_abstratus_skill("forkkind", arraign, 50)
 add_abstratus_skill("forkkind", advance, 75)
 
