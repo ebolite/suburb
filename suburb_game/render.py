@@ -2205,10 +2205,13 @@ class Overmap(UIElement):
                     right_edge = False
                 last_line = list(draw_tiles)[y - 1]
                 last_line = list(reversed(last_line))
-                if int(last_line[x]) < int(char):
+                try:
+                    if int(last_line[x]) < int(char):
+                        up_edge = True
+                    else:
+                        up_edge = False
+                except IndexError:
                     up_edge = True
-                else:
-                    up_edge = False
                 overmap_tile = OvermapTile(x, y, int(char), self, up_edge, right_edge)
                 overmap_tile.blit_surf = self.surf
                 overmap_tile.draw_to_surface(rotation)
