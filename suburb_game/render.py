@@ -3045,8 +3045,8 @@ class Symbol(Image):
             shirtoffset = 0
         base.blit(shirt, (0, shirtoffset))
         base.blit(pants, (0, 0))
-        base.blit(hair, (0, 0))
         base.blit(coat, (0, 0))
+        base.blit(hair, (0, 0))
         base.blit(horns, (0, 0))
         base.blit(mouth, (0, 0))
         base_above_path = (

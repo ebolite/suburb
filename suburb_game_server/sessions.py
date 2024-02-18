@@ -723,7 +723,7 @@ class Map:
     def get_tile(self, x: int, y: int) -> tiles.Tile:
         try:
             return tiles.tiles[self.map_tiles[y][x]]
-        except KeyError:
+        except (KeyError, IndexError):
             return tiles.tiles["."]
 
     def change_tile(self, x: int, y: int, tile_char: str):
