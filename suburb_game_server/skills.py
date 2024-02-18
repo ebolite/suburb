@@ -1322,7 +1322,7 @@ class AbstratusSkill(Skill):
 
 attack = AbstratusSkill("attack")
 attack.description = (
-    f"Does as much damage as AGGRIEVE, but gives you VIM instead of costing it."
+    f"Does as much damage as AGGRIEVE, but gives you VIM."
 )
 attack.damage_formula = AGGRIEVE_FORMULA
 attack.cooldown = 0
