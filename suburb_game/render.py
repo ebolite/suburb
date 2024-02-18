@@ -260,6 +260,8 @@ class UIElement(pygame.sprite.Sprite):
 
     def mousepan(self, mousebutton: int):
         if pygame.mouse.get_pressed()[mousebutton]:
+            try: self.last_mouse_pos
+            except AttributeError: return
             if self.last_mouse_pos is None:
                 self.last_mouse_pos = pygame.mouse.get_pos()
             else:
