@@ -1407,12 +1407,22 @@ aslurp = AbstratusSkill("aslurp")
 aslurp.description = f"Heals you and increases your ASPECT."
 aslurp.action_cost = 0
 aslurp.cooldown = 3
-aslurp.add_vial_cost("aspect", "-user.power//2")
 aslurp.add_vial_change("hp", "user.power")
 aslurp.add_vial_change("aspect", "user.power")
 aslurp.parryable = False
 aslurp.beneficial = True
 aslurp.target_self = True
+
+avale = AbstratusSkill("avale")
+avale.description = f"Heals you and increases your VIM."
+avale.action_cost = 0
+avale.cooldown = 3
+avale.add_vial_cost("aspect", "-user.power//2")
+avale.add_vial_change("hp", "user.power")
+avale.add_vial_change("vim", "user.power")
+avale.parryable = False
+avale.beneficial = True
+avale.target_self = True
 
 assemble = AbstratusSkill("assemble")
 assemble.description = (
@@ -1803,6 +1813,7 @@ add_abstratus_skill("fistkind", anticipate, 75)
 # forkkind
 # avale
 add_abstratus_skill("forkkind", arraign, 50)
+add_abstratus_skill("forkkind", advance, 75)
 
 # glovekind
 add_abstratus_skill("glovekind", arrest, 1)
