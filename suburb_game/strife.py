@@ -302,6 +302,7 @@ class Strife:
             if i == 0:
                 center_offset = 0.16 if direction == "right" else -0.16
                 sprite.battlefield_offsetx = center_offset * self.canvas.w
+                sprite.battlefield_offsety = -sprite.get_height() // 2
                 sprites_offset_xy.append(
                     (sprite.battlefield_offsetx, sprite.battlefield_offsety)
                 )
@@ -313,12 +314,13 @@ class Strife:
                 else 200
             )
             dx = old_width
-            if isinstance(previous_sprite, render.Enemy):
-                dx += old_width // 2
+            # if isinstance(previous_sprite, render.Enemy):
+            #     dx += old_width // 2
             dx = max(dx, 200)
+            dy = -sprite.get_height() // 2
             old_x, old_y = sprites_offset_xy[i - 1]
             new_x = old_x + dx if direction == "right" else old_x - dx
-            new_y = old_y
+            new_y = dy
             sprite.battlefield_offsetx, sprite.battlefield_offsety = new_x, new_y
             sprites_offset_xy.append((new_x, new_y))
 
