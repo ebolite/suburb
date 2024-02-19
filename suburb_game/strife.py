@@ -656,6 +656,7 @@ class Strife:
         for check_list in render.checks:
             if self in check_list:
                 check_list.remove(self)
+        self.strife_dict = {}
 
     def click_griefer(self, griefer: Griefer):
         print(f"griefer clicked {griefer.name}")
