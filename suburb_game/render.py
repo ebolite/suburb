@@ -64,7 +64,7 @@ checks = [
     scroll_check,
 ]
 
-icon_surf = pygame.image.load("sprites\\icon.png").convert()
+icon_surf = pygame.image.load("sprites/icon.png").convert()
 pygame.display.set_icon(icon_surf)
 pygame.display.set_caption(f"SUBURB CLIENT {util.VERSION}")
 
@@ -1699,7 +1699,7 @@ class Tile(UIElement):
         if self.tile in config.tiles:
             return config.tiles[self.tile]
         else:
-            return "sprites\\tiles\\missingtile.png"
+            return "sprites/tiles/missingtile.png"
 
 
 class TileDisplay(UIElement):
@@ -1734,7 +1734,7 @@ class TileDisplay(UIElement):
         if self.tile in config.tiles:
             return config.tiles[self.tile]
         else:
-            return "sprites\\tiles\\missingtile.png"
+            return "sprites/tiles/missingtile.png"
 
     def delete(self):
         if self.popup is not None:
@@ -2585,7 +2585,7 @@ class LogWindow(UIElement):
 
 
 def make_item_image(x, y, instance: "Instance") -> Union[Dowel, Image, None]:
-    image_path = f"sprites\\items\\{instance.item.name}.png"
+    image_path = f"sprites/items/{instance.item.name}.png"
     if instance.item.name == "cruxite dowel":
         return Dowel(x, y, instance.carved, instance.color)
     elif instance.item.name == "entry item":
@@ -3601,16 +3601,16 @@ def show_options_with_search(
     backbutton = Button(
         0.1,
         0.92,
-        "sprites\\buttons\\back.png",
-        "sprites\\buttons\\backpressed.png",
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
         last_scene,
     )
     # identical to back button lol
     confirmbutton = Button(
         0.9,
         0.92,
-        "sprites\\buttons\\confirm.png",
-        "sprites\\buttons\\confirmpressed.png",
+        "sprites/buttons/confirm.png",
+        "sprites/buttons/confirmpressed.png",
         last_scene,
     )
 

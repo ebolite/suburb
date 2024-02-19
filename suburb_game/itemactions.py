@@ -9,11 +9,25 @@ import binaryoperations
 
 item_actions: dict[str, "ItemAction"] = {}
 
-def request_use_item(instance_name: str, action_name: str, target_name:Optional[str]=None, additional_data:Optional[str]=None):
-    return client.requestplus(intent="use_item", content={"instance_name": instance_name, "action_name": action_name, 
-                                                          "target_name": target_name, "additional_data": additional_data})
 
-class ItemAction():
+def request_use_item(
+    instance_name: str,
+    action_name: str,
+    target_name: Optional[str] = None,
+    additional_data: Optional[str] = None,
+):
+    return client.requestplus(
+        intent="use_item",
+        content={
+            "instance_name": instance_name,
+            "action_name": action_name,
+            "target_name": target_name,
+            "additional_data": additional_data,
+        },
+    )
+
+
+class ItemAction:
     def __init__(self, name):
         self.targeted = False
         self.special = False
@@ -24,35 +38,54 @@ class ItemAction():
         self.error_prompt = ""
         self.use_prompt = ""
         item_actions[name] = self
-    
+
     def use_func(self, instance: "sylladex.Instance") -> bool:
         return True
 
     def prompt_message(self, item_name: Optional[str]) -> str:
-        if item_name is None: item_name = "MISSING ITEM"
+        if item_name is None:
+            item_name = "MISSING ITEM"
         prompt = self.prompt
-        if "{iname_lower}" in prompt: prompt = prompt.replace("{iname_lower}", item_name)
-        if "{iname}" in prompt: prompt = prompt.replace("{iname}", item_name.upper())
+        if "{iname_lower}" in prompt:
+            prompt = prompt.replace("{iname_lower}", item_name)
+        if "{iname}" in prompt:
+            prompt = prompt.replace("{iname}", item_name.upper())
         return prompt
 
-    def error_message(self, item_name: Optional[str], target_name: Optional[str]=None) -> str:
-        if item_name is None: item_name = "MISSING ITEM"
-        if target_name is None: target_name = "MISSING ITEM"
+    def error_message(
+        self, item_name: Optional[str], target_name: Optional[str] = None
+    ) -> str:
+        if item_name is None:
+            item_name = "MISSING ITEM"
+        if target_name is None:
+            target_name = "MISSING ITEM"
         prompt = self.error_prompt
-        if "{iname_lower}" in prompt: prompt = prompt.replace("{iname_lower}", item_name)
-        if "{iname}" in prompt: prompt = prompt.replace("{iname}", item_name.upper())
-        if "{tname_lower}" in prompt: prompt = prompt.replace("{tname_lower}", target_name)
-        if "{tname}" in prompt: prompt = prompt.replace("{tname}", target_name.upper())
+        if "{iname_lower}" in prompt:
+            prompt = prompt.replace("{iname_lower}", item_name)
+        if "{iname}" in prompt:
+            prompt = prompt.replace("{iname}", item_name.upper())
+        if "{tname_lower}" in prompt:
+            prompt = prompt.replace("{tname_lower}", target_name)
+        if "{tname}" in prompt:
+            prompt = prompt.replace("{tname}", target_name.upper())
         return prompt
-    
-    def use_message(self, item_name: Optional[str], target_name: Optional[str]=None) -> str:
-        if item_name is None: item_name = "MISSING ITEM"
-        if target_name is None: target_name = "MISSING ITEM"
+
+    def use_message(
+        self, item_name: Optional[str], target_name: Optional[str] = None
+    ) -> str:
+        if item_name is None:
+            item_name = "MISSING ITEM"
+        if target_name is None:
+            target_name = "MISSING ITEM"
         prompt = self.use_prompt
-        if "{iname_lower}" in prompt: prompt = prompt.replace("{iname_lower}", item_name)
-        if "{iname}" in prompt: prompt = prompt.replace("{iname}", item_name.upper())
-        if "{tname_lower}" in prompt: prompt = prompt.replace("{tname_lower}", target_name)
-        if "{tname}" in prompt: prompt = prompt.replace("{tname}", target_name.upper())
+        if "{iname_lower}" in prompt:
+            prompt = prompt.replace("{iname_lower}", item_name)
+        if "{iname}" in prompt:
+            prompt = prompt.replace("{iname}", item_name.upper())
+        if "{tname_lower}" in prompt:
+            prompt = prompt.replace("{tname_lower}", target_name)
+        if "{tname}" in prompt:
+            prompt = prompt.replace("{tname}", target_name.upper())
         return prompt
 
 
@@ -106,12 +139,14 @@ punch_card.prompt = "Which item's code should be punched?"
 punch_card.error_prompt = "No card is inserted."
 punch_card.use_prompt = "You punch the card with the code for {tname_lower}."
 
-#todo: add support for custom punch
+# todo: add support for custom punch
 custom_punch_card = ItemAction("custom_punch_card")
 custom_punch_card.special = True
+
+
 def use_custom_punch(instance: "sylladex.Instance") -> bool:
     inserted_instance = instance.inserted_instance()
-    if inserted_instance is None: 
+    if inserted_instance is None:
         util.log("You must first insert a card before you can punch it with a code!")
         return False
     render.clear_elements()
@@ -121,17 +156,33 @@ def use_custom_punch(instance: "sylladex.Instance") -> bool:
     input_box = render.InputTextBox(0.5, 0.3, 196, 32)
     input_box.text = "00000000"
     input_box.max_characters = 8
+
     def punch_condition():
-        if binaryoperations.is_valid_code(input_box.text): return False
-        else: return True
+        if binaryoperations.is_valid_code(input_box.text):
+            return False
+        else:
+            return True
+
     def punch_button_func():
-        reply = request_use_item(instance.name, "punch_card", additional_data=input_box.text)
-        if reply: util.log(f"Punched the card with code '{input_box.text}'!")
+        reply = request_use_item(
+            instance.name, "punch_card", additional_data=input_box.text
+        )
+        if reply:
+            util.log(f"Punched the card with code '{input_box.text}'!")
         suburb.map_scene()
+
     punch_button = render.TextButton(0.5, 0.4, 128, 32, "PUNCH!", punch_button_func)
     punch_button.inactive_condition = punch_condition
-    backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", suburb.map_scene)
+    backbutton = render.Button(
+        0.1,
+        0.9,
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
+        suburb.map_scene,
+    )
     return False
+
+
 custom_punch_card.use_func = use_custom_punch
 
 
@@ -162,10 +213,14 @@ lathe = ItemAction("lathe")
 lathe.targeted = True
 lathe.prompt = "Which PUNCHED CARD should you lathe?"
 lathe.error_prompt = "No DOWEL is inserted."
-lathe.use_prompt = "The CARVED DOWEL ejects after you lathe it with the code {tname_lower}."
+lathe.use_prompt = (
+    "The CARVED DOWEL ejects after you lathe it with the code {tname_lower}."
+)
 
 alchemize = ItemAction("alchemize")
 alchemize.special = True
+
+
 def use_alchemize(instance: "sylladex.Instance") -> bool:
     inserted_dowel = instance.inserted_instance()
     if inserted_dowel is None:
@@ -173,7 +228,9 @@ def use_alchemize(instance: "sylladex.Instance") -> bool:
         return False
     player_info: dict = client.requestdic(intent="player_info")
     grist_cache: dict = player_info["grist_cache"]
-    carved_item_info: dict = client.requestplusdic(intent="carved_item_info", content={"dowel_name": inserted_dowel.name})
+    carved_item_info: dict = client.requestplusdic(
+        intent="carved_item_info", content={"dowel_name": inserted_dowel.name}
+    )
     if not carved_item_info:
         util.log("The code carved on the DOWEL doesn't match any known item.")
         util.log("Tell the developer to hurry up and add paradox items.")
@@ -189,17 +246,50 @@ def use_alchemize(instance: "sylladex.Instance") -> bool:
     render.LogWindow(None)
     text = render.Text(0.5, 0.2, "This item will cost:")
     text.color = suburb.current_theme().dark
-    render.make_grist_cost_display(0.5, 0.32, 45, cost, grist_cache, None, suburb.current_theme().dark, absolute=False)
+    render.make_grist_cost_display(
+        0.5,
+        0.32,
+        45,
+        cost,
+        grist_cache,
+        None,
+        suburb.current_theme().dark,
+        absolute=False,
+    )
+
     def confirm():
-        client.requestplus(intent="use_item", content={"instance_name": instance.name, "action_name": "alchemize", "target_name": None})
+        client.requestplus(
+            intent="use_item",
+            content={
+                "instance_name": instance.name,
+                "action_name": "alchemize",
+                "target_name": None,
+            },
+        )
         suburb.map_scene()
+
     if can_make:
-        confirm_button = render.Button(0.5, 0.45, "sprites/buttons/confirm.png", "sprites/buttons/confirmpressed.png", confirm)
+        confirm_button = render.Button(
+            0.5,
+            0.45,
+            "sprites/buttons/confirm.png",
+            "sprites/buttons/confirmpressed.png",
+            confirm,
+        )
     else:
-        no_text = render.Text(0.5, 0.45, "You are missing the required grist to make it.")
+        no_text = render.Text(
+            0.5, 0.45, "You are missing the required grist to make it."
+        )
         no_text.color = suburb.current_theme().dark
-    backbutton = render.Button(0.1, 0.9, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", suburb.map_scene)
+    backbutton = render.Button(
+        0.1,
+        0.9,
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
+        suburb.map_scene,
+    )
     return False
+
 
 alchemize.use_func = use_alchemize
 

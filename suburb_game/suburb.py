@@ -193,8 +193,8 @@ def play(page=0):
     backbutton = render.Button(
         0.1,
         0.92,
-        "sprites\\buttons\\back.png",
-        "sprites\\buttons\\backpressed.png",
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
         title,
     )
 
@@ -252,15 +252,15 @@ def register():
     registerbutton = render.Button(
         0.5,
         0.67,
-        "sprites\\buttons\\register.png",
-        "sprites\\buttons\\registerpressed.png",
+        "sprites/buttons/register.png",
+        "sprites/buttons/registerpressed.png",
         verify,
     )
     back = render.Button(
         0.5,
         0.80,
-        "sprites\\buttons\\back.png",
-        "sprites\\buttons\\backpressed.png",
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
         login_scene,
     )
 
@@ -324,15 +324,15 @@ def login_scene():
     loginbutton = render.Button(
         0.5,
         0.62,
-        "sprites\\buttons\\login.png",
-        "sprites\\buttons\\loginpressed.png",
+        "sprites/buttons/login.png",
+        "sprites/buttons/loginpressed.png",
         verify,
     )
     registerbutton = render.Button(
         0.5,
         0.75,
-        "sprites\\buttons\\register.png",
-        "sprites\\buttons\\registerpressed.png",
+        "sprites/buttons/register.png",
+        "sprites/buttons/registerpressed.png",
         register,
     )
 
@@ -361,15 +361,15 @@ def newsessionprompt():
     new = render.Button(
         0.5,
         0.48,
-        "sprites\\buttons\\newsession.png",
-        "sprites\\buttons\\newsessionpressed.png",
+        "sprites/buttons/newsession.png",
+        "sprites/buttons/newsessionpressed.png",
         newsession,
     )
     back = render.Button(
         0.5,
         0.60,
-        "sprites\\buttons\\back.png",
-        "sprites\\buttons\\backpressed.png",
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
         title,
     )
 
@@ -425,15 +425,15 @@ def newsession():
     confirm = render.Button(
         0.5,
         0.67,
-        "sprites\\buttons\\confirm.png",
-        "sprites\\buttons\\confirmpressed.png",
+        "sprites/buttons/confirm.png",
+        "sprites/buttons/confirmpressed.png",
         verify,
     )
     back = render.Button(
         0.5,
         0.80,
-        "sprites\\buttons\\back.png",
-        "sprites\\buttons\\backpressed.png",
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
         title,
     )
 
@@ -481,15 +481,15 @@ def connect():
     confirm = render.Button(
         0.5,
         0.62,
-        "sprites\\buttons\\confirm.png",
-        "sprites\\buttons\\confirmpressed.png",
+        "sprites/buttons/confirm.png",
+        "sprites/buttons/confirmpressed.png",
         verify,
     )
     back = render.Button(
         0.5,
         0.75,
-        "sprites\\buttons\\back.png",
-        "sprites\\buttons\\backpressed.png",
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
         play,
     )
 
@@ -677,8 +677,8 @@ class CharacterCreator:
         confirm_button = render.Button(
             0.65,
             0.75,
-            "sprites\\buttons\\confirm.png",
-            "sprites\\buttons\\confirmpressed.png",
+            "sprites/buttons/confirm.png",
+            "sprites/buttons/confirmpressed.png",
             self.namecharacter,
         )
 
@@ -736,8 +736,8 @@ class CharacterCreator:
         confirm_button = render.Button(
             0.5,
             0.85,
-            "sprites\\buttons\\confirm.png",
-            "sprites\\buttons\\confirmpressed.png",
+            "sprites/buttons/confirm.png",
+            "sprites/buttons/confirmpressed.png",
             confirm_button_func,
         )
 
@@ -760,15 +760,15 @@ class CharacterCreator:
         confirm = render.Button(
             0.5,
             0.9,
-            "sprites\\buttons\\confirm.png",
-            "sprites\\buttons\\confirmpressed.png",
+            "sprites/buttons/confirm.png",
+            "sprites/buttons/confirmpressed.png",
             verify,
         )
         backbutton = render.Button(
             0.08,
             0.1,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.make_symbol,
         )
 
@@ -802,15 +802,15 @@ class CharacterCreator:
         confirm = render.Button(
             0.5,
             0.6,
-            "sprites\\buttons\\confirm.png",
-            "sprites\\buttons\\confirmpressed.png",
+            "sprites/buttons/confirm.png",
+            "sprites/buttons/confirmpressed.png",
             verify,
         )
         backbutton = render.Button(
             0.5,
             0.7,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.namecharacter,
         )
 
@@ -849,36 +849,36 @@ class CharacterCreator:
         hehim = render.Button(
             0.20,
             0.62,
-            "sprites\\buttons\\hehim.png",
-            "sprites\\buttons\\hehimpressed.png",
+            "sprites/buttons/hehim.png",
+            "sprites/buttons/hehimpressed.png",
             himnouns,
         )
         sheher = render.Button(
             0.4,
             0.62,
-            "sprites\\buttons\\sheher.png",
-            "sprites\\buttons\\sheherpressed.png",
+            "sprites/buttons/sheher.png",
+            "sprites/buttons/sheherpressed.png",
             hernouns,
         )
         theyem = render.Button(
             0.6,
             0.62,
-            "sprites\\buttons\\theyem.png",
-            "sprites\\buttons\\theyempressed.png",
+            "sprites/buttons/theyem.png",
+            "sprites/buttons/theyempressed.png",
             themnouns,
         )
         other = render.Button(
             0.8,
             0.62,
-            "sprites\\buttons\\other.png",
-            "sprites\\buttons\\otherpressed.png",
+            "sprites/buttons/other.png",
+            "sprites/buttons/otherpressed.png",
             self.custom_pronouns,
         )
         backbutton = render.Button(
             0.5,
             0.8,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.namecharacter,
         )
 
@@ -912,15 +912,15 @@ class CharacterCreator:
         confirm_button = render.Button(
             0.5,
             0.5,
-            "sprites\\buttons\\confirm.png",
-            "sprites\\buttons\\confirmpressed.png",
+            "sprites/buttons/confirm.png",
+            "sprites/buttons/confirmpressed.png",
             confirm_func,
         )
         backbutton = render.Button(
             0.5,
             0.66,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.pronounscharacter,
         )
 
@@ -1095,16 +1095,16 @@ class CharacterCreator:
         confirm_button = render.Button(
             0.5,
             0.65,
-            "sprites\\buttons\\confirm.png",
-            "sprites\\buttons\\confirmpressed.png",
+            "sprites/buttons/confirm.png",
+            "sprites/buttons/confirmpressed.png",
             self.chooseclass,
             theme=theme,
         )
         backbutton = render.Button(
             0.08,
             0.07,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.pronounscharacter,
             theme=theme,
         )
@@ -1128,7 +1128,7 @@ class CharacterCreator:
         knightsymbol = render.Button(
             0.14,
             0.3,
-            "sprites\\classes\\knight.png",
+            "sprites/classes/knight.png",
             None,
             self.make_classbutton("knight"),
             theme=theme,
@@ -1145,7 +1145,7 @@ class CharacterCreator:
         pagesymbol = render.Button(
             0.14,
             0.7,
-            "sprites\\classes\\page.png",
+            "sprites/classes/page.png",
             None,
             self.make_classbutton("page"),
             theme=theme,
@@ -1162,7 +1162,7 @@ class CharacterCreator:
         princesymbol = render.Button(
             0.29,
             0.3,
-            "sprites\\classes\\prince.png",
+            "sprites/classes/prince.png",
             None,
             self.make_classbutton("prince"),
             theme=theme,
@@ -1179,7 +1179,7 @@ class CharacterCreator:
         bardsymbol = render.Button(
             0.29,
             0.7,
-            "sprites\\classes\\bard.png",
+            "sprites/classes/bard.png",
             None,
             self.make_classbutton("bard"),
             theme=theme,
@@ -1196,7 +1196,7 @@ class CharacterCreator:
         thiefsymbol = render.Button(
             0.43,
             0.3,
-            "sprites\\classes\\thief.png",
+            "sprites/classes/thief.png",
             None,
             self.make_classbutton("thief"),
             theme=theme,
@@ -1213,7 +1213,7 @@ class CharacterCreator:
         roguesymbol = render.Button(
             0.43,
             0.7,
-            "sprites\\classes\\rogue.png",
+            "sprites/classes/rogue.png",
             None,
             self.make_classbutton("rogue"),
             theme=theme,
@@ -1230,7 +1230,7 @@ class CharacterCreator:
         magesymbol = render.Button(
             0.57,
             0.3,
-            "sprites\\classes\\placeholder.png",
+            "sprites/classes/placeholder.png",
             None,
             self.make_classbutton("mage"),
             theme=theme,
@@ -1247,7 +1247,7 @@ class CharacterCreator:
         seersymbol = render.Button(
             0.57,
             0.7,
-            "sprites\\classes\\seer.png",
+            "sprites/classes/seer.png",
             None,
             self.make_classbutton("seer"),
             theme=theme,
@@ -1264,7 +1264,7 @@ class CharacterCreator:
         witchsymbol = render.Button(
             0.71,
             0.3,
-            "sprites\\classes\\witch.png",
+            "sprites/classes/witch.png",
             None,
             self.make_classbutton("witch"),
             theme=theme,
@@ -1278,7 +1278,7 @@ class CharacterCreator:
         heirsymbol = render.Button(
             0.71,
             0.7,
-            "sprites\\classes\\heir.png",
+            "sprites/classes/heir.png",
             None,
             self.make_classbutton("heir"),
             theme=theme,
@@ -1295,7 +1295,7 @@ class CharacterCreator:
         maidsymbol = render.Button(
             0.86,
             0.3,
-            "sprites\\classes\\maid.png",
+            "sprites/classes/maid.png",
             None,
             self.make_classbutton("maid"),
             theme=theme,
@@ -1309,7 +1309,7 @@ class CharacterCreator:
         sylphsymbol = render.Button(
             0.86,
             0.7,
-            "sprites\\classes\\sylph.png",
+            "sprites/classes/sylph.png",
             None,
             self.make_classbutton("sylph"),
             theme=theme,
@@ -1323,8 +1323,8 @@ class CharacterCreator:
         backbutton = render.Button(
             0.1,
             0.08,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.choose_aspect,
             theme=theme,
         )
@@ -1370,15 +1370,15 @@ class CharacterCreator:
             confirm = render.Button(
                 0.5,
                 0.7,
-                "sprites\\buttons\\confirm.png",
-                "sprites\\buttons\\confirmpressed.png",
+                "sprites/buttons/confirm.png",
+                "sprites/buttons/confirmpressed.png",
                 self.choosevial,
             )
         backbutton = render.Button(
             0.1,
             0.07,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.chooseclass,
         )
 
@@ -1439,8 +1439,8 @@ class CharacterCreator:
         backbutton = render.Button(
             0.1,
             0.07,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.chooseinterests,
         )
 
@@ -1575,8 +1575,8 @@ class CharacterCreator:
         backbutton = render.Button(
             0.08,
             0.05,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.choosemodus,
             theme=prospit_theme,
         )
@@ -1613,15 +1613,15 @@ class CharacterCreator:
         confirm_button = render.Button(
             0.5,
             0.9,
-            "sprites\\buttons\\confirm.png",
-            "sprites\\buttons\\confirmpressed.png",
+            "sprites/buttons/confirm.png",
+            "sprites/buttons/confirmpressed.png",
             confirm,
         )
         backbutton = render.Button(
             0.08,
             0.05,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.choose_map,
         )
 
@@ -1689,8 +1689,8 @@ class CharacterCreator:
         backbutton = render.Button(
             0.08,
             0.05,
-            "sprites\\buttons\\back.png",
-            "sprites\\buttons\\backpressed.png",
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
             self.choose_map,
         )
 
@@ -2047,8 +2047,8 @@ def overmap():
     backbutton = render.Button(
         0.1,
         0.1,
-        "sprites\\buttons\\back.png",
-        "sprites\\buttons\\backpressed.png",
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
         map_scene,
         theme=theme,
     )
@@ -2092,8 +2092,8 @@ def display_item(
                 )
 
     elif modus is None:
-        card_path = "sprites\\itemdisplay\\captchalogue_card.png"
-        card_flipped_path = "sprites\\itemdisplay\\captchalogue_card_flipped.png"
+        card_path = "sprites/itemdisplay/captchalogue_card.png"
+        card_flipped_path = "sprites/itemdisplay/captchalogue_card_flipped.png"
         text_color = current_theme().dark
         text_outline_color = None
         theme = current_theme()
@@ -2174,7 +2174,7 @@ def display_item(
         captcha_code.absolute = True
     power = instance.item.power
     power_bar = render.Image(
-        0.5, 1.28, "sprites\\itemdisplay\\power_bar.png", theme=theme
+        0.5, 1.28, "sprites/itemdisplay/power_bar.png", theme=theme
     )
     power_bar.bind_to(captcha_image)
     power_label = render.Text(0.512, 0.51, str(power))
@@ -2315,7 +2315,7 @@ def display_item(
         kind_card_image = render.Button(
             x,
             y,
-            "sprites\\itemdisplay\\strife_card.png",
+            "sprites/itemdisplay/strife_card.png",
             None,
             get_kind_button_func(kind),
         )
@@ -2326,8 +2326,8 @@ def display_item(
         kind_label.fontsize = 16
         kind_label.color = themes.strife.light
         kind_label.set_fontsize_by_width(120)
-        if os.path.isfile(f"sprites\\kinds\\{kind}.png"):
-            kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{kind}.png")
+        if os.path.isfile(f"sprites/kinds/{kind}.png"):
+            kind_image = render.Image(0.5, 0.5, f"sprites/kinds/{kind}.png")
             kind_image.bind_to(kind_card_image)
     if instance.punched_code != "":
         if not flipped:
@@ -2372,8 +2372,8 @@ def display_item(
     backbutton = render.Button(
         0.1,
         0.9,
-        "sprites\\buttons\\back.png",
-        "sprites\\buttons\\backpressed.png",
+        "sprites/buttons/back.png",
+        "sprites/buttons/backpressed.png",
         last_scene,
         theme=theme,
     )
@@ -2469,8 +2469,8 @@ def strife_portfolio_scene(selected_kind: Optional[str] = None):
         abstratus_display = render.Image(
             0.51, 0.43, "sprites/itemdisplay/strife_abstratus_display.png"
         )
-        if os.path.isfile(f"sprites\\kinds\\{selected_kind}.png"):
-            kind_image = render.Image(0.5, 0.5, f"sprites\\kinds\\{selected_kind}.png")
+        if os.path.isfile(f"sprites/kinds/{selected_kind}.png"):
+            kind_image = render.Image(0.5, 0.5, f"sprites/kinds/{selected_kind}.png")
             kind_image.bind_to(abstratus_display)
             kind_image.scale = 3
         # power label
@@ -2792,25 +2792,25 @@ def continue_button_draw_condition():
 
 @scene
 def title():
-    logo = render.Image(0.5, 0.20, "sprites\\largeicon.png")
-    logotext = render.Image(0.5, 0.47, "sprites\\suburb.png")
+    logo = render.Image(0.5, 0.20, "sprites/largeicon.png")
+    logotext = render.Image(0.5, 0.47, "sprites/suburb.png")
     play_button = render.Button(
         0.5,
         0.59,
-        "sprites\\buttons\\play.png",
-        "sprites\\buttons\\playpressed.png",
+        "sprites/buttons/play.png",
+        "sprites/buttons/playpressed.png",
         play,
     )
     play_button.alt_alpha = 100
     new_session_button = render.Button(
         0.5,
         0.70,
-        "sprites\\buttons\\newsession.png",
-        "sprites\\buttons\\newsessionpressed.png",
+        "sprites/buttons/newsession.png",
+        "sprites/buttons/newsessionpressed.png",
         newsessionprompt,
     )
     # todo: options
-    # options_button = render.Button(.5, .81, "sprites\\buttons\\options.png", "sprites\\buttons\\optionspressed.png", newsessionprompt)
+    # options_button = render.Button(.5, .81, "sprites/buttons/options.png", "sprites/buttons/optionspressed.png", newsessionprompt)
     versiontext = render.Text(0, 0, f"SUBURB Version {util.VERSION}")
     versiontext.absolute = True
     versiontext.color = current_theme().dark
@@ -2824,15 +2824,15 @@ def title():
     debug_button = render.Button(
         0.1,
         0.92,
-        "sprites\\buttons\\debug.png",
-        "sprites\\buttons\\debug.png",
+        "sprites/buttons/debug.png",
+        "sprites/buttons/debug.png",
         debug_speedrun,
     )
     debug_button_2 = render.Button(
         0.1,
         0.82,
-        "sprites\\buttons\\debug_2.png",
-        "sprites\\buttons\\debug_2.png",
+        "sprites/buttons/debug_2.png",
+        "sprites/buttons/debug_2.png",
         debug_speedrun_2,
     )
     item_editor_button = render.TextButton(

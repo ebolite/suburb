@@ -151,7 +151,7 @@ class MapEditor():
         resizebutton = render.TextButton(0.92, 0.85, 128, 32, "RESIZE", resize_func)
         def back():
             self.confirm_leave()
-        backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
+        backbutton = render.Button(0.1, 0.92, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", back)
 
     def resize_scene(self):
         suburb.new_scene()
@@ -185,9 +185,9 @@ class MapEditor():
         suburb.new_scene()
         text = render.Text(0.5, 0.2, "Are you sure you want to leave? Any unsaved changes will be lost.")
         def confirm(): self.map_editor_scene()
-        confirmbutton = render.Button(.5, .3, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm)
+        confirmbutton = render.Button(.5, .3, "sprites/buttons/confirm.png", "sprites/buttons/confirmpressed.png", confirm)
         def back(): self.draw_scene()
-        backbutton = render.Button(0.5, 0.4, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
+        backbutton = render.Button(0.5, 0.4, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", back)
 
     def change_tile(self, x, y, tile: str):
         if self.is_tile_in_bounds(x, y):
@@ -385,15 +385,15 @@ class ItemEditor():
             y = 0.20 + 0.05*i
             button_func = button_func_constructor(option)
             button = render.TextButton(0.5, y, 196, 32, option, button_func)
-        backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", last_scene)
+        backbutton = render.Button(0.1, 0.92, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", last_scene)
 
     def confirm_leave(self):
         suburb.new_scene()
         text = render.Text(0.5, 0.2, "Are you sure you want to leave? Any unsaved changes will be lost.")
         def confirm(): self.item_editor_scene()
-        confirmbutton = render.Button(.5, .3, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm)
+        confirmbutton = render.Button(.5, .3, "sprites/buttons/confirm.png", "sprites/buttons/confirmpressed.png", confirm)
         def back(): self.draw_scene()
-        backbutton = render.Button(0.5, 0.4, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
+        backbutton = render.Button(0.5, 0.4, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", back)
 
     def submission_scene(self):
         suburb.new_scene()
@@ -406,9 +406,9 @@ class ItemEditor():
                 logtext.text = reply
             logtext.fontsize = 32
             logtext.set_fontsize_by_width(1200)
-        confirmbutton = render.Button(.5, .3, "sprites\\buttons\\confirm.png", "sprites\\buttons\\confirmpressed.png", confirm)
+        confirmbutton = render.Button(.5, .3, "sprites/buttons/confirm.png", "sprites/buttons/confirmpressed.png", confirm)
         def back(): self.draw_scene()
-        backbutton = render.Button(0.5, 0.4, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
+        backbutton = render.Button(0.5, 0.4, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", back)
 
     def draw_scene(self):
         suburb.new_scene()
@@ -434,7 +434,7 @@ class ItemEditor():
         def submit():
             self.submission_scene()
         submitbutton = render.TextButton(0.57, 0.85, 128, 32, "SUBMIT", submit)
-        backbutton = render.Button(0.1, 0.92, "sprites\\buttons\\back.png", "sprites\\buttons\\backpressed.png", back)
+        backbutton = render.Button(0.1, 0.92, "sprites/buttons/back.png", "sprites/buttons/backpressed.png", back)
 
     def draw_name_and_adjectives(self):
         item_name_box = render.InputTextBox(0.5, 0.05)

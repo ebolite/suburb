@@ -5,16 +5,16 @@ VERSION = "v1.8.3-alpha"
 homedir = os.getcwd()
 subdirectories = next(os.walk("."))[1]
 if "suburb_game" in subdirectories:  # if this is being run in vscode lol
-    homedir += "\\suburb_game"
+    homedir += "/suburb_game"
 
 import client
 
 
 def writejson(obj=None, fn=None):
-    if not os.path.exists(f"{homedir}\\json"):
-        os.makedirs(f"{homedir}\\json")
-        print(f"Created {homedir}\\json")
-    os.chdir(f"{homedir}\\json")
+    if not os.path.exists(f"{homedir}/json"):
+        os.makedirs(f"{homedir}/json")
+        print(f"Created {homedir}/json")
+    os.chdir(f"{homedir}/json")
     if fn != None:
         with open(f"{fn}.json", "w") as f:
             if obj == None:
@@ -28,13 +28,13 @@ def writejson(obj=None, fn=None):
 
 def readjson(obj, filename):
     try:
-        os.chdir(f"{homedir}\\json")
+        os.chdir(f"{homedir}/json")
         with open(f"{filename}.json", "r") as f:
             try:
                 data = json.load(f)
             except json.JSONDecodeError:
                 print(f"UNABLE TO READ JSON {filename}")
-                writejson(obj, f"{homedir}\\json\\failed\\{filename}")
+                writejson(obj, f"{homedir}/json/failed/{filename}")
                 data = {}
             os.chdir(homedir)
             return data
