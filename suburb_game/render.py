@@ -3057,20 +3057,19 @@ class Symbol(Image):
                 hairback.replace(pygame.Color(255, 255, 255), pygame.Color(1, 1, 1))
                 hairback = hairback.make_surface()
 
-        if hairback is not None:
-            base.blit(hairback, (0, 0))
-        if coatback is not None:
-            base.blit(coatback, (0, 0))
-
         base.blit(shoes, (0, 0))
         if self.style_dict["base"] == "wifebeater":
             shirtoffset = 5
         else:
             shirtoffset = 0
+
+        if hairback is not None:
+            base.blit(hairback, (0, 0))
+        if coatback is not None:
+            base.blit(coatback, (0, 0))
         base.blit(shirt, (0, shirtoffset))
         base.blit(pants, (0, 0))
         base.blit(hair, (0, 0))
-        # todo: back hair renders below coat, front hair renders above
         base.blit(coat, (0, 0))
         base.blit(horns, (0, 0))
         base.blit(mouth, (0, 0))
