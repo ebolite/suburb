@@ -56,7 +56,6 @@ serversettings = {
     "port": 0,
     "path_to_cert": "",
     "path_to_key": "",
-    "db_connection_string": "",
 }
 serversettings = readjson(serversettings, "serversettings", homedir)
 
@@ -64,13 +63,11 @@ ip = serversettings["ip"]
 port = serversettings["port"]
 path_to_cert = serversettings["path_to_cert"]
 path_to_key = serversettings["path_to_key"]
-db_connection_string = serversettings["db_connection_string"]
 
 if not path_to_cert or not path_to_key:
     print("serversettings.json must be filled out.")
     print("Please specify an ip address and port to host the server on.")
     print("Please specify a location for the cert and key of your server.")
-    print("Please specify a connection string for MongoDB.")
     raise AssertionError
 
 bases: dict[str, dict] = {}
