@@ -3021,6 +3021,26 @@ class Symbol(Image):
         horns = pygame.image.load(
             self.get_image_path("horns", self.horns)
         ).convert_alpha()
+        if self.style_dict["hair"] == "standard":
+            hair_back_path = f"sprites/symbol/hair-backs/{self.hair}.png"
+        else:
+            hair_back_path = (
+                f"sprites/symbol/hair-backs/{self.hair}-{self.style_dict['hair']}.png"
+            )
+        if os.path.isfile(hair_back_path):
+            hairback = pygame.image.load(hair_back_path).convert_alpha()
+        else:
+            hairback = None
+        if self.style_dict["coat"] == "standard":
+            coat_back_path = f"sprites/symbol/coat-backs/{self.coat}.png"
+        else:
+            coat_back_path = (
+                f"sprites/symbol/coat-backs/{self.coat}-{self.style_dict['coat']}.png"
+            )
+        if os.path.isfile(coat_back_path):
+            coatback = pygame.image.load(coat_back_path).convert_alpha()
+        else:
+            coatback = None
         if self.base == "kid":
             eyes = pygame.PixelArray(eyes)
             eyes.replace(pygame.Color(255, 186, 41), pygame.Color(255, 255, 255))
@@ -3032,24 +3052,16 @@ class Symbol(Image):
             hair = pygame.PixelArray(hair)
             hair.replace(pygame.Color(255, 255, 255), pygame.Color(1, 1, 1))
             hair = hair.make_surface()
-        if self.style_dict["hair"] == "standard":
-            hair_back_path = f"sprites/symbol/hair-backs/{self.hair}.png"
-        else:
-            hair_back_path = (
-                f"sprites/symbol/hair-backs/{self.hair}-{self.style_dict['hair']}.png"
-            )
-        if os.path.isfile(hair_back_path):
-            hairback = pygame.image.load(hair_back_path).convert_alpha()
+            if hairback is not None:
+                hairback = pygame.PixelArray(hairback)
+                hairback.replace(pygame.Color(255, 255, 255), pygame.Color(1, 1, 1))
+                hairback = hairback.make_surface()
+
+        if hairback is not None:
             base.blit(hairback, (0, 0))
-        if self.style_dict["coat"] == "standard":
-            coat_back_path = f"sprites/symbol/coat-backs/{self.coat}.png"
-        else:
-            coat_back_path = (
-                f"sprites/symbol/coat-backs/{self.coat}-{self.style_dict['coat']}.png"
-            )
-        if os.path.isfile(coat_back_path):
-            coatback = pygame.image.load(coat_back_path).convert_alpha()
+        if coatback is not None:
             base.blit(coatback, (0, 0))
+
         base.blit(shoes, (0, 0))
         if self.style_dict["base"] == "wifebeater":
             shirtoffset = 5
