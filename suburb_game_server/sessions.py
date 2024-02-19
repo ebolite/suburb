@@ -1186,9 +1186,10 @@ class Player:
         additional_rungs = max(additional_rungs, 0)
         additional_rungs += 1
         self.unclaimed_rungs += additional_rungs
-        self.unclaimed_rungs = int(self.unclaimed_rungs)
 
     def claim_spoils(self):
+        if self.gameclass == "page":  # page gives bonus on level-up to everyone
+            self.page_scatter()
         self.echeladder_rung += self.unclaimed_rungs
         self.unclaimed_rungs = 0
         for grist_name, amount in self.unclaimed_grist.items():
@@ -1202,6 +1203,30 @@ class Player:
             self.permanent_stat_bonuses[game_attr] += amount
         else:
             raise AttributeError
+
+    def page_scatter(self):
+        total_bonus = 0
+        aspect = skills.aspects[self.aspect]
+        for i in range(self.unclaimed_rungs):
+            total_bonus += (self.echeladder_rung + i + 1) // 16
+        sessions: list[Session] = []
+        for subplayer in self.sub_players_list:
+            if subplayer.session not in sessions:
+                sessions.append(subplayer.session)
+        for session in sessions:
+            for player_name in session.starting_players:
+                player = Player(player_name)
+                for subplayer in player.sub_players_list:
+                    if subplayer.strife is not None:
+                        player_griefer = subplayer.strife.get_griefer(
+                            subplayer.name
+                        )
+                        log_message = aspect.permanent_adjust(
+                            player_griefer, total_bonus
+                        )
+                        player_griefer.strife.log(log_message)
+                else:
+                    aspect.permanent_adjust_player(player, total_bonus)
 
     # deploys an item to this user's map at the specified coordinates
     def deploy_phernalia(self, item_name, target_x, target_y) -> bool:

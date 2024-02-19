@@ -1206,17 +1206,17 @@ for aspect_name, aspect in aspects.items():
     aspectsweep.parryable = False
     aspectsweep.action_cost = 0
 
-    # page
-    scatteraspect = ClassSkill(f"scatter {aspect.name}", aspect, "page", 25)
-    scatteraspect.description = (
-        f"Increases the {aspect.name.upper()} of everyone in the session."
-    )
-    scatteraspect.add_vial_cost("aspect", "user.power//2")
-    scatteraspect.target_self = True
-    scatteraspect.parryable = False
-    scatteraspect.special_effect = scatter_effect_constructor(aspect)
-    scatteraspect.action_cost = 0
-    scatteraspect.cooldown = 2
+    # page 25 - passive
+    # scatteraspect = ClassSkill(f"scatter {aspect.name}", aspect, "page", 25)
+    # scatteraspect.description = (
+    #     f"Increases the {aspect.name.upper()} of everyone in the session."
+    # )
+    # scatteraspect.add_vial_cost("aspect", "user.power//2")
+    # scatteraspect.target_self = True
+    # scatteraspect.parryable = False
+    # scatteraspect.special_effect = scatter_effect_constructor(aspect)
+    # scatteraspect.action_cost = 0
+    # scatteraspect.cooldown = 2
 
     aspectturn = ClassSkill(f"{aspect.name}turn", aspect, "page", 100)
     aspectturn.description = f"Deals damage based on your {aspect.name.upper()}."

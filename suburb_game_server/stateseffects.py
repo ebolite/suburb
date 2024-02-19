@@ -654,3 +654,5 @@ for _, aspect in skills.aspects.items():
     breakstate.tooltip = f"Your {aspect.maximum_name} is increased at the start of combat based on your {aspect.name}."
     gritstate = GritState(f"{aspect.name} grit", aspect, "rogue", 100)
     gritstate.tooltip = f"Damage received is reduced by {aspect.name}."
+    scatterstate = ClassPassive(f"{aspect.name} scatter", aspect, "page", 25)
+    scatterstate.tooltip = f"You give {aspect.name} to everyone in your session as you ascend your ECHELADDER."

@@ -1558,7 +1558,7 @@ class CharacterCreator:
         choose_derse_button.text_color = derse_theme.dark
         choose_derse_button.bind_to(dersebg)
         derse_line_1 = render.Text(
-            0.5, 0.75, "Prospit dreamers are skeptical and rebellious."
+            0.5, 0.75, "Derse dreamers are skeptical and rebellious."
         )
         derse_line_1.fontsize = 18
         derse_line_1.color = derse_theme.black
