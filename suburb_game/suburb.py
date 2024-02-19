@@ -10,6 +10,7 @@ import numpy as np
 import random
 import json
 from typing import Callable, Optional
+import tracemalloc
 
 import util
 import render
@@ -2915,6 +2916,7 @@ def map_editor_scene():
 
 def render_loop():
     while render.render():
+        # print(tracemalloc.get_traced_memory())
         pass
 
 
@@ -2951,6 +2953,7 @@ def main():
 
 
 if __name__ == "__main__":
+    tracemalloc.start()
     connecting_text = render.Text(0.5, 0.5, "CONNECTING...")
     connecting_text.color = themes.default.dark
     connecting_text.outline_color = themes.default.black
