@@ -1181,7 +1181,8 @@ class Player:
         min_for_advancement = np.power(combined_rungs, 1.2)
         if combined_rungs > 50 and power_defeated < min_for_advancement:
             return 0
-        rung_reached = np.power(power_defeated, 1 / 1.2)
+        rung_reached = np.power(power_defeated, 1.2)
+        rung_reached = int(rung_reached)
         additional_rungs = (rung_reached - combined_rungs) // 10
         additional_rungs = max(additional_rungs, 0)
         additional_rungs += 1
