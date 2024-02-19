@@ -1191,6 +1191,7 @@ class Player:
         if self.gameclass == "page":  # page gives bonus on level-up to everyone
             self.page_scatter()
         self.echeladder_rung += self.unclaimed_rungs
+        self.echeladder_rung = int(self.echeladder_rung)
         self.unclaimed_rungs = 0
         for grist_name, amount in self.unclaimed_grist.items():
             self.add_grist(grist_name, amount)
