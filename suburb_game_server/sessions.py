@@ -1210,7 +1210,8 @@ class Player:
         total_bonus = 0
         aspect = skills.aspects[self.aspect]
         for i in range(self.unclaimed_rungs):
-            total_bonus += (self.echeladder_rung + i + 1) // 16
+            total_bonus += (int(self.echeladder_rung) + i + 1) // 16
+        total_bonus = int(total_bonus)
         sessions: list[Session] = []
         for subplayer in self.sub_players_list:
             if subplayer.session not in sessions:
