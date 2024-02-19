@@ -260,8 +260,10 @@ class UIElement(pygame.sprite.Sprite):
 
     def mousepan(self, mousebutton: int):
         if pygame.mouse.get_pressed()[mousebutton]:
-            try: self.last_mouse_pos
-            except AttributeError: return
+            try:
+                self.last_mouse_pos
+            except AttributeError:
+                return
             if self.last_mouse_pos is None:
                 self.last_mouse_pos = pygame.mouse.get_pos()
             else:
@@ -3030,14 +3032,24 @@ class Symbol(Image):
             hair = pygame.PixelArray(hair)
             hair.replace(pygame.Color(255, 255, 255), pygame.Color(1, 1, 1))
             hair = hair.make_surface()
-        coat_back_path = (
-            f"sprites/symbol/coat-backs/{self.coat}-{self.style_dict['coat']}.png"
-        )
+        if self.style_dict["hair"] == "standard":
+            hair_back_path = f"sprites/symbol/hair-backs/{self.hair}.png"
+        else:
+            hair_back_path = (
+                f"sprites/symbol/hair-backs/{self.hair}-{self.style_dict['hair']}.png"
+            )
+        if os.path.isfile(hair_back_path):
+            hairback = pygame.image.load(hair_back_path).convert_alpha()
+            base.blit(hairback, (0, 0))
+        if self.style_dict["coat"] == "standard":
+            coat_back_path = f"sprites/symbol/coat-backs/{self.coat}.png"
+        else:
+            coat_back_path = (
+                f"sprites/symbol/coat-backs/{self.coat}-{self.style_dict['coat']}.png"
+            )
         if os.path.isfile(coat_back_path):
             coatback = pygame.image.load(coat_back_path).convert_alpha()
-            coatback.blit(base, (0, 0))
-            base = coatback
-
+            base.blit(coatback, (0, 0))
         base.blit(shoes, (0, 0))
         if self.style_dict["base"] == "wifebeater":
             shirtoffset = 5
@@ -3045,7 +3057,8 @@ class Symbol(Image):
             shirtoffset = 0
         base.blit(shirt, (0, shirtoffset))
         base.blit(pants, (0, 0))
-        base.blit(hair, (0, 0)) # todo: back hair renders below coat, front hair renders above
+        base.blit(hair, (0, 0))
+        # todo: back hair renders below coat, front hair renders above
         base.blit(coat, (0, 0))
         base.blit(horns, (0, 0))
         base.blit(mouth, (0, 0))
