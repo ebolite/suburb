@@ -129,7 +129,6 @@ class InheritedStatistics:
         self.display_name = None
         self.base_inheritable = True
         self.all_components = Components(self.name).get_all_components()
-        print(f"genning statistics for {self.name}")
         self.gen_statistics()
 
     # how many unique items there are, multiple counts means negative entropy means bad
@@ -153,7 +152,6 @@ class InheritedStatistics:
     def get_descriptors(
         self, guaranteed_compound_name=False, depth=0
     ) -> tuple[str, list, list, list]:
-        print(f"getting descriptors for {self.name}")
         required_inheritors = []
         base = ""
         adjectives: list[str] = []
