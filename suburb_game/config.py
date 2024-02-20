@@ -15,56 +15,56 @@ sample_parts = {
 }
 
 tiles = {
-    "?": "sprites\\tiles\\oob.png",
-    "|": "sprites\\tiles\\wall.png",
-    "#": "sprites\\tiles\\#.png",
-    ".": "sprites\\tiles\\..png",
-    "=": "sprites\\tiles\\floor.png",
-    "+": "sprites\\tiles\\girder.png",
-    "}": "sprites\\tiles\\rightwall.png",
-    "{": "sprites\\tiles\\leftwall.png",
-    "]": "sprites\\tiles\\rightwindow.png",
-    "[": "sprites\\tiles\\leftwindow.png",
-    ">": "sprites\\tiles\\rightdoor.png",
-    "<": "sprites\\tiles\\leftdoor.png",
-    "/": "sprites\\tiles\\rampright.png",
-    "\\": "sprites\\tiles\\rampleft.png",
-    "^": "sprites\\tiles\\stairs.png",
-    "v": "sprites\\tiles\\elevatorshaft.png",
-    "e": "sprites\\tiles\\elevator.png",
-    "b": "sprites\\tiles\\bathroom.png",
-    "B": "sprites\\tiles\\bedroom.png",
-    "S": "sprites\\tiles\\studioapt.png",
-    "s": "sprites\\tiles\\security.png",
-    "F": "sprites\\tiles\\foyer.png",
-    "C": "sprites\\tiles\\cellar.png",
-    "D": "sprites\\tiles\\diningroom.png",
-    "K": "sprites\\tiles\\kitchen.png",
-    "O": "sprites\\tiles\\office.png",
-    "L": "sprites\\tiles\\livingroom.png",
-    "l": "sprites\\tiles\\laundryroom.png",
-    "A": "sprites\\tiles\\attic.png",
-    "I": "sprites\\tiles\\pillar.png",
-    "G": "sprites\\tiles\\garage.png",
-    "g": "sprites\\tiles\\gameroom.png",
-    "W": "sprites\\tiles\\workout.png",
-    "-": "sprites\\tiles\\stairwell.png",
-    "0": "sprites\\tiles\\returngate.png",
-    "1": "sprites\\tiles\\gate1.png",
-    "2": "sprites\\tiles\\gate2.png",
-    "3": "sprites\\tiles\\gate3.png",
-    "4": "sprites\\tiles\\gate4.png",
-    "5": "sprites\\tiles\\gate5.png",
-    "6": "sprites\\tiles\\gate6.png",
-    "7": "sprites\\tiles\\gate7.png",
-    "'": "sprites\\tiles\\stalactite.png",
-    "%": "sprites\\tiles\\stash.png",
-    "&": "sprites\\tiles\\trove.png",
-    "$": "sprites\\tiles\\bounty.png",
-    "n": "sprites\\tiles\\nest.png",
-    "_": "sprites\\tiles\\_.png",
-    "i": "sprites\\tiles\\rope.png",
-    }
+    "?": "sprites/tiles/oob.png",
+    "|": "sprites/tiles/wall.png",
+    "#": "sprites/tiles/#.png",
+    ".": "sprites/tiles/..png",
+    "=": "sprites/tiles/floor.png",
+    "+": "sprites/tiles/girder.png",
+    "}": "sprites/tiles/rightwall.png",
+    "{": "sprites/tiles/leftwall.png",
+    "]": "sprites/tiles/rightwindow.png",
+    "[": "sprites/tiles/leftwindow.png",
+    ">": "sprites/tiles/rightdoor.png",
+    "<": "sprites/tiles/leftdoor.png",
+    "/": "sprites/tiles/rampright.png",
+    "\\": "sprites/tiles/rampleft.png",
+    "^": "sprites/tiles/stairs.png",
+    "v": "sprites/tiles/elevatorshaft.png",
+    "e": "sprites/tiles/elevator.png",
+    "b": "sprites/tiles/bathroom.png",
+    "B": "sprites/tiles/bedroom.png",
+    "S": "sprites/tiles/studioapt.png",
+    "s": "sprites/tiles/security.png",
+    "F": "sprites/tiles/foyer.png",
+    "C": "sprites/tiles/cellar.png",
+    "D": "sprites/tiles/diningroom.png",
+    "K": "sprites/tiles/kitchen.png",
+    "O": "sprites/tiles/office.png",
+    "L": "sprites/tiles/livingroom.png",
+    "l": "sprites/tiles/laundryroom.png",
+    "A": "sprites/tiles/attic.png",
+    "I": "sprites/tiles/pillar.png",
+    "G": "sprites/tiles/garage.png",
+    "g": "sprites/tiles/gameroom.png",
+    "W": "sprites/tiles/workout.png",
+    "-": "sprites/tiles/stairwell.png",
+    "0": "sprites/tiles/returngate.png",
+    "1": "sprites/tiles/gate1.png",
+    "2": "sprites/tiles/gate2.png",
+    "3": "sprites/tiles/gate3.png",
+    "4": "sprites/tiles/gate4.png",
+    "5": "sprites/tiles/gate5.png",
+    "6": "sprites/tiles/gate6.png",
+    "7": "sprites/tiles/gate7.png",
+    "'": "sprites/tiles/stalactite.png",
+    "%": "sprites/tiles/stash.png",
+    "&": "sprites/tiles/trove.png",
+    "$": "sprites/tiles/bounty.png",
+    "n": "sprites/tiles/nest.png",
+    "_": "sprites/tiles/_.png",
+    "i": "sprites/tiles/rope.png",
+}
 
 icons = {
     "no_icon": "sprites/icons/no_icon.png",
@@ -93,62 +93,70 @@ header_icons = {
     "atheneum": "sprites/computer/Sburb/atheneum.png",
     "phernalia_registry": "sprites/computer/Sburb/phernalia_registry.png",
     "alchemize": "sprites/computer/Sburb/alchemize.png",
-    "revise": "sprites/computer/Sburb/revise.png"
+    "revise": "sprites/computer/Sburb/revise.png",
 }
 
 grists = {
-    "build": {"tier": 0, "image": "sprites\\grists\\build.png"},
-    "acid": {"tier": 4, "exotic": True, "image": "sprites\\grists\\acid.png"},
-    "amber": {"tier": 3, "image": "sprites\\grists\\amber.png"},
-    "amethyst": {"tier": 3, "image": "sprites\\grists\\amethyst.png"},
-    "aquamarine": {"tier": 1, "image": "sprites\\grists\\aquamarine.png"},
-    "blood": {"tier": 3, "image": "sprites\\grists\\blood.png"},
-    "caulk": {"tier": 5, "image": "sprites\\grists\\caulk.png"},
-    "chalk": {"tier": 1, "image": "sprites\\grists\\chalk.png"},
-    "cobalt": {"tier": 4, "image": "sprites\\grists\\cobalt.png"},
-    "copper": {"tier": 2, "image": "sprites\\grists\\copper.png"},
-    "diamond": {"tier": 9, "image": "sprites\\grists\\diamond.png"},
-    "emerald": {"tier": 8, "image": "sprites\\grists\\emerald.png"},
-    "fluorite": {"tier": 5, "exotic": True, "image": "sprites\\grists\\fluorite.png"},
-    "frosting": {"tier": 1, "image": "sprites\\grists\\frosting.png"},
-    "garnet": {"tier": 3, "image": "sprites\\grists\\garnet.png"},
-    "gold": {"tier": 6, "image": "sprites\\grists\\gold.png"},
-    "iodine": {"tier": 1, "image": "sprites\\grists\\iodine.png"},
-    "iron": {"tier": 5, "image": "sprites\\grists\\iron.png"},
-    "jet": {"tier": 2, "image": "sprites\\grists\\jet.png"},
-    "lead": {"tier": 2, "image": "sprites\\grists\\lead.png"},
-    "lux": {"tier": 9, "image": "sprites\\grists\\lux.png"},
-    "malachite": {"tier": 2, "exotic": True, "image": "sprites\\grists\\malachite.png"},
-    "marble": {"tier": 3, "image": "sprites\\grists\\marble.png", "exotic": True},
-    "mercury": {"tier": 4, "image": "sprites\\grists\\mercury.png"},
-    "mist": {"tier": 3, "exotic": True, "image": "sprites\\grists\\mist.png"},
-    "moonstone": {"tier": 6, "exotic": True, "image": "sprites\\grists\\moonstone.png"},
-    "neon": {"tier": 4, "exotic": True, "image": "sprites\\grists\\neon.png"},
-    "nitrogen": {"tier": 3, "image": "sprites\\grists\\nitrogen.png"},
-    "obsidian": {"tier": 7, "image": "sprites\\grists\\obsidian.png"},
-    "onyx": {"tier": 9, "image": "sprites\\grists\\onyx.png"},
-    "permafrost": {"tier": 8, "image": "sprites\\grists\\permafrost.png"},
-    "quartz": {"tier": 7, "image": "sprites\\grists\\quartz.png"},
-    "rainbow": {"tier": 10, "exotic": True, "image": "sprites\\grists\\rainbow.png"},
-    "redstone": {"tier": 7, "image": "sprites\\grists\\redstone.png"},
-    "rock candy": {"tier": 2, "image": "sprites\\grists\\rock candy.png"},
-    "rose quartz": {"tier": 5, "exotic": True, "image": "sprites\\grists\\rose quartz.png"},
-    "ruby": {"tier": 6, "image": "sprites\\grists\\ruby.png"},
-    "rust": {"tier": 1, "image": "sprites\\grists\\rust.png"},
-    "sandstone": {"tier": 2, "image": "sprites\\grists\\sandstone.png"},
-    "shale": {"tier": 1, "image": "sprites\\grists\\shale.png"},
-    "silicon": {"tier": 4, "image": "sprites\\grists\\silicon.png"},
-    "silk": {"tier": 6, "exotic": True, "image": "sprites\\grists\\silk.png"},
-    "slime": {"tier": 2, "exotic": True, "image": "sprites\\grists\\slime.png"},
-    "star sapphire": {"tier": 8, "exotic": True, "image": "sprites\\grists\\star sapphire.png"},
-    "sulfur": {"tier": 5, "exotic": True, "image": "sprites\\grists\\sulfur.png"},
-    "sunstone": {"tier": 7, "exotic": True, "image": "sprites\\grists\\sunstone.png"},
-    "tar": {"tier": 4, "image": "sprites\\grists\\tar.png"},
-    "titanium": {"tier": 9, "image": "sprites\\grists\\titanium.png"},
-    "topaz": {"tier": 5, "exotic": True, "image": "sprites\\grists\\topaz.png"},
-    "uranium": {"tier": 8, "image": "sprites\\grists\\uranium.png"},
-    "wood": {"tier": 1, "image": "sprites\\grists\\wood.png"},
-    "zilium": {"tier": 10, "exotic": True, "image": "sprites\\grists\\zilium.png"},
+    "build": {"tier": 0, "image": "sprites/grists/build.png"},
+    "acid": {"tier": 4, "exotic": True, "image": "sprites/grists/acid.png"},
+    "amber": {"tier": 3, "image": "sprites/grists/amber.png"},
+    "amethyst": {"tier": 3, "image": "sprites/grists/amethyst.png"},
+    "aquamarine": {"tier": 1, "image": "sprites/grists/aquamarine.png"},
+    "blood": {"tier": 3, "image": "sprites/grists/blood.png"},
+    "caulk": {"tier": 5, "image": "sprites/grists/caulk.png"},
+    "chalk": {"tier": 1, "image": "sprites/grists/chalk.png"},
+    "cobalt": {"tier": 4, "image": "sprites/grists/cobalt.png"},
+    "copper": {"tier": 2, "image": "sprites/grists/copper.png"},
+    "diamond": {"tier": 9, "image": "sprites/grists/diamond.png"},
+    "emerald": {"tier": 8, "image": "sprites/grists/emerald.png"},
+    "fluorite": {"tier": 5, "exotic": True, "image": "sprites/grists/fluorite.png"},
+    "frosting": {"tier": 1, "image": "sprites/grists/frosting.png"},
+    "garnet": {"tier": 3, "image": "sprites/grists/garnet.png"},
+    "gold": {"tier": 6, "image": "sprites/grists/gold.png"},
+    "iodine": {"tier": 1, "image": "sprites/grists/iodine.png"},
+    "iron": {"tier": 5, "image": "sprites/grists/iron.png"},
+    "jet": {"tier": 2, "image": "sprites/grists/jet.png"},
+    "lead": {"tier": 2, "image": "sprites/grists/lead.png"},
+    "lux": {"tier": 9, "image": "sprites/grists/lux.png"},
+    "malachite": {"tier": 2, "exotic": True, "image": "sprites/grists/malachite.png"},
+    "marble": {"tier": 3, "image": "sprites/grists/marble.png", "exotic": True},
+    "mercury": {"tier": 4, "image": "sprites/grists/mercury.png"},
+    "mist": {"tier": 3, "exotic": True, "image": "sprites/grists/mist.png"},
+    "moonstone": {"tier": 6, "exotic": True, "image": "sprites/grists/moonstone.png"},
+    "neon": {"tier": 4, "exotic": True, "image": "sprites/grists/neon.png"},
+    "nitrogen": {"tier": 3, "image": "sprites/grists/nitrogen.png"},
+    "obsidian": {"tier": 7, "image": "sprites/grists/obsidian.png"},
+    "onyx": {"tier": 9, "image": "sprites/grists/onyx.png"},
+    "permafrost": {"tier": 8, "image": "sprites/grists/permafrost.png"},
+    "quartz": {"tier": 7, "image": "sprites/grists/quartz.png"},
+    "rainbow": {"tier": 10, "exotic": True, "image": "sprites/grists/rainbow.png"},
+    "redstone": {"tier": 7, "image": "sprites/grists/redstone.png"},
+    "rock candy": {"tier": 2, "image": "sprites/grists/rock candy.png"},
+    "rose quartz": {
+        "tier": 5,
+        "exotic": True,
+        "image": "sprites/grists/rose quartz.png",
+    },
+    "ruby": {"tier": 6, "image": "sprites/grists/ruby.png"},
+    "rust": {"tier": 1, "image": "sprites/grists/rust.png"},
+    "sandstone": {"tier": 2, "image": "sprites/grists/sandstone.png"},
+    "shale": {"tier": 1, "image": "sprites/grists/shale.png"},
+    "silicon": {"tier": 4, "image": "sprites/grists/silicon.png"},
+    "silk": {"tier": 6, "exotic": True, "image": "sprites/grists/silk.png"},
+    "slime": {"tier": 2, "exotic": True, "image": "sprites/grists/slime.png"},
+    "star sapphire": {
+        "tier": 8,
+        "exotic": True,
+        "image": "sprites/grists/star sapphire.png",
+    },
+    "sulfur": {"tier": 5, "exotic": True, "image": "sprites/grists/sulfur.png"},
+    "sunstone": {"tier": 7, "exotic": True, "image": "sprites/grists/sunstone.png"},
+    "tar": {"tier": 4, "image": "sprites/grists/tar.png"},
+    "titanium": {"tier": 9, "image": "sprites/grists/titanium.png"},
+    "topaz": {"tier": 5, "exotic": True, "image": "sprites/grists/topaz.png"},
+    "uranium": {"tier": 8, "image": "sprites/grists/uranium.png"},
+    "wood": {"tier": 1, "image": "sprites/grists/wood.png"},
+    "zilium": {"tier": 10, "exotic": True, "image": "sprites/grists/zilium.png"},
 }
 
 gristcolors = {
@@ -184,7 +192,12 @@ gristcolors = {
     "onyx": Color(52, 52, 52),
     "permafrost": Color(74, 246, 238),
     "quartz": Color(180, 255, 238),
-    "rainbow": [Color(255, 60, 156), Color(115, 250, 156), Color(32, 165, 222), Color(8, 60, 255)],
+    "rainbow": [
+        Color(255, 60, 156),
+        Color(115, 250, 156),
+        Color(32, 165, 222),
+        Color(8, 60, 255),
+    ],
     "redstone": Color(255, 64, 0),
     "rock candy": Color(230, 85, 255),
     "rose quartz": Color(246, 12, 74),
@@ -203,30 +216,220 @@ gristcolors = {
     "topaz": Color(255, 182, 32),
     "uranium": Color(32, 206, 57),
     "wood": Color(115, 80, 57),
-    "zilium": [Color(41, 255, 74), Color(230, 76, 213), Color(0, 113, 189)]
+    "zilium": [Color(41, 255, 74), Color(230, 76, 213), Color(0, 113, 189)],
 }
 
 gristcategories = {
-    "amber": ["amber", "rust", "sulfur", "iron", "topaz", "garnet", "gold", "sunstone", "ruby"],
-    "barren": ["rust", "sandstone", "mist", "chalk", "caulk", "sulfur", "sunstone", "permafrost", "onyx"],
-    "beach": ["aquamarine", "sandstone", "shale", "cobalt", "gold", "sunstone", "quartz", "emerald", "star sapphire"],
-    "block": ["rust", "chalk", "malachite", "fluorite", "obsidian", "iron", "permafrost", "redstone", "gold"],
-    "calcite": ["chalk", "iodine", "marble", "amethyst", "garnet", "caulk", "obsidian", "gold", "lux"],
-    "cold": ["aquamarine", "frosting", "chalk", "mist", "nitrogen", "cobalt", "quartz", "permafrost", "diamond"],
-    "dark": ["jet", "tar", "blood", "garnet", "lead", "cobalt", "obsidian", "star sapphire", "onyx"],
-    "elemental": ["iodine", "copper", "cobalt", "nitrogen", "lead", "mercury", "sulfur", "iron", "titanium"],
-    "hot": ["amber", "rust", "garnet", "tar", "sulfur", "ruby", "sunstone", "gold", "redstone"],
-    "liquid": ["iodine", "frosting", "blood", "nitrogen", "acid", "amber", "tar", "mercury", "caulk"],
-    "metal": ["rust", "copper", "lead", "silicon", "mercury", "sulfur", "iron", "gold", "titanium"],
-    "nature": ["shale", "wood", "sandstone", "amber", "topaz", "quartz", "obsidian", "gold", "emerald"],
-    "oil": ["shale", "tar", "jet", "mercury", "cobalt", "fluorite", "moonstone", "quartz", "redstone"],
-    "radiant": ["chalk", "frosting", "marble", "neon", "rose quartz", "gold", "moonstone", "quartz", "sunstone"],
-    "science": ["copper", "slime", "acid", "nitrogen", "silicon", "neon", "lead", "uranium", "titanium"],
-    "stone": ["malachite", "shale", "sandstone", "obsidian", "sunstone", "moonstone", "redstone", "uranium", "titanium"],
-    "sweet": ["frosting", "rock candy", "amethyst", "marble", "rose quartz", "silk", "permafrost", "moonstone", "lux"],
-    "uranium": ["malachite", "copper", "lead", "neon", "silicon", "sunstone", "uranium", "emerald", "star sapphire"],
-    "wealth": ["aquamarine", "amethyst", "topaz", "ruby", "gold", "silk", "emerald", "star sapphire", "diamond"]
-    }
+    "amber": [
+        "amber",
+        "rust",
+        "sulfur",
+        "iron",
+        "topaz",
+        "garnet",
+        "gold",
+        "sunstone",
+        "ruby",
+    ],
+    "barren": [
+        "rust",
+        "sandstone",
+        "mist",
+        "chalk",
+        "caulk",
+        "sulfur",
+        "sunstone",
+        "permafrost",
+        "onyx",
+    ],
+    "beach": [
+        "aquamarine",
+        "sandstone",
+        "shale",
+        "cobalt",
+        "gold",
+        "sunstone",
+        "quartz",
+        "emerald",
+        "star sapphire",
+    ],
+    "block": [
+        "rust",
+        "chalk",
+        "malachite",
+        "fluorite",
+        "obsidian",
+        "iron",
+        "permafrost",
+        "redstone",
+        "gold",
+    ],
+    "calcite": [
+        "chalk",
+        "iodine",
+        "marble",
+        "amethyst",
+        "garnet",
+        "caulk",
+        "obsidian",
+        "gold",
+        "lux",
+    ],
+    "cold": [
+        "aquamarine",
+        "frosting",
+        "chalk",
+        "mist",
+        "nitrogen",
+        "cobalt",
+        "quartz",
+        "permafrost",
+        "diamond",
+    ],
+    "dark": [
+        "jet",
+        "tar",
+        "blood",
+        "garnet",
+        "lead",
+        "cobalt",
+        "obsidian",
+        "star sapphire",
+        "onyx",
+    ],
+    "elemental": [
+        "iodine",
+        "copper",
+        "cobalt",
+        "nitrogen",
+        "lead",
+        "mercury",
+        "sulfur",
+        "iron",
+        "titanium",
+    ],
+    "hot": [
+        "amber",
+        "rust",
+        "garnet",
+        "tar",
+        "sulfur",
+        "ruby",
+        "sunstone",
+        "gold",
+        "redstone",
+    ],
+    "liquid": [
+        "iodine",
+        "frosting",
+        "blood",
+        "nitrogen",
+        "acid",
+        "amber",
+        "tar",
+        "mercury",
+        "caulk",
+    ],
+    "metal": [
+        "rust",
+        "copper",
+        "lead",
+        "silicon",
+        "mercury",
+        "sulfur",
+        "iron",
+        "gold",
+        "titanium",
+    ],
+    "nature": [
+        "shale",
+        "wood",
+        "sandstone",
+        "amber",
+        "topaz",
+        "quartz",
+        "obsidian",
+        "gold",
+        "emerald",
+    ],
+    "oil": [
+        "shale",
+        "tar",
+        "jet",
+        "mercury",
+        "cobalt",
+        "fluorite",
+        "moonstone",
+        "quartz",
+        "redstone",
+    ],
+    "radiant": [
+        "chalk",
+        "frosting",
+        "marble",
+        "neon",
+        "rose quartz",
+        "gold",
+        "moonstone",
+        "quartz",
+        "sunstone",
+    ],
+    "science": [
+        "copper",
+        "slime",
+        "acid",
+        "nitrogen",
+        "silicon",
+        "neon",
+        "lead",
+        "uranium",
+        "titanium",
+    ],
+    "stone": [
+        "malachite",
+        "shale",
+        "sandstone",
+        "obsidian",
+        "sunstone",
+        "moonstone",
+        "redstone",
+        "uranium",
+        "titanium",
+    ],
+    "sweet": [
+        "frosting",
+        "rock candy",
+        "amethyst",
+        "marble",
+        "rose quartz",
+        "silk",
+        "permafrost",
+        "moonstone",
+        "lux",
+    ],
+    "uranium": [
+        "malachite",
+        "copper",
+        "lead",
+        "neon",
+        "silicon",
+        "sunstone",
+        "uranium",
+        "emerald",
+        "star sapphire",
+    ],
+    "wealth": [
+        "aquamarine",
+        "amethyst",
+        "topaz",
+        "ruby",
+        "gold",
+        "silk",
+        "emerald",
+        "star sapphire",
+        "diamond",
+    ],
+}
 
 default_vial = {
     "gel_vial": False,
@@ -236,13 +439,13 @@ default_vial = {
 }
 
 vials: dict[str, dict] = {
-    "hp": { 
+    "hp": {
         "name": "HEALTH VIAL",
         "hidden": False,
         "gel_vial": True,
-        "fill_color": Color(191, 75, 153), 
+        "fill_color": Color(191, 75, 153),
         "shade_color": Color(159, 54, 145),
-        },
+    },
     "vim": {
         "name": "VIM GAUGE",
         "hidden": False,
@@ -310,21 +513,21 @@ vials: dict[str, dict] = {
         "name": "REALNESS",
         "hidden": False,
         "fill_color": Color(92, 92, 92),
-        "shade_color": Color(255, 255, 255)
+        "shade_color": Color(255, 255, 255),
     },
     "fakeness": {
         "name": "FAKENESS",
         "hidden": False,
         "gel_vial": True,
         "fill_color": Color(255, 255, 255),
-        "shade_color": Color(128, 128, 128)
+        "shade_color": Color(128, 128, 128),
     },
     "hysteria": {
         "name": "HYSTERIA",
         "segmented_vial": True,
         "fill_color": Color(254, 0, 0),
         "shade_color": Color(254, 0, 0),
-    }
+    },
 }
 
 for vial_name in vials:
@@ -342,11 +545,13 @@ strife_category_colors = {
     "none": Color(0, 175, 255),
 }
 
+
 def get_category_color(category) -> Color:
     if category in strife_category_colors:
         return strife_category_colors[category]
     else:
         return strife_category_colors["none"]
+
 
 # first is light color, second is dark color
 pickable_colors = [
@@ -380,30 +585,48 @@ pickable_colors = [
 ]
 
 troll_colors = [
-    [161, 0, 0], # rust
-    [162, 82, 3], # bronze
-    [161, 161, 0], # gold
-    [101, 130, 0], # lime
-    [64, 102, 0], # olive
-    [7, 136, 70], # jade
-    [0, 130, 130], # teal
-    [0, 65, 130], # cobalt
-    [0, 33, 203], # indigo
-    [68, 10, 127], # purple
-    [106, 0, 106], # violet
-    [153, 0, 77], # fuchsia
+    [161, 0, 0],  # rust
+    [162, 82, 3],  # bronze
+    [161, 161, 0],  # gold
+    [101, 130, 0],  # lime
+    [64, 102, 0],  # olive
+    [7, 136, 70],  # jade
+    [0, 130, 130],  # teal
+    [0, 65, 130],  # cobalt
+    [0, 33, 203],  # indigo
+    [68, 10, 127],  # purple
+    [106, 0, 106],  # violet
+    [153, 0, 77],  # fuchsia
 ]
 
 parts_files = {
-    "base": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/base")],
-    "eyes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/eyes")],
-    "hair": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/hair")],
-    "horns": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/horns")],
-    "mouth": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/mouth")],
-    "pants": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/pants")],
-    "shirt": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shirt")],
-    "shoes": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shoes")],
-    "coat": [filename.replace(".png", "") for filename in os.listdir("sprites/symbol/coat")],
+    "base": [
+        filename.replace(".png", "") for filename in os.listdir("sprites/symbol/base")
+    ],
+    "eyes": [
+        filename.replace(".png", "") for filename in os.listdir("sprites/symbol/eyes")
+    ],
+    "hair": [
+        filename.replace(".png", "") for filename in os.listdir("sprites/symbol/hair")
+    ],
+    "horns": [
+        filename.replace(".png", "") for filename in os.listdir("sprites/symbol/horns")
+    ],
+    "mouth": [
+        filename.replace(".png", "") for filename in os.listdir("sprites/symbol/mouth")
+    ],
+    "pants": [
+        filename.replace(".png", "") for filename in os.listdir("sprites/symbol/pants")
+    ],
+    "shirt": [
+        filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shirt")
+    ],
+    "shoes": [
+        filename.replace(".png", "") for filename in os.listdir("sprites/symbol/shoes")
+    ],
+    "coat": [
+        filename.replace(".png", "") for filename in os.listdir("sprites/symbol/coat")
+    ],
 }
 
 possible_parts = {}
@@ -427,7 +650,8 @@ for part in parts_files:
         if style not in part_styles[part][final_item_name]:
             part_styles[part][final_item_name].append(style)
 
-default_style_dict = {part:"standard" for part in possible_parts}
+default_style_dict = {part: "standard" for part in possible_parts}
+
 
 def get_random_symbol(base: Optional[str] = None) -> dict:
     symbol_dict: dict[str, Union[str, list, dict]] = {
@@ -440,8 +664,10 @@ def get_random_symbol(base: Optional[str] = None) -> dict:
         "shirt": random.choice(possible_parts["shirt"]),
         "shoes": random.choice(possible_parts["shoes"]),
     }
-    if base is None: symbol_dict["base"] = random.choice(possible_parts["base"])
-    else: symbol_dict["base"] = base
+    if base is None:
+        symbol_dict["base"] = random.choice(possible_parts["base"])
+    else:
+        symbol_dict["base"] = base
     if random.random() < 0.5:
         symbol_dict["coat"] = random.choice(possible_parts["coat"])
     else:
@@ -453,7 +679,7 @@ def get_random_symbol(base: Optional[str] = None) -> dict:
         item_name = symbol_dict[part]
         style_dict[part] = random.choice(part_styles[part][item_name])
     symbol_dict["style_dict"] = style_dict
-    if symbol_dict["base"] != "troll": 
+    if symbol_dict["base"] != "troll":
         symbol_dict["color"] = random.choice(pickable_colors)
     else:
         symbol_dict["color"] = random.choice(troll_colors)
