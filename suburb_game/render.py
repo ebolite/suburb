@@ -1537,7 +1537,7 @@ class Tile(UIElement):
             else: # playing game view
                 if x_diff == 0 and y_diff == 0:
                     return
-                if x_diff !=0 and y_diff != 0: # only accept pure horizontal or vertical movements
+                if x_diff != 0 and y_diff != 0: # only accept pure horizontal or vertical movements
                     return
                 if x_diff > 0: client.requestplus("move_multi", {"direction": "right", "amount": abs(x_diff)})
                 elif x_diff < 0: client.requestplus("move_multi", {"direction": "left", "amount": abs(x_diff)})
