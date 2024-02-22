@@ -1059,6 +1059,8 @@ def use_item(
     if (
         instance.name not in player.sylladex
         and instance.name not in player.room.instances
+        and instance.name != player.worn_instance_name
+        and instance.name != player.wielding
     ):
         return False
     if (
