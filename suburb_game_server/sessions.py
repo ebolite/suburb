@@ -1711,6 +1711,11 @@ class SubPlayer(Player):
             out_dict[instance_name] = instance.get_dict()
         return out_dict
 
+    def add_sylladex_to_alchemy_excursus(self):
+        for instance_name in self.sylladex:
+            instance = alchemy.Instance(instance_name)
+            self.session.add_to_excursus(instance.item.name)
+
     def get_illegal_overmap_moves(self) -> list[str]:
         player_x = self.map.x
         player_y = self.map.y
@@ -1786,7 +1791,8 @@ class SubPlayer(Player):
     def multi_move(self, direction: str, amount: int):
         for i in range(amount):
             self.attempt_move(direction)
-            if self.strife is not None: break
+            if self.strife is not None:
+                break
 
     def attempt_move(self, direction: str) -> bool:
         if self.strife is not None:
@@ -1892,6 +1898,7 @@ class SubPlayer(Player):
             destination_map = destination_player.land.housemap
             room = destination_map.random_valid_room([str(1)])  # go back to first gate
             self.goto_room(room)
+            self.add_sylladex_to_alchemy_excursus()
             return True
         destination_player = land.gate_location(gate_num, at_house)
         if destination_player is None:
@@ -1911,6 +1918,7 @@ class SubPlayer(Player):
             if not room.above_solid_ground():
                 print("not above solid ground")
                 return False
+            self.add_sylladex_to_alchemy_excursus()
         self.goto_room(room)
         return True
 
