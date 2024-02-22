@@ -1663,6 +1663,7 @@ class SubPlayer(Player):
             return False
         self.sylladex.append(instance_name)
         self.room.remove_instance(instance_name)
+        if self.is_at_housemap: self.session.add_to_excursus(instance.item.name)
         return True
 
     def eject(self, instance_name: str, modus_name: str, velocity: int) -> bool:
@@ -1921,6 +1922,17 @@ class SubPlayer(Player):
             self.add_sylladex_to_alchemy_excursus()
         self.goto_room(room)
         return True
+
+    @property
+    def is_at_housemap(self) -> bool:
+        land = self.overmap
+        if land.overmap_type == "land":
+            land = Land(self.overmap.name, self.session)
+        else: return False
+        if land.housemap.name == self.map.name:
+            return True
+        else:
+            return False
 
     @property
     def session(self) -> Session:
