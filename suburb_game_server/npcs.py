@@ -568,7 +568,7 @@ class NpcPrototype(NpcInteraction):
             return f"{old_name.upper()} became {target.nickname.upper()}!"
         else:  # sprite was already prototyped
             if prototyped_item.power + prototyped_item.inheritpower > 200:
-                f"{target.nickname.capitalize()} dodges the {prototyped_item.displayname}!"
+                return f"{target.nickname.capitalize()} dodges the {prototyped_item.displayname}!"
             if prototyped_item.name in target.prototypes:
                 target.nickname = f"2x{target.nickname}"
             else:
