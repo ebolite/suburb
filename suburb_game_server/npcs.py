@@ -546,12 +546,9 @@ class NpcPrototype(NpcInteraction):
             return False
         instance = alchemy.Instance(instance_name)
         prototyped_item = instance.item
-        target.prototype_with_item(
-            prototyped_item.name, inherit_all_skills=True, additive_power=True
-        )
-        if not player.entered:
-            player.session.prototypes.append(prototyped_item.name)
         old_name = target.nickname
+        if player.entered and prototyped_item.power + prototyped_item.inheritpower > 200:
+            return f"{target.nickname.capitalize()} dodges the {prototyped_item.displayname}!"
         if target.type == "kernelsprite":
             target.type = "sprite"
             target.ai_type = "sprite"
@@ -565,10 +562,17 @@ class NpcPrototype(NpcInteraction):
                 sprite_name = prototyped_item.base.replace("+", "").lower()
             target.nickname = f"{sprite_name}sprite"
             target.prototypes.append(prototyped_item.name)
+            target.prototype_with_item(
+                prototyped_item.name, inherit_all_skills=True, additive_power=True
+            )
+            if instance_name in player.sylladex:
+                player.sylladex.remove(instance_name)
+            elif instance_name in player.room.instances:
+                player.room.remove_instance(instance_name)
+            if not player.entered:
+                player.session.prototypes.append(prototyped_item.name)
             return f"{old_name.upper()} became {target.nickname.upper()}!"
         else:  # sprite was already prototyped
-            if prototyped_item.power + prototyped_item.inheritpower > 200:
-                return f"{target.nickname.capitalize()} dodges the {prototyped_item.displayname}!"
             if prototyped_item.name in target.prototypes:
                 target.nickname = f"2x{target.nickname}"
             else:
@@ -582,6 +586,15 @@ class NpcPrototype(NpcInteraction):
                 target.nickname = f"{sprite_adjective}{target.nickname}"
             target.interactions.remove("prototype")
             target.prototypes.append(prototyped_item.name)
+            target.prototype_with_item(
+                prototyped_item.name, inherit_all_skills=True, additive_power=True
+            )
+            if instance_name in player.sylladex:
+                player.sylladex.remove(instance_name)
+            elif instance_name in player.room.instances:
+                player.room.remove_instance(instance_name)
+            if not player.entered:
+                player.session.prototypes.append(prototyped_item.name)
             return f"{old_name.upper()} became {target.nickname.upper()}!"
 
 
