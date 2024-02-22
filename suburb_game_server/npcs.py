@@ -538,11 +538,7 @@ class NpcPrototype(NpcInteraction):
         additional_data: dict[str, str],
     ):
         instance_name = additional_data["instance_name"]
-        if instance_name in player.sylladex:
-            player.sylladex.remove(instance_name)
-        elif instance_name in player.room.instances:
-            player.room.remove_instance(instance_name)
-        else:
+        if instance_name not in player.sylladex and instance_name not in player.room.instances:
             return False
         instance = alchemy.Instance(instance_name)
         prototyped_item = instance.item
