@@ -338,7 +338,8 @@ def handle_request(dict):
             print(f"session created {session_name}")
             return f"The session `{session_name}` has been successfully registered."
         elif intent == "join_session":
-            if session_name not in database.memory_sessions: return f"Session `{session_name}` does not exist."
+            if session_name not in database.memory_sessions:
+                return f"Session `{session_name}` does not exist."
             session = sessions.Session(session_name)
             if not session.verify_password(session_password):
                 return f"Incorrect session password."
@@ -586,6 +587,10 @@ def handle_request(dict):
         case "move":
             player.attempt_move(content)
             return
+        case "move_multi":
+            direction = content["direction"]
+            amount = content["amount"]
+            player.multi_move(direction, amount)
         case "overmap_move":
             player.attempt_overmap_move(content)
             return overmap_data(player)

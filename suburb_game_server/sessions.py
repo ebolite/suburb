@@ -1221,9 +1221,7 @@ class Player:
                 player = Player(player_name)
                 for subplayer in player.sub_players_list:
                     if subplayer.strife is not None:
-                        player_griefer = subplayer.strife.get_griefer(
-                            subplayer.name
-                        )
+                        player_griefer = subplayer.strife.get_griefer(subplayer.name)
                         log_message = aspect.permanent_adjust(
                             player_griefer, total_bonus
                         )
@@ -1784,6 +1782,11 @@ class SubPlayer(Player):
         # else: entry_direction = "right"
         self.goto_room(target_map.get_starting_room(entry_direction))
         return True
+
+    def multi_move(self, direction: str, amount: int):
+        for i in range(amount):
+            self.attempt_move(direction)
+            if self.strife is not None: break
 
     def attempt_move(self, direction: str) -> bool:
         if self.strife is not None:

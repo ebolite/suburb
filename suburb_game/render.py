@@ -1534,6 +1534,19 @@ class Tile(UIElement):
                     case _:
                         self.tile_map.map_editor.move_view(x_diff, y_diff)
                         self.tile_map.update_map()
+            else: # playing game view
+                if x_diff == 0 and y_diff == 0:
+                    return
+                if x_diff !=0 and y_diff != 0: # only accept pure horizontal or vertical movements
+                    return
+                if x_diff > 0: client.requestplus("move_multi", {"direction": "right", "amount": abs(x_diff)})
+                elif x_diff < 0: client.requestplus("move_multi", {"direction": "left", "amount": abs(x_diff)})
+                elif y_diff > 0: client.requestplus("move_multi", {"direction": "down", "amount": abs(y_diff)})
+                else: client.requestplus("move_multi", {"direction": "up", "amount": abs(y_diff)})
+                self.tile_map.update_map()
+
+                
+                
 
     def update(self):
         if self.x == 0 or self.y == 0:
