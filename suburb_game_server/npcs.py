@@ -251,6 +251,14 @@ class Npc:
             "savvy": 1,
             "mettle": 1,
         }
+        self.permanent_stat_bonuses: dict[str, int] = {
+            "spunk": 0,
+            "vigor": 0,
+            "tact": 0,
+            "luck": 0,
+            "savvy": 0,
+            "mettle": 0,
+        }
         self.actions = 1
         self.additional_skills: list[str] = []
         self.onhit_states = {}

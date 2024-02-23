@@ -516,7 +516,11 @@ class Griefer:
         self.death_break()
 
     def take_damage(
-        self, damage: int, coin: Optional[bool] = None, source: Optional[str] = None, log=True
+        self,
+        damage: int,
+        coin: Optional[bool] = None,
+        source: Optional[str] = None,
+        log=True,
     ) -> int:
         if damage > 0:
             damage = skills.modify_damage(damage, self)
@@ -750,6 +754,9 @@ class Griefer:
         griefer.nickname = npc.nickname.upper()
         griefer.base_power = npc.power
         griefer.base_stats = stats_from_ratios(npc.stat_ratios, npc.power)
+        for stat in griefer.base_stats:
+            if stat in npc.permanent_stat_bonuses:
+                griefer.base_stats[stat] += npc.permanent_stat_bonuses[stat]
         griefer.known_skills += npc.additional_skills
         griefer.actions = npc.actions
         griefer.npc_name = npc.name
