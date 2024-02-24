@@ -3366,13 +3366,15 @@ class Enemy(GrieferElement, Image):
         super().__init__(x, y, self.path)
         if griefer.color is not None:
             r, g, b = griefer.color
-            new_color = get_dark_color(r, g, b)
+            new_color = Color(r, g, b)
         else:
             grist_type = griefer.grist_type or "build"
             new_color = config.gristcolors[grist_type]
             if isinstance(new_color, list):
                 new_color = random.choice(new_color)
-        self.convert_colors.append((themes.default.dark, new_color))
+        dark_color = get_dark_color(new_color.r, new_color.g, new_color.b)
+        self.convert_colors.append((themes.default.light, new_color))
+        self.convert_colors.append((themes.default.dark, dark_color))
         self.make_labels()
         click_check.append(self)
         self.update_vials()
