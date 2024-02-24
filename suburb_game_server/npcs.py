@@ -448,6 +448,22 @@ class KernelSprite(Npc):
         return sprite
 
 
+class Consort(Npc):
+    @classmethod
+    def spawn_new(cls, player: "sessions.SubPlayer"):
+        consort_type = "salamander"  # todo: type is selected by players
+        name = Npc.make_valid_name(consort_type)
+        consort = cls(name)
+        consort.type = f"consort_{consort_type}"
+        consort.hostile = False
+        consort.power = 1
+        consort.nickname = consort_type  # todo: random adjective
+        consort.invulnerable = True
+        consort.interactions.append("follow")
+        consort.color = player.color  # todo: color is separate from player color
+        return consort
+
+
 class NpcInteraction:
     def __init__(self, name):
         self.name = name
@@ -546,12 +562,18 @@ class NpcPrototype(NpcInteraction):
         additional_data: dict[str, str],
     ):
         instance_name = additional_data["instance_name"]
-        if instance_name not in player.sylladex and instance_name not in player.room.instances:
+        if (
+            instance_name not in player.sylladex
+            and instance_name not in player.room.instances
+        ):
             return False
         instance = alchemy.Instance(instance_name)
         prototyped_item = instance.item
         old_name = target.nickname
-        if player.entered and prototyped_item.power + prototyped_item.inheritpower > 200:
+        if (
+            player.entered
+            and prototyped_item.power + prototyped_item.inheritpower > 200
+        ):
             return f"{target.nickname.capitalize()} dodges the {prototyped_item.displayname}!"
         if target.type == "kernelsprite":
             target.type = "sprite"
