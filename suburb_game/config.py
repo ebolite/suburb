@@ -86,6 +86,7 @@ icons = {
     "basilisk": "sprites/icons/basilisk.png",
     "giclops": "sprites/icons/giclops.png",
     "acheron": "sprites/icons/acheron.png",
+    "consort_salamander": "sprites/icons/consort_salamander.png",
 }
 
 header_icons = {

@@ -450,7 +450,7 @@ class KernelSprite(Npc):
 
 class Consort(Npc):
     @classmethod
-    def spawn_new(cls, player: "sessions.SubPlayer"):
+    def spawn_new(cls, player: "sessions.SubPlayer", room: "sessions.Room"):
         consort_type = "salamander"  # todo: type is selected by players
         name = Npc.make_valid_name(consort_type)
         consort = cls(name)
@@ -461,6 +461,7 @@ class Consort(Npc):
         consort.invulnerable = True
         consort.interactions.append("follow")
         consort.color = player.color  # todo: color is separate from player color
+        consort.goto_room(room)
         return consort
 
 

@@ -972,6 +972,8 @@ def console_commands(player: sessions.SubPlayer, content: str):
             imp = npcs.underlings["imp"]
             for i in range(num):
                 imp.make_npc(grist_name, player.land.gristcategory, player.room)
+        case "consortify":
+            consort = npcs.Consort.spawn_new(player, player.room)
         case "enemify":
             underling_type = args[0]
             if len(args) > 1:
