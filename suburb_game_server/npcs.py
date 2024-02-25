@@ -243,6 +243,7 @@ class Npc:
         self.hostile = True
         self.hostility = 1.0
         self.ai_type: str = "random"
+        self.owner_id: Optional[str] = None
         self.stat_ratios: dict[str, int] = {
             "spunk": 1,
             "vigor": 1,
@@ -362,6 +363,12 @@ class Npc:
     def name(self):
         return self.__dict__["_id"]
 
+    @property
+    def owner(self) -> Optional["sessions.Player"]:
+        if self.owner_id is None:
+            return None
+        return sessions.Player(self.owner_id)
+
     def follow(self, player: "sessions.SubPlayer"):
         self.unfollow()
         player.npc_followers.append(self.name)
@@ -443,6 +450,7 @@ class KernelSprite(Npc):
         sprite.additional_skills.append("abstain")
         sprite.interactions.append("prototype")
         sprite.ai_type = "kernel"
+        sprite.owner_id = player.player.id
         sprite.follow(player)
         sprite.goto_room(player.room)
         return sprite
@@ -461,6 +469,7 @@ class Consort(Npc):
         consort.invulnerable = True
         consort.interactions.append("follow")
         consort.color = player.color  # todo: color is separate from player color
+        consort.owner_id = player.player.id
         consort.goto_room(room)
         return consort
 
@@ -477,6 +486,28 @@ class NpcInteraction:
         additional_data: dict[str, str],
     ):
         pass
+
+
+class NpcName(NpcInteraction):
+    def use(
+        self,
+        player: "sessions.SubPlayer",
+        target: "Npc",
+        additional_data: dict[str, str],
+    ):
+        if player.player.id == target.owner_id or target.owner_id is None:
+            name = additional_data["name"]
+            if len(name) == 0:
+                return f"Specify a name."
+            if len(name) > 25:
+                return f"'{name}' is a bit too long of a name, you think."
+            target.nickname = name
+            target.owner_id = player.player.id # renaming something makes you own it. i don't make the rules
+        else:
+            return f"You don't have the authority to rename {target.nickname.capitalize()}!"
+
+
+NpcName("name")
 
 
 class NpcTalk(NpcInteraction):
@@ -544,12 +575,15 @@ class NpcFollow(NpcInteraction):
         target: "Npc",
         additional_data: dict[str, str],
     ):
-        if target.following == player.name:
-            target.unfollow()
-            return f"{target.nickname.capitalize()} is no longer following you!"
+        if player.player.id == target.owner_id or target.owner_id is None:
+            if target.following == player.name:
+                target.unfollow()
+                return f"{target.nickname.capitalize()} is no longer following you!"
+            else:
+                target.follow(player)
+                return f"{target.nickname.capitalize()} is now following you!"
         else:
-            target.follow(player)
-            return f"{target.nickname.capitalize()} is now following you!"
+            return f"{target.nickname.capitalize()} won't listen to you!"
 
 
 NpcFollow("follow")
