@@ -468,6 +468,8 @@ class Consort(Npc):
         consort.nickname = consort_type  # todo: random adjective
         consort.invulnerable = True
         consort.interactions.append("follow")
+        consort.interactions.append("name")
+        consort.interactions.append("talk")
         consort.color = player.color  # todo: color is separate from player color
         consort.owner_id = player.player.id
         consort.goto_room(room)
@@ -502,7 +504,9 @@ class NpcName(NpcInteraction):
             if len(name) > 25:
                 return f"'{name}' is a bit too long of a name, you think."
             target.nickname = name
-            target.owner_id = player.player.id # renaming something makes you own it. i don't make the rules
+            target.owner_id = (
+                player.player.id
+            )  # renaming something makes you own it. i don't make the rules
         else:
             return f"You don't have the authority to rename {target.nickname.capitalize()}!"
 
@@ -517,7 +521,18 @@ class NpcTalk(NpcInteraction):
         target: "Npc",
         additional_data: dict[str, str],
     ):
-        if target.type == "kernelsprite":
+        if target.type == "consort_salamander":
+            glub = "glub"
+            return glub * random.randint(4, 13)
+        elif target.type == "consort_crocodile":
+            nak = "nak"
+            return nak * random.randint(4, 13)
+        elif target.type == "consort_iguana":
+            thip = "thip"
+            return thip * random.randint(4, 13)
+        elif target.type == "consort_turtle":
+            return "..."
+        elif target.type == "kernelsprite":
             symbols = list("•❤♫☎°♨✈✣☏■■■☀➑➑➑✂✉✉☼☆★☁☁♕♕♕♕♠♠✪░░▒▒▓▓██■¿.!≡")
             out = []
             for i in range(random.randint(10, 30)):
