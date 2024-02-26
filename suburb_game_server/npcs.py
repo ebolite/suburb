@@ -235,6 +235,7 @@ class Npc:
         self.overmap_name = None
         self.map_name = None
         self.room_name = None
+        self.assigned = False  # Assigned npcs can't move
         self.power: int = 0
         self.nickname: str = name
         self.type: str = ""
@@ -382,6 +383,8 @@ class Npc:
             self.following = None
 
     def goto_room(self, room: "sessions.Room"):
+        if self.assigned:
+            return
         if self.session_name is not None and self.session != room.session:
             if self.name in self.session.current_players:
                 self.session.current_players.remove(self.name)
@@ -507,9 +510,9 @@ class NpcName(NpcInteraction):
             target.owner_id = (
                 player.player.id
             )  # renaming something makes you own it. i don't make the rules
-            return f"Say hello to {name.capitalize()}!"
+            return f"Say hello to {name.upper()}!"
         else:
-            return f"You don't have the authority to rename {target.nickname.capitalize()}!"
+            return f"You don't have the authority to rename {target.nickname.upper()}!"
 
 
 NpcName("name")
@@ -532,7 +535,7 @@ class NpcTalk(NpcInteraction):
             thip = "thip"
             return thip * random.randint(4, 13)
         elif target.type == "consort_turtle":
-            return "..."
+            return "weh..."
         elif target.type == "kernelsprite":
             symbols = list("•❤♫☎°♨✈✣☏■■■☀➑➑➑✂✉✉☼☆★☁☁♕♕♕♕♠♠✪░░▒▒▓▓██■¿.!≡")
             out = []
@@ -565,16 +568,16 @@ class NpcTalk(NpcInteraction):
                 ", and it responds with an infuriatingly vague answer.",
             ]
             possible_lines = [
-                f"{target.nickname.capitalize()} says some nonsense about an Ultimate Riddle or some shit.",
-                f'{target.nickname.capitalize()} is talking about some "{player.title}." Sounds like a loser.',
-                f"{target.nickname.capitalize()} is being coy with some riddlesome bullshit again.",
-                f"{target.nickname.capitalize()} gives you a riddle you're not bothering to solve.",
-                f"{target.nickname.capitalize()} says something about The Choice but you're not really listening.",
+                f"{target.nickname.upper()} says some nonsense about an Ultimate Riddle or some shit.",
+                f'{target.nickname.upper()} is talking about some "{player.title}." Sounds like a loser.',
+                f"{target.nickname.upper()} is being coy with some riddlesome bullshit again.",
+                f"{target.nickname.upper()} gives you a riddle you're not bothering to solve.",
+                f"{target.nickname.upper()} says something about The Choice but you're not really listening.",
             ]
             for question in possible_questions:
                 for response in possible_responses:
                     possible_lines.append(
-                        f"You ask {target.nickname.capitalize()} {question}{response}"
+                        f"You ask {target.nickname.upper()} {question}{response}"
                     )
             return random.choice(possible_lines)
         else:
@@ -582,6 +585,34 @@ class NpcTalk(NpcInteraction):
 
 
 NpcTalk("talk")
+
+
+class NpcAssign(NpcInteraction):
+    def use(
+        self,
+        player: "sessions.SubPlayer",
+        target: "Npc",
+        additional_data: dict[str, str],
+    ):
+        if target.assigned:
+            if target.name not in player.assigned_npcs:
+                return f"{target.nickname.upper()} doesn't follow your orders!"
+            target.assigned = False
+            player.assigned_npcs.remove(target.name)
+            return f"{target.nickname.upper()} stops living in the {target.room.tile.name.upper()}."
+        if target.owner_id != player.player.id:
+            return f"{target.nickname.upper()} doesn't follow your orders!"
+        if target.overmap.name != player.land.name:
+            return f"This isn't {player.land.acronym}!"
+        if target.map.name != player.land.housemap.name:
+            return f"This isn't your house!"
+        if not target.room.tile.livable:
+            return f"{target.nickname.upper()} can't live in the {target.room.tile.name.upper()}!"
+        target.assigned = True
+        player.assigned_npcs.append(target.name)
+
+
+NpcAssign("assign")
 
 
 class NpcFollow(NpcInteraction):
@@ -594,12 +625,12 @@ class NpcFollow(NpcInteraction):
         if player.player.id == target.owner_id or target.owner_id is None:
             if target.following == player.name:
                 target.unfollow()
-                return f"{target.nickname.capitalize()} is no longer following you!"
+                return f"{target.nickname.upper()} is no longer following you!"
             else:
                 target.follow(player)
-                return f"{target.nickname.capitalize()} is now following you!"
+                return f"{target.nickname.upper()} is now following you!"
         else:
-            return f"{target.nickname.capitalize()} won't listen to you!"
+            return f"{target.nickname.upper()} won't listen to you!"
 
 
 NpcFollow("follow")
@@ -625,7 +656,9 @@ class NpcPrototype(NpcInteraction):
             player.entered
             and prototyped_item.power + prototyped_item.inheritpower > 200
         ):
-            return f"{target.nickname.capitalize()} dodges the {prototyped_item.displayname}!"
+            return (
+                f"{target.nickname.upper()} dodges the {prototyped_item.displayname}!"
+            )
         if target.type == "kernelsprite":
             target.type = "sprite"
             target.ai_type = "sprite"

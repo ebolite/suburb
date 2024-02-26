@@ -1096,7 +1096,7 @@ class Player:
         player.setup_defaults(name, owner_username, session)
         return player
 
-    def setup_defaults(self, name, owner_username, session: Session):
+    def setup_defaults(self, name: str, owner_username: str, session: Session):
         self._id = name
         # shared between all selves
         self.sub_players = {}
@@ -1119,9 +1119,10 @@ class Player:
         self.starting_map_name = ""
         self.prototyped_before_entry = False
         # phernalia registry is a default list of deployable objects minus the deployed phernalia
-        self.deployed_phernalia = []
+        self.deployed_phernalia: list[str] = []
         # atheneum is the list of stored instances
-        self.atheneum = []
+        self.atheneum: list[str] = []
+        self.assigned_npcs: list[str] = []
         self.permanent_stat_bonuses = {}
         self.symbol_dict = {}
         self.stat_ratios = {
