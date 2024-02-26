@@ -36,6 +36,11 @@ class Tile:
         self.special = False  # tiles that are otherwise special for some reason
         self.debug = False  # cannot be placed by map editor
         self.activity: Optional[str] = None  # name of corresponding ConsortActivity
+        self.livable = False  # can consorts be assigned here?
+        self.happiness: int = 0  # how much happiness do tenants here get?
+        self.floor_happiness: int = (
+            0  # how much happiness does this structure give tenants in the floor?
+        )
         self.ban_npc_spawn = False
         self.build_cost = 10
         self.always_spawn = []
@@ -196,6 +201,8 @@ right_window.supported = True
 right_window.build_cost = 2
 
 bedroom = Tile("B", "bedroom")
+bedroom.livable = True
+bedroom.happiness = 2
 
 bathroom = Tile("b", "bathroom")
 
@@ -203,26 +210,35 @@ foyer = Tile("F", "foyer")
 foyer.stair = True
 
 living_room = Tile("L", "living room")
+living_room.floor_happiness = 1
 
 laundry_room = Tile("l", "laundry room")
+laundry_room.floor_happiness = 1
 
 kitchen = Tile("K", "kitchen")
+kitchen.floor_happiness = 1
 
 garage = Tile("G", "garage")
 
 cellar = Tile("C", "cellar")
 
 dining_room = Tile("D", "dining room")
+dining_room.floor_happiness = 1
 
 attic = Tile("A", "attic")
 
 office = Tile("O", "office")
+office.livable = True
+office.happiness = -1
 
 workout_room = Tile("W", "workout room")
 
 game_room = Tile("g", "game room")
+game_room.happiness = 1
 
 studio_apartment = Tile("S", "studio apartment")
+studio_apartment.livable = True
+studio_apartment.happiness = 1
 
 security = Tile("s", "security")
 
