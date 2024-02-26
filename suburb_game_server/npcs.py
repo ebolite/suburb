@@ -470,7 +470,6 @@ class Consort(Npc):
         consort.invulnerable = True
         consort.interactions.append("follow")
         consort.interactions.append("name")
-        consort.interactions.append("talk")
         consort.color = player.color  # todo: color is separate from player color
         consort.owner_id = player.player.id
         consort.goto_room(room)
@@ -508,6 +507,7 @@ class NpcName(NpcInteraction):
             target.owner_id = (
                 player.player.id
             )  # renaming something makes you own it. i don't make the rules
+            return f"Say hello to {name.capitalize()}!"
         else:
             return f"You don't have the authority to rename {target.nickname.capitalize()}!"
 

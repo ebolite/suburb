@@ -11,11 +11,11 @@ npc_interactions: dict[str, "NpcInteraction"] = {}
 
 class Npc:
     def __init__(self, name, npc_dict):
-        self.name = name
-        self.nickname = npc_dict["nickname"]
-        self.power = npc_dict["power"]
-        self.type = npc_dict["type"]
-        self.interactions = npc_dict["interactions"]
+        self.name: str = name
+        self.nickname: str = npc_dict["nickname"]
+        self.power: int = npc_dict["power"]
+        self.type: str = npc_dict["type"]
+        self.interactions: list[str] = npc_dict["interactions"]
 
     def get_npc_interaction_button(self, interaction_name: str, last_scene: Callable):
         if interaction_name not in npc_interactions:
@@ -50,6 +50,34 @@ class NpcInteraction:
 
 NpcInteraction("talk")
 NpcInteraction("follow")
+
+
+class NpcName(NpcInteraction):
+    def use(self, npc: Npc, last_scene: Callable):
+        suburb.new_scene()
+        render.LogWindow(None)
+        util.log(f"What will you name {npc.nickname.capitalize()}?")
+        name_box = render.InputTextBox(0.5, 0.5)
+
+        def button_func():
+            util.log(
+                self.request_npc_interaction(
+                    npc, additional_data={"name": name_box.text}
+                )
+            )
+            last_scene()
+
+        confirmbutton = render.TextButton(0.5, 0.6, 100, 50, "Confirm", button_func)
+        backbutton = render.Button(
+            0.1,
+            0.07,
+            "sprites/buttons/back.png",
+            "sprites/buttons/backpressed.png",
+            last_scene,
+        )
+
+
+NpcName("name")
 
 
 class NpcPrototype(NpcInteraction):
