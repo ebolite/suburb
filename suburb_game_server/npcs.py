@@ -473,6 +473,7 @@ class Consort(Npc):
         consort.invulnerable = True
         consort.interactions.append("follow")
         consort.interactions.append("name")
+        consort.interactions.append("assign")
         consort.color = player.color  # todo: color is separate from player color
         consort.owner_id = player.player.id
         consort.goto_room(room)
