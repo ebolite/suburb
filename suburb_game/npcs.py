@@ -50,6 +50,7 @@ class NpcInteraction:
 
 NpcInteraction("talk")
 NpcInteraction("follow")
+NpcInteraction("assign")
 
 
 class NpcName(NpcInteraction):
