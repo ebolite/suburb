@@ -15,6 +15,7 @@ import database
 underlings: dict[str, "Underling"] = {}
 griefer_ai: dict[str, "GrieferAI"] = {}
 npc_interactions: dict[str, "NpcInteraction"] = {}
+consort_activities: dict[str, "ConsortActivity"] = {}
 
 
 class Underling:
@@ -675,6 +676,28 @@ class NpcPrototype(NpcInteraction):
 
 
 NpcPrototype("prototype")
+
+CONSORT_ACTIVITY_MULT = 0.12  # For balancing stat gains
+
+
+class ConsortActivity:
+    def __init__(self, name):
+        consort_activities[name] = self
+        self.name = name
+
+    def do(self, consort: Consort):
+        pass
+
+
+class SecurityActivity(ConsortActivity):
+    def do(self, consort: Consort):
+        bonus = 1
+        bonus += int(consort.power * CONSORT_ACTIVITY_MULT)
+        consort.permanent_stat_bonuses["spunk"] += bonus
+        consort.permanent_stat_bonuses["mettle"] += bonus
+
+
+SecurityActivity("security")
 
 if __name__ == "__main__":
     print(griefer_ai)
