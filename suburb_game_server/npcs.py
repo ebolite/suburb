@@ -609,6 +609,7 @@ class NpcAssign(NpcInteraction):
             return f"This isn't your house!"
         if not target.room.tile.livable:
             return f"{target.nickname.upper()} can't live in the {target.room.tile.name.upper()}!"
+        target.unfollow()
         target.assigned = True
         player.assigned_npcs.append(target.name)
 
@@ -623,6 +624,8 @@ class NpcFollow(NpcInteraction):
         target: "Npc",
         additional_data: dict[str, str],
     ):
+        if target.assigned:
+            return f"{target.nickname.upper()} is living here!"
         if player.player.id == target.owner_id or target.owner_id is None:
             if target.following == player.name:
                 target.unfollow()
