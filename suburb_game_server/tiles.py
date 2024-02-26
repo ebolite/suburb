@@ -1,6 +1,7 @@
 import config
 import random
 from copy import deepcopy
+from typing import Optional
 
 import spawnlists
 import util
@@ -34,6 +35,7 @@ class Tile:
         self.forbidden = False  # tiles that cannot be placed or modified by servers
         self.special = False  # tiles that are otherwise special for some reason
         self.debug = False  # cannot be placed by map editor
+        self.activity: Optional[str] = None  # name of corresponding ConsortActivity
         self.ban_npc_spawn = False
         self.build_cost = 10
         self.always_spawn = []
