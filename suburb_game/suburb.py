@@ -2914,6 +2914,10 @@ def map_editor_scene():
     map_editor.map_editor_scene()
 
 
+def virtual_porkhollow_scene():
+    pass
+
+
 def render_loop():
     while render.render():
         # print(tracemalloc.get_traced_memory())
