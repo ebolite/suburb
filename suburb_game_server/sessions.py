@@ -1011,7 +1011,15 @@ class Room:
             if npc.hostile and npc.power * npc.hostility > highest_power:
                 self.start_strife()
                 return
-
+            
+    def get_available_activities(self) -> list[str]:
+        activities = []
+        for x in range(len(self.map.map_tiles[self.y])):
+            checked_room = self.map.find_room(x, self.y)
+            if checked_room.tile.activity is not None and checked_room.tile.activity not in activities:
+                activities.append(checked_room.tile.activity)
+        return activities
+    
     @property
     def specials(self) -> dict[str, tuple]:
         special_dict = {}
