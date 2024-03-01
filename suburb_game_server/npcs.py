@@ -600,7 +600,9 @@ class NpcAssign(NpcInteraction):
                 return f"{target.nickname.upper()} doesn't follow your orders!"
             target.assigned = False
             player.assigned_npcs.remove(target.name)
+            target.room.assigned_npc_name = None
             return f"{target.nickname.upper()} stops living in the {target.room.tile.name.upper()}."
+        if target.room.assigned_npc_name is not None: return f"Someone else is already assigned here!"
         if target.owner_id != player.player.id:
             return f"{target.nickname.upper()} doesn't follow your orders!"
         if target.overmap.name != player.land.name:
@@ -611,6 +613,7 @@ class NpcAssign(NpcInteraction):
             return f"{target.nickname.upper()} can't live in the {target.room.tile.name.upper()}!"
         target.unfollow()
         target.assigned = True
+        target.room.assigned_npc_name = target.name
         player.assigned_npcs.append(target.name)
 
 

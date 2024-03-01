@@ -817,6 +817,7 @@ class Room:
             self.npcs: list[str] = []
             self.instances: list[str] = []
             self.strife_dict: dict = {}
+            self.assigned_npc_name: Optional[str] = None
             self.generate_loot()
 
     def start_strife(self):
@@ -1060,6 +1061,11 @@ class Room:
     @property
     def tile(self) -> tiles.Tile:
         return self.map.get_tile(self.x, self.y)
+    
+    @property
+    def assigned_npc(self) -> Optional["npcs.Npc"]:
+        if self.assigned_npc_name is None: return None
+        else: return npcs.Npc(self.assigned_npc_name)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -1206,6 +1212,10 @@ class Player:
             self.permanent_stat_bonuses[game_attr] += amount
         else:
             raise AttributeError
+
+    def process_minion_activities(self):
+        for i in range(self.unclaimed_rungs):  # run minion activities once per rung
+            ...
 
     def page_scatter(self):
         total_bonus = 0
@@ -1664,7 +1674,8 @@ class SubPlayer(Player):
             return False
         self.sylladex.append(instance_name)
         self.room.remove_instance(instance_name)
-        if self.is_at_housemap: self.session.add_to_excursus(instance.item.name)
+        if self.is_at_housemap:
+            self.session.add_to_excursus(instance.item.name)
         return True
 
     def eject(self, instance_name: str, modus_name: str, velocity: int) -> bool:
@@ -1929,7 +1940,8 @@ class SubPlayer(Player):
         land = self.overmap
         if land.overmap_type == "land":
             land = Land(self.overmap.name, self.session)
-        else: return False
+        else:
+            return False
         if land.housemap.name == self.map.name:
             return True
         else:
