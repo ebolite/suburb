@@ -1223,7 +1223,13 @@ class Player:
 
     def process_minion_activities(self):
         for i in range(self.unclaimed_rungs):  # run minion activities once per rung
-            ...
+            for minion_name in self.assigned_npcs:
+                minion = npcs.Consort(minion_name)
+                activities = minion.room.get_available_activities()
+                for activity_name in activities:
+                    if activity_name in npcs.consort_activities:
+                        activity = npcs.consort_activities[activity_name]
+                        activity.do(minion)
 
     def page_scatter(self):
         total_bonus = 0
