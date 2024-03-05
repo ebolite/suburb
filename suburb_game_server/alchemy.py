@@ -646,7 +646,7 @@ class Instance:
         self.combined: list[str] = []
         self.carved: str = "00000000"
         self.carved_item_name: str = "perfectly+generic object"
-        self.computer_data: dict = {"installed_programs": []}
+        self.computer_data: dict = {"installed_programs": ["Virtual Porkhollow"]}
         self.color: tuple[int, int, int] = (157, 224, 255)
 
     @property

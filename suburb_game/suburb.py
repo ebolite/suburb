@@ -1802,11 +1802,27 @@ def computer(instance: Instance):
     apps = []
     for app_name in instance.computer_data["installed_programs"]:
         random.seed(instance.name + app_name)
-        x = 0.1 + random.random() * 0.7
+        x = config.app_locations[app_name][0]
         random.seed(instance.name + app_name)
-        y = 0.1 + random.random() * 0.7
-        app_icon = render.AppIcon(random.random(), random.random(), app_name, task_bar)
+        y = config.app_locations[app_name][1]
+        app_icon = render.AppIcon(x, y, app_name, task_bar)
         apps.append(app_icon)
+
+
+def virtual_porkhollow(window: "render.Window"):
+    theme = current_theme()
+    viewport = window.viewport
+    viewport.color = theme.white
+    banner = render.Image(0, 0, "sprites/computer/porkhollow/porkhollow_banner.png")
+    banner.absolute = True
+    label = render.Image(0.5, 0.5, "sprites/computer/porkhollow/porkhollow_label.png")
+    label.bind_to(banner, True)
+    porker = render.Image(0.3, 0.5, "sprites/computer/porkhollow/porker.png")
+    banner.theme = theme
+    label.theme = theme
+    porker.theme = theme
+    banner.bind_to(viewport, True)
+    porker.bind_to(viewport, True)
 
 
 def gristtorrent(window: "render.Window"):
@@ -2912,10 +2928,6 @@ def item_editor_scene():
 def map_editor_scene():
     map_editor = itemeditor.MapEditor()
     map_editor.map_editor_scene()
-
-
-def virtual_porkhollow_scene():
-    pass
 
 
 def render_loop():

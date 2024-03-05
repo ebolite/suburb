@@ -2799,6 +2799,8 @@ class Window(SolidColor):
         match self.app_name:
             case "gristTorrent":
                 suburb.gristtorrent(self)
+            case "Virtual Porkhollow":
+                suburb.virtual_porkhollow(self)
             case "Sburb":
                 sburbserver.sburb(self)
 

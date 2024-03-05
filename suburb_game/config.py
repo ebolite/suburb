@@ -4,6 +4,12 @@ import random
 from pygame import Color
 from typing import Union, Optional
 
+app_locations = {
+    "Sburb": (0.1, 0.1),
+    "gristTorrent": (0.3, 0.1),
+    "Virtual Porkhollow": (0.3, 0.4),
+}
+
 sample_parts = {
     "base": "kid",
     "hair": "egbert",
