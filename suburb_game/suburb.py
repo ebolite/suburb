@@ -1810,6 +1810,7 @@ def computer(instance: Instance):
 
 
 def virtual_porkhollow(window: "render.Window"):
+    player_dict = client.requestdic("player_info")
     theme = current_theme()
     viewport = window.viewport
     viewport.color = theme.white

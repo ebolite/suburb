@@ -1011,15 +1011,18 @@ class Room:
             if npc.hostile and npc.power * npc.hostility > highest_power:
                 self.start_strife()
                 return
-            
+
     def get_available_activities(self) -> list[str]:
         activities = []
         for x in range(len(self.map.map_tiles[self.y])):
             checked_room = self.map.find_room(x, self.y)
-            if checked_room.tile.activity is not None and checked_room.tile.activity not in activities:
+            if (
+                checked_room.tile.activity is not None
+                and checked_room.tile.activity not in activities
+            ):
                 activities.append(checked_room.tile.activity)
         return activities
-    
+
     @property
     def specials(self) -> dict[str, tuple]:
         special_dict = {}
@@ -1069,11 +1072,13 @@ class Room:
     @property
     def tile(self) -> tiles.Tile:
         return self.map.get_tile(self.x, self.y)
-    
+
     @property
     def assigned_npc(self) -> Optional["npcs.Npc"]:
-        if self.assigned_npc_name is None: return None
-        else: return npcs.Npc(self.assigned_npc_name)
+        if self.assigned_npc_name is None:
+            return None
+        else:
+            return npcs.Npc(self.assigned_npc_name)
 
     def __setattr__(self, attr, value):
         self.__dict__[attr] = value
@@ -1150,6 +1155,7 @@ class Player:
         self.echeladder_rung: int = 1
         self.grist_cache = {grist_name: 0 for grist_name in config.grists}
         self.grist_gutter: list[list] = []
+        self.boondollars: int = 0
         self.leeching: list[str] = []
         # key: grist value: amount
         self.unclaimed_grist = {}
