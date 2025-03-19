@@ -57,13 +57,13 @@ def get_captcha(code) -> str:
     path = f"{util.homedir}/sprites/captchas/{code}.png".replace("?", "-")
     if not os.path.isfile(path):
         captcha_generator.write(code, path)
-        img = cv2.imread(path)
-        mask = cv2.imread(f"{util.homedir}/sprites/mask.png")
-        img_masked = cv2.bitwise_and(img, mask)
+        img = cv2.imread(path) # type: ignore this shit all works idk why its being annoying in my editor
+        mask = cv2.imread(f"{util.homedir}/sprites/mask.png") # type: ignore
+        img_masked = cv2.bitwise_and(img, mask) # type: ignore
         black_mask = np.all(img_masked <= 2, axis=-1)
         alpha = np.uint8(np.logical_not(black_mask)) * int(255)
         bgra = np.dstack((img_masked, alpha))
-        cv2.imwrite(path, bgra)
+        cv2.imwrite(path, bgra) # type: ignore
     return path
 
 
