@@ -46,10 +46,10 @@ def receive_data() -> str:
         if "\n" in chunk or not chunk: break
     return "".join(data_fragments).replace("\n", "")
 
-def connect():
+def connect(hostname=HOSTNAME):
     global ClientSocket
     unwrapped_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
-    ClientSocket = context.wrap_socket(unwrapped_sock, server_hostname=HOSTNAME)
+    ClientSocket = context.wrap_socket(unwrapped_sock, server_hostname=hostname)
     print("Waiting for connection")
     try:
         ClientSocket.send(str.encode(json.dumps({"intent": "connect"})))
@@ -58,7 +58,7 @@ def connect():
         try:
             try:
                 ClientSocket.settimeout(10)
-                ClientSocket.connect((HOSTNAME, PORT))
+                ClientSocket.connect((hostname, PORT))
                 return True
             except TimeoutError: return False
         except socket.error as e:

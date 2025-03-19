@@ -2901,15 +2901,20 @@ def test_overmap():
 def connection_screen():
     @scene
     def try_again():
-        if client.connect():
+        if client.connect(util.config["hostname"]):
             login_scene()
         else:
             print("couldn't connect")
             connection_screen()
 
-    text = render.Text(0.5, 0.1, "Could not connect to server.")
+    text = render.Text(0.5, 0.15, f"Attempting to connect to server `{util.config['hostname']}`.")
     text.color = themes.default.dark
     try_again_button = render.TextButton(0.5, 0.7, 196, 32, ">TRY AGAIN", try_again)
+    ip_input = render.InputTextBox(0.5, 0.5)
+    ip_input.text = util.config["hostname"]
+    def change_ip():
+        util.config["hostname"] = ip_input.text
+    ip_input.key_press_func = change_ip
     spiro = render.get_spirograph(0.5, 0.3, False)
 
     def character_creator_func():
@@ -2974,8 +2979,9 @@ if __name__ == "__main__":
     connecting_text = render.Text(0.5, 0.5, "CONNECTING...")
     connecting_text.color = themes.default.dark
     connecting_text.outline_color = themes.default.black
+    if "hostname" not in util.config: util.config["hostname"] = client.HOSTNAME
     render.render()
-    if client.connect():  # connect to server
+    if client.connect(util.config["hostname"]):  # connect to server
         login_scene()  # normal game start
         # character_creator = CharacterCreator()
         # character_creator.choose_moon()

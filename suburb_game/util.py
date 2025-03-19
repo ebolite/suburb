@@ -126,3 +126,6 @@ saved_items = readjson(saved_items, "saved_items")
 
 saved_maps = {}
 saved_maps = readjson(saved_maps, "saved_maps")
+
+config = {}
+config = readjson(config, "config")
